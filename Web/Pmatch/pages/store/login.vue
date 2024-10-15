@@ -5,26 +5,27 @@
           crossorigin='anonymous' />
     <div class="ccontainer">
         <div class="login-card md:w-378px">
-            <form action="" method="post">
-                <!-- 登入Title -->
-                <div class="flex flex-items-center">
-                    <div class="w-25px h-20px bg-#1a6db4 mr-8px"></div>
-                    <div class="text-20px">會員登入</div>
-                </div>
+            <!-- 登入Title -->
+            <div class="flex flex-items-center">
+                <div class="w-25px h-20px bg-#1a6db4 mr-8px"></div>
+                <div class="text-20px">會員登入</div>
+            </div>
 
-                <!-- 頁面切換鈕 -->
-                <div class="flex flex-items-center mt-24px">
-                    <div class="flex-1">
-                        <button class="font-sans w-100% bg-#e93470 outline-none border border-solid border-[#e93470] border-1 hover:bg-#bb2d3b transition duration-200 p-y-1.5 p-x-3 text-16px text-white rounded-1 cursor-pointer">會員登入</button>
-                    </div>
-                    <div class="w-10px"></div>
-                    <div class="flex-1">
-                        <NuxtLink to="/store/login">
-                            <button class="w-100% outline-none bg-white border-1 p-y-1.5 p-x-3 text-16px rounded-1 cursor-pointer text-[#212529] font-sans">媒合商登入</button>
-                        </NuxtLink>
-                    </div>
-                </div>
+            <!-- 頁面切換鈕 -->
+            <div class="flex flex-items-center mt-24px">
+                <div class="flex-1">
+                    <NuxtLink to="/member/login">
+                        <button class="w-100% outline-none bg-white border-1 p-y-1.5 p-x-3 text-16px rounded-1 cursor-pointer text-[#212529] font-sans">會員登入</button>
+                    </NuxtLink>
 
+                </div>
+                <div class="w-10px"></div>
+                <div class="flex-1">
+                    <button class="font-sans w-100% bg-#e93470 outline-none border border-solid border-[#e93470] border-1 hover:bg-#bb2d3b transition duration-200 p-y-1.5 p-x-3 text-16px text-white rounded-1 cursor-pointer">媒合商登入</button>
+                </div>
+            </div>
+            <form action=""
+                  method="post">
                 <div class="mt-15px">
                     <div class="mb-5px">登入帳號</div>
                     <input type="text"
@@ -56,10 +57,6 @@
                 <div class="mt-15px">
                     <div class="flex">
                         <div class="flex-1">
-                            <button class="p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#1a6db4] hover:opacity-70 transition duration-200 cursor-pointer">註冊</button>
-                        </div>
-                        <div class="w-10px"></div>
-                        <div class="flex-1">
                             <button type="submit" :disabled="!loginToken"
                                     class="disabled:opacity-70 p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#e93470] hover:bg-[#bb2d3b] transition duration-200 cursor-pointer">登入</button>
                         </div>
@@ -80,7 +77,7 @@
 import VueTurnstile from 'vue-turnstile';
 const eyes = ref(null);
 const i_password = ref(null);
-const loginToken = useCookie('loginToken');
+const loginToken = useCookie('tstToken');
 const hasToken = ref(loginToken.value !== undefined);
 const turnInputType = () => {
     if (i_password.value.type === 'password') {
@@ -115,13 +112,13 @@ const onVerify = tokenValue => {
 .clip-path-custom {
     clip-path: polygon(50% 100%, 0 50%, 100% 50%);
 }
-.tips{
-  opacity:0;
-  transition: 0.2s;
-  z-index: -1;
+.tips {
+    opacity: 0;
+    transition: 0.2s;
+    z-index: -1;
 }
-.password:hover~.tips{
-  opacity: 1;
-  z-index: 1;
+.password:hover ~ .tips {
+    opacity: 1;
+    z-index: 1;
 }
 </style>
