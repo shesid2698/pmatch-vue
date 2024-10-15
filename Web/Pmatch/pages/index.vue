@@ -1,5 +1,5 @@
 <template>
-    <ElButton type="primary">Primary</ElButton>
+    <div>index</div>
 </template>
 
 <script setup>
