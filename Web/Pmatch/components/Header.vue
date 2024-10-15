@@ -1,23 +1,16 @@
 <template>
-    <div
-        class="flex justify-center fixed w-100% bg-white headerBox top-0 left-0 h-80px"
-    >
-        <div
-            class="flex justify-between items-center max-w-1320px w-100% ps-5 pe-5 position-relative"
-        >
+    <div class="flex justify-center fixed w-100% bg-white headerBox top-0 left-0 h-80px">
+        <div class="flex justify-between items-center max-w-1320px w-100% ps-5 pe-5 position-relative">
             <!-- Logo -->
             <div class="w-100% flex items-center">
-                <div>
-                    <img
-                        class="lg-w-240px w-140px"
-                        src="/images/logo.png"
-                        alt="pmatch的logo"
-                    />
+                <div @click="navigateIndex"
+                     class="cursor-pointer">
+                    <img class="lg-w-240px w-140px"
+                         src="/images/logo.png"
+                         alt="pmatch的logo" />
                 </div>
                 <div>
-                    <h1
-                        class="m-0 ms-3 ps-3 lg-font-size-1.5rem font-size-1.2rem color-#888 b-l-solid"
-                    >
+                    <h1 class="m-0 ms-3 ps-3 lg-font-size-1.5rem font-size-1.2rem color-#888 b-l-solid">
                         遊戲道具媒合網
                     </h1>
                 </div>
@@ -54,6 +47,13 @@
                                 >忘記密碼</NuxtLink
                             >
                         </div>
+                        <!-- <div v-show="item.showDropdown"
+                             class="loginDropdown bg-white p-2 mt-1">
+                            <NuxtLink to="/login"
+                                      class="block p-2">登入</NuxtLink>
+                            <NuxtLink to="/register"
+                                      class="block p-2">註冊</NuxtLink>
+                        </div> -->
                     </div>
                     <NuxtLink
                         v-show="!item.dropdown"
@@ -67,15 +67,11 @@
                 </div>
                 <!-- 手機板漢堡選單 -->
                 <div class="lg-hidden block">
-                    <button
-                        class="flex bg-white b-rd-5px b-1px b-gray radius-5px"
-                        @click="toggleNav"
-                    >
-                        <img
-                            class="w-30px p-1"
-                            src="/images/navigation.svg"
-                            alt="導航漢堡選單icon"
-                        />
+                    <button class="flex bg-white b-rd-5px b-1px b-gray radius-5px"
+                            @click="toggleNav">
+                        <img class="w-30px p-1"
+                             src="/images/navigation.svg"
+                             alt="導航漢堡選單icon" />
                     </button>
                 </div>
             </div>
@@ -106,6 +102,7 @@
 </template>
 
 <script setup>
+const router = useRouter();
 const navOpen = ref(false);
 const toggleNav = () => {
     navOpen.value = !navOpen.value;
@@ -113,21 +110,21 @@ const toggleNav = () => {
 const headerLink = ref([
     {
         id: 0,
-        title: "幫助中心",
-        link: "/helpcenter",
+        title: '幫助中心',
+        link: '/helpcenter'
     },
     {
         id: 1,
-        title: "找媒合",
-        link: "/findmatch",
+        title: '找媒合',
+        link: '/findmatch'
     },
     {
         id: 2,
-        title: "會員登入/註冊",
-        link: "/login",
+        title: '會員登入/註冊',
+        link: '/member/login',
         dropdown: true,
-        showDropdown: false,
-    },
+        showDropdown: false
+    }
 ]);
 // 保存下拉選單的參考
 const dropdownRefs = ref([]);
