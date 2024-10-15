@@ -3,7 +3,7 @@
         class="flex justify-center fixed w-100% bg-white headerBox top-0 left-0 h-80px"
     >
         <div
-            class="flex justify-between items-center max-w-1320px w-100% ps-3 pe-3 position-relative"
+            class="flex justify-between items-center max-w-1320px w-100% ps-5 pe-5 position-relative"
         >
             <!-- Logo -->
             <div class="w-100% flex items-center">
@@ -29,35 +29,41 @@
                     v-for="item of headerLink"
                     :key="item.id"
                 >
-                    <div class="relative" @click="handleDropdown(item)">
-                        <NuxtLink
-                            v-show="!item.dropdown"
-                            :title="item.title"
-                            :to="item.link"
-                            class="color-black decoration-none ms-1.5rem font-bold"
-                            :alt="item.title"
-                        >
-                            {{ item.title }}
-                        </NuxtLink>
+                    <div class="relative" @click="handleDropdown(item)" :ref="setDropdownRef(item.id)">
                         <span
                             v-show="item.dropdown"
-                            class="color-black decoration-none ms-1.5rem font-bold w-100% cursor-pointer"
+                            class="loginLink color-#555553 decoration-none ms-1.5rem font-bold w-100% cursor-pointer"
                             :alt="item.title"
                         >
                             {{ item.title }}
                         </span>
                         <div
                             v-show="item.showDropdown"
-                            class="loginDropdown bg-white p-2 mt-1"
+                            class="loginDropdown bg-white mt-1"
                         >
-                            <NuxtLink to="/login" class="block p-2"
-                                >登入</NuxtLink
+                            <NuxtLink to="/login" class="loginItem block p-1 ps-2 pe-2 mt-1 mb-1 decoration-none"
+                                >會員登入</NuxtLink
                             >
-                            <NuxtLink to="/register" class="block p-2"
-                                >註冊</NuxtLink
+                            <NuxtLink to="/login" class="loginItem block p-1 ps-2 pe-2 mt-1 mb-1 decoration-none"
+                                >媒合商登入</NuxtLink
+                            >
+                            <NuxtLink to="/register" class="loginItem block p-1 ps-2 pe-2 mt-1 mb-1 decoration-none"
+                                >註冊會員</NuxtLink
+                            >
+                            <NuxtLink to="/login" class="loginItem block p-1 ps-2 pe-2 mt-1 mb-1 decoration-none"
+                                >忘記密碼</NuxtLink
                             >
                         </div>
                     </div>
+                    <NuxtLink
+                        v-show="!item.dropdown"
+                        :title="item.title"
+                        :to="item.link"
+                        class="headerLink color-#555553 decoration-none ms-1.5rem font-bold"
+                        :alt="item.title"
+                    >
+                        {{ item.title }}
+                    </NuxtLink>
                 </div>
                 <!-- 手機板漢堡選單 -->
                 <div class="lg-hidden block">
@@ -75,7 +81,7 @@
             </div>
             <!-- 手機板下拉選單 -->
             <div
-                class="headerBox position-absolute w-100% bg-white top-100% left-0 flex flex-wrap items-center"
+                class="headerBoxMenu position-absolute w-100% bg-white top-100% left-0 flex flex-wrap items-center"
                 v-show="navOpen"
             >
                 <div
@@ -87,7 +93,7 @@
                         <NuxtLink
                             :title="item.title"
                             :to="item.link"
-                            class="color-black decoration-none font-bold w-100%"
+                            class="headerLink color-#555553 decoration-none font-bold w-100%"
                             :alt="item.title"
                         >
                             {{ item.title }}
@@ -123,20 +129,65 @@ const headerLink = ref([
         showDropdown: false,
     },
 ]);
-const handleDropdown = (item) => {
-    item.showDropdown = !item.showDropdown;
+// 保存下拉選單的參考
+const dropdownRefs = ref([]);
+
+// 設置下拉選單的 ref
+const setDropdownRef = (id) => (el) => {
+  dropdownRefs.value[id] = el;
 };
+
+// 處理下拉選單的顯示或隱藏
+const handleDropdown = (item) => {
+  item.showDropdown = !item.showDropdown;
+};
+// 點擊外部關閉下拉選單
+const closeDropdownOutside = (event) => {
+  headerLink.value.forEach((item) => {
+    if (item.dropdown && item.showDropdown) {
+      const dropdownElement = dropdownRefs.value[item.id];
+      if (dropdownElement && !dropdownElement.contains(event.target)) {
+        item.showDropdown = false;
+      }
+    }
+  });
+};
+
+// 在組件掛載時添加全局點擊事件監聽器
+onMounted(() => {
+  document.addEventListener('click', closeDropdownOutside);
+});
+
+// 在組件卸載時移除點擊事件監聽器
+onBeforeUnmount(() => {
+  document.removeEventListener('click', closeDropdownOutside);
+});
 </script>
 
 <style scoped>
 .headerBox {
-    box-shadow: 0 1px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 2px 4px rgb(0 0 0 / 0.5);
     z-index: 3;
+}
+.headerBoxMenu{
+    box-shadow: 0 2px 2px rgb(0 0 0 / 0.5);
 }
 .loginDropdown {
     border: 1px solid #ccc;
     position: absolute;
-    top: 30px;
-    width: 150px;
+    top: 32px;
+    left: 12px;
+    width: 120px;
+    border-radius: 5px;
+}
+.loginItem{
+    color: #555553;
+}
+.loginItem:hover{
+    color: #999;
+    background-color: #e9ecef;
+}
+.headerLink:hover, .loginLink:hover{
+    color: #999;
 }
 </style>
