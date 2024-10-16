@@ -1,7 +1,7 @@
 <template>
     <div class="ccontainer">
         <div class="w-68.75%">
-            <div class="flex  flex-items-center">
+            <div class="flex flex-items-center">
                 <div class="w-25px h-20px bg-#1a6db4 mr-8px mt-3px"></div>
                 <div class="text-20px">服務條款</div>
             </div>

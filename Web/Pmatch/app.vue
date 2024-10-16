@@ -1,7 +1,7 @@
 <template>
     <div>
         <Header />
-        <div class="mt-140px mb-60px min-h-483px">
+        <div class="mt-140px mb-60px page">
             <NuxtPage />
         </div>
         <Footer />
@@ -36,5 +36,8 @@ body{
 .el-tabs--card > .el-tabs__header {
     border-bottom: none !important;
     margin: 0 0 10px 0;
+}
+.page{
+    min-height: calc(100vh - 120px - 80px - 280px);
 }
 </style>

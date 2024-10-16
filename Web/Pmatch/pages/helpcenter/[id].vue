@@ -36,5 +36,4 @@ const pageComponent = pageName.component;
 </script>
 
 <style scoped>
-
 </style>

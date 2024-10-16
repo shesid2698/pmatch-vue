@@ -62,7 +62,7 @@
                 <NuxtLink
                     v-for="(item, index) in helpItems"
                     :key="item.id"
-                    :class=" index % 2 === 0 ? 'bg-blue' : 'bg-red' "
+                    :class="index % 2 === 0 ? 'bg-blue' : 'bg-red'"
                     class="helpBtn border-none bg-blue p-5 m-2 color-#fff"
                     :to="item.link"
                 >
@@ -125,7 +125,7 @@ const filteredStores = computed(() => {
 </script>
 
 <style scoped>
-.storeName{
+.storeName {
     padding-left: 40px;
     box-sizing: border-box;
 }
