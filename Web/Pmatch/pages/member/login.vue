@@ -4,7 +4,7 @@
           integrity='sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=='
           crossorigin='anonymous' />
     <div class="ccontainer">
-        <div class="login-card md:w-378px">
+        <div class="login-card w-100% md:w-378px ">
             <form action="" method="post">
                 <!-- 登入Title -->
                 <div class="flex flex-items-center">
@@ -27,14 +27,14 @@
 
                 <div class="mt-15px">
                     <div class="mb-5px">登入帳號</div>
-                    <input type="text"
+                    <input type="text" required
                            class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
                 </div>
 
                 <div class="mt-15px">
                     <div class="mb-5px">密碼</div>
                     <div class="relative">
-                        <input type="password"
+                        <input type="password" required
                                ref="i_password"
                                class="password box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200"
                                pattern="(?=.*\d)(?=.*[a-zA-Z])[A-Za-z0-9!@#$%&*]{8,20}">
@@ -68,7 +68,7 @@
             </form>
 
             <div class="mt-15px text-center">
-                已經註冊?<NuxtLink to="#"
+                已經註冊?<NuxtLink to="/member/forgetpwd"
                           class="text-[#0d6efd] hover:opacity-70 hover:underline text-15px no-underline">忘記密碼</NuxtLink>
             </div>
         </div>

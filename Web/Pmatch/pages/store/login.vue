@@ -4,7 +4,7 @@
           integrity='sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=='
           crossorigin='anonymous' />
     <div class="ccontainer">
-        <div class="login-card md:w-378px">
+        <div class="login-card md:w-378px w-100%">
             <!-- 登入Title -->
             <div class="flex flex-items-center">
                 <div class="w-25px h-20px bg-#1a6db4 mr-8px"></div>
