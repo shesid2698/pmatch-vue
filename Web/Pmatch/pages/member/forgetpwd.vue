@@ -2,7 +2,7 @@
     <div class="ccontainer">
         <div class="login-card w-100% md:w-378px ">
             <div class="flex flex-items-center">
-                <div class="w-25px h-20px bg-#1a6db4 mr-8px"></div>
+                <div class="w-25px h-20px bg-#1a6db4 mr-8px mt-3px"></div>
                 <div class="text-20px">忘記密碼</div>
             </div>
 
@@ -37,8 +37,8 @@
                 </div>
             </div>
         </div>
-
     </div>
+
 </template>
 
 <script setup>
@@ -61,10 +61,12 @@ const checkCaptcha = () => {
 </script>
 <style scoped>
 .ccontainer {
-    height: calc(100vh - 110px);
+    height:calc(100vh - 110px);
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
 }
+
+
 </style>

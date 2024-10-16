@@ -5,10 +5,11 @@
           crossorigin='anonymous' />
     <div class="ccontainer">
         <div class="login-card w-100% md:w-378px ">
-            <form action="" method="post">
+            <form action=""
+                  method="post">
                 <!-- 登入Title -->
                 <div class="flex flex-items-center">
-                    <div class="w-25px h-20px bg-#1a6db4 mr-8px"></div>
+                    <div class="w-25px h-20px bg-#1a6db4 mr-8px mt-3px"></div>
                     <div class="text-20px">會員登入</div>
                 </div>
 
@@ -27,14 +28,16 @@
 
                 <div class="mt-15px">
                     <div class="mb-5px">登入帳號</div>
-                    <input type="text" required
+                    <input type="text"
+                           required
                            class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
                 </div>
 
                 <div class="mt-15px">
                     <div class="mb-5px">密碼</div>
                     <div class="relative">
-                        <input type="password" required
+                        <input type="password"
+                               required
                                ref="i_password"
                                class="password box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200"
                                pattern="(?=.*\d)(?=.*[a-zA-Z])[A-Za-z0-9!@#$%&*]{8,20}">
@@ -56,11 +59,12 @@
                 <div class="mt-15px">
                     <div class="flex">
                         <div class="flex-1">
-                            <button class="p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#1a6db4] hover:opacity-70 transition duration-200 cursor-pointer">註冊</button>
+                            <NuxtLink to="/register"><button class="p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#1a6db4] hover:opacity-70 transition duration-200 cursor-pointer">註冊</button></NuxtLink>
                         </div>
                         <div class="w-10px"></div>
                         <div class="flex-1">
-                            <button type="submit" :disabled="!loginToken"
+                            <button type="submit"
+                                    :disabled="!loginToken"
                                     class="disabled:opacity-70 p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#e93470] hover:bg-[#bb2d3b] transition duration-200 cursor-pointer">登入</button>
                         </div>
                     </div>
@@ -115,13 +119,13 @@ const onVerify = tokenValue => {
 .clip-path-custom {
     clip-path: polygon(50% 100%, 0 50%, 100% 50%);
 }
-.tips{
-  opacity:0;
-  transition: 0.2s;
-  z-index: -1;
+.tips {
+    opacity: 0;
+    transition: 0.2s;
+    z-index: -1;
 }
-.password:hover~.tips{
-  opacity: 1;
-  z-index: 1;
+.password:hover ~ .tips {
+    opacity: 1;
+    z-index: 1;
 }
 </style>

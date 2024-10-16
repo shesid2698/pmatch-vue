@@ -1,9 +1,9 @@
 <template>
     <div>
-        <Header />
-        <div class="mt-100px">
-            <NuxtPage />
-        </div>
+      <div class="mb-100px">
+        <Header  />
+      </div>
+      <NuxtPage/>
     </div>
 </template>
 
