@@ -1,30 +1,30 @@
 <template>
-    <div class="mt-7rem max-w-1300px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3">
+    <div class="mt-7rem max-w-1320px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3">
         <div class="mb-5 flex items-center justify-between">
             <!-- title -->
             <div class="flex items-center">
                 <div class="w-25px h-20px bg-#1a6db4"></div>
                 <span class="font-size-1.4rem ms-3 fw-600">幫助中心</span>
             </div>
-            <!-- 麵包屑 -->
-            <div>
+            <!-- 麵包屑 (新版目前沒有 先不刪以防後續需要) -->
+            <!-- <div>
                 <ElBreadcrumb :separator-icon="ArrowRight">
                     <ElBreadcrumbItem :to="{ path: '/' }"
                         >首頁</ElBreadcrumbItem
                     >
                     <ElBreadcrumbItem> 幫助中心 </ElBreadcrumbItem>
                 </ElBreadcrumb>
-            </div>
+            </div> -->
         </div>
         <!-- 搜尋列 -->
         <div class="mb-6 lg-flex block">
             <div class="lg-mt-0 mt-3 flex w-100%">
                 <div class="flex items-center w-100%">
                     <div class="flex w-100% relative">
-                        <div class="w-100%">
+                        <div class="w-100% relative">
                             <input
                                 v-model="searchQuery"
-                                class="storeName w-100% h-36px p-0 border-none bg-#eee font-size-1rem ps-2.5rem rounded-10px"
+                                class="storeName w-100% h-36px p-0 border-none bg-#eee font-size-1rem rounded-10px"
                                 type="text"
                                 placeholder="搜尋關鍵字..."
                             />
@@ -56,8 +56,21 @@
                 </div>
             </div>
         </div>
-        <!-- 各媒合商 -->
-        <HelpCenterCollapse />
+        <!-- 幫助中心問&答 -->
+        <div>
+            <div class="flex">
+                <NuxtLink
+                    v-for="(item, index) in helpItems"
+                    :key="item.id"
+                    :class=" index % 2 === 0 ? 'bg-blue' : 'bg-red' "
+                    class="helpBtn border-none bg-blue p-5 m-2 color-#fff"
+                    :to="item.link"
+                >
+                    <h6>{{ item.title }}</h6>
+                    <p class="m-0">{{ item.detail }}</p>
+                </NuxtLink>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -66,88 +79,30 @@ import { ArrowRight } from "@element-plus/icons-vue";
 import { ElBreadcrumb } from "element-plus";
 import { ElBreadcrumbItem } from "element-plus";
 
-const matchStore = {
-    pokemonBank: {
+const helpItems = [
+    {
         id: "0",
-        title: "寶可夢銀行",
-        img: "./images/pokemonBank.jpg",
-        link: "/findmatch/pokemonBank",
-        platform: "滿貫大亨",
-        description:
-            "信用第一☆老字號品牌☆24H服務☆絕無分身☆轉帳超商皆可☎電話：0979-880-818 ☆LINE ID：gobank168",
-        contact: [
-            {
-                contactImg: "./images/facebook.png",
-                contactLink: "",
-            },
-            {
-                contactImg: "./images/phonecall.png",
-                contactLink: "",
-            },
-            {
-                contactImg: "./images/line.png",
-                contactLink: "",
-            },
-        ],
+        title: "help111",
+        link: "/helpcenter/help111",
     },
-    asaliGoldFlow: {
+    {
         id: "1",
-        title: "阿莎力金流#8500",
-        img: "./images/asaliGoldFlow.jpg",
-        link: "/findmatch/asaliGoldFlow",
-        platform: "錢街Online",
-        description: "阿莎力金流#8500 LINE：jiau777 百大富豪,信用滿分",
-        contact: [
-            {
-                contactImg: "./images/phonecall.png",
-                contactLink: "",
-            },
-        ],
+        title: "help222",
+        link: "/helpcenter/help222",
     },
-    goodMongKokBank: {
+    {
         id: "2",
-        title: "好旺角銀行",
-        img: "./images/goodMongKokBank.png",
-        link: "/findmatch/goodMongKokBank",
-        platform: "包你發娛樂城",
-        description:
-            "☄包你發娛樂城最優質商家☄好旺角銀行小姐姐等你☄LINE:0901288196",
-        contact: [
-            {
-                contactImg: "./images/phonecall.png",
-                contactLink: "",
-            },
-            {
-                contactImg: "./images/line.png",
-                contactLink: "",
-            },
-        ],
+        title: "help333",
+        link: "/helpcenter/help333",
     },
-    grandSlamMoney: {
+    {
         id: "3",
-        title: "滿貫金流",
-        img: "./images/grandSlamMoney.jpg",
-        link: "/findmatch/grandSlamMoney",
-        platform: "滿貫大亨",
-        description: "☆信用第一，交流首選☆請認明滿貫金流~♥",
-        contact: [
-            {
-                contactImg: "./images/instagram.png",
-                contactLink: "",
-            },
-            {
-                contactImg: "./images/phonecall.png",
-                contactLink: "",
-            },
-            {
-                contactImg: "./images/line.png",
-                contactLink: "",
-            },
-        ],
+        title: "help444",
+        link: "/helpcenter/help444",
     },
-};
+];
 
-const stores = Object.values(matchStore);
+// const stores = Object.values(matchStore);
 
 const searchQuery = ref("");
 const selectedPlatform = ref("");
@@ -170,6 +125,10 @@ const filteredStores = computed(() => {
 </script>
 
 <style scoped>
+.storeName{
+    padding-left: 40px;
+    box-sizing: border-box;
+}
 .storeName:focus {
     border-color: #3092fa;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
@@ -181,5 +140,10 @@ const filteredStores = computed(() => {
 }
 :deep(.el-icon) {
     z-index: -1;
+}
+.helpBtn {
+    width: calc(100% / 4);
+    height: 250px;
+    border-radius: 50px 50px 0 50px;
 }
 </style>

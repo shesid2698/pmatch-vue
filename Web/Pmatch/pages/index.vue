@@ -1,5 +1,7 @@
 <template>
-    <div>index</div>
+    <div>
+        <div class="max-w-1320px m-auto ps-5 pe-5">index</div>
+    </div>
 </template>
 
 <script setup>

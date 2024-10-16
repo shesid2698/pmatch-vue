@@ -1,11 +1,12 @@
 <template>
-    <div class="mt-7rem max-w-1300px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3">
+    <div class="mt-7rem max-w-1320px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3">
         <div class="mb-7 flex items-center justify-between">
             <div class="flex items-center">
                 <div class="w-25px h-20px bg-#1a6db4"></div>
                 <span class="font-size-1.4rem ms-3 fw-600">關於商店</span>
             </div>
-            <div>
+            <!-- 麵包屑 (新版目前沒有 先不刪以防後續需要) -->
+            <!-- <div>
                 <ElBreadcrumb :separator-icon="ArrowRight">
                     <ElBreadcrumbItem :to="{ path: '/' }"
                         >首頁</ElBreadcrumbItem
@@ -15,7 +16,7 @@
                     </ElBreadcrumbItem>
                     <ElBreadcrumbItem> {{ pageTitle }} </ElBreadcrumbItem>
                 </ElBreadcrumb>
-            </div>
+            </div> -->
         </div>
         <div>
             <component :is="pageComponent" />

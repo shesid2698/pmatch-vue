@@ -1,13 +1,17 @@
 <template>
     <div>
         <Header />
-        <div class="mt-100px">
+        <div class="mt-140px mb-60px min-h-550px">
             <NuxtPage />
         </div>
+        <Footer />
     </div>
 </template>
 
 <style>
+body{
+    margin: 0;
+}
 .el-tabs--card > .el-tabs__header .el-tabs__item {
     background-color: #fff;
     color: #212529;
