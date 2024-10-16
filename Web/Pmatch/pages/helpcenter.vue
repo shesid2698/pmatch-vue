@@ -30,9 +30,7 @@
                             />
                         </div>
                         <div class="absolute">
-                            <button
-                                class="h-38px searchBtn"
-                            >
+                            <button class="h-38px searchBtn">
                                 <svg
                                     class="w-25px"
                                     version="1.1"
@@ -59,7 +57,7 @@
             </div>
         </div>
         <!-- 各媒合商 -->
-        <HelpCenterCollapse/>
+        <HelpCenterCollapse />
     </div>
 </template>
 
@@ -177,9 +175,9 @@ const filteredStores = computed(() => {
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
     outline: none;
 }
-.searchBtn{
+.searchBtn {
     border: none;
-    background-color: rgba(0,0,0,0);
+    background-color: rgba(0, 0, 0, 0);
 }
 :deep(.el-icon) {
     z-index: -1;
