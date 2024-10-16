@@ -46,7 +46,7 @@ const footerLink = ref([
     {
         id: 1,
         title: "服務條款",
-        link: "/serviceterms",
+        link: "/member/service",
     },
     {
         id: 2,
@@ -56,7 +56,7 @@ const footerLink = ref([
     {
         id: 3,
         title: "隱私權聲明",
-        link: "/privacy",
+        link: "/member/privacy",
     },
     {
         id: 4,

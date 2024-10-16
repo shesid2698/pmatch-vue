@@ -106,7 +106,7 @@ const onVerify = tokenValue => {
 
 <style scoped>
 .ccontainer {
-    height: calc(100vh - 110px);
+    height: calc(100vh - 470px);
     display: flex;
     justify-content: center;
     align-items: center;

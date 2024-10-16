@@ -38,7 +38,7 @@
 <script setup></script>
 <style scoped>
 .ccontainer {
-    height: fit-content;
+    height: calc(100vh - 470px);
     display: flex;
     justify-content: center;
     align-items: center;

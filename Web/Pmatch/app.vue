@@ -1,7 +1,7 @@
 <template>
     <div>
         <Header />
-        <div class="mt-140px mb-60px min-h-550px">
+        <div class="mt-140px mb-60px min-h-483px">
             <NuxtPage />
         </div>
         <Footer />
