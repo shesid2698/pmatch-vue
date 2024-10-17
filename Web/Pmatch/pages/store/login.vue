@@ -5,7 +5,7 @@
         integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
         crossorigin="anonymous"
     />
-    <div class="ccontainer">
+    <div class="ccontainer md:pt-60px">
         <div class="login-card md:w-378px w-100%">
             <!-- 登入Title -->
             <div class="flex flex-items-center">
@@ -105,7 +105,7 @@
 </template>
 
 <script setup lang="ts">
-// import VueTurnstile from 'vue-turnstile';
+import VueTurnstile from 'vue-turnstile';
 const eyes = ref(null);
 const i_password = ref(null);
 const loginToken = useCookie("tstToken");
@@ -131,7 +131,7 @@ const onVerify = (tokenValue) => {
 
 <style scoped>
 .ccontainer {
-    height: calc(100vh - 470px);
+    height: fit-content;
     display: flex;
     justify-content: center;
     align-items: center;
