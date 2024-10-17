@@ -5,7 +5,7 @@
         integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
         crossorigin="anonymous"
     />
-    <div class="ccontainer">
+    <div class="ccontainer md:pt-60px">
         <div class="w-68.75% flex flex-col flex-items-center">
             <div class="w-370px">
                 <div class="flex flex-items-center">
@@ -74,7 +74,7 @@
 <script setup></script>
 <style scoped>
 .ccontainer {
-    height: calc(100vh - 470px);
+    height: fit-content;
     display: flex;
     justify-content: center;
     align-items: center;

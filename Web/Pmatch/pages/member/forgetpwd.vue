@@ -1,5 +1,5 @@
 <template>
-    <div class="ccontainer">
+    <div class="ccontainer md:pt-60px">
         <div class="login-card w-100% md:w-378px">
             <div class="flex flex-items-center">
                 <div class="w-25px h-20px bg-#1a6db4 mr-8px mt-3px"></div>
@@ -74,7 +74,7 @@ const checkCaptcha = () => {
 </script>
 <style scoped>
 .ccontainer {
-    height: calc(100vh - 470px);
+    height: fit-content;
     display: flex;
     justify-content: center;
     align-items: center;
