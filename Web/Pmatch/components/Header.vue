@@ -94,7 +94,7 @@
             </div>
             <!-- 手機板下拉選單 -->
             <div
-                class="headerBoxMenu position-absolute w-100% bg-white top-100% left-0 flex flex-wrap items-center"
+                class="headerBoxMenu position-absolute w-100% bg-white top-98% left-0 flex flex-wrap items-center"
                 v-show="navOpen"
             >
                 <div
