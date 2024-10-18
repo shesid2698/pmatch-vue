@@ -88,14 +88,17 @@
                         <span>簽約狀況</span>
                     </div>
                 </div>
-                <NuxtLink
-                    :to="item.link"
-                    class="decoration-none color-#000"
+
+                <div
+                    class="storeDetail flex border-b b-b-solid b-#D5ECFF"
                     v-for="(item, index) in filteredStores"
                     :key="index"
                 >
-                    <div class="storeDetail flex border-b b-b-solid b-#D5ECFF">
-                        <div class="w-75%">
+                    <NuxtLink
+                        :to="item.link"
+                        class="decoration-none color-#000 w-75%"
+                    >
+                        <div class="">
                             <div class="md-flex block items-center p-3">
                                 <div class="flex justify-start md-mb-0 mb-5">
                                     <img
@@ -135,15 +138,38 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="w-25% flex justify-center items-center">
-                            <button
-                                class="border-none color-#aaa w-95px h-40px rounded-5px"
-                            >
-                                檢視合約
-                            </button>
-                        </div>
+                    </NuxtLink>
+                    <div class="w-25% flex justify-center items-center">
+                        <el-button
+                            class="border-none color-#aaa w-95px h-40px rounded-5px"
+                            plain
+                            @click="dialogVisible = true"
+                        >
+                            檢視合約
+                        </el-button>
+                        <el-dialog
+                            v-model="dialogVisible"
+                            title="Tips"
+                            width="500"
+                            :before-close="handleClose"
+                        >
+                            <span>This is a message</span>
+                            <template #footer>
+                                <div class="dialog-footer">
+                                    <el-button @click="dialogVisible = false"
+                                        >Cancel</el-button
+                                    >
+                                    <el-button
+                                        type="primary"
+                                        @click="dialogVisible = false"
+                                    >
+                                        Confirm
+                                    </el-button>
+                                </div>
+                            </template>
+                        </el-dialog>
                     </div>
-                </NuxtLink>
+                </div>
             </div>
             <div class="sideBar">
                 <div class="mb-5">
@@ -182,7 +208,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="border-solid b-1px p-3 rounded-5px b-#ccc">
+                    <!-- 點卡先關 後面有要再開 -->
+                    <!-- <div class="border-solid b-1px p-3 rounded-5px b-#ccc">
                         <div
                             class="flex items-center mb-3 border-b-solid b-1px b-#ccc pb-3"
                         >
@@ -213,7 +240,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -225,6 +252,19 @@
 import { ArrowRight } from "@element-plus/icons-vue";
 import { ElBreadcrumb } from "element-plus";
 import { ElBreadcrumbItem } from "element-plus";
+import { ElMessageBox } from "element-plus";
+
+const dialogVisible = ref(false);
+
+const handleClose = (done) => {
+    ElMessageBox.confirm("要關閉視窗嗎?")
+        .then(() => {
+            done();
+        })
+        .catch(() => {
+            // catch error
+        });
+};
 
 // 媒合商資料
 const matchStore = {
@@ -250,6 +290,7 @@ const matchStore = {
                 contactLink: "",
             },
         ],
+        contract: "寶可夢銀行合約內容",
     },
     asaliGoldFlow: {
         id: "1",
@@ -264,6 +305,7 @@ const matchStore = {
                 contactLink: "",
             },
         ],
+        contract: "阿莎力金流#8500合約內容",
     },
     goodMongKokBank: {
         id: "2",
@@ -283,6 +325,7 @@ const matchStore = {
                 contactLink: "",
             },
         ],
+        contract: "好旺角銀行合約內容",
     },
     grandSlamMoney: {
         id: "3",
@@ -305,6 +348,7 @@ const matchStore = {
                 contactLink: "",
             },
         ],
+        contract: "滿貫金流合約內容",
     },
     grandSlamMqqoney: {
         id: "4",
@@ -327,6 +371,7 @@ const matchStore = {
                 contactLink: "",
             },
         ],
+        contract: "",
     },
     grandSlamModdney: {
         id: "5",
@@ -349,6 +394,7 @@ const matchStore = {
                 contactLink: "",
             },
         ],
+        contract: "",
     },
     grandSlasmMoney: {
         id: "6",
@@ -371,6 +417,7 @@ const matchStore = {
                 contactLink: "",
             },
         ],
+        contract: "",
     },
 };
 

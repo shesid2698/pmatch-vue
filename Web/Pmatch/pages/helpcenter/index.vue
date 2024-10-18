@@ -60,7 +60,7 @@
         <div>
             <div class="flex flex-wrap">
                 <NuxtLink
-                    v-for="(item, index) in helpItems"
+                    v-for="(item, index) in filteredHelpItems"
                     :key="item.id"
                     :class="index % 2 === 0 ? 'bg-#FF83AD' : 'bg-#7DC4FF'"
                     class="helpBtn decoration-none color-#fff"
@@ -75,10 +75,12 @@
 </template>
 
 <script setup>
+// 引入的東西
 import { ArrowRight } from "@element-plus/icons-vue";
 import { ElBreadcrumb } from "element-plus";
 import { ElBreadcrumbItem } from "element-plus";
 
+// 幫助中心資料
 const helpItems = [
     {
         title: "● 我是媒合商，我該如何申請合作提案呢？",
@@ -110,22 +112,15 @@ const helpItems = [
     },
 ];
 
-// const stores = Object.values(matchStore);
-
+// 搜尋關鍵字
+const help = Object.values(helpItems);
 const searchQuery = ref("");
-const selectedPlatform = ref("");
-
-const filteredStores = computed(() => {
-    let filtered = stores;
+const filteredHelpItems = computed(() => {
+    let filtered = help;
     if (searchQuery.value) {
         const Query = searchQuery.value.toLowerCase();
-        filtered = filtered.filter((stores) =>
-            stores.title.toLowerCase().includes(Query)
-        );
-    }
-    if (selectedPlatform.value) {
-        filtered = filtered.filter(
-            (stores) => stores.platform === selectedPlatform.value
+        filtered = filtered.filter((help) =>
+            help.title.toLowerCase().includes(Query)
         );
     }
     return filtered;
@@ -152,24 +147,24 @@ const filteredStores = computed(() => {
 .helpBtn {
     width: calc(100% / 4 - 2rem);
     height: 250px;
-    padding: .5rem;
-    margin: .5rem;
+    padding: 0.5rem;
+    margin: 0.5rem;
     border-radius: 50px 50px 0 50px;
 }
 @media screen and (max-width: 1024px) {
     .helpBtn {
-    width: calc(100% / 3 - 2rem);
-}
+        width: calc(100% / 3 - 2rem);
+    }
 }
 @media screen and (max-width: 768px) {
     .helpBtn {
-    width: calc(100% / 2 - 2rem);
-}
+        width: calc(100% / 2 - 2rem);
+    }
 }
 @media screen and (max-width: 480px) {
     .helpBtn {
-    width: calc(100% / 1);
-    margin: .5rem 0;
-}
+        width: calc(100% / 1);
+        margin: 0.5rem 0;
+    }
 }
 </style>
