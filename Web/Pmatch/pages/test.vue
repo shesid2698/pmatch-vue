@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-button plain
+        <el-button
                    @click="dialogTableVisible = true">
             Open a Table nested Dialog
         </el-button>
@@ -9,10 +9,12 @@
                    title="手機驗證"
                    :width="dialogWidth">
             <keep-alive>
-                <MobileVerify from="edit"></MobileVerify>
+                <MobileVerify from="edit" index=1 @isVerify="getVerify" ></MobileVerify>
             </keep-alive>
 
         </el-dialog>
+        <div>
+    </div>
     </div>
 
 </template>
@@ -20,6 +22,11 @@
 <script lang="ts" setup>
 const dialogTableVisible = ref(false);
 const dialogWidth = ref('370px');
+const getVerify=(result)=>{
+  if(result === true){
+    dialogTableVisible.value = false
+  }
+}
 onMounted(() => {
     const updateDialogWidth = () => {
         if (window.innerWidth <= 768) {
