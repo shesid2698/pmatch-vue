@@ -58,16 +58,16 @@
         </div>
         <!-- 幫助中心問&答 -->
         <div>
-            <div class="flex">
+            <div class="flex flex-wrap">
                 <NuxtLink
                     v-for="(item, index) in helpItems"
                     :key="item.id"
-                    :class="index % 2 === 0 ? 'bg-blue' : 'bg-red'"
-                    class="helpBtn border-none bg-blue p-5 m-2 color-#fff"
+                    :class="index % 2 === 0 ? 'bg-#FF83AD' : 'bg-#7DC4FF'"
+                    class="helpBtn decoration-none color-#fff"
                     :to="item.link"
                 >
-                    <h6>{{ item.title }}</h6>
-                    <p class="m-0">{{ item.detail }}</p>
+                    <h3 class="decoration-none">{{ item.title }}</h3>
+                    <p class="m-0 decoration-none">{{ item.detail }}</p>
                 </NuxtLink>
             </div>
         </div>
@@ -81,24 +81,32 @@ import { ElBreadcrumbItem } from "element-plus";
 
 const helpItems = [
     {
-        id: "0",
-        title: "help111",
-        link: "/helpcenter/help111",
+        title: "● 我是媒合商，我該如何申請合作提案呢？",
+        link: "/helpcenter/help1",
+        detail: "",
     },
     {
-        id: "1",
-        title: "help222",
-        link: "/helpcenter/help222",
+        title: "● 我是玩家，我該如何尋找媒合商協助做遊戲貨幣的媒合呢？",
+        link: "/helpcenter/help2",
+        detail: "",
     },
     {
         id: "2",
-        title: "help333",
-        link: "/helpcenter/help333",
+        title: "● PMatch可以提供什麼？",
+        link: "/helpcenter/help3",
+        detail: "能讓玩家",
     },
     {
         id: "3",
-        title: "help444",
-        link: "/helpcenter/help444",
+        title: "● 什麼是委託媒合？",
+        link: "/helpcenter/help4",
+        detail: "委託媒合商",
+    },
+    {
+        id: "4",
+        title: "● 什麼是成功媒合紀錄？",
+        link: "/helpcenter/help5",
+        detail: "",
     },
 ];
 
@@ -142,8 +150,26 @@ const filteredStores = computed(() => {
     z-index: -1;
 }
 .helpBtn {
-    width: calc(100% / 4);
+    width: calc(100% / 4 - 2rem);
     height: 250px;
+    padding: .5rem;
+    margin: .5rem;
     border-radius: 50px 50px 0 50px;
+}
+@media screen and (max-width: 1024px) {
+    .helpBtn {
+    width: calc(100% / 3 - 2rem);
+}
+}
+@media screen and (max-width: 768px) {
+    .helpBtn {
+    width: calc(100% / 2 - 2rem);
+}
+}
+@media screen and (max-width: 480px) {
+    .helpBtn {
+    width: calc(100% / 1);
+    margin: .5rem 0;
+}
 }
 </style>

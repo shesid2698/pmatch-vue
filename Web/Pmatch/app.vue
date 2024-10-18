@@ -11,6 +11,7 @@
 <style>
 body{
     margin: 0;
+    color: #555553;
 }
 .el-tabs--card > .el-tabs__header .el-tabs__item {
     background-color: #fff;
