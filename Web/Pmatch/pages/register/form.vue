@@ -148,6 +148,7 @@
                             <input type="email"
                                    v-model="email"
                                    :disabled="emailVerify === true"
+                                   @input="validEmailPattern"
                                    class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200 disabled:bg-[#e9ecef] pr-35px" />
                                    <div v-if="emailVerify===true"
                                  class="absolute w-20px h-20px top-50% transform translate-y-[-50%] right-5px border border-3px border-solid rounded-full border-[#24b75d] text-center content-center text-[#24b75d] text-15px font-bold"><i class="fa-solid fa-check"></i></div>
@@ -156,6 +157,7 @@
                         <div class="w-38%">
                             <button v-if="emailVerify!==true"
                             @click="emailTableVisible = true"
+                            :disabled="emailPattern===false"
                                     class="p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#2696F3] hover:bg-[#228de6] transition duration-200 cursor-pointer disabled:bg-gray disabled:hover:bg-gray">
                                 電子信箱驗證
                             </button>
@@ -234,6 +236,7 @@ const phone = ref('');
 const email = ref('');
 const mobilePattern = ref(false);
 const mobileVerify = ref(false);
+const emailPattern = ref(false);
 const emailVerify = ref(false);
 const mobileTableVisible = ref(false);
 const emailTableVisible = ref(false);
@@ -259,6 +262,14 @@ const validMobilePattern = () => {
         mobilePattern.value = true;
     } else {
         mobilePattern.value = false;
+    }
+};
+const validEmailPattern = () => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (regex.test(email.value)) {
+        emailPattern.value = true;
+    } else {
+        emailPattern.value = false;
     }
 };
 const turnInputType2 = () => {
