@@ -58,22 +58,22 @@ const footerLink = ref([
     {
         id: 0,
         title: "關於我們",
-        link: "/about",
+        link: "/company/about",
     },
     {
         id: 1,
         title: "服務條款",
-        link: "/member/service",
+        link: "/company/service",
     },
     {
         id: 2,
         title: "免責聲明",
-        link: "/disclaimer",
+        link: "/company/disclaimer",
     },
     {
         id: 3,
         title: "隱私權聲明",
-        link: "/member/privacy",
+        link: "/company/privacy",
     },
     {
         id: 4,

@@ -143,27 +143,27 @@
                         <el-button
                             class="border-none color-#aaa w-95px h-40px rounded-5px"
                             plain
-                            @click="dialogVisible = true"
+                            @click="item.dialogVisible = true"
                         >
                             檢視合約
                         </el-button>
                         <el-dialog
-                            v-model="dialogVisible"
-                            title="Tips"
+                            v-model="item.dialogVisible"
+                            title="合約服務條款"
                             width="500"
-                            :before-close="handleClose"
+                            :close-on-click-modal="false"
                         >
-                            <span>This is a message</span>
+                            <div v-html="item.contract"></div>
                             <template #footer>
                                 <div class="dialog-footer">
-                                    <el-button @click="dialogVisible = false"
-                                        >Cancel</el-button
+                                    <el-button @click="item.dialogVisible = false"
+                                        >取消</el-button
                                     >
                                     <el-button
                                         type="primary"
-                                        @click="dialogVisible = false"
+                                        @click="item.dialogVisible = false"
                                     >
-                                        Confirm
+                                        同意
                                     </el-button>
                                 </div>
                             </template>
@@ -254,17 +254,7 @@ import { ElBreadcrumb } from "element-plus";
 import { ElBreadcrumbItem } from "element-plus";
 import { ElMessageBox } from "element-plus";
 
-const dialogVisible = ref(false);
 
-const handleClose = (done) => {
-    ElMessageBox.confirm("要關閉視窗嗎?")
-        .then(() => {
-            done();
-        })
-        .catch(() => {
-            // catch error
-        });
-};
 
 // 媒合商資料
 const matchStore = {
@@ -276,6 +266,7 @@ const matchStore = {
         platform: "滿貫大亨",
         description:
             "信用第一☆老字號品牌☆24H服務☆絕無分身☆轉帳超商皆可☎電話：0979-880-818 ☆LINE ID：gobank168",
+        contract: "寶可夢銀行合約內容",
         contact: [
             {
                 contactImg: "./images/facebook.png",
@@ -290,7 +281,6 @@ const matchStore = {
                 contactLink: "",
             },
         ],
-        contract: "寶可夢銀行合約內容",
     },
     asaliGoldFlow: {
         id: "1",
@@ -299,13 +289,13 @@ const matchStore = {
         link: "/findmatch/asaliGoldFlow",
         platform: "錢街Online",
         description: "阿莎力金流#8500 LINE：jiau777 百大富豪,信用滿分",
+        contract: "阿莎力金流#8500合約內容",
         contact: [
             {
                 contactImg: "./images/phonecall.png",
                 contactLink: "",
             },
         ],
-        contract: "阿莎力金流#8500合約內容",
     },
     goodMongKokBank: {
         id: "2",
@@ -315,6 +305,7 @@ const matchStore = {
         platform: "包你發娛樂城",
         description:
             "☄包你發娛樂城最優質商家☄好旺角銀行小姐姐等你☄LINE:0901288196",
+        contract: "好旺角銀行合約內容",
         contact: [
             {
                 contactImg: "./images/phonecall.png",
@@ -325,7 +316,6 @@ const matchStore = {
                 contactLink: "",
             },
         ],
-        contract: "好旺角銀行合約內容",
     },
     grandSlamMoney: {
         id: "3",
@@ -334,6 +324,7 @@ const matchStore = {
         link: "/findmatch/grandSlamMoney",
         platform: "滿貫大亨",
         description: "☆信用第一，交流首選☆請認明滿貫金流~♥",
+        contract: "滿貫金流合約內容",
         contact: [
             {
                 contactImg: "./images/instagram.png",
@@ -348,7 +339,6 @@ const matchStore = {
                 contactLink: "",
             },
         ],
-        contract: "滿貫金流合約內容",
     },
     grandSlamMqqoney: {
         id: "4",
@@ -357,6 +347,7 @@ const matchStore = {
         link: "/findmatch/grandSlamMoney",
         platform: "滿貫大亨",
         description: "☆信用第一，交流首選☆請認明滿貫金流~♥",
+        contract: "滿貫金流合約",
         contact: [
             {
                 contactImg: "./images/instagram.png",
@@ -371,7 +362,6 @@ const matchStore = {
                 contactLink: "",
             },
         ],
-        contract: "",
     },
     grandSlamModdney: {
         id: "5",
@@ -380,6 +370,7 @@ const matchStore = {
         link: "/findmatch/grandSlamMoney",
         platform: "滿貫大亨",
         description: "☆信用第一，交流首選☆請認明滿貫金流~♥",
+        contract: "",
         contact: [
             {
                 contactImg: "./images/instagram.png",
@@ -394,7 +385,6 @@ const matchStore = {
                 contactLink: "",
             },
         ],
-        contract: "",
     },
     grandSlasmMoney: {
         id: "6",
@@ -403,6 +393,8 @@ const matchStore = {
         link: "/findmatch/grandSlamMoney",
         platform: "滿貫大亨",
         description: "☆信用第一，交流首選☆請認明滿貫金流~♥",
+        contract:
+            "合約締約方：<br/>本合約由以下雙方締結：<br/>甲方：[你的姓名/公司名稱]，以下簡稱「甲方」。<br/>乙方：[對方姓名/公司名稱]，以下簡稱「乙方」。合約內容：0503改版<br/>身份信息：<br/>甲方身份信息：<br/>姓名/公司名稱：<br/>地址：<br/>電話：<br/>電子郵件：<br/>乙方身份信息：<br/>姓名/公司名稱：<br/>地址：<br/>電話：<br/>電子郵件：<br/>網站公約：甲方在購買產品/服務時，應遵守網站的相關公約和規定。乙方作為賣方，有權根據網站公約執行和管理交易。<br/>其他條款：本合約經雙方同意後生效，自簽署之日起生效。合約一經簽署，雙方應按照合約規定履行各自的義務。<br/>簽署：",
         contact: [
             {
                 contactImg: "./images/instagram.png",
@@ -417,16 +409,20 @@ const matchStore = {
                 contactLink: "",
             },
         ],
-        contract: "",
     },
 };
 
+const dialogVisible = ref(false);
 // 搜尋及下拉選單篩選
-const stores = Object.values(matchStore);
+const stores = ref(Object.values(matchStore).map(store => ({
+    ...store,
+    dialogVisible: false,  // 初始化每個商店的彈窗狀態
+})));
 const searchQuery = ref("");
 const selectedPlatform = ref("");
+
 const filteredStores = computed(() => {
-    let filtered = stores;
+    let filtered = stores.value;;
     if (searchQuery.value) {
         const Query = searchQuery.value.toLowerCase();
         filtered = filtered.filter((stores) =>
@@ -521,6 +517,13 @@ const mycard = [
 .joinCartBtn:hover {
     color: #fff;
     background-color: #e93470;
+}
+:deep(.el-overlay) {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+:deep(.el-dialog) {
+    box-shadow: none;
+    border-radius: 10px;
 }
 @media screen and (min-width: 1300px) {
     .sideBar {

@@ -1,9 +1,9 @@
 <template>
     <div class="ccontainer">
         <div class="w-68.75%">
-            <div class="flex flex-items-center">
-                <div class="w-25px h-20px bg-#1a6db4 mr-8px mt-3px"></div>
-                <div class="text-20px">服務條款</div>
+            <div class="flex items-center">
+                <div class="w-25px h-20px bg-#1a6db4"></div>
+                <span class="font-size-1.4rem ms-3 fw-600">服務條款</span>
             </div>
             <div v-html="data" class="mt-15px"></div>
         </div>
