@@ -68,7 +68,7 @@ onMounted(() => {
 
 const checkCaptcha = () => {
     if (captcha.validate(inputCode.value)) {
-        alert("驗證成功");
+        navigateTo("/member/resetpassword");
     }
 };
 </script>
