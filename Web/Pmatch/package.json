@@ -24,6 +24,7 @@
   "devDependencies": {
     "@element-plus/nuxt": "^1.0.9",
     "@pinia-plugin-persistedstate/nuxt": "^1.2.1",
-    "@unocss/nuxt": "^0.60.4"
+    "@unocss/nuxt": "^0.60.4",
+    "jsonwebtoken": "^9.0.2"
   }
 }
