@@ -68,7 +68,24 @@
                 <div class="w-100% flex justify-center mt-3 mb-3"
                      v-for="item of headerLink"
                      :key="item.id">
-                    <div>
+                    <div v-if="item.title === '會員中心'"
+                         class="text-center">
+                        <div class="headerLink color-#555553 decoration-none font-bold w-100% cursor-pointer"
+                             @click="show = !show">{{ item.title }}
+                            <el-collapse-transition>
+                                <div v-show="show"
+                                     class=" member-center-container">
+                                    <div class="transition-box"
+                                         v-for="memberItem of memberCenterLink">
+                                        <NuxtLink :to="memberItem.link"
+                                                  :title="memberItem.title"
+                                                  class="decoration-none">{{memberItem.title }}</NuxtLink>
+                                    </div>
+                                </div>
+                            </el-collapse-transition>
+                        </div>
+                    </div>
+                    <div v-else>
                         <NuxtLink :title="item.title"
                                   :to="item.link"
                                   class="headerLink color-#555553 decoration-none font-bold w-100%"
@@ -80,6 +97,7 @@
             </div>
         </div>
     </div>
+
 </template>
 
 <script setup>
@@ -112,6 +130,33 @@ const headerLink = ref([
         showDropdown: false
     }
 ]);
+const memberCenterLink = ref([
+    {
+        title: '會員維護資訊',
+        link: '/member/center/'
+    },
+    {
+        title: '更改密碼',
+        link: '/member/center/#'
+    },
+    {
+        title: '我的訂單',
+        link: '/member/center/#'
+    },
+    {
+        title: '委託媒合紀錄',
+        link: '/member/center/#'
+    },
+    {
+        title: '成功媒合紀錄',
+        link: '/member/center/#'
+    },
+    {
+        title: '簽約媒合商',
+        link: '/member/center/#'
+    }
+]);
+const show = ref(false);
 // 保存下拉選單的參考
 const dropdownRefs = ref([]);
 
@@ -139,7 +184,7 @@ const logout = () => {
     uToken.value = '';
     uToken.value = undefined;
     uToken.maxAge = -1;
-    window.location.href="/";
+    window.location.href = '/';
 };
 // 在組件掛載時添加全局點擊事件監聽器
 onMounted(() => {
@@ -210,5 +255,21 @@ onBeforeUnmount(() => {
 .headerLink:hover,
 .loginLink:hover {
     color: #999;
+}
+.headerLink:hover .member-center-container {
+    color: #555553;
+}
+.member-center-container {
+    border: 1px solid darkgrey;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 5px;
+}
+.transition-box {
+    padding: 5px 10px;
+}
+.transition-box:hover {
+    background: #ebecf0;
+    color: grey;
 }
 </style>
