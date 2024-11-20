@@ -2,13 +2,13 @@
     <div class="mt-7rem max-w-1320px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3">
         <div class="mb-5 flex items-center justify-center">
             <!-- title -->
-            <div class="flex items-center w-410px">
+            <div class="flex items-center w-100% lg-w-410px">
                 <div class="w-25px h-20px bg-#1a6db4"></div>
                 <span class="font-size-1.4rem ms-3 fw-600">聯絡我們</span>
             </div>
         </div>
         <div class="flex justify-center">
-            <div class="w-100%">
+            <div class="w-100% lg-w-auto">
                 <p class="m-0 mb-3">
                     會員帳號： <span class="color-red">*</span>
                 </p>
@@ -20,7 +20,7 @@
                 <p class="m-0 mb-3">
                     遊戲平台： <span class="color-red">*</span>
                 </p>
-                <select v-model="platform" class="selectCol w-100% rounded-5px h-32px lg-ps-1rem lg-pe-1rem ps-0 pe-0 pt-.2rem pb-.2rem font-size-1rem mb-3">
+                <select v-model="platform" class="selectCol w-100% lg-w-414px rounded-5px h-32px lg-ps-1rem lg-pe-1rem ps-0 pe-0 pt-.2rem pb-.2rem font-size-1rem mb-3">
                     <option value="" hidden>請選擇..</option>
                     <option value="">老子有錢</option>
                 </select>
@@ -55,7 +55,7 @@
                 <p class="m-0 mb-3">
                     問題類別： <span class="color-red">*</span>
                 </p>
-                <select v-model="questionType" class="selectCol w-100% rounded-5px h-32px lg-ps-1rem lg-pe-1rem ps-0 pe-0 pt-.2rem pb-.2rem font-size-1rem mb-3">
+                <select v-model="questionType" class="selectCol w-100% lg-w-414px rounded-5px h-32px lg-ps-1rem lg-pe-1rem ps-0 pe-0 pt-.2rem pb-.2rem font-size-1rem mb-3">
                     <option value="">商務洽談</option>
                     <option value="">會員帳號</option>
                     <option value="">其他</option>
@@ -74,7 +74,7 @@
                     v-model="questionDescription"
                 />
                 <div>
-                    <button class="border-none bg-#e93470 color-#fff w-100% rounded-5px h-35px font-size-1rem" @click="submitForm">提交</button>
+                    <button class="border-none bg-#e93470 color-#fff w-100% lg-w-414px rounded-5px h-35px font-size-1rem" @click="submitForm">提交</button>
                 </div>
             </div>
         </div>

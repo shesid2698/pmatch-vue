@@ -30,13 +30,13 @@ async function fetchToken() {
     }
 }
 
-// 取得GetCompayIformationList
+// 取得GetCompayIformationDetail
 async function fetchData() {
     await fetchToken();
-    console.log(" +++ " + " " + token.value);
+    
     try {
         const response = await $axios.post(
-            "/api/v1/Pmatch/GetCompayIformationList",
+            "/api/v1/Pmatch/GetCompayIformationDetail",
             {
                 Category: 1,
             },
@@ -46,18 +46,19 @@ async function fetchData() {
                 },
             }
         );
-        console.log("資料:", response.data);
-        if(response.data.Status.Code === 0 && response.data != null){
-            data.value = response.data.Data[0]?.Content;
+        if(response.data.Status.Code === 0){
+            data.value = response.data.Content;
         }else{
             alert(`${response.data.Status.Message}`)
         }
+        
     } catch (error) {
         console.error("請求失敗:", error);
-        data.value = "無法取得資料，請稍後再試。"; // 畫面顯示錯誤訊息
+        data.value = "無法取得資料。"; // 畫面顯示錯誤訊息
     }
 }
 fetchData();
+
 </script>
 
 <style scoped>
