@@ -137,23 +137,23 @@ const memberCenterLink = ref([
     },
     {
         title: '更改密碼',
-        link: '/member/center/#'
+        link: '/member/center/changepwd'
     },
     {
         title: '我的訂單',
-        link: '/member/center/#'
+        link: '/member/center/myorder'
     },
     {
         title: '委託媒合紀錄',
-        link: '/member/center/#'
+        link: '/member/center/matchlog'
     },
     {
         title: '成功媒合紀錄',
-        link: '/member/center/#'
+        link: '/member/center/successmatch'
     },
     {
         title: '簽約媒合商',
-        link: '/member/center/#'
+        link: '/member/center/contract'
     }
 ]);
 const show = ref(false);

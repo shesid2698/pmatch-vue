@@ -28,6 +28,7 @@
                 <input type="text"
                        v-model="mobile"
                        @input="validMobilePattern"
+                       :disabled="mobileTimer.secCount!==120"
                        class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
             </div>
             <div>
@@ -74,7 +75,7 @@ const Token = useCookie(`${props.from}Token`, {
     maxAge: 600
 });
 const mobileCook = useCookie(`${props.from}Mobile`, {
-    maxAge: 600
+    maxAge: 120
 });
 const validMobilePattern = () => {
     const regex = /^\d{10}$/;
@@ -97,11 +98,14 @@ const SendCode = () => {
 };
 const verifyCode = () => {
     let code = decrypt(Token.value);
-    console.log(code);
     if (ansCode.value !== code) {
         alert('驗證碼錯誤');
     } else {
-      resetAll();
+      if(mobile.value == mobileCook.value){
+        resetAll();
+      }else{
+        alert('驗證中的電話號碼錯誤');
+      }
     }
 };
 const resetAll = () => {
@@ -112,7 +116,6 @@ const resetAll = () => {
     mobile.value = '';
     isValid.value = false;
     mobileTimer.reset();
-
 };
 const openSendBtn = () => {
     let open = true;
@@ -129,7 +132,7 @@ onMounted(() => {
     if (mobileTimer.secCount !== 120) {
         mobileTimer.decrement();
     }
-    mobile.value = props.phone
+    mobile.value = props.phone;
     validMobilePattern();
 });
 watch(
