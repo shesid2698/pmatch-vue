@@ -10,7 +10,8 @@
                           style="width: 100%;"
                           :header-cell-style="{color:'white',background:'#3CAADC'}"
                           stripe
-                          border>
+                          border
+                          >
                     <el-table-column prop="date"
                                      label="日期"
                                      sortable
@@ -99,7 +100,16 @@ const tableData: User[] = [
 colgroup{
   background: blue;
 }
-:deep(.el-table__cell .caret-wrapper .sort-caret){
-  color:red;
+:deep(.el-table__cell .caret-wrapper .ascending){
+  border-bottom-color:#B1DDF1;
+}
+:deep(.el-table__cell .caret-wrapper .descending){
+  border-top-color:#B1DDF1;
+}
+:deep(.el-table__cell.ascending .caret-wrapper .ascending){
+  border-bottom-color:#fff;
+}
+:deep(.el-table__cell.descending .caret-wrapper .descending){
+  border-top-color:#fff;
 }
 </style>
