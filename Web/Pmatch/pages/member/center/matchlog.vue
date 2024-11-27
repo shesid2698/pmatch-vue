@@ -10,30 +10,35 @@
                           style="width: 100%;"
                           :header-cell-style="{color:'white',background:'#3CAADC'}"
                           stripe
-                          border
-                          >
+                          border>
                     <el-table-column prop="date"
                                      label="日期"
                                      sortable
-                                     />
+                                     :sort-orders="['ascending','descending']" />
                     <el-table-column prop="platform"
                                      label="營運平台"
-                                     sortable />
+                                     sortable
+                                     :sort-orders="['ascending','descending']" />
                     <el-table-column prop="matchMaker"
                                      label="媒合商"
-                                     sortable />
+                                     sortable
+                                     :sort-orders="['ascending','descending']" />
                     <el-table-column prop="status"
                                      label="狀態"
-                                     sortable />
+                                     sortable
+                                     :sort-orders="['ascending','descending']" />
                     <el-table-column prop="total"
                                      label="數量"
-                                     sortable />
+                                     sortable
+                                     :sort-orders="['ascending','descending']" />
                     <el-table-column prop="unit"
                                      label="單位"
-                                     sortable />
+                                     sortable
+                                     :sort-orders="['ascending','descending']" />
                     <el-table-column prop="entrustStatus"
                                      label="委託狀態"
-                                     sortable />
+                                     sortable
+                                     :sort-orders="['ascending','descending']" />
                 </el-table>
             </div>
         </div>
@@ -97,19 +102,22 @@ const tableData: User[] = [
     display: flex;
     margin: 0 auto;
 }
-colgroup{
-  background: blue;
+:deep(.el-table .descending .sort-caret.descending) {
+    border-top-color: white;
 }
-:deep(.el-table__cell .caret-wrapper .ascending){
-  border-bottom-color:#B1DDF1;
+:deep(.el-table .ascending .sort-caret.ascending) {
+    border-bottom-color: white;
 }
-:deep(.el-table__cell .caret-wrapper .descending){
-  border-top-color:#B1DDF1;
+:deep(.el-table .sort-caret.ascending) {
+    border-bottom-color: #b1ddf177;
 }
-:deep(.el-table__cell.ascending .caret-wrapper .ascending){
-  border-bottom-color:#fff;
+:deep(.el-table .sort-caret.descending) {
+    border-top-color: #b1ddf177;
 }
-:deep(.el-table__cell.descending .caret-wrapper .descending){
-  border-top-color:#fff;
+:deep(.el-table tr) {
+    background: #e6e6e6;
+}
+:deep(.el-table--striped .el-table__body tr.el-table__row--striped td.el-table__cell) {
+    background: white;
 }
 </style>
