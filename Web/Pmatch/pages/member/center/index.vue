@@ -22,7 +22,7 @@
         <div class="lg:w-160px">
             <MemberCenter></MemberCenter>
         </div>
-        <div class="flex-1 pl-20px">
+        <div class="flex-1 md:pl-20px">
             <!-- container -->
             <div class="text-20px flex justify-center">
                 <div>

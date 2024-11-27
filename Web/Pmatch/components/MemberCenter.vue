@@ -27,11 +27,6 @@ const curPage = ref([
         link: '/member/center/changepwd'
     },
     {
-        title: '我的訂單',
-        show: '',
-        link: '/member/center/myorder'
-    },
-    {
         title: '委託媒合紀錄',
         show: '',
         link: '/member/center/matchlog'
@@ -58,17 +53,14 @@ onMounted(() => {
         case '/member/center/changepwd':
             curPage.value[1].show = 'showTitle';
             break;
-        case '/member/center/myorder':
+        case '/member/center/matchlog':
             curPage.value[2].show = 'showTitle';
             break;
-        case '/member/center/matchlog':
+        case '/member/center/successmatch':
             curPage.value[3].show = 'showTitle';
             break;
-        case '/member/center/successmatch':
-            curPage.value[4].show = 'showTitle';
-            break;
         case '/member/center/contract':
-            curPage.value[5].show = 'showTitle';
+            curPage.value[4].show = 'showTitle';
             break;
     }
 });
