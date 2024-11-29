@@ -5,17 +5,25 @@
         </div>
         <div class="flex-1 md:pl-20px">
             <div>
-                <div class="mb-5px flex justify-between">
+                <div class="mb-3 flex justify-between flex-items-center">
+                    <div>顯示
+                        <select name=""
+                                v-model="pageCount"
+                                @change="ChangePageCount"
+                                class="box-border p-y-1.5 p-x-3 text-base flex-1 outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                        項結果
+                    </div>
                     <div>
                         搜尋: <input type="search"
                                v-model="searchStr"
                                @input="FilterData"
                                class="box-border p-y-1 p-x-3 text-base flex-1 outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
                     </div>
-                    <div>顯示筆數:<input type="number"
-                              v-model="pageCount"
-                              @change="ChangePageCount"
-                               class="box-border p-y-1 p-x-3 text-base flex-1 outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" /></div>
                 </div>
 
                 <el-table :data="tableData"
@@ -224,9 +232,9 @@ const ChangePage = page => {
     let endSlice = page * pageCount.value;
     tableData.value = [...OriTableData.slice(startSlice, endSlice)];
 };
-const ChangePageCount = ()=>{
-  ChangePage(curPage.value);
-}
+const ChangePageCount = () => {
+    ChangePage(curPage.value);
+};
 </script>
 <style scoped>
 .ccontainer {
