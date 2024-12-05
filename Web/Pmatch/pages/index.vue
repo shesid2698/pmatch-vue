@@ -55,7 +55,7 @@
                 </div>
             </div>
         </div>
-        <div class="w-full bg-#eee ps-5 pe-5">
+        <div class="w-full bg-#eee pt-5 pb-5">
             <div class="max-w-1320px m-auto ps-5 pe-5">
                 <div>
                     <h2 class="m-0 text-center">NEWS</h2>
