@@ -17,7 +17,7 @@
             </div> -->
         </div>
         <!-- 搜尋列 -->
-        <div class="mb-6 md-flex block items-center">
+        <div class="mb-6 md-flex block items-center justify-center">
             <div class="flex items-center">
                 <div class="flex items-center w-100%">
                     <div class="w-100%">
@@ -75,100 +75,133 @@
                     <input type="checkbox" class="w-20px h-20px" />
                     <span>查看已簽約媒合商</span>
                 </div>
+                <div>
+                    <button class="ms-3 w-100px">搜尋</button>
+                </div>
             </div>
+        </div>
+        <div class="mb-6 flex justify-center">
+            <div class="p-5 w-33%">滿貫大亨圖</div>
+            <Matching class="w-33%" />
+            <NewRatio class="w-33%" />
         </div>
         <!-- 各媒合商 -->
         <div class="flex relative w-100%">
             <div class="w-75% overflow-y-auto">
-                <div class="storeTitle flex bg-#D5ECFF pt-2 pb-2">
-                    <div class="w-75% text-center mainContent">
-                        <span>商家資訊</span>
+                <div class="flex">
+                    <div class="storeTitle w-full flex bg-#D5ECFF pt-2 pb-2">
+                        <div class="w-75% text-center mainContent">
+                            <span>商家資訊</span>
+                        </div>
+                        <div class="w-25% text-center">
+                            <span>簽約狀況</span>
+                        </div>
                     </div>
-                    <div class="w-25% text-center">
-                        <span>簽約狀況</span>
+                    <div
+                        class="storeTitle w-150px flex bg-#D5ECFF ms-3 pt-2 pb-2"
+                    >
+                        <div class="w-full text-center mainContent">
+                            <span>評分</span>
+                        </div>
                     </div>
                 </div>
-
-                <div
-                    class="storeDetail flex border-b b-b-solid b-#D5ECFF"
-                    v-for="(item, index) in filteredStores"
-                    :key="index"
-                >
-                    <NuxtLink
-                        :to="item.link"
-                        class="decoration-none color-#000 w-75%"
-                    >
-                        <div class="">
-                            <div class="md-flex block items-center p-3">
-                                <div class="flex justify-start md-mb-0 mb-5">
-                                    <img
-                                        class="storeImg w-130px"
-                                        :src="item.img"
-                                        :alt="item.title"
-                                    />
-                                </div>
-                                <div class="md-ms-2rem ms-0">
-                                    <div class="mb-3">
-                                        <span class="fw-600 color-#496BBB">{{
-                                            item.title
-                                        }}</span>
-                                    </div>
-                                    <div class="mb-2">
-                                        <span>遊戲平台 : </span>
-                                        <span>{{ item.platform }}</span>
-                                    </div>
-                                    <div class="mb-2">
-                                        <span>商店簡介 : </span>
-                                        <span>{{ item.description }}</span>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <span>聯絡方式 : </span>
+                <div class="flex" v-for="(item, index) in filteredStores"
+                            :key="index">
+                    <div class="w-full">
+                        <div
+                            class="storeDetail flex border-b b-b-solid b-#D5ECFF"
+                            
+                        >
+                            <NuxtLink
+                                :to="item.link"
+                                class="decoration-none color-#000 w-75%"
+                            >
+                                <div class="">
+                                    <div class="md-flex block items-center p-3">
                                         <div
-                                            class="ms-2"
-                                            v-for="(it, i) in item.contact"
-                                            :key="i"
+                                            class="flex justify-start md-mb-0 mb-5"
                                         >
                                             <img
-                                                class="w-23px"
-                                                :src="it.contactImg"
-                                                alt=""
+                                                class="storeImg w-130px"
+                                                :src="item.img"
+                                                :alt="item.Name"
                                             />
+                                        </div>
+                                        <div class="md-ms-2rem ms-0">
+                                            <div class="mb-3">
+                                                <span
+                                                    class="fw-600 color-#496BBB"
+                                                    >{{ item.Name }}</span
+                                                >
+                                            </div>
+                                            <div class="mb-2">
+                                                <span>遊戲平台 : </span>
+                                                <span v-if="item.GamePlatforms.length > 0">{{ processedGamePlatforms[index]}}</span>
+                                            </div>
+                                            <div class="mb-2">
+                                                <span>商店簡介 : </span>
+                                                <span>{{
+                                                    item.About
+                                                }}</span>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <span>聯絡方式 : </span>
+                                                <div
+                                                    class="ms-2"
+                                                    v-for="(
+                                                        it, i
+                                                    ) in item.contact"
+                                                    :key="i"
+                                                >
+                                                    <img
+                                                        class="w-23px"
+                                                        :src="it.contactImg"
+                                                        alt=""
+                                                    />
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                            </NuxtLink>
+                            <div class="w-25% flex justify-center items-center">
+                                <el-button
+                                    class="border-none color-#aaa w-95px h-40px rounded-5px"
+                                    plain
+                                    @click="item.dialogVisible = true"
+                                >
+                                    檢視合約
+                                </el-button>
+                                <el-dialog
+                                    v-model="item.dialogVisible"
+                                    title="合約服務條款"
+                                    width="500"
+                                    :close-on-click-modal="false"
+                                >
+                                    <div v-html="item.ContractConetnt"></div>
+                                    <template #footer>
+                                        <div class="dialog-footer">
+                                            <el-button
+                                                @click="
+                                                    item.dialogVisible = false
+                                                "
+                                                >取消</el-button
+                                            >
+                                            <el-button
+                                                type="primary"
+                                                @click="
+                                                    item.dialogVisible = false
+                                                "
+                                            >
+                                                同意
+                                            </el-button>
+                                        </div>
+                                    </template>
+                                </el-dialog>
                             </div>
                         </div>
-                    </NuxtLink>
-                    <div class="w-25% flex justify-center items-center">
-                        <el-button
-                            class="border-none color-#aaa w-95px h-40px rounded-5px"
-                            plain
-                            @click="item.dialogVisible = true"
-                        >
-                            檢視合約
-                        </el-button>
-                        <el-dialog
-                            v-model="item.dialogVisible"
-                            title="合約服務條款"
-                            width="500"
-                            :close-on-click-modal="false"
-                        >
-                            <div v-html="item.contract"></div>
-                            <template #footer>
-                                <div class="dialog-footer">
-                                    <el-button @click="item.dialogVisible = false"
-                                        >取消</el-button
-                                    >
-                                    <el-button
-                                        type="primary"
-                                        @click="item.dialogVisible = false"
-                                    >
-                                        同意
-                                    </el-button>
-                                </div>
-                            </template>
-                        </el-dialog>
                     </div>
+                    <div class="w-150px ms-3">0 0 0 0 0</div>
                 </div>
             </div>
             <div class="sideBar">
@@ -253,6 +286,74 @@ import { ArrowRight } from "@element-plus/icons-vue";
 import { ElBreadcrumb } from "element-plus";
 import { ElBreadcrumbItem } from "element-plus";
 import { ElMessageBox } from "element-plus";
+
+const data = ref("");
+const token = ref("");
+const storesList = ref([]);
+const { $axios } = useNuxtApp();
+
+// 獲得jwt token
+async function fetchToken() {
+    const { data, error } = await useFetch("/api/guestToken", {
+        params: {
+            strUserName: "",
+            iExpireMinutes: 10,
+        },
+    });
+
+    if (error.value) {
+        console.error("Token 生成失敗:", error.value);
+    } else {
+        token.value = data.value.token;
+    }
+}
+
+// 取得GetStoreList
+async function fetchStoresListData(num) {
+    await fetchToken();
+
+    try {
+        const response = await $axios.post(
+            "/api/v1/Pmatch/GetStoreList",
+            {
+                IsFront: true,
+            },
+            {
+                headers: {
+                    Authorization: token.value, // 帶上 Token
+                },
+            }
+        );
+        if (response.data.Status.Code === 0) {
+            storesList.value = response.data.Data;
+        } else {
+            alert(`${response.data.Status.Message}`);
+        }
+    } catch (error) {
+        console.error("請求失敗:", error);
+        data.value = "無法取得資料。"; // 畫面顯示錯誤訊息
+    }
+}
+
+fetchStoresListData([]);
+
+const processedGamePlatforms = computed(() => {
+    if (!storesList.value.length) return []; // 如果資料是空的，回傳空陣列
+
+    return storesList.value.map((store) => {
+        // 如果 `GamePlatforms` 不存在或是空的，回傳空字串
+        if (!store.GamePlatforms || !store.GamePlatforms.length) return "";
+
+        // 提取 `GamePlatform`，過濾重複並以逗號分隔
+        const platformsSet = new Set(store.GamePlatforms.map((platform) => platform.GamePlatform));
+        console.log(platformsSet);
+        return Array.from(platformsSet).join(", "); // 轉換為陣列後用逗號分隔
+    });
+});
+
+
+
+
 
 
 
@@ -414,24 +515,26 @@ const matchStore = {
 
 const dialogVisible = ref(false);
 // 搜尋及下拉選單篩選
-const stores = ref(Object.values(matchStore).map(store => ({
-    ...store,
-    dialogVisible: false,  // 初始化每個商店的彈窗狀態
-})));
+const stores = ref(
+    Object.values(storesList).map((store) => ({
+        ...store,
+        dialogVisible: false, // 初始化每個商店的彈窗狀態
+    }))
+);
 const searchQuery = ref("");
 const selectedPlatform = ref("");
 
 const filteredStores = computed(() => {
-    let filtered = stores.value;;
+    let filtered = storesList.value;
     if (searchQuery.value) {
         const Query = searchQuery.value.toLowerCase();
         filtered = filtered.filter((stores) =>
-            stores.title.toLowerCase().includes(Query)
+            storesList.title.toLowerCase().includes(Query)
         );
     }
     if (selectedPlatform.value) {
         filtered = filtered.filter(
-            (stores) => stores.platform === selectedPlatform.value
+            (stores) => storesList.platform === selectedPlatform.value
         );
     }
     return filtered;
