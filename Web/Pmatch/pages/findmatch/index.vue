@@ -113,7 +113,7 @@
                             
                         >
                             <NuxtLink
-                                :to="item.link"
+                                :to="`/findmatch/${item.Id}`"
                                 class="decoration-none color-#000 w-75%"
                             >
                                 <div class="">
@@ -136,7 +136,7 @@
                                             </div>
                                             <div class="mb-2">
                                                 <span>遊戲平台 : </span>
-                                                <span v-if="item.GamePlatforms.length > 0">{{ processedGamePlatforms[index]}}</span>
+                                                <span v-if="item.GamePlatforms.length > 0">{{ filteredProcessedGamePlatforms[index]}}</span>
                                             </div>
                                             <div class="mb-2">
                                                 <span>商店簡介 : </span>
@@ -146,18 +146,22 @@
                                             </div>
                                             <div class="flex items-center">
                                                 <span>聯絡方式 : </span>
+
                                                 <div
-                                                    class="ms-2"
-                                                    v-for="(
-                                                        it, i
-                                                    ) in item.contact"
-                                                    :key="i"
+                                                    class="ms-2 flex"
                                                 >
-                                                    <img
-                                                        class="w-23px"
-                                                        :src="it.contactImg"
-                                                        alt=""
-                                                    />
+                                                    <NuxtLink class="flex items-center ms-1 me-1" v-if="item.FB" :to="item.FB">
+                                                        <img class="w-20px h-20px" src="/images/facebook.png" alt="">
+                                                    </NuxtLink>
+                                                    <NuxtLink class="flex items-center ms-1 me-1" v-if="item.LineId" :to="item.LineId">
+                                                        <img class="w-20px h-20px" src="/images/line.png" alt="">
+                                                    </NuxtLink>
+                                                    <NuxtLink class="flex items-center ms-1 me-1" v-if="item.IGId" :to="item.IGId">
+                                                        <img class="w-20px h-20px" src="/images/instagram.png" alt="">
+                                                    </NuxtLink>
+                                                    <NuxtLink class="flex items-center ms-1 me-1" v-if="item.TwitterId" :to="item.TwitterId">
+                                                        <div class="bg-#000 w-20px h-20px rounded-50% color-#fff text-center">x</div>
+                                                    </NuxtLink>
                                                 </div>
                                             </div>
                                         </div>
@@ -294,6 +298,13 @@ const { $axios } = useNuxtApp();
 
 // 獲得jwt token
 async function fetchToken() {
+    const savedToken = localStorage.getItem("jwtToken");
+    if (savedToken) {
+        token.value = savedToken;
+        return; // 如果 LocalStorage 有 token，直接使用
+    }
+
+    // 若 LocalStorage 沒有 token，調用 API 獲取
     const { data, error } = await useFetch("/api/guestToken", {
         params: {
             strUserName: "",
@@ -305,6 +316,7 @@ async function fetchToken() {
         console.error("Token 生成失敗:", error.value);
     } else {
         token.value = data.value.token;
+        localStorage.setItem("jwtToken", token.value); // 儲存到 LocalStorage
     }
 }
 
@@ -335,7 +347,14 @@ async function fetchStoresListData(num) {
     }
 }
 
-fetchStoresListData([]);
+onMounted(async () => {
+    try {
+        await fetchToken(); // 確保 token 存在
+        await fetchStoresListData([]); // 再獲取資料
+    } catch (error) {
+        console.error("頁面初始化失敗:", error);
+    }
+});
 
 const processedGamePlatforms = computed(() => {
     if (!storesList.value.length) return []; // 如果資料是空的，回傳空陣列
@@ -353,170 +372,10 @@ const processedGamePlatforms = computed(() => {
 
 
 
-
-
-
-
-// 媒合商資料
-const matchStore = {
-    pokemonBank: {
-        id: "0",
-        title: "【寶可夢銀行】",
-        img: "./images/pokemonBank.jpg",
-        link: "/findmatch/pokemonBank",
-        platform: "滿貫大亨",
-        description:
-            "信用第一☆老字號品牌☆24H服務☆絕無分身☆轉帳超商皆可☎電話：0979-880-818 ☆LINE ID：gobank168",
-        contract: "寶可夢銀行合約內容",
-        contact: [
-            {
-                contactImg: "./images/facebook.png",
-                contactLink: "",
-            },
-            {
-                contactImg: "./images/phonecall.png",
-                contactLink: "",
-            },
-            {
-                contactImg: "./images/line.png",
-                contactLink: "",
-            },
-        ],
-    },
-    asaliGoldFlow: {
-        id: "1",
-        title: "阿莎力金流#8500",
-        img: "./images/asaliGoldFlow.jpg",
-        link: "/findmatch/asaliGoldFlow",
-        platform: "錢街Online",
-        description: "阿莎力金流#8500 LINE：jiau777 百大富豪,信用滿分",
-        contract: "阿莎力金流#8500合約內容",
-        contact: [
-            {
-                contactImg: "./images/phonecall.png",
-                contactLink: "",
-            },
-        ],
-    },
-    goodMongKokBank: {
-        id: "2",
-        title: "好旺角銀行",
-        img: "./images/goodMongKokBank.png",
-        link: "/findmatch/goodMongKokBank",
-        platform: "包你發娛樂城",
-        description:
-            "☄包你發娛樂城最優質商家☄好旺角銀行小姐姐等你☄LINE:0901288196",
-        contract: "好旺角銀行合約內容",
-        contact: [
-            {
-                contactImg: "./images/phonecall.png",
-                contactLink: "",
-            },
-            {
-                contactImg: "./images/line.png",
-                contactLink: "",
-            },
-        ],
-    },
-    grandSlamMoney: {
-        id: "3",
-        title: "滿貫金流",
-        img: "./images/grandSlamMoney.jpg",
-        link: "/findmatch/grandSlamMoney",
-        platform: "滿貫大亨",
-        description: "☆信用第一，交流首選☆請認明滿貫金流~♥",
-        contract: "滿貫金流合約內容",
-        contact: [
-            {
-                contactImg: "./images/instagram.png",
-                contactLink: "",
-            },
-            {
-                contactImg: "./images/phonecall.png",
-                contactLink: "",
-            },
-            {
-                contactImg: "./images/line.png",
-                contactLink: "",
-            },
-        ],
-    },
-    grandSlamMqqoney: {
-        id: "4",
-        title: "滿貫金流",
-        img: "./images/grandSlamMoney.jpg",
-        link: "/findmatch/grandSlamMoney",
-        platform: "滿貫大亨",
-        description: "☆信用第一，交流首選☆請認明滿貫金流~♥",
-        contract: "滿貫金流合約",
-        contact: [
-            {
-                contactImg: "./images/instagram.png",
-                contactLink: "",
-            },
-            {
-                contactImg: "./images/phonecall.png",
-                contactLink: "",
-            },
-            {
-                contactImg: "./images/line.png",
-                contactLink: "",
-            },
-        ],
-    },
-    grandSlamModdney: {
-        id: "5",
-        title: "滿貫金流",
-        img: "./images/grandSlamMoney.jpg",
-        link: "/findmatch/grandSlamMoney",
-        platform: "滿貫大亨",
-        description: "☆信用第一，交流首選☆請認明滿貫金流~♥",
-        contract: "",
-        contact: [
-            {
-                contactImg: "./images/instagram.png",
-                contactLink: "",
-            },
-            {
-                contactImg: "./images/phonecall.png",
-                contactLink: "",
-            },
-            {
-                contactImg: "./images/line.png",
-                contactLink: "",
-            },
-        ],
-    },
-    grandSlasmMoney: {
-        id: "6",
-        title: "滿貫金流",
-        img: "./images/grandSlamMoney.jpg",
-        link: "/findmatch/grandSlamMoney",
-        platform: "滿貫大亨",
-        description: "☆信用第一，交流首選☆請認明滿貫金流~♥",
-        contract:
-            "合約締約方：<br/>本合約由以下雙方締結：<br/>甲方：[你的姓名/公司名稱]，以下簡稱「甲方」。<br/>乙方：[對方姓名/公司名稱]，以下簡稱「乙方」。合約內容：0503改版<br/>身份信息：<br/>甲方身份信息：<br/>姓名/公司名稱：<br/>地址：<br/>電話：<br/>電子郵件：<br/>乙方身份信息：<br/>姓名/公司名稱：<br/>地址：<br/>電話：<br/>電子郵件：<br/>網站公約：甲方在購買產品/服務時，應遵守網站的相關公約和規定。乙方作為賣方，有權根據網站公約執行和管理交易。<br/>其他條款：本合約經雙方同意後生效，自簽署之日起生效。合約一經簽署，雙方應按照合約規定履行各自的義務。<br/>簽署：",
-        contact: [
-            {
-                contactImg: "./images/instagram.png",
-                contactLink: "",
-            },
-            {
-                contactImg: "./images/phonecall.png",
-                contactLink: "",
-            },
-            {
-                contactImg: "./images/line.png",
-                contactLink: "",
-            },
-        ],
-    },
-};
-
 const dialogVisible = ref(false);
 // 搜尋及下拉選單篩選
 const stores = ref(
-    Object.values(storesList).map((store) => ({
+    Object.values(storesList.value).map((store) => ({
         ...store,
         dialogVisible: false, // 初始化每個商店的彈窗狀態
     }))
@@ -529,35 +388,34 @@ const filteredStores = computed(() => {
     if (searchQuery.value) {
         const Query = searchQuery.value.toLowerCase();
         filtered = filtered.filter((stores) =>
-            storesList.title.toLowerCase().includes(Query)
+            stores.Name.toLowerCase().includes(Query)
         );
     }
     if (selectedPlatform.value) {
-        filtered = filtered.filter(
-            (stores) => storesList.platform === selectedPlatform.value
-        );
+        filtered = filtered.filter((store) => {
+            const platformsSet = new Set(
+                store.GamePlatforms.map((platform) => platform.GamePlatform)
+            );
+            const platforms = Array.from(platformsSet).join(", ");
+            return platforms === selectedPlatform.value;
+        });
     }
+
     return filtered;
 });
 
-// mycard資料
-const mycard = [
-    {
-        img: "./images/mycard50.jpg",
-    },
-    {
-        img: "./images/mycard500.jpg",
-    },
-    {
-        img: "./images/mycard1000.jpg",
-    },
-    {
-        img: "./images/mycard5000.png",
-    },
-    {
-        img: "./images/mycard10000.jpg",
-    },
-];
+const filteredProcessedGamePlatforms = computed(() => {
+    return filteredStores.value.map((store) => {
+        if (!store.GamePlatforms || !store.GamePlatforms.length) return "";
+
+        const platformsSet = new Set(
+            store.GamePlatforms.map((platform) => platform.GamePlatform)
+        );
+
+        return Array.from(platformsSet).join(", "); // 轉換為陣列後用逗號分隔
+    });
+});
+
 </script>
 
 <style scoped>

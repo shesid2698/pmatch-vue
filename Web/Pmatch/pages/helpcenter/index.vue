@@ -61,13 +61,13 @@
             <div class="flex flex-wrap">
                 <NuxtLink
                     v-for="(item, index) in filteredHelpItems"
-                    :key="item.id"
+                    :key="item.Id"
                     :class="index % 2 === 0 ? 'bg-#FF83AD' : 'bg-#7DC4FF'"
                     class="helpBtn decoration-none color-#fff"
-                    :to="item.link"
+                    :to="`/helpcenter/${item.Id}`"
                 >
-                    <h3 class="decoration-none">{{ item.title }}</h3>
-                    <p class="m-0 decoration-none">{{ item.detail }}</p>
+                    <h3 class="decoration-none">{{ item.Title }}</h3>
+                    <p class="m-0 decoration-none">{{ item.Summary }}</p>
                 </NuxtLink>
             </div>
         </div>
@@ -79,48 +79,61 @@
 import { ArrowRight } from "@element-plus/icons-vue";
 import { ElBreadcrumb } from "element-plus";
 import { ElBreadcrumbItem } from "element-plus";
+const data = ref("");
+const token = ref("");
+const newsList = ref([]);
+const { $axios } = useNuxtApp();
+// 獲得jwt token
+async function fetchToken() {
+    const { data, error } = await useFetch("/api/guestToken", {
+        params: {
+            strUserName: "",
+            iExpireMinutes: 10,
+        },
+    });
 
-// 幫助中心資料
-const helpItems = [
-    {
-        title: "● 我是媒合商，我該如何申請合作提案呢？",
-        link: "/helpcenter/help1",
-        detail: "",
-    },
-    {
-        title: "● 我是玩家，我該如何尋找媒合商協助做遊戲貨幣的媒合呢？",
-        link: "/helpcenter/help2",
-        detail: "",
-    },
-    {
-        id: "2",
-        title: "● PMatch可以提供什麼？",
-        link: "/helpcenter/help3",
-        detail: "能讓玩家",
-    },
-    {
-        id: "3",
-        title: "● 什麼是委託媒合？",
-        link: "/helpcenter/help4",
-        detail: "委託媒合商",
-    },
-    {
-        id: "4",
-        title: "● 什麼是成功媒合紀錄？",
-        link: "/helpcenter/help5",
-        detail: "",
-    },
-];
+    if (error.value) {
+        console.error("Token 生成失敗:", error.value);
+    } else {
+        token.value = data.value.token;
+    }
+}
+// 取得GetNewsList
+async function fetchNewsListData() {
+    await fetchToken();
 
+    try {
+        const response = await $axios.post(
+            "/api/v1/Pmatch/GetNewsList",
+            {
+                Categorys: [3],
+            },
+            {
+                headers: {
+                    Authorization: token.value, // 帶上 Token
+                },
+            }
+        );
+        if (response.data.Status.Code === 0) {
+            newsList.value = response.data.Data;
+        } else {
+            alert(`${response.data.Status.Message}`);
+        }
+    } catch (error) {
+        console.error("請求失敗:", error);
+        data.value = "無法取得資料。"; // 畫面顯示錯誤訊息
+    }
+}
+
+fetchNewsListData();
 // 搜尋關鍵字
-const help = Object.values(helpItems);
 const searchQuery = ref("");
 const filteredHelpItems = computed(() => {
-    let filtered = help;
+    let filtered = newsList.value;
     if (searchQuery.value) {
         const Query = searchQuery.value.toLowerCase();
         filtered = filtered.filter((help) =>
-            help.title.toLowerCase().includes(Query)
+            help.Title.toLowerCase().includes(Query)
         );
     }
     return filtered;

@@ -93,9 +93,6 @@ let questionTheme = ref("");
 let questionDescription = ref("");
 
 const submitForm = function(){
-    console.log(typeof(accountId.value));
-    console.log(accountId.value);
-    console.log(platform.value);
 }
 
 </script>

@@ -19,7 +19,110 @@
             </div> -->
         </div>
         <div>
-            <component :is="pageComponent" />
+            <div class="flex items-center mb-2rem pb-2rem">
+                <div class="flex justify-start md-mb-0 mb-5">
+                    <img class="w-200px" />
+                </div>
+                <div class="ms-2rem">
+                    <div class="mb-3">
+                        <span class="font-size-1.2rem fw-600">商店名稱 : </span>
+                        <span class="font-size-1.2rem fw-600" v-if="storesItem">
+                            {{ storesItem.Name }}
+                        </span>
+                    </div>
+                    <div class="mb-2">
+                        <span class="fw-600">遊戲平台 : </span>
+                        <span>{{ filteredPlatform }}</span>
+                    </div>
+                    <div class="mb-2">
+                        <span class="fw-600">商店簡介 : </span>
+                        <span v-if="storesItem">{{ storesItem.About }}</span>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="fw-600">聯絡方式 : </span>
+                        <div class="ms-2 flex">
+                            <NuxtLink
+                                class="flex items-center ms-1 me-1"
+                                v-if="storesItem"
+                                :to="storesItem.FB"
+                            >
+                                <img
+                                    class="w-20px h-20px"
+                                    src="/images/facebook.png"
+                                    alt=""
+                                />
+                            </NuxtLink>
+                            <NuxtLink
+                                class="flex items-center ms-1 me-1"
+                                v-if="storesItem"
+                                :to="storesItem.LineId"
+                            >
+                                <img
+                                    class="w-20px h-20px"
+                                    src="/images/line.png"
+                                    alt=""
+                                />
+                            </NuxtLink>
+                            <NuxtLink
+                                class="flex items-center ms-1 me-1"
+                                v-if="storesItem"
+                                :to="storesItem.IGId"
+                            >
+                                <img
+                                    class="w-20px h-20px"
+                                    src="/images/instagram.png"
+                                    alt=""
+                                />
+                            </NuxtLink>
+                            <NuxtLink
+                                class="flex items-center ms-1 me-1"
+                                v-if="storesItem"
+                                :to="storesItem.TwitterId"
+                            >
+                                <div
+                                    class="bg-#000 w-20px h-20px rounded-50% color-#fff text-center"
+                                >
+                                    x
+                                </div>
+                            </NuxtLink>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <el-tabs
+                    v-model="activeName"
+                    type="card"
+                    class="demo-tabs"
+                    @tab-click="handleClick"
+                >
+                    <el-tab-pane label="開單" name="first">
+                        <div class="b-solid border-1 p-5 b-#212529">
+                            <p class="m-0 mb-4 mt-4"></p>
+                        </div>
+                    </el-tab-pane>
+                    <el-tab-pane label="問與答" name="second">
+                        <div class="b-solid border-1 b-#212529">
+                            <div class="p-5">
+                                <p>尚未有提問資料...</p>
+                            </div>
+                            <div class="p-5 bg-#ccc">
+                                <p class="m-0 mb-1rem">我要提問</p>
+                                <textarea
+                                    class="w-100% h-5rem p-0 mb-1rem"
+                                ></textarea>
+                                <div class="w-100% flex justify-end">
+                                    <button
+                                        class="w-200px h-38px bg-#1A6DB4 color-#fff border-none fw-bold font-size-1rem"
+                                    >
+                                        送出
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </el-tab-pane>
+                </el-tabs>
+            </div>
         </div>
     </div>
 </template>
@@ -29,33 +132,99 @@ import { ArrowRight } from "@element-plus/icons-vue";
 import { ElBreadcrumb } from "element-plus";
 import { ElBreadcrumbItem } from "element-plus";
 
-const matchStore = {
-    pokemonBank: {
-        id: "0",
-        title: "寶可夢銀行",
-        component: resolveComponent("MatchPokemonBank"),
-    },
-    asaliGoldFlow: {
-        id: "1",
-        title: "阿莎力金流#8500",
-        component: resolveComponent("MatchAsaliGoldFlow"),
-    },
-    goodMongKokBank: {
-        id: "2",
-        title: "好旺角銀行",
-        component: resolveComponent("MatchGoodMongKokBank"),
-    },
-    grandSlamMoney: {
-        id: "3",
-        title: "滿貫金流",
-        component: resolveComponent("MatchGrandSlamMoney"),
-    },
+const route = useRoute();
+const routeParamId = route.params.id;
+
+const data = ref("");
+const token = ref("");
+const storesItem = ref(null);
+const isLoading = ref(true); // 加載狀態
+const { $axios } = useNuxtApp();
+
+// 獲得jwt token
+async function fetchToken() {
+    const savedToken = localStorage.getItem("jwtToken");
+    if (savedToken) {
+        token.value = savedToken;
+        return; // 如果 LocalStorage 有 token，直接使用
+    }
+
+    // 若 LocalStorage 沒有 token，調用 API 獲取
+    const { data, error } = await useFetch("/api/guestToken", {
+        params: {
+            strUserName: "",
+            iExpireMinutes: 10,
+        },
+    });
+
+    if (error.value) {
+        console.error("Token 生成失敗:", error.value);
+    } else {
+        token.value = data.value.token;
+        localStorage.setItem("jwtToken", token.value); // 儲存到 LocalStorage
+    }
+}
+
+// 取得GetNewsDetail
+async function fetchStoresDetailData() {
+    if (!token.value) {
+        await fetchToken();
+    }
+
+    try {
+        const response = await $axios.post(
+            "/api/v1/Pmatch/GetStoreDetail",
+            {
+                IsFront: true,
+                StoreId: routeParamId,
+            },
+            {
+                headers: {
+                    Authorization: token.value, // 帶上 Token
+                },
+            }
+        );
+        if (response.data.Status.Code === 0) {
+            storesItem.value = response.data.Data;
+        } else {
+            alert(`${response.data.Status.Message}`);
+        }
+    } catch (error) {
+        console.error("請求失敗:", error);
+        data.value = "無法取得資料。"; // 畫面顯示錯誤訊息
+    } finally {
+        isLoading.value = false; // 完成後無論成功或失敗，都結束加載
+    }
+}
+
+onMounted(async () => {
+    try {
+        await fetchToken();
+        await fetchStoresDetailData();
+    } catch (error) {
+        console.error("頁面初始化失敗:", error);
+    }
+});
+
+const activeName = ref("first");
+
+const handleClick = (tab, event) => {
+    console.log(tab, event);
 };
 
-const route = useRoute();
-const pageName = matchStore[route.params.id];
-const pageTitle = pageName.title;
-const pageComponent = pageName.component;
+const filteredPlatform = computed(() => {
+    if (!storesItem.value || !storesItem.value.StoreProducts) {
+        return; // 如果資料尚未加載，返回空陣列
+    }
+
+    // 對 StoreProducts 進行過濾並提取平台資訊
+    const platformsSet = new Set(
+        storesItem.value.StoreProducts.map((product) => product.GamePlatform)
+    );
+
+    // 返回格式化後的平臺列表
+    return Array.from(platformsSet).join(", ");
+});
 </script>
 
 <style scoped>
