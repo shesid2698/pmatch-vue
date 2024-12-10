@@ -298,21 +298,27 @@ const { $axios } = useNuxtApp();
 
 // 獲得jwt token
 async function fetchToken() {
-    const { data, error } = await useFetch("/api/guestToken", {
-        params: {
-            strUserName: "",
-        },
-    });
-    
-    if (error.value) {
-        console.log("000");
-        console.error("Token 生成失敗:", error.value);
-    } else {
-        console.log("111");
-        
-        token.value = data.value.token;
-        console.log(token.value);
-        await fetchStoresListData([]);
+    try {
+        const { data, error } = await useFetch("/api/guestToken", {
+            params: {
+                strUserName: "",
+            },
+            key: `guestToken_${Date.now()}`,
+            cache: false,
+        });
+
+        if (error.value) {
+            console.error("Token 生成失敗:", error.value);
+        } else if (data.value) {
+            console.log("成功獲取資料:", data.value);
+            token.value = data.value.token; // 確保 token 資料已經存在
+            await fetchStoresListData([]); // 使用獲得的 token 獲取其他資料
+        } else {
+            console.error("未獲取到有效的 data 值");
+            await fetchToken();
+        }
+    } catch (err) {
+        console.error("請求失敗:", err);
     }
 }
 

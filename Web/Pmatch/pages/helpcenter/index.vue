@@ -89,6 +89,7 @@ async function fetchToken() {
         params: {
             strUserName: "",
             iExpireMinutes: 10,
+            cache: false,
         },
     });
 
