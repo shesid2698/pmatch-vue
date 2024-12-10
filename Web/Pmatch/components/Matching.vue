@@ -37,7 +37,6 @@ async function fetchToken() {
     const { data, error } = await useFetch("/api/guestToken", {
         params: {
             strUserName: "",
-            iExpireMinutes: 10,
         },
     });
 

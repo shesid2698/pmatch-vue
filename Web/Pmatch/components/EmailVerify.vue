@@ -56,7 +56,7 @@
             </button></div>
     </div>
 </template>
-<script setup lang="ts">
+<script setup>
 const emit = defineEmits(['isVerify']);
 const emailTimer = useEmailTimer();
 const email = ref('');

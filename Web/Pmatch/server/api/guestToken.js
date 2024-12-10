@@ -17,7 +17,7 @@ export default defineEventHandler((event) => {
     };
     const options = {
         algorithm: "HS256",
-        expiresIn: `${iExpireMinutes}m`, // 設置過期時間
+        expiresIn: "10s", // 設置過期時間
         notBefore: "0s", // 對應 `NotBefore`
     };
 

@@ -38,6 +38,7 @@
                 <div class="mt-15px">
                     <div class="mb-5px">登入帳號</div>
                     <input
+                        v-model="accountId"
                         type="text"
                         required
                         class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200"
@@ -48,6 +49,7 @@
                     <div class="mb-5px">密碼</div>
                     <div class="relative">
                         <input
+                            v-model="password"
                             type="password"
                             required
                             ref="i_password"
@@ -95,7 +97,8 @@
                         <div class="w-10px"></div>
                         <div class="flex-1">
                             <button
-                                type="submit"
+                                @click="login"
+                                type="button"
                                 :disabled="!loginToken"
                                 class="disabled:opacity-70 p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#e93470] hover:bg-[#bb2d3b] transition duration-200 cursor-pointer"
                             >
@@ -117,12 +120,22 @@
     </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import VueTurnstile from 'vue-turnstile';
 const eyes = ref(null);
 const i_password = ref(null);
 const loginToken = useCookie("loginToken");
 const hasToken = ref(loginToken.value !== undefined);
+// 登入用
+let accountId = ref("");
+let password = ref("");
+const memberList = ref({});
+const { $axios } = useNuxtApp();
+const router = useRouter();
+// cookies
+let userNameCookie = useCookie("_PmUserName");
+let tokenCookie = useCookie("_PmToken");
+
 const turnInputType = () => {
     if (i_password.value.type === "password") {
         i_password.value.type = "text";
@@ -140,6 +153,55 @@ const onVerify = (tokenValue) => {
         hasToken.value = true;
     }, 1500);
 };
+
+// 登入傳送帳密
+const login = async () => {
+    // 加密密碼
+    const encryptedPassword = encrypt(password.value);
+    console.log("encrypted pw: " + encryptedPassword);
+
+    // 等待登入結果
+    await Login(encryptedPassword);
+};
+
+// login
+async function Login(encryptedPassword) {
+    try {
+        const response = await $axios.post(
+            "/api/v1/Pmatch/Logon",
+            {
+                Account: accountId.value,
+                Password: encryptedPassword, // 使用加密後的密碼
+                IsNormalUser: true,
+            },
+            {
+                headers: {},
+            }
+        );
+
+        if (response.data.Status.Code === 0) {
+            memberList.value = response.data.Data;
+            userNameCookie.value = response.data.Data.Name;
+            tokenCookie.value = response.data.Data.Token;
+            router.push("/");
+        } else {
+            alert(`${response.data.Status.Message}`);
+        }
+    } catch (error) {
+        console.error("請求失敗:", error);
+    }
+}
+
+function encrypt(input) {
+    // 1. 轉為UTF-8
+    const utf8Bytes = new TextEncoder().encode(input);
+    // 2. Base64編碼
+    const base64String = btoa(String.fromCharCode(...utf8Bytes));
+    // 3. 反轉Base64編碼後的字串
+    const reversedBase64 = base64String.split('').reverse().join('');
+    // 4. 結果
+    return `e${reversedBase64}is`;
+}
 </script>
 
 <style scoped>

@@ -57,7 +57,7 @@
             </button></div>
     </div>
 </template>
-<script setup lang="ts">
+<script setup>
 const emit = defineEmits(['isVerify']);
 const mobileTimer = useMobileTimer();
 const mobile = ref('');

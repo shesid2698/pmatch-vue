@@ -90,7 +90,7 @@
     </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import VueTurnstile from 'vue-turnstile';
 const account = ref('');
 const password = ref('');

@@ -298,32 +298,26 @@ const { $axios } = useNuxtApp();
 
 // 獲得jwt token
 async function fetchToken() {
-    const savedToken = localStorage.getItem("jwtToken");
-    if (savedToken) {
-        token.value = savedToken;
-        return; // 如果 LocalStorage 有 token，直接使用
-    }
-
-    // 若 LocalStorage 沒有 token，調用 API 獲取
     const { data, error } = await useFetch("/api/guestToken", {
         params: {
             strUserName: "",
-            iExpireMinutes: 10,
         },
     });
-
+    
     if (error.value) {
+        console.log("000");
         console.error("Token 生成失敗:", error.value);
     } else {
+        console.log("111");
+        
         token.value = data.value.token;
-        localStorage.setItem("jwtToken", token.value); // 儲存到 LocalStorage
+        console.log(token.value);
+        await fetchStoresListData([]);
     }
 }
 
 // 取得GetStoreList
 async function fetchStoresListData(num) {
-    await fetchToken();
-
     try {
         const response = await $axios.post(
             "/api/v1/Pmatch/GetStoreList",
@@ -349,8 +343,7 @@ async function fetchStoresListData(num) {
 
 onMounted(async () => {
     try {
-        await fetchToken(); // 確保 token 存在
-        await fetchStoresListData([]); // 再獲取資料
+        await fetchToken(); // 再獲取資料
     } catch (error) {
         console.error("頁面初始化失敗:", error);
     }
