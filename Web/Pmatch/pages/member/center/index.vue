@@ -280,7 +280,7 @@
         </div>
     </div>
 </template>
-<script lang="ts" setup>
+<script setup>
 /**正在驗證的手機號碼 */
 const verifyingMobile = useCookie('editMobile');
 /**可再次發送驗證碼的計時器 */

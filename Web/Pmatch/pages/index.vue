@@ -17,66 +17,68 @@
                 </div>
             </div> -->
             <div class="mb-6 md-flex block items-center justify-center">
-            <div class="flex items-center">
-                <div class="flex items-center w-100%">
-                    <div class="w-100%">
-                        <select
-                            class="platformName md-w-270px w-100% h-43px font-size-1rem b-#a9d8f8 rounded-5px p-5px"
-                        >
-                            <option value="">選擇遊戲...</option>
-                            <option value="滿貫大亨">滿貫大亨</option>
-                            <option value="錢街Online">錢街Online</option>
-                            <option value="包你發娛樂城">包你發娛樂城</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="md-ms-3 md-mt-0 mt-3 flex w-100%">
+                <div class="flex items-center">
                     <div class="flex items-center w-100%">
-                        <div class="flex w-100%">
-                            <div class="w-100%">
-                                <input
-                                    class="storeName md-ms-3 w-100% md-w-270px h-36px p-0 rounded-5px font-size-1rem p-3px"
-                                    type="text"
-                                    placeholder="輸入關鍵字..."
-                                />
-                            </div>
-                            <div class="relative">
-                                <button
-                                    class="h-38px border-none searchBtn absolute top-4px right-0"
-                                >
-                                    <svg
-                                        class="w-23px searchIcon"
-                                        version="1.1"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                                        x="0px"
-                                        y="0px"
-                                        viewBox="0 0 512 512"
-                                        enable-background="new 0 0 512 512"
-                                        xml:space="preserve"
-                                        fill="#50B0FF"
+                        <div class="w-100%">
+                            <select
+                                class="platformName md-w-270px w-100% h-43px font-size-1rem b-#a9d8f8 rounded-5px p-5px"
+                            >
+                                <option value="">選擇遊戲...</option>
+                                <option value="滿貫大亨">滿貫大亨</option>
+                                <option value="錢街Online">錢街Online</option>
+                                <option value="包你發娛樂城">
+                                    包你發娛樂城
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="md-ms-3 md-mt-0 mt-3 flex w-100%">
+                        <div class="flex items-center w-100%">
+                            <div class="flex w-100%">
+                                <div class="w-100%">
+                                    <input
+                                        class="storeName md-ms-3 w-100% md-w-270px h-36px p-0 rounded-5px font-size-1rem p-3px"
+                                        type="text"
+                                        placeholder="輸入關鍵字..."
+                                    />
+                                </div>
+                                <div class="relative">
+                                    <button
+                                        class="h-38px border-none searchBtn absolute top-4px right-0"
                                     >
-                                        <path
-                                            d="M443.5,420.2L336.7,312.4c20.9-26.2,33.5-59.4,33.5-95.5c0-84.5-68.5-153-153.1-153S64,132.5,64,217s68.5,153,153.1,153
+                                        <svg
+                                            class="w-23px searchIcon"
+                                            version="1.1"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                                            x="0px"
+                                            y="0px"
+                                            viewBox="0 0 512 512"
+                                            enable-background="new 0 0 512 512"
+                                            xml:space="preserve"
+                                            fill="#50B0FF"
+                                        >
+                                            <path
+                                                d="M443.5,420.2L336.7,312.4c20.9-26.2,33.5-59.4,33.5-95.5c0-84.5-68.5-153-153.1-153S64,132.5,64,217s68.5,153,153.1,153
 	c36.6,0,70.1-12.8,96.5-34.2l106.1,107.1c3.2,3.4,7.6,5.1,11.9,5.1c4.1,0,8.2-1.5,11.3-4.5C449.5,437.2,449.7,426.8,443.5,420.2z
 	 M217.1,337.1c-32.1,0-62.3-12.5-85-35.2c-22.7-22.7-35.2-52.9-35.2-84.9c0-32.1,12.5-62.3,35.2-84.9c22.7-22.7,52.9-35.2,85-35.2
 	c32.1,0,62.3,12.5,85,35.2c22.7,22.7,35.2,52.9,35.2,84.9c0,32.1-12.5,62.3-35.2,84.9C279.4,324.6,249.2,337.1,217.1,337.1z"
-                                        ></path>
-                                    </svg>
-                                </button>
+                                            ></path>
+                                        </svg>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="w-100% md-ms-3 flex items-center">
-                    <input type="checkbox" class="w-20px h-20px" />
-                    <span>查看已簽約媒合商</span>
-                </div>
-                <div>
-                    <button class="ms-3 w-100px">搜尋</button>
+                    <div class="w-100% md-ms-3 flex items-center">
+                        <input type="checkbox" class="w-20px h-20px" />
+                        <span>查看已簽約媒合商</span>
+                    </div>
+                    <div>
+                        <button class="ms-3 w-100px">搜尋</button>
+                    </div>
                 </div>
             </div>
-        </div>
             <div class="mb-3">banner</div>
             <div class="mb-3">
                 <div class="flex">
@@ -187,7 +189,9 @@
                 </div>
                 <div class="flex justify-end pt-3 pb-3">
                     <div class="">
-                        <NuxtLink class="color-#555553 decoration-none" to="/gamelist"
+                        <NuxtLink
+                            class="color-#555553 decoration-none"
+                            to="/gamelist"
                             >more ..</NuxtLink
                         >
                     </div>
@@ -268,39 +272,45 @@
 
 <script setup>
 import { ElButton } from "element-plus";
+import jwt from "jwt-simple";
+import { Buffer } from "buffer";
+import CryptoJS from "crypto-js";
 const data = ref("");
 const token = ref("");
 const newsList = ref([]);
 const { $axios } = useNuxtApp();
 
+const guestTokenStore = useGuestTokenStore();
 // 獲得jwt token
-async function fetchToken() {
-    try {
-        const { data, error } = await useFetch("/api/guestToken", {
-            params: {
-                strUserName: "",
-            },
-            key: `guestToken_${Date.now()}`,
-            cache: false,
-        });
+// async function fetchToken() {
 
-        if (error.value) {
-            console.error("Token 生成失敗:", error.value);
-        } else if (data.value) {
-            console.log("成功獲取資料:", data.value);
-            token.value = data.value.token; // 確保 token 資料已經存在
-            await fetchNewsListData([]); // 使用獲得的 token 獲取其他資料
-        } else {
-            console.error("未獲取到有效的 data 值");
-            await fetchToken();
-        }
-    } catch (err) {
-        console.error("請求失敗:", err);
-    }
-}
+//     try {
+//         guestToken();
+//         // const { data, error } = await useFetch("/api/guestToken", {
+//         //     params: {
+//         //         strUserName: "",
+//         //     },
+//         //     key: `guestToken_${Date.now()}`,
+//         //     cache: false,
+//         // });
+
+//         // if (error.value) {
+//         //     console.error("Token 生成失敗:", error.value);
+//         // } else if (data.value) {
+//         //     console.log("成功獲取資料:", data.value);
+//         //     token.value = data.value.token; // 確保 token 資料已經存在
+//         //     await fetchNewsListData([]); // 使用獲得的 token 獲取其他資料
+//         // } else {
+//         //     console.error("未獲取到有效的 data 值");
+//         //     await fetchToken();
+//         // }
+//     } catch (err) {
+//         console.error("請求失敗:", err);
+//     }
+// }
 
 // 取得GetNewsList
-async function fetchNewsListData(num) {
+async function fetchNewsListData(num, token) {
     try {
         const response = await $axios.post(
             "/api/v1/Pmatch/GetNewsList",
@@ -309,7 +319,7 @@ async function fetchNewsListData(num) {
             },
             {
                 headers: {
-                    Authorization: token.value, // 帶上 Token
+                    Authorization: token, // 帶上 Token
                 },
             }
         );
@@ -326,12 +336,64 @@ async function fetchNewsListData(num) {
 
 onMounted(async () => {
     try {
-        await fetchToken();
+        const strUserName = ""; // 隨機產生用戶名
+        const secretKey = "WmlIYWkgSldUIFNlY3JldCBLZXkgNTA5MjIzMTAgMjAyMw=="; // 與上面相同的密鑰
+        const iExpireSeconds = 10; // 10 秒過期
+
+        // 設置 payload
+        const payload = {
+            unique_name: "",
+        };
+
+        generateJwtToken(payload, secretKey).then((token) => {
+            console.log("Generated JWT token:", token);
+            fetchNewsListData([], token);
+        });
+
+        // 顯示生成的 Token
     } catch (error) {
         console.error("頁面初始化失敗:", error);
     }
 });
 
+function base64UrlEncode(str) {
+    return btoa(str) // 使用標準 Base64
+        .replace(/=/g, "") // 去除填充字符 '='
+        .replace(/\+/g, "-") // 替換 '+' 為 '-'
+        .replace(/\//g, "_"); // 替換 '/' 為 '_'
+}
+
+function hmacSHA256(data, secret) {
+    const hmac = CryptoJS.HmacSHA256(data, secret);
+    return hmac
+        .toString(CryptoJS.enc.Base64)
+        .replace(/=/g, "") // 去除填充字符 '='
+        .replace(/\+/g, "-") // 替換 '+' 為 '-'
+        .replace(/\//g, "_"); // 替換 '/' 為 '_'
+}
+
+async function generateJwtToken(payload, secretKey) {
+    const decodedSecretKey = atob(secretKey);
+    const header = {
+        alg: "HS256", // 簽名演算法
+        typ: "JWT", // 類型
+    };
+
+    const now = Math.floor(Date.now() / 1000);
+    payload.iat = now; // 發行時間
+    payload.nbf = now; // 生效時間
+    payload.exp = now + 10; // 過期時間（10 秒後）
+    const encodedHeader = base64UrlEncode(JSON.stringify(header));
+    const encodedPayload = base64UrlEncode(JSON.stringify(payload));
+
+    // 使用 CryptoJS 計算簽名
+    const signature = hmacSHA256(
+        `${encodedHeader}.${encodedPayload}`,
+        decodedSecretKey
+    );
+
+    return `${encodedHeader}.${encodedPayload}.${signature}`;
+}
 </script>
 
 <style scoped>
