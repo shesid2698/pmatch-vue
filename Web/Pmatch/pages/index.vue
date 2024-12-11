@@ -272,26 +272,35 @@ const data = ref("");
 const token = ref("");
 const newsList = ref([]);
 const { $axios } = useNuxtApp();
+
 // 獲得jwt token
 async function fetchToken() {
-    const { data, error } = await useFetch("/api/guestToken", {
-        params: {
-            strUserName: "",
-            iExpireMinutes: 10,
-        },
-    });
+    try {
+        const { data, error } = await useFetch("/api/guestToken", {
+            params: {
+                strUserName: "",
+            },
+            key: `guestToken_${Date.now()}`,
+            cache: false,
+        });
 
-    if (error.value) {
-        console.error("Token 生成失敗:", error.value);
-    } else {
-        token.value = data.value.token;
+        if (error.value) {
+            console.error("Token 生成失敗:", error.value);
+        } else if (data.value) {
+            console.log("成功獲取資料:", data.value);
+            token.value = data.value.token; // 確保 token 資料已經存在
+            await fetchNewsListData([]); // 使用獲得的 token 獲取其他資料
+        } else {
+            console.error("未獲取到有效的 data 值");
+            await fetchToken();
+        }
+    } catch (err) {
+        console.error("請求失敗:", err);
     }
 }
 
 // 取得GetNewsList
 async function fetchNewsListData(num) {
-    await fetchToken();
-
     try {
         const response = await $axios.post(
             "/api/v1/Pmatch/GetNewsList",
@@ -315,7 +324,14 @@ async function fetchNewsListData(num) {
     }
 }
 
-fetchNewsListData([]);
+onMounted(async () => {
+    try {
+        await fetchToken();
+    } catch (error) {
+        console.error("頁面初始化失敗:", error);
+    }
+});
+
 </script>
 
 <style scoped>
