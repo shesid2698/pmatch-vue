@@ -207,7 +207,7 @@
                         <div><input type="checkbox"
                                    checked /></div>
                         <div>
-                            <NuxtLink to="/member/privacy"
+                            <NuxtLink to="/company/privacy"
                                       target="_blank"
                                       class="text-[#0d6efd] text-12px underline hover:opacity-70">我同意隱私權與資訊安全政策</NuxtLink>
                         </div>
@@ -216,7 +216,7 @@
                         <div><input type="checkbox"
                                    checked /></div>
                         <div>
-                            <NuxtLink to="/member/service"
+                            <NuxtLink to="/company/service"
                                       target="_blank"
                                       class="text-[#0d6efd] text-12px underline hover:opacity-70">我同意服務條款</NuxtLink>
                         </div>
