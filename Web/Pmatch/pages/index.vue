@@ -246,16 +246,16 @@
                             </NuxtLink>
                         </div>
                         <div>
-                            <button @click="fetchNewsListData([])">
+                            <button @click="fetchNewsListData([],'')">
                                 所有資訊
                             </button>
-                            <button @click="fetchNewsListData([1])">
+                            <button @click="fetchNewsListData([1],'')">
                                 網站公告
                             </button>
-                            <button @click="fetchNewsListData([2])">
+                            <button @click="fetchNewsListData([2],'')">
                                 活動資訊
                             </button>
-                            <button @click="fetchNewsListData([3])">
+                            <button @click="fetchNewsListData([3],'')">
                                 新手幫助
                             </button>
                         </div>
@@ -288,6 +288,10 @@ const imageUrl = '/assets/2024/20241212112821424.jpg';
 
 // 取得GetNewsList
 async function fetchNewsListData(num, token) {
+    if(token === ""){
+        token = await jwtStore.generateToken();
+    }
+
     try {
         const response = await $axios.post(
             "/api/v1/Pmatch/GetNewsList",
