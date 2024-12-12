@@ -263,6 +263,13 @@
                     <div class="w-400px">
                         <NewRatio />
                         <Matching />
+                        <div class="w-200px h-200px bg-#999">
+                            <img
+                                class="w-200px h-200px"
+                                :src="imageUrl"
+                                alt=""
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -272,42 +279,12 @@
 
 <script setup>
 import { ElButton } from "element-plus";
-import jwt from "jwt-simple";
-import { Buffer } from "buffer";
-import CryptoJS from "crypto-js";
-const data = ref("");
-const token = ref("");
 const newsList = ref([]);
 const { $axios } = useNuxtApp();
+const jwtStore = useJwtStore();
 
-const guestTokenStore = useGuestTokenStore();
-// 獲得jwt token
-// async function fetchToken() {
-
-//     try {
-//         guestToken();
-//         // const { data, error } = await useFetch("/api/guestToken", {
-//         //     params: {
-//         //         strUserName: "",
-//         //     },
-//         //     key: `guestToken_${Date.now()}`,
-//         //     cache: false,
-//         // });
-
-//         // if (error.value) {
-//         //     console.error("Token 生成失敗:", error.value);
-//         // } else if (data.value) {
-//         //     console.log("成功獲取資料:", data.value);
-//         //     token.value = data.value.token; // 確保 token 資料已經存在
-//         //     await fetchNewsListData([]); // 使用獲得的 token 獲取其他資料
-//         // } else {
-//         //     console.error("未獲取到有效的 data 值");
-//         //     await fetchToken();
-//         // }
-//     } catch (err) {
-//         console.error("請求失敗:", err);
-//     }
-// }
+// 到時候用這個路徑讀api回來的圖(本地會跳錯、看不到正常)
+const imageUrl = '/assets/2024/20241212112821424.jpg';
 
 // 取得GetNewsList
 async function fetchNewsListData(num, token) {
@@ -336,64 +313,17 @@ async function fetchNewsListData(num, token) {
 
 onMounted(async () => {
     try {
-        const strUserName = ""; // 隨機產生用戶名
-        const secretKey = "WmlIYWkgSldUIFNlY3JldCBLZXkgNTA5MjIzMTAgMjAyMw=="; // 與上面相同的密鑰
-        const iExpireSeconds = 10; // 10 秒過期
-
-        // 設置 payload
-        const payload = {
-            unique_name: "",
-        };
-
-        generateJwtToken(payload, secretKey).then((token) => {
-            console.log("Generated JWT token:", token);
+        // 生成新的 token
+        const token = await jwtStore.generateToken();
+        if (token != "") {
             fetchNewsListData([], token);
-        });
-
-        // 顯示生成的 Token
+        } else {
+            console.error("token獲取失敗");
+        }
     } catch (error) {
         console.error("頁面初始化失敗:", error);
     }
 });
-
-function base64UrlEncode(str) {
-    return btoa(str) // 使用標準 Base64
-        .replace(/=/g, "") // 去除填充字符 '='
-        .replace(/\+/g, "-") // 替換 '+' 為 '-'
-        .replace(/\//g, "_"); // 替換 '/' 為 '_'
-}
-
-function hmacSHA256(data, secret) {
-    const hmac = CryptoJS.HmacSHA256(data, secret);
-    return hmac
-        .toString(CryptoJS.enc.Base64)
-        .replace(/=/g, "") // 去除填充字符 '='
-        .replace(/\+/g, "-") // 替換 '+' 為 '-'
-        .replace(/\//g, "_"); // 替換 '/' 為 '_'
-}
-
-async function generateJwtToken(payload, secretKey) {
-    const decodedSecretKey = atob(secretKey);
-    const header = {
-        alg: "HS256", // 簽名演算法
-        typ: "JWT", // 類型
-    };
-
-    const now = Math.floor(Date.now() / 1000);
-    payload.iat = now; // 發行時間
-    payload.nbf = now; // 生效時間
-    payload.exp = now + 10; // 過期時間（10 秒後）
-    const encodedHeader = base64UrlEncode(JSON.stringify(header));
-    const encodedPayload = base64UrlEncode(JSON.stringify(payload));
-
-    // 使用 CryptoJS 計算簽名
-    const signature = hmacSHA256(
-        `${encodedHeader}.${encodedPayload}`,
-        decodedSecretKey
-    );
-
-    return `${encodedHeader}.${encodedPayload}.${signature}`;
-}
 </script>
 
 <style scoped>

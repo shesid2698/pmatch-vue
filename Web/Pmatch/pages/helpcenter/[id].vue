@@ -19,32 +19,12 @@ import { defineAsyncComponent } from "vue";
 // 用路由的名字 help1、help2
 const route = useRoute();
 const routeParamId = route.params.id;
-
-const data = ref("");
-const token = ref("");
 const newsItem = ref(null);
-const isLoading = ref(true); // 加載狀態
 const { $axios } = useNuxtApp();
+const jwtStore = useJwtStore();
 
-// 獲得jwt token
-async function fetchToken() {
-    const { data, error } = await useFetch("/api/guestToken", {
-        params: {
-            strUserName: "",
-            iExpireMinutes: 10,
-        },
-    });
-
-    if (error.value) {
-        console.error("Token 生成失敗:", error.value);
-    } else {
-        token.value = data.value.token;
-    }
-}
 // 取得GetNewsDetail
-async function fetchNewsDetailData() {
-    await fetchToken();
-
+async function fetchNewsDetailData(token) {
     try {
         const response = await $axios.post(
             "/api/v1/Pmatch/GetNewsDetail",
@@ -53,7 +33,7 @@ async function fetchNewsDetailData() {
             },
             {
                 headers: {
-                    Authorization: token.value, // 帶上 Token
+                    Authorization: token, // 帶上 Token
                 },
             }
         );
@@ -65,11 +45,21 @@ async function fetchNewsDetailData() {
     } catch (error) {
         console.error("請求失敗:", error);
         data.value = "無法取得資料。"; // 畫面顯示錯誤訊息
-    }finally {
-        isLoading.value = false; // 完成後無論成功或失敗，都結束加載
     }
 }
-fetchNewsDetailData();
+onMounted(async () => {
+    try {
+        // 生成新的 token
+        const token = await jwtStore.generateToken();
+        if(token != ""){
+            fetchNewsDetailData(token);
+        }else{
+            console.error("token獲取失敗");
+        }
+    } catch (error) {
+        console.error("頁面初始化失敗:", error);
+    }
+});
 
 </script>
 

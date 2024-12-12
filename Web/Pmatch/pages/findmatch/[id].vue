@@ -134,31 +134,13 @@ import { ElBreadcrumbItem } from "element-plus";
 
 const route = useRoute();
 const routeParamId = route.params.id;
-
-const data = ref("");
-const token = ref("");
 const storesItem = ref(null);
 const isLoading = ref(true); // 加載狀態
 const { $axios } = useNuxtApp();
-
-// 獲得jwt token
-async function fetchToken() {
-    const { data, error } = await useFetch("/api/guestToken", {
-        params: {
-            strUserName: "",
-        },
-    });
-    
-    if (error.value) {
-        console.error("Token 生成失敗:", error.value);
-    } else {
-        token.value = data.value.token;
-        await fetchStoresDetailData();
-    }
-}
+const jwtStore = useJwtStore();
 
 // 取得GetNewsDetail
-async function fetchStoresDetailData() {
+async function fetchStoresDetailData(token) {
     try {
         const response = await $axios.post(
             "/api/v1/Pmatch/GetStoreDetail",
@@ -168,7 +150,7 @@ async function fetchStoresDetailData() {
             },
             {
                 headers: {
-                    Authorization: token.value, // 帶上 Token
+                    Authorization: token, // 帶上 Token
                 },
             }
         );
@@ -187,7 +169,13 @@ async function fetchStoresDetailData() {
 
 onMounted(async () => {
     try {
-        await fetchToken();
+        // 生成新的 token
+        const token = await jwtStore.generateToken();
+        if(token != ""){
+            fetchStoresDetailData(token);
+        }else{
+            console.error("token獲取失敗");
+        }
     } catch (error) {
         console.error("頁面初始化失敗:", error);
     }

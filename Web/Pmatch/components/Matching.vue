@@ -27,30 +27,12 @@
 </template>
 
 <script setup>
-    const data = ref("");
-const token = ref("");
 const matchingList = ref([]);
 const { $axios } = useNuxtApp();
-
-// 獲得jwt token
-async function fetchToken() {
-    const { data, error } = await useFetch("/api/guestToken", {
-        params: {
-            strUserName: "",
-        },
-    });
-
-    if (error.value) {
-        console.error("Token 生成失敗:", error.value);
-    } else {
-        token.value = data.value.token;
-    }
-}
+const jwtStore = useJwtStore();
 
 // 取得MatchingList
-async function fetchMatchingListData() {
-    await fetchToken();
-
+async function fetchMatchingListData(token) {
     try {
         const response = await $axios.post(
             "/api/v1/Pmatch/InstantMatching",
@@ -59,7 +41,7 @@ async function fetchMatchingListData() {
             },
             {
                 headers: {
-                    Authorization: token.value, // 帶上 Token
+                    Authorization: token // 帶上 Token
                 },
             }
         );
@@ -73,7 +55,21 @@ async function fetchMatchingListData() {
         data.value = "無法取得資料。"; // 畫面顯示錯誤訊息
     }
 }
-fetchMatchingListData();
+
+onMounted(async () => {
+    try {
+        // 生成新的 token
+        const token = await jwtStore.generateToken();
+
+        if(token != ""){
+            fetchMatchingListData(token);
+        }else{
+            console.error("token獲取失敗");
+        }
+    } catch (error) {
+        console.error("頁面初始化失敗:", error);
+    }
+});
 </script>
 
 <style scoped>

@@ -291,39 +291,12 @@ import { ElBreadcrumb } from "element-plus";
 import { ElBreadcrumbItem } from "element-plus";
 import { ElMessageBox } from "element-plus";
 
-const data = ref("");
-const token = ref("");
 const storesList = ref([]);
 const { $axios } = useNuxtApp();
-
-// 獲得jwt token
-async function fetchToken() {
-    try {
-        const { data, error } = await useFetch("/api/guestToken", {
-            params: {
-                strUserName: "",
-            },
-            key: `guestToken_${Date.now()}`,
-            cache: false,
-        });
-
-        if (error.value) {
-            console.error("Token 生成失敗:", error.value);
-        } else if (data.value) {
-            console.log("成功獲取資料:", data.value);
-            token.value = data.value.token; // 確保 token 資料已經存在
-            await fetchStoresListData([]); // 使用獲得的 token 獲取其他資料
-        } else {
-            console.error("未獲取到有效的 data 值");
-            await fetchToken();
-        }
-    } catch (err) {
-        console.error("請求失敗:", err);
-    }
-}
+const jwtStore = useJwtStore();
 
 // 取得GetStoreList
-async function fetchStoresListData(num) {
+async function fetchStoresListData(token) {
     try {
         const response = await $axios.post(
             "/api/v1/Pmatch/GetStoreList",
@@ -332,7 +305,7 @@ async function fetchStoresListData(num) {
             },
             {
                 headers: {
-                    Authorization: token.value, // 帶上 Token
+                    Authorization: token, // 帶上 Token
                 },
             }
         );
@@ -349,7 +322,13 @@ async function fetchStoresListData(num) {
 
 onMounted(async () => {
     try {
-        await fetchToken(); // 再獲取資料
+        // 生成新的 token
+        const token = await jwtStore.generateToken();
+        if(token != ""){
+            fetchStoresListData(token);
+        }else{
+            console.error("token獲取失敗");
+        }
     } catch (error) {
         console.error("頁面初始化失敗:", error);
     }

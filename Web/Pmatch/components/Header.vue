@@ -21,14 +21,18 @@
                      v-for="item of headerLink"
                      :key="item.id">
                     <div class="relative"
-                         @click="handleDropdown(item)"
-                         :ref="setDropdownRef(item.id)">
+                         @click.stop="handleDropdown(item)"
+                         :ref="setDropdownRef(item.id)"
+                         >
                         <span v-show="item.dropdown"
                               class="loginLink color-#555553 decoration-none ms-1.5rem font-bold w-100% cursor-pointer"
                               :alt="item.title">
                             {{ item.title }}
                         </span>
-                        <div v-show="item.showDropdown"
+                        <button v-if="item.items" class="logoutBtn ms-1 bg-#fff border-none">
+                            <span v-for="subItem in item.items" :key="subItem.id" @click="subItem.action">{{ subItem.title }}</span>
+                        </button>
+                        <div v-show="dropdownStates[item.id]"
                              class="loginDropdown bg-white mt-1">
                             <NuxtLink to="/member/login"
                                       class="loginItem block p-1 ps-2 pe-2 mt-1 mb-1 decoration-none">會員登入</NuxtLink>
@@ -104,14 +108,16 @@
 const { data: userInfo, error } = await useFetch('/api/getuser', {
     headers: useRequestHeaders(['cookie'])
 });
-const uToken = useCookie('u_token');
+const userToken = useCookie('_PmToken');
+const userNameCookie = useCookie("_PmUserName");
 const user = reactive({});
 const router = useRouter();
 const navOpen = ref(false);
 const toggleNav = () => {
     navOpen.value = !navOpen.value;
 };
-const headerLink = ref([
+
+const headerLink = computed(() => [
     {
         id: 0,
         title: '幫助中心',
@@ -124,10 +130,26 @@ const headerLink = ref([
     },
     {
         id: 2,
-        title: '會員登入/註冊',
+        title: userToken.value 
+            ? `HI,${userNameCookie.value}` 
+            : '會員登入/註冊',
         link: '/member/login',
         dropdown: true,
-        showDropdown: false
+        showDropdown: false,
+        items: userToken.value
+                ? [
+                    {
+                        id: 'logout',
+                        title: '登出',
+                        action: () => {
+                            // 清除登入狀態
+                            userToken.value = null;
+                            userNameCookie.value = '';
+                            console.log('已登出');
+                        }
+                    }
+                ]
+                : []
     }
 ]);
 const memberCenterLink = ref([
@@ -160,6 +182,9 @@ const show = ref(false);
 // 保存下拉選單的參考
 const dropdownRefs = ref([]);
 
+const dropdownStates = ref({
+    2: false, // 僅對 id 為 2 的項目有下拉選單
+});
 // 設置下拉選單的 ref
 const setDropdownRef = id => el => {
     dropdownRefs.value[id] = el;
@@ -167,16 +192,16 @@ const setDropdownRef = id => el => {
 
 // 處理下拉選單的顯示或隱藏
 const handleDropdown = item => {
-    item.showDropdown = !item.showDropdown;
+    const currentState = dropdownStates.value[item.id];
+    dropdownStates.value[item.id] = !currentState;
+    console.log(item.showDropdown);
 };
 // 點擊外部關閉下拉選單
 const closeDropdownOutside = event => {
-    headerLink.value.forEach(item => {
-        if (item.dropdown && item.showDropdown) {
-            const dropdownElement = dropdownRefs.value[item.id];
-            if (dropdownElement && !dropdownElement.contains(event.target)) {
-                item.showDropdown = false;
-            }
+    Object.keys(dropdownStates.value).forEach((id) => {
+        const dropdownElement = dropdownRefs.value[id];
+        if (dropdownElement && !dropdownElement.contains(event.target)) {
+            dropdownStates.value[id] = false; // 關閉該選單
         }
     });
 };
@@ -190,8 +215,7 @@ const logout = () => {
 onMounted(() => {
     document.addEventListener('click', closeDropdownOutside);
     if (userInfo && userInfo.value != null) {
-        Object.assign(user, userInfo.value.user.user);
-        if (user.Name !== undefined) {
+        if (userNameCookie !== "") {
             headerLink.value = [
                 {
                     id: 0,
@@ -210,7 +234,7 @@ onMounted(() => {
                 },
                 {
                     id: 3,
-                    title: `${user.Name} 您好`,
+                    title: `${userNameCookie} 您好`,
                     link: '#'
                 },
                 {
@@ -271,5 +295,12 @@ onBeforeUnmount(() => {
 .transition-box:hover {
     background: #ebecf0;
     color: grey;
+}
+.logoutBtn{
+    font-size: 1rem;
+    cursor: pointer;
+}
+.logoutBtn:hover{
+    color: #999;
 }
 </style>

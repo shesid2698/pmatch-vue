@@ -79,30 +79,12 @@
 import { ArrowRight } from "@element-plus/icons-vue";
 import { ElBreadcrumb } from "element-plus";
 import { ElBreadcrumbItem } from "element-plus";
-const data = ref("");
-const token = ref("");
 const newsList = ref([]);
 const { $axios } = useNuxtApp();
-// 獲得jwt token
-async function fetchToken() {
-    const { data, error } = await useFetch("/api/guestToken", {
-        params: {
-            strUserName: "",
-            iExpireMinutes: 10,
-            cache: false,
-        },
-    });
+const jwtStore = useJwtStore();
 
-    if (error.value) {
-        console.error("Token 生成失敗:", error.value);
-    } else {
-        token.value = data.value.token;
-    }
-}
 // 取得GetNewsList
-async function fetchNewsListData() {
-    await fetchToken();
-
+async function fetchNewsListData(token) {
     try {
         const response = await $axios.post(
             "/api/v1/Pmatch/GetNewsList",
@@ -111,7 +93,7 @@ async function fetchNewsListData() {
             },
             {
                 headers: {
-                    Authorization: token.value, // 帶上 Token
+                    Authorization: token, // 帶上 Token
                 },
             }
         );
@@ -126,7 +108,20 @@ async function fetchNewsListData() {
     }
 }
 
-fetchNewsListData();
+onMounted(async () => {
+    try {
+        // 生成新的 token
+        const token = await jwtStore.generateToken();
+        if(token != ""){
+            fetchNewsListData(token);
+        }else{
+            console.error("token獲取失敗");
+        }
+    } catch (error) {
+        console.error("頁面初始化失敗:", error);
+    }
+});
+
 // 搜尋關鍵字
 const searchQuery = ref("");
 const filteredHelpItems = computed(() => {

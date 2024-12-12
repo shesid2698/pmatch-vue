@@ -1,33 +1,69 @@
 import { defineStore } from 'pinia';
-import jwt from 'jwt-simple';
-import { Buffer } from 'buffer';
+import CryptoJS from 'crypto-js';
 
-export const useGuestTokenStore = defineStore("guestToken", {
+// 輔助函數
+const base64UrlEncode = (str) => {
+    return btoa(str)
+        .replace(/=/g, "")
+        .replace(/\+/g, "-")
+        .replace(/\//g, "_");
+};
+
+const hmacSHA256 = (data, secret) => {
+    const hmac = CryptoJS.HmacSHA256(data, secret);
+    return hmac
+        .toString(CryptoJS.enc.Base64)
+        .replace(/=/g, "")
+        .replace(/\+/g, "-")
+        .replace(/\//g, "_");
+};
+
+export const useJwtStore = defineStore('jwt', {
     state: () => ({
-        token: null, // 儲存 JWT Token
+        token: null,
+        secretKey: "WmlIYWkgSldUIFNlY3JldCBLZXkgNTA5MjIzMTAgMjAyMw==",
     }),
-    actions: {
-        async fetchToken(strUserName = "", iExpireMinutes = 10) {
-            try {
-                const m_strSecret = "WmlIYWkgSldUIFNlY3JldCBLZXkgNTA5MjIzMTAgMjAyMw==";
-                const symmetricKey = Buffer.from(m_strSecret, "base64");
 
-                const payload = { unique_name: strUserName };
-                const options = {
-                    algorithm: "HS256",
-                    expiresIn: `${iExpireMinutes}s`,
-                    notBefore: "0s",
+    actions: {
+        async generateToken(customPayload = {}) {
+            try {
+                const decodedSecretKey = atob(this.secretKey);
+                const header = {
+                    alg: "HS256",
+                    typ: "JWT",
                 };
 
-                const token = jwt.encode(payload, symmetricKey, options);
+                const now = Math.floor(Date.now() / 1000);
+                const payload = {
+                    unique_name: "",
+                    iat: now,
+                    nbf: now,
+                    exp: now + 10,
+                    ...customPayload
+                };
 
-                this.token = token; // 儲存在 Store 狀態中
-                return token; // 返回 Token 給調用者
+                const encodedHeader = base64UrlEncode(JSON.stringify(header));
+                const encodedPayload = base64UrlEncode(JSON.stringify(payload));
+
+                const signature = hmacSHA256(
+                    `${encodedHeader}.${encodedPayload}`,
+                    decodedSecretKey
+                );
+
+                this.token = `${encodedHeader}.${encodedPayload}.${signature}`;
+                return this.token;
             } catch (error) {
-                console.error("獲取 Token 失敗：", error);
-                throw error; // 傳遞錯誤
+                console.error("生成 JWT token 失敗:", error);
+                throw error;
             }
         },
-    },
-});
 
+        getToken() {
+            return this.token;
+        },
+
+        clearToken() {
+            this.token = null;
+        }
+    }
+});

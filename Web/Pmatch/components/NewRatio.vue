@@ -3,8 +3,8 @@
         <h3 class="m-0">最新比值</h3>
         <div class="flex">
             <div class="w-full font-size-15px ps-1 pe-1">遊戲平台</div>
-            <div class="w-full font-size-15px ps-1 pe-1">遊戲幣數量</div>
-            <div class="w-full font-size-15px ps-1 pe-1">委託對象</div>
+            <div class="w-full font-size-15px ps-1 pe-1">委買比值</div>
+            <div class="w-full font-size-15px ps-1 pe-1">委賣比值</div>
         </div>
         <div v-for="(item, index) in matchingList" :key="index">
             <div class="w-full flex">
@@ -12,10 +12,10 @@
                     {{ item.GamePlatform }}
                 </div>
                 <div class="w-full font-size-15px ps-1 pe-1">
-                    {{ item.Patch }}
+                    {{ item.SendPatch }}
                 </div>
                 <div class="w-full font-size-15px ps-1 pe-1">
-                    {{ item.MobileNumber }}
+                    {{ item.CollectPatch }}
                 </div>
             </div>
         </div>
@@ -25,49 +25,61 @@
 <script setup>
 const data = ref("");
 const token = ref("");
-const matchingList = ref([]);
+const matchingList = [
+    {
+        GamePlatform:"包你發娛樂城",
+        SendPatch: "134",
+        CollectPatch: "144"
+    },
+    {
+        GamePlatform:"聚寶Online",
+        SendPatch: "130",
+        CollectPatch: "140"
+    },
+    {
+        GamePlatform:"老子有錢Online",
+        SendPatch: "130",
+        CollectPatch: "144"
+    },
+    {
+        GamePlatform:"寶島娛樂城",
+        SendPatch: "130",
+        CollectPatch: "144"
+    },
+    {
+        GamePlatform:"錢街Online",
+        SendPatch: "130",
+        CollectPatch: "144"
+    },
+    {
+        GamePlatform:"金好運娛樂城",
+        SendPatch: "130",
+        CollectPatch: "140"
+    },
+    {
+        GamePlatform:"滿貫大亨",
+        SendPatch: "1.35",
+        CollectPatch: "1.5"
+    },
+    {
+        GamePlatform:"豪神娛樂城",
+        SendPatch: "1300",
+        CollectPatch: "1440"
+    },
+    {
+        GamePlatform:"錢多多娛樂城",
+        SendPatch: "134",
+        CollectPatch: "150"
+    },
+    {
+        GamePlatform:"金豹娛樂城",
+        SendPatch: "130",
+        CollectPatch: "144"
+    }
+];
 const { $axios } = useNuxtApp();
 
-// 獲得jwt token
-async function fetchToken() {
-    const { data, error } = await useFetch("/api/guestToken", {
-        params: {
-            strUserName: "",
-        },
-    });
 
-    if (error.value) {
-        console.error("Token 生成失敗:", error.value);
-    } else {
-        token.value = data.value.token;
-    }
-}
-
-// 取得MatchingList
-async function fetchMatchingListData() {
-    await fetchToken();
-
-    try {
-        const response = await $axios.post(
-            "/api/v1/Pmatch/InstantMatching",
-            {},
-            {
-                headers: {
-                    Authorization: token.value, // 帶上 Token
-                },
-            }
-        );
-        if (response.data.Status.Code === 0) {
-            matchingList.value = response.data.Datas;
-        } else {
-            alert(`${response.data.Status.Message}`);
-        }
-    } catch (error) {
-        console.error("請求失敗:", error);
-        data.value = "無法取得資料。"; // 畫面顯示錯誤訊息
-    }
-}
-fetchMatchingListData();
 </script>
 
 <style scoped>

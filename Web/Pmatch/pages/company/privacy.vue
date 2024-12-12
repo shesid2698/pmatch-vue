@@ -12,26 +12,10 @@
 <script setup>
 const { $axios } = useNuxtApp();
 const data = ref("");
-const token = ref("");
-// 獲得jwt token
-async function fetchToken() {
-    const { data, error } = await useFetch("/api/guestToken", {
-        params: {
-            strUserName: "",
-            iExpireMinutes: 10,
-        },
-    });
-
-    if (error.value) {
-        console.error("Token 生成失敗:", error.value);
-    } else {
-        token.value = data.value.token;
-    }
-}
+const jwtStore = useJwtStore();
 
 // 取得GetCompayIformationDetail
-async function fetchData() {
-    await fetchToken();
+async function fetchData(token) {
     try {
         const response = await $axios.post(
             "/api/v1/Pmatch/GetCompayIformationDetail",
@@ -40,7 +24,7 @@ async function fetchData() {
             },
             {
                 headers: {
-                    Authorization: token.value, // 帶上 Token
+                    Authorization: token, // 帶上 Token
                 },
             }
         );
@@ -54,7 +38,20 @@ async function fetchData() {
         data.value = "無法取得資料。"; // 畫面顯示錯誤訊息
     }
 }
-fetchData();
+
+onMounted(async () => {
+    try {
+        // 生成新的 token
+        const token = await jwtStore.generateToken();
+        if(token != ""){
+            fetchData(token);
+        }else{
+            console.error("token獲取失敗");
+        }
+    } catch (error) {
+        console.error("頁面初始化失敗:", error);
+    }
+});
 </script>
 <style scoped>
 .ccontainer {
