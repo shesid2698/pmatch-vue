@@ -22,6 +22,7 @@ const routeParamId = route.params.id;
 const newsItem = ref(null);
 const { $axios } = useNuxtApp();
 const jwtStore = useJwtStore();
+const userToken = useCookie("_PmToken");
 
 // 取得GetNewsDetail
 async function fetchNewsDetailData(token) {
@@ -49,12 +50,18 @@ async function fetchNewsDetailData(token) {
 }
 onMounted(async () => {
     try {
-        // 生成新的 token
-        const token = await jwtStore.generateToken();
-        if(token != ""){
-            fetchNewsDetailData(token);
-        }else{
-            console.error("token獲取失敗");
+        if (userToken.value != "" && userToken.value != undefined) {
+            
+            const token = userToken.value;
+            if (token != "") {
+                fetchNewsDetailData(token);
+            }
+        } else {
+            // 生成新的 token
+            const token = await jwtStore.generateToken();
+            if (token != "") {
+                fetchNewsDetailData(token);
+            }
         }
     } catch (error) {
         console.error("頁面初始化失敗:", error);

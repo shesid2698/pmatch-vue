@@ -30,6 +30,7 @@
 const matchingList = ref([]);
 const { $axios } = useNuxtApp();
 const jwtStore = useJwtStore();
+const userToken = useCookie("_PmToken");
 
 // 取得MatchingList
 async function fetchMatchingListData(token) {

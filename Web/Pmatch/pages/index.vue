@@ -246,16 +246,16 @@
                             </NuxtLink>
                         </div>
                         <div>
-                            <button @click="fetchNewsListData([],'')">
+                            <button @click="fetchNewsListData([], '')">
                                 所有資訊
                             </button>
-                            <button @click="fetchNewsListData([1],'')">
+                            <button @click="fetchNewsListData([1], '')">
                                 網站公告
                             </button>
-                            <button @click="fetchNewsListData([2],'')">
+                            <button @click="fetchNewsListData([2], '')">
                                 活動資訊
                             </button>
-                            <button @click="fetchNewsListData([3],'')">
+                            <button @click="fetchNewsListData([3], '')">
                                 新手幫助
                             </button>
                         </div>
@@ -282,13 +282,14 @@ import { ElButton } from "element-plus";
 const newsList = ref([]);
 const { $axios } = useNuxtApp();
 const jwtStore = useJwtStore();
+const userToken = useCookie("_PmToken");
 
 // 到時候用這個路徑讀api回來的圖(本地會跳錯、看不到正常)
-const imageUrl = '/assets/2024/20241212112821424.jpg';
+const imageUrl = "/assets/2024/20241212112821424.jpg";
 
 // 取得GetNewsList
 async function fetchNewsListData(num, token) {
-    if(token === ""){
+    if (token === "") {
         token = await jwtStore.generateToken();
     }
 
@@ -317,12 +318,19 @@ async function fetchNewsListData(num, token) {
 
 onMounted(async () => {
     try {
-        // 生成新的 token
-        const token = await jwtStore.generateToken();
-        if (token != "") {
-            fetchNewsListData([], token);
+        if (userToken.value != "" && userToken.value != undefined) {
+            
+            const token = userToken.value;
+            
+            if (token != "") {
+                fetchNewsListData([], token);
+            }
         } else {
-            console.error("token獲取失敗");
+            // 生成新的 token
+            const token = await jwtStore.generateToken();
+            if (token != "") {
+                fetchNewsListData([], token);
+            }
         }
     } catch (error) {
         console.error("頁面初始化失敗:", error);

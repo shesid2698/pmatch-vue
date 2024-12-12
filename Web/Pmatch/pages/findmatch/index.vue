@@ -294,6 +294,7 @@ import { ElMessageBox } from "element-plus";
 const storesList = ref([]);
 const { $axios } = useNuxtApp();
 const jwtStore = useJwtStore();
+const userToken = useCookie("_PmToken");
 
 // 取得GetStoreList
 async function fetchStoresListData(token) {
@@ -322,12 +323,18 @@ async function fetchStoresListData(token) {
 
 onMounted(async () => {
     try {
-        // 生成新的 token
-        const token = await jwtStore.generateToken();
-        if(token != ""){
-            fetchStoresListData(token);
-        }else{
-            console.error("token獲取失敗");
+        if (userToken.value != "" && userToken.value != undefined) {
+            
+            const token = userToken.value;
+            if (token != "") {
+                fetchStoresListData(token);
+            }
+        } else {
+            // 生成新的 token
+            const token = await jwtStore.generateToken();
+            if (token != "") {
+                fetchStoresListData(token);
+            }
         }
     } catch (error) {
         console.error("頁面初始化失敗:", error);

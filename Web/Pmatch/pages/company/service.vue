@@ -13,6 +13,7 @@
 const { $axios } = useNuxtApp();
 const jwtStore = useJwtStore();
 const data = ref("");
+const userToken = useCookie("_PmToken");
 
 // 取得GetCompayIformationDetail
 async function fetchData(token) {
@@ -41,12 +42,18 @@ async function fetchData(token) {
 
 onMounted(async () => {
     try {
-        // 生成新的 token
-        const token = await jwtStore.generateToken();
-        if(token != ""){
-            fetchData(token);
-        }else{
-            console.error("token獲取失敗");
+        if (userToken.value != "" && userToken.value != undefined) {
+            
+            const token = userToken.value;
+            if (token != "") {
+                fetchData(token);
+            }
+        } else {
+            // 生成新的 token
+            const token = await jwtStore.generateToken();
+            if (token != "") {
+                fetchData(token);
+            }
         }
     } catch (error) {
         console.error("頁面初始化失敗:", error);
