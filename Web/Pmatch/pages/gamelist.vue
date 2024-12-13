@@ -3,18 +3,19 @@
         <div class="max-w-1320px m-auto ps-5 pe-5">
             <div class="flex flex-wrap">
                 <div class="gameBox" v-for="(item, index) in gameList" :key="index">
-                    <div class="p-3">滿貫大亨圖</div>
+                    <div class="p-3">
+                        <img :src="`${assetsUrl}${item.ImgFile}`" :alt="item.PlatformName">
+                    </div>
                     <div>
                         <div v-for="(character, index2) in item.Characters.slice(0, 3)" :key="index2">
                             <NuxtLink
                                 class="color-#555553 decoration-none"
-                                to="/"
-                                >* {{character}}</NuxtLink
+                                :to="`/findmatch/${character.Id}`"
+                                >* {{character.Name}}</NuxtLink
                             >
                         </div>
                     </div>
                 </div>
-                
             </div>
         </div>
     </div>
@@ -25,6 +26,7 @@ const gameList = ref([]);
 const { $axios } = useNuxtApp();
 const jwtStore = useJwtStore();
 const userToken = useCookie("_PmToken");
+const assetsUrl = useCookie("_PmAssetsUrl");
 
 async function fetchGameList(token) {
     if (token === "") {

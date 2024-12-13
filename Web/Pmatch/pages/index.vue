@@ -81,107 +81,29 @@
             </div>
             <div class="mb-3">banner</div>
             <div class="mb-3">
-                <div class="flex">
-                    <div class="w-full">
-                        <div class="p-3">滿貫大亨圖</div>
-                        <div>
-                            <div>
-                                <NuxtLink
-                                    class="color-#555553 decoration-none"
-                                    to="/"
-                                    >* 滿貫金流</NuxtLink
-                                >
-                            </div>
-                            <div>
-                                <NuxtLink
-                                    class="color-#555553 decoration-none"
-                                    to="/"
-                                    >* 希望之花</NuxtLink
-                                >
-                            </div>
-                            <div>
-                                <NuxtLink
-                                    class="color-#555553 decoration-none"
-                                    to="/"
-                                    >* 發大財金庫</NuxtLink
-                                >
-                            </div>
+                <div class="flex flex-wrap">
+                    <div
+                        class="gameBox"
+                        v-for="(item, index) in gameList.slice(0, 4)"
+                        :key="index"
+                    >
+                        <div class="p-3">
+                            <img
+                                :src="`${assetsUrl}${item.ImgFile}`"
+                                :alt="item.PlatformName"
+                            />
                         </div>
-                    </div>
-                    <div class="w-full">
-                        <div class="p-3">滿貫大亨圖</div>
                         <div>
-                            <div>
+                            <div
+                                v-for="(
+                                    character, index2
+                                ) in item.Characters.slice(0, 3)"
+                                :key="index2"
+                            >
                                 <NuxtLink
                                     class="color-#555553 decoration-none"
-                                    to="/"
-                                    >* 滿貫金流</NuxtLink
-                                >
-                            </div>
-                            <div>
-                                <NuxtLink
-                                    class="color-#555553 decoration-none"
-                                    to="/"
-                                    >* 希望之花</NuxtLink
-                                >
-                            </div>
-                            <div>
-                                <NuxtLink
-                                    class="color-#555553 decoration-none"
-                                    to="/"
-                                    >* 發大財金庫</NuxtLink
-                                >
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-full">
-                        <div class="p-3">滿貫大亨圖</div>
-                        <div>
-                            <div>
-                                <NuxtLink
-                                    class="color-#555553 decoration-none"
-                                    to="/"
-                                    >* 滿貫金流</NuxtLink
-                                >
-                            </div>
-                            <div>
-                                <NuxtLink
-                                    class="color-#555553 decoration-none"
-                                    to="/"
-                                    >* 希望之花</NuxtLink
-                                >
-                            </div>
-                            <div>
-                                <NuxtLink
-                                    class="color-#555553 decoration-none"
-                                    to="/"
-                                    >* 發大財金庫</NuxtLink
-                                >
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-full">
-                        <div class="p-3">滿貫大亨圖</div>
-                        <div>
-                            <div>
-                                <NuxtLink
-                                    class="color-#555553 decoration-none"
-                                    to="/"
-                                    >* 滿貫金流</NuxtLink
-                                >
-                            </div>
-                            <div>
-                                <NuxtLink
-                                    class="color-#555553 decoration-none"
-                                    to="/"
-                                    >* 希望之花</NuxtLink
-                                >
-                            </div>
-                            <div>
-                                <NuxtLink
-                                    class="color-#555553 decoration-none"
-                                    to="/"
-                                    >* 發大財金庫</NuxtLink
+                                    :to="`/findmatch/${character.Id}`"
+                                    >* {{ character.Name }}</NuxtLink
                                 >
                             </div>
                         </div>
@@ -263,13 +185,6 @@
                     <div class="w-400px">
                         <NewRatio />
                         <Matching />
-                        <div class="w-200px h-200px bg-#999">
-                            <img
-                                class="w-200px h-200px"
-                                :src="imageUrl"
-                                alt=""
-                            />
-                        </div>
                     </div>
                 </div>
             </div>
@@ -280,12 +195,11 @@
 <script setup>
 import { ElButton } from "element-plus";
 const newsList = ref([]);
+const gameList = ref([]);
 const { $axios } = useNuxtApp();
 const jwtStore = useJwtStore();
 const userToken = useCookie("_PmToken");
-
-// 到時候用這個路徑讀api回來的圖(本地會跳錯、看不到正常)
-const imageUrl = "/assets/2024/20241212112821424.jpg";
+const assetsUrl = useCookie("_PmAssetsUrl");
 
 // 取得GetNewsList
 async function fetchNewsListData(num, token) {
@@ -315,21 +229,48 @@ async function fetchNewsListData(num, token) {
         data.value = "無法取得資料。"; // 畫面顯示錯誤訊息
     }
 }
+// 取得GetPlatformAndCharacterList
+async function fetchGameList(token) {
+    if (token === "") {
+        token = await jwtStore.generateToken();
+    }
+
+    try {
+        const response = await $axios.post(
+            "/api/v1/Pmatch/GetPlatformAndCharacterList",
+            {},
+            {
+                headers: {
+                    Authorization: token, // 帶上 Token
+                },
+            }
+        );
+        if (response.data.Status.Code === 0) {
+            gameList.value = response.data.Data;
+        } else {
+            alert(`${response.data.Status.Message}`);
+        }
+    } catch (error) {
+        console.error("請求失敗:", error);
+        data.value = "無法取得資料。"; // 畫面顯示錯誤訊息
+    }
+}
 
 onMounted(async () => {
     try {
         if (userToken.value != "" && userToken.value != undefined) {
-            
             const token = userToken.value;
-            
+
             if (token != "") {
                 fetchNewsListData([], token);
+                fetchGameList(token);
             }
         } else {
             // 生成新的 token
             const token = await jwtStore.generateToken();
             if (token != "") {
                 fetchNewsListData([], token);
+                fetchGameList(token);
             }
         }
     } catch (error) {
@@ -362,4 +303,9 @@ onMounted(async () => {
 :deep(.el-icon) {
     z-index: -1;
 }
+/* 遊戲 */
+.gameBox{
+        width: calc(100% /4);
+        padding-bottom: 1rem;
+    }
 </style>

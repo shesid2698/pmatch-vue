@@ -44,9 +44,11 @@ body {
 </style>
 
 <script setup>
-const settingList = ref([]);
+const settingList = ref("");
 const { $axios } = useNuxtApp();
 const jwtStore = useJwtStore();
+// cookies
+let assetsUrl = useCookie("_PmAssetsUrl");
 const userToken = useCookie("_PmToken");
 
 onMounted(async () => {
@@ -55,13 +57,13 @@ onMounted(async () => {
             const token = userToken.value;
 
             if (token != "") {
-                fetchNewsListData([], token);
+                fetchSetting(token);
             }
         } else {
             // 生成新的 token
             const token = await jwtStore.generateToken();
             if (token != "") {
-                fetchNewsListData([], token);
+                fetchSetting(token);
             }
         }
     } catch (error) {
@@ -69,18 +71,16 @@ onMounted(async () => {
     }
 });
 
-// 取得GetNewsList
-async function fetchNewsListData(num, token) {
+// 取得GetSetting
+async function fetchSetting(token) {
     if (token === "") {
         token = await jwtStore.generateToken();
     }
 
     try {
         const response = await $axios.post(
-            "/api/v1/Pmatch/GetNewsList",
-            {
-                Categorys: num,
-            },
+            "/api/v1/Pmatch/GetSetting",
+            {},
             {
                 headers: {
                     Authorization: token, // 帶上 Token
@@ -89,6 +89,15 @@ async function fetchNewsListData(num, token) {
         );
         if (response.data.Status.Code === 0) {
             settingList.value = response.data.Data;
+            try {
+                // 移除外層轉義字符
+                const parsedSettingList = JSON.parse(settingList.value);
+                console.log("parsedSettingList",parsedSettingList);
+                // 取出 AssetsUrl 的值
+                assetsUrl.value = parsedSettingList.AssetsUrl;
+            } catch (error) {
+                console.error("無法解析 JSON 字符串:", error);
+            }
         } else {
             alert(`${response.data.Status.Message}`);
         }
