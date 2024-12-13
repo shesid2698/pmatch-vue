@@ -92,7 +92,6 @@ async function fetchSetting(token) {
             try {
                 // 移除外層轉義字符
                 const parsedSettingList = JSON.parse(settingList.value);
-                console.log("parsedSettingList",parsedSettingList);
                 // 取出 AssetsUrl 的值
                 assetsUrl.value = parsedSettingList.AssetsUrl;
             } catch (error) {
