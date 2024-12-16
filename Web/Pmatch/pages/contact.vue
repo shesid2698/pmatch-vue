@@ -8,75 +8,106 @@
             </div>
         </div>
         <div class="flex justify-center">
-            <div class="w-100% lg-w-auto">
-                <p class="m-0 mb-3">
-                    會員帳號： <span class="color-red">*</span>
-                </p>
-                <input
-                    class="entryCol w-100% lg-w-380px rounded-5px h-25px lg-ps-1rem lg-pe-1rem ps-0 pe-0 pt-.2rem pb-.2rem font-size-1rem mb-3"
-                    type="text"
-                    v-model="accountId"
-                />
-                <p class="m-0 mb-3">
-                    遊戲平台： <span class="color-red">*</span>
-                </p>
-                <select v-model="platform" class="selectCol w-100% lg-w-414px rounded-5px h-32px lg-ps-1rem lg-pe-1rem ps-0 pe-0 pt-.2rem pb-.2rem font-size-1rem mb-3">
-                    <option value="" hidden>請選擇..</option>
-                    <option v-for="(item, index) in gameList" :key="index" :value="item.PlatformId">{{item.PlatformName}}</option>
-                </select>
-                <p class="m-0 mb-3">
-                    遊戲暱稱： <span class="color-red">*</span>
-                </p>
-                <input
-                    class="entryCol w-100% lg-w-380px rounded-5px h-25px lg-ps-1rem lg-pe-1rem ps-0 pe-0 pt-.2rem pb-.2rem font-size-1rem mb-3"
-                    type="text" v-model="nickName"
-                />
-                <p class="m-0 mb-3">
-                    聯絡人姓名： <span class="color-red">*</span>
-                </p>
-                <input
-                    class="entryCol w-100% lg-w-380px rounded-5px h-25px lg-ps-1rem lg-pe-1rem ps-0 pe-0 pt-.2rem pb-.2rem font-size-1rem mb-3"
-                    type="text" v-model="name"
-                />
-                <p class="m-0 mb-3">
-                    聯絡人信箱： <span class="color-red">*</span>
-                </p>
-                <input
-                    class="entryCol w-100% lg-w-380px rounded-5px h-25px lg-ps-1rem lg-pe-1rem ps-0 pe-0 pt-.2rem pb-.2rem font-size-1rem mb-3"
-                    type="text" placeholder="ex: johnny.doe@mail.com"
-                    v-model="mail"
-                />
-                <p class="m-0 mb-3">聯絡人電話：</p>
-                <input
-                    class="entryCol w-100% lg-w-380px rounded-5px h-25px lg-ps-1rem lg-pe-1rem ps-0 pe-0 pt-.2rem pb-.2rem font-size-1rem mb-3"
-                    type="text" placeholder="ex: xxx-xxxxxxxx#ext"
-                    v-model="telephone"
-                />
-                <p class="m-0 mb-3">
-                    問題類別： <span class="color-red">*</span>
-                </p>
-                <select v-model="questionType" class="selectCol w-100% lg-w-414px rounded-5px h-32px lg-ps-1rem lg-pe-1rem ps-0 pe-0 pt-.2rem pb-.2rem font-size-1rem mb-3">
-                    <option value="">商務洽談</option>
-                    <option value="">會員帳號</option>
-                    <option value="">其他</option>
-                </select>
-                <p class="m-0 mb-3">
-                    問題主題： <span class="color-red">*</span>
-                </p>
-                <input
-                    class="entryCol w-100% lg-w-380px rounded-5px h-25px lg-ps-1rem lg-pe-1rem ps-0 pe-0 pt-.2rem pb-.2rem font-size-1rem mb-3"
-                    type="text"
-                    v-model="questionTheme"
-                />
-                <p class="m-0 mb-3">問題描述：</p>
-                <textarea
-                    class="entryCol w-100% lg-w-380px rounded-5px h-150px lg-ps-1rem lg-pe-1rem ps-0 pe-0 pt-.2rem pb-.2rem font-size-1rem mb-3"
-                    v-model="questionDescription"
-                />
-                <div>
-                    <button class="border-none bg-#e93470 color-#fff w-100% lg-w-414px rounded-5px h-35px font-size-1rem" @click="submitForm">提交</button>
+            <form action="#" @submit="SubmitForm">
+                <div class="w-100% lg-w-auto">
+                    <p class="m-0 mb-3">
+                        會員帳號： <span class="color-red">*</span>
+                    </p>
+                    <input
+                        required
+                        class="entryCol w-100% lg-w-380px rounded-5px h-25px lg-ps-1rem lg-pe-1rem ps-0 pe-0 pt-.2rem pb-.2rem font-size-1rem mb-3"
+                        type="text"
+                        v-model="accountId"
+                    />
+                    <p class="m-0 mb-3">
+                        遊戲平台： <span class="color-red">*</span>
+                    </p>
+                    <select
+                        required
+                        v-model="platform"
+                        class="selectCol w-100% lg-w-414px rounded-5px h-32px lg-ps-1rem lg-pe-1rem ps-0 pe-0 pt-.2rem pb-.2rem font-size-1rem mb-3"
+                    >
+                        <option value="" hidden>請選擇..</option>
+                        <option
+                            v-for="(item, index) in gameList"
+                            :key="index"
+                            :value="item.PlatformId"
+                        >
+                            {{ item.PlatformName }}
+                        </option>
+                    </select>
+                    <p class="m-0 mb-3">
+                        遊戲暱稱： <span class="color-red">*</span>
+                    </p>
+                    <input
+                        required
+                        class="entryCol w-100% lg-w-380px rounded-5px h-25px lg-ps-1rem lg-pe-1rem ps-0 pe-0 pt-.2rem pb-.2rem font-size-1rem mb-3"
+                        type="text"
+                        v-model="nickName"
+                    />
+                    <p class="m-0 mb-3">
+                        聯絡人姓名： <span class="color-red">*</span>
+                    </p>
+                    <input
+                        required
+                        class="entryCol w-100% lg-w-380px rounded-5px h-25px lg-ps-1rem lg-pe-1rem ps-0 pe-0 pt-.2rem pb-.2rem font-size-1rem mb-3"
+                        type="text"
+                        v-model="name"
+                    />
+                    <p class="m-0 mb-3">
+                        聯絡人信箱： <span class="color-red">*</span>
+                    </p>
+                    <input
+                        required
+                        class="entryCol w-100% lg-w-380px rounded-5px h-25px lg-ps-1rem lg-pe-1rem ps-0 pe-0 pt-.2rem pb-.2rem font-size-1rem mb-3"
+                        type="text"
+                        placeholder="ex: johnny.doe@mail.com"
+                        v-model="mail"
+                    />
+                    <p class="m-0 mb-3">聯絡人電話：</p>
+                    <input
+                        required
+                        class="entryCol w-100% lg-w-380px rounded-5px h-25px lg-ps-1rem lg-pe-1rem ps-0 pe-0 pt-.2rem pb-.2rem font-size-1rem mb-3"
+                        type="text"
+                        placeholder="ex: xxx-xxxxxxxx#ext"
+                        v-model="telephone"
+                    />
+                    <p class="m-0 mb-3">
+                        問題類別： <span class="color-red">*</span>
+                    </p>
+                    <select
+                        required
+                        v-model="questionType"
+                        class="selectCol w-100% lg-w-414px rounded-5px h-32px lg-ps-1rem lg-pe-1rem ps-0 pe-0 pt-.2rem pb-.2rem font-size-1rem mb-3"
+                    >
+                        <option value="1">商務洽談</option>
+                        <option value="2">會員帳號</option>
+                        <option value="3">其他</option>
+                    </select>
+                    <p class="m-0 mb-3">
+                        問題主題： <span class="color-red">*</span>
+                    </p>
+                    <input
+                        required
+                        class="entryCol w-100% lg-w-380px rounded-5px h-25px lg-ps-1rem lg-pe-1rem ps-0 pe-0 pt-.2rem pb-.2rem font-size-1rem mb-3"
+                        type="text"
+                        v-model="questionTheme"
+                    />
+                    <p class="m-0 mb-3">問題描述：</p>
+                    <textarea
+                        class="entryCol w-100% lg-w-380px rounded-5px h-150px lg-ps-1rem lg-pe-1rem ps-0 pe-0 pt-.2rem pb-.2rem font-size-1rem mb-3"
+                        v-model="questionDescription"
+                    />
+                    <div>
+                        <button
+                            class="border-none bg-#e93470 color-#fff w-100% lg-w-414px rounded-5px h-35px font-size-1rem"
+                            @click="submitForm"
+                        >
+                            提交
+                        </button>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </template>
@@ -100,32 +131,35 @@ let questionType = ref("");
 let questionTheme = ref("");
 let questionDescription = ref("");
 
-async function contactList(encryptedPassword) {
+async function contactList(token) {
     try {
         const response = await $axios.post(
-            "/api/v1/Pmatch/Logon",
+            "/api/v1/Pmatch/CreateOrUpdateFeedBack",
             {
-                Id: 0,
-                Category: questionType.value,
-                MemberId: accountId.value,
-                GameplatformId: platform.value,
-                Name:,
-                NickName:,
-                Email:,
-                phonenumber:,
-                Title:,
-                Content:,
+                Data: [
+                    {
+                        Id: 0,
+                        Category: Number(questionType.value),
+                        MemberId: accountId.value,
+                        GameplatformId: platform.value,
+                        Name: name.value,
+                        NickName: nickName.value,
+                        Email: mail.value,
+                        phonenumber: telephone.value,
+                        Title: questionTheme.value,
+                        Content: questionDescription.value,
+                    },
+                ],
             },
             {
-                headers: {},
+                headers: {
+                    Authorization: token,
+                },
             }
         );
 
         if (response.data.Status.Code === 0) {
-            memberList.value = response.data.Data;
-            userNameCookie.value = response.data.Data.Name;
-            tokenCookie.value = response.data.Data.Token;
-            router.push("/");
+            console.log("ok");
         } else {
             alert(`${response.data.Status.Message}`);
         }
@@ -133,9 +167,10 @@ async function contactList(encryptedPassword) {
         console.error("請求失敗:", error);
     }
 }
-async function submitForm(){
-    console.log(platform.value);
+async function submitForm() {
+    await contactList(userToken.value);
 }
+
 // 取得GetPlatformAndCharacterList
 async function fetchGameList(token) {
     try {
@@ -163,33 +198,34 @@ onMounted(async () => {
         if (userToken.value != "" && userToken.value != undefined) {
             name.value = userNameCookie.value;
             accountId.value = MemberIdCookie.value;
-            fetchGameList(userToken.value)
+            fetchGameList(userToken.value);
             return;
-        }else{
+        } else {
             router.push("/member/login");
         }
     } catch (error) {
         console.error("頁面初始化失敗:", error);
     }
 });
-
 </script>
 
 <style scoped>
-.entryCol,.selectCol {
+.entryCol,
+.selectCol {
     border: 1px solid #ccc;
 }
-.entryCol:focus, .selectCol:focus {
+.entryCol:focus,
+.selectCol:focus {
     border-color: #a9d8f8;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
     outline: none;
 }
-.selectCol{
+.selectCol {
     appearance: none;
     -moz-appearance: none;
     -webkit-appearance: none;
 }
-.selectCol::-ms-expand{
+.selectCol::-ms-expand {
     display: none;
 }
 </style>
