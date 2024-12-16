@@ -296,6 +296,9 @@ const { $axios } = useNuxtApp();
 const jwtStore = useJwtStore();
 const userToken = useCookie("_PmToken");
 
+const route = useRoute();
+const platformName = route.query.platformName;
+
 // 取得GetStoreList
 async function fetchStoresListData(token) {
     try {
@@ -336,6 +339,11 @@ onMounted(async () => {
                 fetchStoresListData(token);
             }
         }
+        
+        if(platformName !== "" && platformName !== undefined){
+            selectedPlatform.value = platformName;
+        }
+
     } catch (error) {
         console.error("頁面初始化失敗:", error);
     }
@@ -368,6 +376,30 @@ const stores = ref(
 const searchQuery = ref("");
 const selectedPlatform = ref("");
 
+
+// 搜尋按鈕的事件處理函式
+// const searchStores = () => {
+//     let filtered = storesList.value;
+//     if (searchQuery.value) {
+//         const Query = searchQuery.value.toLowerCase();
+//         filtered = filtered.filter((store) =>
+//             store.Name.toLowerCase().includes(Query)
+//         );
+//     }
+
+//     if (selectedPlatform.value && selectedPlatform.value !== undefined) {
+//         filtered = filtered.filter((store) => {
+//             const platformsSet = new Set(
+//                 store.GamePlatforms.map((platform) => platform.GamePlatform)
+//             );
+//             const platforms = Array.from(platformsSet).join(", ");
+//             return platforms === selectedPlatform.value;
+//         });
+//     }
+
+//     filteredStores.value = filtered; // 更新篩選結果
+// };
+
 const filteredStores = computed(() => {
     let filtered = storesList.value;
     if (searchQuery.value) {
@@ -376,7 +408,7 @@ const filteredStores = computed(() => {
             stores.Name.toLowerCase().includes(Query)
         );
     }
-    if (selectedPlatform.value) {
+    if (selectedPlatform.value && selectedPlatform.value !== undefined) {
         filtered = filtered.filter((store) => {
             const platformsSet = new Set(
                 store.GamePlatforms.map((platform) => platform.GamePlatform)

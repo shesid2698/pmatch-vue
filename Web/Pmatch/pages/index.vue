@@ -88,10 +88,13 @@
                         :key="index"
                     >
                         <div class="p-3">
-                            <img
-                                :src="`${assetsUrl}${item.ImgFile}`"
-                                :alt="item.PlatformName"
-                            />
+                            <NuxtLink :to="{ path: '/findmatch', query: { platformName: item.PlatformName } }">
+                                <img
+                                    :src="`${assetsUrl}${item.ImgFile}`"
+                                    :alt="item.PlatformName"
+                                />
+                            </NuxtLink>
+                            
                         </div>
                         <div>
                             <div
