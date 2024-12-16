@@ -108,8 +108,13 @@ async function contactList(encryptedPassword) {
                 Id: 0,
                 Category: questionType.value,
                 MemberId: accountId.value,
-                Password: encryptedPassword, // 使用加密後的密碼
-                IsNormalUser: true,
+                GameplatformId: platform.value,
+                Name:,
+                NickName:,
+                Email:,
+                phonenumber:,
+                Title:,
+                Content:,
             },
             {
                 headers: {},
@@ -128,7 +133,9 @@ async function contactList(encryptedPassword) {
         console.error("請求失敗:", error);
     }
 }
-
+async function submitForm(){
+    console.log(platform.value);
+}
 // 取得GetPlatformAndCharacterList
 async function fetchGameList(token) {
     try {

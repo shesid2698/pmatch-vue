@@ -128,8 +128,8 @@ const headerLink = computed(() => [
     },
     {
         id: 2,
-        title: userToken.value 
-            ? `HI,${userNameCookie.value}` 
+        title: userToken.value
+            ? `HI,${userNameCookie.value}`
             : '會員登入/註冊',
         link: '/member/login',
         dropdown: true,
