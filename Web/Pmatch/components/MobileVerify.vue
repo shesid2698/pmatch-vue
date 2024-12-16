@@ -86,6 +86,7 @@ const validMobilePattern = () => {
 };
 const SendCode = async () => {
     try {
+        token.value = await jwtStore.generateToken();
         const response = await $axios.post(
             '/api/v1/Pmatch/SendVerifyCode',
             {
@@ -93,7 +94,7 @@ const SendCode = async () => {
             },
             {
                 headers: {
-                    Authorization:token.value
+                    Authorization: token.value
                 }
             }
         );
@@ -110,6 +111,7 @@ const SendCode = async () => {
 };
 const verifyCode = async () => {
     try {
+        token.value = await jwtStore.generateToken();
         const response = await $axios.post(
             '/api/v1/Pmatch/Verify',
             {
@@ -118,7 +120,7 @@ const verifyCode = async () => {
             },
             {
                 headers: {
-                    Authorization:token.value
+                    Authorization: token.value
                 }
             }
         );
@@ -154,7 +156,6 @@ onMounted(async () => {
     if (mobileTimer.secCount !== 120) {
         mobileTimer.decrement();
     }
-    token.value = await jwtStore.generateToken();
     mobile.value = props.phone;
     validMobilePattern();
 });

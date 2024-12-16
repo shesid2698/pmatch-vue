@@ -465,6 +465,8 @@ const SubmitForm = async e => {
     var password2 = encrypt(i_password2.value.value);
     var phoneValue = mobileVerify.value === true ? phone.value : '';
     var emailValue = emailVerify.value === true ? email.value : '';
+    var birthDayValue = birthday.value === "" ? null :birthday.value;
+    token.value = await jwtStore.generateToken();
     if (password1 !== password2) {
         alert('密碼與確認密碼不一致');
         return;
@@ -477,7 +479,7 @@ const SubmitForm = async e => {
                 Password: password1, // 使用加密後的密碼
                 Email: emailValue,
                 Name: theName.value,
-                BirthDay: birthday.value,
+                BirthDay: birthDayValue,
                 Address: selectedCity.value + selectedRegion.value + address.value
             },
             {
@@ -520,8 +522,6 @@ onMounted(async () => {
     if (mobileTimer.secCount !== 120) {
         mobileTimer.decrement();
     }
-    token.value = await jwtStore.generateToken();
-    console.log("token=>",token.value);
     // 初次加載時設置
     updateDialogWidth();
 
