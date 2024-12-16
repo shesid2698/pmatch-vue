@@ -206,8 +206,8 @@
                             <div class="w-2%"></div>
                             <div class="w-49%">
                                 <select class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200">
-                                  <option value="">請選擇</option>
-                                  <option v-for="(district, index) in districts"
+                                    <option value="">請選擇</option>
+                                    <option v-for="(district, index) in districts"
                                             :key="index"
                                             :value="district">
                                         {{ district }}
@@ -217,13 +217,14 @@
                         </div>
                         <div class="mt-5px">
                             <input type="text"
-                                    v-model="address"
+                                   v-model="address"
                                    class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
                         </div>
                     </div>
                     <div class="mt-15px">
                         <div class="flex">
                             <div><input type="checkbox"
+                                       required
                                        checked /></div>
                             <div>
                                 <NuxtLink to="/company/privacy"
@@ -233,6 +234,7 @@
                         </div>
                         <div class="flex">
                             <div><input type="checkbox"
+                                       required
                                        checked /></div>
                             <div>
                                 <NuxtLink to="/company/service"
@@ -277,7 +279,7 @@ const i_password = ref(null);
 const i_password2 = ref(null);
 const eyes = ref(null);
 const eyes2 = ref(null);
-const token = ref("");
+const token = ref('');
 const cities = reactive([
     {
         value: '',
@@ -446,7 +448,7 @@ const GetRegions = async () => {
         const res = await fetch(`/api/regions?city=${selectedCity.value}`);
         const data = await res.json();
         if (data.districts) {
-            districts.value =data.districts;
+            districts.value = data.districts;
         } else {
             districts.value = [];
         }
@@ -461,8 +463,8 @@ const SubmitForm = async e => {
     e.preventDefault();
     var password1 = encrypt(i_password.value.value);
     var password2 = encrypt(i_password2.value.value);
-    var phoneValue = mobileVerify.value === true?phone.value:'';
-    var emailValue = emailVerify.value === true?email.value:'';
+    var phoneValue = mobileVerify.value === true ? phone.value : '';
+    var emailValue = emailVerify.value === true ? email.value : '';
     if (password1 !== password2) {
         alert('密碼與確認密碼不一致');
         return;
@@ -476,17 +478,17 @@ const SubmitForm = async e => {
                 Email: emailValue,
                 Name: theName.value,
                 BirthDay: birthday.value,
-                Address:selectedCity.value+selectedRegion.value+address.value
+                Address: selectedCity.value + selectedRegion.value + address.value
             },
             {
                 headers: {
-                  Authorization:token.value,
+                    Authorization: token.value
                 }
             }
         );
         console.log(response);
         if (response.data.Status.Code === 0) {
-          router.push(`/register/done?account=${phoneValue}`);
+            router.push(`/register/done?account=${phoneValue}`);
         } else {
             alert(`${response.data.Status.Message}`);
         }
@@ -507,7 +509,7 @@ function encrypt(input) {
     // 4. 結果
     return `e${reversedBase64}is`;
 }
-onMounted(async() => {
+onMounted(async () => {
     const updateDialogWidth = () => {
         if (window.innerWidth <= 768) {
             dialogWidth.value = '90%'; // MD 裝置或以下設置寬度為 370px
@@ -518,8 +520,8 @@ onMounted(async() => {
     if (mobileTimer.secCount !== 120) {
         mobileTimer.decrement();
     }
-    token.value= await jwtStore.generateToken();
-    // console.log("token=>",token.value);
+    token.value = await jwtStore.generateToken();
+    console.log("token=>",token.value);
     // 初次加載時設置
     updateDialogWidth();
 
