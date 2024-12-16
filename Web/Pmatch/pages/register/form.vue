@@ -198,14 +198,17 @@
                                 <select @change="GetRegions"
                                         v-model="selectedCity"
                                         class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200">
-                                    <option v-for="item in cities"
-                                            :key="item.name"
-                                            :value="item.value">{{item.name}}</option>
+                                    <option value="">請選擇</option>
+                                    <option v-for="(item,index) in cities"
+                                            :key="index"
+                                            :value="item">{{item}}</option>
                                 </select>
                             </div>
                             <div class="w-2%"></div>
                             <div class="w-49%">
-                                <select class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200">
+                                <select
+                                v-model="selectedRegion"
+                                class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200">
                                     <option value="">請選擇</option>
                                     <option v-for="(district, index) in districts"
                                             :key="index"
@@ -254,6 +257,7 @@
     </div>
 </template>
 <script setup>
+const theCities = useGetCities();
 const jwtStore = useJwtStore();
 const router = useRouter();
 const { $axios } = useNuxtApp();
@@ -280,100 +284,7 @@ const i_password2 = ref(null);
 const eyes = ref(null);
 const eyes2 = ref(null);
 const token = ref('');
-const cities = reactive([
-    {
-        value: '',
-        name: '請選擇'
-    },
-    {
-        value: '台北市',
-        name: '台北市'
-    },
-    {
-        value: '新北市',
-        name: '新北市'
-    },
-    {
-        value: '基隆市',
-        name: '基隆市'
-    },
-    {
-        value: '宜蘭縣',
-        name: '宜蘭縣'
-    },
-    {
-        value: '新竹縣',
-        name: '新竹縣'
-    },
-    {
-        value: '新竹市',
-        name: '新竹市'
-    },
-    {
-        value: '桃園市',
-        name: '桃園市'
-    },
-    {
-        value: '苗栗縣',
-        name: '苗栗縣'
-    },
-    {
-        value: '台中市',
-        name: '台中市'
-    },
-    {
-        value: '彰化縣',
-        name: '彰化縣'
-    },
-    {
-        value: '南投縣',
-        name: '南投縣'
-    },
-    {
-        value: '嘉義市',
-        name: '嘉義市'
-    },
-    {
-        value: '嘉義縣',
-        name: '嘉義縣'
-    },
-    {
-        value: '雲林縣',
-        name: '雲林縣'
-    },
-    {
-        value: '台南市',
-        name: '台南市'
-    },
-    {
-        value: '高雄市',
-        name: '高雄市'
-    },
-    {
-        value: '澎湖縣',
-        name: '澎湖縣'
-    },
-    {
-        value: '屏東縣',
-        name: '屏東縣'
-    },
-    {
-        value: '台東縣',
-        name: '台東縣'
-    },
-    {
-        value: '花蓮縣',
-        name: '花蓮縣'
-    },
-    {
-        value: '金門縣',
-        name: '金門縣'
-    },
-    {
-        value: '連江縣',
-        name: '連江縣'
-    }
-]);
+const cities = ref([]);
 const districts = ref([]);
 const selectedCity = ref('');
 const selectedRegion = ref('');
@@ -445,13 +356,7 @@ const openMobileDialog = () => {
  */
 const GetRegions = async () => {
     if (selectedCity.value != '請選擇') {
-        const res = await fetch(`/api/regions?city=${selectedCity.value}`);
-        const data = await res.json();
-        if (data.districts) {
-            districts.value = data.districts;
-        } else {
-            districts.value = [];
-        }
+        districts.value = theCities.cities[selectedCity.value];
     } else {
         districts.value = [];
     }
@@ -465,7 +370,7 @@ const SubmitForm = async e => {
     var password2 = encrypt(i_password2.value.value);
     var phoneValue = mobileVerify.value === true ? phone.value : '';
     var emailValue = emailVerify.value === true ? email.value : '';
-    var birthDayValue = birthday.value === "" ? null :birthday.value;
+    var birthDayValue = birthday.value === '' ? null : birthday.value;
     token.value = await jwtStore.generateToken();
     if (password1 !== password2) {
         alert('密碼與確認密碼不一致');
@@ -488,7 +393,6 @@ const SubmitForm = async e => {
                 }
             }
         );
-        console.log(response);
         if (response.data.Status.Code === 0) {
             router.push(`/register/done?account=${phoneValue}`);
         } else {
@@ -522,6 +426,7 @@ onMounted(async () => {
     if (mobileTimer.secCount !== 120) {
         mobileTimer.decrement();
     }
+    cities.value = Object.keys(theCities.getCities());
     // 初次加載時設置
     updateDialogWidth();
 

@@ -82,9 +82,7 @@ const handleScroll = event => {
 
 onMounted(async()=>{
   token.value = await jwtStore.generateToken();
-  console.log("token",token.value);
   await GetService(token.value,4);
-
 });
 </script>
 <style scoped>
