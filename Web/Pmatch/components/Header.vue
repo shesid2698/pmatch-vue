@@ -36,8 +36,6 @@
                              class="loginDropdown bg-white mt-1">
                             <NuxtLink to="/member/login"
                                       class="loginItem block p-1 ps-2 pe-2 mt-1 mb-1 decoration-none">會員登入</NuxtLink>
-                            <NuxtLink to="/store/login"
-                                      class="loginItem block p-1 ps-2 pe-2 mt-1 mb-1 decoration-none">媒合商登入</NuxtLink>
                             <NuxtLink to="/register"
                                       class="loginItem block p-1 ps-2 pe-2 mt-1 mb-1 decoration-none">註冊會員</NuxtLink>
                             <NuxtLink to="/member/forgetpwd"
@@ -130,8 +128,8 @@ const headerLink = computed(() => [
     },
     {
         id: 2,
-        title: userToken.value 
-            ? `HI,${userNameCookie.value}` 
+        title: userToken.value
+            ? `HI,${userNameCookie.value}`
             : '會員登入/註冊',
         link: '/member/login',
         dropdown: true,

@@ -14,27 +14,6 @@
                     <div class="text-20px">會員登入</div>
                 </div>
 
-                <!-- 頁面切換鈕 -->
-                <div class="flex flex-items-center mt-24px">
-                    <div class="flex-1">
-                        <button
-                            class="font-sans w-100% bg-#e93470 outline-none border border-solid border-[#e93470] border-1 hover:bg-#bb2d3b transition duration-200 p-y-1.5 p-x-3 text-16px text-white rounded-1 cursor-pointer"
-                        >
-                            會員登入
-                        </button>
-                    </div>
-                    <div class="w-10px"></div>
-                    <div class="flex-1">
-                        <NuxtLink to="/store/login">
-                            <button
-                                class="w-100% outline-none bg-white border-1 p-y-1.5 p-x-3 text-16px rounded-1 cursor-pointer text-[#212529] font-sans"
-                            >
-                                媒合商登入
-                            </button>
-                        </NuxtLink>
-                    </div>
-                </div>
-
                 <div class="mt-15px">
                     <div class="mb-5px">登入帳號</div>
                     <input
