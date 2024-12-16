@@ -4,18 +4,6 @@
             <div class="mb-3">
                 <h1 class="m-0 text-center">最安全的遊戲交易平台</h1>
             </div>
-            <!-- <div class="mb-3 flex justify-center items-center">
-                <div class="flex justify-center items-center">
-                    <select class="platformSelect">
-                        <option>選擇遊戲...</option>
-                    </select>
-                    <input class="keywordEntry" type="text" placeholder="輸入關鍵字..." />
-                    <input class="checkBox" type="checkbox" /><span>查看已簽約之媒合商</span>
-                </div>
-                <div>
-                    <button class="ms-5">搜尋</button>
-                </div>
-            </div> -->
             <div class="mb-6 md-flex block items-center justify-center">
                 <div class="flex items-center">
                     <div class="flex items-center w-100%">
@@ -24,11 +12,7 @@
                                 class="platformName md-w-270px w-100% h-43px font-size-1rem b-#a9d8f8 rounded-5px p-5px"
                             >
                                 <option value="">選擇遊戲...</option>
-                                <option value="滿貫大亨">滿貫大亨</option>
-                                <option value="錢街Online">錢街Online</option>
-                                <option value="包你發娛樂城">
-                                    包你發娛樂城
-                                </option>
+                                <option v-for="(item, index) in gameList" :key="index" :value="item.PlatformName">{{item.PlatformName}}</option>
                             </select>
                         </div>
                     </div>
