@@ -50,29 +50,28 @@
                 <div class="text-11px text-red-8">注意:驗證碼有效時間為10分鐘</div>
             </div>
         </div>
-        <div class="mt-5px"><button :disabled="!Token || Token.value===''"
-                    @click="verifyCode"
+        <div class="mt-5px"><button @click="verifyCode"
                     class="w-100% p-y-1.5 p-x-3 border-none outline-none text-16px text-white rounded-1 bg-[#1a6db4] hover:bg-[#0b5ed7] transition duration-200 cursor-pointer disabled:bg-gray disabled:hover:bg-gray">
                 驗證手機號碼
             </button></div>
     </div>
 </template>
 <script setup>
+const jwtStore = useJwtStore();
 const emit = defineEmits(['isVerify']);
 const mobileTimer = useMobileTimer();
 const mobile = ref('');
+const token = ref('');
 
 const isValid = ref(false);
 const ansCode = ref('');
+const { $axios } = useNuxtApp();
 let num = '';
 const { encrypt, decrypt } = crypto();
 const props = defineProps({
     from: String,
     index: String,
-    phone:String,
-});
-const Token = useCookie(`${props.from}Token`, {
-    maxAge: 600
+    phone: String
 });
 const mobileCook = useCookie(`${props.from}Mobile`, {
     maxAge: 120
@@ -85,32 +84,55 @@ const validMobilePattern = () => {
         isValid.value = false;
     }
 };
-const SendCode = () => {
-    alert('驗證碼已發送，請至手機收取驗證碼!');
-    num ='';
-    for (let i = 0; i < 6; i++) {
-        num += Math.floor(Math.random() * 10).toString();
+const SendCode = async () => {
+    try {
+        const response = await $axios.post(
+            '/api/v1/Pmatch/SendVerifyCode',
+            {
+                MobileNumber: mobile.value
+            },
+            {
+                headers: {
+                    Authorization:token.value
+                }
+            }
+        );
+        if (response.data.Status.Code === 0) {
+            alert('驗證碼已發送，請至手機收取驗證碼!');
+            mobileTimer.decrement();
+            mobileCook.value = mobile.value;
+        } else {
+            alert(`${response.data.Status.Message}`);
+        }
+    } catch (error) {
+        console.error('請求失敗:', error);
     }
-    mobileTimer.decrement();
-    mobileCook.value = mobile.value;
-    console.log(num);
-    Token.value = encrypt(num);
 };
-const verifyCode = () => {
-    let code = decrypt(Token.value);
-    if (ansCode.value !== code) {
-        alert('驗證碼錯誤');
-    } else {
-      if(mobile.value == mobileCook.value){
-        resetAll();
-      }else{
-        alert('驗證中的電話號碼錯誤');
-      }
+const verifyCode = async () => {
+    try {
+        const response = await $axios.post(
+            '/api/v1/Pmatch/Verify',
+            {
+                MobileNumber: mobile.value,
+                VerifyCode: ansCode.value
+            },
+            {
+                headers: {
+                    Authorization:token.value
+                }
+            }
+        );
+        if (response.data.Status.Code === 0) {
+            resetAll();
+        } else {
+            alert(`${response.data.Status.Message}`);
+        }
+    } catch (error) {
+        console.error('請求失敗:', error);
     }
 };
 const resetAll = () => {
-    emit('isVerify', true,mobile.value);
-    Token.value = undefined;
+    emit('isVerify', true, mobile.value);
     mobileCook.value = undefined;
     ansCode.value = '';
     mobile.value = '';
@@ -122,27 +144,28 @@ const openSendBtn = () => {
     if (isValid.value === true) {
         open = false;
     }
-    if (mobileTimer.secCount!=undefined && mobileTimer.secCount !== 120) {
+    if (mobileTimer.secCount != undefined && mobileTimer.secCount !== 120) {
         open = true;
     }
 
     return open;
 };
-onMounted(() => {
+onMounted(async () => {
     if (mobileTimer.secCount !== 120) {
         mobileTimer.decrement();
     }
+    token.value = await jwtStore.generateToken();
     mobile.value = props.phone;
     validMobilePattern();
 });
 watch(
-  () => props,
-  (newProps) => {
-    mobile.value = newProps.phone
-    validMobilePattern();
-  },
-  { deep: true, immediate: false }
-)
+    () => props,
+    newProps => {
+        mobile.value = newProps.phone;
+        validMobilePattern();
+    },
+    { deep: true, immediate: false }
+);
 </script>
 <style scoped>
 .ccontainer {

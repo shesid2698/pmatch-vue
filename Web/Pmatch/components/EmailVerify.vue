@@ -49,7 +49,7 @@
                 <div class="text-11px text-red-8">注意:驗證碼有效時間為10分鐘</div>
             </div>
         </div>
-        <div class="mt-5px"><button :disabled="!Token || Token.value===''"
+        <div class="mt-5px"><button
                     @click="verifyCode"
                     class="w-100% p-y-1.5 p-x-3 border-none outline-none text-16px text-white rounded-1 bg-[#1a6db4] hover:bg-[#0b5ed7] transition duration-200 cursor-pointer disabled:bg-gray disabled:hover:bg-gray">
                 驗證電子信箱
@@ -60,19 +60,18 @@
 const emit = defineEmits(['isVerify']);
 const emailTimer = useEmailTimer();
 const email = ref('');
-
+const jwtStore = useJwtStore();
 const isValid = ref(false);
 const ansCode = ref('');
 let num = '';
+const { $axios } = useNuxtApp();
 const { encrypt, decrypt } = crypto();
 const props = defineProps({
     from: String,
     index: String,
     pEmail: 'shshsh@gamil.com'
 });
-const Token = useCookie(`${props.from}emailToken`, {
-    maxAge: 600
-});
+const token = ref("");
 const emailCook = useCookie(`${props.from}Email`, {
     maxAge: 600
 });
@@ -84,29 +83,57 @@ const validEmailPattern = () => {
         isValid.value = false;
     }
 };
-const SendCode = () => {
-    alert('驗證碼已發送，請至信箱收取驗證碼!');
-    num = '';
-    for (let i = 0; i < 6; i++) {
-        num += Math.floor(Math.random() * 10).toString();
+const SendCode = async() => {
+    try {
+        const response = await $axios.post(
+            '/api/v1/Pmatch/SendVerifyCode',
+            {
+                Email: email.value
+            },
+            {
+                headers: {
+                    Authorization:
+                        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InN5c3RlbSIsIm5iZiI6MTcwNjU4Mzc2MywiZXhwIjoxNzkyOTgzNzYzLCJpYXQiOjE3MDY1ODM3NjN9.wxFnZD-cJjL3ehDzgxhmhFg4KDtULB-ptleQEcBNnfg'
+                }
+            }
+        );
+        if (response.data.Status.Code === 0) {
+            alert('驗證碼已發送，請至信箱收取驗證碼!');
+            emailTimer.decrement();
+            emailCook.value = email.value;
+        } else {
+            alert(`${response.data.Status.Message}`);
+        }
+    } catch (error) {
+        console.error('請求失敗:', error);
     }
-    emailTimer.decrement();
-    emailCook.value = email.value;
-    console.log(num);
-    Token.value = encrypt(num);
 };
-const verifyCode = () => {
-    let code = decrypt(Token.value);
-    console.log(code);
-    if (ansCode.value !== code) {
-        alert('驗證碼錯誤');
-    } else {
-        resetAll();
+const verifyCode = async() => {
+    try {
+        const response = await $axios.post(
+            '/api/v1/Pmatch/Verify',
+            {
+                Email: email.value,
+                VerifyCode: ansCode.value
+            },
+            {
+                headers: {
+                    Authorization:
+                        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InN5c3RlbSIsIm5iZiI6MTcwNjU4Mzc2MywiZXhwIjoxNzkyOTgzNzYzLCJpYXQiOjE3MDY1ODM3NjN9.wxFnZD-cJjL3ehDzgxhmhFg4KDtULB-ptleQEcBNnfg'
+                }
+            }
+        );
+        if (response.data.Status.Code === 0) {
+            resetAll();
+        } else {
+            alert(`${response.data.Status.Message}`);
+        }
+    } catch (error) {
+        console.error('請求失敗:', error);
     }
 };
 const resetAll = () => {
     emit('isVerify', true, email.value);
-    Token.value = undefined;
     emailCook.value = undefined;
     ansCode.value = '';
     email.value = '';
@@ -123,11 +150,12 @@ const openSendBtn = () => {
     }
     return open;
 };
-onMounted(() => {
+onMounted(async() => {
     if (emailTimer.count !== 120) {
         emailTimer.decrement();
     } else {
     }
+    token.value = await jwtStore.generateToken();
     email.value = props.pEmail;
     validEmailPattern();
 });

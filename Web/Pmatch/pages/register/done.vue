@@ -46,7 +46,7 @@
                         帳號
                     </div>
                     <div class="flex-1 text-22px h-25px leading-[23px]">
-                        123456
+                        {{ account }}
                     </div>
                 </div>
                 <div class="mt-15px">
@@ -71,7 +71,13 @@
     </div>
 </template>
 
-<script setup></script>
+<script setup>
+const route = useRoute();
+const account = ref("");
+onMounted(()=>{
+  account.value = route.query.account || "";
+});
+</script>
 <style scoped>
 .ccontainer {
     height: fit-content;

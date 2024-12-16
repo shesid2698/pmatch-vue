@@ -79,8 +79,10 @@ const handleScroll = event => {
         isBottom.value = true;
     }
 };
+
 onMounted(async()=>{
   token.value = await jwtStore.generateToken();
+  console.log("token",token.value);
   await GetService(token.value,4);
 
 });
