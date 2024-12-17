@@ -12,7 +12,13 @@
                                 class="platformName md-w-270px w-100% h-43px font-size-1rem b-#a9d8f8 rounded-5px p-5px"
                             >
                                 <option value="">選擇遊戲...</option>
-                                <option v-for="(item, index) in gameList" :key="index" :value="item.PlatformName">{{item.PlatformName}}</option>
+                                <option
+                                    v-for="(item, index) in gameList"
+                                    :key="index"
+                                    :value="item.PlatformName"
+                                >
+                                    {{ item.PlatformName }}
+                                </option>
                             </select>
                         </div>
                     </div>
@@ -63,7 +69,17 @@
                     </div>
                 </div>
             </div>
-            <div class="mb-3">banner</div>
+            <div class="mb-3">
+                <ElCarousel class="h-200px" :interval="2000" arrow="always">
+                    <ElCarouselItem class="h-200px" v-for="(item, index) in bannerList" :key="index">
+                        <img
+                        class="w-100% "
+                        :src="`${assetsUrl}${item.ImgFile}`"
+                        :alt="item.PlatformName"
+                    />
+                    </ElCarouselItem>
+                </ElCarousel>
+            </div>
             <div class="mb-3">
                 <div class="flex flex-wrap">
                     <div
@@ -72,13 +88,17 @@
                         :key="index"
                     >
                         <div class="p-3">
-                            <NuxtLink :to="{ path: '/findmatch', query: { platformName: item.PlatformName } }">
+                            <NuxtLink
+                                :to="{
+                                    path: '/findmatch',
+                                    query: { platformName: item.PlatformName },
+                                }"
+                            >
                                 <img
                                     :src="`${assetsUrl}${item.ImgFile}`"
                                     :alt="item.PlatformName"
                                 />
                             </NuxtLink>
-                            
                         </div>
                         <div>
                             <div
@@ -181,14 +201,17 @@
 
 <script setup>
 import { ElButton } from "element-plus";
+import { ElCarousel } from "element-plus";
+import { ElCarouselItem } from "element-plus";
 const newsList = ref([]);
 const gameList = ref([]);
+const bannerList = ref([]);
 const { $axios } = useNuxtApp();
 const jwtStore = useJwtStore();
 const userToken = useCookie("_PmToken");
 const assetsUrl = useCookie("_PmAssetsUrl");
 
-// 取得GetNewsList
+// 取得GetNewsList(最新消息)
 async function fetchNewsListData(num, token) {
     if (token === "") {
         token = await jwtStore.generateToken();
@@ -216,7 +239,7 @@ async function fetchNewsListData(num, token) {
         data.value = "無法取得資料。"; // 畫面顯示錯誤訊息
     }
 }
-// 取得GetPlatformAndCharacterList
+// 取得GetPlatformAndCharacterList(遊戲平台資訊)
 async function fetchGameList(token) {
     if (token === "") {
         token = await jwtStore.generateToken();
@@ -242,6 +265,34 @@ async function fetchGameList(token) {
         data.value = "無法取得資料。"; // 畫面顯示錯誤訊息
     }
 }
+// GetAdvertisementList(banner)
+async function fetchADList(token) {
+    if (token === "") {
+        token = await jwtStore.generateToken();
+    }
+
+    try {
+        const response = await $axios.post(
+            "/api/v1/Pmatch/GetAdvertisementList",
+            {
+                Category: 1,
+            },
+            {
+                headers: {
+                    Authorization: token, // 帶上 Token
+                },
+            }
+        );
+        if (response.data.Status.Code === 0) {
+            bannerList.value = response.data.Data;
+        } else {
+            alert(`${response.data.Status.Message}`);
+        }
+    } catch (error) {
+        console.error("請求失敗:", error);
+        data.value = "無法取得資料。"; // 畫面顯示錯誤訊息
+    }
+}
 
 onMounted(async () => {
     try {
@@ -249,15 +300,17 @@ onMounted(async () => {
             const token = userToken.value;
 
             if (token != "") {
-                fetchNewsListData([], token);
-                fetchGameList(token);
+                await fetchNewsListData([], token);
+                await fetchGameList(token);
+                await fetchADList(token);
             }
         } else {
             // 生成新的 token
             const token = await jwtStore.generateToken();
             if (token != "") {
-                fetchNewsListData([], token);
-                fetchGameList(token);
+                await fetchNewsListData([], token);
+                await fetchGameList(token);
+                await fetchADList(token);
             }
         }
     } catch (error) {
@@ -291,8 +344,15 @@ onMounted(async () => {
     z-index: -1;
 }
 /* 遊戲 */
-.gameBox{
-        width: calc(100% /4);
-        padding-bottom: 1rem;
-    }
+.gameBox {
+    width: calc(100% / 4);
+    padding-bottom: 1rem;
+}
+.el-carousel__item:nth-child(2n) {
+  background-color: #99a9bf;
+}
+
+.el-carousel__item:nth-child(2n + 1) {
+  background-color: #d3dce6;
+}
 </style>

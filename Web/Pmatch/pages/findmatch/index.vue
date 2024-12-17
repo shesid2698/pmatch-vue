@@ -26,7 +26,13 @@
                             v-model="tempSelectedPlatform"
                         >
                             <option value="">選擇遊戲...</option>
-                            <option v-for="(item, index) in gameList" :key="index" :value="item.PlatformName">{{item.PlatformName}}</option>
+                            <option
+                                v-for="(item, index) in gameList"
+                                :key="index"
+                                :value="item.PlatformName"
+                            >
+                                {{ item.PlatformName }}
+                            </option>
                         </select>
                     </div>
                 </div>
@@ -74,7 +80,9 @@
                     <span>查看已簽約媒合商</span>
                 </div>
                 <div>
-                    <button class="ms-3 w-100px" @click="handleSearch">搜尋</button>
+                    <button class="ms-3 w-100px" @click="handleSearch">
+                        搜尋
+                    </button>
                 </div>
             </div>
         </div>
@@ -103,12 +111,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex" v-for="(item, index) in filteredStores"
-                            :key="index">
+                <div
+                    class="flex"
+                    v-for="(item, index) in filteredStores"
+                    :key="index"
+                >
                     <div class="w-full">
                         <div
                             class="storeDetail flex border-b b-b-solid b-#D5ECFF"
-                            
                         >
                             <NuxtLink
                                 :to="`/findmatch/${item.Id}`"
@@ -134,31 +144,69 @@
                                             </div>
                                             <div class="mb-2">
                                                 <span>遊戲平台 : </span>
-                                                <span v-if="item.GamePlatforms.length > 0">{{ filteredProcessedGamePlatforms[index]}}</span>
+                                                <span
+                                                    v-if="
+                                                        item.GamePlatforms
+                                                            .length > 0
+                                                    "
+                                                    >{{
+                                                        filteredProcessedGamePlatforms[
+                                                            index
+                                                        ]
+                                                    }}</span
+                                                >
                                             </div>
                                             <div class="mb-2">
                                                 <span>商店簡介 : </span>
-                                                <span>{{
-                                                    item.About
-                                                }}</span>
+                                                <span>{{ item.About }}</span>
                                             </div>
                                             <div class="flex items-center">
                                                 <span>聯絡方式 : </span>
 
-                                                <div
-                                                    class="ms-2 flex"
-                                                >
-                                                    <NuxtLink class="flex items-center ms-1 me-1" v-if="item.FB" :to="item.FB">
-                                                        <img class="w-20px h-20px" src="/images/facebook.png" alt="">
+                                                <div class="ms-2 flex">
+                                                    <NuxtLink
+                                                        class="flex items-center ms-1 me-1"
+                                                        v-if="item.FB"
+                                                        :to="item.FB"
+                                                    >
+                                                        <img
+                                                            class="w-20px h-20px"
+                                                            src="/images/facebook.png"
+                                                            alt=""
+                                                        />
                                                     </NuxtLink>
-                                                    <NuxtLink class="flex items-center ms-1 me-1" v-if="item.LineId" :to="item.LineId">
-                                                        <img class="w-20px h-20px" src="/images/line.png" alt="">
+                                                    <NuxtLink
+                                                        class="flex items-center ms-1 me-1"
+                                                        v-if="item.LineId"
+                                                        :to="item.LineId"
+                                                    >
+                                                        <img
+                                                            class="w-20px h-20px"
+                                                            src="/images/line.png"
+                                                            alt=""
+                                                        />
                                                     </NuxtLink>
-                                                    <NuxtLink class="flex items-center ms-1 me-1" v-if="item.IGId" :to="item.IGId">
-                                                        <img class="w-20px h-20px" src="/images/instagram.png" alt="">
+                                                    <NuxtLink
+                                                        class="flex items-center ms-1 me-1"
+                                                        v-if="item.IGId"
+                                                        :to="item.IGId"
+                                                    >
+                                                        <img
+                                                            class="w-20px h-20px"
+                                                            src="/images/instagram.png"
+                                                            alt=""
+                                                        />
                                                     </NuxtLink>
-                                                    <NuxtLink class="flex items-center ms-1 me-1" v-if="item.TwitterId" :to="item.TwitterId">
-                                                        <div class="bg-#000 w-20px h-20px rounded-50% color-#fff text-center">x</div>
+                                                    <NuxtLink
+                                                        class="flex items-center ms-1 me-1"
+                                                        v-if="item.TwitterId"
+                                                        :to="item.TwitterId"
+                                                    >
+                                                        <div
+                                                            class="bg-#000 w-20px h-20px rounded-50% color-#fff text-center"
+                                                        >
+                                                            x
+                                                        </div>
                                                     </NuxtLink>
                                                 </div>
                                             </div>
@@ -208,74 +256,34 @@
             </div>
             <div class="sideBar">
                 <div class="mb-5">
-                    <div
-                        class="bg-#50b0ff flex justify-center pt-2 pb-2 totalMatchNumber"
-                    >
-                        <span class="color-#fff fw-600">累計委託媒合筆數</span>
-                    </div>
-                    <div
-                        class="flex justify-center pt-2 pb-2 border-solid b-1px b-#50b0ff matchNumber"
-                    >
-                        <div>
-                            <span>0</span>
-                            <span>筆</span>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div class="flex items-center mb-3">
-                        <img
-                            class="w-20px h-20px"
-                            src="/images/weekRanking.png"
-                            alt="週排行icon"
-                        />
-                        <span class="fw-600 ms-3">週媒合排行榜</span>
-                    </div>
-                    <div class="mb-5">
-                        <div
-                            class="bg-#d5ecff flex justify-center pt-2 pb-2 totalMatchNumber flex justify-around"
-                        >
-                            <div class="flex justify-center w-100%">
-                                <span class="fw-600">遊戲平台</span>
-                            </div>
-                            <div class="flex justify-center w-100%">
-                                <span class="fw-600">媒合活躍度</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 點卡先關 後面有要再開 -->
-                    <!-- <div class="border-solid b-1px p-3 rounded-5px b-#ccc">
-                        <div
-                            class="flex items-center mb-3 border-b-solid b-1px b-#ccc pb-3"
+                    <ElCarousel class="h-200px" :interval="2000" arrow="always">
+                        <ElCarouselItem
+                            class="h-200px"
+                            v-for="(item, index) in bannerTopList"
+                            :key="index"
                         >
                             <img
-                                class="w-20px h-20px"
-                                src="/images/sellHot.png"
-                                alt="週排行icon"
+                                class="w-100% h-200px"
+                                :src="`${assetsUrl}${item.ImgFile}`"
+                                :alt="item.PlatformName"
                             />
-                            <span class="fw-600 ms-3">週媒合排行榜</span>
-                        </div>
-                        <div class="flex overflow-x-auto">
-                            <div
-                                class="m-3"
-                                v-for="item of mycard"
-                                :key="item.key"
-                            >
-                                <div>
-                                    <img
-                                        class="w-110px"
-                                        :src="item.img"
-                                        alt=""
-                                    />
-                                </div>
-                                <div class="mt-3 mb-3">
-                                    <button class="joinCartBtn">
-                                        加入購物車
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
+                        </ElCarouselItem>
+                    </ElCarousel>
+                </div>
+                <div>
+                    <ElCarousel class="h-200px" :interval="2000" arrow="always">
+                        <ElCarouselItem
+                            class="h-200px"
+                            v-for="(item, index) in bannerDownList"
+                            :key="index"
+                        >
+                            <img
+                                class="w-100% h-200px"
+                                :src="`${assetsUrl}${item.ImgFile}`"
+                                :alt="item.PlatformName"
+                            />
+                        </ElCarouselItem>
+                    </ElCarousel>
                 </div>
             </div>
         </div>
@@ -288,12 +296,18 @@ import { ArrowRight } from "@element-plus/icons-vue";
 import { ElBreadcrumb } from "element-plus";
 import { ElBreadcrumbItem } from "element-plus";
 import { ElMessageBox } from "element-plus";
+import { ElCarousel } from "element-plus";
+import { ElCarouselItem } from "element-plus";
 
 const storesList = ref([]);
 const gameList = ref([]);
+const bannerTopList = ref([]);
+const bannerDownList = ref([]);
+
 const { $axios } = useNuxtApp();
 const jwtStore = useJwtStore();
 const userToken = useCookie("_PmToken");
+const assetsUrl = useCookie("_PmAssetsUrl");
 
 const route = useRoute();
 const platformName = route.query.platformName;
@@ -348,30 +362,87 @@ async function fetchGameList(token) {
         data.value = "無法取得資料。"; // 畫面顯示錯誤訊息
     }
 }
+// 找媒合GetAdvertisementList(上banner)
+async function fetchADTopList(token) {
+    if (token === "") {
+        token = await jwtStore.generateToken();
+    }
 
+    try {
+        const response = await $axios.post(
+            "/api/v1/Pmatch/GetAdvertisementList",
+            {
+                Category: 2,
+            },
+            {
+                headers: {
+                    Authorization: token, // 帶上 Token
+                },
+            }
+        );
+        if (response.data.Status.Code === 0) {
+            bannerTopList.value = response.data.Data;
+        } else {
+            alert(`${response.data.Status.Message}`);
+        }
+    } catch (error) {
+        console.error("請求失敗:", error);
+        data.value = "無法取得資料。"; // 畫面顯示錯誤訊息
+    }
+}
+// 找媒合GetAdvertisementList(下banner)
+async function fetchADDownList(token) {
+    if (token === "") {
+        token = await jwtStore.generateToken();
+    }
+
+    try {
+        const response = await $axios.post(
+            "/api/v1/Pmatch/GetAdvertisementList",
+            {
+                Category: 3,
+            },
+            {
+                headers: {
+                    Authorization: token, // 帶上 Token
+                },
+            }
+        );
+        if (response.data.Status.Code === 0) {
+            bannerDownList.value = response.data.Data;
+        } else {
+            alert(`${response.data.Status.Message}`);
+        }
+    } catch (error) {
+        console.error("請求失敗:", error);
+        data.value = "無法取得資料。"; // 畫面顯示錯誤訊息
+    }
+}
 onMounted(async () => {
     try {
         if (userToken.value != "" && userToken.value != undefined) {
-            
             const token = userToken.value;
             if (token != "") {
-                fetchStoresListData(token);
-                fetchGameList(token);
+                await fetchStoresListData(token);
+                await fetchGameList(token);
+                await fetchADTopList(token);
+                await fetchADDownList(token);
             }
         } else {
             // 生成新的 token
             const token = await jwtStore.generateToken();
             if (token != "") {
-                fetchStoresListData(token);
-                fetchGameList(token);
+                await fetchStoresListData(token);
+                await fetchGameList(token);
+                await fetchADTopList(token);
+                await fetchADDownList(token);
             }
         }
-        
-        if(platformName !== "" && platformName !== undefined){
+
+        if (platformName !== "" && platformName !== undefined) {
             tempSelectedPlatform.value = platformName;
             handleSearch();
         }
-
     } catch (error) {
         console.error("頁面初始化失敗:", error);
     }
@@ -385,7 +456,9 @@ const processedGamePlatforms = computed(() => {
         if (!store.GamePlatforms || !store.GamePlatforms.length) return "";
 
         // 提取 `GamePlatform`，過濾重複並以逗號分隔
-        const platformsSet = new Set(store.GamePlatforms.map((platform) => platform.GamePlatform));
+        const platformsSet = new Set(
+            store.GamePlatforms.map((platform) => platform.GamePlatform)
+        );
         return Array.from(platformsSet).join(", "); // 轉換為陣列後用逗號分隔
     });
 });
@@ -399,68 +472,66 @@ const stores = ref(
     }))
 );
 
-
 const searchQuery = ref("");
 const selectedPlatform = ref("");
 
 // 用於暫存搜尋條件的變數
-const tempSearchQuery = ref("")
-const tempSelectedPlatform = ref("")
-const tempShowSignedOnly = ref(false)
+const tempSearchQuery = ref("");
+const tempSelectedPlatform = ref("");
+const tempShowSignedOnly = ref(false);
 
 // 實際用於篩選的變數
-const activeSearchQuery = ref("")
-const activeSelectedPlatform = ref("")
-const activeShowSignedOnly = ref(false)
+const activeSearchQuery = ref("");
+const activeSelectedPlatform = ref("");
+const activeShowSignedOnly = ref(false);
 
 const handleSearch = () => {
     // 更新實際用於篩選的值
-    activeSearchQuery.value = tempSearchQuery.value
-    activeSelectedPlatform.value = tempSelectedPlatform.value
-    activeShowSignedOnly.value = tempShowSignedOnly.value
-}
+    activeSearchQuery.value = tempSearchQuery.value;
+    activeSelectedPlatform.value = tempSelectedPlatform.value;
+    activeShowSignedOnly.value = tempShowSignedOnly.value;
+};
 
 // 篩選邏輯
 const filteredStores = computed(() => {
-    let filtered = storesList.value
+    let filtered = storesList.value;
 
     // 使用實際的篩選值進行篩選
     if (activeSearchQuery.value) {
-        const query = activeSearchQuery.value.toLowerCase()
+        const query = activeSearchQuery.value.toLowerCase();
         filtered = filtered.filter((store) =>
             store.Name.toLowerCase().includes(query)
-        )
+        );
     }
 
     if (activeSelectedPlatform.value) {
         filtered = filtered.filter((store) => {
             const platformsSet = new Set(
                 store.GamePlatforms.map((platform) => platform.GamePlatform)
-            )
-            const platforms = Array.from(platformsSet).join(", ")
-            return platforms === activeSelectedPlatform.value
-        })
+            );
+            const platforms = Array.from(platformsSet).join(", ");
+            return platforms === activeSelectedPlatform.value;
+        });
     }
 
     if (activeShowSignedOnly.value) {
-        filtered = filtered.filter((store) => store.isSigned) // 假設有 isSigned 欄位
+        filtered = filtered.filter((store) => store.isSigned); // 假設有 isSigned 欄位
     }
 
-    return filtered
-})
+    return filtered;
+});
 
 const filteredProcessedGamePlatforms = computed(() => {
     return filteredStores.value.map((store) => {
-        if (!store.GamePlatforms || !store.GamePlatforms.length) return ""
+        if (!store.GamePlatforms || !store.GamePlatforms.length) return "";
 
         const platformsSet = new Set(
             store.GamePlatforms.map((platform) => platform.GamePlatform)
-        )
+        );
 
-        return Array.from(platformsSet).join(", ")
-    })
-})
-
+        return Array.from(platformsSet).join(", ");
+    });
+});
 </script>
 
 <style scoped>
