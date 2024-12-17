@@ -141,7 +141,7 @@ async function contactList(token) {
                         Id: 0,
                         Category: Number(questionType.value),
                         MemberId: accountId.value,
-                        GameplatformId: platform.value,
+                        GameplatformId: Number(platform.value),
                         Name: name.value,
                         NickName: nickName.value,
                         Email: mail.value,

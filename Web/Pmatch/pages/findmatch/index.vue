@@ -131,7 +131,7 @@
                                         >
                                             <img
                                                 class="storeImg w-130px"
-                                                :src="item.img"
+                                                :src="`${assetsUrl}${item.ImgFile}`"
                                                 :alt="item.Name"
                                             />
                                         </div>
