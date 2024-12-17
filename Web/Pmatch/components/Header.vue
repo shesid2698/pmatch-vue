@@ -22,15 +22,17 @@
                      :key="item.id">
                     <div class="relative"
                          @click.stop="handleDropdown(item)"
-                         :ref="setDropdownRef(item.id)"
-                         >
+                         :ref="setDropdownRef(item.id)">
                         <span v-show="item.dropdown"
                               class="loginLink color-#555553 decoration-none ms-1.5rem font-bold w-100% cursor-pointer"
                               :alt="item.title">
                             {{ item.title }}
                         </span>
-                        <button v-if="item.items" class="logoutBtn ms-1 bg-#fff border-none">
-                            <span v-for="subItem in item.items" :key="subItem.id" @click="subItem.action">{{ subItem.title }}</span>
+                        <button v-if="item.items"
+                                class="logoutBtn ms-1 bg-#fff border-none">
+                            <span v-for="subItem in item.items"
+                                  :key="subItem.id"
+                                  @click="subItem.action">{{ subItem.title }}</span>
                         </button>
                         <div v-show="dropdownStates[item.id]"
                              class="loginDropdown bg-white mt-1">
@@ -106,51 +108,15 @@
 
 <script setup>
 const userToken = useCookie('_PmToken');
-const userNameCookie = useCookie("_PmUserName");
-const MemberIdCookie = useCookie("_PmMemberId");
+const userNameCookie = useCookie('_PmUserName');
+const MemberIdCookie = useCookie('_PmMemberId');
 const user = reactive({});
 const router = useRouter();
 const navOpen = ref(false);
 const toggleNav = () => {
     navOpen.value = !navOpen.value;
 };
-
-const headerLink = computed(() => [
-    {
-        id: 0,
-        title: '幫助中心',
-        link: '/helpcenter'
-    },
-    {
-        id: 1,
-        title: '找媒合',
-        link: '/findmatch'
-    },
-    {
-        id: 2,
-        title: userToken.value
-            ? `HI,${userNameCookie.value}`
-            : '會員登入/註冊',
-        link: '/member/login',
-        dropdown: true,
-        showDropdown: false,
-        items: userToken.value
-                ? [
-                    {
-                        id: 'logout',
-                        title: '登出',
-                        action: () => {
-                            // 清除登入狀態
-                            userToken.value = null;
-                            userNameCookie.value = '';
-                            MemberIdCookie.value = '';
-                            router.push("/");
-                        }
-                    }
-                ]
-                : []
-    }
-]);
+const headerLink = ref([]);
 const memberCenterLink = ref([
     {
         title: '會員維護資訊',
@@ -182,7 +148,7 @@ const show = ref(false);
 const dropdownRefs = ref([]);
 
 const dropdownStates = ref({
-    2: false, // 僅對 id 為 2 的項目有下拉選單
+    2: false // 僅對 id 為 2 的項目有下拉選單
 });
 // 設置下拉選單的 ref
 const setDropdownRef = id => el => {
@@ -197,7 +163,7 @@ const handleDropdown = item => {
 };
 // 點擊外部關閉下拉選單
 const closeDropdownOutside = event => {
-    Object.keys(dropdownStates.value).forEach((id) => {
+    Object.keys(dropdownStates.value).forEach(id => {
         const dropdownElement = dropdownRefs.value[id];
         if (dropdownElement && !dropdownElement.contains(event.target)) {
             dropdownStates.value[id] = false; // 關閉該選單
@@ -205,44 +171,81 @@ const closeDropdownOutside = event => {
     });
 };
 const logout = () => {
-    uToken.value = '';
-    uToken.value = undefined;
-    uToken.maxAge = -1;
-    MemberIdCookie.value = '';
+    userToken.value = undefined;
+    userToken.maxAge = -1;
+    userNameCookie.value = undefined;
+    userNameCookie.maxAge = -1;
+    MemberIdCookie.value = undefined;
+    MemberIdCookie.maxAge = -1;
     window.location.href = '/';
 };
 // 在組件掛載時添加全局點擊事件監聽器
 onMounted(() => {
     document.addEventListener('click', closeDropdownOutside);
-        if (userNameCookie !== "") {
-            headerLink.value = [
-                {
-                    id: 0,
-                    title: '會員中心',
-                    link: '/member/center'
-                },
-                {
-                    id: 1,
-                    title: '幫助中心',
-                    link: '/helpcenter'
-                },
-                {
-                    id: 2,
-                    title: '找媒合',
-                    link: '/findmatch'
-                },
-                {
-                    id: 3,
-                    title: `${userNameCookie} 您好`,
-                    link: '#'
-                },
-                {
-                    id: 4,
-                    title: '登出',
-                    link: '#'
-                }
-            ];
-        }
+    if (userNameCookie.value !== '' && userNameCookie.value != undefined) {
+        headerLink.value = [
+            {
+                id: 0,
+                title: '會員中心',
+                link: '/member/center'
+            },
+            {
+                id: 1,
+                title: '幫助中心',
+                link: '/helpcenter'
+            },
+            {
+                id: 2,
+                title: '找媒合',
+                link: '/findmatch'
+            },
+            {
+                id: 3,
+                title: `${userNameCookie.value} 您好`,
+                link: '#'
+            },
+            {
+                id: 4,
+                title: '登出',
+                link: '#'
+            }
+        ];
+    } else {
+        headerLink.value = [
+            {
+                id: 0,
+                title: '幫助中心',
+                link: '/helpcenter'
+            },
+            {
+                id: 1,
+                title: '找媒合',
+                link: '/findmatch'
+            },
+            {
+                id: 2,
+                title: userToken.value ? `HI,${userNameCookie.value}` : '會員登入/註冊',
+                link: '/member/login',
+                dropdown: true,
+                showDropdown: false,
+                items: userToken.value
+                    ? [
+                          {
+                              id: 'logout',
+                              title: '登出',
+                              action: () => {
+                                  // 清除登入狀態
+                                  userToken.value = null;
+                                  userNameCookie.value = '';
+                                  MemberIdCookie.value = '';
+                                  router.push('/');
+                              }
+                          }
+                      ]
+                    : []
+            }
+        ];
+    }
 });
 
 // 在組件卸載時移除點擊事件監聽器
@@ -294,11 +297,11 @@ onBeforeUnmount(() => {
     background: #ebecf0;
     color: grey;
 }
-.logoutBtn{
+.logoutBtn {
     font-size: 1rem;
     cursor: pointer;
 }
-.logoutBtn:hover{
+.logoutBtn:hover {
     color: #999;
 }
 </style>

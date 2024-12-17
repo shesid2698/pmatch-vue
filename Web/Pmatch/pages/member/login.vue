@@ -164,7 +164,7 @@ async function Login(encryptedPassword) {
             userNameCookie.value = response.data.Data.Name;
             tokenCookie.value = response.data.Data.Token;
             MemberIdCookie.value = response.data.Data.PmatchMemberId;
-            router.push("/");
+            window.location.href = '/';
         } else {
             alert(`${response.data.Status.Message}`);
         }
