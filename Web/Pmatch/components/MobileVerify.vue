@@ -66,7 +66,6 @@ const token = ref('');
 const isValid = ref(false);
 const ansCode = ref('');
 const { $axios } = useNuxtApp();
-let num = '';
 const { encrypt, decrypt } = crypto();
 const props = defineProps({
     from: String,

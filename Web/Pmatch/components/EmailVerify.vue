@@ -153,9 +153,7 @@ const openSendBtn = () => {
 onMounted(async() => {
     if (emailTimer.count !== 120) {
         emailTimer.decrement();
-    } else {
     }
-    token.value = await jwtStore.generateToken();
     email.value = props.pEmail;
     validEmailPattern();
 });
