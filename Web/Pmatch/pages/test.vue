@@ -17,9 +17,6 @@
 </template>
 
 <script setup>
-const { data: userInfo, error } = await useFetch('/api/getuser', {
-    headers: useRequestHeaders(['cookie'])
-});
 const user = reactive({});
 onMounted(() => {
     if (userInfo && userInfo.value!=null) {

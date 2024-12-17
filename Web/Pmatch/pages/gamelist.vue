@@ -2,16 +2,36 @@
     <div>
         <div class="max-w-1320px m-auto ps-5 pe-5">
             <div class="flex flex-wrap">
-                <div class="gameBox" v-for="(item, index) in gameList" :key="index">
+                <div
+                    class="gameBox"
+                    v-for="(item, index) in gameList"
+                    :key="index"
+                >
                     <div class="p-3">
-                        <img :src="`${assetsUrl}${item.ImgFile}`" :alt="item.PlatformName">
+                        <NuxtLink
+                            :to="{
+                                path: '/findmatch',
+                                query: { platformName: item.PlatformName },
+                            }"
+                        >
+                            <img
+                                :src="`${assetsUrl}${item.ImgFile}`"
+                                :alt="item.PlatformName"
+                            />
+                        </NuxtLink>
                     </div>
                     <div>
-                        <div v-for="(character, index2) in item.Characters.slice(0, 3)" :key="index2">
+                        <div
+                            v-for="(character, index2) in item.Characters.slice(
+                                0,
+                                3
+                            )"
+                            :key="index2"
+                        >
                             <NuxtLink
                                 class="color-#555553 decoration-none"
                                 :to="`/findmatch/${character.Id}`"
-                                >* {{character.Name}}</NuxtLink
+                                >* {{ character.Name }}</NuxtLink
                             >
                         </div>
                     </div>
@@ -36,9 +56,7 @@ async function fetchGameList(token) {
     try {
         const response = await $axios.post(
             "/api/v1/Pmatch/GetPlatformAndCharacterList",
-            {
-                
-            },
+            {},
             {
                 headers: {
                     Authorization: token, // 帶上 Token
@@ -59,7 +77,6 @@ async function fetchGameList(token) {
 onMounted(async () => {
     try {
         if (userToken.value != "" && userToken.value != undefined) {
-            
             const token = userToken.value;
             if (token != "") {
                 fetchGameList(token);
@@ -78,8 +95,8 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-    .gameBox{
-        width: calc(100% /4);
-        padding-bottom: 1rem;
-    }
+.gameBox {
+    width: calc(100% / 4);
+    padding-bottom: 1rem;
+}
 </style>

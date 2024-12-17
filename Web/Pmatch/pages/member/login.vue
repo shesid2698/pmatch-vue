@@ -13,7 +13,28 @@
                     <div class="text-20px">會員登入</div>
                 </div>
 
-                <div class="mt-15px">
+                <!-- 頁面切換鈕 -->
+                <!-- <div class="flex flex-items-center mt-24px">
+                    <div class="flex-1">
+                        <button
+                            class="font-sans w-100% bg-#e93470 outline-none border border-solid border-[#e93470] border-1 hover:bg-#bb2d3b transition duration-200 p-y-1.5 p-x-3 text-16px text-white rounded-1 cursor-pointer"
+                        >
+                            會員登入
+                        </button>
+                    </div>
+                    <div class="w-10px"></div>
+                    <div class="flex-1">
+                        <NuxtLink to="/store/login">
+                            <button
+                                class="w-100% outline-none bg-white border-1 p-y-1.5 p-x-3 text-16px rounded-1 cursor-pointer text-[#212529] font-sans"
+                            >
+                                媒合商登入
+                            </button>
+                        </NuxtLink>
+                    </div>
+                </div> -->
+
+                <div class="mt-3rem">
                     <div class="mb-5px">登入帳號</div>
                     <input v-model="accountId"
                            type="text"
@@ -93,8 +114,9 @@ const memberList = ref({});
 const { $axios } = useNuxtApp();
 const router = useRouter();
 // cookies
-let userNameCookie = useCookie('_PmUserName');
-let tokenCookie = useCookie('_PmToken');
+let userNameCookie = useCookie("_PmUserName");
+let tokenCookie = useCookie("_PmToken");
+let MemberIdCookie = useCookie("_PmMemberId");
 
 const turnInputType = () => {
     if (i_password.value.type === 'password') {
@@ -118,8 +140,6 @@ const onVerify = tokenValue => {
 const login = async () => {
     // 加密密碼
     const encryptedPassword = encrypt(password.value);
-    console.log('encrypted pw: ' + encryptedPassword);
-
     // 等待登入結果
     await Login(encryptedPassword);
 };
@@ -143,7 +163,8 @@ async function Login(encryptedPassword) {
             memberList.value = response.data.Data;
             userNameCookie.value = response.data.Data.Name;
             tokenCookie.value = response.data.Data.Token;
-            router.push('/');
+            MemberIdCookie.value = response.data.Data.PmatchMemberId;
+            router.push("/");
         } else {
             alert(`${response.data.Status.Message}`);
         }

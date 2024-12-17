@@ -36,6 +36,8 @@
                              class="loginDropdown bg-white mt-1">
                             <NuxtLink to="/member/login"
                                       class="loginItem block p-1 ps-2 pe-2 mt-1 mb-1 decoration-none">會員登入</NuxtLink>
+                            <!-- <NuxtLink to="/store/login"
+                                      class="loginItem block p-1 ps-2 pe-2 mt-1 mb-1 decoration-none">媒合商登入</NuxtLink> -->
                             <NuxtLink to="/register"
                                       class="loginItem block p-1 ps-2 pe-2 mt-1 mb-1 decoration-none">註冊會員</NuxtLink>
                             <NuxtLink to="/member/forgetpwd"
@@ -103,11 +105,9 @@
 </template>
 
 <script setup>
-const { data: userInfo, error } = await useFetch('/api/getuser', {
-    headers: useRequestHeaders(['cookie'])
-});
 const userToken = useCookie('_PmToken');
 const userNameCookie = useCookie("_PmUserName");
+const MemberIdCookie = useCookie("_PmMemberId");
 const user = reactive({});
 const router = useRouter();
 const navOpen = ref(false);
@@ -143,7 +143,8 @@ const headerLink = computed(() => [
                             // 清除登入狀態
                             userToken.value = null;
                             userNameCookie.value = '';
-                            console.log('已登出');
+                            MemberIdCookie.value = '';
+                            router.push("/");
                         }
                     }
                 ]
@@ -207,12 +208,12 @@ const logout = () => {
     uToken.value = '';
     uToken.value = undefined;
     uToken.maxAge = -1;
+    MemberIdCookie.value = '';
     window.location.href = '/';
 };
 // 在組件掛載時添加全局點擊事件監聽器
 onMounted(() => {
     document.addEventListener('click', closeDropdownOutside);
-    if (userInfo && userInfo.value != null) {
         if (userNameCookie !== "") {
             headerLink.value = [
                 {
@@ -242,7 +243,6 @@ onMounted(() => {
                 }
             ];
         }
-    }
 });
 
 // 在組件卸載時移除點擊事件監聽器

@@ -23,12 +23,10 @@
                     <div class="w-100%">
                         <select
                             class="platformName md-w-270px w-100% h-43px font-size-1rem b-#a9d8f8 rounded-5px p-5px"
-                            v-model="selectedPlatform"
+                            v-model="tempSelectedPlatform"
                         >
                             <option value="">選擇遊戲...</option>
-                            <option value="滿貫大亨">滿貫大亨</option>
-                            <option value="錢街Online">錢街Online</option>
-                            <option value="包你發娛樂城">包你發娛樂城</option>
+                            <option v-for="(item, index) in gameList" :key="index" :value="item.PlatformName">{{item.PlatformName}}</option>
                         </select>
                     </div>
                 </div>
@@ -37,7 +35,7 @@
                         <div class="flex w-100%">
                             <div class="w-100%">
                                 <input
-                                    v-model="searchQuery"
+                                    v-model="tempSearchQuery"
                                     class="storeName md-ms-3 w-100% md-w-270px h-36px p-0 rounded-5px font-size-1rem p-3px"
                                     type="text"
                                     placeholder="輸入關鍵字..."
@@ -76,7 +74,7 @@
                     <span>查看已簽約媒合商</span>
                 </div>
                 <div>
-                    <button class="ms-3 w-100px">搜尋</button>
+                    <button class="ms-3 w-100px" @click="handleSearch">搜尋</button>
                 </div>
             </div>
         </div>
@@ -292,6 +290,7 @@ import { ElBreadcrumbItem } from "element-plus";
 import { ElMessageBox } from "element-plus";
 
 const storesList = ref([]);
+const gameList = ref([]);
 const { $axios } = useNuxtApp();
 const jwtStore = useJwtStore();
 const userToken = useCookie("_PmToken");
@@ -323,6 +322,32 @@ async function fetchStoresListData(token) {
         data.value = "無法取得資料。"; // 畫面顯示錯誤訊息
     }
 }
+// 取得GetPlatformAndCharacterList
+async function fetchGameList(token) {
+    if (token === "") {
+        token = await jwtStore.generateToken();
+    }
+
+    try {
+        const response = await $axios.post(
+            "/api/v1/Pmatch/GetPlatformAndCharacterList",
+            {},
+            {
+                headers: {
+                    Authorization: token, // 帶上 Token
+                },
+            }
+        );
+        if (response.data.Status.Code === 0) {
+            gameList.value = response.data.Data;
+        } else {
+            alert(`${response.data.Status.Message}`);
+        }
+    } catch (error) {
+        console.error("請求失敗:", error);
+        data.value = "無法取得資料。"; // 畫面顯示錯誤訊息
+    }
+}
 
 onMounted(async () => {
     try {
@@ -331,17 +356,20 @@ onMounted(async () => {
             const token = userToken.value;
             if (token != "") {
                 fetchStoresListData(token);
+                fetchGameList(token);
             }
         } else {
             // 生成新的 token
             const token = await jwtStore.generateToken();
             if (token != "") {
                 fetchStoresListData(token);
+                fetchGameList(token);
             }
         }
         
         if(platformName !== "" && platformName !== undefined){
-            selectedPlatform.value = platformName;
+            tempSelectedPlatform.value = platformName;
+            handleSearch();
         }
 
     } catch (error) {
@@ -358,12 +386,9 @@ const processedGamePlatforms = computed(() => {
 
         // 提取 `GamePlatform`，過濾重複並以逗號分隔
         const platformsSet = new Set(store.GamePlatforms.map((platform) => platform.GamePlatform));
-        console.log(platformsSet);
         return Array.from(platformsSet).join(", "); // 轉換為陣列後用逗號分隔
     });
 });
-
-
 
 const dialogVisible = ref(false);
 // 搜尋及下拉選單篩選
@@ -373,65 +398,68 @@ const stores = ref(
         dialogVisible: false, // 初始化每個商店的彈窗狀態
     }))
 );
+
+
 const searchQuery = ref("");
 const selectedPlatform = ref("");
 
+// 用於暫存搜尋條件的變數
+const tempSearchQuery = ref("")
+const tempSelectedPlatform = ref("")
+const tempShowSignedOnly = ref(false)
 
-// 搜尋按鈕的事件處理函式
-// const searchStores = () => {
-//     let filtered = storesList.value;
-//     if (searchQuery.value) {
-//         const Query = searchQuery.value.toLowerCase();
-//         filtered = filtered.filter((store) =>
-//             store.Name.toLowerCase().includes(Query)
-//         );
-//     }
+// 實際用於篩選的變數
+const activeSearchQuery = ref("")
+const activeSelectedPlatform = ref("")
+const activeShowSignedOnly = ref(false)
 
-//     if (selectedPlatform.value && selectedPlatform.value !== undefined) {
-//         filtered = filtered.filter((store) => {
-//             const platformsSet = new Set(
-//                 store.GamePlatforms.map((platform) => platform.GamePlatform)
-//             );
-//             const platforms = Array.from(platformsSet).join(", ");
-//             return platforms === selectedPlatform.value;
-//         });
-//     }
+const handleSearch = () => {
+    // 更新實際用於篩選的值
+    activeSearchQuery.value = tempSearchQuery.value
+    activeSelectedPlatform.value = tempSelectedPlatform.value
+    activeShowSignedOnly.value = tempShowSignedOnly.value
+}
 
-//     filteredStores.value = filtered; // 更新篩選結果
-// };
-
+// 篩選邏輯
 const filteredStores = computed(() => {
-    let filtered = storesList.value;
-    if (searchQuery.value) {
-        const Query = searchQuery.value.toLowerCase();
-        filtered = filtered.filter((stores) =>
-            stores.Name.toLowerCase().includes(Query)
-        );
+    let filtered = storesList.value
+
+    // 使用實際的篩選值進行篩選
+    if (activeSearchQuery.value) {
+        const query = activeSearchQuery.value.toLowerCase()
+        filtered = filtered.filter((store) =>
+            store.Name.toLowerCase().includes(query)
+        )
     }
-    if (selectedPlatform.value && selectedPlatform.value !== undefined) {
+
+    if (activeSelectedPlatform.value) {
         filtered = filtered.filter((store) => {
             const platformsSet = new Set(
                 store.GamePlatforms.map((platform) => platform.GamePlatform)
-            );
-            const platforms = Array.from(platformsSet).join(", ");
-            return platforms === selectedPlatform.value;
-        });
+            )
+            const platforms = Array.from(platformsSet).join(", ")
+            return platforms === activeSelectedPlatform.value
+        })
     }
 
-    return filtered;
-});
+    if (activeShowSignedOnly.value) {
+        filtered = filtered.filter((store) => store.isSigned) // 假設有 isSigned 欄位
+    }
+
+    return filtered
+})
 
 const filteredProcessedGamePlatforms = computed(() => {
     return filteredStores.value.map((store) => {
-        if (!store.GamePlatforms || !store.GamePlatforms.length) return "";
+        if (!store.GamePlatforms || !store.GamePlatforms.length) return ""
 
         const platformsSet = new Set(
             store.GamePlatforms.map((platform) => platform.GamePlatform)
-        );
+        )
 
-        return Array.from(platformsSet).join(", "); // 轉換為陣列後用逗號分隔
-    });
-});
+        return Array.from(platformsSet).join(", ")
+    })
+})
 
 </script>
 

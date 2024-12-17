@@ -114,6 +114,7 @@
                                 <div class="w-100% flex justify-end">
                                     <button
                                         class="w-200px h-38px bg-#1A6DB4 color-#fff border-none fw-bold font-size-1rem"
+                                        @click="sendQAList"
                                     >
                                         送出
                                     </button>
@@ -135,6 +136,7 @@ import { ElBreadcrumbItem } from "element-plus";
 const route = useRoute();
 const routeParamId = route.params.id;
 const storesItem = ref(null);
+const storeQAList = ref([]);
 const isLoading = ref(true); // 加載狀態
 const { $axios } = useNuxtApp();
 const jwtStore = useJwtStore();
@@ -163,9 +165,7 @@ async function fetchStoresDetailData(token) {
     } catch (error) {
         console.error("請求失敗:", error);
         data.value = "無法取得資料。"; // 畫面顯示錯誤訊息
-    } finally {
-        isLoading.value = false; // 完成後無論成功或失敗，都結束加載
-    }
+    } 
 }
 
 onMounted(async () => {
@@ -175,6 +175,7 @@ onMounted(async () => {
             const token = userToken.value;
             if (token != "") {
                 fetchStoresDetailData(token);
+                getQAList(token);
             }
         } else {
             // 生成新的 token
@@ -191,7 +192,6 @@ onMounted(async () => {
 const activeName = ref("first");
 
 const handleClick = (tab, event) => {
-    console.log(tab, event);
 };
 
 const filteredPlatform = computed(() => {
@@ -207,6 +207,62 @@ const filteredPlatform = computed(() => {
     // 返回格式化後的平臺列表
     return Array.from(platformsSet).join(", ");
 });
+
+async function sendQAList(){
+    if (userToken.value === "" || userToken.value === undefined){
+        alert("請先登入會員");
+    }else{
+        await sendQAList
+    }
+}
+// 取得問與答列表
+async function getQAList(token){
+    try {
+        const response = await $axios.post(
+            "/api/v1/Pmatch/GetStoreQAList",
+            {
+                IsFront: true,
+                StoreId: routeParamId,
+            },
+            {
+                headers: {
+                    Authorization: token, // 帶上 Token
+                },
+            }
+        );
+        if (response.data.Status.Code === 0) {
+            storeQAList.value = response.data.Data;
+        } else {
+            alert(`${response.data.Status.Message}`);
+        }
+    } catch (error) {
+        console.error("請求失敗:", error);
+    } 
+}
+// 送出問與答列表
+async function getQAApi(token){
+    try {
+        const response = await $axios.post(
+            "/api/v1/Pmatch/GetStoreQAList",
+            {
+                IsFront: true,
+                StoreId: routeParamId,
+            },
+            {
+                headers: {
+                    Authorization: token, // 帶上 Token
+                },
+            }
+        );
+        if (response.data.Status.Code === 0) {
+            storeQAList.value = response.data.Data;
+        } else {
+            alert(`${response.data.Status.Message}`);
+        }
+    } catch (error) {
+        console.error("請求失敗:", error);
+    } 
+}
 </script>
 
 <style scoped>
