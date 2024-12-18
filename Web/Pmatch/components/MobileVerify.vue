@@ -28,13 +28,13 @@
                 <input type="text"
                        v-model="mobile"
                        @input="validMobilePattern"
-                       :disabled="mobileTimer.secCount!==120"
+                       :disabled="countdown!==120 && countdown!==0"
                        class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
             </div>
             <div>
                 <button :disabled="openSendBtn()"
                         @click="SendCode"
-                        class="w-50% bg-[#198754] h-38px text-white outline-none border-none rounded-1 hover:bg-[#157347] cursor-pointer disabled:bg-gray disabled:cursor-default">發送驗證碼</button><span v-show="mobileTimer.secCount!=undefined&&mobileTimer.secCount!==120">{{mobileTimer.secCount}} 秒後重置...</span>
+                        class="w-50% bg-[#198754] h-38px text-white outline-none border-none rounded-1 hover:bg-[#157347] cursor-pointer disabled:bg-gray disabled:cursor-default">發送驗證碼</button><span v-show="countdown!==120 && countdown!==0">{{countdown}} 秒後重置...</span>
             </div>
         </div>
         <div class="mt-15px">
@@ -57,9 +57,34 @@
     </div>
 </template>
 <script setup>
+const COUNTDOWN_DURATION = 120; // 倒計時總長度 (秒)
+const countdown = ref(COUNTDOWN_DURATION); // 剩餘時間 (秒)
+const timer = ref(null); // 計時器
+const startCountdown = () => {
+    const now = Date.now();
+    const endTime = localStorage.getItem('countdownEndTime');
+
+    // 如果已存在倒計時結束時間，計算剩餘時間
+    if (endTime) {
+        countdown.value = Math.max(0, Math.floor((+endTime - now) / 1000));
+    } else {
+        // 初始化倒計時結束時間
+        localStorage.setItem('countdownEndTime', now + COUNTDOWN_DURATION * 1000);
+    }
+
+    // 啟動計時器
+    timer.value = setInterval(() => {
+        countdown.value -= 1;
+        if (countdown.value <= 0) {
+            clearInterval(timer.value);
+            localStorage.removeItem('countdownEndTime'); // 清理存儲
+            countdown.value = COUNTDOWN_DURATION;
+        }
+    }, 1000);
+};
+//------
 const jwtStore = useJwtStore();
 const emit = defineEmits(['isVerify']);
-const mobileTimer = useMobileTimer();
 const mobile = ref('');
 const token = ref('');
 
@@ -99,7 +124,7 @@ const SendCode = async () => {
         );
         if (response.data.Status.Code === 0) {
             alert('驗證碼已發送，請至手機收取驗證碼!');
-            mobileTimer.decrement();
+            startCountdown();
             mobileCook.value = mobile.value;
         } else {
             alert(`${response.data.Status.Message}`);
@@ -109,28 +134,29 @@ const SendCode = async () => {
     }
 };
 const verifyCode = async () => {
-    try {
-        token.value = await jwtStore.generateToken();
-        const response = await $axios.post(
-            '/api/v1/Pmatch/Verify',
-            {
-                MobileNumber: mobile.value,
-                VerifyCode: ansCode.value
-            },
-            {
-                headers: {
-                    Authorization: token.value
-                }
-            }
-        );
-        if (response.data.Status.Code === 0) {
-            resetAll();
-        } else {
-            alert(`${response.data.Status.Message}`);
-        }
-    } catch (error) {
-        console.error('請求失敗:', error);
-    }
+    resetAll();
+    // try {
+    //     token.value = await jwtStore.generateToken();
+    //     const response = await $axios.post(
+    //         '/api/v1/Pmatch/Verify',
+    //         {
+    //             MobileNumber: mobile.value,
+    //             VerifyCode: ansCode.value
+    //         },
+    //         {
+    //             headers: {
+    //                 Authorization: token.value
+    //             }
+    //         }
+    //     );
+    //     if (response.data.Status.Code === 0) {
+    //         resetAll();
+    //     } else {
+    //         alert(`${response.data.Status.Message}`);
+    //     }
+    // } catch (error) {
+    //     console.error('請求失敗:', error);
+    // }
 };
 const resetAll = () => {
     emit('isVerify', true, mobile.value);
@@ -138,25 +164,31 @@ const resetAll = () => {
     ansCode.value = '';
     mobile.value = '';
     isValid.value = false;
-    mobileTimer.reset();
+    clearInterval(timer.value);
+    countdown.value = COUNTDOWN_DURATION;
 };
 const openSendBtn = () => {
     let open = true;
     if (isValid.value === true) {
         open = false;
     }
-    if (mobileTimer.secCount != undefined && mobileTimer.secCount !== 120) {
+    if (countdown.value !== 120 && countdown.value !== 0) {
         open = true;
     }
 
     return open;
 };
 onMounted(async () => {
-    if (mobileTimer.secCount !== 120) {
-        mobileTimer.decrement();
+    var plusTime = localStorage.getItem('countdownEndTime');
+    if (plusTime !== null) {
+        startCountdown();
     }
     mobile.value = props.phone;
     validMobilePattern();
+});
+onBeforeUnmount(() => {
+    clearInterval(timer.value); // 清理計時器
+    countdown.value = COUNTDOWN_DURATION;
 });
 watch(
     () => props,

@@ -33,7 +33,7 @@
             <div>
                 <button :disabled="openSendBtn()"
                         @click="SendCode"
-                        class="w-50% bg-[#198754] h-38px text-white outline-none border-none rounded-1 hover:bg-[#157347] cursor-pointer disabled:bg-gray disabled:cursor-default">發送驗證碼</button><span v-show="emailTimer.count!=undefined&&emailTimer.count!==120">{{emailTimer.count}} 秒後重置...</span>
+                        class="w-50% bg-[#198754] h-38px text-white outline-none border-none rounded-1 hover:bg-[#157347] cursor-pointer disabled:bg-gray disabled:cursor-default">發送驗證碼</button><span v-show="countdown!==120 && countdown!=0">{{countdown}} 秒後重置...</span>
             </div>
         </div>
         <div class="mt-15px">
@@ -49,16 +49,42 @@
                 <div class="text-11px text-red-8">注意:驗證碼有效時間為10分鐘</div>
             </div>
         </div>
-        <div class="mt-5px"><button
-                    @click="verifyCode"
+        <div class="mt-5px"><button @click="verifyCode"
                     class="w-100% p-y-1.5 p-x-3 border-none outline-none text-16px text-white rounded-1 bg-[#1a6db4] hover:bg-[#0b5ed7] transition duration-200 cursor-pointer disabled:bg-gray disabled:hover:bg-gray">
                 驗證電子信箱
             </button></div>
     </div>
 </template>
 <script setup>
+const COUNTDOWN_DURATION = 120; // 倒計時總長度 (秒)
+const countdown = ref(COUNTDOWN_DURATION); // 剩餘時間 (秒)
+const timer = ref(null); // 計時器
+const startCountdown = () => {
+    {
+        const now = Date.now();
+        const endTime = localStorage.getItem('countdownEndTime');
+
+        // 如果已存在倒計時結束時間，計算剩餘時間
+        if (endTime) {
+            countdown.value = Math.max(0, Math.floor((+endTime - now) / 1000));
+        } else {
+            // 初始化倒計時結束時間
+            localStorage.setItem('countdownEndTime', now + COUNTDOWN_DURATION * 1000);
+        }
+
+        // 啟動計時器
+        timer.value = setInterval(() => {
+            countdown.value -= 1;
+            if (countdown.value <= 0) {
+                clearInterval(timer.value);
+                localStorage.removeItem('countdownEndTime'); // 清理存儲
+                countdown.value = COUNTDOWN_DURATION;
+            }
+        }, 1000);
+    }
+};
+//------
 const emit = defineEmits(['isVerify']);
-const emailTimer = useEmailTimer();
 const email = ref('');
 const jwtStore = useJwtStore();
 const isValid = ref(false);
@@ -71,7 +97,7 @@ const props = defineProps({
     index: String,
     pEmail: 'shshsh@gamil.com'
 });
-const token = ref("");
+const token = ref('');
 const emailCook = useCookie(`${props.from}Email`, {
     maxAge: 600
 });
@@ -83,7 +109,7 @@ const validEmailPattern = () => {
         isValid.value = false;
     }
 };
-const SendCode = async() => {
+const SendCode = async () => {
     try {
         const response = await $axios.post(
             '/api/v1/Pmatch/SendVerifyCode',
@@ -99,7 +125,7 @@ const SendCode = async() => {
         );
         if (response.data.Status.Code === 0) {
             alert('驗證碼已發送，請至信箱收取驗證碼!');
-            emailTimer.decrement();
+            startCountdown();
             emailCook.value = email.value;
         } else {
             alert(`${response.data.Status.Message}`);
@@ -108,7 +134,7 @@ const SendCode = async() => {
         console.error('請求失敗:', error);
     }
 };
-const verifyCode = async() => {
+const verifyCode = async () => {
     try {
         const response = await $axios.post(
             '/api/v1/Pmatch/Verify',
@@ -138,24 +164,30 @@ const resetAll = () => {
     ansCode.value = '';
     email.value = '';
     isValid.value = false;
-    emailTimer.reset();
+    clearInterval(timer.value);
+    countdown.value = COUNTDOWN_DURATION;
 };
 const openSendBtn = () => {
     let open = true;
     if (isValid.value === true) {
         open = false;
     }
-    if (emailTimer.count!=undefined && emailTimer.count !== 120) {
+    if (countdown.value!==120 && countdown.value!==0) {
         open = true;
     }
     return open;
 };
-onMounted(async() => {
-    if (emailTimer.count !== 120) {
-        emailTimer.decrement();
+onMounted(async () => {
+    var plusTime = localStorage.getItem('countdownEndTime');
+    if(plusTime!==null){
+      startCountdown();
     }
     email.value = props.pEmail;
     validEmailPattern();
+});
+onBeforeUnmount(() => {
+  clearInterval(timer.value); // 清理計時器
+  countdown.value =COUNTDOWN_DURATION;
 });
 watch(
     () => props,

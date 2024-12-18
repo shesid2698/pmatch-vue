@@ -1,8 +1,4 @@
 <template>
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
-          integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
-          crossorigin="anonymous" />
     <el-dialog v-model="mobileTableVisible"
                :width="dialogWidth">
         <keep-alive>
@@ -263,8 +259,6 @@ const router = useRouter();
 const { $axios } = useNuxtApp();
 /**正在驗證的手機號碼 */
 const verifyingMobile = useCookie('newMobile');
-/**可再次發送驗證碼的計時器 */
-const mobileTimer = useMobileTimer();
 /**傳送給驗證視窗的手機號碼 */
 const dialogMobile = ref('');
 const phone = ref('');
@@ -377,6 +371,8 @@ const SubmitForm = async e => {
         return;
     }
     try {
+        var allAddress='';
+        if(address.value!=''&&selectedRegion.value!=''&&selectedCity.value!='')allAddress =selectedCity.value + selectedRegion.value + address.value;
         const response = await $axios.post(
             '/api/v1/Pmatch/Register',
             {
@@ -385,7 +381,7 @@ const SubmitForm = async e => {
                 Email: emailValue,
                 Name: theName.value,
                 BirthDay: birthDayValue,
-                Address: selectedCity.value + selectedRegion.value + address.value
+                Address: allAddress
             },
             {
                 headers: {
@@ -423,9 +419,7 @@ onMounted(async () => {
             dialogWidth.value = '370px'; // 其他裝置設置寬度為 800px
         }
     };
-    if (mobileTimer.secCount !== 120) {
-        mobileTimer.decrement();
-    }
+
     cities.value = Object.keys(theCities.getCities());
     // 初次加載時設置
     updateDialogWidth();

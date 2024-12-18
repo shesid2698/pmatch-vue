@@ -22,7 +22,8 @@
         <div class="lg:w-160px">
             <MemberCenter></MemberCenter>
         </div>
-        <div class="flex-1 md:pl-20px">
+        <div class="flex-1 md:pl-20px"
+             v-if="theUser[0]!=null && theUser[0]!=undefined">
             <!-- container -->
             <div class="text-20px flex justify-center">
                 <div>
@@ -35,7 +36,7 @@
                             <div class="text-15px mr-8px">登入帳號 </div>
                             <div><input type="text"
                                        name="account"
-                                       value="123456"
+                                       v-model="theUser[0].Mobile1"
                                        class="border-none text-15px"
                                        disabled></div>
                         </div>
@@ -43,12 +44,15 @@
                             <div class="mb-5px text-16px">姓名</div>
                             <input type="text"
                                    required
+                                   v-model="theUser[0].Name"
                                    class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
                         </div>
                         <div class="mt-15px">
                             <div class="mb-5px text-16px">出生年月日</div>
                             <input type="date"
                                    required
+                                   v-model="Birthday"
+                                   @change="theUser[0].Birthday = Birthday"
                                    class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
                         </div>
                         <div class="mt-15px">
@@ -57,19 +61,28 @@
                             </div>
                             <div class="flex">
                                 <div class="w-49%">
-                                    <select class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200">
-                                        <option value="請選擇">請選擇</option>
+                                    <select v-model="selectedCity"
+                                            class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200">
+                                        <option value="">請選擇</option>
+                                        <option v-for="(item,index) in cities"
+                                                :key="index"
+                                                :value="index">{{index}}</option>
                                     </select>
                                 </div>
                                 <div class="w-2%"></div>
                                 <div class="w-49%">
-                                    <select class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200">
-                                        <option value="請選擇">請選擇</option>
+                                    <select v-model="selectedRegion"
+                                            class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200">
+                                        <option value="">請選擇</option>
+                                        <option v-for="region in cities[selectedCity]"
+                                                :key="region">
+                                            {{ region }}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="mt-5px">
                                 <input type="text"
+                                       v-model="addressDetail"
                                        class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
                             </div>
                         </div>
@@ -81,9 +94,8 @@
                             <div class="flex">
                                 <div class="w-60% relative">
                                     <input type="email"
-                                           v-model="email"
-                                           :disabled="emailVerify === true"
-                                           @input="validEmailPattern"
+                                           v-model="theUser[0].Email"
+                                           disabled
                                            class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200 disabled:bg-[#e9ecef] pr-35px" />
                                     <div v-if="emailVerify===true"
                                          class="absolute w-20px h-20px top-50% transform translate-y-[-50%] right-5px border border-3px border-solid rounded-full border-[#24b75d] text-center content-center text-[#24b75d] text-15px font-bold"><i class="fa-solid fa-check"></i></div>
@@ -92,13 +104,12 @@
                                 <div class="w-38%">
                                     <button v-if="emailVerify!==true"
                                             @click="emailTableVisible = true;$event.preventDefault();"
-                                            :disabled="emailPattern===false"
                                             class="p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#2696F3] hover:bg-[#228de6] transition duration-200 cursor-pointer disabled:bg-gray disabled:hover:bg-gray">
                                         電子信箱驗證
                                     </button>
                                     <button v-else
-                                            @click="$event.preventDefault()"
-                                            class="p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#58CB6E] hover:bg-[#52bd65] transition duration-200 cursor-default disabled:bg-gray disabled:hover:bg-gray">
+                                            @click="emailTableVisible = true;$event.preventDefault();"
+                                            class="p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#58CB6E] hover:bg-[#52bd65] transition duration-200 cursor-pointer disabled:bg-gray disabled:hover:bg-gray">
                                         已完成驗證
                                     </button>
                                 </div>
@@ -113,41 +124,44 @@
                                 <label for="phone"
                                        class="text-15px">
                                     <input type="radio"
-                                           v-model="invoice"
+                                           v-model="theUser[0].CarrierType"
                                            value="1"
                                            id="phone">手機條碼
                                 </label>
                                 <label for="natural"
                                        class="text-15px">
                                     <input type="radio"
-                                           v-model="invoice"
+                                           v-model="theUser[0].CarrierType"
                                            value="2"
                                            id="natural">自然人憑證
                                 </label>
                                 <label for="donate"
                                        class="text-15px">
                                     <input type="radio"
-                                           v-model="invoice"
+                                           v-model="theUser[0].CarrierType"
                                            value="3"
                                            id="donate">捐贈碼
                                 </label>
                             </div>
-                            <div v-if="invoice === '1'"
+                            <div v-if="theUser[0].CarrierType === '1' || theUser[0].CarrierType === 1"
                                  class="relative">
                                 <span class="absolute top-50% transform transform translate-y--1/2 left-10px text-black">/</span>
                                 <input type="text"
-                                       value=""
+                                       v-model="theUser[0].Carrier"
+                                       @change="theUser[0].Carrier = theUser[0].Carrier.toUpperCase()"
                                        pattern="(?=.*[0-9])(?=.*[A-Z])[0-9A-Z.+\-]{7}"
                                        class="box-border p-y-1.5 p-x-3 pl-17px text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
                             </div>
 
-                            <div v-else-if="invoice === '2'"><input type="text"
-                                       value=""
+                            <div v-else-if="theUser[0].CarrierType === '2' || theUser[0].CarrierType === 2"><input type="text"
+                                       v-model="theUser[0].Carrier"
+                                       @change="theUser[0].Carrier = theUser[0].Carrier.toUpperCase()"
                                        pattern="[A-Z]{2}[0-9]{14}"
                                        class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" /></div>
-                            <div v-else-if="invoice === '3'">
+                            <div v-else-if="theUser[0].CarrierType === '3' || theUser[0].CarrierType === 3">
                                 <input type="text"
-                                       value=""
+                                       v-model="theUser[0].Carrier"
+                                       @change=""
                                        pattern="[0-9]{3,7}"
                                        class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
                             </div>
@@ -163,14 +177,40 @@
                             <div class="mb-5px text-16px">統一編號</div>
                             <input type="text"
                                    pattern="[0-9]{8}"
+                                   v-model="theUser[0].TaxId"
                                    class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
                         </div>
 
                         <div class="mt-15px">
-                            <div class="mb-5px text-16px">Line ID</div>
-                            <input type="text"
-                                   pattern="[0-9]{8}"
-                                   class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
+                            <div class="mb-5px text-[#484646] font-400 text-15px">
+                                發票寄送方式
+                            </div>
+                            <div class="mb-5px">
+                                <label for="carrierType"
+                                       class="text-15px">
+                                    <input type="radio"
+                                           v-model="theUser[0].SendReceiptType"
+                                           value="1"
+                                           :disabled="theUser[0].CarrierType === 0 || theUser[0].CarrierType==='0'|| theUser[0].Carrier===''"
+                                           id="carrierType">電子載具
+                                </label>
+                                <label for="email"
+                                       class="text-15px">
+                                    <input type="radio"
+                                    :disabled="theUser[0].Email===''"
+                                           v-model="theUser[0].SendReceiptType"
+                                           value="2"
+                                           id="email">電子信箱
+                                </label>
+                                <label for="address"
+                                       class="text-15px">
+                                    <input type="radio"
+                                           v-model="theUser[0].SendReceiptType"
+                                           :disabled="addressDetail===''"
+                                           value="3"
+                                           id="address">紙本寄送
+                                </label>
+                            </div>
                         </div>
 
                         <div class="mt-15px">
@@ -181,9 +221,8 @@
                                 <div class="w-68% relative">
                                     <input type="text"
                                            required
-                                           v-model="phone"
-                                           :disabled="mobileTimer.secCount != 120 || mobileVerify === true "
-                                           @input="validMobilePattern(1)"
+                                           v-model="theUser[0].Mobile1"
+                                           disabled
                                            class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200 disabled:bg-[#e9ecef]" />
                                     <div v-if="mobileVerify===true"
                                          class="absolute w-20px h-20px top-50% transform translate-y-[-50%] right-5px border border-3px border-solid rounded-full border-[#24b75d] text-center content-center text-[#24b75d] text-15px font-bold"><i class="fa-solid fa-check"></i></div>
@@ -192,14 +231,11 @@
                                 <div class="w-30%">
                                     <button v-if="mobileVerify!==true"
                                             @click="openMobileDialog($event,1)"
-                                            :disabled="mobilePattern !== true"
-                                            class="p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#2696F3] hover:bg-[#228de6] transition duration-200 cursor-pointer disabled:bg-gray disabled:hover:bg-gray">
-                                        <span v-if="mobileTimer.secCount===120">手機驗證</span>
-                                        <span v-else>驗證中</span>
+                                            class="p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#2696F3] hover:bg-[#228de6] transition duration-200 cursor-pointer disabled:bg-gray disabled:hover:bg-gray">手機驗證
                                     </button>
                                     <button v-else
-                                            @click="$event.preventDefault()"
-                                            class="p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#58CB6E] hover:bg-[#52bd65] transition duration-200 cursor-default disabled:bg-gray disabled:hover:bg-gray">
+                                            @click="openMobileDialog($event,1)"
+                                            class="p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#58CB6E] hover:bg-[#52bd65] transition duration-200 disabled:bg-gray disabled:hover:bg-gray cursor-pointer">
                                         已完成驗證
                                     </button>
                                 </div>
@@ -214,9 +250,8 @@
                                 <div class="w-68% relative">
                                     <input type="text"
                                            required
-                                           v-model="phone2"
-                                           :disabled="mobileTimer.secCount != 120 || mobileVerify2 === true"
-                                           @input="validMobilePattern(2)"
+                                           v-model="theUser[0].Mobile2"
+                                           disabled
                                            class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200 disabled:bg-[#e9ecef]" />
                                     <div v-if="mobileVerify2===true"
                                          class="absolute w-20px h-20px top-50% transform translate-y-[-50%] right-5px border border-3px border-solid rounded-full border-[#24b75d] text-center content-center text-[#24b75d] text-15px font-bold"><i class="fa-solid fa-check"></i></div>
@@ -225,14 +260,11 @@
                                 <div class="w-30%">
                                     <button v-if="mobileVerify2!==true"
                                             @click="openMobileDialog($event,2)"
-                                            :disabled="mobilePattern2 !== true"
-                                            class="p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#2696F3] hover:bg-[#228de6] transition duration-200 cursor-pointer disabled:bg-gray disabled:hover:bg-gray">
-                                        <span v-if="mobileTimer.secCount===120">手機驗證</span>
-                                        <span v-else>驗證中</span>
+                                            class="p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#2696F3] hover:bg-[#228de6] transition duration-200 cursor-pointer disabled:bg-gray disabled:hover:bg-gray cursor-pointer">手機驗證
                                     </button>
                                     <button v-else
-                                            @click="$event.preventDefault()"
-                                            class="p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#58CB6E] hover:bg-[#52bd65] transition duration-200 cursor-default disabled:bg-gray disabled:hover:bg-gray">
+                                            @click="openMobileDialog($event,2)"
+                                            class="p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#58CB6E] hover:bg-[#52bd65] transition duration-200 cursor-pointer disabled:bg-gray disabled:hover:bg-gray">
                                         已完成驗證
                                     </button>
                                 </div>
@@ -247,9 +279,8 @@
                                 <div class="w-68% relative">
                                     <input type="text"
                                            required
-                                           v-model="phone3"
-                                           :disabled="mobileTimer.secCount != 120 || mobileVerify3 === true "
-                                           @input="validMobilePattern(3)"
+                                           v-model="theUser[0].Mobile3"
+                                           disabled
                                            class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200 disabled:bg-[#e9ecef]" />
                                     <div v-if="mobileVerify3===true"
                                          class="absolute w-20px h-20px top-50% transform translate-y-[-50%] right-5px border border-3px border-solid rounded-full border-[#24b75d] text-center content-center text-[#24b75d] text-15px font-bold"><i class="fa-solid fa-check"></i></div>
@@ -258,14 +289,11 @@
                                 <div class="w-30%">
                                     <button v-if="mobileVerify3!==true"
                                             @click="openMobileDialog($event,3)"
-                                            :disabled="mobilePattern3 !== true"
-                                            class="p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#2696F3] hover:bg-[#228de6] transition duration-200 cursor-pointer disabled:bg-gray disabled:hover:bg-gray">
-                                        <span v-if="mobileTimer.secCount===120">手機驗證</span>
-                                        <span v-else>驗證中</span>
+                                            class="p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#2696F3] hover:bg-[#228de6] transition duration-200 cursor-pointer disabled:bg-gray disabled:hover:bg-gray">手機驗證
                                     </button>
                                     <button v-else
-                                            @click="$event.preventDefault()"
-                                            class="p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#58CB6E] hover:bg-[#52bd65] transition duration-200 cursor-default disabled:bg-gray disabled:hover:bg-gray">
+                                            @click="openMobileDialog($event,3)"
+                                            class="p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#58CB6E] hover:bg-[#52bd65] transition duration-200 cursor-pointer disabled:bg-gray disabled:hover:bg-gray">
                                         已完成驗證
                                     </button>
                                 </div>
@@ -281,24 +309,27 @@
     </div>
 </template>
 <script setup>
+const router = useRouter();
+const { $axios } = useNuxtApp();
+const userToken = useCookie('_PmToken');
+const memberId = useCookie('_PmMemberId');
+const theUser = reactive({});
+const Birthday = ref('');
+const getCities = useGetCities();
+const cities = ref([]);
+const selectedCity = ref('');
+const selectedRegion = ref('');
+const addressDetail = ref('');
 /**正在驗證的手機號碼 */
 const verifyingMobile = useCookie('editMobile');
-/**可再次發送驗證碼的計時器 */
-const mobileTimer = useMobileTimer();
 /**手機/信箱驗證視窗寬度 */
 const dialogWidth = ref('370px');
 /**電子信箱 */
 const email = ref('');
 /**電子信箱是否通過驗證 */
 const emailVerify = ref(false);
-/**電子信箱格式驗證 */
-const emailPattern = ref(false);
 /**是否開啟電子驗證視窗 */
 const emailTableVisible = ref(false);
-/**行動電話1 */
-const phone = ref('');
-/**行動電話2 */
-const phone2 = ref('');
 /**行動電話3 */
 const phone3 = ref('');
 const dialogMobile = ref('');
@@ -308,27 +339,12 @@ const mobileVerify = ref(false);
 const mobileVerify2 = ref(false);
 /**行動電話3是否驗證 */
 const mobileVerify3 = ref(false);
-/**行動電話1格式是否正確 */
-const mobilePattern = ref(false);
-/**行動電話2格式是否正確 */
-const mobilePattern2 = ref(false);
-/**行動電話3格式是否正確 */
-const mobilePattern3 = ref(false);
 /**是否開啟手機驗證視窗 */
 const mobileTableVisible = ref(false);
 /**正在驗證哪個行動電話 */
 const isVerifyingNum = ref(0);
 /**電子載具類型 */
 const invoice = ref('');
-/**驗證電子信箱格式是否正確 */
-const validEmailPattern = () => {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (regex.test(email.value)) {
-        emailPattern.value = true;
-    } else {
-        emailPattern.value = false;
-    }
-};
 /**電子信箱通過驗證*/
 const getEmailVerify = (result, resEmail) => {
     if (result === true) {
@@ -337,51 +353,12 @@ const getEmailVerify = (result, resEmail) => {
         email.value = resEmail;
     }
 };
-/**驗證行動電話格式*/
-const validMobilePattern = index => {
-    const regex = /^\d{10}$/;
-    switch (index) {
-        case 1:
-            if (regex.test(phone.value)) {
-                mobilePattern.value = true;
-            } else {
-                mobilePattern.value = false;
-            }
-            break;
-        case 2:
-            if (regex.test(phone2.value)) {
-                mobilePattern2.value = true;
-            } else {
-                mobilePattern2.value = false;
-            }
-            break;
-        case 3:
-            if (regex.test(phone3.value)) {
-                mobilePattern3.value = true;
-            } else {
-                mobilePattern3.value = false;
-            }
-            break;
-    }
-};
 const openMobileDialog = (event, index) => {
     event.preventDefault();
     mobileTableVisible.value = true;
     isVerifyingNum.value = index;
     if (verifyingMobile.value != undefined && verifyingMobile.value != '') {
         dialogMobile.value = verifyingMobile.value;
-    } else {
-        switch (index) {
-            case 1:
-                dialogMobile.value = phone.value;
-                break;
-            case 2:
-                dialogMobile.value = phone2.value;
-                break;
-            case 3:
-                dialogMobile.value = phone3.value;
-                break;
-        }
     }
 };
 const getMobileVerify = (result, mobile) => {
@@ -389,28 +366,100 @@ const getMobileVerify = (result, mobile) => {
         switch (isVerifyingNum.value) {
             case 1:
                 mobileVerify.value = result;
-                phone.value = mobile;
+                theUser[0].Mobile1 = mobile;
+                theUser[0].Mobile1_Verified = true;
                 mobileTableVisible.value = false;
                 break;
             case 2:
                 mobileVerify2.value = result;
-                phone2.value = mobile;
+                theUser[0].Mobile2 = mobile;
+                theUser[0].Mobile2_Verified = true;
                 mobileTableVisible.value = false;
                 break;
             case 3:
                 mobileVerify3.value = result;
-                phone3.value = mobile;
+                theUser[0].Mobile3 = mobile;
+                theUser[0].Mobile3_Verified = true;
                 mobileTableVisible.value = false;
                 break;
         }
         isVerifyingNum.value = 0;
     }
 };
-const checkForm = event => {
+/**
+ * 提交表單
+ */
+const checkForm = async(event) => {
     event.preventDefault();
-    console.log('成功');
+    //做型別轉換
+    theUser[0].CarrierType = parseInt(theUser[0].CarrierType);
+    theUser[0].SendReceiptType = parseInt(theUser[0].SendReceiptType);
+    if (theUser[0].CarrierType === 1 && theUser[0].Carrier !== '') {
+        theUser[0].Carrier = '/' + theUser[0].Carrier;
+    }
+    if (theUser[0].Carrier === '') theUser[0].CarrierType = 0;
+    var allAddress = '';
+    if(selectedRegion.value!==''&&selectedCity.value!==''&&addressDetail.value!=='')allAddress = selectedCity.value+selectedRegion.value+addressDetail.value;
+    theUser[0].Address = allAddress;
+    try {
+        const response = await $axios.post(
+            '/api/v1/Pmatch/UpdatedMemberData',
+            theUser[0],
+            {
+                headers: {
+                    Authorization: userToken.value
+                }
+            }
+        );
+
+        if (response.data.Status.Code === 0) {
+          alert("更新成功");
+          window.location.reload();
+        } else {
+            alert(`${response.data.Status.Message}`);
+        }
+    } catch (error) {
+        console.error('請求失敗:', error);
+    }
 };
-onMounted(() => {
+/**
+ * 日期轉換函數
+ */
+function formatToDateInput(dateStr) {
+    const date = new Date(dateStr);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // 月份從0開始
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`; // return YYYY-MM-DD 格式
+}
+onMounted(async () => {
+    try {
+        const response = await $axios.post(
+            '/api/v1/Pmatch/GetMemberDetail',
+            {
+                PmatchMemberId: memberId.value
+            },
+            {
+                headers: {
+                    Authorization: userToken.value
+                }
+            }
+        );
+
+        if (response.data.Status.Code === 0) {
+            Object.assign(theUser, response.data.Data);
+            Birthday.value = formatToDateInput(theUser[0].Birthday);
+            if (theUser[0].Email !== '') emailVerify.value = true;
+            if (theUser[0].Mobile1 !== '') mobileVerify.value = true;
+            if (theUser[0].CarrierType === 1 && theUser[0].Carrier !== '') {
+                theUser[0].Carrier = theUser[0].Carrier.replace('/', '');
+            }
+        } else {
+            alert(`${response.data.Status.Message}`);
+        }
+    } catch (error) {
+        console.error('請求失敗:', error);
+    }
     const updateDialogWidth = () => {
         if (window.innerWidth <= 768) {
             dialogWidth.value = '90%'; // MD 裝置或以下設置寬度為 370px
@@ -424,9 +473,25 @@ onMounted(() => {
 
     // 監聽視窗尺寸變化
     window.addEventListener('resize', updateDialogWidth);
-
-    if (mobileTimer.secCount !== 120) {
-        mobileTimer.decrement();
+    cities.value = getCities.getCities();
+    if (cities.value != null && cities.value != undefined) {
+        for (const [key, value] of Object.entries(cities.value)) {
+            if (theUser[0].Address.indexOf(key) !== -1) {
+                selectedCity.value = key;
+            }
+        }
+        if (selectedCity.value != '' && selectedCity.value != undefined) {
+            for (const [key, value] of Object.entries(cities.value[selectedCity.value])) {
+                if (theUser[0].Address.indexOf(value) !== -1) {
+                    selectedRegion.value = value;
+                }
+            }
+        }
+        if(selectedCity.value!==""&&selectedRegion.value!=""){
+          theUser[0].Address=theUser[0].Address.replace(selectedCity.value,"");
+          theUser[0].Address=theUser[0].Address.replace(selectedRegion.value,"");
+          addressDetail.value = theUser[0].Address;
+        }
     }
 });
 </script>

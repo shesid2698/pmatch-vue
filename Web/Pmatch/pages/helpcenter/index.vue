@@ -112,7 +112,7 @@ async function fetchNewsListData(token) {
 onMounted(async () => {
     try {
         if (userToken.value != "" && userToken.value != undefined) {
-            
+
             const token = userToken.value;
             if (token != "") {
                 fetchNewsListData(token);
@@ -120,6 +120,7 @@ onMounted(async () => {
         } else {
             // 生成新的 token
             const token = await jwtStore.generateToken();
+            console.log("token",token);
             if (token != "") {
                 fetchNewsListData(token);
             }

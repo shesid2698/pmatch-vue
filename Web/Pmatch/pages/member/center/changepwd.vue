@@ -9,12 +9,14 @@
                     <div class="flex flex-items-center mb-20px">
                         <span class="w-25px h-20px inline-block bg-#1a6db4 mr-8px mt-3px"></span>更改密碼
                     </div>
-                    <form action="" @submit="CheckPassword">
+                    <form action=""
+                          @submit="CheckPassword">
                         <div class="mt-15px">
                             <div class="mb-5px text-16px">原密碼</div>
                             <input type="password"
                                    required
                                    autocomplete="off"
+                                   v-model="oldPassword"
                                    pattern="(?=.*\d)(?=.*[a-zA-Z])[A-Za-z0-9!@#$%&*]{8,20}"
                                    class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
                         </div>
@@ -25,6 +27,7 @@
                                        required
                                        autocomplete="off"
                                        ref="i_password2"
+                                       v-model="newPassword"
                                        class="password box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200"
                                        pattern="(?=.*\d)(?=.*[a-zA-Z])[A-Za-z0-9!@#$%&*]{8,20}" />
                                 <div @click="turnInputType2"
@@ -47,6 +50,7 @@
                                 <input type="password"
                                        required
                                        autocomplete="off"
+                                       v-model="confirmPassword"
                                        ref="i_password2"
                                        class="password box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200"
                                        pattern="(?=.*\d)(?=.*[a-zA-Z])[A-Za-z0-9!@#$%&*]{8,20}" />
@@ -75,10 +79,46 @@
     </div>
 </template>
 <script setup>
-const CheckPassword = e=>{
-  e.preventDefault();
-  console.log(e);
+const { $axios } = useNuxtApp();
+const encrypt = useEncrypt();
+const userToken = useCookie('_PmToken');
+const oldPassword = ref('');
+const newPassword = ref('');
+const confirmPassword = ref('');
+const CheckPassword = async e => {
+    e.preventDefault();
+    if (newPassword.value !== confirmPassword.value) {
+        alert('新密碼與確認密碼不一致!!');
+        return;
+    } else {
+        newPassword.value = encrypt.encrypt(newPassword.value);
+        oldPassword.value = encrypt.encrypt(oldPassword.value);
+        try {
+            const response = await $axios.post(
+                '/api/v1/Pmatch/ChangedPassword',
+                {
+                    OldPassword:oldPassword.value,
+                    NewPassword:newPassword.value
+                },
+                {
+                    headers: {
+                        Authorization: userToken.value
+                    }
+                }
+            );
+            if (response.data.Status.Code === 0) {
+              alert(`密碼修改成功`);
+              window.location.href="/member/center";
+            } else {
+                alert(`${response.data.Status.Message}`);
+            }
+        } catch (error) {
+            console.error('請求失敗:', error);
+        }
+    }
 };
+
+onMounted(() => {});
 </script>
 <style scoped>
 .ccontainer {

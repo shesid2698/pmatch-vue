@@ -1,8 +1,4 @@
 <template>
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
-          integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
-          crossorigin="anonymous" />
     <div class="ccontainer md:pt-60px">
         <div class="login-card w-100% md:w-378px">
             <form action=""
@@ -39,7 +35,6 @@
                     <input v-model="accountId"
                            type="text"
                            required
-
                            class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
                 </div>
 
@@ -76,7 +71,8 @@
                 <div class="mt-15px">
                     <div class="flex">
                         <div class="flex-1">
-                            <NuxtLink to="/register"><button type="button" class="p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#1a6db4] hover:opacity-70 transition duration-200 cursor-pointer">
+                            <NuxtLink to="/register"><button type="button"
+                                        class="p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#1a6db4] hover:opacity-70 transition duration-200 cursor-pointer">
                                     註冊
                                 </button></NuxtLink>
                         </div>
@@ -103,6 +99,7 @@
 
 <script setup>
 import VueTurnstile from 'vue-turnstile';
+const encrypt = useEncrypt();
 const eyes = ref(null);
 const i_password = ref(null);
 const loginToken = useCookie('loginToken');
@@ -112,11 +109,10 @@ let accountId = ref('');
 let password = ref('');
 const memberList = ref({});
 const { $axios } = useNuxtApp();
-const router = useRouter();
 // cookies
-let userNameCookie = useCookie("_PmUserName");
-let tokenCookie = useCookie("_PmToken");
-let MemberIdCookie = useCookie("_PmMemberId");
+let userNameCookie = useCookie('_PmUserName');
+let tokenCookie = useCookie('_PmToken');
+let MemberIdCookie = useCookie('_PmMemberId');
 
 const turnInputType = () => {
     if (i_password.value.type === 'password') {
@@ -139,7 +135,7 @@ const onVerify = tokenValue => {
 // 登入傳送帳密
 const login = async () => {
     // 加密密碼
-    const encryptedPassword = encrypt(password.value);
+    const encryptedPassword = encrypt.encrypt(password.value);
     // 等待登入結果
     await Login(encryptedPassword);
 };
@@ -172,17 +168,6 @@ async function Login(encryptedPassword) {
         console.error('請求失敗:', error);
     }
 }
-
-function encrypt(input) {
-    // 1. 轉為UTF-8
-    const utf8Bytes = new TextEncoder().encode(input);
-    // 2. Base64編碼
-    const base64String = btoa(String.fromCharCode(...utf8Bytes));
-    // 3. 反轉Base64編碼後的字串
-    const reversedBase64 = base64String.split('').reverse().join('');
-    // 4. 結果
-    return `e${reversedBase64}is`;
-}
 onMounted(() => {
     window.addEventListener('keydown', EnterLogin);
 });
@@ -190,7 +175,7 @@ onBeforeUnmount(() => {
     window.removeEventListener('keydown', EnterLogin);
 });
 function EnterLogin(e) {
-  // e.preventDefault();
+    // e.preventDefault();
     if (e.key == 'Enter') {
         login();
     }
