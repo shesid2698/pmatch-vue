@@ -98,7 +98,7 @@
                 >
                     <el-tab-pane label="開單" name="first">
                         <div class="b-solid border-1 p-5 b-#212529">
-                            <form action="#" @submit="SubmitForm">
+                            <form action="#" @submit="sendAccList">
                                 <div>
                                     <p>遊戲平台 :</p>
                                     <select v-model="accPlatformName" required>
@@ -136,7 +136,7 @@
                                     <p>聯絡資料 :</p>
                                     <input v-model="accPhone" type="text" required/>
                                 </div>
-                                <button class="mt-5" @click="sendAccList">
+                                <button class="mt-5">
                                     送出
                                 </button>
                             </form>
@@ -274,7 +274,8 @@ async function sendQAList() {
         await sendQAApi(userToken.value);
     }
 }
-async function sendAccList() {
+async function sendAccList(event) {
+    event.preventDefault();
     if (userToken.value === "" || userToken.value === undefined) {
         alert("請先登入會員");
     } else {

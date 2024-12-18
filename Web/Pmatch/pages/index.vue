@@ -70,7 +70,7 @@
                 </div>
             </div>
             <div class="mb-3">
-                <ElCarousel class="h-200px" :interval="2000" arrow="always">
+                <ElCarousel v-if="bannerList.length > 0" class="h-200px" :interval="2000" arrow="always">
                     <ElCarouselItem class="h-200px" v-for="(item, index) in bannerList" :key="index">
                         <img
                         class="w-100% "
@@ -275,7 +275,7 @@ async function fetchADList(token) {
         const response = await $axios.post(
             "/api/v1/Pmatch/GetAdvertisementList",
             {
-                Category: 1,
+                Category: [1],
             },
             {
                 headers: {
@@ -296,6 +296,7 @@ async function fetchADList(token) {
 
 onMounted(async () => {
     try {
+
         if (userToken.value != "" && userToken.value != undefined) {
             const token = userToken.value;
 

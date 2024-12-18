@@ -8,7 +8,7 @@
             </div>
         </div>
         <div class="flex justify-center">
-            <form action="#" @submit="SubmitForm">
+            <form action="#" @submit="submitForm">
                 <div class="w-100% lg-w-auto">
                     <p class="m-0 mb-3">
                         會員帳號： <span class="color-red">*</span>
@@ -60,7 +60,7 @@
                     <input
                         required
                         class="entryCol w-100% lg-w-380px rounded-5px h-25px lg-ps-1rem lg-pe-1rem ps-0 pe-0 pt-.2rem pb-.2rem font-size-1rem mb-3"
-                        type="text"
+                        type="email"
                         placeholder="ex: johnny.doe@mail.com"
                         v-model="mail"
                     />
@@ -101,7 +101,6 @@
                     <div>
                         <button
                             class="border-none bg-#e93470 color-#fff w-100% lg-w-414px rounded-5px h-35px font-size-1rem"
-                            @click="submitForm"
                         >
                             提交
                         </button>
@@ -157,9 +156,9 @@ async function contactList(token) {
                 },
             }
         );
-
+        
         if (response.data.Status.Code === 0) {
-            console.log("ok");
+            alert("已成功傳送訊息!將有專員為您服務!");
         } else {
             alert(`${response.data.Status.Message}`);
         }
@@ -167,7 +166,8 @@ async function contactList(token) {
         console.error("請求失敗:", error);
     }
 }
-async function submitForm() {
+async function submitForm(event) {
+    event.preventDefault();
     await contactList(userToken.value);
 }
 

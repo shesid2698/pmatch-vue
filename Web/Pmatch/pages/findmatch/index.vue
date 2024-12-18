@@ -251,12 +251,36 @@
                             </div>
                         </div>
                     </div>
-                    <div class="w-150px ms-3">0 0 0 0 0</div>
+                    <div class="w-150px ms-3 flex items-center justify-center">
+                        <div>
+                            <!-- 顯示完整星星 -->
+                            <img
+                                v-for="n in Math.floor(item.Score)"
+                                :key="`filled-${index}-${n}`"
+                                class="w-20px h-20px"
+                                src="/images/Star.svg"
+                                alt=""
+                            />
+                            <!-- 顯示半顆星星 -->
+                            <img
+                                v-if="item.Score % 1 !== 0"
+                                :key="`half-${index}`"
+                                class="w-20px h-20px"
+                                src="/images/StarHalf.svg"
+                                alt=""
+                            />
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="sideBar">
                 <div class="mb-5">
-                    <ElCarousel class="h-200px" :interval="2000" arrow="always">
+                    <ElCarousel
+                        v-if="bannerTopList.length > 0"
+                        class="h-200px"
+                        :interval="2000"
+                        arrow="always"
+                    >
                         <ElCarouselItem
                             class="h-200px"
                             v-for="(item, index) in bannerTopList"
@@ -271,7 +295,12 @@
                     </ElCarousel>
                 </div>
                 <div>
-                    <ElCarousel class="h-200px" :interval="2000" arrow="always">
+                    <ElCarousel
+                        v-if="bannerDownList.length > 0"
+                        class="h-200px"
+                        :interval="2000"
+                        arrow="always"
+                    >
                         <ElCarouselItem
                             class="h-200px"
                             v-for="(item, index) in bannerDownList"
@@ -372,7 +401,7 @@ async function fetchADTopList(token) {
         const response = await $axios.post(
             "/api/v1/Pmatch/GetAdvertisementList",
             {
-                Category: 2,
+                Category: [2],
             },
             {
                 headers: {
@@ -400,7 +429,7 @@ async function fetchADDownList(token) {
         const response = await $axios.post(
             "/api/v1/Pmatch/GetAdvertisementList",
             {
-                Category: 3,
+                Category: [3],
             },
             {
                 headers: {
