@@ -109,7 +109,8 @@
                                 </div>
                                 <div>
                                     <p>遊戲暱稱 :</p>
-                                    <input required
+                                    <input
+                                        required
                                         v-model="accMemberName"
                                         type="text"
                                     />
@@ -123,7 +124,11 @@
                                 </div>
                                 <div>
                                     <p>委託金額 :</p>
-                                    <input required v-model="accPatch" type="text" />
+                                    <input
+                                        required
+                                        v-model="accPatch"
+                                        type="text"
+                                    />
                                 </div>
                                 <div>
                                     <p>希望付款方式 :</p>
@@ -134,11 +139,13 @@
                                 </div>
                                 <div>
                                     <p>聯絡資料 :</p>
-                                    <input v-model="accPhone" type="text" required/>
+                                    <input
+                                        v-model="accPhone"
+                                        type="text"
+                                        required
+                                    />
                                 </div>
-                                <button class="mt-5">
-                                    送出
-                                </button>
+                                <button class="mt-5">送出</button>
                             </form>
                         </div>
                     </el-tab-pane>
@@ -184,6 +191,11 @@
 import { ArrowRight } from "@element-plus/icons-vue";
 import { ElBreadcrumb } from "element-plus";
 import { ElBreadcrumbItem } from "element-plus";
+
+// loading page
+import { useLoadStore } from "../stores/loading.js";
+const store = useLoadStore();
+const setPageLoading = store.setPageLoading;
 
 const route = useRoute();
 const routeParamId = route.params.id;
@@ -231,19 +243,21 @@ async function fetchStoresDetailData(token) {
 }
 
 onMounted(async () => {
+    await setPageLoading(true);
     try {
         if (userToken.value != "" && userToken.value != undefined) {
             const token = userToken.value;
             if (token != "") {
-                fetchStoresDetailData(token);
+                await fetchStoresDetailData(token);
             }
         } else {
             // 生成新的 token
             const token = await jwtStore.generateToken();
             if (token != "") {
-                fetchStoresDetailData(token);
+                await fetchStoresDetailData(token);
             }
         }
+        await setPageLoading(false);
     } catch (error) {
         console.error("頁面初始化失敗:", error);
     }
@@ -288,10 +302,14 @@ async function sendQAApi(token) {
         const response = await $axios.post(
             "/api/v1/Pmatch/CreateOrUpdateStoreQAData",
             {
-                Id: 0,
-                StoreId: routeParamId,
-                MemberId: MemberIdCookie.value,
-                Question: question.value,
+                Data: [
+                    {
+                        Id: 0,
+                        StoreId: routeParamId,
+                        MemberId: MemberIdCookie.value,
+                        Question: question.value,
+                    },
+                ],
             },
             {
                 headers: {

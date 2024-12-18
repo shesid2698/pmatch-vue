@@ -1,5 +1,6 @@
 <template>
     <div>
+        <LoadingPage />
         <Header />
         <div class="mt-140px mb-60px page">
             <NuxtPage />
@@ -44,6 +45,11 @@ body {
 </style>
 
 <script setup>
+// loading page
+import { useLoadStore } from "./stores/loading.js";
+const store = useLoadStore();
+const setPageLoading = store.setPageLoading;
+
 const settingList = ref("");
 const { $axios } = useNuxtApp();
 const jwtStore = useJwtStore();
@@ -52,6 +58,7 @@ let assetsUrl = useCookie("_PmAssetsUrl");
 const userToken = useCookie("_PmToken");
 
 onMounted(async () => {
+    await setPageLoading(true);
     try {
         if (userToken.value != "" && userToken.value != undefined) {
             const token = userToken.value;
@@ -66,6 +73,7 @@ onMounted(async () => {
                 fetchSetting(token);
             }
         }
+        await setPageLoading(false);
     } catch (error) {
         console.error("頁面初始化失敗:", error);
     }

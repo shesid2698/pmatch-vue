@@ -112,6 +112,11 @@
 </template>
 
 <script setup>
+// loading page
+import { useLoadStore } from "../stores/loading.js";
+const store = useLoadStore();
+const setPageLoading = store.setPageLoading;
+
 const { $axios } = useNuxtApp();
 const jwtStore = useJwtStore();
 const userToken = useCookie("_PmToken");
@@ -156,7 +161,7 @@ async function contactList(token) {
                 },
             }
         );
-        
+
         if (response.data.Status.Code === 0) {
             alert("已成功傳送訊息!將有專員為您服務!");
         } else {
@@ -194,15 +199,18 @@ async function fetchGameList(token) {
     }
 }
 onMounted(async () => {
+    await setPageLoading(true);
     try {
         if (userToken.value != "" && userToken.value != undefined) {
             name.value = userNameCookie.value;
             accountId.value = MemberIdCookie.value;
-            fetchGameList(userToken.value);
+            await fetchGameList(userToken.value);
+            await setPageLoading(false);
             return;
         } else {
             router.push("/member/login");
         }
+        await setPageLoading(true);
     } catch (error) {
         console.error("頁面初始化失敗:", error);
     }

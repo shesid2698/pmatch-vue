@@ -91,6 +91,11 @@
 </template>
 
 <script setup>
+// loading page
+import { useLoadStore } from "../stores/loading.js";
+const store = useLoadStore();
+const setPageLoading = store.setPageLoading;
+
 import VueTurnstile from 'vue-turnstile';
 const account = ref('');
 const password = ref('');
@@ -177,12 +182,14 @@ const validatePassword = text => {
     }
 };
 onMounted(async () => {
+    await setPageLoading(true);
     const res = await getSerialNumber();
     if (res != null && res.data.s != '') {
         Object.assign(data, res.data);
     } else {
         alert('安裝工具過程中請記得輸入序號');
     }
+    await setPageLoading(false);
 });
 </script>
 

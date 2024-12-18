@@ -70,13 +70,22 @@
                 </div>
             </div>
             <div class="mb-3">
-                <ElCarousel v-if="bannerList.length > 0" class="h-200px" :interval="2000" arrow="always">
-                    <ElCarouselItem class="h-200px" v-for="(item, index) in bannerList" :key="index">
+                <ElCarousel
+                    v-if="bannerList.length > 0"
+                    class="h-200px"
+                    :interval="2000"
+                    arrow="always"
+                >
+                    <ElCarouselItem
+                        class="h-200px"
+                        v-for="(item, index) in bannerList"
+                        :key="index"
+                    >
                         <img
-                        class="w-100% "
-                        :src="`${assetsUrl}${item.ImgFile}`"
-                        :alt="item.PlatformName"
-                    />
+                            class="w-100%"
+                            :src="`${assetsUrl}${item.ImgFile}`"
+                            :alt="item.PlatformName"
+                        />
                     </ElCarouselItem>
                 </ElCarousel>
             </div>
@@ -203,6 +212,11 @@
 import { ElButton } from "element-plus";
 import { ElCarousel } from "element-plus";
 import { ElCarouselItem } from "element-plus";
+// loading page
+import { useLoadStore } from "../stores/loading.js";
+const store = useLoadStore();
+const setPageLoading = store.setPageLoading;
+
 const newsList = ref([]);
 const gameList = ref([]);
 const bannerList = ref([]);
@@ -295,8 +309,8 @@ async function fetchADList(token) {
 }
 
 onMounted(async () => {
+    await setPageLoading(true);
     try {
-
         if (userToken.value != "" && userToken.value != undefined) {
             const token = userToken.value;
 
@@ -314,6 +328,7 @@ onMounted(async () => {
                 await fetchADList(token);
             }
         }
+        await setPageLoading(false);
     } catch (error) {
         console.error("頁面初始化失敗:", error);
     }
@@ -350,10 +365,10 @@ onMounted(async () => {
     padding-bottom: 1rem;
 }
 .el-carousel__item:nth-child(2n) {
-  background-color: #99a9bf;
+    background-color: #99a9bf;
 }
 
 .el-carousel__item:nth-child(2n + 1) {
-  background-color: #d3dce6;
+    background-color: #d3dce6;
 }
 </style>

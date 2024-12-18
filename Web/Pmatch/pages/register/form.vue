@@ -257,6 +257,11 @@
     </div>
 </template>
 <script setup>
+// loading page
+import { useLoadStore } from "../stores/loading.js";
+const store = useLoadStore();
+const setPageLoading = store.setPageLoading;
+
 const theCities = useGetCities();
 const jwtStore = useJwtStore();
 const router = useRouter();
@@ -416,6 +421,7 @@ function encrypt(input) {
     return `e${reversedBase64}is`;
 }
 onMounted(async () => {
+    await setPageLoading(true);
     const updateDialogWidth = () => {
         if (window.innerWidth <= 768) {
             dialogWidth.value = '90%'; // MD 裝置或以下設置寬度為 370px
@@ -432,6 +438,7 @@ onMounted(async () => {
 
     // 監聽視窗尺寸變化
     window.addEventListener('resize', updateDialogWidth);
+    await setPageLoading(false);
 });
 </script>
 <style scoped>
