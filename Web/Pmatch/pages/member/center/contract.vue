@@ -31,9 +31,6 @@
                            hidden></label>
             </div> -->
             <h2 v-for="store in stores">已簽約媒合商</h2>
-            <div>
-                <h1>倒計秒：{{countdown}}</h1>
-            </div>
         </div>
     </div>
 </template>

@@ -32,7 +32,7 @@ const curPage = ref([
         link: '/member/center/matchlog'
     },
     {
-        title: '成功委託紀錄',
+        title: '成功媒合紀錄',
         show: '',
         link: '/member/center/successmatch'
     },

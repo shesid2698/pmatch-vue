@@ -309,7 +309,6 @@
     </div>
 </template>
 <script setup>
-const router = useRouter();
 const { $axios } = useNuxtApp();
 const userToken = useCookie('_PmToken');
 const memberId = useCookie('_PmMemberId');

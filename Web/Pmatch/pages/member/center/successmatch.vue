@@ -35,12 +35,6 @@
                         </select>
                         項結果
                     </div>
-                    <div>
-                        搜尋: <input type="search"
-                               v-model="searchStr"
-                               @input="FilterData"
-                               class="box-border p-y-1 p-x-3 text-base flex-1 outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
-                    </div>
                 </div>
 
                 <el-table :data="tableData"
@@ -50,7 +44,7 @@
                           stripe
                           border>
                     <el-table-column prop="date"
-                                     label="日期"
+                                     label="時間"
                                      sortable
                                      :sort-orders="['ascending','descending']" />
                     <el-table-column prop="platform"
@@ -73,8 +67,8 @@
                                      label="單位"
                                      sortable
                                      :sort-orders="['ascending','descending']" />
-                    <el-table-column prop="entrustStatus"
-                                     label="委託狀態"
+                    <el-table-column prop="phone"
+                                     label="電話"
                                      sortable
                                      :sort-orders="['ascending','descending']" />
                 </el-table>
@@ -87,20 +81,12 @@
         </div>
     </div>
 </template>
-<script lang="ts" setup>
+<script setup>
 const searchStr = ref('');
 const pageCount = ref(10);
 const curPage = ref(1);
-interface User {
-    date: String;
-    platform: String;
-    matchMaker: String;
-    status: String;
-    total: String;
-    unit: String;
-    entrustStatus: String;
-}
-const OriTableData: User[] = [
+
+const OriTableData = [
     {
         date: '2016-05-03',
         platform: '滿貫大亨',
@@ -108,7 +94,7 @@ const OriTableData: User[] = [
         status: '完成',
         total: '1,200',
         unit: '滿幣',
-        entrustStatus: '委託中'
+        phone: '委託中'
     },
     {
         date: '2016-05-02',
@@ -117,7 +103,7 @@ const OriTableData: User[] = [
         status: '完成',
         total: '1,200',
         unit: '滿幣',
-        entrustStatus: '委託中'
+        phone: '委託中'
     },
     {
         date: '2016-05-04',
@@ -126,7 +112,7 @@ const OriTableData: User[] = [
         status: '完成',
         total: '1,200',
         unit: '滿幣',
-        entrustStatus: '委託中'
+        phone: '委託中'
     },
     {
         date: '2016-05-01',
@@ -135,7 +121,7 @@ const OriTableData: User[] = [
         status: '完成',
         total: '1,462',
         unit: '滿幣',
-        entrustStatus: '委託中'
+        phone: '委託中'
     },
     {
         date: '2016-05-01',
@@ -144,7 +130,7 @@ const OriTableData: User[] = [
         status: '完成',
         total: '1,666',
         unit: '滿幣',
-        entrustStatus: '委託中'
+        phone: '委託中'
     },
     {
         date: '2016-05-01',
@@ -153,7 +139,7 @@ const OriTableData: User[] = [
         status: '完成',
         total: '1,444',
         unit: '滿幣',
-        entrustStatus: '委託中'
+        phone: '委託中'
     },
     {
         date: '2016-05-01',
@@ -162,7 +148,7 @@ const OriTableData: User[] = [
         status: '完成',
         total: '1,777',
         unit: '滿幣',
-        entrustStatus: '委託中'
+        phone: '委託中'
     },
     {
         date: '2016-05-01',
@@ -171,7 +157,7 @@ const OriTableData: User[] = [
         status: '完成',
         total: '1,785',
         unit: '滿幣',
-        entrustStatus: '委託中'
+        phone: '委託中'
     },
     {
         date: '2016-05-01',
@@ -180,7 +166,7 @@ const OriTableData: User[] = [
         status: '完成',
         total: '1,586',
         unit: '滿幣',
-        entrustStatus: '委託中'
+        phone: '委託中'
     },
     {
         date: '2016-05-01',
@@ -189,7 +175,7 @@ const OriTableData: User[] = [
         status: '完成',
         total: '1,125',
         unit: '滿幣',
-        entrustStatus: '委託中'
+        phone: '委託中'
     },
     {
         date: '2016-05-01',
@@ -198,7 +184,7 @@ const OriTableData: User[] = [
         status: '完成',
         total: '1,687',
         unit: '滿幣',
-        entrustStatus: '委託中'
+        phone: '委託中'
     },
     {
         date: '2016-05-01',
@@ -207,7 +193,7 @@ const OriTableData: User[] = [
         status: '完成',
         total: '1,215',
         unit: '滿幣',
-        entrustStatus: '委託中'
+        phone: '委託中'
     },
     {
         date: '2016-05-01',
@@ -216,7 +202,7 @@ const OriTableData: User[] = [
         status: '完成',
         total: '1,735',
         unit: '滿幣',
-        entrustStatus: '委託中'
+        phone: '委託中'
     },
     {
         date: '2016-05-01',
@@ -225,21 +211,11 @@ const OriTableData: User[] = [
         status: '完成',
         total: '1,456',
         unit: '滿幣',
-        entrustStatus: '委託中'
+        phone: '委託中'
     }
 ];
 const tableData = ref(null);
 tableData.value = [...OriTableData.slice(0, pageCount.value)];
-const FilterData = () => {
-    ChangePageCount();
-    if (searchStr.value != '') {
-        tableData.value = tableData.value.filter(item =>
-            Object.values(item).some(
-                value => value.toString().includes(searchStr.value) // 將值轉成字串後進行包含檢查
-            )
-        );
-    }
-};
 /**
  * 切換分頁事件
  */
