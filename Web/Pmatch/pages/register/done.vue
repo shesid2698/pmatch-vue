@@ -1,10 +1,4 @@
 <template>
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
-        integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
-        crossorigin="anonymous"
-    />
     <div class="ccontainer md:pt-60px">
         <div class="w-68.75% flex flex-col flex-items-center">
             <div class="w-370px">

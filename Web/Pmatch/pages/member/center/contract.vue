@@ -4,7 +4,7 @@
             <MemberCenter></MemberCenter>
         </div>
         <div class="flex-1 md:pl-20px">
-            <div class="flex justify-between">
+            <!-- <div class="flex justify-between">
                 <label for="isMember"
                        class="text-18px cursor-pointer text-[#808080] p-x-10px pb-5px"
                        :class="{show:Type=='isMember'}">已簽約
@@ -29,13 +29,43 @@
                            value="Canceled"
                            v-model="Type"
                            hidden></label>
-            </div>
+            </div> -->
+            <h2 v-for="store in stores">已簽約媒合商</h2>
         </div>
     </div>
 </template>
 <script setup>
+const { $axios } = useNuxtApp();
+const userToken = useCookie('_PmToken');
 const Type = ref('isMember');
 const wade = ref('show');
+const stores = ref([]);
+onMounted(async () => {
+    startCountdown();
+    if (userToken.value != undefined || userToken.value != '') {
+        try {
+            const response = await $axios.post(
+                '/api/v1/Pmatch/GetContractedStoreList',
+                {
+                    category: 1
+                },
+                {
+                    headers: {
+                        Authorization: userToken.value
+                    }
+                }
+            );
+
+            if (response.data.Status.Code === 0) {
+                stores.value = response.data.Data;
+            } else {
+                alert(`${response.data.Status.Message}`);
+            }
+        } catch (error) {
+            console.error('請求失敗:', error);
+        }
+    }
+});
 </script>
 <style scoped>
 .ccontainer {
@@ -44,7 +74,7 @@ const wade = ref('show');
     margin: 0 auto;
 }
 .show {
-    color: #3D8DCC;
-    border-bottom: 3px solid #3D8DCC;
+    color: #3d8dcc;
+    border-bottom: 3px solid #3d8dcc;
 }
 </style>

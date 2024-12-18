@@ -4,6 +4,23 @@
             <MemberCenter></MemberCenter>
         </div>
         <div class="flex-1 md:pl-20px">
+            <div class="md:flex flex-items-center mb-5">
+                <div class="pb-2 md:pb-0 w-100% md:w-45% flex flex-items-center pr-3">
+                    <div>起始時間:&nbsp;</div>
+                    <div class="flex-1">
+                        <input type="date"
+                               class="box-border p-y-1 p-x-3 text-base flex-1 outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200 w-100%">
+                    </div>
+                </div>
+                <div class="pb-2 md:pb-0 w-100% md:w-45% flex flex-items-center pr-3">
+                    <div>結束時間:&nbsp;</div>
+                    <div class="flex-1">
+                        <input type="date"
+                               class="box-border p-y-1 p-x-3 text-base flex-1 outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200 w-100%">
+                    </div>
+                </div>
+                <div class="flex-1"><button class="w-100% p-y-1.5 p-x-3 border-none outline-none text-16px text-white rounded-1 bg-#1A6DB4 hover:bg-#0b5ed7 transition duration-200 cursor-pointer">提交</button></div>
+            </div>
             <div>
                 <div class="mb-3 flex justify-between flex-items-center">
                     <div>顯示
@@ -17,12 +34,6 @@
                             <option value="100">100</option>
                         </select>
                         項結果
-                    </div>
-                    <div>
-                        搜尋: <input type="search"
-                               v-model="searchStr"
-                               @input="FilterData"
-                               class="box-border p-y-1 p-x-3 text-base flex-1 outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
                     </div>
                 </div>
 
@@ -70,20 +81,12 @@
         </div>
     </div>
 </template>
-<script lang="ts" setup>
+<script setup>
+const { $axios } = useNuxtApp();
 const searchStr = ref('');
 const pageCount = ref(10);
 const curPage = ref(1);
-interface User {
-    date: String;
-    platform: String;
-    matchMaker: String;
-    status: String;
-    total: String;
-    unit: String;
-    entrustStatus: String;
-}
-const OriTableData: User[] = [
+const OriTableData = [
     {
         date: '2016-05-03',
         platform: '滿貫大亨',
@@ -213,16 +216,6 @@ const OriTableData: User[] = [
 ];
 const tableData = ref(null);
 tableData.value = [...OriTableData.slice(0, pageCount.value)];
-const FilterData = () => {
-    ChangePageCount();
-    if (searchStr.value != '') {
-        tableData.value = tableData.value.filter(item =>
-            Object.values(item).some(
-                value => value.toString().includes(searchStr.value) // 將值轉成字串後進行包含檢查
-            )
-        );
-    }
-};
 /**
  * 切換分頁事件
  */
@@ -235,6 +228,31 @@ const ChangePage = page => {
 const ChangePageCount = () => {
     ChangePage(curPage.value);
 };
+onMounted(async()=>{
+  try {
+        const response = await $axios.post(
+            'http://localhost:2370/api/v1/Statist/PMGetListViaMatchLog',
+            {
+              PageNumber:1,
+              RowsPerPage:10,
+              Data:["0988618510"],
+            },
+            {
+                headers: {
+                    Authorization: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzQ1MDU2MDAsIm5iZiI6MTczNDUwNTYwMCwiZXhwIjoxNzM0NTA2MjAwfQ.9q_b925Rdc3bCP1cI21l6ggOa5Rm4cUYJowY0O6-fCY"
+                }
+            }
+        );
+
+        if (response.data.Status.Code === 0) {
+          console.log(response.data.Data);
+        } else {
+            alert(`${response.data.Status.Message}`);
+        }
+    } catch (error) {
+        console.error('請求失敗:', error);
+    }
+});
 </script>
 <style scoped>
 .ccontainer {
