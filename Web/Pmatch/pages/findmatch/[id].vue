@@ -98,18 +98,70 @@
                 >
                     <el-tab-pane label="開單" name="first">
                         <div class="b-solid border-1 p-5 b-#212529">
-                            <p class="m-0 mb-4 mt-4"></p>
+                            <form action="#" @submit="sendAccList">
+                                <div>
+                                    <p>遊戲平台 :</p>
+                                    <select v-model="accPlatformName" required>
+                                        <option :value="filteredPlatform">
+                                            {{ filteredPlatform }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <p>遊戲暱稱 :</p>
+                                    <input required
+                                        v-model="accMemberName"
+                                        type="text"
+                                    />
+                                </div>
+                                <div>
+                                    <p>交易種類 :</p>
+                                    <select v-model="accTransaction" required>
+                                        <option value="10">委買</option>
+                                        <option value="12">委賣</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <p>委託金額 :</p>
+                                    <input required v-model="accPatch" type="text" />
+                                </div>
+                                <div>
+                                    <p>希望付款方式 :</p>
+                                    <select v-model="accPayMode" required>
+                                        <option value="1">超商代收</option>
+                                        <option value="2">銀行轉帳</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <p>聯絡資料 :</p>
+                                    <input v-model="accPhone" type="text" required/>
+                                </div>
+                                <button class="mt-5">
+                                    送出
+                                </button>
+                            </form>
                         </div>
                     </el-tab-pane>
                     <el-tab-pane label="問與答" name="second">
                         <div class="b-solid border-1 b-#212529">
-                            <div class="p-5">
-                                <p>尚未有提問資料...</p>
+                            <div class="p-5" v-if="storesItem != null">
+                                <div
+                                    v-if="storesItem.StoreQAs.length > 0"
+                                    v-for="(item, index) in storesItem.StoreQAs"
+                                    :key="index"
+                                >
+                                    <p>問 : {{ item.Question }}</p>
+                                    <p>答 : {{ item.Answer }}</p>
+                                </div>
+                                <div v-else>
+                                    <p>尚未有提問資料...</p>
+                                </div>
                             </div>
                             <div class="p-5 bg-#ccc">
                                 <p class="m-0 mb-1rem">我要提問</p>
                                 <textarea
                                     class="w-100% h-5rem p-0 mb-1rem"
+                                    v-model="question"
                                 ></textarea>
                                 <div class="w-100% flex justify-end">
                                     <button
@@ -141,6 +193,16 @@ const isLoading = ref(true); // 加載狀態
 const { $axios } = useNuxtApp();
 const jwtStore = useJwtStore();
 const userToken = useCookie("_PmToken");
+const MemberIdCookie = useCookie("_PmMemberId");
+
+let question = ref("");
+
+let accPlatformName = ref("");
+let accMemberName = ref("");
+let accTransaction = ref("10");
+let accPatch = ref("");
+let accPayMode = ref("1");
+let accPhone = ref("");
 
 // 取得GetNewsDetail
 async function fetchStoresDetailData(token) {
@@ -165,17 +227,15 @@ async function fetchStoresDetailData(token) {
     } catch (error) {
         console.error("請求失敗:", error);
         data.value = "無法取得資料。"; // 畫面顯示錯誤訊息
-    } 
+    }
 }
 
 onMounted(async () => {
     try {
         if (userToken.value != "" && userToken.value != undefined) {
-            
             const token = userToken.value;
             if (token != "") {
                 fetchStoresDetailData(token);
-                getQAList(token);
             }
         } else {
             // 生成新的 token
@@ -191,8 +251,7 @@ onMounted(async () => {
 
 const activeName = ref("first");
 
-const handleClick = (tab, event) => {
-};
+const handleClick = (tab, event) => {};
 
 const filteredPlatform = computed(() => {
     if (!storesItem.value || !storesItem.value.StoreProducts) {
@@ -208,45 +267,31 @@ const filteredPlatform = computed(() => {
     return Array.from(platformsSet).join(", ");
 });
 
-async function sendQAList(){
-    if (userToken.value === "" || userToken.value === undefined){
+async function sendQAList() {
+    if (userToken.value === "" || userToken.value === undefined) {
         alert("請先登入會員");
-    }else{
-        await sendQAList
+    } else {
+        await sendQAApi(userToken.value);
     }
 }
-// 取得問與答列表
-async function getQAList(token){
-    try {
-        const response = await $axios.post(
-            "/api/v1/Pmatch/GetStoreQAList",
-            {
-                IsFront: true,
-                StoreId: routeParamId,
-            },
-            {
-                headers: {
-                    Authorization: token, // 帶上 Token
-                },
-            }
-        );
-        if (response.data.Status.Code === 0) {
-            storeQAList.value = response.data.Data;
-        } else {
-            alert(`${response.data.Status.Message}`);
-        }
-    } catch (error) {
-        console.error("請求失敗:", error);
-    } 
+async function sendAccList(event) {
+    event.preventDefault();
+    if (userToken.value === "" || userToken.value === undefined) {
+        alert("請先登入會員");
+    } else {
+        await createAccApi(userToken.value);
+    }
 }
 // 送出問與答列表
-async function getQAApi(token){
+async function sendQAApi(token) {
     try {
         const response = await $axios.post(
-            "/api/v1/Pmatch/GetStoreQAList",
+            "/api/v1/Pmatch/CreateOrUpdateStoreQAData",
             {
-                IsFront: true,
+                Id: 0,
                 StoreId: routeParamId,
+                MemberId: MemberIdCookie.value,
+                Question: question.value,
             },
             {
                 headers: {
@@ -261,8 +306,48 @@ async function getQAApi(token){
         }
     } catch (error) {
         console.error("請求失敗:", error);
-    } 
+    }
 }
+// 開單
+async function createAccApi(token) {
+    try {
+        const response = await $axios.post(
+            "/api/v1/Pmatch/CreateAccounting",
+            {
+                SqlIndex: storesItem.value.DB,
+                TeamId: storesItem.value.Teamid,
+                GamePlatformName: accPlatformName.value,
+                MemberCharacterName: accMemberName.value,
+                TransactionMode: accTransaction.value,
+                Patch: accPatch.value,
+                PayMode: accPayMode.value,
+                Phone: accPhone.value,
+                PmatchMemberId: MemberIdCookie.value,
+            },
+            {
+                headers: {
+                    Authorization: token, // 帶上 Token
+                },
+            }
+        );
+        if (response.data.Status.Code === 0) {
+            storeQAList.value = response.data.Data;
+        } else {
+            alert(`${response.data.Status.Message}`);
+        }
+    } catch (error) {
+        console.error("請求失敗:", error);
+    }
+}
+watch(
+    filteredPlatform,
+    (newValue) => {
+        if (newValue) {
+            accPlatformName.value = newValue;
+        }
+    },
+    { immediate: true } // 立刻執行一次，將初始值設置進去
+);
 </script>
 
 <style scoped>
