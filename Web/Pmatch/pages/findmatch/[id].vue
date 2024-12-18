@@ -89,6 +89,12 @@
                     </div>
                 </div>
             </div>
+            <!-- 先不刪 設計圖出來之後可能會改 -->
+            <!-- <div>
+                <div v-for="(item, index) in filteredPlatformArray" :key="index">
+                    <button>{{item}}</button>
+                </div>
+            </div> -->
             <div>
                 <el-tabs
                     v-model="activeName"
@@ -102,8 +108,8 @@
                                 <div>
                                     <p>遊戲平台 :</p>
                                     <select v-model="accPlatformName" required>
-                                        <option :value="filteredPlatform">
-                                            {{ filteredPlatform }}
+                                        <option v-for="(item, index) in filteredPlatformArray" :key="index" :value="item">
+                                            {{ item }}
                                         </option>
                                     </select>
                                 </div>
@@ -145,6 +151,32 @@
                                         required
                                     />
                                 </div>
+                                <el-button
+                                    class="border-none color-#aaa w-95px h-40px rounded-5px"
+                                    @click="dialogVisible = true"
+                                >
+                                    檢視合約
+                                </el-button>
+                                <el-dialog
+                                    v-model="dialogVisible"
+                                    title="合約服務條款"
+                                    width="500"
+                                    :close-on-click-modal="false"
+                                >
+                                    <div v-html="item.ContractConetnt"></div>
+                                    <template #footer>
+                                        <div class="dialog-footer">
+                                            <el-button
+                                                type="primary"
+                                                @click="
+                                                    dialogVisible = false
+                                                "
+                                            >
+                                                同意
+                                            </el-button>
+                                        </div>
+                                    </template>
+                                </el-dialog>
                                 <button class="mt-5">送出</button>
                             </form>
                         </div>
@@ -242,6 +274,7 @@ async function fetchStoresDetailData(token) {
     }
 }
 
+
 onMounted(async () => {
     await setPageLoading(true);
     try {
@@ -267,6 +300,7 @@ const activeName = ref("first");
 
 const handleClick = (tab, event) => {};
 
+// 篩選後的載台字串
 const filteredPlatform = computed(() => {
     if (!storesItem.value || !storesItem.value.StoreProducts) {
         return; // 如果資料尚未加載，返回空陣列
@@ -281,6 +315,15 @@ const filteredPlatform = computed(() => {
     return Array.from(platformsSet).join(", ");
 });
 
+// 篩選後的載台陣列
+const filteredPlatformArray = computed(() => {
+    if (!filteredPlatform.value) {
+        return [];
+    }
+
+    // 使用 split 將逗號分隔的字串轉換為陣列，並移除多餘空白
+    return filteredPlatform.value.split(',').map(item => item.trim());
+});
 async function sendQAList() {
     if (userToken.value === "" || userToken.value === undefined) {
         alert("請先登入會員");
@@ -336,9 +379,9 @@ async function createAccApi(token) {
                 TeamId: storesItem.value.Teamid,
                 GamePlatformName: accPlatformName.value,
                 MemberCharacterName: accMemberName.value,
-                TransactionMode: accTransaction.value,
-                Patch: accPatch.value,
-                PayMode: accPayMode.value,
+                TransactionMode: Number(accTransaction.value),
+                Patch: Number(accPatch.value),
+                PayMode: Number(accPayMode.value),
                 Phone: accPhone.value,
                 PmatchMemberId: MemberIdCookie.value,
             },
