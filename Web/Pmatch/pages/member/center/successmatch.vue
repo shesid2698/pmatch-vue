@@ -59,6 +59,10 @@
                                      label="媒合商"
                                      sortable
                                      :sort-orders="['ascending','descending']" />
+                    <el-table-column prop="Status"
+                                     label="媒合商"
+                                     sortable
+                                     :sort-orders="['ascending','descending']" />
                     <el-table-column prop="Amount"
                                      label="數量"
                                      sortable
