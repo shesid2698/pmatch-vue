@@ -32,17 +32,31 @@ const { $axios } = useNuxtApp();
 const jwtStore = useJwtStore();
 const userToken = useCookie("_PmToken");
 
+// 接收父元件傳遞的參數
+const props = defineProps({
+    param: {
+        type: String,
+        required: true,
+    },
+});
+
 // 取得MatchingList
-async function fetchMatchingListData(token) {
+async function fetchMatchingListData(token, platformName) {
+    if (token === "") {
+        token = await jwtStore.generateToken();
+    }
+    if(platformName === undefined){
+        platformName = "";
+    }
     try {
         const response = await $axios.post(
             "/api/v1/Pmatch/InstantMatching",
             {
-
+                GamePlatform: platformName,
             },
             {
                 headers: {
-                    Authorization: token // 帶上 Token
+                    Authorization: token, // 帶上 Token
                 },
             }
         );
@@ -57,20 +71,14 @@ async function fetchMatchingListData(token) {
     }
 }
 
-onMounted(async () => {
-    try {
-        // 生成新的 token
-        const token = await jwtStore.generateToken();
-
-        if(token != ""){
-            fetchMatchingListData(token);
-        }else{
-            console.error("token獲取失敗");
-        }
-    } catch (error) {
-        console.error("頁面初始化失敗:", error);
-    }
-});
+// 監聽傳遞即時媒合值的變化去call api
+watch(
+    () => props.param,
+    (newParam) => {
+        fetchMatchingListData("", newParam);
+    },
+    { immediate: true } // 頁面初始化時立即執行一次
+);
 </script>
 
 <style scoped>

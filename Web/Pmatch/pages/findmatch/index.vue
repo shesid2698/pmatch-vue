@@ -92,8 +92,11 @@
         </div>
         <div class="mb-6 flex justify-center">
             <div class="p-5 w-33%">滿貫大亨圖</div>
-            <Matching class="w-33%" />
-            <NewRatio class="w-33%" />
+            <Matching
+                :param="matchingPlatform !== undefined ? matchingPlatform : ''"
+                class="w-33%"
+            />
+            <!-- <NewRatio class="w-33%" /> -->
         </div>
         <!-- 各媒合商 -->
         <div class="flex relative w-100%">
@@ -365,6 +368,9 @@ const activeSearchQuery = ref("");
 const activeSelectedPlatform = ref("");
 const activeShowSignedOnly = ref(false);
 
+// 即時媒合用
+const matchingPlatform = ref("");
+
 // 取得GetStoreList
 async function fetchStoresListData(token) {
     try {
@@ -508,6 +514,11 @@ onMounted(async () => {
             handleSearch();
         }
 
+        if (platformName !== undefined) {
+            tempSelectedPlatform.value = platformName;
+            handleSearch();
+        }
+
         await setPageLoading(false);
     } catch (error) {
         console.error("頁面初始化失敗:", error);
@@ -542,8 +553,8 @@ const handleSearch = () => {
     // 更新實際用於篩選的值
     activeSearchQuery.value = tempSearchQuery.value;
     activeSelectedPlatform.value = tempSelectedPlatform.value;
-    console.log(typeof tempShowSignedOnly.value);
     activeShowSignedOnly.value = tempShowSignedOnly.value;
+    matchingPlatform.value = tempSelectedPlatform.value;
 };
 
 // 篩選邏輯
