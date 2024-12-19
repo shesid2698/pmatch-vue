@@ -151,32 +151,34 @@
                                         required
                                     />
                                 </div>
-                                <el-button
+                                <ElButton
                                     class="border-none color-#aaa w-95px h-40px rounded-5px"
+                                    plain
                                     @click="dialogVisible = true"
                                 >
                                     檢視合約
-                                </el-button>
-                                <el-dialog
+                                </ElButton>
+                                <ElDialog
                                     v-model="dialogVisible"
                                     title="合約服務條款"
                                     width="500"
                                     :close-on-click-modal="false"
                                 >
-                                    <div v-html="item.ContractConetnt"></div>
+                                    <div v-if="storesItem"
+                                v-html="storesItem.ContractConetnt"></div>
                                     <template #footer>
                                         <div class="dialog-footer">
-                                            <el-button
+                                            <ElButton
                                                 type="primary"
                                                 @click="
                                                     dialogVisible = false
                                                 "
                                             >
                                                 同意
-                                            </el-button>
+                                            </ElButton>
                                         </div>
                                     </template>
-                                </el-dialog>
+                                </ElDialog>
                                 <button class="mt-5">送出</button>
                             </form>
                         </div>
@@ -223,6 +225,9 @@
 import { ArrowRight } from "@element-plus/icons-vue";
 import { ElBreadcrumb } from "element-plus";
 import { ElBreadcrumbItem } from "element-plus";
+import { ElButton } from "element-plus";
+import { ElDialog } from "element-plus";
+import { ElMessageBox } from 'element-plus'
 
 // loading page
 import { useLoadStore } from "../stores/loading.js";
@@ -238,6 +243,7 @@ const { $axios } = useNuxtApp();
 const jwtStore = useJwtStore();
 const userToken = useCookie("_PmToken");
 const MemberIdCookie = useCookie("_PmMemberId");
+const dialogVisible = ref(false);
 
 let question = ref("");
 
