@@ -1,6 +1,6 @@
 <template>
     <div class="ccontainer w-90% lg:w-70%">
-        <div class="lg:min-w-160px">
+        <div class="lg:w-160px">
             <MemberCenter></MemberCenter>
         </div>
         <div class="flex-1 md:pl-20px">
@@ -9,6 +9,7 @@
                     <div>起始時間:&nbsp;</div>
                     <div class="flex-1">
                         <input type="date"
+                               v-model="startTime"
                                class="box-border p-y-1 p-x-3 text-base flex-1 outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200 w-100%">
                     </div>
                 </div>
@@ -16,17 +17,20 @@
                     <div>結束時間:&nbsp;</div>
                     <div class="flex-1">
                         <input type="date"
+                               v-model="endTime"
                                class="box-border p-y-1 p-x-3 text-base flex-1 outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200 w-100%">
                     </div>
                 </div>
-                <div class="flex-1"><button class="w-100% p-y-1.5 p-x-3 border-none outline-none text-16px text-white rounded-1 bg-#1A6DB4 hover:bg-#0b5ed7 transition duration-200 cursor-pointer">提交</button></div>
+                <div class="flex-1">
+                    <button @click="GetData"
+                            class="w-100% p-y-1.5 p-x-3 border-none outline-none text-16px text-white rounded-1 bg-#1A6DB4 hover:bg-#0b5ed7 transition duration-200 cursor-pointer">提交</button>
+                </div>
             </div>
             <div>
                 <div class="mb-3 flex justify-between flex-items-center">
                     <div>顯示
                         <select name=""
                                 v-model="pageCount"
-                                @change="ChangePageCount"
                                 class="box-border p-y-1.5 p-x-3 text-base flex-1 outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200">
                             <option value="10">10</option>
                             <option value="25">25</option>
@@ -38,221 +42,140 @@
                 </div>
 
                 <el-table :data="tableData"
-                          :default-sort="{ prop: 'date', order: 'descending' }"
+                          :default-sort="{ prop: 'Createtime', order: 'descending' }"
                           style="width: 100%;"
                           :header-cell-style="{color:'white',background:'#3CAADC'}"
                           stripe
                           border>
-                    <el-table-column prop="date"
+                    <el-table-column prop="Createtime"
                                      label="日期"
                                      sortable
                                      :sort-orders="['ascending','descending']" />
-                    <el-table-column prop="platform"
+                    <el-table-column prop="GameplatformName"
                                      label="營運平台"
                                      sortable
                                      :sort-orders="['ascending','descending']" />
-                    <el-table-column prop="matchMaker"
+                    <el-table-column prop="NickName"
                                      label="媒合商"
                                      sortable
                                      :sort-orders="['ascending','descending']" />
-                    <el-table-column prop="status"
-                                     label="狀態"
-                                     sortable
-                                     :sort-orders="['ascending','descending']" />
-                    <el-table-column prop="total"
+                    <el-table-column prop="Patch"
                                      label="數量"
                                      sortable
                                      :sort-orders="['ascending','descending']" />
-                    <el-table-column prop="unit"
+                    <el-table-column prop="GamecurrencyName"
                                      label="單位"
                                      sortable
                                      :sort-orders="['ascending','descending']" />
-                    <el-table-column prop="entrustStatus"
-                                     label="委託狀態"
+                    <el-table-column prop="Status"
+                                     label="狀態"
                                      sortable
                                      :sort-orders="['ascending','descending']" />
                 </el-table>
-                <el-pagination background
-                               layout="prev, pager, next"
-                               :total="OriTableData.length"
-                               :page-size="pageCount"
-                               @change="ChangePage" />
+                <div class="flex justify-between">
+                    <div>頁次:{{curPage}}/{{totalPage}}</div>
+                    <div>
+                        <button v-if="curPage!==1"
+                                @click="PrevPage"
+                                class="bg-primary border-none text-[15px] rounded-[5px] bg-#1A6DB4 hover:bg-#0b5ed7 p-x-10px p-y-5px text-white cursor-pointer">上一頁</button>
+                        <button @click="NextPage"
+                                v-if="curPage!==totalPage"
+                                class="bg-primary border-none text-[15px] rounded-[5px] bg-#1A6DB4 hover:bg-#0b5ed7 p-x-10px p-y-5px text-white cursor-pointer">下一頁</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </template>
 <script setup>
 const { $axios } = useNuxtApp();
-const searchStr = ref('');
+const userToken = useCookie('_PmToken');
+const memberId = useCookie('_PmMemberId');
 const pageCount = ref(10);
 const curPage = ref(1);
-const OriTableData = [
-    {
-        date: '2016-05-03',
-        platform: '滿貫大亨',
-        matchMaker: 'et3',
-        status: '完成',
-        total: '1,200',
-        unit: '滿幣',
-        entrustStatus: '委託中'
-    },
-    {
-        date: '2016-05-02',
-        platform: '滿貫大亨',
-        matchMaker: 'et2',
-        status: '完成',
-        total: '1,200',
-        unit: '滿幣',
-        entrustStatus: '委託中'
-    },
-    {
-        date: '2016-05-04',
-        platform: '滿貫大亨',
-        matchMaker: 'et4',
-        status: '完成',
-        total: '1,200',
-        unit: '滿幣',
-        entrustStatus: '委託中'
-    },
-    {
-        date: '2016-05-01',
-        platform: '滿貫大亨',
-        matchMaker: 'et1',
-        status: '完成',
-        total: '1,462',
-        unit: '滿幣',
-        entrustStatus: '委託中'
-    },
-    {
-        date: '2016-05-01',
-        platform: '滿貫大亨',
-        matchMaker: 'et1',
-        status: '完成',
-        total: '1,666',
-        unit: '滿幣',
-        entrustStatus: '委託中'
-    },
-    {
-        date: '2016-05-01',
-        platform: '滿貫大亨',
-        matchMaker: 'et1',
-        status: '完成',
-        total: '1,444',
-        unit: '滿幣',
-        entrustStatus: '委託中'
-    },
-    {
-        date: '2016-05-01',
-        platform: '滿貫大亨',
-        matchMaker: 'et1',
-        status: '完成',
-        total: '1,777',
-        unit: '滿幣',
-        entrustStatus: '委託中'
-    },
-    {
-        date: '2016-05-01',
-        platform: '滿貫大亨',
-        matchMaker: 'et1',
-        status: '完成',
-        total: '1,785',
-        unit: '滿幣',
-        entrustStatus: '委託中'
-    },
-    {
-        date: '2016-05-01',
-        platform: '滿貫大亨',
-        matchMaker: 'et1',
-        status: '完成',
-        total: '1,586',
-        unit: '滿幣',
-        entrustStatus: '委託中'
-    },
-    {
-        date: '2016-05-01',
-        platform: '滿貫大亨',
-        matchMaker: 'et1',
-        status: '完成',
-        total: '1,125',
-        unit: '滿幣',
-        entrustStatus: '委託中'
-    },
-    {
-        date: '2016-05-01',
-        platform: '滿貫大亨',
-        matchMaker: 'et1',
-        status: '完成',
-        total: '1,687',
-        unit: '滿幣',
-        entrustStatus: '委託中'
-    },
-    {
-        date: '2016-05-01',
-        platform: '滿貫大亨',
-        matchMaker: 'et1',
-        status: '完成',
-        total: '1,215',
-        unit: '滿幣',
-        entrustStatus: '委託中'
-    },
-    {
-        date: '2016-05-01',
-        platform: '滿貫大亨',
-        matchMaker: 'et1',
-        status: '完成',
-        total: '1,735',
-        unit: '滿幣',
-        entrustStatus: '委託中'
-    },
-    {
-        date: '2016-05-01',
-        platform: '滿貫大亨',
-        matchMaker: 'et1',
-        status: '完成',
-        total: '1,456',
-        unit: '滿幣',
-        entrustStatus: '委託中'
-    }
-];
-const tableData = ref(null);
-tableData.value = [...OriTableData.slice(0, pageCount.value)];
+const totalPage = ref(1);
+const startTime = ref('');
+const endTime = ref('');
+let OriTableData = [];
+const tableData = ref([]);
+
 /**
  * 切換分頁事件
  */
-const ChangePage = page => {
-    curPage.value = page;
-    let startSlice = (page - 1) * pageCount.value;
-    let endSlice = page * pageCount.value;
-    tableData.value = [...OriTableData.slice(startSlice, endSlice)];
+const NextPage = async () => {
+    curPage.value += 1;
+    await GetData();
 };
-const ChangePageCount = () => {
-    ChangePage(curPage.value);
+const PrevPage = async () => {
+    curPage.value -= 1;
+    await GetData();
 };
-onMounted(async()=>{
-  try {
-        const response = await $axios.post(
-            'http://localhost:2370/api/v1/Statist/PMGetListViaMatchLog',
-            {
-              PageNumber:1,
-              RowsPerPage:10,
-              Data:["0988618510"],
-            },
-            {
-                headers: {
-                    Authorization: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzQ1MDU2MDAsIm5iZiI6MTczNDUwNTYwMCwiZXhwIjoxNzM0NTA2MjAwfQ.9q_b925Rdc3bCP1cI21l6ggOa5Rm4cUYJowY0O6-fCY"
-                }
-            }
-        );
+const formatDateTimeIntl = dateTimeString => {
+    const date = new Date(dateTimeString);
 
-        if (response.data.Status.Code === 0) {
-          console.log(response.data.Data);
-        } else {
-            alert(`${response.data.Status.Message}`);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // 月份從 0 開始
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+};
+onMounted(async () => {});
+const GetData = async () => {
+    try {
+        if (
+            userToken.value !== undefined &&
+            userToken.value !== '' &&
+            startTime.value !== '' &&
+            endTime.value !== ''
+        ) {
+            const response = await $axios.post(
+                'http://localhost:2450/api/v1/Pmatch/GetAccountingList',
+                {
+                    PmatchMemberId: memberId.value,
+                    StartTime: startTime.value,
+                    EndTime: endTime.value,
+                    PageNo: curPage.value,
+                    PageSize: pageCount.value
+                },
+                {
+                    headers: {
+                        Authorization: userToken.value
+                    }
+                }
+            );
+
+            if (response.data.Status.Code === 0) {
+                OriTableData = response.data.Data;
+                OriTableData.forEach(x => {
+                    x.Createtime = formatDateTimeIntl(x.Createtime);
+                    totalPage.value = x.TotalPage;
+                    switch (x.Status) {
+                        case 0:
+                            x.Status = '處理中';
+                            break;
+                        case 1:
+                            x.Status = '已完成';
+                            break;
+                        case 2:
+                            x.Status = '已取消';
+                            break;
+                        case 2:
+                            x.Status = '異常';
+                            break;
+                    }
+                });
+                tableData.value = [...OriTableData.slice(0, pageCount.value)];
+            } else {
+                alert(`${response.data.Status.Message}`);
+            }
         }
     } catch (error) {
         console.error('請求失敗:', error);
     }
-});
+};
 </script>
 <style scoped>
 .ccontainer {

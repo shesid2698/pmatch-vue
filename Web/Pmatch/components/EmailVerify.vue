@@ -111,6 +111,7 @@ const validEmailPattern = () => {
 };
 const SendCode = async () => {
     try {
+        token.value = await jwtStore.generateToken();
         const response = await $axios.post(
             '/api/v1/Pmatch/SendVerifyCode',
             {
@@ -118,8 +119,7 @@ const SendCode = async () => {
             },
             {
                 headers: {
-                    Authorization:
-                        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InN5c3RlbSIsIm5iZiI6MTcwNjU4Mzc2MywiZXhwIjoxNzkyOTgzNzYzLCJpYXQiOjE3MDY1ODM3NjN9.wxFnZD-cJjL3ehDzgxhmhFg4KDtULB-ptleQEcBNnfg'
+                    Authorization:token.value
                 }
             }
         );
@@ -136,16 +136,18 @@ const SendCode = async () => {
 };
 const verifyCode = async () => {
     try {
+        token.value = await jwtStore.generateToken();
+        var IsNew = props.from == "new" ? true : false;
         const response = await $axios.post(
             '/api/v1/Pmatch/Verify',
             {
                 Email: email.value,
-                VerifyCode: ansCode.value
+                VerifyCode: ansCode.value,
+                IsOnRegistering:IsNew
             },
             {
                 headers: {
-                    Authorization:
-                        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InN5c3RlbSIsIm5iZiI6MTcwNjU4Mzc2MywiZXhwIjoxNzkyOTgzNzYzLCJpYXQiOjE3MDY1ODM3NjN9.wxFnZD-cJjL3ehDzgxhmhFg4KDtULB-ptleQEcBNnfg'
+                    Authorization:token.value
                 }
             }
         );
@@ -172,22 +174,22 @@ const openSendBtn = () => {
     if (isValid.value === true) {
         open = false;
     }
-    if (countdown.value!==120 && countdown.value!==0) {
+    if (countdown.value !== 120 && countdown.value !== 0) {
         open = true;
     }
     return open;
 };
 onMounted(async () => {
     var plusTime = localStorage.getItem('countdownEndTime');
-    if(plusTime!==null){
-      startCountdown();
+    if (plusTime !== null) {
+        startCountdown();
     }
     email.value = props.pEmail;
     validEmailPattern();
 });
 onBeforeUnmount(() => {
-  clearInterval(timer.value); // 清理計時器
-  countdown.value =COUNTDOWN_DURATION;
+    clearInterval(timer.value); // 清理計時器
+    countdown.value = COUNTDOWN_DURATION;
 });
 watch(
     () => props,
