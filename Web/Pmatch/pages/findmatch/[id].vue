@@ -108,7 +108,13 @@
                                 <div>
                                     <p>遊戲平台 :</p>
                                     <select v-model="accPlatformName" required>
-                                        <option v-for="(item, index) in filteredPlatformArray" :key="index" :value="item">
+                                        <option
+                                            v-for="(
+                                                item, index
+                                            ) in filteredPlatformArray"
+                                            :key="index"
+                                            :value="item"
+                                        >
                                             {{ item }}
                                         </option>
                                     </select>
@@ -164,15 +170,15 @@
                                     width="500"
                                     :close-on-click-modal="false"
                                 >
-                                    <div v-if="storesItem"
-                                v-html="storesItem.ContractConetnt"></div>
+                                    <div
+                                        v-if="storesItem"
+                                        v-html="storesItem.ContractConetnt"
+                                    ></div>
                                     <template #footer>
                                         <div class="dialog-footer">
                                             <ElButton
                                                 type="primary"
-                                                @click="
-                                                    dialogVisible = false
-                                                "
+                                                @click="dialogVisible = false"
                                             >
                                                 同意
                                             </ElButton>
@@ -227,7 +233,7 @@ import { ElBreadcrumb } from "element-plus";
 import { ElBreadcrumbItem } from "element-plus";
 import { ElButton } from "element-plus";
 import { ElDialog } from "element-plus";
-import { ElMessageBox } from 'element-plus'
+import { ElMessageBox } from "element-plus";
 
 // loading page
 import { useLoadStore } from "../stores/loading.js";
@@ -280,7 +286,6 @@ async function fetchStoresDetailData(token) {
     }
 }
 
-
 onMounted(async () => {
     await setPageLoading(true);
     try {
@@ -328,7 +333,7 @@ const filteredPlatformArray = computed(() => {
     }
 
     // 使用 split 將逗號分隔的字串轉換為陣列，並移除多餘空白
-    return filteredPlatform.value.split(',').map(item => item.trim());
+    return filteredPlatform.value.split(",").map((item) => item.trim());
 });
 async function sendQAList() {
     if (userToken.value === "" || userToken.value === undefined) {
