@@ -134,29 +134,31 @@ const SendCode = async () => {
     }
 };
 const verifyCode = async () => {
-    resetAll();
-    // try {
-    //     token.value = await jwtStore.generateToken();
-    //     const response = await $axios.post(
-    //         '/api/v1/Pmatch/Verify',
-    //         {
-    //             MobileNumber: mobile.value,
-    //             VerifyCode: ansCode.value
-    //         },
-    //         {
-    //             headers: {
-    //                 Authorization: token.value
-    //             }
-    //         }
-    //     );
-    //     if (response.data.Status.Code === 0) {
-    //         resetAll();
-    //     } else {
-    //         alert(`${response.data.Status.Message}`);
-    //     }
-    // } catch (error) {
-    //     console.error('請求失敗:', error);
-    // }
+    // resetAll();
+    try {
+        token.value = await jwtStore.generateToken();
+        var IsNew = props.from == "new" ? true:false;
+        const response = await $axios.post(
+            '/api/v1/Pmatch/Verify',
+            {
+                MobileNumber: mobile.value,
+                VerifyCode: ansCode.value,
+                IsOnRegistering:IsNew
+            },
+            {
+                headers: {
+                    Authorization: token.value
+                }
+            }
+        );
+        if (response.data.Status.Code === 0) {
+            resetAll();
+        } else {
+            alert(`${response.data.Status.Message}`);
+        }
+    } catch (error) {
+        console.error('請求失敗:', error);
+    }
 };
 const resetAll = () => {
     emit('isVerify', true, mobile.value);

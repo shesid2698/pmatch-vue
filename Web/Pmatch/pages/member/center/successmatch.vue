@@ -60,7 +60,7 @@
                                      sortable
                                      :sort-orders="['ascending','descending']" />
                     <el-table-column prop="Status"
-                                     label="媒合商"
+                                     label="委託狀態"
                                      sortable
                                      :sort-orders="['ascending','descending']" />
                     <el-table-column prop="Amount"
