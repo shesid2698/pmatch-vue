@@ -76,7 +76,11 @@
                     </div>
                 </div>
                 <div class="w-100% md-ms-3 flex items-center">
-                    <input type="checkbox" class="w-20px h-20px" />
+                    <input
+                        type="checkbox"
+                        class="w-20px h-20px"
+                        v-model="tempShowSignedOnly"
+                    />
                     <span>查看已簽約媒合商</span>
                 </div>
                 <div>
@@ -345,6 +349,21 @@ const assetsUrl = useCookie("_PmAssetsUrl");
 
 const route = useRoute();
 const platformName = route.query.platformName;
+const keyword = route.query.keyword;
+const contract = route.query.contract;
+
+const searchQuery = ref("");
+const selectedPlatform = ref("");
+
+// 用於暫存搜尋條件的變數
+const tempSearchQuery = ref("");
+const tempSelectedPlatform = ref("");
+const tempShowSignedOnly = ref(false);
+
+// 實際用於篩選的變數
+const activeSearchQuery = ref("");
+const activeSelectedPlatform = ref("");
+const activeShowSignedOnly = ref(false);
 
 // 取得GetStoreList
 async function fetchStoresListData(token) {
@@ -474,10 +493,21 @@ onMounted(async () => {
             }
         }
 
-        if (platformName !== "" && platformName !== undefined) {
+        if (
+            platformName !== undefined &&
+            keyword !== undefined &&
+            contract !== undefined
+        ) {
             tempSelectedPlatform.value = platformName;
+            tempSearchQuery.value = keyword;
+            if (contract === "1") {
+                tempShowSignedOnly.value = true;
+            } else {
+                tempShowSignedOnly.value = false;
+            }
             handleSearch();
         }
+
         await setPageLoading(false);
     } catch (error) {
         console.error("頁面初始化失敗:", error);
@@ -508,53 +538,41 @@ const stores = ref(
     }))
 );
 
-const searchQuery = ref("");
-const selectedPlatform = ref("");
-
-// 用於暫存搜尋條件的變數
-const tempSearchQuery = ref("");
-const tempSelectedPlatform = ref("");
-const tempShowSignedOnly = ref(false);
-
-// 實際用於篩選的變數
-const activeSearchQuery = ref("");
-const activeSelectedPlatform = ref("");
-const activeShowSignedOnly = ref(false);
-
 const handleSearch = () => {
     // 更新實際用於篩選的值
     activeSearchQuery.value = tempSearchQuery.value;
     activeSelectedPlatform.value = tempSelectedPlatform.value;
+    console.log(typeof tempShowSignedOnly.value);
     activeShowSignedOnly.value = tempShowSignedOnly.value;
 };
 
 // 篩選邏輯
 const filteredStores = computed(() => {
-    let filtered = storesList.value;
+    return storesList.value.filter((store) => {
+        const matchesSearchQuery = activeSearchQuery.value
+            ? store.Name.toLowerCase().includes(
+                  activeSearchQuery.value.toLowerCase()
+              )
+            : true;
 
-    // 使用實際的篩選值進行篩選
-    if (activeSearchQuery.value) {
-        const query = activeSearchQuery.value.toLowerCase();
-        filtered = filtered.filter((store) =>
-            store.Name.toLowerCase().includes(query)
+        const matchesSelectedPlatform = activeSelectedPlatform.value
+            ? store.GamePlatforms.some(
+                  (platform) =>
+                      platform.GamePlatform === activeSelectedPlatform.value
+              )
+            : true;
+
+        const matchesShowSignedOnly =
+            activeShowSignedOnly.value === true
+                ? store.MemberContractId !== 0
+                : true;
+
+        return (
+            matchesSearchQuery &&
+            matchesSelectedPlatform &&
+            matchesShowSignedOnly
         );
-    }
-
-    if (activeSelectedPlatform.value) {
-        filtered = filtered.filter((store) => {
-            const platformsSet = new Set(
-                store.GamePlatforms.map((platform) => platform.GamePlatform)
-            );
-            const platforms = Array.from(platformsSet).join(", ");
-            return platforms === activeSelectedPlatform.value;
-        });
-    }
-
-    if (activeShowSignedOnly.value) {
-        filtered = filtered.filter((store) => store.isSigned); // 假設有 isSigned 欄位
-    }
-
-    return filtered;
+    });
 });
 
 const filteredProcessedGamePlatforms = computed(() => {

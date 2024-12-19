@@ -47,7 +47,7 @@
                 <p class="m-0 text-center">
                     本網站支援Edge Firefox及Chrome,最佳瀏覧解析度為1024x768
                 </p>
-                <p class="m-0 text-center">版號 v5.1.1</p>
+                <p class="m-0 text-center">版號 v6.1.1</p>
             </div>
         </div>
     </div>

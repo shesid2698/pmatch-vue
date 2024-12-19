@@ -10,6 +10,7 @@
                         <div class="w-100%">
                             <select
                                 class="platformName md-w-270px w-100% h-43px font-size-1rem b-#a9d8f8 rounded-5px p-5px"
+                                v-model="platformNameToSearch"
                             >
                                 <option value="">選擇遊戲...</option>
                                 <option
@@ -30,6 +31,7 @@
                                         class="storeName md-ms-3 w-100% md-w-270px h-36px p-0 rounded-5px font-size-1rem p-3px"
                                         type="text"
                                         placeholder="輸入關鍵字..."
+                                        v-model="keywordToSearch"
                                     />
                                 </div>
                                 <div class="relative">
@@ -61,11 +63,11 @@
                         </div>
                     </div>
                     <div class="w-100% md-ms-3 flex items-center">
-                        <input type="checkbox" class="w-20px h-20px" />
+                        <input type="checkbox" class="w-20px h-20px" v-model="contractToSearch"/>
                         <span>查看已簽約媒合商</span>
                     </div>
                     <div>
-                        <button class="ms-3 w-100px">搜尋</button>
+                        <button class="ms-3 w-100px" @click="searchToFindMatch" >搜尋</button>
                     </div>
                 </div>
             </div>
@@ -216,6 +218,7 @@ import { ElCarouselItem } from "element-plus";
 import { useLoadStore } from "../stores/loading.js";
 const store = useLoadStore();
 const setPageLoading = store.setPageLoading;
+const router = useRouter();
 
 const newsList = ref([]);
 const gameList = ref([]);
@@ -224,6 +227,10 @@ const { $axios } = useNuxtApp();
 const jwtStore = useJwtStore();
 const userToken = useCookie("_PmToken");
 const assetsUrl = useCookie("_PmAssetsUrl");
+
+let platformNameToSearch = ref("");
+let keywordToSearch = ref("");
+let contractToSearch = ref(false);
 
 // 取得GetNewsList(最新消息)
 async function fetchNewsListData(num, token) {
@@ -308,6 +315,16 @@ async function fetchADList(token) {
     }
 }
 
+const searchToFindMatch = () =>{
+    router.push({
+        path: '/findmatch',
+        query: {
+            platformName: platformNameToSearch.value || '', // 平台名稱
+            keyword: keywordToSearch.value || '',         // 關鍵字
+            contract: contractToSearch.value ? 1 : 0 // 是否查看已簽約媒合商
+        }
+    });
+}
 onMounted(async () => {
     await setPageLoading(true);
     try {
