@@ -8,7 +8,7 @@
             </div>
 
             <!-- 頁面切換鈕 -->
-            <div class="flex flex-items-center mt-24px">
+            <!-- <div class="flex flex-items-center mt-24px">
                 <div class="flex-1">
                     <NuxtLink to="/member/login">
                         <button class="w-100% outline-none bg-white border-1 p-y-1.5 p-x-3 text-16px rounded-1 cursor-pointer text-[#212529] font-sans">
@@ -22,10 +22,11 @@
                         媒合商登入
                     </button>
                 </div>
-            </div>
+            </div> -->
             <form action=""
                   method="POST"
-                  @submit.prevent="validateForm">
+                  @submit.prevent="validateForm"
+                   class="mt-3rem">
                 <div class="mt-15px">
                     <div class="mb-5px">登入帳號</div>
                     <input type="text"
@@ -87,6 +88,11 @@
 </template>
 
 <script setup>
+// loading page
+import { useLoadStore } from "../stores/loading.js";
+const store = useLoadStore();
+const setPageLoading = store.setPageLoading;
+
 import VueTurnstile from 'vue-turnstile';
 const account = ref('');
 const password = ref('');
@@ -173,12 +179,14 @@ const validatePassword = text => {
     }
 };
 onMounted(async () => {
+    await setPageLoading(true);
     const res = await getSerialNumber();
     if (res != null && res.data.s != '') {
         Object.assign(data, res.data);
     } else {
         alert('安裝工具過程中請記得輸入序號');
     }
+    await setPageLoading(false);
 });
 </script>
 

@@ -42,6 +42,11 @@
 </template>
 
 <script setup>
+// loading page
+import { useLoadStore } from "../stores/loading.js";
+const store = useLoadStore();
+const setPageLoading = store.setPageLoading;
+
 const gameList = ref([]);
 const { $axios } = useNuxtApp();
 const jwtStore = useJwtStore();
@@ -75,19 +80,21 @@ async function fetchGameList(token) {
 }
 
 onMounted(async () => {
+    await setPageLoading(true);
     try {
         if (userToken.value != "" && userToken.value != undefined) {
             const token = userToken.value;
             if (token != "") {
-                fetchGameList(token);
+                await fetchGameList(token);
             }
         } else {
             // 生成新的 token
             const token = await jwtStore.generateToken();
             if (token != "") {
-                fetchGameList(token);
+                await fetchGameList(token);
             }
         }
+        await setPageLoading(false);
     } catch (error) {
         console.error("頁面初始化失敗:", error);
     }

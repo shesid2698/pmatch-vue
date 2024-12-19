@@ -328,6 +328,11 @@ import { ElMessageBox } from "element-plus";
 import { ElCarousel } from "element-plus";
 import { ElCarouselItem } from "element-plus";
 
+// loading page
+import { useLoadStore } from "../stores/loading.js";
+const store = useLoadStore();
+const setPageLoading = store.setPageLoading;
+
 const storesList = ref([]);
 const gameList = ref([]);
 const bannerTopList = ref([]);
@@ -448,6 +453,7 @@ async function fetchADDownList(token) {
     }
 }
 onMounted(async () => {
+    await setPageLoading(true);
     try {
         if (userToken.value != "" && userToken.value != undefined) {
             const token = userToken.value;
@@ -472,6 +478,7 @@ onMounted(async () => {
             tempSelectedPlatform.value = platformName;
             handleSearch();
         }
+        await setPageLoading(false);
     } catch (error) {
         console.error("頁面初始化失敗:", error);
     }

@@ -38,6 +38,12 @@ ChartJS.register(
     CategoryScale,
     LinearScale
 );
+
+// loading page
+import { useLoadStore } from "../stores/loading.js";
+const store = useLoadStore();
+const setPageLoading = store.setPageLoading;
+
 const dailyPatchList = ref([]);
 const { $axios } = useNuxtApp();
 const jwtStore = useJwtStore();
@@ -112,7 +118,6 @@ const changePlatform = async (event) => {
             await fetchRichList(token, platformId);
         }
     }
-    
 };
 // 計算日期
 const calculateWeekRange = () => {

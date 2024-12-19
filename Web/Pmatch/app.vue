@@ -4,6 +4,7 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
           integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
           crossorigin="anonymous" />
+        <LoadingPage />
         <Header />
         <div class="mt-140px mb-60px page">
             <NuxtPage />
@@ -48,6 +49,11 @@ body {
 </style>
 
 <script setup>
+// loading page
+import { useLoadStore } from "./stores/loading.js";
+const store = useLoadStore();
+const setPageLoading = store.setPageLoading;
+
 const settingList = ref("");
 const { $axios } = useNuxtApp();
 const jwtStore = useJwtStore();
@@ -56,6 +62,7 @@ let assetsUrl = useCookie("_PmAssetsUrl");
 const userToken = useCookie("_PmToken");
 
 onMounted(async () => {
+    await setPageLoading(true);
     try {
         if (userToken.value != "" && userToken.value != undefined) {
             const token = userToken.value;
@@ -70,6 +77,7 @@ onMounted(async () => {
                 fetchSetting(token);
             }
         }
+        await setPageLoading(false);
     } catch (error) {
         console.error("頁面初始化失敗:", error);
     }
