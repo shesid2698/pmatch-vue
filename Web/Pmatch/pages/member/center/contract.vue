@@ -37,12 +37,9 @@
 <script setup>
 const { $axios } = useNuxtApp();
 const userToken = useCookie('_PmToken');
-const Type = ref('isMember');
-const wade = ref('show');
 const stores = ref([]);
 onMounted(async () => {
-    startCountdown();
-    if (userToken.value != undefined || userToken.value != '') {
+    if (userToken.value != undefined && userToken.value != '') {
         try {
             const response = await $axios.post(
                 '/api/v1/Pmatch/GetContractedStoreList',
