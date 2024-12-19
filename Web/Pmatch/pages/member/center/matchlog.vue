@@ -94,7 +94,6 @@ const memberId = useCookie('_PmMemberId');
 const pageCount = ref(10);
 const curPage = ref(1);
 const totalPage = ref(1);
-const mobileArr = ref([]);
 const startTime = ref('');
 const endTime = ref('');
 let OriTableData = [];
@@ -123,42 +122,7 @@ const formatDateTimeIntl = dateTimeString => {
 
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 };
-onMounted(async () => {
-    try {
-        if (
-            userToken.value !== undefined &&
-            userToken.value !== '' &&
-            memberId.value !== undefined &&
-            memberId.value !== ''
-        ) {
-            const response = await $axios.post(
-                '/api/v1/Pmatch/GetMemberDetail',
-                {
-                    PmatchMemberId: memberId.value
-                },
-                {
-                    headers: {
-                        Authorization: userToken.value
-                    }
-                }
-            );
-
-            if (response.data.Status.Code === 0) {
-                let mobileArr = [];
-                if (response.data.Data[0].Mobile1 !== '')
-                    mobileArr.push(response.data.Data[0].Mobile1);
-                if (response.data.Data[0].Mobile2 !== '')
-                    mobileArr.push(response.data.Data[0].Mobile2);
-                if (response.data.Data[0].Mobile3 !== '')
-                    mobileArr.push(response.data.Data[0].Mobile3);
-            } else {
-                alert(`${response.data.Status.Message}`);
-            }
-        }
-    } catch (error) {
-        console.error('請求失敗:', error);
-    }
-});
+onMounted(async () => {});
 const GetData = async () => {
     try {
         if (
@@ -168,9 +132,11 @@ const GetData = async () => {
             endTime.value !== ''
         ) {
             const response = await $axios.post(
-                '/api/v1/Pmatch/GetAccountingList',
+                'http://localhost:2450/api/v1/Pmatch/GetAccountingList',
                 {
                     PmatchMemberId: memberId.value,
+                    StartTime: startTime.value,
+                    EndTime: endTime.value,
                     PageNo: curPage.value,
                     PageSize: pageCount.value
                 },
@@ -186,6 +152,20 @@ const GetData = async () => {
                 OriTableData.forEach(x => {
                     x.Createtime = formatDateTimeIntl(x.Createtime);
                     totalPage.value = x.TotalPage;
+                    switch (x.Status) {
+                        case 0:
+                            x.Status = '處理中';
+                            break;
+                        case 1:
+                            x.Status = '已完成';
+                            break;
+                        case 2:
+                            x.Status = '已取消';
+                            break;
+                        case 2:
+                            x.Status = '異常';
+                            break;
+                    }
                 });
                 tableData.value = [...OriTableData.slice(0, pageCount.value)];
             } else {
