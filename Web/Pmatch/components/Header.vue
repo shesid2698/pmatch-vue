@@ -1,101 +1,157 @@
 <template>
-    <div class="flex justify-center fixed w-100% bg-white headerBox top-0 left-0 h-80px">
-        <div class="flex justify-between items-center max-w-1320px w-100% ps-5 pe-5 position-relative">
+    <div
+        class="flex justify-center fixed w-100% bg-white headerBox top-0 left-0 h-80px"
+    >
+        <div
+            class="flex justify-between items-center max-w-1320px w-100% ps-5 pe-5 position-relative"
+        >
             <!-- Logo -->
             <div class="w-100% flex items-center">
-                <div @click="navigateIndex"
-                     class="cursor-pointer">
-                    <NuxtLink to="/"><img class="lg-w-240px w-140px"
-                             src="/images/logo.png"
-                             alt="pmatch的logo" /></NuxtLink>
+                <div @click="navigateIndex" class="cursor-pointer">
+                    <NuxtLink to="/"
+                        ><img
+                            class="lg-w-240px w-140px"
+                            src="/images/logo.png"
+                            alt="pmatch的logo"
+                    /></NuxtLink>
                 </div>
                 <div>
-                    <h1 class="m-0 ms-3 ps-3 lg-font-size-1.5rem font-size-1.2rem color-#888 b-l-solid">
+                    <h1
+                        class="m-0 ms-3 ps-3 lg-font-size-1.5rem font-size-1.2rem color-#888 b-l-solid"
+                    >
                         遊戲道具媒合網
                     </h1>
                 </div>
             </div>
             <div class="lg-none lg-w-100% flex justify-end">
                 <!-- PC版導航連結 -->
-                <div class="hidden lg-block"
-                     v-for="item of headerLink"
-                     :key="item.id">
-                    <div class="relative"
-                         @click.stop="handleDropdown(item)"
-                         :ref="setDropdownRef(item.id)">
-                        <span v-show="item.dropdown"
-                              class="loginLink color-#555553 decoration-none ms-1.5rem font-bold w-100% cursor-pointer"
-                              :alt="item.title">
+                <div
+                    class="hidden lg-block"
+                    v-for="item of headerLink"
+                    :key="item.id"
+                >
+                    <div
+                        class="relative"
+                        @click.stop="handleDropdown(item)"
+                        :ref="setDropdownRef(item.id)"
+                    >
+                        <span
+                            v-show="item.dropdown"
+                            class="loginLink color-#555553 decoration-none ms-1.5rem font-bold w-100% cursor-pointer"
+                            :alt="item.title"
+                        >
                             {{ item.title }}
                         </span>
-                        <button v-if="item.items"
-                                class="logoutBtn ms-1 bg-#fff border-none">
-                            <span v-for="subItem in item.items"
-                                  :key="subItem.id"
-                                  @click="subItem.action">{{ subItem.title }}</span>
+                        <button
+                            v-if="item.items"
+                            class="logoutBtn ms-1 bg-#fff border-none"
+                        >
+                            <span
+                                v-for="subItem in item.items"
+                                :key="subItem.id"
+                                @click="subItem.action"
+                                >{{ subItem.title }}</span
+                            >
                         </button>
-                        <div v-show="dropdownStates[item.id]"
-                             class="loginDropdown bg-white mt-1">
-                            <NuxtLink to="/member/login"
-                                      class="loginItem block p-1 ps-2 pe-2 mt-1 mb-1 decoration-none">會員登入</NuxtLink>
+                        <div
+                            v-show="dropdownStates[item.id]"
+                            class="loginDropdown bg-white mt-1"
+                        >
+                            <NuxtLink
+                                to="/member/login"
+                                class="loginItem block p-1 ps-2 pe-2 mt-1 mb-1 decoration-none"
+                                >會員登入</NuxtLink
+                            >
+                            <!--
                             <NuxtLink to="/store/login"
                                       class="loginItem block p-1 ps-2 pe-2 mt-1 mb-1 decoration-none">媒合商登入</NuxtLink>
-                            <NuxtLink to="/register"
-                                      class="loginItem block p-1 ps-2 pe-2 mt-1 mb-1 decoration-none">註冊會員</NuxtLink>
-                            <NuxtLink to="/member/forgetpwd"
-                                      class="loginItem block p-1 ps-2 pe-2 mt-1 mb-1 decoration-none">忘記密碼</NuxtLink>
+                                      -->
+                            <NuxtLink
+                                to="/register"
+                                class="loginItem block p-1 ps-2 pe-2 mt-1 mb-1 decoration-none"
+                                >註冊會員</NuxtLink
+                            >
+                            <NuxtLink
+                                to="/member/forgetpwd"
+                                class="loginItem block p-1 ps-2 pe-2 mt-1 mb-1 decoration-none"
+                                >忘記密碼</NuxtLink
+                            >
                         </div>
                     </div>
-                    <NuxtLink v-show="!item.dropdown"
-                              v-if="item.id!==4"
-                              :title="item.title"
-                              :to="item.link"
-                              class="headerLink color-#555553 decoration-none ms-1.5rem font-bold"
-                              :alt="item.title">
+                    <NuxtLink
+                        v-show="!item.dropdown"
+                        v-if="item.id !== 4"
+                        :title="item.title"
+                        :to="item.link"
+                        class="headerLink color-#555553 decoration-none ms-1.5rem font-bold"
+                        :alt="item.title"
+                    >
                         {{ item.title }}
                     </NuxtLink>
-                    <NuxtLink v-else
-                              @click="logout"
-                              class=" color-#0d6efd hover:opacity-70 hover:underline cursor-pointer decoration-none ms-1.5rem font-bold">登出</NuxtLink>
+                    <NuxtLink
+                        v-else
+                        @click="logout"
+                        class="color-#0d6efd hover:opacity-70 hover:underline cursor-pointer decoration-none ms-1.5rem font-bold"
+                        >登出</NuxtLink
+                    >
                 </div>
                 <!-- 手機板漢堡選單 -->
                 <div class="lg-hidden block">
-                    <button class="flex bg-white b-rd-5px b-1px b-gray radius-5px"
-                            @click="toggleNav">
-                        <img class="w-30px p-1"
-                             src="/images/navigation.svg"
-                             alt="導航漢堡選單icon" />
+                    <button
+                        class="flex bg-white b-rd-5px b-1px b-gray radius-5px"
+                        @click="toggleNav"
+                    >
+                        <img
+                            class="w-30px p-1"
+                            src="/images/navigation.svg"
+                            alt="導航漢堡選單icon"
+                        />
                     </button>
                 </div>
             </div>
             <!-- 手機板下拉選單 -->
-            <div class="headerBoxMenu position-absolute w-100% bg-white top-98% left-0 flex flex-wrap items-center"
-                 v-show="navOpen">
-                <div class="w-100% flex justify-center mt-3 mb-3"
-                     v-for="item of headerLink"
-                     :key="item.id">
-                    <div v-if="item.title === '會員中心'"
-                         class="text-center">
-                        <div class="headerLink color-#555553 decoration-none font-bold w-100% cursor-pointer"
-                             @click="show = !show">{{ item.title }}
+            <div
+                class="headerBoxMenu position-absolute w-100% bg-white top-98% left-0 flex flex-wrap items-center"
+                v-show="navOpen"
+            >
+                <div
+                    class="w-100% flex justify-center mt-3 mb-3"
+                    v-for="item of headerLink"
+                    :key="item.id"
+                >
+                    <div v-if="item.title === '會員中心'" class="text-center">
+                        <div
+                            class="headerLink color-#555553 decoration-none font-bold w-100% cursor-pointer"
+                            @click="show = !show"
+                        >
+                            {{ item.title }}
                             <el-collapse-transition>
-                                <div v-show="show"
-                                     class=" member-center-container">
-                                    <div class="transition-box"
-                                         v-for="memberItem of memberCenterLink">
-                                        <NuxtLink :to="memberItem.link"
-                                                  :title="memberItem.title"
-                                                  class="decoration-none">{{memberItem.title }}</NuxtLink>
+                                <div
+                                    v-show="show"
+                                    class="member-center-container"
+                                >
+                                    <div
+                                        class="transition-box"
+                                        v-for="memberItem of memberCenterLink"
+                                    >
+                                        <NuxtLink
+                                            :to="memberItem.link"
+                                            :title="memberItem.title"
+                                            class="decoration-none"
+                                            >{{ memberItem.title }}</NuxtLink
+                                        >
                                     </div>
                                 </div>
                             </el-collapse-transition>
                         </div>
                     </div>
                     <div v-else>
-                        <NuxtLink :title="item.title"
-                                  :to="item.link"
-                                  class="headerLink color-#555553 decoration-none font-bold w-100%"
-                                  :alt="item.title">
+                        <NuxtLink
+                            :title="item.title"
+                            :to="item.link"
+                            class="headerLink color-#555553 decoration-none font-bold w-100%"
+                            :alt="item.title"
+                        >
                             {{ item.title }}
                         </NuxtLink>
                     </div>
@@ -103,13 +159,12 @@
             </div>
         </div>
     </div>
-
 </template>
 
 <script setup>
-const userToken = useCookie('_PmToken');
-const userNameCookie = useCookie('_PmUserName');
-const MemberIdCookie = useCookie('_PmMemberId');
+const userToken = useCookie("_PmToken");
+const userNameCookie = useCookie("_PmUserName");
+const MemberIdCookie = useCookie("_PmMemberId");
 const user = reactive({});
 const router = useRouter();
 const navOpen = ref(false);
@@ -119,51 +174,51 @@ const toggleNav = () => {
 const headerLink = ref([]);
 const memberCenterLink = ref([
     {
-        title: '會員維護資訊',
-        link: '/member/center/'
+        title: "會員維護資訊",
+        link: "/member/center/",
     },
     {
-        title: '更改密碼',
-        link: '/member/center/changepwd'
+        title: "更改密碼",
+        link: "/member/center/changepwd",
     },
     {
-        title: '我的訂單',
-        link: '/member/center/myorder'
+        title: "我的訂單",
+        link: "/member/center/myorder",
     },
     {
-        title: '委託媒合紀錄',
-        link: '/member/center/matchlog'
+        title: "委託媒合紀錄",
+        link: "/member/center/matchlog",
     },
     {
-        title: '成功媒合紀錄',
-        link: '/member/center/successmatch'
+        title: "成功媒合紀錄",
+        link: "/member/center/successmatch",
     },
     {
-        title: '簽約媒合商',
-        link: '/member/center/contract'
-    }
+        title: "簽約媒合商",
+        link: "/member/center/contract",
+    },
 ]);
 const show = ref(false);
 // 保存下拉選單的參考
 const dropdownRefs = ref([]);
 
 const dropdownStates = ref({
-    2: false // 僅對 id 為 2 的項目有下拉選單
+    2: false, // 僅對 id 為 2 的項目有下拉選單
 });
 // 設置下拉選單的 ref
-const setDropdownRef = id => el => {
+const setDropdownRef = (id) => (el) => {
     dropdownRefs.value[id] = el;
 };
 
 // 處理下拉選單的顯示或隱藏
-const handleDropdown = item => {
+const handleDropdown = (item) => {
     const currentState = dropdownStates.value[item.id];
     dropdownStates.value[item.id] = !currentState;
     console.log(item.showDropdown);
 };
 // 點擊外部關閉下拉選單
-const closeDropdownOutside = event => {
-    Object.keys(dropdownStates.value).forEach(id => {
+const closeDropdownOutside = (event) => {
+    Object.keys(dropdownStates.value).forEach((id) => {
         const dropdownElement = dropdownRefs.value[id];
         if (dropdownElement && !dropdownElement.contains(event.target)) {
             dropdownStates.value[id] = false; // 關閉該選單
@@ -177,80 +232,82 @@ const logout = () => {
     userNameCookie.maxAge = -1;
     MemberIdCookie.value = undefined;
     MemberIdCookie.maxAge = -1;
-    window.location.href = '/';
+    window.location.href = "/";
 };
 // 在組件掛載時添加全局點擊事件監聽器
 onMounted(() => {
-    document.addEventListener('click', closeDropdownOutside);
-    if (userNameCookie.value !== '' && userNameCookie.value != undefined) {
+    document.addEventListener("click", closeDropdownOutside);
+    if (userNameCookie.value !== "" && userNameCookie.value != undefined) {
         headerLink.value = [
             {
                 id: 0,
-                title: '會員中心',
-                link: '/member/center'
+                title: "會員中心",
+                link: "/member/center",
             },
             {
                 id: 1,
-                title: '幫助中心',
-                link: '/helpcenter'
+                title: "幫助中心",
+                link: "/helpcenter",
             },
             {
                 id: 2,
-                title: '找媒合',
-                link: '/findmatch'
+                title: "找媒合",
+                link: "/findmatch",
             },
             {
                 id: 3,
                 title: `${userNameCookie.value} 您好`,
-                link: '#'
+                link: "#",
             },
             {
                 id: 4,
-                title: '登出',
-                link: '#'
-            }
+                title: "登出",
+                link: "#",
+            },
         ];
     } else {
         headerLink.value = [
             {
                 id: 0,
-                title: '幫助中心',
-                link: '/helpcenter'
+                title: "幫助中心",
+                link: "/helpcenter",
             },
             {
                 id: 1,
-                title: '找媒合',
-                link: '/findmatch'
+                title: "找媒合",
+                link: "/findmatch",
             },
             {
                 id: 2,
-                title: userToken.value ? `HI,${userNameCookie.value}` : '會員登入/註冊',
-                link: '/member/login',
+                title: userToken.value
+                    ? `HI,${userNameCookie.value}`
+                    : "會員登入/註冊",
+                link: "/member/login",
                 dropdown: true,
                 showDropdown: false,
                 items: userToken.value
                     ? [
                           {
-                              id: 'logout',
-                              title: '登出',
+                              id: "logout",
+                              title: "登出",
                               action: () => {
                                   // 清除登入狀態
                                   userToken.value = null;
-                                  userNameCookie.value = '';
-                                  MemberIdCookie.value = '';
-                                  router.push('/');
-                              }
-                          }
+                                  userNameCookie.value = "";
+                                  MemberIdCookie.value = "";
+                                  router.push("/");
+                              },
+                          },
                       ]
-                    : []
-            }
+                    : [],
+            },
         ];
     }
 });
 
 // 在組件卸載時移除點擊事件監聽器
 onBeforeUnmount(() => {
-    document.removeEventListener('click', closeDropdownOutside);
+    document.removeEventListener("click", closeDropdownOutside);
 });
 </script>
 
