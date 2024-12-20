@@ -117,7 +117,6 @@ const PrevPage = async () => {
 };
 const formatDateTimeIntl = dateTimeString => {
     const date = new Date(dateTimeString);
-
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0'); // 月份從 0 開始
     const day = String(date.getDate()).padStart(2, '0');
@@ -193,6 +192,10 @@ const GetData = async () => {
             );
 
             if (response.data.Status.Code === 0) {
+              if(response.data.Data.length === 0){
+                alert("查無資料");
+                return;
+              }
                 OriTableData = response.data.Data;
                 OriTableData.forEach(x => {
                     x.Time = formatDateTimeIntl(x.Time);

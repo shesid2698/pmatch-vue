@@ -132,7 +132,7 @@ const GetData = async () => {
             endTime.value !== ''
         ) {
             const response = await $axios.post(
-                'http://localhost:2450/api/v1/Pmatch/GetAccountingList',
+                '/api/v1/Pmatch/GetAccountingList',
                 {
                     PmatchMemberId: memberId.value,
                     StartTime: startTime.value,
@@ -148,6 +148,10 @@ const GetData = async () => {
             );
 
             if (response.data.Status.Code === 0) {
+              if(response.data.Data.length === 0){
+                alert("查無資料");
+                return;
+              }
                 OriTableData = response.data.Data;
                 OriTableData.forEach(x => {
                     x.Createtime = formatDateTimeIntl(x.Createtime);
