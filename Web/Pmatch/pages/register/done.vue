@@ -68,8 +68,9 @@
 <script setup>
 const route = useRoute();
 const account = ref("");
+const encrypt = useEncrypt();
 onMounted(()=>{
-  account.value = route.query.account || "";
+  account.value = encrypt.decrypt(route.query.account) || "";
 });
 </script>
 <style scoped>
