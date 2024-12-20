@@ -107,6 +107,7 @@
 <script setup>
 // loading page
 import { useLoadStore } from "../stores/loading.js";
+import VueTurnstile from "vue-turnstile";
 const store = useLoadStore();
 const setPageLoading = store.setPageLoading;
 
@@ -114,7 +115,7 @@ const { $axios } = useNuxtApp();
 const encrypt = useEncrypt();
 
 const matchMemberList = ref([]);
-import VueTurnstile from "vue-turnstile";
+
 const iData = ref([]);
 const password = ref("");
 const eyes = ref(null);
@@ -123,7 +124,9 @@ const s = reactive({});
 const i_password = ref(null);
 const { md5 } = crypto();
 
-// const hasToken = ref(loginToken.value !== undefined);
+const loginToken = useCookie('tstToken');
+const hasToken = ref(loginToken.value !== undefined);
+
 let accountId = ref("");
 const turnInputType = () => {
     if (i_password.value.type === "password") {
@@ -136,12 +139,12 @@ const turnInputType = () => {
         eyes.value.classList.add("fa-eye");
     }
 };
-// const onVerify = (tokenValue) => {
-//     loginToken.value = tokenValue;
-//     setTimeout(() => {
-//         hasToken.value = true;
-//     }, 1500);
-// };
+const onVerify = (tokenValue) => {
+    loginToken.value = tokenValue;
+    setTimeout(() => {
+        hasToken.value = true;
+    }, 1500);
+};
 
 // login
 async function login(event, encryptedPassword) {
@@ -169,10 +172,10 @@ async function login(event, encryptedPassword) {
                 const base64UrlToken = btoa(token)
                     .replace(/\+/g, "-")
                     .replace(/\//g, "_")
-                    .replace(/=+$/, "");
 
                 // 跳轉到目標網站
-                const targetUrl = `http://192.168.10.206:5092/l/${base64UrlToken}`;
+                const targetUrl = `http://192.168.10.206:6092/l/${base64UrlToken}`;
+                console.log(base64UrlToken);
                 window.location.href = targetUrl;
             } else {
                 console.error("跳轉失敗");

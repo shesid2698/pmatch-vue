@@ -4,6 +4,9 @@
             <div class="mb-3">
                 <h1 class="m-0 text-center">最安全的遊戲交易平台</h1>
             </div>
+            <div class="flex justify-end">
+                <NuxtLink class="font-size-20px decoration-none fw-bold color-#666" to="/store/login">媒合商這邊登入 > </NuxtLink>
+            </div>
             <div class="mb-6 md-flex block items-center justify-center">
                 <div class="flex items-center">
                     <div class="flex items-center w-100%">
