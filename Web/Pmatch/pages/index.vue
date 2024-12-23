@@ -1,11 +1,13 @@
 <template>
     <div>
-        <div class="max-w-1320px m-auto ps-5 pe-5">
+        <div class="max-w-1320px m-auto ps-5 pe-5 relative z-2">
             <div class="mb-3">
-                <h1 class="m-0 text-center">最安全的遊戲交易平台</h1>
-            </div>
-            <div class="flex justify-end">
-                <NuxtLink class="font-size-20px decoration-none fw-bold color-#666" to="/store/login">媒合商這邊登入 > </NuxtLink>
+                <h1 class="m-0 mb-2 text-center font-size-3rem slogan">
+                    安心交易的第一選項Pmatch
+                </h1>
+                <h3 class="m-0 text-center subSlogan">
+                    為你嚴選商家、用合約保障你的權益、繁瑣的事情都再見
+                </h3>
             </div>
             <div class="mb-6 md-flex block items-center justify-center">
                 <div class="flex items-center">
@@ -66,15 +68,21 @@
                         </div>
                     </div>
                     <div class="w-100% md-ms-3 flex items-center">
-                        <input type="checkbox" class="w-20px h-20px" v-model="contractToSearch"/>
+                        <input
+                            type="checkbox"
+                            class="w-20px h-20px"
+                            v-model="contractToSearch"
+                        />
                         <span>查看已簽約媒合商</span>
                     </div>
                     <div>
-                        <button class="ms-3 w-100px" @click="searchToFindMatch" >搜尋</button>
+                        <button class="ms-3 w-100px" @click="searchToFindMatch">
+                            搜尋
+                        </button>
                     </div>
                 </div>
             </div>
-            <div class="mb-3">
+            <div class="pt-5rem pb-5rem">
                 <ElCarousel
                     v-if="bannerList.length > 0"
                     class="h-200px"
@@ -94,7 +102,7 @@
                     </ElCarouselItem>
                 </ElCarousel>
             </div>
-            <div class="mb-3">
+            <div class="mb-3 pt-5rem pb-5rem">
                 <div class="flex flex-wrap">
                     <div
                         class="gameBox"
@@ -141,43 +149,91 @@
                 </div>
             </div>
         </div>
-        <div class="w-full bg-#eee pt-5 pb-5">
+        
+        <div class="w-full bg-#fff relative mt-5rem">
+            <div class="waveTop absolute"></div>
             <div class="max-w-1320px m-auto ps-5 pe-5">
-                <div>
-                    <h2 class="m-0 text-center">NEWS</h2>
-                    <h1 class="m-0 text-center">最新消息</h1>
+                <div class="mb-5rem">
+                    <h1 class="newsTitle m-0 text-center font-size-2.5rem">
+                        最新消息
+                    </h1>
+                    <div class="flex justify-center">
+                        <img
+                            class="w-250px"
+                            src="/images/news.png"
+                            alt="最新消息"
+                        />
+                    </div>
                 </div>
-                <div class="flex">
-                    <div class="w-70%">
+                <div class="lg-flex">
+                    <div class="w-100% lg-w-50% me-0 lg-me-2">
+                        <div class="mb-3rem">
+                            <button
+                                class="newsAllBtn border-none p-3 bg-#4361ee color-#fff rounded-50px"
+                                @click="fetchNewsListData([], '')"
+                            >
+                                ALL
+                            </button>
+                            <button
+                                class="newsSystemBtn bg-#fff border-1px-solid-7B2CBF p-3 ms-3 color-#7B2CBF rounded-50px"
+                                @click="fetchNewsListData([1], '')"
+                            >
+                                系統公告
+                            </button>
+                            <button
+                                class="newsActivityBtn bg-#fff border-none p-3 ms-3 color-#F72585 rounded-50px"
+                                @click="fetchNewsListData([2], '')"
+                            >
+                                活動資訊
+                            </button>
+                        </div>
                         <div v-if="newsList.length > 0">
                             <NuxtLink
                                 to="/"
-                                v-for="(item, index) in newsList.slice(0, 3)"
+                                v-for="(item, index) in newsList.slice(0, 5)"
                                 :key="index"
                                 class="color-#555553 decoration-none"
                             >
-                                <div
-                                    class="w-full flex mb-3 bg-#fff rounded-1rem"
-                                >
-                                    <div class="w-80 p-5">
-                                        <div>
-                                            <span>{{ item.StartTime }}</span>
-                                        </div>
-                                        <div class="">
-                                            {{
-                                                item.Category === 1
-                                                    ? "網站公告"
-                                                    : item.Category === 2
-                                                    ? "活動資訊"
-                                                    : item.Category === 3
-                                                    ? "新手幫助"
-                                                    : ""
-                                            }}
+                                <div class="w-full bg-#fff">
+                                    <div class="w-80 font-size-.8rem">
+                                        <div class="flex items-center">
+                                            <div
+                                                :class="{
+                                                    'bg-#7b2cbf':
+                                                        item.Category === 1,
+                                                    'bg-#f72585':
+                                                        item.Category === 2,
+                                                }"
+                                                class="color-#fff p-1 rounded-50px"
+                                            >
+                                                {{
+                                                    item.Category === 1
+                                                        ? "網站公告"
+                                                        : item.Category === 2
+                                                        ? "活動資訊"
+                                                        : ""
+                                                }}
+                                            </div>
+                                            <div class="flex items-center p-2">
+                                                <span :class="{
+                                                    'color-#4361EE':
+                                                        item.Category === 1,
+                                                    'color-#f72585':
+                                                        item.Category === 2,
+                                                }">{{
+                                                    item.StartTime.slice(0, 10)
+                                                }}</span>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="w-full p-5">
+                                    <div class="w-full pt-3 pb-3 mt-3 mb-3 newsItemLink">
                                         <div>
-                                            <h2 class="m-0">
+                                            <h2 class="m-0" :class="{
+                                                    'newsItem1':
+                                                        item.Category === 1,
+                                                    'newsItem2':
+                                                        item.Category === 2,
+                                                }">
                                                 {{ item.Title }}
                                             </h2>
                                             <h3 class="m-0">
@@ -188,24 +244,38 @@
                                 </div>
                             </NuxtLink>
                         </div>
-                        <div>
-                            <button @click="fetchNewsListData([], '')">
-                                所有資訊
-                            </button>
-                            <button @click="fetchNewsListData([1], '')">
-                                網站公告
-                            </button>
-                            <button @click="fetchNewsListData([2], '')">
-                                活動資訊
-                            </button>
-                            <button @click="fetchNewsListData([3], '')">
-                                新手幫助
-                            </button>
-                        </div>
                     </div>
-                    <div class="w-400px">
+                    <div class="mt-4rem w-100% lg-w-50% ms-0 lg-ms-2 lg-mt-1rem">
                         <NewRatio />
-                        <Matching param=""/>
+                        <Matching class="mt-3rem" param="" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="w-full bg-#fff pt-5rem pb-5 relative">
+            <div class="waveBottom absolute"></div>
+            <div class="max-w-1320px m-auto ps-5 pe-5">
+                <div class="mb-5rem">
+                    <h1 class="newsTitle m-0 text-center font-size-2.5rem">
+                        我們的服務
+                    </h1>
+                    <div class="flex justify-center">
+                        <img
+                            class="w-250px"
+                            src="/images/ourService.png"
+                            alt="我們的服務"
+                        />
+                    </div>
+                </div>
+                <div class="md-flex" v-for="(item, index) in serviceList" :key="index" :class="{'serviceEven': index % 2 === 1}">
+                    <div class="w-100% lg-w-50%">
+                        <img class="w-100%" :src="item.img" :alt="item.title">
+                    </div>
+                    <div class="mt-4rem w-100% lg-w-50% lg-mt-1rem flex items-center">
+                        <div class="lg-ms-5 lg-me-5 ps-5 pe-5 lg-w-auto w-100% pb-20 serviceItemsContent">
+                            <h2 class="serviceItemsTitle m-0 mb-5">{{item.title}}</h2>
+                            <h4 class="m-0">{{item.detail}}</h4>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -231,6 +301,23 @@ const jwtStore = useJwtStore();
 const userToken = useCookie("_PmToken");
 const assetsUrl = useCookie("_PmAssetsUrl");
 
+const serviceList = [
+    {
+        title: "簽約有保障，交易更安全",
+        detail: "交易前與媒合商簽訂正式合約，避免交易糾紛，玩家交易權益更有保障",
+        img: "/images/service1.png",
+    },
+    {
+        title: "精選優質媒合商，詐騙走開",
+        detail: "平台上的媒合商均經過Pmatch平台嚴格篩選，交易信用有保障，告別詐騙交易",
+        img: "/images/service2.png",
+    },
+    {
+        title: "即時查詢，交易資訊100%透明",
+        detail: "平台提供即時交易查詢服務，不論是遊戲幣流向還是交易進度，資訊完整透明",
+        img: "/images/service3.png",
+    },
+]
 let platformNameToSearch = ref("");
 let keywordToSearch = ref("");
 let contractToSearch = ref(false);
@@ -318,16 +405,16 @@ async function fetchADList(token) {
     }
 }
 
-const searchToFindMatch = () =>{
+const searchToFindMatch = () => {
     router.push({
-        path: '/findmatch',
+        path: "/findmatch",
         query: {
-            platformName: platformNameToSearch.value || '', // 平台名稱
-            keyword: keywordToSearch.value || '',         // 關鍵字
-            contract: contractToSearch.value ? 1 : 0 // 是否查看已簽約媒合商
-        }
+            platformName: platformNameToSearch.value || "", // 平台名稱
+            keyword: keywordToSearch.value || "", // 關鍵字
+            contract: contractToSearch.value ? 1 : 0, // 是否查看已簽約媒合商
+        },
     });
-}
+};
 onMounted(async () => {
     await setPageLoading(true);
     try {
@@ -390,5 +477,87 @@ onMounted(async () => {
 
 .el-carousel__item:nth-child(2n + 1) {
     background-color: #d3dce6;
+}
+
+.slogan {
+    background: linear-gradient(to bottom, #f72585, #7b2cbf);
+    background: -webkit-linear-gradient(to bottom, #f72585, #7b2cbf);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+.subSlogan {
+    color: #f72585;
+}
+.newsTitle {
+    background: linear-gradient(to right, #4361ee, #7b2cbf);
+    background: -webkit-linear-gradient(to right, #4361ee, #7b2cbf);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+.waveTop {
+    background-image: url("/images/waveBottom.svg");
+    background-repeat: no-repeat;
+    background-position: right bottom;
+    background-size: 100%;
+    top: -300px;
+    left: 0;
+    width: 100%;
+    min-height: 300px;
+}
+.newsAllBtn {
+    border: 1px solid #4361ee;
+    cursor: pointer;
+}
+.newsSystemBtn {
+    border: 1px solid #7b2cbf;
+    cursor: pointer;
+}
+.newsActivityBtn {
+    border: 1px solid #f72585;
+    cursor: pointer;
+}
+.newsItem1{
+    background: linear-gradient(to right, #4361ee, #7b2cbf);
+    background: -webkit-linear-gradient(to right, #4361ee, #7b2cbf);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+.newsItem2{
+    background: linear-gradient(to right, #f72585, #7b2cbf);
+    background: -webkit-linear-gradient(to right, #f72585, #7b2cbf);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+.newsItemLink{
+    border-bottom: 1px solid rgba(67, 97, 238, .3);
+}
+.serviceEven{
+    flex-direction: row-reverse;
+    margin: 2rem 0;
+}
+.serviceItemsTitle{
+    background: linear-gradient(to right, #f72585, #7b2cbf);
+    background: -webkit-linear-gradient(to right, #f72585, #7b2cbf);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+.serviceItemsContent{
+    border-bottom: 1px solid;
+    border-image: linear-gradient(to right, #f72585, #7b2cbf) 1;
+}
+.waveBottom {
+    background-image: url("/images/waveTop.svg");
+    background-repeat: no-repeat;
+    background-position: left top;
+    background-size: 100%;
+    bottom: -480px;
+    left: 0;
+    width: 100%;
+    height: 480px;
 }
 </style>

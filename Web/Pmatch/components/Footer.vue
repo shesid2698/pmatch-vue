@@ -1,60 +1,96 @@
 <template>
-    <div class="bg-#423a52 w-100% h-280px flex items-center">
-        <div class="max-w-1320px m-auto">
-            <div class="footer flex justify-center">
-                <div
-                    class="footerItem"
-                    v-for="item in footerLink"
-                    :key="item.id"
-                >
-                    <NuxtLink
-                        class="footerLink color-#fff decoration-none"
-                        :to="item.link"
-                        :title="item.title"
-                        :alt="item.title"
-                        >{{ item.title }}</NuxtLink
-                    >
-                    <span
-                        class="m-2 color-#fff"
-                        v-if="item.id !== footerLink.length - 1"
-                    >
-                        |
-                    </span>
+    <div
+        class="w-100% flex justify-center items-center relative z-2 mt-13rem lg-mt-30rem pb-5rem"
+    >
+        <div class="max-w-1320px w-100% ps-5 pe-5">
+            <div class="lg-flex">
+                <div class="w-100% flex lg-justify-start justify-center mb-5">
+                    <div>
+                        <img
+                        class="w-200px mb-2"
+                        src="/images/logoWhite.png"
+                        alt="pmatch頁尾Logo"
+                    />
+                    <p class="color-#fff m-0 text-center">© 2020~2024 版權所有</p>
+                    <p class="color-#fff m-0 mb-2 text-center">PMatch 遊戲道具媒合網</p>
+                    <div class="flex lg-justify-start justify-center">
+                        <img src="/images/rapidSSL.gif" alt="ssl憑證" />
+                    </div>
+                    
+                    </div>
                 </div>
-            </div>
-            <div
-                class="color-#fff flex items-center justify-around max-w-700px m-auto mt-5"
-            >
-                <div>
-                    <img src="/images/rapidSSL.gif" alt="ssl憑證小圖" />
-                </div>
-                <div>
-                    <p class="m-0">
-                        客服信箱 :
-                        <a
-                            class="color-#fff decoration-none"
-                            href="mailto:service@zihai.com.tw"
-                            >service@zihai.com.tw</a
+                <div class="flex w-100% mb-5">
+                    <div class="w-50%">
+                        <div
+                            class="m-2 text-center"
+                            v-for="(item, index) in footerLinkLeft"
+                            :key="index"
                         >
-                    </p>
-                    <p class="m-0">客服時間 : 週一至週五0900〜18:00</p>
+                            <NuxtLink
+                                class="color-#fff decoration-none"
+                                :to="item.link"
+                                >{{ item.title }}</NuxtLink
+                            >
+                        </div>
+                    </div>
+                    <div class="w-50%">
+                        <div
+                            class="m-2 text-center"
+                            v-for="(item, index) in footerLinkRight"
+                            :key="index"
+                        >
+                            <NuxtLink
+                                class="color-#fff decoration-none"
+                                :to="item.link"
+                                >{{ item.title }}</NuxtLink
+                            >
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="color-#fff mt-5">
-                <p class="m-0 text-center">
-                    Copyright &copy; 2020~2024 版權所有 PMatch遊戲道具媒合網
-                </p>
-                <p class="m-0 text-center">
-                    本網站支援Edge Firefox及Chrome,最佳瀏覧解析度為1024x768
-                </p>
-                <p class="m-0 text-center">版號 v6.1.1</p>
+                <div class="w-100% flex lg-justify-end justify-center">
+                    <div class="m-2">
+                        <p class="color-#fff mb-2 m-0 justify-center text-center">
+                            客服信箱 : service@zihai.com.tw
+                        </p>
+                        <p class="color-#fff m-0 text-center">
+                            客服時間 : 週一至週五0900〜1800
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-const footerLink = ref([
+const footerLinkLeft = ref([
+    {
+        id: 0,
+        title: "首頁",
+        link: "/",
+    },
+    {
+        id: 1,
+        title: "會員中心",
+        link: "/member/center",
+    },
+    {
+        id: 2,
+        title: "幫助中心",
+        link: "/helpcenter",
+    },
+    {
+        id: 3,
+        title: "找媒合",
+        link: "/findmatch",
+    },
+    {
+        id: 4,
+        title: "登入/註冊",
+        link: "/member/login",
+    },
+]);
+const footerLinkRight = ref([
     {
         id: 0,
         title: "關於我們",
@@ -77,11 +113,6 @@ const footerLink = ref([
     },
     {
         id: 4,
-        title: "幫助中心",
-        link: "/helpcenter",
-    },
-    {
-        id: 5,
         title: "聯絡我們",
         link: "/contact",
     },

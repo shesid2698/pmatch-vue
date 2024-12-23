@@ -1,32 +1,32 @@
 <template>
     <div
-        class="flex justify-center fixed w-100% bg-white headerBox top-0 left-0 h-80px"
+        class="flex justify-center fixed w-100% headerBox top-0 left-0 h-110px"
     >
         <div
             class="flex justify-between items-center max-w-1320px w-100% ps-5 pe-5 position-relative"
         >
             <!-- Logo -->
-            <div class="w-100% flex items-center">
+            <div class="lg-w-80% w-100% flex items-center">
                 <div @click="navigateIndex" class="cursor-pointer">
                     <NuxtLink to="/"
                         ><img
-                            class="lg-w-240px w-140px"
+                            class="md-w-240px w-160px"
                             src="/images/logo.png"
                             alt="pmatch的logo"
                     /></NuxtLink>
                 </div>
                 <div>
                     <h1
-                        class="m-0 ms-3 ps-3 lg-font-size-1.5rem font-size-1.2rem color-#888 b-l-solid"
+                        class="m-0 ms-3 font-size-1.2rem md-font-size-1.5rem color-#7B2CBF"
                     >
                         遊戲道具媒合網
                     </h1>
                 </div>
             </div>
-            <div class="lg-none lg-w-100% flex justify-end">
+            <div class="lg-w-100% w-20% flex justify-end">
                 <!-- PC版導航連結 -->
                 <div
-                    class="hidden lg-block"
+                    class="hidden lg-flex items-center"
                     v-for="item of headerLink"
                     :key="item.id"
                 >
@@ -37,7 +37,7 @@
                     >
                         <span
                             v-show="item.dropdown"
-                            class="loginLink color-#555553 decoration-none ms-1.5rem font-bold w-100% cursor-pointer"
+                            class="loginLink color-#555553 decoration-none font-bold w-100% cursor-pointer"
                             :alt="item.title"
                         >
                             {{ item.title }}
@@ -62,10 +62,6 @@
                                 class="loginItem block p-1 ps-2 pe-2 mt-1 mb-1 decoration-none"
                                 >會員登入</NuxtLink
                             >
-                            <!--
-                            <NuxtLink to="/store/login"
-                                      class="loginItem block p-1 ps-2 pe-2 mt-1 mb-1 decoration-none">媒合商登入</NuxtLink>
-                                      -->
                             <NuxtLink
                                 to="/register"
                                 class="loginItem block p-1 ps-2 pe-2 mt-1 mb-1 decoration-none"
@@ -80,13 +76,14 @@
                     </div>
                     <NuxtLink
                         v-show="!item.dropdown"
-                        v-if="item.id !== 4"
+                        v-if="item.id !== 5"
                         :title="item.title"
                         :to="item.link"
-                        class="headerLink color-#555553 decoration-none ms-1.5rem font-bold"
+                        :class="`headerLink flex items-center color-#555553 decoration-none pt-.2rem pb-.2rem ps-1.2rem pe-1.2rem font-bold ${item.className}`"
                         :alt="item.title"
                     >
                         {{ item.title }}
+                        <img class="ms-2 w-20px" v-if="item.icon !== ''" :src="item.icon" :alt="item.title">
                     </NuxtLink>
                     <NuxtLink
                         v-else
@@ -269,20 +266,40 @@ onMounted(() => {
         headerLink.value = [
             {
                 id: 0,
-                title: "幫助中心",
-                link: "/helpcenter",
+                title: "首頁",
+                link: "/",
+                className: "nav0",
+                icon: "",
             },
             {
                 id: 1,
-                title: "找媒合",
-                link: "/findmatch",
+                title: "會員中心",
+                link: "/member/center",
+                className: "nav1",
+                icon: "",
             },
             {
                 id: 2,
+                title: "幫助中心",
+                link: "/helpcenter",
+                className: "nav2",
+                icon: "",
+            },
+            {
+                id: 3,
+                title: "媒合商",
+                link: "/store/login",
+                className: "nav3",
+                icon: "/images/linkIcon.png",
+            },
+            {
+                id: 4,
                 title: userToken.value
                     ? `HI,${userNameCookie.value}`
-                    : "會員登入/註冊",
+                    : "登入/註冊",
                 link: "/member/login",
+                className: "nav4",
+                icon: "",
                 dropdown: true,
                 showDropdown: false,
                 items: userToken.value
@@ -312,12 +329,8 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
-.headerBox {
-    box-shadow: 0 2px 4px rgb(0 0 0 / 0.5);
-    z-index: 3;
-}
-.headerBoxMenu {
-    box-shadow: 0 2px 2px rgb(0 0 0 / 0.5);
+.headerBox{
+    z-index: 99;
 }
 .loginDropdown {
     border: 1px solid #ccc;
@@ -360,5 +373,21 @@ onBeforeUnmount(() => {
 }
 .logoutBtn:hover {
     color: #999;
+}
+.nav1{
+    border-right: 2px solid #ccc;
+    border-left: 2px solid #ccc;
+}
+.nav3{
+    background:linear-gradient(to right, #4361EE, #F72585);
+    border-radius: 50px;
+    color: #fff;
+    padding: .5rem 1.5rem;
+}
+.loginLink{
+    border-radius: 50px;
+    color: #F72585;
+    padding: .5rem 1.5rem;
+    background:#fff;
 }
 </style>

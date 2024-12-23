@@ -1,12 +1,19 @@
 <template>
-    <div>
+    <div class="pageSetting">
+        <div class="bgSetting relative">
+            <div class="headerLeft">
+            </div>
+            <div class="dotRight">
+            </div>
+        </div>
+        
       <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
           integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
           crossorigin="anonymous" />
         <LoadingPage />
-        <Header />
-        <div class="mt-140px mb-60px page">
+        <Header/>
+        <div class="pt-180px pb- 60px page">
             <NuxtPage />
         </div>
         <Footer />
@@ -45,6 +52,37 @@ body {
 }
 .page {
     min-height: calc(100vh - 120px - 80px - 280px);
+    z-index: 2;
+    position: relative;
+}
+.pageSetting{
+    background-image: url('/images/bg.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+}
+.headerLeft{
+    background-image: url('/images/headerLeft.svg');
+    background-repeat: no-repeat;
+    background-position: left top;
+    position: absolute;
+    background-size: 85%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1300px;
+}
+.dotRight{
+    background-image: url('/images/bgDot01.png');
+    background-repeat: no-repeat;
+    background-position: right top;
+    position: absolute;
+    background-size: 30%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1300px;
 }
 </style>
 

@@ -1,25 +1,47 @@
 <template>
-    <div class="bg-#fff p-5 rounded-1rem">
-        <h3 class="m-0">即時媒合狀況</h3>
-        <div class="flex">
-            <div class="w-150px font-size-15px ps-1 pe-1">時間</div>
-            <div class="w-full font-size-15px ps-1 pe-1">遊戲平台</div>
-            <div class="w-full font-size-15px ps-1 pe-1">遊戲幣數量</div>
-            <div class="w-full font-size-15px ps-1 pe-1">委託對象</div>
-        </div>
-        <div v-for="(item, index) in matchingList" :key="index">
-            <div class="w-full flex">
-                <div class="w-150px font-size-15px ps-1 pe-1">
-                    {{ item.EndTime.split("T")[0].slice(5) }}
+    <div class="bg-#fff matchingBox relative">
+        <div class="matchingDetail">
+            <div class="matchingTitle p-1 absolute flex items-center rounded-10px">
+                <div class="flex items-center me-2">
+                    <img class="w-20px" src="/images/matchingIcon.png" alt="即時媒合狀況">
                 </div>
-                <div class="w-full font-size-15px ps-1 pe-1">
-                    {{ item.GamePlatform }}
+                <h3 class="m-0">即時媒合狀況</h3>
+            </div>
+            
+            <div class="flex titleBox">
+                <div class="w-200px font-size-15px text-center mt-1 mb-1">
+                    時間
                 </div>
-                <div class="w-full font-size-15px ps-1 pe-1">
-                    {{ item.Patch }}
+                <div
+                    class="w-full font-size-15px text-center titleBorder mt-1 mb-1"
+                >
+                    遊戲平台
                 </div>
-                <div class="w-full font-size-15px ps-1 pe-1">
-                    {{ item.MobileNumber }}
+                <div
+                    class="w-full font-size-15px text-center titleBorder mt-1 mb-1"
+                >
+                    遊戲幣數量
+                </div>
+                <div
+                    class="w-full font-size-15px text-center titleBorder mt-1 mb-1"
+                >
+                    委託對象
+                </div>
+            </div>
+            <div v-for="(item, index) in matchingList" :key="index">
+                <div class="w-full flex">
+                    <div class="w-200px font-size-15px pt-1 pb-1 text-center">
+                        {{ item.EndTime.split("T")[0].slice(5) }}
+                    </div>
+                    <div class="w-full font-size-15px pt-1 pb-1 text-center">
+                        {{ item.GamePlatform }}
+                    </div>
+                    <div class="w-full font-size-15px pt-1 pb-1 text-center">
+                        {{ item.Patch }}
+                    </div>
+                    <div class="w-full font-size-15px pt-1 pb-1 text-center">
+                        {{ item.MobileNumber }}
+                    </div>
                 </div>
             </div>
         </div>
@@ -45,7 +67,7 @@ async function fetchMatchingListData(token, platformName) {
     if (token === "") {
         token = await jwtStore.generateToken();
     }
-    if(platformName === undefined){
+    if (platformName === undefined) {
         platformName = "";
     }
     try {
@@ -82,4 +104,33 @@ watch(
 </script>
 
 <style scoped>
+.matchingBox {
+    padding: 1px;
+    background: linear-gradient(
+        to right,
+        rgba(67, 97, 238, 0.3),
+        rgba(247, 37, 133, 0.3)
+    );
+    border-radius: 1rem;
+}
+.matchingDetail {
+    background: #fff;
+    border-radius: 1rem;
+    padding-top: 2rem;
+}
+.matchingTitle{
+    top: -1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(to right, #4361ee, #f72585);
+    color: #fff;
+}
+.titleBox {
+    background: linear-gradient(to right, #4361ee, #f72585);
+    color: #fff;
+    padding: 0.2rem 0;
+}
+.titleBorder {
+    border-left: 2px solid #fff;
+}
 </style>
