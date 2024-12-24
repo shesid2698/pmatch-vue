@@ -43,7 +43,7 @@
                             {{ item.title }}
                         </span>
                         <button
-                            v-if="item.items"
+                            v-if="item.items && userNameCookie != null && userNameCookie.value !== ''"
                             class="logoutBtn ms-1 bg-#fff border-none"
                         >
                             <span
@@ -95,7 +95,7 @@
                 <!-- 手機板漢堡選單 -->
                 <div class="lg-hidden block">
                     <button
-                        class="flex bg-white b-rd-5px b-1px b-gray radius-5px"
+                        class="navBtn flex"
                         @click="toggleNav"
                     >
                         <img
@@ -389,5 +389,12 @@ onBeforeUnmount(() => {
     color: #F72585;
     padding: .5rem 1.5rem;
     background:#fff;
+    margin-left: .3rem;
+}
+.navBtn{
+    background:linear-gradient(to right, #7b2cbf, #F72585);
+    border: none;
+    border-radius: 10px;
+    justify-content: center;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
     <div class="bg-#fff matchingBox relative">
         <div class="matchingDetail">
-            <div class="matchingTitle p-1 absolute flex items-center rounded-10px">
+            <div class="matchingTitle p-2 absolute flex items-center rounded-10px">
                 <div class="flex items-center me-2">
                     <img class="w-20px" src="/images/matchingIcon.png" alt="即時媒合狀況">
                 </div>
@@ -119,7 +119,7 @@ watch(
     padding-top: 2rem;
 }
 .matchingTitle{
-    top: -1rem;
+    top: -1.2rem;
     left: 50%;
     transform: translateX(-50%);
     background: linear-gradient(to right, #4361ee, #f72585);

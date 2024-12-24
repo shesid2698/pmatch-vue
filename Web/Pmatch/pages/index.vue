@@ -152,7 +152,10 @@
         
         <div class="w-full bg-#fff relative mt-5rem">
             <div class="waveTop absolute"></div>
-            <div class="max-w-1320px m-auto ps-5 pe-5">
+            <div class="arrowRight absolute">
+                <img src="/images/corner.png" alt="右邊箭頭">
+            </div>
+            <div class="max-w-1320px m-auto ps-5 pe-5 relative z-2">
                 <div class="mb-5rem">
                     <h1 class="newsTitle m-0 text-center font-size-2.5rem">
                         最新消息
@@ -194,7 +197,7 @@
                                 :key="index"
                                 class="color-#555553 decoration-none"
                             >
-                                <div class="w-full bg-#fff">
+                                <div class="w-full">
                                     <div class="w-80 font-size-.8rem">
                                         <div class="flex items-center">
                                             <div
@@ -254,8 +257,14 @@
         </div>
         <div class="w-full bg-#fff pt-5rem pb-5 relative">
             <div class="waveBottom absolute"></div>
-            <div class="max-w-1320px m-auto ps-5 pe-5">
-                <div class="mb-5rem">
+            <div class="arrowLeft absolute">
+                <img src="/images/corner.png" alt="左邊箭頭">
+            </div>
+            <div class="arrowRight absolute bottom-0">
+                <img src="/images/corner.png" alt="右邊箭頭">
+            </div>
+            <div class="max-w-1320px m-auto ps-5 pe-5 relative z-2">
+                <div class="mb-5rem relative">
                     <h1 class="newsTitle m-0 text-center font-size-2.5rem">
                         我們的服務
                     </h1>
@@ -266,6 +275,7 @@
                             alt="我們的服務"
                         />
                     </div>
+                    
                 </div>
                 <div class="md-flex" v-for="(item, index) in serviceList" :key="index" :class="{'serviceEven': index % 2 === 1}">
                     <div class="w-100% lg-w-50%">
@@ -559,5 +569,23 @@ onMounted(async () => {
     left: 0;
     width: 100%;
     height: 480px;
+}
+.arrowRight{
+    transform: rotate(180deg);
+    right: 0;
+}
+:deep(.el-carousel__arrow--left), :deep(.el-carousel__arrow--right) {
+    background: rgba(0, 0, 0, 0);
+}
+:deep(.el-carousel__arrow--left > .el-icon), :deep(.el-carousel__arrow--right > .el-icon){
+    font-size: 3rem;
+}
+:deep(.el-carousel__button){
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+:deep(.el-carousel__indicators--horizontal){
+    bottom: -10px;
 }
 </style>
