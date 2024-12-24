@@ -1,62 +1,51 @@
 <template>
-  <h1>123</h1>
+  <div></div>
 </template>
 <script setup>
-const {$axios} = useNuxtApp();
+const { $axios } = useNuxtApp();
 const code = ref('');
 const route = useRoute();
-onMounted(async()=>{
-  // try {
-  //       if (
-  //           userToken.value !== undefined &&
-  //           userToken.value !== '' &&
-  //           startTime.value !== '' &&
-  //           endTime.value !== ''
-  //       ) {
-  //           const response = await $axios.post(
-  //               'http://localhost:2450/api/v1/Pmatch/GetAccountingList',
-  //               {
-  //                   PmatchMemberId: memberId.value,
-  //                   StartTime: startTime.value,
-  //                   EndTime: endTime.value,
-  //                   PageNo: curPage.value,
-  //                   PageSize: pageCount.value
-  //               },
-  //               {
-  //                   headers: {
-  //                       Authorization: userToken.value
-  //                   }
-  //               }
-  //           );
+const router = useRouter();
+const token = ref('');
+const jwtStore = useJwtStore();
+const encrypt = useEncrypt();
+onMounted(async () => {
+    try {
+        if (route.params.code !== '' && route.params.code !== undefined) {
+            token.value = await jwtStore.generateToken();
+            code.value = route.params.code;
 
-  //           if (response.data.Status.Code === 0) {
-  //               OriTableData = response.data.Data;
-  //               OriTableData.forEach(x => {
-  //                   x.Createtime = formatDateTimeIntl(x.Createtime);
-  //                   totalPage.value = x.TotalPage;
-  //                   switch (x.Status) {
-  //                       case 0:
-  //                           x.Status = '處理中';
-  //                           break;
-  //                       case 1:
-  //                           x.Status = '已完成';
-  //                           break;
-  //                       case 2:
-  //                           x.Status = '已取消';
-  //                           break;
-  //                       case 2:
-  //                           x.Status = '異常';
-  //                           break;
-  //                   }
-  //               });
-  //               tableData.value = [...OriTableData.slice(0, pageCount.value)];
-  //           } else {
-  //               alert(`${response.data.Status.Message}`);
-  //           }
-  //       }
-  //   } catch (error) {
-  //       console.error('請求失敗:', error);
-  //   }
+            const response = await $axios.post(
+                '/api/v1/ShortUrl/PmatchGetData',
+                {
+                    Data: {
+                        Code: code.value
+                    }
+                },
+                {
+                    headers: {
+                        Authorization: token.value
+                    }
+                }
+            );
+
+            if (response.data.Status.Code === 0 && response.data.Data!=null) {
+                console.log(response);
+                var t_Phone = encrypt.encrypt(response.data.Data.Data.Phone);
+                var t_PmatchStoreIds= encrypt.encrypt(response.data.Data.Data.PmatchStoreIds);
+                var t_Id= encrypt.encrypt(response.data.Data.Id);
+                router.push({
+                  path:'/register',
+                  query:{Phone:t_Phone,PmatchStoreIds:t_PmatchStoreIds,D:t_Id}
+                });
+            } else {
+                alert(`${response.data.Status.Message}`);
+                router.push("/");
+            }
+        }
+    } catch (error) {
+        console.error('請求失敗:', error);
+    }
 });
 </script>
 <style scoped></style>

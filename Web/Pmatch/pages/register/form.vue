@@ -202,9 +202,8 @@
                             </div>
                             <div class="w-2%"></div>
                             <div class="w-49%">
-                                <select
-                                v-model="selectedRegion"
-                                class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200">
+                                <select v-model="selectedRegion"
+                                        class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200">
                                     <option value="">請選擇</option>
                                     <option v-for="(district, index) in districts"
                                             :key="index"
@@ -254,13 +253,15 @@
 </template>
 <script setup>
 // loading page
-import { useLoadStore } from "../stores/loading.js";
+import { useLoadStore } from '../stores/loading.js';
 const store = useLoadStore();
+const contractStores = ref('');
 const setPageLoading = store.setPageLoading;
-
+const encrypt = useEncrypt();
 const theCities = useGetCities();
 const jwtStore = useJwtStore();
 const router = useRouter();
+const route = useRoute();
 const { $axios } = useNuxtApp();
 /**正在驗證的手機號碼 */
 const verifyingMobile = useCookie('newMobile');
@@ -365,59 +366,85 @@ const GetRegions = async () => {
  *  */
 const SubmitForm = async e => {
     e.preventDefault();
-    var password1 = encrypt(i_password.value.value);
-    var password2 = encrypt(i_password2.value.value);
-    var phoneValue = mobileVerify.value === true ? phone.value : '';
-    var emailValue = emailVerify.value === true ? email.value : '';
-    var birthDayValue = birthday.value === '' ? null : birthday.value;
+    if (mobileVerify.value === false) {
+        alert('手機號碼尚未驗證');
+        return;
+    }
+    var password1 = encrypt.encrypt(i_password.value.value);
+    var password2 = encrypt.encrypt(i_password2.value.value);
     token.value = await jwtStore.generateToken();
     if (password1 !== password2) {
         alert('密碼與確認密碼不一致');
         return;
     }
     try {
-        var allAddress='';
-        if(address.value!=''&&selectedRegion.value!=''&&selectedCity.value!='')allAddress =selectedCity.value + selectedRegion.value + address.value;
-        const response = await $axios.post(
-            '/api/v1/Pmatch/Register',
-            {
-                MobileNumber: phoneValue,
-                Password: password1, // 使用加密後的密碼
-                Email: emailValue,
-                Name: theName.value,
-                BirthDay: birthDayValue,
-                Address: allAddress
-            },
-            {
-                headers: {
-                    Authorization: token.value
+        if (route.query.D) {
+            const shortUrlResponse = await $axios.post(
+                '/api/v1/ShortUrl/RegisterNotify',
+                {
+                    Data: {
+                        Id: encrypt.decrypt(route.query.D)
+                    }
+                },
+                {
+                    headers: {
+                        Authorization: token.value
+                    }
                 }
+            );
+            if (shortUrlResponse.data.Status.Code === 0) {
+                await RegisterMember(password1);
+            } else {
+                alert(`${shortUrlResponse.data.Status.Message}`);
+                return;
             }
-        );
-        if (response.data.Status.Code === 0) {
-            router.push(`/register/done?account=${phoneValue}`);
         } else {
-            alert(`${response.data.Status.Message}`);
+            await RegisterMember(password1);
         }
     } catch (error) {
         console.error('請求失敗:', error);
     }
 };
-/**
- * base64加密
- */
-function encrypt(input) {
-    // 1. 轉為UTF-8
-    const utf8Bytes = new TextEncoder().encode(input);
-    // 2. Base64編碼
-    const base64String = btoa(String.fromCharCode(...utf8Bytes));
-    // 3. 反轉Base64編碼後的字串
-    const reversedBase64 = base64String.split('').reverse().join('');
-    // 4. 結果
-    return `e${reversedBase64}is`;
-}
+const RegisterMember = async password1 => {
+    token.value = await jwtStore.generateToken();
+    var allAddress = '';
+    var phoneValue = mobileVerify.value === true ? phone.value : '';
+    var emailValue = emailVerify.value === true ? email.value : '';
+    var birthDayValue = birthday.value === '' ? null : birthday.value;
+    if (address.value != '' && selectedRegion.value != '' && selectedCity.value != '')
+        allAddress = selectedCity.value + selectedRegion.value + address.value;
+    const response = await $axios.post(
+        '/api/v1/Pmatch/Register',
+        {
+            MobileNumber: phoneValue,
+            Password: password1, // 使用加密後的密碼
+            Email: emailValue,
+            Name: theName.value,
+            BirthDay: birthDayValue,
+            Address: allAddress,
+            ContractStores: contractStores.value
+        },
+        {
+            headers: {
+                Authorization: token.value
+            }
+        }
+    );
+    if (response.data.Status.Code === 0) {
+        router.push(`/register/done?account=${encrypt.encrypt(phoneValue)}`);
+    } else {
+        alert(`${response.data.Status.Message}`);
+    }
+};
 onMounted(async () => {
     await setPageLoading(true);
+    if (route.query.Phone) {
+        phone.value = encrypt.decrypt(route.query.Phone);
+        mobileVerify.value = true;
+    }
+    if (route.query.ContractStores) {
+        contractStores.value = encrypt.decrypt(route.query.ContractStores);
+    }
     const updateDialogWidth = () => {
         if (window.innerWidth <= 768) {
             dialogWidth.value = '90%'; // MD 裝置或以下設置寬度為 370px
