@@ -83,9 +83,10 @@
                 </div>
             </div>
             <div class="pt-5rem pb-5rem">
-                <ElCarousel
+                <div class="bannerBox">
+                    <ElCarousel
                     v-if="bannerList.length > 0"
-                    class="h-200px"
+                    class="h-200px bannerDetail"
                     :interval="2000"
                     arrow="always"
                 >
@@ -101,8 +102,9 @@
                         />
                     </ElCarouselItem>
                 </ElCarousel>
+                </div>
             </div>
-            <div class="mb-3 pt-5rem pb-5rem">
+            <div class="mb-3 pt-5rem pb-8rem">
                 <div class="flex flex-wrap">
                     <div
                         class="gameBox"
@@ -139,12 +141,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex justify-end pt-3 pb-3">
-                    <div class="">
+                <div class="flex justify-center pt-3 pb-3">
+                    <div>
                         <NuxtLink
-                            class="color-#555553 decoration-none"
+                            class="moreGameBtn color-#fff decoration-none"
                             to="/gamelist"
-                            >more ..</NuxtLink
+                            >更多遊戲</NuxtLink
                         >
                     </div>
                 </div>
@@ -193,7 +195,7 @@
                         </div>
                         <div v-if="newsList.length > 0">
                             <NuxtLink
-                                to="/"
+                                :to="`/news/${item.Id}`"
                                 v-for="(item, index) in newsList.slice(0, 5)"
                                 :key="index"
                                 class="color-#555553 decoration-none"
@@ -490,7 +492,19 @@ onMounted(async () => {
 .el-carousel__item:nth-child(2n + 1) {
     background-color: #d3dce6;
 }
-
+.bannerBox {
+    padding: 3px;
+    background: linear-gradient(
+        to right,
+        rgba(67, 97, 238),
+        rgba(247, 37, 133)
+    );
+    border-radius: 1rem;
+}
+.bannerDetail {
+    background: #fff;
+    border-radius: 1rem;
+}
 .slogan {
     background: linear-gradient(to bottom, #f72585, #7b2cbf);
     background: -webkit-linear-gradient(to bottom, #f72585, #7b2cbf);
@@ -592,5 +606,12 @@ onMounted(async () => {
 }
 :deep(.el-carousel__indicators--horizontal){
     bottom: -10px;
+}
+.moreGameBtn{
+    padding: 1rem 2rem;
+    background: linear-gradient(to right, #7b2cbf, #f72585);
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: 600;
 }
 </style>
