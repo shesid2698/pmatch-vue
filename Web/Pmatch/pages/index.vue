@@ -157,7 +157,7 @@
             </div>
             <div class="max-w-1320px m-auto ps-5 pe-5 relative z-2">
                 <div class="mb-5rem">
-                    <h1 class="newsTitle m-0 text-center font-size-2.5rem">
+                    <h1 class="newsTitle m-0 text-center font-size-2.8rem">
                         最新消息
                     </h1>
                     <div class="flex justify-center">
@@ -265,7 +265,7 @@
             </div>
             <div class="max-w-1320px m-auto ps-5 pe-5 relative z-2">
                 <div class="mb-5rem relative">
-                    <h1 class="newsTitle m-0 text-center font-size-2.5rem">
+                    <h1 class="newsTitle m-0 text-center font-size-2.8rem">
                         我們的服務
                     </h1>
                     <div class="flex justify-center">
@@ -277,14 +277,14 @@
                     </div>
                     
                 </div>
-                <div class="md-flex" v-for="(item, index) in serviceList" :key="index" :class="{'serviceEven': index % 2 === 1}">
+                <div class="md-flex" v-for="(item, index) in serviceList" :key="index" :class="{'serviceEven': index % 2 === 0}">
                     <div class="w-100% lg-w-50%">
                         <img class="w-100%" :src="item.img" :alt="item.title">
                     </div>
                     <div class="mt-4rem w-100% lg-w-50% lg-mt-1rem flex items-center">
                         <div class="lg-ms-5 lg-me-5 ps-5 pe-5 lg-w-auto w-100% pb-20 serviceItemsContent">
-                            <h2 class="serviceItemsTitle m-0 mb-5">{{item.title}}</h2>
-                            <h4 class="m-0">{{item.detail}}</h4>
+                            <h2 class="serviceItemsTitle font-size-2rem m-0 mb-5">{{item.title}}</h2>
+                            <h4 class="m-0 font-size-1.2rem">{{item.detail}}</h4>
                         </div>
                     </div>
                 </div>
@@ -569,6 +569,9 @@ onMounted(async () => {
     left: 0;
     width: 100%;
     height: 480px;
+}
+.arrowLeft{
+    top: -150px;
 }
 .arrowRight{
     transform: rotate(180deg);

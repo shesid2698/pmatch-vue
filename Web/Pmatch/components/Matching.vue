@@ -28,18 +28,18 @@
                     委託對象
                 </div>
             </div>
-            <div v-for="(item, index) in matchingList" :key="index">
+            <div v-for="(item, index) in matchingList.slice(0,5)" :key="index">
                 <div class="w-full flex">
-                    <div class="w-200px font-size-15px pt-1 pb-1 text-center">
+                    <div class="w-200px font-size-15px pt-2 pb-2 text-center">
                         {{ item.EndTime.split("T")[0].slice(5) }}
                     </div>
-                    <div class="w-full font-size-15px pt-1 pb-1 text-center">
+                    <div class="w-full font-size-15px pt-2 pb-2 text-center">
                         {{ item.GamePlatform }}
                     </div>
-                    <div class="w-full font-size-15px pt-1 pb-1 text-center">
+                    <div class="patchDetail w-full font-size-15px pt-2 pb-2 text-center">
                         {{ item.Patch }}
                     </div>
-                    <div class="w-full font-size-15px pt-1 pb-1 text-center">
+                    <div class="w-full font-size-15px pt-2 pb-2 text-center">
                         {{ item.MobileNumber }}
                     </div>
                 </div>
@@ -116,7 +116,7 @@ watch(
 .matchingDetail {
     background: #fff;
     border-radius: 1rem;
-    padding-top: 2rem;
+    padding-top: 2.5rem;
 }
 .matchingTitle{
     top: -1.2rem;
@@ -132,5 +132,13 @@ watch(
 }
 .titleBorder {
     border-left: 2px solid #fff;
+}
+.patchDetail{
+    background: linear-gradient(to right, #4361ee, #7b2cbf);
+    background: -webkit-linear-gradient(to right, #4361ee, #7b2cbf);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    font-weight: 600;
 }
 </style>

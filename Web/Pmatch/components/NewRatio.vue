@@ -8,8 +8,11 @@
                 <h3 class="m-0">最新比值</h3>
             </div>
             <div class="flex titleBox">
+                <div class="w-200px font-size-15px text-center mt-1 mb-1">
+                    時間
+                </div>
                 <div
-                    class="w-full font-size-15px text-center mt-1 mb-1"
+                    class="w-full font-size-15px text-center titleBorder mt-1 mb-1"
                 >
                     遊戲平台
                 </div>
@@ -24,15 +27,18 @@
                     委賣比值
                 </div>
             </div>
-        <div v-for="(item, index) in matchingList" :key="index">
+        <div v-for="(item, index) in matchingList.slice(0, 5)" :key="index">
             <div class="w-full flex">
-                <div class="w-full font-size-15px pt-1 pb-1 text-center">
+                <div class="w-200px font-size-15px pt-2 pb-2 text-center">
+                    12-11 
+                </div>
+                <div class="w-full font-size-15px pt-2 pb-2 text-center">
                     {{ item.GamePlatform }}
                 </div>
-                <div class="w-full font-size-15px pt-1 pb-1 text-center">
+                <div class="patchDetail w-full font-size-15px pt-2 pb-2 text-center">
                     {{ item.SendPatch }}
                 </div>
-                <div class="w-full font-size-15px pt-1 pb-1 text-center">
+                <div class="patchDetail w-full font-size-15px pt-2 pb-2 text-center">
                     {{ item.CollectPatch }}
                 </div>
             </div>
@@ -115,7 +121,7 @@ const { $axios } = useNuxtApp();
 .matchingDetail {
     background: #fff;
     border-radius: 1rem;
-    padding-top: 2rem;
+    padding-top: 2.5rem;
 }
 .matchingTitle{
     top: -1.2rem;
@@ -131,6 +137,14 @@ const { $axios } = useNuxtApp();
 }
 .titleBorder {
     border-left: 2px solid #fff;
+}
+.patchDetail{
+    background: linear-gradient(to right, #4361ee, #7b2cbf);
+    background: -webkit-linear-gradient(to right, #4361ee, #7b2cbf);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    font-weight: 600;
 }
 </style>
 

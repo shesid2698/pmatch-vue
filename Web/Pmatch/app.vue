@@ -22,6 +22,7 @@
 
 <style>
 body {
+    font-family: Microsoft JhengHei;
     margin: 0;
     color: #555553;
 }

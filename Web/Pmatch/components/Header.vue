@@ -99,7 +99,7 @@
                         @click="toggleNav"
                     >
                         <img
-                            class="w-30px p-1"
+                            class="w-30px px-1 py-2"
                             src="/images/navigation.svg"
                             alt="導航漢堡選單icon"
                         />
