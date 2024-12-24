@@ -119,6 +119,7 @@
                                 <img
                                     :src="`${assetsUrl}${item.ImgFile}`"
                                     :alt="item.PlatformName"
+                                    class="w-100%"
                                 />
                             </NuxtLink>
                         </div>
@@ -445,9 +446,10 @@ onMounted(async () => {
                 await fetchADList(token);
             }
         }
-        await setPageLoading(false);
     } catch (error) {
         console.error("頁面初始化失敗:", error);
+    } finally{
+        await setPageLoading(false);
     }
 });
 </script>

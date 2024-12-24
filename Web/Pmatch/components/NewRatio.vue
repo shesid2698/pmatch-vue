@@ -27,19 +27,19 @@
                     委賣比值
                 </div>
             </div>
-        <div v-for="(item, index) in matchingList.slice(0, 5)" :key="index">
-            <div class="w-full flex">
+        <div v-for="(item, index) in visibleList" :key="index">
+            <div class="w-full flex rotatingBox">
                 <div class="w-200px font-size-15px pt-2 pb-2 text-center">
                     12-11 
                 </div>
                 <div class="w-full font-size-15px pt-2 pb-2 text-center">
-                    {{ item.GamePlatform }}
+                    {{ item.GamePlatform || "　" }}
                 </div>
                 <div class="patchDetail w-full font-size-15px pt-2 pb-2 text-center">
-                    {{ item.SendPatch }}
+                    {{ item.SendPatch || "　" }}
                 </div>
                 <div class="patchDetail w-full font-size-15px pt-2 pb-2 text-center">
-                    {{ item.CollectPatch }}
+                    {{ item.CollectPatch || "　" }}
                 </div>
             </div>
         </div>
@@ -103,9 +103,48 @@ const matchingList = [
         CollectPatch: "144"
     }
 ];
-const { $axios } = useNuxtApp();
 
+const visibleList = ref([]); // 當前顯示的列表
+const currentIndex = ref(0); // 當前的起始索引
+let intervalId = null; // 計時器 ID
 
+const updateVisibleList = () => {
+  const start = currentIndex.value;
+  const end = Math.min(start + 5, matchingList.length); // 確保不超過數據長度
+  const slice = matchingList.slice(start, end);
+
+  // 如果不足 5 個，補空白項
+  while (slice.length < 5) {
+    slice.push({ GamePlatform: null, SendPatch: null, CollectPatch: null });
+  }
+
+  visibleList.value = slice;
+
+  // 更新索引
+  if (end >= matchingList.length) {
+    // 如果到達末尾，回到起點
+    currentIndex.value = 0;
+  } else {
+    currentIndex.value += 5;
+  }
+};
+const startInterval = () => {
+  updateVisibleList(); // 初始化顯示
+  intervalId = setInterval(updateVisibleList, 4000); // 每 3 秒更新
+};
+
+const stopInterval = () => {
+  if (intervalId) {
+    clearInterval(intervalId);
+    intervalId = null;
+  }
+};
+onMounted(() => {
+  startInterval();
+});
+onBeforeUnmount(() => {
+  stopInterval();
+});
 </script>
 
 <style scoped>
@@ -145,6 +184,28 @@ const { $axios } = useNuxtApp();
     -webkit-background-clip: text;
     color: transparent;
     font-weight: 600;
+}
+@keyframes rotate-with-pause {
+  0% {
+    transform: rotateX(0deg); /* 初始狀態 */
+  }
+  25% {
+    transform: rotateX(720deg); /* 旋轉 1 圈 */
+  }
+  75% {
+    transform: rotateX(720deg); /* 保持 1 圈旋轉，這是第二秒，暫停 */
+  }
+  100% {
+    transform: rotateX(1440deg); /* 旋轉 2 圈 */
+  }
+}
+
+/* 動畫樣式 */
+.rotatingBox {
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  animation: rotate-with-pause 4s ease-out infinite; /* 每 3 秒一個循環 */
 }
 </style>
 

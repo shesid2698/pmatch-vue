@@ -94,9 +94,10 @@ onMounted(async () => {
                 await fetchGameList(token);
             }
         }
-        await setPageLoading(false);
     } catch (error) {
         console.error("頁面初始化失敗:", error);
+    } finally{
+        await setPageLoading(false);
     }
 });
 </script>

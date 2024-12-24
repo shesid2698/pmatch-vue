@@ -185,6 +185,7 @@ async function fetchRichList(token, type) {
 }
 
 onMounted(async () => {
+    await setPageLoading(true);
     try {
         if (userToken.value != "" && userToken.value != undefined) {
             const token = userToken.value;
@@ -201,6 +202,8 @@ onMounted(async () => {
         }
     } catch (error) {
         console.error("頁面初始化失敗:", error);
+    } finally{
+        await setPageLoading(false);
     }
 });
 </script>
