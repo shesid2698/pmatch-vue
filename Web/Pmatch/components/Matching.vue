@@ -1,13 +1,19 @@
 <template>
     <div class="bg-#fff matchingBox relative">
         <div class="matchingDetail">
-            <div class="matchingTitle p-2 absolute flex items-center rounded-10px">
+            <div
+                class="matchingTitle p-2 absolute flex items-center rounded-10px"
+            >
                 <div class="flex items-center me-2">
-                    <img class="w-20px" src="/images/matchingIcon.png" alt="即時媒合狀況">
+                    <img
+                        class="w-20px"
+                        src="/images/matchingIcon.png"
+                        alt="即時媒合狀況"
+                    />
                 </div>
                 <h3 class="m-0">即時媒合狀況</h3>
             </div>
-            
+
             <div class="flex titleBox">
                 <div class="w-200px font-size-15px text-center mt-1 mb-1">
                     時間
@@ -28,16 +34,27 @@
                     委託對象
                 </div>
             </div>
-            
+
             <div class="">
-                <div class="w-full flex rotatingBox infinite-rotation" v-if="visibleList.length > 0" v-for="(item, index) in visibleList" :key="index">
+                <div
+                    class="w-full flex rotatingBox infinite-rotation"
+                    v-if="visibleList.length > 0"
+                    v-for="(item, index) in visibleList"
+                    :key="index"
+                >
                     <div class="w-200px font-size-15px pt-2 pb-2 text-center">
-                        {{ item.EndTime ? item.EndTime.split("T")[0].slice(5) : "　" }}
+                        {{
+                            item.EndTime
+                                ? item.EndTime.split("T")[0].slice(5)
+                                : "　"
+                        }}
                     </div>
                     <div class="w-full font-size-15px pt-2 pb-2 text-center">
                         {{ item.GamePlatform || "　" }}
                     </div>
-                    <div class="patchDetail w-full font-size-15px pt-2 pb-2 text-center">
+                    <div
+                        class="patchDetail w-full font-size-15px pt-2 pb-2 text-center"
+                    >
                         {{ item.Patch || "　" }}
                     </div>
                     <div class="w-full font-size-15px pt-2 pb-2 text-center">
@@ -61,35 +78,40 @@ const currentIndex = ref(0); // 當前的起始索引
 let intervalId = null; // 計時器 ID
 
 const updateVisibleList = () => {
-  const start = currentIndex.value;
-  const end = Math.min(start + 5, matchingList.value.length); // 確保不超過數據長度
-  const slice = matchingList.value.slice(start, end);
+    const start = currentIndex.value;
+    const end = Math.min(start + 5, matchingList.value.length); // 確保不超過數據長度
+    const slice = matchingList.value.slice(start, end);
 
-  // 如果不足 5 個，補空白項
-  while (slice.length < 5) {
-    slice.push({ EndTime: null, GamePlatform: null, Patch: null, MobileNumber: null });
-  }
+    // 如果不足 5 個，補空白項
+    while (slice.length < 5) {
+        slice.push({
+            EndTime: null,
+            GamePlatform: null,
+            Patch: null,
+            MobileNumber: null,
+        });
+    }
 
-  visibleList.value = slice;
+    visibleList.value = slice;
 
-  // 更新索引
-  if (end >= matchingList.value.length) {
-    // 如果到達末尾，回到起點
-    currentIndex.value = 0;
-  } else {
-    currentIndex.value += 5;
-  }
+    // 更新索引
+    if (end >= matchingList.value.length) {
+        // 如果到達末尾，回到起點
+        currentIndex.value = 0;
+    } else {
+        currentIndex.value += 5;
+    }
 };
 const startInterval = () => {
-  updateVisibleList(); // 初始化顯示
-  intervalId = setInterval(updateVisibleList, 4000); // 每 3 秒更新
+    updateVisibleList(); // 初始化顯示
+    intervalId = setInterval(updateVisibleList, 4000); // 每 3 秒更新
 };
 
 const stopInterval = () => {
-  if (intervalId) {
-    clearInterval(intervalId);
-    intervalId = null;
-  }
+    if (intervalId) {
+        clearInterval(intervalId);
+        intervalId = null;
+    }
 };
 
 // 接收父元件傳遞的參數
@@ -140,11 +162,12 @@ watch(
     { immediate: true } // 頁面初始化時立即執行一次
 );
 // 在組件載入時啟動計時器
-onMounted(() => {
-  startInterval();
+onMounted( async() => {
+    await fetchMatchingListData("", ""); // 初次呼叫 API
+    startInterval();
 });
 onBeforeUnmount(() => {
-  stopInterval();
+    stopInterval();
 });
 </script>
 
@@ -163,7 +186,7 @@ onBeforeUnmount(() => {
     border-radius: 1rem;
     padding-top: 2.5rem;
 }
-.matchingTitle{
+.matchingTitle {
     top: -1.2rem;
     left: 50%;
     transform: translateX(-50%);
@@ -178,7 +201,7 @@ onBeforeUnmount(() => {
 .titleBorder {
     border-left: 2px solid #fff;
 }
-.patchDetail{
+.patchDetail {
     background: linear-gradient(to right, #4361ee, #7b2cbf);
     background: -webkit-linear-gradient(to right, #4361ee, #7b2cbf);
     background-clip: text;
@@ -188,25 +211,25 @@ onBeforeUnmount(() => {
 }
 
 @keyframes rotate-with-pause {
-  0% {
-    transform: rotateX(0deg); /* 初始狀態 */
-  }
-  25% {
-    transform: rotateX(720deg); /* 旋轉 1 圈 */
-  }
-  75% {
-    transform: rotateX(720deg); /* 保持 1 圈旋轉，這是第二秒，暫停 */
-  }
-  100% {
-    transform: rotateX(1440deg); /* 旋轉 2 圈 */
-  }
+    0% {
+        transform: rotateX(0deg); /* 初始狀態 */
+    }
+    25% {
+        transform: rotateX(720deg); /* 旋轉 1 圈 */
+    }
+    75% {
+        transform: rotateX(720deg); /* 保持 1 圈旋轉，這是第二秒，暫停 */
+    }
+    100% {
+        transform: rotateX(1440deg); /* 旋轉 2 圈 */
+    }
 }
 
 /* 動畫樣式 */
 .rotatingBox {
-  justify-content: center;
-  align-items: center;
-  border-radius: 10px;
-  animation: rotate-with-pause 4s ease-out infinite; /* 每 3 秒一個循環 */
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    animation: rotate-with-pause 4s ease-out infinite; /* 每 3 秒一個循環 */
 }
 </style>
