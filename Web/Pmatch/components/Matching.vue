@@ -11,7 +11,7 @@
                         alt="即時媒合狀況"
                     />
                 </div>
-                <h3 class="m-0">即時媒合狀況</h3>
+                <h3 class="m-0 font-size-20px">即時媒合狀況</h3>
             </div>
 
             <div class="flex titleBox">

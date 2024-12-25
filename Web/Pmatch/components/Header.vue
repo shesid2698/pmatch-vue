@@ -3,7 +3,7 @@
         class="flex justify-center fixed w-100% headerBox top-0 left-0 h-110px"
     >
         <div
-            class="flex justify-between items-center max-w-1320px w-100% ps-5 pe-5 position-relative"
+            class="flex justify-between items-center max-w-1110px w-100% ps-5 pe-5 position-relative"
         >
             <!-- Logo -->
             <div class="lg-w-80% w-100% flex items-center">

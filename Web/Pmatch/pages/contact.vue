@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-7rem max-w-1320px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3">
+    <div class="mt-7rem max-w-1110px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3">
         <div class="mb-5 flex items-center justify-center">
             <!-- title -->
             <div class="flex items-center w-100% lg-w-410px">

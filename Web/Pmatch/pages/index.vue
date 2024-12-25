@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="max-w-1320px m-auto ps-5 pe-5 relative z-2">
+        <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
             <div class="mb-3">
                 <h1 class="m-0 mb-2 text-center font-size-33px md-font-size-48px slogan">
                     安心交易的第一選項Pmatch
@@ -158,7 +158,7 @@
             <div class="arrowRight absolute">
                 <img src="/images/corner.png" alt="右邊箭頭">
             </div>
-            <div class="max-w-1320px m-auto ps-5 pe-5 relative z-2">
+            <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
                 <div class="mb-5rem">
                     <h1 class="newsTitle m-0 text-center font-size-45px">
                         最新消息
@@ -266,7 +266,7 @@
             <div class="arrowRight absolute bottom-0">
                 <img src="/images/corner.png" alt="右邊箭頭">
             </div>
-            <div class="max-w-1320px m-auto ps-5 pe-5 relative z-2">
+            <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
                 <div class="mb-5rem relative">
                     <h1 class="newsTitle m-0 text-center font-size-45px">
                         我們的服務

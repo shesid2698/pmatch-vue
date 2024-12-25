@@ -2,7 +2,7 @@
     <div
         class="w-100% flex justify-center items-center relative z-2 mt-15rem lg-mt-35rem pb-5rem"
     >
-        <div class="max-w-1320px w-100% ps-5 pe-5">
+        <div class="max-w-1110px w-100% ps-5 pe-5">
             <div class="lg-flex">
                 <div class="w-100% flex lg-justify-start justify-center mb-5">
                     <div>
