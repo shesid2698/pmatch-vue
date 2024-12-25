@@ -1,8 +1,8 @@
 <template>
-    <div class="bg-#fff matchingBox relative">
+    <div class="bg-#fff matchingBox relative w-100%">
         <div class="matchingDetail">
             <div
-                class="matchingTitle p-2 absolute flex items-center rounded-10px"
+                class="matchingTitle p-3 absolute flex items-center rounded-10px"
             >
                 <div class="flex items-center me-2">
                     <img
@@ -42,22 +42,22 @@
                     v-for="(item, index) in visibleList"
                     :key="index"
                 >
-                    <div class="w-200px font-size-15px pt-2 pb-2 text-center">
+                    <div class="w-200px font-size-15px pt-3 pb-3 text-center">
                         {{
                             item.EndTime
                                 ? item.EndTime.split("T")[0].slice(5)
                                 : "　"
                         }}
                     </div>
-                    <div class="w-full font-size-15px pt-2 pb-2 text-center">
+                    <div class="w-full font-size-15px pt-3 pb-3 text-center">
                         {{ item.GamePlatform || "　" }}
                     </div>
                     <div
-                        class="patchDetail w-full font-size-15px pt-2 pb-2 text-center"
+                        class="patchDetail w-full font-size-15px pt-3 pb-3 text-center"
                     >
                         {{ item.Patch || "　" }}
                     </div>
-                    <div class="w-full font-size-15px pt-2 pb-2 text-center">
+                    <div class="w-full font-size-15px pt-3 pb-3 text-center">
                         {{ item.MobileNumber || "　" }}
                     </div>
                 </div>
@@ -184,10 +184,10 @@ onBeforeUnmount(() => {
 .matchingDetail {
     background: #fff;
     border-radius: 1rem;
-    padding-top: 2.5rem;
+    padding-top: 3rem;
 }
 .matchingTitle {
-    top: -1.2rem;
+    top: -1.5rem;
     left: 50%;
     transform: translateX(-50%);
     background: linear-gradient(to right, #4361ee, #f72585);

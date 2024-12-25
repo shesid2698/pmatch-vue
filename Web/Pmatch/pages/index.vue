@@ -200,7 +200,7 @@
                                 :key="index"
                                 class="color-#555553 decoration-none"
                             >
-                                <div class="w-full">
+                                <div class="w-full mt-1.8rem">
                                     <div class="w-80 font-size-.8rem">
                                         <div class="flex items-center">
                                             <div
@@ -232,7 +232,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="w-full pt-3 pb-3 mt-3 mb-3 newsItemLink">
+                                    <div class="w-full pt-3 pb-3 newsItemLink">
                                         <div>
                                             <h2 class="m-0 font-size-30px" :class="{
                                                     'newsItem1':
@@ -251,7 +251,7 @@
                             </NuxtLink>
                         </div>
                     </div>
-                    <div class="mt-4rem w-100% lg-w-50% ms-0 lg-ms-2 lg-mt-1rem">
+                    <div class="mt-4rem w-100% lg-w-50% ms-0 lg-ms-2 lg-mt-1.5rem newsBoard">
                         <NewRatio />
                         <Matching class="mt-3rem" param="" />
                     </div>
@@ -560,6 +560,11 @@ onMounted(async () => {
 }
 .newsItemLink{
     border-bottom: 1px solid rgba(67, 97, 238, .3);
+}
+.newsBoard{
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-between;
 }
 .serviceEven{
     flex-direction: row-reverse;
