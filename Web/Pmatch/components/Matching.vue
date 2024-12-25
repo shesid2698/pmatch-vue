@@ -215,13 +215,13 @@ onBeforeUnmount(() => {
         transform: rotateX(0deg); /* 初始狀態 */
     }
     25% {
-        transform: rotateX(720deg); /* 旋轉 1 圈 */
+        transform: rotateX(360deg); /* 旋轉 1 圈 */
     }
     75% {
-        transform: rotateX(720deg); /* 保持 1 圈旋轉，這是第二秒，暫停 */
+        transform: rotateX(360deg); /* 保持 1 圈旋轉，這是第二秒，暫停 */
     }
     100% {
-        transform: rotateX(1440deg); /* 旋轉 2 圈 */
+        transform: rotateX(720deg); /* 旋轉 2 圈 */
     }
 }
 

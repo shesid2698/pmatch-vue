@@ -312,6 +312,8 @@
 const { $axios } = useNuxtApp();
 const userToken = useCookie('_PmToken');
 const memberId = useCookie('_PmMemberId');
+const userNameCookie = useCookie("_PmUserName");
+const router = useRouter();
 const theUser = reactive({});
 const Birthday = ref('');
 const getCities = useGetCities();
@@ -433,7 +435,8 @@ function formatToDateInput(dateStr) {
 }
 onMounted(async () => {
     try {
-        const response = await $axios.post(
+        if (userToken.value != "" && userToken.value != undefined) {
+            const response = await $axios.post(
             '/api/v1/Pmatch/GetMemberDetail',
             {
                 PmatchMemberId: memberId.value
@@ -456,6 +459,12 @@ onMounted(async () => {
         } else {
             alert(`${response.data.Status.Message}`);
         }
+        } else {
+            router.push("/member/login");
+            return;
+        }
+
+        
     } catch (error) {
         console.error('請求失敗:', error);
     }
