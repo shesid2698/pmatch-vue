@@ -173,7 +173,7 @@
                 </div>
                 <div class="lg-flex">
                     <div class="w-100% lg-w-50% me-0 lg-me-2">
-                        <div class="mb-3rem">
+                        <div class="mb-3rem lg-block flex lg-justify-start justify-center">
                             <button
                                 class="newsAllBtn font-size-15px border-none p-3 bg-#4361ee color-#fff rounded-50px"
                                 @click="fetchNewsListData([], '')"
