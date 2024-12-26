@@ -167,8 +167,8 @@
                     <h1 class="newsTitle m-0 text-center font-size-45px">
                         最新消息
                     </h1>
-                    <button @click="testAlert">點擊開啟alert彈窗</button>
-                    <button @click="testConfirm">點擊開啟confirm彈窗</button>
+                    <!-- <button @click="testAlert">點擊開啟alert彈窗</button>
+                    <button @click="testConfirm">點擊開啟confirm彈窗</button> -->
                     <div class="flex justify-center">
                         <img
                             class="w-250px"
@@ -355,7 +355,7 @@ const jwtStore = useJwtStore();
 const userToken = useCookie("_PmToken");
 const assetsUrl = useCookie("_PmAssetsUrl");
 
-
+// alert & confirm function
 async function testConfirm(){
     await openModal("標題","內容",() => console.log("確定按鈕被點擊"), // 確定的回調
     () => console.log("取消按鈕被點擊") );
