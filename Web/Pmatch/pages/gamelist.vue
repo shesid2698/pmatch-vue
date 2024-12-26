@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="max-w-1320px m-auto ps-5 pe-5">
+        <div class="max-w-1110px m-auto ps-5 pe-5">
             <div class="flex flex-wrap">
                 <div
                     class="gameBox"

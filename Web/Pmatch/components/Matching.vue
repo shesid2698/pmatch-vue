@@ -1,8 +1,8 @@
 <template>
-    <div class="bg-#fff matchingBox relative">
+    <div class="bg-#fff matchingBox relative w-100%">
         <div class="matchingDetail">
             <div
-                class="matchingTitle p-2 absolute flex items-center rounded-10px"
+                class="matchingTitle p-3 absolute flex items-center rounded-10px"
             >
                 <div class="flex items-center me-2">
                     <img
@@ -11,7 +11,7 @@
                         alt="即時媒合狀況"
                     />
                 </div>
-                <h3 class="m-0">即時媒合狀況</h3>
+                <h3 class="m-0 font-size-20px">即時媒合狀況</h3>
             </div>
 
             <div class="flex titleBox">
@@ -42,22 +42,22 @@
                     v-for="(item, index) in visibleList"
                     :key="index"
                 >
-                    <div class="w-200px font-size-15px pt-2 pb-2 text-center">
+                    <div class="w-200px font-size-15px pt-3 pb-3 text-center">
                         {{
                             item.EndTime
                                 ? item.EndTime.split("T")[0].slice(5)
                                 : "　"
                         }}
                     </div>
-                    <div class="w-full font-size-15px pt-2 pb-2 text-center">
+                    <div class="w-full font-size-15px pt-3 pb-3 text-center">
                         {{ item.GamePlatform || "　" }}
                     </div>
                     <div
-                        class="patchDetail w-full font-size-15px pt-2 pb-2 text-center"
+                        class="patchDetail w-full font-size-15px pt-3 pb-3 text-center"
                     >
                         {{ item.Patch || "　" }}
                     </div>
-                    <div class="w-full font-size-15px pt-2 pb-2 text-center">
+                    <div class="w-full font-size-15px pt-3 pb-3 text-center">
                         {{ item.MobileNumber || "　" }}
                     </div>
                 </div>
@@ -184,10 +184,10 @@ onBeforeUnmount(() => {
 .matchingDetail {
     background: #fff;
     border-radius: 1rem;
-    padding-top: 2.5rem;
+    padding-top: 3rem;
 }
 .matchingTitle {
-    top: -1.2rem;
+    top: -1.5rem;
     left: 50%;
     transform: translateX(-50%);
     background: linear-gradient(to right, #4361ee, #f72585);
@@ -215,13 +215,13 @@ onBeforeUnmount(() => {
         transform: rotateX(0deg); /* 初始狀態 */
     }
     25% {
-        transform: rotateX(720deg); /* 旋轉 1 圈 */
+        transform: rotateX(360deg); /* 旋轉 1 圈 */
     }
     75% {
-        transform: rotateX(720deg); /* 保持 1 圈旋轉，這是第二秒，暫停 */
+        transform: rotateX(360deg); /* 保持 1 圈旋轉，這是第二秒，暫停 */
     }
     100% {
-        transform: rotateX(1440deg); /* 旋轉 2 圈 */
+        transform: rotateX(720deg); /* 旋轉 2 圈 */
     }
 }
 

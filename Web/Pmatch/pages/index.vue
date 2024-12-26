@@ -1,11 +1,11 @@
 <template>
     <div>
-        <div class="max-w-1320px m-auto ps-5 pe-5 relative z-2">
+        <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
             <div class="mb-3">
-                <h1 class="m-0 mb-2 text-center font-size-3rem slogan">
+                <h1 class="m-0 mb-2 text-center font-size-33px md-font-size-48px slogan">
                     安心交易的第一選項Pmatch
                 </h1>
-                <h3 class="m-0 text-center subSlogan">
+                <h3 class="m-0 font-size-14px md-font-size-26px text-center subSlogan">
                     為你嚴選商家、用合約保障你的權益、繁瑣的事情都再見
                 </h3>
             </div>
@@ -144,7 +144,7 @@
                 <div class="flex justify-center pt-3 pb-3">
                     <div>
                         <NuxtLink
-                            class="moreGameBtn color-#fff decoration-none"
+                            class="moreGameBtn color-#fff font-size-22px decoration-none"
                             to="/gamelist"
                             >更多遊戲</NuxtLink
                         >
@@ -158,9 +158,9 @@
             <div class="arrowRight absolute">
                 <img src="/images/corner.png" alt="右邊箭頭">
             </div>
-            <div class="max-w-1320px m-auto ps-5 pe-5 relative z-2">
+            <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
                 <div class="mb-5rem">
-                    <h1 class="newsTitle m-0 text-center font-size-2.8rem">
+                    <h1 class="newsTitle m-0 text-center font-size-45px">
                         最新消息
                     </h1>
                     <div class="flex justify-center">
@@ -173,21 +173,21 @@
                 </div>
                 <div class="lg-flex">
                     <div class="w-100% lg-w-50% me-0 lg-me-2">
-                        <div class="mb-3rem">
+                        <div class="mb-3rem lg-block flex lg-justify-start justify-center">
                             <button
-                                class="newsAllBtn border-none p-3 bg-#4361ee color-#fff rounded-50px"
+                                class="newsAllBtn font-size-15px border-none p-3 bg-#4361ee color-#fff rounded-50px"
                                 @click="fetchNewsListData([], '')"
                             >
                                 ALL
                             </button>
                             <button
-                                class="newsSystemBtn bg-#fff border-1px-solid-7B2CBF p-3 ms-3 color-#7B2CBF rounded-50px"
+                                class="newsSystemBtn font-size-15px bg-#fff border-1px-solid-7B2CBF p-3 ms-3 color-#7B2CBF rounded-50px"
                                 @click="fetchNewsListData([1], '')"
                             >
                                 系統公告
                             </button>
                             <button
-                                class="newsActivityBtn bg-#fff border-none p-3 ms-3 color-#F72585 rounded-50px"
+                                class="newsActivityBtn font-size-15px bg-#fff border-none p-3 ms-3 color-#F72585 rounded-50px"
                                 @click="fetchNewsListData([2], '')"
                             >
                                 活動資訊
@@ -200,7 +200,7 @@
                                 :key="index"
                                 class="color-#555553 decoration-none"
                             >
-                                <div class="w-full">
+                                <div class="w-full mt-1.8rem">
                                     <div class="w-80 font-size-.8rem">
                                         <div class="flex items-center">
                                             <div
@@ -210,7 +210,7 @@
                                                     'bg-#f72585':
                                                         item.Category === 2,
                                                 }"
-                                                class="color-#fff p-1 rounded-50px"
+                                                class="color-#fff p-1 font-size-12px rounded-50px"
                                             >
                                                 {{
                                                     item.Category === 1
@@ -220,7 +220,7 @@
                                                         : ""
                                                 }}
                                             </div>
-                                            <div class="flex items-center p-2">
+                                            <div class="flex font-size-12px items-center p-2">
                                                 <span :class="{
                                                     'color-#4361EE':
                                                         item.Category === 1,
@@ -232,9 +232,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="w-full pt-3 pb-3 mt-3 mb-3 newsItemLink">
+                                    <div class="w-full pt-3 pb-3 newsItemLink">
                                         <div>
-                                            <h2 class="m-0" :class="{
+                                            <h2 class="m-0 font-size-30px" :class="{
                                                     'newsItem1':
                                                         item.Category === 1,
                                                     'newsItem2':
@@ -242,7 +242,7 @@
                                                 }">
                                                 {{ item.Title }}
                                             </h2>
-                                            <h3 class="m-0">
+                                            <h3 class="m-0 font-size-12px">
                                                 {{ item.Summary }}
                                             </h3>
                                         </div>
@@ -251,7 +251,7 @@
                             </NuxtLink>
                         </div>
                     </div>
-                    <div class="mt-4rem w-100% lg-w-50% ms-0 lg-ms-2 lg-mt-1rem">
+                    <div class="mt-4rem w-100% lg-w-50% ms-0 lg-ms-2 lg-mt-1.5rem newsBoard">
                         <NewRatio />
                         <Matching class="mt-3rem" param="" />
                     </div>
@@ -266,9 +266,9 @@
             <div class="arrowRight absolute bottom-0">
                 <img src="/images/corner.png" alt="右邊箭頭">
             </div>
-            <div class="max-w-1320px m-auto ps-5 pe-5 relative z-2">
+            <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
                 <div class="mb-5rem relative">
-                    <h1 class="newsTitle m-0 text-center font-size-2.8rem">
+                    <h1 class="newsTitle m-0 text-center font-size-45px">
                         我們的服務
                     </h1>
                     <div class="flex justify-center">
@@ -286,8 +286,8 @@
                     </div>
                     <div class="mt-4rem w-100% lg-w-50% lg-mt-1rem flex items-center">
                         <div class="lg-ms-5 lg-me-5 ps-5 pe-5 lg-w-auto w-100% pb-20 serviceItemsContent">
-                            <h2 class="serviceItemsTitle font-size-2rem m-0 mb-5">{{item.title}}</h2>
-                            <h4 class="m-0 font-size-1.2rem">{{item.detail}}</h4>
+                            <h2 class="serviceItemsTitle font-size-30px m-0 mb-5">{{item.title}}</h2>
+                            <h4 class="m-0 font-size-15px">{{item.detail}}</h4>
                         </div>
                     </div>
                 </div>
@@ -561,6 +561,11 @@ onMounted(async () => {
 .newsItemLink{
     border-bottom: 1px solid rgba(67, 97, 238, .3);
 }
+.newsBoard{
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-between;
+}
 .serviceEven{
     flex-direction: row-reverse;
     margin: 2rem 0;
@@ -592,6 +597,7 @@ onMounted(async () => {
 .arrowRight{
     transform: rotate(180deg);
     right: 0;
+    top: -180px;
 }
 :deep(.el-carousel__arrow--left), :deep(.el-carousel__arrow--right) {
     background: rgba(0, 0, 0, 0);

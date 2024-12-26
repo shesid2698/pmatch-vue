@@ -3,7 +3,7 @@
         class="flex justify-center fixed w-100% headerBox top-0 left-0 h-110px"
     >
         <div
-            class="flex justify-between items-center max-w-1320px w-100% ps-5 pe-5 position-relative"
+            class="flex justify-between items-center max-w-1110px w-100% ps-5 pe-5 position-relative"
         >
             <!-- Logo -->
             <div class="lg-w-80% w-100% flex items-center">
@@ -17,7 +17,7 @@
                 </div>
                 <div>
                     <h1
-                        class="m-0 ms-3 font-size-1.2rem md-font-size-1.5rem color-#7B2CBF"
+                        class="m-0 ms-3 font-size-22px md-font-size-22px color-#7B2CBF"
                     >
                         遊戲道具媒合網
                     </h1>
@@ -85,13 +85,14 @@
                         {{ item.title }}
                         <img class="ms-2 w-20px" v-if="item.icon !== ''" :src="item.icon" :alt="item.title">
                     </NuxtLink>
-                    <NuxtLink
-                        v-else
+                    
+                </div>
+                <NuxtLink
+                        v-if="isLoggedIn"
                         @click="logout"
-                        class="color-#0d6efd hover:opacity-70 hover:underline cursor-pointer decoration-none ms-1.5rem font-bold"
+                        class="color-#0d6efd flex items-center hover:opacity-70 hover:underline cursor-pointer decoration-none ms-1.5rem font-bold"
                         >登出</NuxtLink
                     >
-                </div>
                 <!-- 手機板漢堡選單 -->
                 <div class="lg-hidden block">
                     <button
@@ -160,6 +161,7 @@
 
 <script setup>
 const userToken = useCookie("_PmToken");
+const isLoggedIn = computed(() => !!userToken?.value && userToken.value.trim() !== "");
 const userNameCookie = useCookie("_PmUserName");
 const MemberIdCookie = useCookie("_PmMemberId");
 const user = reactive({});
@@ -240,26 +242,25 @@ onMounted(() => {
                 id: 0,
                 title: "會員中心",
                 link: "/member/center",
+                icon: "",
             },
             {
                 id: 1,
                 title: "幫助中心",
                 link: "/helpcenter",
+                icon: "",
             },
             {
                 id: 2,
                 title: "找媒合",
                 link: "/findmatch",
+                icon: "",
             },
             {
                 id: 3,
                 title: `${userNameCookie.value} 您好`,
                 link: "#",
-            },
-            {
-                id: 4,
-                title: "登出",
-                link: "#",
+                icon: "",
             },
         ];
     } else {

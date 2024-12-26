@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-7rem max-w-1320px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3">
+    <div class="mt-7rem max-w-1110px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3">
 
         <!-- 成功獲取資料時 -->
         <div v-for="(item, index) in newsItem" :key="index">
