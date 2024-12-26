@@ -197,7 +197,7 @@
                                 <label for="email"
                                        class="text-15px">
                                     <input type="radio"
-                                    :disabled="theUser[0].Email===''"
+                                           :disabled="theUser[0].Email===''"
                                            v-model="theUser[0].SendReceiptType"
                                            value="2"
                                            id="email">電子信箱
@@ -299,6 +299,16 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="mt-15px">
+                            <div class="mb-5px text-[#484646] font-400 text-15px">
+                                推薦碼(推薦人)
+                            </div>
+                            <input type="text"
+                                   required
+                                   onchange="if(confirm('綁定推薦碼後，不可再進行變更，確定要綁定此組推薦碼嗎？') === true){}else{}"
+                                   class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
+                        </div>
                         <div class="mt-15px">
                             <button class="bg-[#e93470] cursor-pointer text-white text-16px h-38px w-100% rounded-[5px] outline-none border-none hover:bg-[#bb2d3b] transition duration-300">提交</button>
                         </div>
@@ -309,6 +319,7 @@
     </div>
 </template>
 <script setup>
+const recommendDisabled = ref(false);
 const { $axios } = useNuxtApp();
 const userToken = useCookie('_PmToken');
 const memberId = useCookie('_PmMemberId');
@@ -388,7 +399,7 @@ const getMobileVerify = (result, mobile) => {
 /**
  * 提交表單
  */
-const checkForm = async(event) => {
+const checkForm = async event => {
     event.preventDefault();
     //做型別轉換
     theUser[0].CarrierType = parseInt(theUser[0].CarrierType);
@@ -398,22 +409,19 @@ const checkForm = async(event) => {
     }
     if (theUser[0].Carrier === '') theUser[0].CarrierType = 0;
     var allAddress = '';
-    if(selectedRegion.value!==''&&selectedCity.value!==''&&addressDetail.value!=='')allAddress = selectedCity.value+selectedRegion.value+addressDetail.value;
+    if (selectedRegion.value !== '' && selectedCity.value !== '' && addressDetail.value !== '')
+        allAddress = selectedCity.value + selectedRegion.value + addressDetail.value;
     theUser[0].Address = allAddress;
     try {
-        const response = await $axios.post(
-            '/api/v1/Pmatch/UpdatedMemberData',
-            theUser[0],
-            {
-                headers: {
-                    Authorization: userToken.value
-                }
+        const response = await $axios.post('/api/v1/Pmatch/UpdatedMemberData', theUser[0], {
+            headers: {
+                Authorization: userToken.value
             }
-        );
+        });
 
         if (response.data.Status.Code === 0) {
-          alert("更新成功");
-          window.location.reload();
+            alert('更新成功');
+            window.location.reload();
         } else {
             alert(`${response.data.Status.Message}`);
         }
@@ -486,10 +494,10 @@ onMounted(async () => {
                 }
             }
         }
-        if(selectedCity.value!==""&&selectedRegion.value!=""){
-          theUser[0].Address=theUser[0].Address.replace(selectedCity.value,"");
-          theUser[0].Address=theUser[0].Address.replace(selectedRegion.value,"");
-          addressDetail.value = theUser[0].Address;
+        if (selectedCity.value !== '' && selectedRegion.value != '') {
+            theUser[0].Address = theUser[0].Address.replace(selectedCity.value, '');
+            theUser[0].Address = theUser[0].Address.replace(selectedRegion.value, '');
+            addressDetail.value = theUser[0].Address;
         }
     }
 });
