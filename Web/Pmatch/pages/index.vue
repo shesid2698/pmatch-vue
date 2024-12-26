@@ -1,43 +1,63 @@
 <template>
     <div>
-        <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
+        <div class="headerLeft absolute top-0">
+            <img
+                class="w-85%"
+                src="/images/headerLeft.svg"
+                alt="header左邊底圖"
+            />
+        </div>
+        <div class="max-w-1110px m-auto pt-60px ps-5 pe-5 relative z-2">
             <div class="mb-3">
                 <h1
-                    class="m-0 mb-2 text-center font-size-33px md-font-size-48px slogan"
+                    class="m-0 mb-2 text-center font-size-33px md-font-size-44px slogan"
                 >
                     安心交易的第一選項Pmatch
                 </h1>
                 <h3
-                    class="m-0 font-size-14px md-font-size-26px text-center subSlogan"
+                    class="m-0 font-size-14px md-font-size-22px text-center subSlogan"
                 >
                     為你嚴選商家、用合約保障你的權益、繁瑣的事情都再見
                 </h3>
             </div>
-            <div class="mb-6 md-flex block items-center justify-center">
-                <div class="flex items-center">
-                    <div class="flex items-center w-100%">
-                        <div class="w-100%">
-                            <select
-                                class="platformName md-w-270px w-100% h-43px font-size-1rem b-#a9d8f8 rounded-5px p-5px"
-                                v-model="platformNameToSearch"
-                            >
-                                <option value="">選擇遊戲...</option>
-                                <option
+            <div class="mt-2rem md-mt-0 md-flex block items-center justify-center">
+                <div class="block md-flex items-center w-100%">
+                    <div
+                        class="relative m-0 md-m-4 pt-4 pb-4 w-100% md-w-50% font-size-1.2rem gameSelect color-#fff"
+                        @click.stop="togglePlatformBox"
+                    >
+                        <span class=" fw-600">{{ selectedGame || "遊戲選擇 ..." }}</span>
+                        <div class="absolute top-17px right-20px">
+                            <img class="w-25px" src="/images/arrowDown.png" alt="選擇遊戲下拉箭頭">
+                        </div>
+                        <div class="absolute top-0 w-100% z-99">
+                            <div
+                            class="platformBox"
+                            v-show="showPlatformBox"
+                        >
+                            <div class="platformBoxContent">
+                                <div class="relative pt-2 pb-2 w-100% fw-600">
+                                    遊戲選擇 ...
+                                </div>
+                                <div
+                                    class="platformItem pt-2 pb-2 w-100% fw-600"
                                     v-for="(item, index) in gameList"
                                     :key="index"
-                                    :value="item.PlatformName"
+                                    @click.stop="selectGame(item)"
                                 >
                                     {{ item.PlatformName }}
-                                </option>
-                            </select>
+                                </div>
+                            </div>
                         </div>
+                        </div>
+                        
                     </div>
-                    <div class="md-ms-3 md-mt-0 mt-3 flex w-100%">
+                    <div class="mt-1rem m-0 md-m-4 flex w-100% md-w-50%">
                         <div class="flex items-center w-100%">
                             <div class="flex w-100%">
-                                <div class="w-100%">
+                                <div class="w-100% storeNameBox">
                                     <input
-                                        class="storeName md-ms-3 w-100% md-w-270px h-36px p-0 rounded-5px font-size-1rem p-3px"
+                                        class="storeName max-w-702px md-max-w-517px pt-4 pb-4 w-100% font-size-1.2rem fw-600"
                                         type="text"
                                         placeholder="輸入關鍵字..."
                                         v-model="keywordToSearch"
@@ -45,33 +65,20 @@
                                 </div>
                                 <div class="relative">
                                     <button
-                                        class="h-38px border-none searchBtn absolute top-4px right-0"
+                                        class="h-38px border-none searchBtn absolute top-10px right-10px"
+                                        @click="searchToFindMatch"
                                     >
-                                        <svg
-                                            class="w-23px searchIcon"
-                                            version="1.1"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            xmlns:xlink="http://www.w3.org/1999/xlink"
-                                            x="0px"
-                                            y="0px"
-                                            viewBox="0 0 512 512"
-                                            enable-background="new 0 0 512 512"
-                                            xml:space="preserve"
-                                            fill="#50B0FF"
-                                        >
-                                            <path
-                                                d="M443.5,420.2L336.7,312.4c20.9-26.2,33.5-59.4,33.5-95.5c0-84.5-68.5-153-153.1-153S64,132.5,64,217s68.5,153,153.1,153
-	c36.6,0,70.1-12.8,96.5-34.2l106.1,107.1c3.2,3.4,7.6,5.1,11.9,5.1c4.1,0,8.2-1.5,11.3-4.5C449.5,437.2,449.7,426.8,443.5,420.2z
-	 M217.1,337.1c-32.1,0-62.3-12.5-85-35.2c-22.7-22.7-35.2-52.9-35.2-84.9c0-32.1,12.5-62.3,35.2-84.9c22.7-22.7,52.9-35.2,85-35.2
-	c32.1,0,62.3,12.5,85,35.2c22.7,22.7,35.2,52.9,35.2,84.9c0,32.1-12.5,62.3-35.2,84.9C279.4,324.6,249.2,337.1,217.1,337.1z"
-                                            ></path>
-                                        </svg>
+                                        <img
+                                            class="w-25px"
+                                            src="/images/searchIcon.png"
+                                            alt="搜尋按鈕"
+                                        />
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="w-100% md-ms-3 flex items-center">
+                    <!-- <div class="w-100% md-ms-3 flex items-center">
                         <input
                             type="checkbox"
                             class="w-20px h-20px"
@@ -83,19 +90,22 @@
                         <button class="ms-3 w-100px" @click="searchToFindMatch">
                             搜尋
                         </button>
-                    </div>
+                    </div> -->
                 </div>
             </div>
-            <div class="pt-5rem pb-5rem">
+            <div class="ms-2rem fw-600 color-#F72585">
+                搜尋紀錄???
+            </div>
+            <div class="pt-1rem">
                 <div class="bannerBox">
                     <ElCarousel
                         v-if="bannerList.length > 0"
-                        class="h-200px bannerDetail"
+                        class="h-400px bannerDetail"
                         :interval="2000"
                         arrow="always"
                     >
                         <ElCarouselItem
-                            class="h-200px"
+                            class="h-400px"
                             v-for="(item, index) in bannerList"
                             :key="index"
                         >
@@ -109,6 +119,20 @@
                 </div>
             </div>
             <div class="mb-3 pt-5rem pb-8rem">
+                <div class="mb-5rem">
+                    <h1 class="color-#fff m-0 text-center font-size-50px">
+                        熱門媒合商
+                    </h1>
+                    <!-- <button @click="testAlert">點擊開啟alert彈窗</button>
+                    <button @click="testConfirm">點擊開啟confirm彈窗</button> -->
+                    <div class="flex justify-center">
+                        <img
+                            class="w-250px"
+                            src="/images/hotMatch.png"
+                            alt="最新消息"
+                        />
+                    </div>
+                </div>
                 <div class="flex flex-wrap">
                     <div
                         class="gameBox"
@@ -164,11 +188,11 @@
             </div>
             <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
                 <div class="mb-5rem">
-                    <h1 class="newsTitle m-0 text-center font-size-45px">
+                    <h1 class="newsTitle m-0 text-center font-size-50px">
                         最新消息
                     </h1>
-                    <!-- <button @click="testAlert">點擊開啟alert彈窗</button>
-                    <button @click="testConfirm">點擊開啟confirm彈窗</button> -->
+                    <button @click="testAlert">點擊開啟alert彈窗</button>
+                    <button @click="testConfirm">點擊開啟confirm彈窗</button>
                     <div class="flex justify-center">
                         <img
                             class="w-250px"
@@ -289,7 +313,7 @@
             </div>
             <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
                 <div class="mb-5rem relative">
-                    <h1 class="newsTitle m-0 text-center font-size-45px">
+                    <h1 class="newsTitle m-0 text-center font-size-50px">
                         我們的服務
                     </h1>
                     <div class="flex justify-center">
@@ -354,16 +378,41 @@ const { $axios } = useNuxtApp();
 const jwtStore = useJwtStore();
 const userToken = useCookie("_PmToken");
 const assetsUrl = useCookie("_PmAssetsUrl");
+const showPlatformBox = ref(false);
+const selectedGame = ref("");
 
 // alert & confirm function
-async function testConfirm(){
-    await openModal("標題","內容",() => console.log("確定按鈕被點擊"), // 確定的回調
-    () => console.log("取消按鈕被點擊") );
+async function testConfirm() {
+    await openModal(
+        "標題",
+        "內容",
+        () => console.log("確定按鈕被點擊"), // 確定的回調
+        () => console.log("取消按鈕被點擊")
+    );
 }
-async function testAlert(){
+async function testAlert() {
     console.log(alertModalStore.alertShowModal);
-    await openAlertModal("標題","內容",() => console.log("確定按鈕被點擊")); // 確定的回調
+    await openAlertModal("標題", "內容", () => console.log("確定按鈕被點擊")); // 確定的回調
 }
+
+// 切換下拉選單的顯示/隱藏
+const togglePlatformBox = () => {
+    showPlatformBox.value = !showPlatformBox.value;
+    // 選單開啟時添加全域點擊監聽
+    if (showPlatformBox.value) {
+        document.addEventListener("click", handleClickOutside);
+    } else {
+        document.removeEventListener("click", handleClickOutside);
+    }
+};
+
+// 選擇遊戲並關閉選單
+const selectGame = (item) => {
+    selectedGame.value = item.PlatformName; // 或 item.value 根據需要
+    showPlatformBox.value = false; // 隱藏選單
+    console.log(showPlatformBox.value);
+};
+
 const serviceList = [
     {
         title: "簽約有保障，交易更安全",
@@ -472,11 +521,16 @@ const searchToFindMatch = () => {
     router.push({
         path: "/findmatch",
         query: {
-            platformName: platformNameToSearch.value || "", // 平台名稱
+            platformName: selectedGame.value || "", // 平台名稱
             keyword: keywordToSearch.value || "", // 關鍵字
-            contract: contractToSearch.value ? 1 : 0, // 是否查看已簽約媒合商
         },
     });
+};
+const handleClickOutside = (event) => {
+    const dropdown = document.querySelector(".platformBox");
+    if (dropdown && !dropdown.contains(event.target)) {
+        showPlatformBox.value = false;
+    }
 };
 onMounted(async () => {
     await setPageLoading(true);
@@ -504,6 +558,9 @@ onMounted(async () => {
         await setPageLoading(false);
     }
 });
+onBeforeUnmount(() => {
+    document.removeEventListener("click", handleClickOutside);
+});
 </script>
 
 <style scoped>
@@ -513,12 +570,26 @@ onMounted(async () => {
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
     outline: none;
 }
-.storeName {
-    border: 1px solid #a9d8f8;
+.storeNameBox {
+    position: relative;
+    padding: 1px;
+    background: linear-gradient(
+        to right,
+        rgba(67, 97, 238),
+        rgba(247, 37, 133)
+    );
+    border-radius: 50px;
+    border: none;
 }
-.storeName:focus {
-    border-color: #a9d8f8;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+.storeName {
+    position: relative;
+    background: #fff;
+    border-radius: 50px;
+    border: none;
+    text-indent: 1rem;
+    color: #8D8D8D;
+}
+.storeName:focus-visible{
     outline: none;
 }
 .searchBtn {
@@ -543,6 +614,7 @@ onMounted(async () => {
     background-color: #d3dce6;
 }
 .bannerBox {
+    position: relative;
     padding: 3px;
     background: linear-gradient(
         to right,
@@ -561,6 +633,8 @@ onMounted(async () => {
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
+    font-weight: 900;
+    -webkit-text-stroke: 1px rgba(200, 200, 200, 0.1);
 }
 .subSlogan {
     color: #f72585;
@@ -571,6 +645,7 @@ onMounted(async () => {
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
+    -webkit-text-stroke: 1px rgba(200, 200, 200, 0.1);
 }
 .waveTop {
     background-image: url("/images/waveBottom.svg");
@@ -649,13 +724,16 @@ onMounted(async () => {
     right: 0;
     top: -180px;
 }
+:deep(.el-carousel) {
+    position: static;
+}
 :deep(.el-carousel__arrow--left),
 :deep(.el-carousel__arrow--right) {
     background: rgba(0, 0, 0, 0);
 }
 :deep(.el-carousel__arrow--left > .el-icon),
 :deep(.el-carousel__arrow--right > .el-icon) {
-    font-size: 3rem;
+    font-size: 2.5rem;
 }
 :deep(.el-carousel__button) {
     width: 10px;
@@ -663,7 +741,7 @@ onMounted(async () => {
     border-radius: 50%;
 }
 :deep(.el-carousel__indicators--horizontal) {
-    bottom: -10px;
+    bottom: -45px;
 }
 .moreGameBtn {
     padding: 1rem 2rem;
@@ -671,5 +749,37 @@ onMounted(async () => {
     border-radius: 50px;
     font-size: 1.2rem;
     font-weight: 600;
+}
+.gameSelect {
+    background: linear-gradient(to right, #4361ee, #f72585);
+    border-radius: 50px;
+    text-indent: 1rem;
+}
+.platformBox {
+    position: relative;
+    padding: 1px;
+    background: linear-gradient(
+        to right,
+        rgba(67, 97, 238),
+        rgba(247, 37, 133)
+    );
+    border-radius: 25px;
+    border: none;
+}
+.platformBoxContent{
+    position: relative;
+    background: #FAFAFA;
+    border-radius: 25px;
+    border: none;
+    text-indent: 1rem;
+    width: 100%;
+    color: #F72585;
+}
+.platformItem{
+    border-radius: 25px;
+}
+.platformItem:hover{
+    background-color: #F72585;
+    color: #fff;
 }
 </style>

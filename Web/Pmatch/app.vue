@@ -3,7 +3,6 @@
         <AlertModal/>
         <ConfirmModal/>
         <div class="bgSetting relative">
-            <div class="headerLeft"></div>
             <div class="dotRight"></div>
         </div>
 
@@ -15,7 +14,7 @@
         />
         <LoadingPage />
         <Header />
-        <div class="pt-180px pb- 60px page">
+        <div class="pt-120px pb- 60px page">
             <NuxtPage />
         </div>
         <Footer />
@@ -64,17 +63,6 @@ body {
     background-position: center;
     background-size: cover;
     position: relative;
-}
-.headerLeft {
-    background-image: url("/images/headerLeft.svg");
-    background-repeat: no-repeat;
-    background-position: left top;
-    position: absolute;
-    background-size: 85%;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 1300px;
 }
 .dotRight {
     background-image: url("/images/bgDot01.png");
