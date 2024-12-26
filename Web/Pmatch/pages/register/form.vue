@@ -219,6 +219,17 @@
                                    class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
                         </div>
                     </div>
+
+                    <div class="mt-15px">
+                        <div class="mb-5px text-[#484646] font-400 text-15px">
+                            推薦碼(推薦人)
+                        </div>
+                        <div>
+                            <input type="text"
+                                   v-model="recommendCode"
+                                   class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
+                        </div>
+                    </div>
                     <div class="mt-15px">
                         <div class="flex">
                             <div><input type="checkbox"
@@ -288,6 +299,7 @@ const cities = ref([]);
 const districts = ref([]);
 const selectedCity = ref('');
 const selectedRegion = ref('');
+const recommendCode = ref('');
 const turnInputType = () => {
     if (i_password.value.type === 'password') {
         i_password.value.type = 'text';
