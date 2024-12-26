@@ -2,10 +2,14 @@
     <div>
         <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
             <div class="mb-3">
-                <h1 class="m-0 mb-2 text-center font-size-33px md-font-size-48px slogan">
+                <h1
+                    class="m-0 mb-2 text-center font-size-33px md-font-size-48px slogan"
+                >
                     安心交易的第一選項Pmatch
                 </h1>
-                <h3 class="m-0 font-size-14px md-font-size-26px text-center subSlogan">
+                <h3
+                    class="m-0 font-size-14px md-font-size-26px text-center subSlogan"
+                >
                     為你嚴選商家、用合約保障你的權益、繁瑣的事情都再見
                 </h3>
             </div>
@@ -85,23 +89,23 @@
             <div class="pt-5rem pb-5rem">
                 <div class="bannerBox">
                     <ElCarousel
-                    v-if="bannerList.length > 0"
-                    class="h-200px bannerDetail"
-                    :interval="2000"
-                    arrow="always"
-                >
-                    <ElCarouselItem
-                        class="h-200px"
-                        v-for="(item, index) in bannerList"
-                        :key="index"
+                        v-if="bannerList.length > 0"
+                        class="h-200px bannerDetail"
+                        :interval="2000"
+                        arrow="always"
                     >
-                        <img
-                            class="w-100%"
-                            :src="`${assetsUrl}${item.ImgFile}`"
-                            :alt="item.PlatformName"
-                        />
-                    </ElCarouselItem>
-                </ElCarousel>
+                        <ElCarouselItem
+                            class="h-200px"
+                            v-for="(item, index) in bannerList"
+                            :key="index"
+                        >
+                            <img
+                                class="w-100%"
+                                :src="`${assetsUrl}${item.ImgFile}`"
+                                :alt="item.PlatformName"
+                            />
+                        </ElCarouselItem>
+                    </ElCarousel>
                 </div>
             </div>
             <div class="mb-3 pt-5rem pb-8rem">
@@ -152,17 +156,19 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="w-full bg-#fff relative mt-5rem">
             <div class="waveTop absolute"></div>
             <div class="arrowRight absolute">
-                <img src="/images/corner.png" alt="右邊箭頭">
+                <img src="/images/corner.png" alt="右邊箭頭" />
             </div>
             <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
                 <div class="mb-5rem">
                     <h1 class="newsTitle m-0 text-center font-size-45px">
                         最新消息
                     </h1>
+                    <button @click="testAlert">點擊開啟alert彈窗</button>
+                    <button @click="testConfirm">點擊開啟confirm彈窗</button>
                     <div class="flex justify-center">
                         <img
                             class="w-250px"
@@ -173,7 +179,9 @@
                 </div>
                 <div class="lg-flex">
                     <div class="w-100% lg-w-50% me-0 lg-me-2">
-                        <div class="mb-3rem lg-block flex lg-justify-start justify-center">
+                        <div
+                            class="mb-3rem lg-block flex lg-justify-start justify-center"
+                        >
                             <button
                                 class="newsAllBtn font-size-15px border-none p-3 bg-#4361ee color-#fff rounded-50px"
                                 @click="fetchNewsListData([], '')"
@@ -220,26 +228,37 @@
                                                         : ""
                                                 }}
                                             </div>
-                                            <div class="flex font-size-12px items-center p-2">
-                                                <span :class="{
-                                                    'color-#4361EE':
-                                                        item.Category === 1,
-                                                    'color-#f72585':
-                                                        item.Category === 2,
-                                                }">{{
-                                                    item.StartTime.slice(0, 10)
-                                                }}</span>
+                                            <div
+                                                class="flex font-size-12px items-center p-2"
+                                            >
+                                                <span
+                                                    :class="{
+                                                        'color-#4361EE':
+                                                            item.Category === 1,
+                                                        'color-#f72585':
+                                                            item.Category === 2,
+                                                    }"
+                                                    >{{
+                                                        item.StartTime.slice(
+                                                            0,
+                                                            10
+                                                        )
+                                                    }}</span
+                                                >
                                             </div>
                                         </div>
                                     </div>
                                     <div class="w-full pt-3 pb-3 newsItemLink">
                                         <div>
-                                            <h2 class="m-0 font-size-30px" :class="{
-                                                    'newsItem1':
+                                            <h2
+                                                class="m-0 font-size-30px"
+                                                :class="{
+                                                    newsItem1:
                                                         item.Category === 1,
-                                                    'newsItem2':
+                                                    newsItem2:
                                                         item.Category === 2,
-                                                }">
+                                                }"
+                                            >
                                                 {{ item.Title }}
                                             </h2>
                                             <h3 class="m-0 font-size-12px">
@@ -251,7 +270,9 @@
                             </NuxtLink>
                         </div>
                     </div>
-                    <div class="mt-4rem w-100% lg-w-50% ms-0 lg-ms-2 lg-mt-1.5rem newsBoard">
+                    <div
+                        class="mt-4rem w-100% lg-w-50% ms-0 lg-ms-2 lg-mt-1.5rem newsBoard"
+                    >
                         <NewRatio />
                         <Matching class="mt-3rem" param="" />
                     </div>
@@ -261,10 +282,10 @@
         <div class="w-full bg-#fff pt-5rem pb-5 relative">
             <div class="waveBottom absolute"></div>
             <div class="arrowLeft absolute">
-                <img src="/images/corner.png" alt="左邊箭頭">
+                <img src="/images/corner.png" alt="左邊箭頭" />
             </div>
             <div class="arrowRight absolute bottom-0">
-                <img src="/images/corner.png" alt="右邊箭頭">
+                <img src="/images/corner.png" alt="右邊箭頭" />
             </div>
             <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
                 <div class="mb-5rem relative">
@@ -278,16 +299,30 @@
                             alt="我們的服務"
                         />
                     </div>
-                    
                 </div>
-                <div class="md-flex" v-for="(item, index) in serviceList" :key="index" :class="{'serviceEven': index % 2 === 0}">
+                <div
+                    class="md-flex"
+                    v-for="(item, index) in serviceList"
+                    :key="index"
+                    :class="{ serviceEven: index % 2 === 0 }"
+                >
                     <div class="w-100% lg-w-50%">
-                        <img class="w-100%" :src="item.img" :alt="item.title">
+                        <img class="w-100%" :src="item.img" :alt="item.title" />
                     </div>
-                    <div class="mt-4rem w-100% lg-w-50% lg-mt-1rem flex items-center">
-                        <div class="lg-ms-5 lg-me-5 ps-5 pe-5 lg-w-auto w-100% pb-20 serviceItemsContent">
-                            <h2 class="serviceItemsTitle font-size-30px m-0 mb-5">{{item.title}}</h2>
-                            <h4 class="m-0 font-size-15px">{{item.detail}}</h4>
+                    <div
+                        class="mt-4rem w-100% lg-w-50% lg-mt-1rem flex items-center"
+                    >
+                        <div
+                            class="lg-ms-5 lg-me-5 ps-5 pe-5 lg-w-auto w-100% pb-20 serviceItemsContent"
+                        >
+                            <h2
+                                class="serviceItemsTitle font-size-30px m-0 mb-5"
+                            >
+                                {{ item.title }}
+                            </h2>
+                            <h4 class="m-0 font-size-15px">
+                                {{ item.detail }}
+                            </h4>
                         </div>
                     </div>
                 </div>
@@ -302,7 +337,13 @@ import { ElCarousel } from "element-plus";
 import { ElCarouselItem } from "element-plus";
 // loading page
 import { useLoadStore } from "../stores/loading.js";
+import { useModalStore } from "../stores/useModal.js";
+import { useAlertModalStore } from "../stores/useAlertModal.js";
 const store = useLoadStore();
+const modalStore = useModalStore();
+const alertModalStore = useAlertModalStore();
+const openModal = modalStore.showModal;
+const openAlertModal = alertModalStore.alertShowModal;
 const setPageLoading = store.setPageLoading;
 const router = useRouter();
 
@@ -314,6 +355,15 @@ const jwtStore = useJwtStore();
 const userToken = useCookie("_PmToken");
 const assetsUrl = useCookie("_PmAssetsUrl");
 
+
+async function testConfirm(){
+    await openModal("標題","內容",() => console.log("確定按鈕被點擊"), // 確定的回調
+    () => console.log("取消按鈕被點擊") );
+}
+async function testAlert(){
+    console.log(alertModalStore.alertShowModal);
+    await openAlertModal("標題","內容",() => console.log("確定按鈕被點擊")); // 確定的回調
+}
 const serviceList = [
     {
         title: "簽約有保障，交易更安全",
@@ -330,7 +380,7 @@ const serviceList = [
         detail: "平台提供即時交易查詢服務，不論是遊戲幣流向還是交易進度，資訊完整透明",
         img: "/images/service3.png",
     },
-]
+];
 let platformNameToSearch = ref("");
 let keywordToSearch = ref("");
 let contractToSearch = ref(false);
@@ -450,7 +500,7 @@ onMounted(async () => {
         }
     } catch (error) {
         console.error("頁面初始化失敗:", error);
-    } finally{
+    } finally {
         await setPageLoading(false);
     }
 });
@@ -544,40 +594,40 @@ onMounted(async () => {
     border: 1px solid #f72585;
     cursor: pointer;
 }
-.newsItem1{
+.newsItem1 {
     background: linear-gradient(to right, #4361ee, #7b2cbf);
     background: -webkit-linear-gradient(to right, #4361ee, #7b2cbf);
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
 }
-.newsItem2{
+.newsItem2 {
     background: linear-gradient(to right, #f72585, #7b2cbf);
     background: -webkit-linear-gradient(to right, #f72585, #7b2cbf);
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
 }
-.newsItemLink{
-    border-bottom: 1px solid rgba(67, 97, 238, .3);
+.newsItemLink {
+    border-bottom: 1px solid rgba(67, 97, 238, 0.3);
 }
-.newsBoard{
+.newsBoard {
     display: flex;
     flex-wrap: wrap;
     align-content: space-between;
 }
-.serviceEven{
+.serviceEven {
     flex-direction: row-reverse;
     margin: 2rem 0;
 }
-.serviceItemsTitle{
+.serviceItemsTitle {
     background: linear-gradient(to right, #f72585, #7b2cbf);
     background: -webkit-linear-gradient(to right, #f72585, #7b2cbf);
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
 }
-.serviceItemsContent{
+.serviceItemsContent {
     border-bottom: 1px solid;
     border-image: linear-gradient(to right, #f72585, #7b2cbf) 1;
 }
@@ -591,29 +641,31 @@ onMounted(async () => {
     width: 100%;
     height: 480px;
 }
-.arrowLeft{
+.arrowLeft {
     top: -150px;
 }
-.arrowRight{
+.arrowRight {
     transform: rotate(180deg);
     right: 0;
     top: -180px;
 }
-:deep(.el-carousel__arrow--left), :deep(.el-carousel__arrow--right) {
+:deep(.el-carousel__arrow--left),
+:deep(.el-carousel__arrow--right) {
     background: rgba(0, 0, 0, 0);
 }
-:deep(.el-carousel__arrow--left > .el-icon), :deep(.el-carousel__arrow--right > .el-icon){
+:deep(.el-carousel__arrow--left > .el-icon),
+:deep(.el-carousel__arrow--right > .el-icon) {
     font-size: 3rem;
 }
-:deep(.el-carousel__button){
+:deep(.el-carousel__button) {
     width: 10px;
     height: 10px;
     border-radius: 50%;
 }
-:deep(.el-carousel__indicators--horizontal){
+:deep(.el-carousel__indicators--horizontal) {
     bottom: -10px;
 }
-.moreGameBtn{
+.moreGameBtn {
     padding: 1rem 2rem;
     background: linear-gradient(to right, #7b2cbf, #f72585);
     border-radius: 50px;
