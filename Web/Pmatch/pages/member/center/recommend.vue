@@ -3,8 +3,8 @@
         <div class="lg:w-160px">
             <MemberCenter></MemberCenter>
         </div>
-        <div class="p-50px w-100%">
-            <div class="flex">
+        <div class="lg:p-50px w-100%">
+            <div class="flex flex-col lg:flex-row">
                 <div class="mr-30px">
                     <div class="w-300px h-55px bg-[#3caadc] border-1 border-solid border-[#3caadc] text-white text-[20px] font-500 text-center content-center">回饋總遊戲幣</div>
                     <div class="w-300px border-1 border-solid border-[#ced2db]">
@@ -18,7 +18,7 @@
                     </div>
                 </div>
 
-                <div class="w-400px rounded-5px border-2px border-solid border-gray-300 p-20px h-fit">
+                <div class="mt-30px lg:mt-0 w-auto lg:w-400px rounded-5px border-2px border-solid border-gray-300 p-20px h-fit">
                     <div class="flex">
                         <div class="w-50% m-t-3px text-black text-20px font-500">回饋分潤設定</div>
                         <div class="flex-1">
@@ -29,7 +29,7 @@
                                            v-model="mainPercent"
                                            @input="SettingPercent"
                                            class="text-16px text-black left-0 text-end bg-transparent absolute outline-none w-70% border-none top-50% transform-translate-y-[-50%]">
-                                    <div class="absolute right-5px top-50% transform-translate-y-[-50%]">%</div>
+                                    <div class="text-black absolute right-5px top-43% transform-translate-y-[-50%]">%</div>
                                 </div>
                             </div>
                             <div class="flex justify-between items-center ">
@@ -39,7 +39,7 @@
                                            disabled
                                            v-model="secondPercent"
                                            class="text-16px text-black left-0 text-end bg-transparent absolute outline-none w-70% border-none top-50% transform-translate-y-[-50%]">
-                                    <div class="absolute right-5px top-50% transform-translate-y-[-50%]">%</div>
+                                    <div class="text-black absolute right-5px top-43% transform-translate-y-[-50%]">%</div>
                                 </div>
                             </div>
                         </div>
@@ -137,7 +137,7 @@ onMounted(() => {
     ];
 });
 </script>
-<style scoped>
+<style>
 .ccontainer {
     height: fit-content;
     display: flex;
@@ -166,7 +166,7 @@ input[type='number']::-webkit-outer-spin-button {
 :deep(.el-table--striped .el-table__body tr.el-table__row--striped td.el-table__cell) {
     background: #ffffff;
 }
-:deep(.el-table--enable-row-transition .el-table__body td.el-table__cell){
-  align-content: start;
+:deep(.el-table--enable-row-transition .el-table__body td.el-table__cell) {
+    align-content: start;
 }
 </style>

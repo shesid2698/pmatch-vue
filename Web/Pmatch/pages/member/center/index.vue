@@ -104,10 +104,12 @@
                                 <div class="w-38%">
                                     <button v-if="emailVerify!==true"
                                             @click="emailTableVisible = true;$event.preventDefault();"
+                                            type="button"
                                             class="p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#2696F3] hover:bg-[#228de6] transition duration-200 cursor-pointer disabled:bg-gray disabled:hover:bg-gray">
                                         電子信箱驗證
                                     </button>
                                     <button v-else
+                                            type="button"
                                             @click="emailTableVisible = true;$event.preventDefault();"
                                             class="p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#58CB6E] hover:bg-[#52bd65] transition duration-200 cursor-pointer disabled:bg-gray disabled:hover:bg-gray">
                                         已完成驗證
@@ -230,11 +232,13 @@
                                 <div class="w-2%"></div>
                                 <div class="w-30%">
                                     <button v-if="mobileVerify!==true"
+                                            type="button"
                                             @click="openMobileDialog($event,1)"
                                             class="p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#2696F3] hover:bg-[#228de6] transition duration-200 cursor-pointer disabled:bg-gray disabled:hover:bg-gray">手機驗證
                                     </button>
                                     <button v-else
                                             @click="openMobileDialog($event,1)"
+                                            type="button"
                                             class="p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#58CB6E] hover:bg-[#52bd65] transition duration-200 disabled:bg-gray disabled:hover:bg-gray cursor-pointer">
                                         已完成驗證
                                     </button>
@@ -260,10 +264,12 @@
                                 <div class="w-30%">
                                     <button v-if="mobileVerify2!==true"
                                             @click="openMobileDialog($event,2)"
+                                            type="button"
                                             class="p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#2696F3] hover:bg-[#228de6] transition duration-200 cursor-pointer disabled:bg-gray disabled:hover:bg-gray cursor-pointer">手機驗證
                                     </button>
                                     <button v-else
                                             @click="openMobileDialog($event,2)"
+                                            type="button"
                                             class="p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#58CB6E] hover:bg-[#52bd65] transition duration-200 cursor-pointer disabled:bg-gray disabled:hover:bg-gray">
                                         已完成驗證
                                     </button>
@@ -289,10 +295,12 @@
                                 <div class="w-30%">
                                     <button v-if="mobileVerify3!==true"
                                             @click="openMobileDialog($event,3)"
+                                            type="button"
                                             class="p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#2696F3] hover:bg-[#228de6] transition duration-200 cursor-pointer disabled:bg-gray disabled:hover:bg-gray">手機驗證
                                     </button>
                                     <button v-else
                                             @click="openMobileDialog($event,3)"
+                                            type="button"
                                             class="p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#58CB6E] hover:bg-[#52bd65] transition duration-200 cursor-pointer disabled:bg-gray disabled:hover:bg-gray">
                                         已完成驗證
                                     </button>
@@ -306,7 +314,8 @@
                             </div>
                             <input type="text"
                                    required
-                                   onchange="if(confirm('綁定推薦碼後，不可再進行變更，確定要綁定此組推薦碼嗎？') === true){}else{}"
+                                   v-model="recommendStr"
+                                   @change="CheckCode"
                                    class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
                         </div>
                         <div class="mt-15px">
@@ -319,6 +328,8 @@
     </div>
 </template>
 <script setup>
+const modalStore = useModalStore();
+const alertModal = useAlertModalStore();
 const recommendDisabled = ref(false);
 const { $axios } = useNuxtApp();
 const userToken = useCookie('_PmToken');
@@ -332,6 +343,7 @@ const cities = ref([]);
 const selectedCity = ref('');
 const selectedRegion = ref('');
 const addressDetail = ref('');
+const recommendStr = ref('');
 /**正在驗證的手機號碼 */
 const verifyingMobile = useCookie('editMobile');
 /**手機/信箱驗證視窗寬度 */
@@ -441,7 +453,28 @@ function formatToDateInput(dateStr) {
     const day = String(date.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`; // return YYYY-MM-DD 格式
 }
+const confirmOK = ()=>{
+  console.log("卻喔!!");
+}
+const confirmCancel = ()=>{
+  console.log("取消啦!!");
+}
+const CheckCode=()=>{
+  if(recommendStr.value!=="wade"){
+    alertModal.alertShowModal("err","此為無效推薦碼");
+    recommendStr.value = "";
+  }else{
+    function OK(){
+      console.log("OK");
+    }
+    function cancel(){
+      console.log("取消");
+    }
+    modalStore.showModal("溫腥提示","綁定推薦碼後，不可再進行變更，確定要綁定此組推薦碼嗎？",OK,cancel);
+  }
+}
 onMounted(async () => {
+    // modalStore.showModal("提示測試","這是談窗測試",confirmOK,confirmCancel);
     try {
         if (userToken.value != "" && userToken.value != undefined) {
             const response = await $axios.post(
@@ -472,7 +505,7 @@ onMounted(async () => {
             return;
         }
 
-        
+
     } catch (error) {
         console.error('請求失敗:', error);
     }
