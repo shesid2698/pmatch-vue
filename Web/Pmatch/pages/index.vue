@@ -2,96 +2,107 @@
     <div>
         <div class="headerLeft absolute top-0">
             <img
-                class="w-85%"
+                class="w-85% max-w-1630px min-w-980px"
                 src="/images/headerLeft.svg"
                 alt="header左邊底圖"
             />
         </div>
-        <div class="DotRight absolute right-0 top-0">
+        <div class="absolute right-0 top-0">
             <img
                 class="w-100%"
                 src="/images/bgDot01.png"
-                alt="header左邊底圖"
+                alt="header右邊點點圖"
             />
         </div>
-        <div class="max-w-1110px m-auto pt-60px ps-5 pe-5 relative z-2">
-            <div class="mb-3">
-                <h1
-                    class="m-0 mb-2 text-center font-size-33px md-font-size-44px slogan"
-                >
-                    安心交易的第一選項Pmatch
-                </h1>
-                <h3
-                    class="m-0 font-size-14px md-font-size-22px text-center subSlogan"
-                >
-                    為你嚴選商家、用合約保障你的權益、繁瑣的事情都再見
-                </h3>
+        <div class="relative">
+            <div class="absolute left-0 bottom-0">
+                <img
+                    class="w-100%"
+                    src="/images/bgDot02.png"
+                    alt="熱門左邊點點圖"
+                />
             </div>
-            <div
-                class="mt-2rem md-mt-0 md-flex block items-center justify-center"
-            >
-                <div class="block md-flex items-center w-100%">
-                    <div
-                        class="relative m-0 md-m-4 pt-4 pb-4 w-100% md-w-50% font-size-1.2rem gameSelect color-#fff"
-                        @click.stop="togglePlatformBox"
+            <div class="max-w-1110px m-auto pt-60px ps-5 pe-5 relative z-2">
+                <div class="mb-3">
+                    <h1
+                        class="m-0 mb-2 text-center font-size-33px md-font-size-44px slogan"
                     >
-                        <span class="fw-600">{{
-                            selectedGame || "遊戲選擇 ..."
-                        }}</span>
-                        <div class="absolute top-17px right-20px">
-                            <img
-                                class="w-25px"
-                                src="/images/arrowDown.png"
-                                alt="選擇遊戲下拉箭頭"
-                            />
-                        </div>
-                        <div class="absolute top-0 w-100% z-99">
-                            <div class="platformBox" v-show="showPlatformBox">
-                                <div class="platformBoxContent">
-                                    <div
-                                        class="relative pt-2 pb-2 w-100% fw-600"
-                                    >
-                                        遊戲選擇 ...
-                                    </div>
-                                    <div
-                                        class="platformItem pt-2 pb-2 w-100% fw-600"
-                                        v-for="(item, index) in gameList"
-                                        :key="index"
-                                        @click.stop="selectGame(item)"
-                                    >
-                                        {{ item.PlatformName }}
+                        安心交易的第一選項Pmatch
+                    </h1>
+                    <h3
+                        class="m-0 font-size-14px md-font-size-22px text-center subSlogan"
+                    >
+                        為你嚴選商家、用合約保障你的權益、繁瑣的事情都再見
+                    </h3>
+                </div>
+                <div
+                    class="mt-2rem md-mt-0 md-flex block items-center justify-center"
+                >
+                    <div class="block md-flex items-center w-100%">
+                        <div
+                            class="relative m-0 md-m-4 pt-4 pb-4 w-100% md-w-50% font-size-1.2rem gameSelect color-#fff"
+                            @click.stop="togglePlatformBox"
+                        >
+                            <span class="fw-600">{{
+                                selectedGame || "遊戲選擇 ..."
+                            }}</span>
+                            <div class="absolute top-17px right-20px">
+                                <img
+                                    class="w-25px"
+                                    src="/images/arrowDown.png"
+                                    alt="選擇遊戲下拉箭頭"
+                                />
+                            </div>
+                            <div class="absolute top-0 w-100% z-99">
+                                <div
+                                    class="platformBox"
+                                    v-show="showPlatformBox"
+                                >
+                                    <div class="platformBoxContent">
+                                        <div
+                                            class="relative pt-2 pb-2 w-100% fw-600"
+                                        >
+                                            遊戲選擇 ...
+                                        </div>
+                                        <div
+                                            class="platformItem pt-2 pb-2 w-100% fw-600"
+                                            v-for="(item, index) in gameList"
+                                            :key="index"
+                                            @click.stop="selectGame(item)"
+                                        >
+                                            {{ item.PlatformName }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="mt-1rem m-0 md-m-4 flex w-100% md-w-50%">
-                        <div class="flex items-center w-100%">
-                            <div class="flex w-100%">
-                                <div class="w-100% storeNameBox">
-                                    <input
-                                        class="storeName max-w-702px md-max-w-517px pt-4 pb-4 w-100% font-size-1.2rem fw-600"
-                                        type="text"
-                                        placeholder="輸入關鍵字..."
-                                        v-model="keywordToSearch"
-                                    />
-                                </div>
-                                <div class="relative">
-                                    <button
-                                        class="h-38px border-none searchBtn absolute top-10px right-10px"
-                                        @click="searchToFindMatch"
-                                    >
-                                        <img
-                                            class="w-25px"
-                                            src="/images/searchIcon.png"
-                                            alt="搜尋按鈕"
+                        <div class="mt-1rem m-0 md-m-4 flex w-100% md-w-50%">
+                            <div class="flex items-center w-100%">
+                                <div class="flex w-100%">
+                                    <div class="w-100% storeNameBox">
+                                        <input
+                                            class="storeName max-w-702px md-max-w-517px pt-4 pb-4 w-100% font-size-1.2rem fw-600"
+                                            type="text"
+                                            placeholder="輸入關鍵字..."
+                                            v-model="keywordToSearch"
                                         />
-                                    </button>
+                                    </div>
+                                    <div class="relative">
+                                        <button
+                                            class="h-38px border-none searchBtn absolute top-10px right-10px"
+                                            @click="searchToFindMatch"
+                                        >
+                                            <img
+                                                class="w-25px"
+                                                src="/images/searchIcon.png"
+                                                alt="搜尋按鈕"
+                                            />
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- <div class="w-100% md-ms-3 flex items-center">
+                        <!-- <div class="w-100% md-ms-3 flex items-center">
                         <input
                             type="checkbox"
                             class="w-20px h-20px"
@@ -104,127 +115,139 @@
                             搜尋
                         </button>
                     </div> -->
-                </div>
-            </div>
-            <div class="ms-2rem fw-600 color-#F72585 flex items-center">
-                <div class="flex items-center">
-                    <img
-                        class="w-25px"
-                        src="/images/gameSearchIcon.png"
-                        alt="遊戲搜尋icon"
-                    />
-                </div>
-                <span class="ms-3"> 搜尋紀錄??? </span>
-            </div>
-            <div class="pt-1rem">
-                <div class="bannerBox">
-                    <ElCarousel
-                        v-if="bannerList.length > 0"
-                        class="h-400px bannerDetail"
-                        :interval="2000"
-                        arrow="always"
-                    >
-                        <ElCarouselItem
-                            class="h-400px"
-                            v-for="(item, index) in bannerList"
-                            :key="index"
-                        >
-                            <img
-                                class="w-100%"
-                                :src="`${assetsUrl}${item.ImgFile}`"
-                                :alt="item.PlatformName"
-                            />
-                        </ElCarouselItem>
-                    </ElCarousel>
-                </div>
-            </div>
-            <div class="mb-3 pt-5rem pb-8rem">
-                <div class="mb-5rem">
-                    <h1 class="color-#fff m-0 text-center font-size-50px">
-                        熱門媒合商
-                    </h1>
-                    <!-- <button @click="testAlert">點擊開啟alert彈窗</button>
-                    <button @click="testConfirm">點擊開啟confirm彈窗</button> -->
-                    <div class="flex justify-center">
-                        <img
-                            class="w-250px"
-                            src="/images/hotMatch.png"
-                            alt="熱門媒合商"
-                        />
                     </div>
                 </div>
-                <div class="flex flex-wrap gameOutside w-100%">
-                    <div
-                        class="gameBox flex"
-                        v-for="(item, index) in gameList.slice(0, 4)"
-                        :key="index"
-                        :class="`gameBox${index}`"
-                    >
-                        <div class="p-2rem w-100%">
-                            <div class="flex">
-                                <div class="gameImg w-100% me-3">
-                                    <NuxtLink
-                                        :to="{
-                                            path: '/findmatch',
-                                            query: {
-                                                platformName: item.PlatformName,
-                                            },
-                                        }"
-                                        class="w-100% m-1"
-                                    >
-                                        <div class="w-100% flex">
-                                            <img
-                                                :src="`${assetsUrl}${item.ImgFile}`"
-                                                :alt="item.PlatformName"
-                                                class="w-100% rounded-10px"
-                                            />
-                                        </div>
-                                    </NuxtLink>
+                <div class="mt-4 md-mt-0 ms-2rem fw-600 color-#F72585 flex items-center">
+                    <div class="flex items-center">
+                        <img
+                            class="w-25px"
+                            src="/images/gameSearchIcon.png"
+                            alt="遊戲搜尋icon"
+                        />
+                    </div>
+                    <span class="ms-3"> 搜尋紀錄??? </span>
+                </div>
+                <div class="pt-1rem">
+                    <div class="bannerBox">
+                        <ElCarousel
+                            v-if="bannerList.length > 0"
+                            class="h-400px bannerDetail"
+                            :interval="2000"
+                            arrow="always"
+                        >
+                            <ElCarouselItem
+                                class="h-400px"
+                                v-for="(item, index) in bannerList"
+                                :key="index"
+                            >
+                                <img
+                                    class="w-100%"
+                                    :src="`${assetsUrl}${item.ImgFile}`"
+                                    :alt="item.PlatformName"
+                                />
+                            </ElCarouselItem>
+                        </ElCarousel>
+                    </div>
+                </div>
+                <div class="mb-3 pt-5rem pb-15rem">
+                    <div class="mb-5rem">
+                        <h1 class="color-#fff m-0 text-center font-size-50px">
+                            熱門媒合商
+                        </h1>
+                        <!-- <button @click="testAlert">點擊開啟alert彈窗</button>
+                    <button @click="testConfirm">點擊開啟confirm彈窗</button> -->
+                        <div class="flex justify-center">
+                            <img
+                                class="w-250px"
+                                src="/images/hotMatch.png"
+                                alt="熱門媒合商"
+                            />
+                        </div>
+                    </div>
+                    <div class="block md-flex flex-wrap gameOutside w-100%">
+                        <div
+                            class="gameBox flex"
+                            v-for="(item, index) in gameList.slice(0, 4)"
+                            :key="index"
+                            :class="`gameBox${index}`"
+                        >
+                            <div class="p-2rem w-100% relative">
+                                <div class="gameLogo">
+                                    <img
+                                        class="w-200px"
+                                        src="/images/gameLogo.png"
+                                        alt="熱門媒合logo"
+                                    />
                                 </div>
-                                <div class="w-100% ms-3 gameContent">
-                                    <div
-                                        v-for="(
-                                            character, index2
-                                        ) in item.Characters.slice(0, 3)"
-                                        :key="index2"
-                                        class="w-100%"
-                                    >
+                                <div class="flex">
+                                    <div class="gameImg w-100% me-3">
                                         <NuxtLink
-                                            class="decoration-none"
-                                            :to="`/findmatch/${character.Id}`"
+                                            :to="{
+                                                path: '/findmatch',
+                                                query: {
+                                                    platformName:
+                                                        item.PlatformName,
+                                                },
+                                            }"
+                                            class="w-100% m-1"
                                         >
-                                            <div
-                                                class="gameItem pt-3 pb-3 w-100%"
-                                            >
-                                                {{ character.Name }}
+                                            <div class="w-100% flex">
+                                                <img
+                                                    :src="`${assetsUrl}${item.ImgFile}`"
+                                                    :alt="item.PlatformName"
+                                                    class="w-100% rounded-10px"
+                                                />
                                             </div>
+                                        </NuxtLink>
+                                    </div>
+                                    <div class="w-100% ms-3 gameContent">
+                                        <div
+                                            v-for="(
+                                                character, index2
+                                            ) in item.Characters.slice(0, 3)"
+                                            :key="index2"
+                                            :class="`w-100% gameItemBox${index2}`"
+                                        >
+                                            <NuxtLink
+                                                class="decoration-none"
+                                                :to="`/findmatch/${character.Id}`"
+                                            >
+                                                <div
+                                                    class="gameItem pt-3 pb-3 w-100%"
+                                                >
+                                                    {{ character.Name }}
+                                                </div>
+                                            </NuxtLink>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex justify-end mt-7">
+                                    <div>
+                                        <NuxtLink
+                                            :to="{
+                                                path: '/findmatch',
+                                                query: {
+                                                    platformName:
+                                                        item.PlatformName,
+                                                },
+                                            }"
+                                            class="decoration-none font-size-18px color-#f72585 fw-600"
+                                        >
+                                            >> 更多媒合商
                                         </NuxtLink>
                                     </div>
                                 </div>
                             </div>
-                            <div class="flex justify-end mt-5">
-                                <div>
-                                    <NuxtLink :to="{
-                                            path: '/findmatch',
-                                            query: {
-                                                platformName: item.PlatformName,
-                                            },
-                                        }"
-                                        class="decoration-none font-size-18px color-#f72585 fw-600">
-                                        >> 更多媒合商
-                                    </NuxtLink>
-                                </div>
-                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="flex justify-center pt-3 pb-3">
-                    <div>
-                        <NuxtLink
-                            class="moreGameBtn color-#fff font-size-22px decoration-none"
-                            to="/gamelist"
-                            >更多遊戲</NuxtLink
-                        >
+                    <div class="flex justify-center pt-3 pb-3 mt-10">
+                        <div class="moreGameBtnBox">
+                            <NuxtLink
+                                class="moreGameBtn color-#fff font-size-22px decoration-none"
+                                to="/gamelist"
+                                >更多遊戲</NuxtLink
+                            >
+                        </div>
                     </div>
                 </div>
             </div>
@@ -240,8 +263,8 @@
                     <h1 class="newsTitle m-0 text-center font-size-50px">
                         最新消息
                     </h1>
-                    <button @click="testAlert">點擊開啟alert彈窗</button>
-                    <button @click="testConfirm">點擊開啟confirm彈窗</button>
+                    <!-- <button @click="testAlert">點擊開啟alert彈窗</button>
+                    <button @click="testConfirm">點擊開啟confirm彈窗</button> -->
                     <div class="flex justify-center">
                         <img
                             class="w-250px"
@@ -279,7 +302,7 @@
                                 :to="`/news/${item.Id}`"
                                 v-for="(item, index) in newsList.slice(0, 5)"
                                 :key="index"
-                                class="color-#555553 decoration-none"
+                                class="newsLink color-#555553 decoration-none"
                             >
                                 <div class="w-full mt-1.8rem">
                                     <div class="w-80 font-size-.8rem">
@@ -613,6 +636,19 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
+.headerLeft {
+    width: 100%; /* 限制区域宽度 */
+    height: auto;
+    overflow: hidden; /* 隐藏超出部分 */
+    clip-path: inset(0 0 0 0); /* 裁剪区域 */
+}
+
+.headerLeft img {
+    width: 85%; /* 设置图片宽度 */
+    max-width: 1630px;
+    min-width: 980px;
+}
+
 /* 搜尋欄位樣式 */
 .platformName:focus {
     border-color: #a9d8f8;
@@ -713,6 +749,35 @@ onBeforeUnmount(() => {
 .newsActivityBtn {
     border: 1px solid #f72585;
     cursor: pointer;
+}
+.newsAllBtn:hover {
+    border: 1px solid #4361ee;
+    background: #fff;
+    color: #4361ee;
+}
+.newsSystemBtn:hover {
+    border: 1px solid #7b2cbf;
+    background: #7b2cbf;
+    color: #fff;
+}
+.newsActivityBtn:hover {
+    border: 1px solid #f72585;
+    background: #f72585;
+    color: #fff;
+}
+.newsLink:hover .newsItem1{
+    background: linear-gradient(to right, #7b2cbf, #4361ee);
+    background: -webkit-linear-gradient(to right, #7b2cbf, #4361ee);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+.newsLink:hover .newsItem2{
+    background: linear-gradient(to right, #7b2cbf, #f72585);
+    background: -webkit-linear-gradient(to right, #7b2cbf, #f72585);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
 }
 .newsItem1 {
     background: linear-gradient(to right, #4361ee, #7b2cbf);
@@ -831,10 +896,31 @@ onBeforeUnmount(() => {
     background: linear-gradient(to bottom, #fff, #f6a2ff);
     border-radius: 10px;
 }
+.gameItemBox0,
+.gameItemBox1,
+.gameItemBox2 {
+    position: relative;
+    padding: 1px;
+    background: linear-gradient(
+        to bottom,
+        rgba(247, 37, 133),
+        #7b2cbf
+    );
+    border-radius: 10px;
+    border: none;
+}
 .gameItem {
+    position: relative;
     width: 100%;
     background: linear-gradient(to bottom, #f72585, #7b2cbf);
     color: #fff;
+    border-radius: 10px;
+    text-align: center;
+}
+.gameItem:hover {
+    width: 100%;
+    background: #fff;
+    color: #f72585;
     border-radius: 10px;
     text-align: center;
 }
@@ -863,5 +949,49 @@ onBeforeUnmount(() => {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+.gameImg:hover {
+    background: linear-gradient(to right, #f72585, #4361ee);
+    color: #fff;
+    border-radius: 10px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.gameLogo {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.moreGameBtnBox{
+    position: relative;
+    padding: 1px;
+    background: linear-gradient(
+        to right,
+        #7b2cbf,
+        rgba(247, 37, 133)
+    );
+    border-radius: 50px;
+    border: none;
+}
+.moreGameBtn:hover{
+    background: #fff;
+    color: #f72585;
+}
+@media screen and (max-width: 768px) {
+    .gameBox0,
+    .gameBox2 {
+        width: 100%;
+        margin-right: 0rem;
+        margin-bottom: 2rem;
+    }
+    .gameBox1,
+    .gameBox3 {
+        width: 100%;
+        margin-left: 0rem;
+        margin-bottom: 2rem;
+    }
 }
 </style>
