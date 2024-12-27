@@ -26,8 +26,8 @@
                                 <div class="text-black text-20px font-500">本會員</div>
                                 <div class="w-80px h-30px relative border-1px border-solid border-#ced2db">
                                     <input type="number"
-                                            v-model="mainPercent"
-                                            @input="SettingPercent"
+                                           v-model="mainPercent"
+                                           @input="SettingPercent"
                                            class="text-16px text-black left-0 text-end bg-transparent absolute outline-none w-70% border-none top-50% transform-translate-y-[-50%]">
                                     <div class="absolute right-5px top-50% transform-translate-y-[-50%]">%</div>
                                 </div>
@@ -50,29 +50,33 @@
             <el-table :data="tableData"
                       :default-sort="{ prop: 'Createtime', order: 'descending' }"
                       style="width: 100%;"
-                      :header-cell-style="{color:'white',background:'#3CAADC',fontSize:'20px',fontWeight:'500'}"
+                      :header-cell-style="{ color: 'white', background: '#3CAADC', fontSize: '20px', fontWeight: '500' }"
                       stripe
                       border>
                 <el-table-column prop="Num"
-                                 label=""
+                                 label="序號"
                                  sortable
-                                 :sort-orders="['ascending','descending']" />
+                                 :sort-orders="['ascending', 'descending']" />
                 <el-table-column prop="Account"
                                  label="被推薦人帳號"
                                  sortable
-                                 :sort-orders="['ascending','descending']" />
+                                 :sort-orders="['ascending', 'descending']" />
                 <el-table-column prop="BindingTime"
                                  label="綁定時間"
                                  sortable
-                                 :sort-orders="['ascending','descending']" />
+                                 :sort-orders="['ascending', 'descending']" />
                 <el-table-column prop="Patch"
                                  label="已回饋遊戲幣"
                                  sortable
-                                 :sort-orders="['ascending','descending']" />
+                                 :sort-orders="['ascending', 'descending']">
+                    <template #default="scope">
+                        <div v-html="formatPatch(scope.row.Patch)"></div>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="FeedbackTime"
                                  label="最後回饋日"
                                  sortable
-                                 :sort-orders="['ascending','descending']" />
+                                 :sort-orders="['ascending', 'descending']" />
             </el-table>
         </div>
     </div>
@@ -81,39 +85,49 @@
 const mainPercent = ref(0);
 const secondPercent = ref(0);
 const tableData = ref([]);
-const SettingPercent = ()=>{
-  if(mainPercent.value > 100){
-    mainPercent.value = 100;
-  }
-  secondPercent.value = 100 - mainPercent.value;
-}
+const formatPatch = patch => {
+    if (Array.isArray(patch)) {
+        return patch.map(item => `${item}`).join('<br/>');
+    }
+    return patch;
+};
+const SettingPercent = () => {
+    if (mainPercent.value > 100) {
+        mainPercent.value = 100;
+    }
+    secondPercent.value = 100 - mainPercent.value;
+};
 onMounted(() => {
     tableData.value = [
         {
             Num: 1,
             Account: '09*****165',
             BindingTime: '2024-11-02 08:46:58',
-            Patch: '(包)1,200',
+            Patch: ['(包)1,200', '(包)1,100', '(包)3,200'],
             FeedbackTime: '2024-06-21'
-        },{
+        },
+        {
             Num: 2,
             Account: '09*****165',
             BindingTime: '2024-11-02 08:46:58',
             Patch: '(包)1,200',
             FeedbackTime: '2024-06-21'
-        },{
+        },
+        {
             Num: 3,
             Account: '09*****165',
             BindingTime: '2024-11-02 08:46:58',
             Patch: '(包)1,200',
             FeedbackTime: '2024-06-21'
-        },{
+        },
+        {
             Num: 4,
             Account: '09*****165',
             BindingTime: '2024-11-02 08:46:58',
             Patch: '(包)1,200',
             FeedbackTime: '2024-06-21'
-        },{
+        },
+        {
             Num: 5,
             Account: '09*****165',
             BindingTime: '2024-11-02 08:46:58',
@@ -147,10 +161,12 @@ input[type='number']::-webkit-outer-spin-button {
     border-top-color: #b1ddf177;
 }
 :deep(.el-table tr) {
-    /* background: #e6e6e6; */
     background: #f2f2f2;
 }
 :deep(.el-table--striped .el-table__body tr.el-table__row--striped td.el-table__cell) {
     background: #ffffff;
+}
+:deep(.el-table--enable-row-transition .el-table__body td.el-table__cell){
+  align-content: start;
 }
 </style>
