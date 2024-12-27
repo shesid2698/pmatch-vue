@@ -20,7 +20,22 @@
 
                 <div class="mt-30px lg:mt-0 w-auto lg:w-400px rounded-5px border-2px border-solid border-gray-300 p-20px h-fit">
                     <div class="flex">
-                        <div class="w-50% m-t-3px text-black text-20px font-500">回饋分潤設定</div>
+                        <div class="flex items-center w-50% m-t-3px text-black text-20px font-500  h-fit">
+                            <div class="me-5px">回饋分潤設定</div>
+
+                            <el-tooltip class="box-item"
+                                        effect="dark"
+                                        placement="top">
+                                <template #content>
+                                    <div class="text-14px">
+                                        此設定為媒合商所提供回饋的分配比例，總和為100%。<br />
+                                        例如媒合商提供回饋比例為1%，<br />
+                                        設定為70%-30%，則實際計算分配比例為0.7%-0.3%。
+                                    </div>
+                                </template>
+                                <div class="inline-block w-15px h-15px rounded-50% border-2px border-solid border-#acb4c2 text-10px font-1000 text-#acb4c2 text-center content-center">i</div>
+                            </el-tooltip>
+                        </div>
                         <div class="flex-1">
                             <div class="flex justify-between items-center mb-5">
                                 <div class="text-black text-20px font-500">本會員</div>
