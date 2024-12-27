@@ -1,10 +1,10 @@
 <template>
     <div class="menu-container hidden lg:block">
-        <div class="p-x-8px text-20px text-black font-bold">會員中心</div>
+        <div class="p-x-8px text-20px text-black font-bold whitespace-nowrap">會員中心</div>
         <NuxtLink v-for="page of curPage"
                   class="decoration-none"
                   :to="page.link">
-            <div class="p-x-15px p-y-7px text-black font-bold cursor-pointer hover:opacity-50 hover:underline"
+            <div class="p-x-15px p-y-7px text-black font-bold cursor-pointer hover:opacity-50 hover:underline whitespace-nowrap"
                  :class="page.show">
                 {{ page.title }}
             </div>
@@ -40,12 +40,23 @@ const curPage = ref([
         title: '簽約媒合商',
         show: '',
         link: '/member/center/contract'
+    },
+    {
+        title: '會員回饋累積',
+        show: '',
+        link: '/member/center/feedback'
+    },
+    {
+        title: '推薦管理',
+        show: '',
+        link: '/member/center/recommend'
     }
 ]);
 onMounted(() => {
     curPage.value.forEach(x => {
         x.show = '';
     });
+    // curPage.value=curPage.value.filter(item=>item.title!=="會員回饋累積");
     switch (route.path) {
         case '/member/center':
             curPage.value[0].show = 'showTitle';
@@ -61,6 +72,12 @@ onMounted(() => {
             break;
         case '/member/center/contract':
             curPage.value[4].show = 'showTitle';
+            break;
+        case '/member/center/feedback':
+            curPage.value[5].show = 'showTitle';
+            break;
+        case '/member/center/recommend':
+            curPage.value[6].show = 'showTitle';
             break;
     }
 });
