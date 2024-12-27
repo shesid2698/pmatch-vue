@@ -1,39 +1,63 @@
 <template>
     <div>
-        <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
+        <div class="headerLeft absolute top-0">
+            <img
+                class="w-85%"
+                src="/images/headerLeft.svg"
+                alt="header左邊底圖"
+            />
+        </div>
+        <div class="max-w-1110px m-auto pt-60px ps-5 pe-5 relative z-2">
             <div class="mb-3">
-                <h1 class="m-0 mb-2 text-center font-size-33px md-font-size-48px slogan">
+                <h1
+                    class="m-0 mb-2 text-center font-size-33px md-font-size-44px slogan"
+                >
                     安心交易的第一選項Pmatch
                 </h1>
-                <h3 class="m-0 font-size-14px md-font-size-26px text-center subSlogan">
+                <h3
+                    class="m-0 font-size-14px md-font-size-22px text-center subSlogan"
+                >
                     為你嚴選商家、用合約保障你的權益、繁瑣的事情都再見
                 </h3>
             </div>
-            <div class="mb-6 md-flex block items-center justify-center">
-                <div class="flex items-center">
-                    <div class="flex items-center w-100%">
-                        <div class="w-100%">
-                            <select
-                                class="platformName md-w-270px w-100% h-43px font-size-1rem b-#a9d8f8 rounded-5px p-5px"
-                                v-model="platformNameToSearch"
-                            >
-                                <option value="">選擇遊戲...</option>
-                                <option
+            <div class="mt-2rem md-mt-0 md-flex block items-center justify-center">
+                <div class="block md-flex items-center w-100%">
+                    <div
+                        class="relative m-0 md-m-4 pt-4 pb-4 w-100% md-w-50% font-size-1.2rem gameSelect color-#fff"
+                        @click.stop="togglePlatformBox"
+                    >
+                        <span class=" fw-600">{{ selectedGame || "遊戲選擇 ..." }}</span>
+                        <div class="absolute top-17px right-20px">
+                            <img class="w-25px" src="/images/arrowDown.png" alt="選擇遊戲下拉箭頭">
+                        </div>
+                        <div class="absolute top-0 w-100% z-99">
+                            <div
+                            class="platformBox"
+                            v-show="showPlatformBox"
+                        >
+                            <div class="platformBoxContent">
+                                <div class="relative pt-2 pb-2 w-100% fw-600">
+                                    遊戲選擇 ...
+                                </div>
+                                <div
+                                    class="platformItem pt-2 pb-2 w-100% fw-600"
                                     v-for="(item, index) in gameList"
                                     :key="index"
-                                    :value="item.PlatformName"
+                                    @click.stop="selectGame(item)"
                                 >
                                     {{ item.PlatformName }}
-                                </option>
-                            </select>
+                                </div>
+                            </div>
                         </div>
+                        </div>
+                        
                     </div>
-                    <div class="md-ms-3 md-mt-0 mt-3 flex w-100%">
+                    <div class="mt-1rem m-0 md-m-4 flex w-100% md-w-50%">
                         <div class="flex items-center w-100%">
                             <div class="flex w-100%">
-                                <div class="w-100%">
+                                <div class="w-100% storeNameBox">
                                     <input
-                                        class="storeName md-ms-3 w-100% md-w-270px h-36px p-0 rounded-5px font-size-1rem p-3px"
+                                        class="storeName max-w-702px md-max-w-517px pt-4 pb-4 w-100% font-size-1.2rem fw-600"
                                         type="text"
                                         placeholder="輸入關鍵字..."
                                         v-model="keywordToSearch"
@@ -41,33 +65,20 @@
                                 </div>
                                 <div class="relative">
                                     <button
-                                        class="h-38px border-none searchBtn absolute top-4px right-0"
+                                        class="h-38px border-none searchBtn absolute top-10px right-10px"
+                                        @click="searchToFindMatch"
                                     >
-                                        <svg
-                                            class="w-23px searchIcon"
-                                            version="1.1"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            xmlns:xlink="http://www.w3.org/1999/xlink"
-                                            x="0px"
-                                            y="0px"
-                                            viewBox="0 0 512 512"
-                                            enable-background="new 0 0 512 512"
-                                            xml:space="preserve"
-                                            fill="#50B0FF"
-                                        >
-                                            <path
-                                                d="M443.5,420.2L336.7,312.4c20.9-26.2,33.5-59.4,33.5-95.5c0-84.5-68.5-153-153.1-153S64,132.5,64,217s68.5,153,153.1,153
-	c36.6,0,70.1-12.8,96.5-34.2l106.1,107.1c3.2,3.4,7.6,5.1,11.9,5.1c4.1,0,8.2-1.5,11.3-4.5C449.5,437.2,449.7,426.8,443.5,420.2z
-	 M217.1,337.1c-32.1,0-62.3-12.5-85-35.2c-22.7-22.7-35.2-52.9-35.2-84.9c0-32.1,12.5-62.3,35.2-84.9c22.7-22.7,52.9-35.2,85-35.2
-	c32.1,0,62.3,12.5,85,35.2c22.7,22.7,35.2,52.9,35.2,84.9c0,32.1-12.5,62.3-35.2,84.9C279.4,324.6,249.2,337.1,217.1,337.1z"
-                                            ></path>
-                                        </svg>
+                                        <img
+                                            class="w-25px"
+                                            src="/images/searchIcon.png"
+                                            alt="搜尋按鈕"
+                                        />
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="w-100% md-ms-3 flex items-center">
+                    <!-- <div class="w-100% md-ms-3 flex items-center">
                         <input
                             type="checkbox"
                             class="w-20px h-20px"
@@ -79,32 +90,49 @@
                         <button class="ms-3 w-100px" @click="searchToFindMatch">
                             搜尋
                         </button>
-                    </div>
+                    </div> -->
                 </div>
             </div>
-            <div class="pt-5rem pb-5rem">
+            <div class="ms-2rem fw-600 color-#F72585">
+                搜尋紀錄???
+            </div>
+            <div class="pt-1rem">
                 <div class="bannerBox">
                     <ElCarousel
-                    v-if="bannerList.length > 0"
-                    class="h-200px bannerDetail"
-                    :interval="2000"
-                    arrow="always"
-                >
-                    <ElCarouselItem
-                        class="h-200px"
-                        v-for="(item, index) in bannerList"
-                        :key="index"
+                        v-if="bannerList.length > 0"
+                        class="h-400px bannerDetail"
+                        :interval="2000"
+                        arrow="always"
                     >
-                        <img
-                            class="w-100%"
-                            :src="`${assetsUrl}${item.ImgFile}`"
-                            :alt="item.PlatformName"
-                        />
-                    </ElCarouselItem>
-                </ElCarousel>
+                        <ElCarouselItem
+                            class="h-400px"
+                            v-for="(item, index) in bannerList"
+                            :key="index"
+                        >
+                            <img
+                                class="w-100%"
+                                :src="`${assetsUrl}${item.ImgFile}`"
+                                :alt="item.PlatformName"
+                            />
+                        </ElCarouselItem>
+                    </ElCarousel>
                 </div>
             </div>
             <div class="mb-3 pt-5rem pb-8rem">
+                <div class="mb-5rem">
+                    <h1 class="color-#fff m-0 text-center font-size-50px">
+                        熱門媒合商
+                    </h1>
+                    <!-- <button @click="testAlert">點擊開啟alert彈窗</button>
+                    <button @click="testConfirm">點擊開啟confirm彈窗</button> -->
+                    <div class="flex justify-center">
+                        <img
+                            class="w-250px"
+                            src="/images/hotMatch.png"
+                            alt="最新消息"
+                        />
+                    </div>
+                </div>
                 <div class="flex flex-wrap">
                     <div
                         class="gameBox"
@@ -152,17 +180,19 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="w-full bg-#fff relative mt-5rem">
             <div class="waveTop absolute"></div>
             <div class="arrowRight absolute">
-                <img src="/images/corner.png" alt="右邊箭頭">
+                <img src="/images/corner.png" alt="右邊箭頭" />
             </div>
             <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
                 <div class="mb-5rem">
-                    <h1 class="newsTitle m-0 text-center font-size-45px">
+                    <h1 class="newsTitle m-0 text-center font-size-50px">
                         最新消息
                     </h1>
+                    <button @click="testAlert">點擊開啟alert彈窗</button>
+                    <button @click="testConfirm">點擊開啟confirm彈窗</button>
                     <div class="flex justify-center">
                         <img
                             class="w-250px"
@@ -173,7 +203,9 @@
                 </div>
                 <div class="lg-flex">
                     <div class="w-100% lg-w-50% me-0 lg-me-2">
-                        <div class="mb-3rem lg-block flex lg-justify-start justify-center">
+                        <div
+                            class="mb-3rem lg-block flex lg-justify-start justify-center"
+                        >
                             <button
                                 class="newsAllBtn font-size-15px border-none p-3 bg-#4361ee color-#fff rounded-50px"
                                 @click="fetchNewsListData([], '')"
@@ -220,26 +252,37 @@
                                                         : ""
                                                 }}
                                             </div>
-                                            <div class="flex font-size-12px items-center p-2">
-                                                <span :class="{
-                                                    'color-#4361EE':
-                                                        item.Category === 1,
-                                                    'color-#f72585':
-                                                        item.Category === 2,
-                                                }">{{
-                                                    item.StartTime.slice(0, 10)
-                                                }}</span>
+                                            <div
+                                                class="flex font-size-12px items-center p-2"
+                                            >
+                                                <span
+                                                    :class="{
+                                                        'color-#4361EE':
+                                                            item.Category === 1,
+                                                        'color-#f72585':
+                                                            item.Category === 2,
+                                                    }"
+                                                    >{{
+                                                        item.StartTime.slice(
+                                                            0,
+                                                            10
+                                                        )
+                                                    }}</span
+                                                >
                                             </div>
                                         </div>
                                     </div>
                                     <div class="w-full pt-3 pb-3 newsItemLink">
                                         <div>
-                                            <h2 class="m-0 font-size-30px" :class="{
-                                                    'newsItem1':
+                                            <h2
+                                                class="m-0 font-size-30px"
+                                                :class="{
+                                                    newsItem1:
                                                         item.Category === 1,
-                                                    'newsItem2':
+                                                    newsItem2:
                                                         item.Category === 2,
-                                                }">
+                                                }"
+                                            >
                                                 {{ item.Title }}
                                             </h2>
                                             <h3 class="m-0 font-size-12px">
@@ -251,7 +294,9 @@
                             </NuxtLink>
                         </div>
                     </div>
-                    <div class="mt-4rem w-100% lg-w-50% ms-0 lg-ms-2 lg-mt-1.5rem newsBoard">
+                    <div
+                        class="mt-4rem w-100% lg-w-50% ms-0 lg-ms-2 lg-mt-1.5rem newsBoard"
+                    >
                         <NewRatio />
                         <Matching class="mt-3rem" param="" />
                     </div>
@@ -261,14 +306,14 @@
         <div class="w-full bg-#fff pt-5rem pb-5 relative">
             <div class="waveBottom absolute"></div>
             <div class="arrowLeft absolute">
-                <img src="/images/corner.png" alt="左邊箭頭">
+                <img src="/images/corner.png" alt="左邊箭頭" />
             </div>
             <div class="arrowRight absolute bottom-0">
-                <img src="/images/corner.png" alt="右邊箭頭">
+                <img src="/images/corner.png" alt="右邊箭頭" />
             </div>
             <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
                 <div class="mb-5rem relative">
-                    <h1 class="newsTitle m-0 text-center font-size-45px">
+                    <h1 class="newsTitle m-0 text-center font-size-50px">
                         我們的服務
                     </h1>
                     <div class="flex justify-center">
@@ -278,16 +323,30 @@
                             alt="我們的服務"
                         />
                     </div>
-                    
                 </div>
-                <div class="md-flex" v-for="(item, index) in serviceList" :key="index" :class="{'serviceEven': index % 2 === 0}">
+                <div
+                    class="md-flex"
+                    v-for="(item, index) in serviceList"
+                    :key="index"
+                    :class="{ serviceEven: index % 2 === 0 }"
+                >
                     <div class="w-100% lg-w-50%">
-                        <img class="w-100%" :src="item.img" :alt="item.title">
+                        <img class="w-100%" :src="item.img" :alt="item.title" />
                     </div>
-                    <div class="mt-4rem w-100% lg-w-50% lg-mt-1rem flex items-center">
-                        <div class="lg-ms-5 lg-me-5 ps-5 pe-5 lg-w-auto w-100% pb-20 serviceItemsContent">
-                            <h2 class="serviceItemsTitle font-size-30px m-0 mb-5">{{item.title}}</h2>
-                            <h4 class="m-0 font-size-15px">{{item.detail}}</h4>
+                    <div
+                        class="mt-4rem w-100% lg-w-50% lg-mt-1rem flex items-center"
+                    >
+                        <div
+                            class="lg-ms-5 lg-me-5 ps-5 pe-5 lg-w-auto w-100% pb-20 serviceItemsContent"
+                        >
+                            <h2
+                                class="serviceItemsTitle font-size-30px m-0 mb-5"
+                            >
+                                {{ item.title }}
+                            </h2>
+                            <h4 class="m-0 font-size-15px">
+                                {{ item.detail }}
+                            </h4>
                         </div>
                     </div>
                 </div>
@@ -302,7 +361,13 @@ import { ElCarousel } from "element-plus";
 import { ElCarouselItem } from "element-plus";
 // loading page
 import { useLoadStore } from "../stores/loading.js";
+import { useModalStore } from "../stores/useModal.js";
+import { useAlertModalStore } from "../stores/useAlertModal.js";
 const store = useLoadStore();
+const modalStore = useModalStore();
+const alertModalStore = useAlertModalStore();
+const openModal = modalStore.showModal;
+const openAlertModal = alertModalStore.alertShowModal;
 const setPageLoading = store.setPageLoading;
 const router = useRouter();
 
@@ -313,6 +378,40 @@ const { $axios } = useNuxtApp();
 const jwtStore = useJwtStore();
 const userToken = useCookie("_PmToken");
 const assetsUrl = useCookie("_PmAssetsUrl");
+const showPlatformBox = ref(false);
+const selectedGame = ref("");
+
+// alert & confirm function
+async function testConfirm() {
+    await openModal(
+        "標題",
+        "內容",
+        () => console.log("確定按鈕被點擊"), // 確定的回調
+        () => console.log("取消按鈕被點擊")
+    );
+}
+async function testAlert() {
+    console.log(alertModalStore.alertShowModal);
+    await openAlertModal("標題", "內容", () => console.log("確定按鈕被點擊")); // 確定的回調
+}
+
+// 切換下拉選單的顯示/隱藏
+const togglePlatformBox = () => {
+    showPlatformBox.value = !showPlatformBox.value;
+    // 選單開啟時添加全域點擊監聽
+    if (showPlatformBox.value) {
+        document.addEventListener("click", handleClickOutside);
+    } else {
+        document.removeEventListener("click", handleClickOutside);
+    }
+};
+
+// 選擇遊戲並關閉選單
+const selectGame = (item) => {
+    selectedGame.value = item.PlatformName; // 或 item.value 根據需要
+    showPlatformBox.value = false; // 隱藏選單
+    console.log(showPlatformBox.value);
+};
 
 const serviceList = [
     {
@@ -330,7 +429,7 @@ const serviceList = [
         detail: "平台提供即時交易查詢服務，不論是遊戲幣流向還是交易進度，資訊完整透明",
         img: "/images/service3.png",
     },
-]
+];
 let platformNameToSearch = ref("");
 let keywordToSearch = ref("");
 let contractToSearch = ref(false);
@@ -422,11 +521,16 @@ const searchToFindMatch = () => {
     router.push({
         path: "/findmatch",
         query: {
-            platformName: platformNameToSearch.value || "", // 平台名稱
+            platformName: selectedGame.value || "", // 平台名稱
             keyword: keywordToSearch.value || "", // 關鍵字
-            contract: contractToSearch.value ? 1 : 0, // 是否查看已簽約媒合商
         },
     });
+};
+const handleClickOutside = (event) => {
+    const dropdown = document.querySelector(".platformBox");
+    if (dropdown && !dropdown.contains(event.target)) {
+        showPlatformBox.value = false;
+    }
 };
 onMounted(async () => {
     await setPageLoading(true);
@@ -450,9 +554,12 @@ onMounted(async () => {
         }
     } catch (error) {
         console.error("頁面初始化失敗:", error);
-    } finally{
+    } finally {
         await setPageLoading(false);
     }
+});
+onBeforeUnmount(() => {
+    document.removeEventListener("click", handleClickOutside);
 });
 </script>
 
@@ -463,12 +570,26 @@ onMounted(async () => {
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
     outline: none;
 }
-.storeName {
-    border: 1px solid #a9d8f8;
+.storeNameBox {
+    position: relative;
+    padding: 1px;
+    background: linear-gradient(
+        to right,
+        rgba(67, 97, 238),
+        rgba(247, 37, 133)
+    );
+    border-radius: 50px;
+    border: none;
 }
-.storeName:focus {
-    border-color: #a9d8f8;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+.storeName {
+    position: relative;
+    background: #fff;
+    border-radius: 50px;
+    border: none;
+    text-indent: 1rem;
+    color: #8D8D8D;
+}
+.storeName:focus-visible{
     outline: none;
 }
 .searchBtn {
@@ -493,6 +614,7 @@ onMounted(async () => {
     background-color: #d3dce6;
 }
 .bannerBox {
+    position: relative;
     padding: 3px;
     background: linear-gradient(
         to right,
@@ -511,6 +633,8 @@ onMounted(async () => {
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
+    font-weight: 900;
+    -webkit-text-stroke: 1px rgba(200, 200, 200, 0.1);
 }
 .subSlogan {
     color: #f72585;
@@ -521,6 +645,7 @@ onMounted(async () => {
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
+    -webkit-text-stroke: 1px rgba(200, 200, 200, 0.1);
 }
 .waveTop {
     background-image: url("/images/waveBottom.svg");
@@ -544,40 +669,40 @@ onMounted(async () => {
     border: 1px solid #f72585;
     cursor: pointer;
 }
-.newsItem1{
+.newsItem1 {
     background: linear-gradient(to right, #4361ee, #7b2cbf);
     background: -webkit-linear-gradient(to right, #4361ee, #7b2cbf);
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
 }
-.newsItem2{
+.newsItem2 {
     background: linear-gradient(to right, #f72585, #7b2cbf);
     background: -webkit-linear-gradient(to right, #f72585, #7b2cbf);
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
 }
-.newsItemLink{
-    border-bottom: 1px solid rgba(67, 97, 238, .3);
+.newsItemLink {
+    border-bottom: 1px solid rgba(67, 97, 238, 0.3);
 }
-.newsBoard{
+.newsBoard {
     display: flex;
     flex-wrap: wrap;
     align-content: space-between;
 }
-.serviceEven{
+.serviceEven {
     flex-direction: row-reverse;
     margin: 2rem 0;
 }
-.serviceItemsTitle{
+.serviceItemsTitle {
     background: linear-gradient(to right, #f72585, #7b2cbf);
     background: -webkit-linear-gradient(to right, #f72585, #7b2cbf);
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
 }
-.serviceItemsContent{
+.serviceItemsContent {
     border-bottom: 1px solid;
     border-image: linear-gradient(to right, #f72585, #7b2cbf) 1;
 }
@@ -591,33 +716,70 @@ onMounted(async () => {
     width: 100%;
     height: 480px;
 }
-.arrowLeft{
+.arrowLeft {
     top: -150px;
 }
-.arrowRight{
+.arrowRight {
     transform: rotate(180deg);
     right: 0;
     top: -180px;
 }
-:deep(.el-carousel__arrow--left), :deep(.el-carousel__arrow--right) {
+:deep(.el-carousel) {
+    position: static;
+}
+:deep(.el-carousel__arrow--left),
+:deep(.el-carousel__arrow--right) {
     background: rgba(0, 0, 0, 0);
 }
-:deep(.el-carousel__arrow--left > .el-icon), :deep(.el-carousel__arrow--right > .el-icon){
-    font-size: 3rem;
+:deep(.el-carousel__arrow--left > .el-icon),
+:deep(.el-carousel__arrow--right > .el-icon) {
+    font-size: 2.5rem;
 }
-:deep(.el-carousel__button){
+:deep(.el-carousel__button) {
     width: 10px;
     height: 10px;
     border-radius: 50%;
 }
-:deep(.el-carousel__indicators--horizontal){
-    bottom: -10px;
+:deep(.el-carousel__indicators--horizontal) {
+    bottom: -45px;
 }
-.moreGameBtn{
+.moreGameBtn {
     padding: 1rem 2rem;
     background: linear-gradient(to right, #7b2cbf, #f72585);
     border-radius: 50px;
     font-size: 1.2rem;
     font-weight: 600;
+}
+.gameSelect {
+    background: linear-gradient(to right, #4361ee, #f72585);
+    border-radius: 50px;
+    text-indent: 1rem;
+}
+.platformBox {
+    position: relative;
+    padding: 1px;
+    background: linear-gradient(
+        to right,
+        rgba(67, 97, 238),
+        rgba(247, 37, 133)
+    );
+    border-radius: 25px;
+    border: none;
+}
+.platformBoxContent{
+    position: relative;
+    background: #FAFAFA;
+    border-radius: 25px;
+    border: none;
+    text-indent: 1rem;
+    width: 100%;
+    color: #F72585;
+}
+.platformItem{
+    border-radius: 25px;
+}
+.platformItem:hover{
+    background-color: #F72585;
+    color: #fff;
 }
 </style>

@@ -1,9 +1,15 @@
 <template>
     <div class="bg-#fff matchingBox relative w-100%">
         <div class="matchingDetail">
-            <div class="matchingTitle p-3 absolute flex items-center rounded-10px">
+            <div
+                class="matchingTitle p-3 absolute flex items-center rounded-10px"
+            >
                 <div class="flex items-center me-2">
-                    <img class="w-20px" src="/images/ratioIcon.png" alt="最新比值">
+                    <img
+                        class="w-20px"
+                        src="/images/ratioIcon.png"
+                        alt="最新比值"
+                    />
                 </div>
                 <h3 class="m-0">最新比值</h3>
             </div>
@@ -27,25 +33,28 @@
                     委賣比值
                 </div>
             </div>
-        <div v-for="(item, index) in visibleList" :key="index">
-            <div class="w-full flex rotatingBox">
-                <div class="w-200px font-size-15px pt-3 pb-3 text-center">
-                    12-11 
-                </div>
-                <div class="w-full font-size-15px pt-3 pb-3 text-center">
-                    {{ item.GamePlatform || "　" }}
-                </div>
-                <div class="patchDetail w-full font-size-15px pt-3 pb-3 text-center">
-                    {{ item.SendPatch || "　" }}
-                </div>
-                <div class="patchDetail w-full font-size-15px pt-3 pb-3 text-center">
-                    {{ item.CollectPatch || "　" }}
+            <div v-for="(item, index) in visibleList" :key="index">
+                <div class="w-full flex rotatingBox">
+                    <div class="w-200px font-size-15px pt-3 pb-3 text-center">
+                        12-11
+                    </div>
+                    <div class="w-full font-size-15px pt-3 pb-3 text-center">
+                        {{ item.GamePlatform || "　" }}
+                    </div>
+                    <div
+                        class="patchDetail w-full font-size-15px pt-3 pb-3 text-center"
+                    >
+                        {{ item.SendPatch || "　" }}
+                    </div>
+                    <div
+                        class="patchDetail w-full font-size-15px pt-3 pb-3 text-center"
+                    >
+                        {{ item.CollectPatch || "　" }}
+                    </div>
                 </div>
             </div>
         </div>
-        </div>
     </div>
-    
 </template>
 
 <script setup>
@@ -53,55 +62,55 @@ const data = ref("");
 const token = ref("");
 const matchingList = [
     {
-        GamePlatform:"包你發娛樂城",
+        GamePlatform: "包你發娛樂城",
         SendPatch: "134",
-        CollectPatch: "144"
+        CollectPatch: "144",
     },
     {
-        GamePlatform:"聚寶Online",
+        GamePlatform: "聚寶Online",
         SendPatch: "130",
-        CollectPatch: "140"
+        CollectPatch: "140",
     },
     {
-        GamePlatform:"老子有錢Online",
+        GamePlatform: "老子有錢Online",
         SendPatch: "130",
-        CollectPatch: "144"
+        CollectPatch: "144",
     },
     {
-        GamePlatform:"寶島娛樂城",
+        GamePlatform: "寶島娛樂城",
         SendPatch: "130",
-        CollectPatch: "144"
+        CollectPatch: "144",
     },
     {
-        GamePlatform:"錢街Online",
+        GamePlatform: "錢街Online",
         SendPatch: "130",
-        CollectPatch: "144"
+        CollectPatch: "144",
     },
     {
-        GamePlatform:"金好運娛樂城",
+        GamePlatform: "金好運娛樂城",
         SendPatch: "130",
-        CollectPatch: "140"
+        CollectPatch: "140",
     },
     {
-        GamePlatform:"滿貫大亨",
+        GamePlatform: "滿貫大亨",
         SendPatch: "1.35",
-        CollectPatch: "1.5"
+        CollectPatch: "1.5",
     },
     {
-        GamePlatform:"豪神娛樂城",
+        GamePlatform: "豪神娛樂城",
         SendPatch: "1300",
-        CollectPatch: "1440"
+        CollectPatch: "1440",
     },
     {
-        GamePlatform:"錢多多娛樂城",
+        GamePlatform: "錢多多娛樂城",
         SendPatch: "134",
-        CollectPatch: "150"
+        CollectPatch: "150",
     },
     {
-        GamePlatform:"金豹娛樂城",
+        GamePlatform: "金豹娛樂城",
         SendPatch: "130",
-        CollectPatch: "144"
-    }
+        CollectPatch: "144",
+    },
 ];
 
 const visibleList = ref([]); // 當前顯示的列表
@@ -109,41 +118,41 @@ const currentIndex = ref(0); // 當前的起始索引
 let intervalId = null; // 計時器 ID
 
 const updateVisibleList = () => {
-  const start = currentIndex.value;
-  const end = Math.min(start + 5, matchingList.length); // 確保不超過數據長度
-  const slice = matchingList.slice(start, end);
+    const start = currentIndex.value;
+    const end = Math.min(start + 5, matchingList.length); // 確保不超過數據長度
+    const slice = matchingList.slice(start, end);
 
-  // 如果不足 5 個，補空白項
-  while (slice.length < 5) {
-    slice.push({ GamePlatform: null, SendPatch: null, CollectPatch: null });
-  }
+    // 如果不足 5 個，補空白項
+    while (slice.length < 5) {
+        slice.push({ GamePlatform: null, SendPatch: null, CollectPatch: null });
+    }
 
-  visibleList.value = slice;
+    visibleList.value = slice;
 
-  // 更新索引
-  if (end >= matchingList.length) {
-    // 如果到達末尾，回到起點
-    currentIndex.value = 0;
-  } else {
-    currentIndex.value += 5;
-  }
+    // 更新索引
+    if (end >= matchingList.length) {
+        // 如果到達末尾，回到起點
+        currentIndex.value = 0;
+    } else {
+        currentIndex.value += 5;
+    }
 };
 const startInterval = () => {
-  updateVisibleList(); // 初始化顯示
-  intervalId = setInterval(updateVisibleList, 4000); // 每 3 秒更新
+    updateVisibleList(); // 初始化顯示
+    intervalId = setInterval(updateVisibleList, 5000); // 每 5 秒更新
 };
 
 const stopInterval = () => {
-  if (intervalId) {
-    clearInterval(intervalId);
-    intervalId = null;
-  }
+    if (intervalId) {
+        clearInterval(intervalId);
+        intervalId = null;
+    }
 };
 onMounted(() => {
-  startInterval();
+    startInterval();
 });
 onBeforeUnmount(() => {
-  stopInterval();
+    stopInterval();
 });
 </script>
 
@@ -162,7 +171,7 @@ onBeforeUnmount(() => {
     border-radius: 1rem;
     padding-top: 3rem;
 }
-.matchingTitle{
+.matchingTitle {
     top: -1.5rem;
     left: 50%;
     transform: translateX(-50%);
@@ -177,7 +186,7 @@ onBeforeUnmount(() => {
 .titleBorder {
     border-left: 2px solid #fff;
 }
-.patchDetail{
+.patchDetail {
     background: linear-gradient(to right, #4361ee, #7b2cbf);
     background: -webkit-linear-gradient(to right, #4361ee, #7b2cbf);
     background-clip: text;
@@ -186,26 +195,26 @@ onBeforeUnmount(() => {
     font-weight: 600;
 }
 @keyframes rotate-with-pause {
-  0% {
-    transform: rotateX(0deg); /* 初始狀態 */
-  }
-  25% {
-    transform: rotateX(360deg); /* 旋轉 1 圈 */
-  }
-  75% {
-    transform: rotateX(360deg); /* 保持 1 圈旋轉，這是第二秒，暫停 */
-  }
-  100% {
-    transform: rotateX(720deg); /* 旋轉 2 圈 */
-  }
+    0% {
+        transform: rotateX(0deg); /* 初始狀態 */
+    }
+    25% {
+        transform: rotateX(720deg); /* 旋轉 2 圈 */
+    }
+    75% {
+        transform: rotateX(720deg); /* 保持 2 圈 */
+    }
+    100% {
+        transform: rotateX(720deg); /* 保持 2 圈 */
+    }
 }
 
 /* 動畫樣式 */
 .rotatingBox {
-  justify-content: center;
-  align-items: center;
-  border-radius: 10px;
-  animation: rotate-with-pause 4s ease-out infinite; /* 每 3 秒一個循環 */
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    animation: rotate-with-pause 5s ease-out infinite; /* 每 5 秒一個循環 */
 }
 </style>
 

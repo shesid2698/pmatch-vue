@@ -104,7 +104,7 @@ const updateVisibleList = () => {
 };
 const startInterval = () => {
     updateVisibleList(); // 初始化顯示
-    intervalId = setInterval(updateVisibleList, 4000); // 每 3 秒更新
+    intervalId = setInterval(updateVisibleList, 5000); // 每 5 秒更新
 };
 
 const stopInterval = () => {
@@ -162,7 +162,7 @@ watch(
     { immediate: true } // 頁面初始化時立即執行一次
 );
 // 在組件載入時啟動計時器
-onMounted( async() => {
+onMounted(async () => {
     await fetchMatchingListData("", ""); // 初次呼叫 API
     startInterval();
 });
@@ -215,10 +215,10 @@ onBeforeUnmount(() => {
         transform: rotateX(0deg); /* 初始狀態 */
     }
     25% {
-        transform: rotateX(360deg); /* 旋轉 1 圈 */
+        transform: rotateX(720deg); /* 旋轉 1 圈 */
     }
     75% {
-        transform: rotateX(360deg); /* 保持 1 圈旋轉，這是第二秒，暫停 */
+        transform: rotateX(720deg); /* 保持 1 圈旋轉，這是第二秒，暫停 */
     }
     100% {
         transform: rotateX(720deg); /* 旋轉 2 圈 */
@@ -230,6 +230,6 @@ onBeforeUnmount(() => {
     justify-content: center;
     align-items: center;
     border-radius: 10px;
-    animation: rotate-with-pause 4s ease-out infinite; /* 每 3 秒一個循環 */
+    animation: rotate-with-pause 5s ease-out infinite; /* 每 5 秒一個循環 */
 }
 </style>

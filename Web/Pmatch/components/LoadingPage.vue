@@ -4,7 +4,7 @@
         class="loadingBac flex items-center justify-center w-100% h-100%"
     >
         <div class="">
-            <img src="/images/pmLoading.gif" alt="" />
+            <img src="/images/pmLoading.gif" alt="pmatchLoadingGif" />
         </div>
     </div>
 </template>
