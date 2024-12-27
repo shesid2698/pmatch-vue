@@ -1,11 +1,7 @@
 <template>
-    <div class="pageSetting">
+    <div :class="{ 'pageSetting': isHomePage }">
         <AlertModal/>
         <ConfirmModal/>
-        <div class="bgSetting relative">
-            <div class="dotRight"></div>
-        </div>
-
         <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
@@ -64,17 +60,6 @@ body {
     background-size: cover;
     position: relative;
 }
-.dotRight {
-    background-image: url("/images/bgDot01.png");
-    background-repeat: no-repeat;
-    background-position: right top;
-    position: absolute;
-    background-size: 30%;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 1300px;
-}
 </style>
 
 <script setup>
@@ -93,6 +78,8 @@ const jwtStore = useJwtStore();
 // cookies
 let assetsUrl = useCookie("_PmAssetsUrl");
 const userToken = useCookie("_PmToken");
+const route = useRoute();
+const isHomePage = computed(() => route.path === '/');
 
 onMounted(async () => {
     await setPageLoading(true);

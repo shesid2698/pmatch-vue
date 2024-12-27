@@ -1,6 +1,6 @@
 <template>
     <div
-        class="w-100% flex justify-center items-center relative z-2 mt-15rem lg-mt-35rem pb-5rem"
+        class="w-100% flex justify-center items-center relative z-2 mt-15rem lg-mt-35rem pb-5rem footerBox"
     >
         <div class="max-w-1110px w-100% ps-5 pe-5">
             <div class="lg-flex">
@@ -125,5 +125,12 @@ const footerLinkRight = ref([
 }
 .footer {
     flex-wrap: wrap;
+}
+.footerBox {
+    background-image: url("/images/bg.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    position: relative;
 }
 </style>

@@ -26,24 +26,29 @@
             <div class="lg-w-100% w-20% flex justify-end">
                 <!-- PC版導航連結 -->
                 <div
-                    class="hidden lg-flex items-center"
+                    class="navBox hidden lg-flex items-center"
                     v-for="item of headerLink"
                     :key="item.id"
+                    :class="`${item.className}Box`"
                 >
                     <div
-                        class="relative"
+                        :class="`relative login${item.className}`"
                         @click.stop="handleDropdown(item)"
                         :ref="setDropdownRef(item.id)"
                     >
                         <span
                             v-show="item.dropdown"
-                            class="loginLink color-#555553 decoration-none font-bold w-100% cursor-pointer"
+                            class="loginLink decoration-none font-bold w-100% cursor-pointer ps-1.2rem pe-1.2rem"
                             :alt="item.title"
                         >
                             {{ item.title }}
                         </span>
                         <button
-                            v-if="item.items && userNameCookie != null && userNameCookie.value !== ''"
+                            v-if="
+                                item.items &&
+                                userNameCookie != null &&
+                                userNameCookie.value !== ''
+                            "
                             class="logoutBtn ms-1 bg-#fff border-none"
                         >
                             <span
@@ -74,31 +79,34 @@
                             >
                         </div>
                     </div>
-                    <NuxtLink
-                        v-show="!item.dropdown"
-                        v-if="item.id !== 5"
-                        :title="item.title"
-                        :to="item.link"
-                        :class="`headerLink flex items-center color-#555553 decoration-none pt-.2rem pb-.2rem ps-1.2rem pe-1.2rem font-bold ${item.className}`"
-                        :alt="item.title"
-                    >
-                        {{ item.title }}
-                        <img class="ms-2 w-20px" v-if="item.icon !== ''" :src="item.icon" :alt="item.title">
-                    </NuxtLink>
-                    
+                    <div class="flex items-center">
+                        <NuxtLink
+                            v-show="!item.dropdown"
+                            v-if="item.id !== 5"
+                            :title="item.title"
+                            :to="item.link"
+                            :class="` decoration-none ps-1.2rem pe-1.2rem font-bold ${item.className}`"
+                            :alt="item.title"
+                        >
+                            {{ item.title }}
+                            <img
+                                class="ms-2 w-20px"
+                                v-if="item.icon !== ''"
+                                :src="item.icon"
+                                :alt="item.title"
+                            />
+                        </NuxtLink>
+                    </div>
                 </div>
                 <NuxtLink
-                        v-if="isLoggedIn"
-                        @click="logout"
-                        class="color-#0d6efd flex items-center hover:opacity-70 hover:underline cursor-pointer decoration-none ms-1.5rem font-bold"
-                        >登出</NuxtLink
-                    >
+                    v-if="isLoggedIn"
+                    @click="logout"
+                    class="color-#0d6efd flex items-center hover:opacity-70 hover:underline cursor-pointer decoration-none ms-1.5rem font-bold"
+                    >登出</NuxtLink
+                >
                 <!-- 手機板漢堡選單 -->
                 <div class="lg-hidden block">
-                    <button
-                        class="navBtn flex"
-                        @click="toggleNav"
-                    >
+                    <button class="navBtn flex" @click="toggleNav">
                         <img
                             class="w-30px px-1 py-2"
                             src="/images/navigation.svg"
@@ -161,7 +169,9 @@
 
 <script setup>
 const userToken = useCookie("_PmToken");
-const isLoggedIn = computed(() => !!userToken?.value && userToken.value.trim() !== "");
+const isLoggedIn = computed(
+    () => !!userToken?.value && userToken.value.trim() !== ""
+);
 const userNameCookie = useCookie("_PmUserName");
 const MemberIdCookie = useCookie("_PmMemberId");
 const user = reactive({});
@@ -303,24 +313,18 @@ onMounted(() => {
                 icon: "",
                 dropdown: true,
                 showDropdown: false,
-                items: userToken.value
-                    ? [
-                          {
-                              id: "logout",
-                              title: "登出",
-                              action: () => {
-                                  // 清除登入狀態
-                                  userToken.value = null;
-                                  userNameCookie.value = "";
-                                  MemberIdCookie.value = "";
-                                  router.push("/");
-                              },
-                          },
-                      ]
-                    : [],
             },
         ];
     }
+    window.addEventListener("scroll", () => {
+    const header = document.querySelector(".headerBox");
+
+    if (window.scrollY > 100) {
+        header.classList.add("scrolled");
+    } else {
+        header.classList.remove("scrolled");
+    }
+});
 });
 
 // 在組件卸載時移除點擊事件監聽器
@@ -330,8 +334,12 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
-.headerBox{
+.headerBox {
     z-index: 99;
+}
+.scrolled{
+    background: #fff;
+    box-shadow: 1px 1px 3px rgba(0,0,0,.3);
 }
 .loginDropdown {
     border: 1px solid #ccc;
@@ -347,13 +355,6 @@ onBeforeUnmount(() => {
 .loginItem:hover {
     color: #999;
     background-color: #e9ecef;
-}
-.headerLink:hover,
-.loginLink:hover {
-    color: #999;
-}
-.headerLink:hover .member-center-container {
-    color: #555553;
 }
 .member-center-container {
     border: 1px solid darkgrey;
@@ -375,25 +376,103 @@ onBeforeUnmount(() => {
 .logoutBtn:hover {
     color: #999;
 }
-.nav1{
+.nav1 {
     border-right: 2px solid #ccc;
     border-left: 2px solid #ccc;
 }
-.nav3{
-    background:linear-gradient(to right, #4361EE, #F72585);
+.nav3 {
+    background: linear-gradient(to right, #4361ee, #f72585);
     border-radius: 50px;
     color: #fff;
-    padding: .5rem 1.5rem;
+    height: 40px;
+    display: flex;
+    align-items: center;
 }
-.loginLink{
+.nav0,
+.nav1,
+.nav2 {
+    color: #6b6b6b;
+    transition: all 0.3s;
+}
+.nav0:hover,
+.nav1:hover,
+.nav2:hover {
+    color: #4361ee;
+}
+.nav0:focus,
+.nav1:focus,
+.nav2:focus {
+    color: #4361ee;
+    text-decoration: underline;
+}
+.nav3:hover {
+    position: relative;
+    background: #fff;
     border-radius: 50px;
-    color: #F72585;
-    padding: .5rem 1.5rem;
-    background:#fff;
-    margin-left: .3rem;
+    border: none;
+    width: 100%;
+    color: #f72585;
+    height: 40px;
 }
-.navBtn{
-    background:linear-gradient(to right, #7b2cbf, #F72585);
+.nav3Box:hover {
+    position: relative;
+    background: linear-gradient(
+        to right,
+        rgba(67, 97, 238),
+        rgba(247, 37, 133)
+    );
+    border-radius: 50px;
+    border: none;
+}
+.nav3Box {
+    position: relative;
+    background: linear-gradient(
+        to right,
+        rgba(67, 97, 238),
+        rgba(247, 37, 133)
+    );
+    border-radius: 50px;
+    border: none;
+    padding: 0 1px;
+}
+.nav4Box {
+    position: relative;
+    padding: 1px;
+    background: linear-gradient(
+        to right,
+        rgba(67, 97, 238),
+        rgba(247, 37, 133)
+    );
+    border-radius: 50px;
+    border: none;
+    margin-left: 10px;
+}
+.nav4:hover,.loginnav4:hover,.loginLink:hover{
+    background: linear-gradient(to right, #4361ee, #f72585);
+    border-radius: 50px;
+    color: #fff;
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+.nav4,
+.loginnav4 {
+    position: relative;
+    background: #fff;
+    border-radius: 50px;
+    height: 40px;
+    border: none;
+    width: 100%;
+    color: #f72585;
+}
+.loginLink {
+    border-radius: 50px;
+    color: #f72585;
+    line-height: 40px;
+    background: #fff;
+}
+.navBtn {
+    background: linear-gradient(to right, #7b2cbf, #f72585);
     border: none;
     border-radius: 10px;
     justify-content: center;
