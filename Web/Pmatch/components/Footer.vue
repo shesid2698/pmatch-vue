@@ -26,7 +26,7 @@
                 <div class="flex w-100% mb-5">
                     <div class="w-50%">
                         <div
-                            class="m-2 lg-text-center"
+                            class="m-2 text-center lg-text-start"
                             v-for="(item, index) in footerLinkLeft"
                             :key="index"
                         >
@@ -39,7 +39,7 @@
                     </div>
                     <div class="w-50%">
                         <div
-                            class="m-2 lg-text-center"
+                            class="m-2 text-center lg-text-start"
                             v-for="(item, index) in footerLinkRight"
                             :key="index"
                         >
@@ -52,19 +52,19 @@
                     </div>
                 </div>
                 <div class="w-100%">
-                    <div class=" flex lg-justify-end justify-center">
-                        <div class="m-2">
+                    <div class=" flex lg-justify-start justify-center">
+                        <div class="mt-2">
                             <p
-                                class="color-#fff mb-2 m-0 justify-center text-center"
+                                class="color-#fff mb-2 m-0 justify-center text-center lg-text-start"
                             >
                                 客服信箱 : service@zihai.com.tw
                             </p>
-                            <p class="color-#fff m-0 text-center">
+                            <p class="color-#fff m-0 text-center lg-text-start">
                                 客服時間 : 週一至週五0900〜1800
                             </p>
                         </div>
                     </div>
-                    <div class="flex lg-justify-end justify-center">
+                    <div class="mt-2 flex lg-justify-start justify-center">
                         <img
                             class="w-100px"
                             src="/images/rapidSSL.gif"

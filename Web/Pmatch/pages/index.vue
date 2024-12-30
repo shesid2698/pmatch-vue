@@ -727,10 +727,10 @@ onMounted(async () => {
             plaformLog.value = [
                 "包你發娛樂城",
                 "滿貫大亨",
-                "聚寶online",
+                "聚寶Online",
                 "金好運娛樂城",
                 "寶島娛樂城",
-                "老子有錢Online",
+                "老子有錢",
             ];
             serchPlatformLogCookies.value = JSON.stringify(plaformLog.value);
         } else {
