@@ -80,6 +80,8 @@ let assetsUrl = useCookie("_PmAssetsUrl");
 const userToken = useCookie("_PmToken");
 const route = useRoute();
 const isHomePage = computed(() => route.path === '/');
+const router = useRouter();
+
 
 onMounted(async () => {
     await setPageLoading(true);
@@ -98,6 +100,7 @@ onMounted(async () => {
             }
         }
         await setPageLoading(false);
+        
     } catch (error) {
         console.error("頁面初始化失敗:", error);
     }
@@ -137,5 +140,6 @@ async function fetchSetting(token) {
         data.value = "無法取得資料。"; // 畫面顯示錯誤訊息
     }
 }
+
 </script>
 

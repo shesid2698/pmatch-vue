@@ -82,11 +82,11 @@
                                     <div class="w-100% storeNameBox">
                                         <div class="storeName pt-4px pb-4px">
                                             <input
-                                            class="storeEntry max-w-702px md-max-w-517px pt-12px pb-12px w-80% md-w-80% font-size-1.2rem fw-600"
-                                            type="text"
-                                            placeholder="輸入關鍵字..."
-                                            v-model="keywordToSearch"
-                                        />
+                                                class="storeEntry max-w-702px md-max-w-517px pt-12px pb-12px w-80% md-w-80% font-size-1.2rem fw-600"
+                                                type="text"
+                                                placeholder="輸入關鍵字..."
+                                                v-model="keywordToSearch"
+                                            />
                                         </div>
                                     </div>
                                     <div class="relative">
@@ -135,25 +135,32 @@
                             v-for="(item, index) in plaformLog"
                             :key="index"
                         >
-                            <button @click="searchLog(item)"  class="searchLogBtn">
+                            <button
+                                @click="searchLog(item)"
+                                class="searchLogBtn"
+                            >
                                 <span>{{ item }}</span>
-                                <span class="m-2" v-if="index !== plaformLog.length - 1">/</span>
+                                <span
+                                    class="m-2"
+                                    v-if="index !== plaformLog.length - 1"
+                                    >/</span
+                                >
                             </button>
                         </div>
                     </div>
 
                     <span class=""> </span>
                 </div>
-                <div class="pt-1rem">
+                <div class="pt-2rem">
                     <div class="bannerBox">
                         <ElCarousel
                             v-if="bannerList.length > 0"
-                            class="h-400px bannerDetail"
+                            class="h-420px bannerDetail"
                             :interval="2000"
                             arrow="always"
                         >
                             <ElCarouselItem
-                                class="h-400px"
+                                class="h-420px"
                                 v-for="(item, index) in bannerList"
                                 :key="index"
                             >
@@ -458,6 +465,7 @@ const alertModalStore = useAlertModalStore();
 const openModal = modalStore.showModal;
 const openAlertModal = alertModalStore.alertShowModal;
 const setPageLoading = store.setPageLoading;
+const route = useRoute();
 const router = useRouter();
 
 const newsList = ref([]);
@@ -471,6 +479,7 @@ const serchPlatformLogCookies = useCookie("_PmSearchLog");
 const plaformLog = ref([]);
 const showPlatformBox = ref(false);
 const selectedGame = ref("");
+let isBackNavigation = false;
 
 // alert & confirm function
 async function testConfirm() {
@@ -657,8 +666,44 @@ const updateNameArray = (searchValue) => {
     // 更新 Cookie
     serchPlatformLogCookies.value = JSON.stringify(plaformLog.value);
 };
+
+// 儲存滾動位置
+const saveScrollPosition = () => {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    sessionStorage.setItem(
+        `scroll-position-${route.fullPath}`,
+        scrollTop.toString()
+    );
+};
+
+// 恢復滾動位置
+const restoreScrollPosition = () => {
+    const scrollPosition = sessionStorage.getItem(
+        `scroll-position-${route.fullPath}`
+    );
+    if (scrollPosition) {
+        // 延遲滾動確保 DOM 已渲染
+        setTimeout(() => {
+            window.scrollTo({ top: Number(scrollPosition), behavior: "auto" });
+        }, 50);
+    }
+};
+
+// 監聽路由變化
+watch(
+    () => route.fullPath,
+    (newPath, oldPath) => {
+        if (oldPath) {
+            // 儲存上一頁的滾動位置
+            saveScrollPosition();
+        }
+        restoreScrollPosition();
+    }
+);
+
 onMounted(async () => {
     await setPageLoading(true);
+
     try {
         if (userToken.value != "" && userToken.value != undefined) {
             const token = userToken.value;
@@ -691,6 +736,11 @@ onMounted(async () => {
         } else {
             plaformLog.value = serchPlatformLogCookies.value;
         }
+        // 監聽「上一頁」按鈕
+        window.addEventListener("popstate", () => {
+            isBackNavigation = true; // 標記為「上一頁」返回
+        });
+        restoreScrollPosition();
     } catch (error) {
         console.error("頁面初始化失敗:", error);
     } finally {
@@ -699,6 +749,7 @@ onMounted(async () => {
 });
 onBeforeUnmount(() => {
     document.removeEventListener("click", handleClickOutside);
+    saveScrollPosition();
 });
 </script>
 
@@ -739,12 +790,11 @@ onBeforeUnmount(() => {
     border-radius: 50px;
     border: none;
     text-indent: 1rem;
-    
 }
 .storeEntry:focus-visible {
     outline: none;
 }
-.storeEntry{
+.storeEntry {
     border: none;
     color: #8d8d8d;
 }
@@ -805,7 +855,7 @@ onBeforeUnmount(() => {
     background-repeat: no-repeat;
     background-position: right bottom;
     background-size: 100%;
-    top: -300px;
+    top: -295px;
     left: 0;
     width: 100%;
     min-height: 300px;
@@ -1044,22 +1094,22 @@ onBeforeUnmount(() => {
     background: #fff;
     color: #f72585;
 }
-.searchLogBtn{
-    background:rgba(0, 0, 0, 0);
+.searchLogBtn {
+    background: rgba(0, 0, 0, 0);
     color: #f72585;
-    border:none;
+    border: none;
     padding: 0;
     cursor: pointer;
-    margin: .2rem;
+    margin: 0.2rem;
     font-size: 15px;
     font-weight: 600;
 }
-@media screen and (max-width: 1024px){
+@media screen and (max-width: 1024px) {
     .arrowRight {
-    transform: rotate(180deg);
-    right: 0;
-    top: 0;
-}
+        transform: rotate(180deg);
+        right: 0;
+        top: 0;
+    }
 }
 @media screen and (max-width: 768px) {
     .gameBox0,

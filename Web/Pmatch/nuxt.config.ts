@@ -1,10 +1,14 @@
-
 export default defineNuxtConfig({
     devtools: { enabled: true },
-    modules: ['@unocss/nuxt', '@element-plus/nuxt', '@pinia/nuxt', '@pinia-plugin-persistedstate/nuxt'],
-    css: ['element-plus/dist/index.css'],
+    modules: [
+        "@unocss/nuxt",
+        "@element-plus/nuxt",
+        "@pinia/nuxt",
+        "@pinia-plugin-persistedstate/nuxt",
+    ],
+    css: ["element-plus/dist/index.css"],
     imports: {
-        dirs: ['stores'],
+        dirs: ["stores"],
     },
     experimental: {
         appManifest: false,
