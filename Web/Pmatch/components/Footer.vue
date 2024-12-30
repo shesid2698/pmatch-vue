@@ -1,6 +1,6 @@
 <template>
     <div
-        class="w-100% flex justify-center items-center relative z-2 mt-15rem lg-mt-35rem pb-5rem footerBox"
+        class="w-100% flex justify-center items-center relative z-2 mt-8rem lg-mt-23rem pt-5rem pb-5rem footerBox"
         :class="{ homeBackground: isHomePage }"
     >
         <div class="max-w-1110px w-100% ps-5 pe-5">

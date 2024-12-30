@@ -755,14 +755,14 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .headerLeft {
-    width: 100%; /* 限制区域宽度 */
+    width: 100%; 
     height: auto;
-    overflow: hidden; /* 隐藏超出部分 */
-    clip-path: inset(0 0 0 0); /* 裁剪区域 */
+    overflow: hidden; 
+    clip-path: inset(0 0 0 0); 
 }
 
 .headerLeft img {
-    width: 85%; /* 设置图片宽度 */
+    width: 85%;
     max-width: 1630px;
     min-width: 980px;
 }
@@ -832,7 +832,7 @@ onBeforeUnmount(() => {
 }
 .slogan {
     background: linear-gradient(to bottom, #f72585, #7b2cbf);
-    background: -webkit-linear-gradient(to bottom, #f72585, #7b2cbf);
+    background: -webkit-linear-gradient(#f72585, #7b2cbf);
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
@@ -1095,13 +1095,14 @@ onBeforeUnmount(() => {
     color: #f72585;
 }
 .searchLogBtn {
+    font-family: Microsoft JhengHei;
     background: rgba(0, 0, 0, 0);
     color: #f72585;
     border: none;
     padding: 0;
     cursor: pointer;
     margin: 0.2rem;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 600;
 }
 @media screen and (max-width: 1024px) {
