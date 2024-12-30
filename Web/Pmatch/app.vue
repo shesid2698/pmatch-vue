@@ -10,7 +10,7 @@
         />
         <LoadingPage />
         <Header />
-        <div class="pt-120px pb- 60px page">
+        <div class="pt-70px pb-60px page">
             <NuxtPage />
         </div>
         <Footer />

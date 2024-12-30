@@ -27,7 +27,7 @@
                     <h1
                         class="m-0 mb-2 text-center font-size-33px md-font-size-44px slogan"
                     >
-                        安心交易的第一選項Pmatch
+                        安心交易的第一選項PMatch
                     </h1>
                     <h3
                         class="m-0 font-size-14px md-font-size-22px text-center subSlogan"
@@ -117,7 +117,9 @@
                     </div> -->
                     </div>
                 </div>
-                <div class="mt-4 md-mt-0 ms-2rem fw-600 color-#F72585 flex items-center">
+                <div
+                    class="mt-4 md-mt-0 ms-2rem fw-600 color-#F72585 flex items-center"
+                >
                     <div class="flex items-center">
                         <img
                             class="w-25px"
@@ -125,7 +127,20 @@
                             alt="遊戲搜尋icon"
                         />
                     </div>
-                    <span class="ms-3"> 搜尋紀錄??? </span>
+                    <div class="ms-3 flex">
+                        <div
+                            v-if="!plaformLog.value"
+                            v-for="(item, index) in plaformLog"
+                            :key="index"
+                        >
+                            <button @click="searchLog(item)"  class="searchLogBtn">
+                                <span>{{ item }}</span>
+                                <span class="m-2" v-if="index !== plaformLog.length - 1">/</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <span class=""> </span>
                 </div>
                 <div class="pt-1rem">
                     <div class="bannerBox">
@@ -450,6 +465,8 @@ const { $axios } = useNuxtApp();
 const jwtStore = useJwtStore();
 const userToken = useCookie("_PmToken");
 const assetsUrl = useCookie("_PmAssetsUrl");
+const serchPlatformLogCookies = useCookie("_PmSearchLog");
+const plaformLog = ref([]);
 const showPlatformBox = ref(false);
 const selectedGame = ref("");
 
@@ -482,7 +499,6 @@ const togglePlatformBox = () => {
 const selectGame = (item) => {
     selectedGame.value = item.PlatformName; // 或 item.value 根據需要
     showPlatformBox.value = false; // 隱藏選單
-    console.log(showPlatformBox.value);
 };
 
 const serviceList = [
@@ -588,8 +604,14 @@ async function fetchADList(token) {
         data.value = "無法取得資料。"; // 畫面顯示錯誤訊息
     }
 }
-
+// 找媒合搜尋
 const searchToFindMatch = () => {
+    if (selectedGame.value.trim() !== "") {
+        updateNameArray(selectedGame.value.trim());
+        selectedGame.value = ""; // 清空搜索框
+    } else {
+        return;
+    }
     router.push({
         path: "/findmatch",
         query: {
@@ -598,11 +620,40 @@ const searchToFindMatch = () => {
         },
     });
 };
+// 搜尋紀錄
+const searchLog = (item) => {
+    router.push({
+        path: "/findmatch",
+        query: {
+            platformName: item || "", // 平台名稱
+        },
+    });
+};
 const handleClickOutside = (event) => {
     const dropdown = document.querySelector(".platformBox");
     if (dropdown && !dropdown.contains(event.target)) {
         showPlatformBox.value = false;
     }
+};
+
+// 搜尋紀錄更新陣列並保存到 Cookie
+const updateNameArray = (searchValue) => {
+    const index = plaformLog.value.indexOf(searchValue);
+    if (index !== -1) {
+        // 如果搜索值已存在，移到陣列開頭
+        console.log(plaformLog.value);
+        plaformLog.value.splice(index, 1);
+    }
+    // 添加到陣列開頭
+    plaformLog.value.unshift(searchValue);
+
+    // 限制陣列長度（例如限制為 3）
+    if (plaformLog.value.length > 6) {
+        plaformLog.value.pop();
+    }
+
+    // 更新 Cookie
+    serchPlatformLogCookies.value = JSON.stringify(plaformLog.value);
 };
 onMounted(async () => {
     await setPageLoading(true);
@@ -623,6 +674,20 @@ onMounted(async () => {
                 await fetchGameList(token);
                 await fetchADList(token);
             }
+        }
+
+        if (!serchPlatformLogCookies.value) {
+            plaformLog.value = [
+                "包你發娛樂城",
+                "滿貫大亨",
+                "聚寶online",
+                "金好運娛樂城",
+                "寶島娛樂城",
+                "老子有錢Online",
+            ];
+            serchPlatformLogCookies.value = JSON.stringify(plaformLog.value);
+        } else {
+            plaformLog.value = serchPlatformLogCookies.value;
         }
     } catch (error) {
         console.error("頁面初始化失敗:", error);
@@ -694,7 +759,7 @@ onBeforeUnmount(() => {
 .el-carousel__item:nth-child(2n + 1) {
     background-color: #d3dce6;
 }
-.bannerBox {
+/* .bannerBox {
     position: relative;
     padding: 3px;
     background: linear-gradient(
@@ -703,7 +768,7 @@ onBeforeUnmount(() => {
         rgba(247, 37, 133)
     );
     border-radius: 1rem;
-}
+} */
 .bannerDetail {
     background: #fff;
     border-radius: 1rem;
@@ -765,14 +830,14 @@ onBeforeUnmount(() => {
     background: #f72585;
     color: #fff;
 }
-.newsLink:hover .newsItem1{
+.newsLink:hover .newsItem1 {
     background: linear-gradient(to right, #7b2cbf, #4361ee);
     background: -webkit-linear-gradient(to right, #7b2cbf, #4361ee);
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
 }
-.newsLink:hover .newsItem2{
+.newsLink:hover .newsItem2 {
     background: linear-gradient(to right, #7b2cbf, #f72585);
     background: -webkit-linear-gradient(to right, #7b2cbf, #f72585);
     background-clip: text;
@@ -901,11 +966,7 @@ onBeforeUnmount(() => {
 .gameItemBox2 {
     position: relative;
     padding: 1px;
-    background: linear-gradient(
-        to bottom,
-        rgba(247, 37, 133),
-        #7b2cbf
-    );
+    background: linear-gradient(to bottom, rgba(247, 37, 133), #7b2cbf);
     border-radius: 10px;
     border: none;
 }
@@ -965,20 +1026,26 @@ onBeforeUnmount(() => {
     left: 50%;
     transform: translateX(-50%);
 }
-.moreGameBtnBox{
+.moreGameBtnBox {
     position: relative;
     padding: 1px;
-    background: linear-gradient(
-        to right,
-        #7b2cbf,
-        rgba(247, 37, 133)
-    );
+    background: linear-gradient(to right, #7b2cbf, rgba(247, 37, 133));
     border-radius: 50px;
     border: none;
 }
-.moreGameBtn:hover{
+.moreGameBtn:hover {
     background: #fff;
     color: #f72585;
+}
+.searchLogBtn{
+    background:rgba(0, 0, 0, 0);
+    color: #f72585;
+    border:none;
+    padding: 0;
+    cursor: pointer;
+    margin: .2rem;
+    font-size: 15px;
+    font-weight: 600;
 }
 @media screen and (max-width: 768px) {
     .gameBox0,

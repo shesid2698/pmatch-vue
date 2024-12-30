@@ -26,7 +26,7 @@
                 <div class="flex w-100% mb-5">
                     <div class="w-50%">
                         <div
-                            class="m-2 text-center"
+                            class="m-2"
                             v-for="(item, index) in footerLinkLeft"
                             :key="index"
                         >
@@ -39,7 +39,7 @@
                     </div>
                     <div class="w-50%">
                         <div
-                            class="m-2 text-center"
+                            class="m-2"
                             v-for="(item, index) in footerLinkRight"
                             :key="index"
                         >
@@ -138,9 +138,7 @@ const footerLinkRight = ref([
 
 <style scoped>
 .footerLink:hover {
-    font-weight: 600;
-}
-.footerLink:focus {
+    color:#ccc;
     text-decoration: underline;
 }
 .footer {
