@@ -55,7 +55,7 @@
                     <div
                         class="patchDetail w-full font-size-15px pt-3 pb-3 text-center"
                     >
-                        {{ item.Patch || "　" }}
+                        {{ formatNumber(item.Patch) || "　" }}
                     </div>
                     <div class="w-full font-size-15px pt-3 pb-3 text-center">
                         {{ item.MobileNumber || "　" }}
@@ -152,7 +152,17 @@ async function fetchMatchingListData(token, platformName) {
         data.value = "無法取得資料。"; // 畫面顯示錯誤訊息
     }
 }
-
+// 千分位
+const formatNumber = (value) => {
+    if (value === undefined || value === null || value === "") {
+        return "　"; // 如果值不存在，返回空白字符
+    }
+    const number = Number(value);
+    if (isNaN(number)) {
+        return value; // 如果不是數字，直接返回原始值
+    }
+    return number.toLocaleString(); // 將數字轉換為千分位格式
+};
 // 監聽傳遞即時媒合值的變化去call api
 watch(
     () => props.param,

@@ -26,7 +26,7 @@
                 <div class="flex w-100% mb-5">
                     <div class="w-50%">
                         <div
-                            class="m-2"
+                            class="m-2 lg-text-center"
                             v-for="(item, index) in footerLinkLeft"
                             :key="index"
                         >
@@ -39,7 +39,7 @@
                     </div>
                     <div class="w-50%">
                         <div
-                            class="m-2"
+                            class="m-2 lg-text-center"
                             v-for="(item, index) in footerLinkRight"
                             :key="index"
                         >

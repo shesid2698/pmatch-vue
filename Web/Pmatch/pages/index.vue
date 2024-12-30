@@ -80,12 +80,14 @@
                             <div class="flex items-center w-100%">
                                 <div class="flex w-100%">
                                     <div class="w-100% storeNameBox">
-                                        <input
-                                            class="storeName max-w-702px md-max-w-517px pt-4 pb-4 w-100% font-size-1.2rem fw-600"
+                                        <div class="storeName pt-4px pb-4px">
+                                            <input
+                                            class="storeEntry max-w-702px md-max-w-517px pt-12px pb-12px w-80% md-w-80% font-size-1.2rem fw-600"
                                             type="text"
                                             placeholder="輸入關鍵字..."
                                             v-model="keywordToSearch"
                                         />
+                                        </div>
                                     </div>
                                     <div class="relative">
                                         <button
@@ -118,7 +120,7 @@
                     </div>
                 </div>
                 <div
-                    class="mt-4 md-mt-0 ms-2rem fw-600 color-#F72585 flex items-center"
+                    class="mt-4 md-mt-0 md-ms-2rem fw-600 color-#F72585 flex items-center"
                 >
                     <div class="flex items-center">
                         <img
@@ -127,7 +129,7 @@
                             alt="遊戲搜尋icon"
                         />
                     </div>
-                    <div class="ms-3 flex">
+                    <div class="ms-3 flex flex-wrap">
                         <div
                             v-if="!plaformLog.value"
                             v-for="(item, index) in plaformLog"
@@ -737,11 +739,16 @@ onBeforeUnmount(() => {
     border-radius: 50px;
     border: none;
     text-indent: 1rem;
-    color: #8d8d8d;
+    
 }
-.storeName:focus-visible {
+.storeEntry:focus-visible {
     outline: none;
 }
+.storeEntry{
+    border: none;
+    color: #8d8d8d;
+}
+
 .searchBtn {
     background-color: rgba(0, 0, 0, 0);
 }
@@ -759,16 +766,16 @@ onBeforeUnmount(() => {
 .el-carousel__item:nth-child(2n + 1) {
     background-color: #d3dce6;
 }
-/* .bannerBox {
+.bannerBox {
     position: relative;
-    padding: 3px;
+    /* padding: 3px;
     background: linear-gradient(
         to right,
         rgba(67, 97, 238),
         rgba(247, 37, 133)
     );
-    border-radius: 1rem;
-} */
+    border-radius: 1rem; */
+}
 .bannerDetail {
     background: #fff;
     border-radius: 1rem;
@@ -1046,6 +1053,13 @@ onBeforeUnmount(() => {
     margin: .2rem;
     font-size: 15px;
     font-weight: 600;
+}
+@media screen and (max-width: 1024px){
+    .arrowRight {
+    transform: rotate(180deg);
+    right: 0;
+    top: 0;
+}
 }
 @media screen and (max-width: 768px) {
     .gameBox0,
