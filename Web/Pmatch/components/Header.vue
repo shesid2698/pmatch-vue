@@ -414,6 +414,9 @@ onBeforeUnmount(() => {
     color: #f72585;
     height: 40px;
 }
+.nav3:hover img {
+    content: url('/images/linkIconPink.png'); /* 鼠标悬停时的图标 */
+}
 .nav3Box:hover {
     position: relative;
     background: linear-gradient(
@@ -434,6 +437,40 @@ onBeforeUnmount(() => {
     border-radius: 50px;
     border: none;
     padding: 0 1px;
+}
+.nav3:focus {
+    background: linear-gradient(to right, #f72585, #4361ee);
+    border-radius: 50px;
+    color: #fff;
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+.nav3:focus img{
+    content: url('/images/linkIcon.png');
+}
+.nav3Box:focus-within  {
+    position: relative;
+    background: linear-gradient(
+        to right,
+        rgba(247, 37, 133),
+        rgba(67, 97, 238)
+    );
+    border-radius: 50px;
+    border: none;
+    padding: 0 1px;
+}
+.nav4Box:focus-within{
+    position: relative;
+    padding: 1px;
+    background: linear-gradient(
+        to right,
+        rgba(247, 37, 133),
+        rgba(67, 97, 238)
+    );
+    border-radius: 50px;
+    border: none;
+    margin-left: 10px;
 }
 .nav4Box {
     position: relative;
