@@ -99,6 +99,11 @@
 
 <script setup>
 import VueTurnstile from 'vue-turnstile';
+
+import { useAlertModalStore } from "../stores/useAlertModal.js";
+const alertModalStore = useAlertModalStore();
+const openAlertModal = alertModalStore.alertShowModal;
+
 const encrypt = useEncrypt();
 const eyes = ref(null);
 const i_password = ref(null);
@@ -162,7 +167,7 @@ async function Login(encryptedPassword) {
             MemberIdCookie.value = response.data.Data.PmatchMemberId;
             window.location.href = '/';
         } else {
-            alert(`${response.data.Status.Message}`);
+            await openAlertModal(" ", `${response.data.Status.Message}`);
         }
     } catch (error) {
         console.error('請求失敗:', error);

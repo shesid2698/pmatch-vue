@@ -57,6 +57,9 @@
     </div>
 </template>
 <script setup>
+import { useAlertModalStore } from "../stores/useAlertModal.js";
+const alertModalStore = useAlertModalStore();
+const openAlertModal = alertModalStore.alertShowModal;
 const COUNTDOWN_DURATION = 120; // 倒計時總長度 (秒)
 const countdown = ref(COUNTDOWN_DURATION); // 剩餘時間 (秒)
 const timer = ref(null); // 計時器
@@ -123,11 +126,11 @@ const SendCode = async () => {
             }
         );
         if (response.data.Status.Code === 0) {
-            alert('驗證碼已發送，請至手機收取驗證碼!');
+            await openAlertModal(" ", '驗證碼已發送，請至手機收取驗證碼!');
             startCountdown();
             mobileCook.value = mobile.value;
         } else {
-            alert(`${response.data.Status.Message}`);
+            await openAlertModal(" ", `${response.data.Status.Message}`);
         }
     } catch (error) {
         console.error('請求失敗:', error);
@@ -154,7 +157,7 @@ const verifyCode = async () => {
         if (response.data.Status.Code === 0) {
             resetAll();
         } else {
-            alert(`${response.data.Status.Message}`);
+            await openAlertModal(" ", `${response.data.Status.Message}`);
         }
     } catch (error) {
         console.error('請求失敗:', error);

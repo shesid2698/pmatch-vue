@@ -68,6 +68,9 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from "vue";
+import { useAlertModalStore } from "../stores/useAlertModal.js";
+const alertModalStore = useAlertModalStore();
+const openAlertModal = alertModalStore.alertShowModal;
 const matchingList = ref([]);
 const { $axios } = useNuxtApp();
 const jwtStore = useJwtStore();
@@ -153,7 +156,7 @@ async function fetchMatchingListData(token, platformName) {
         if (response.data.Status.Code === 0) {
             matchingList.value = response.data.Datas;
         } else {
-            alert(`${response.data.Status.Message}`);
+            await openAlertModal(" ", `${response.data.Status.Message}`);
         }
     } catch (error) {
         console.error("請求失敗:", error);

@@ -16,6 +16,10 @@
 // 引入的東西
 import { defineAsyncComponent } from "vue";
 
+import { useAlertModalStore } from "../stores/useAlertModal.js";
+const alertModalStore = useAlertModalStore();
+const openAlertModal = alertModalStore.alertShowModal;
+
 // 用路由的名字 help1、help2
 const route = useRoute();
 const routeParamId = route.params.id;
@@ -41,11 +45,10 @@ async function fetchNewsDetailData(token) {
         if (response.data.Status.Code === 0) {
             newsItem.value = response.data.Data;
         } else {
-            alert(`${response.data.Status.Message}`);
+            await openAlertModal(" ", `${response.data.Status.Message}`);
         }
     } catch (error) {
         console.error("請求失敗:", error);
-        data.value = "無法取得資料。"; // 畫面顯示錯誤訊息
     }
 }
 onMounted(async () => {

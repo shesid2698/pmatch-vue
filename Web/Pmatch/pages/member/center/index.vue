@@ -328,8 +328,10 @@
     </div>
 </template>
 <script setup>
+import { useAlertModalStore } from "../stores/useAlertModal.js";
+const alertModalStore = useAlertModalStore();
+const openAlertModal = alertModalStore.alertShowModal;
 const modalStore = useModalStore();
-const alertModal = useAlertModalStore();
 const recommendDisabled = ref(false);
 const { $axios } = useNuxtApp();
 const userToken = useCookie('_PmToken');
@@ -498,7 +500,7 @@ onMounted(async () => {
                 theUser[0].Carrier = theUser[0].Carrier.replace('/', '');
             }
         } else {
-            alert(`${response.data.Status.Message}`);
+            await openAlertModal(" ", `${response.data.Status.Message}`);
         }
         } else {
             router.push("/member/login");

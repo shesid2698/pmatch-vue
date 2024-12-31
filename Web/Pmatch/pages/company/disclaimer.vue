@@ -12,6 +12,9 @@
 <script setup>
 // loading page
 import { useLoadStore } from "../stores/loading.js";
+import { useAlertModalStore } from "../stores/useAlertModal.js";
+const alertModalStore = useAlertModalStore();
+const openAlertModal = alertModalStore.alertShowModal;
 const store = useLoadStore();
 const setPageLoading = store.setPageLoading;
 
@@ -34,10 +37,10 @@ async function fetchData(token) {
                 },
             }
         );
-        if(response.data.Status.Code === 0 && response.data != null){
+        if (response.data.Status.Code === 0 && response.data != null) {
             data.value = response.data.Content;
-        }else{
-            alert(`${response.data.Status.Message}`)
+        } else {
+            await openAlertModal(" ", `${response.data.Status.Message}`);
         }
     } catch (error) {
         console.error("請求失敗:", error);
@@ -48,7 +51,6 @@ onMounted(async () => {
     await setPageLoading(true);
     try {
         if (userToken.value != "" && userToken.value != undefined) {
-            
             const token = userToken.value;
             if (token != "") {
                 await fetchData(token);
@@ -62,11 +64,10 @@ onMounted(async () => {
         }
     } catch (error) {
         console.error("頁面初始化失敗:", error);
-    } finally{
+    } finally {
         await setPageLoading(false);
     }
 });
-
 </script>
 <style scoped>
 .ccontainer {

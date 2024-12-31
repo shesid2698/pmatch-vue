@@ -258,7 +258,7 @@
                     </div>
                 </div>
                 <div>
-                    <div class="w-100% flex justify-center flex-wrap">
+                    <div class="w-100% flex justify-center flex-wrap mb-10">
                         <div class="entryBox mb-5">
                             <div class="entryContent">
                                 <input
@@ -269,10 +269,24 @@
                             </div>
                         </div>
                         <div class="w-100% flex justify-center mb-5">
-                            <input type="radio"/><span>委買遊戲幣</span>
-                            <input type="radio"/><span>委賣遊戲幣</span>
+                            <div class="flex items-center mx-10">
+                                <input
+                                    type="radio"
+                                    class="w-20px h-20px m-0 me-3"
+                                /><span class="font-size-18px color-#f72585"
+                                    >委買遊戲幣</span
+                                >
+                            </div>
+                            <div class="flex items-center mx-10">
+                                <input
+                                    type="radio"
+                                    class="w-20px h-20px m-0 me-3"
+                                /><span class="font-size-18px color-#4361ee"
+                                    >委賣遊戲幣</span
+                                >
+                            </div>
                         </div>
-                        <div class="entryBox">
+                        <div class="entryBox mb-5">
                             <div class="entryContent">
                                 <input
                                     class="entryDetail w-90% py-.5rem font-size-18px"
@@ -280,6 +294,57 @@
                                     placeholder="委託金額(必填)"
                                 />
                             </div>
+                        </div>
+                        <div class="w-100% flex justify-center mb-5">
+                            <div class="flex items-center ms-13 me-9">
+                                <input
+                                    type="radio"
+                                    class="w-20px h-20px m-0 me-3"
+                                /><span class="font-size-18px color-#f72585"
+                                    >超商代收</span
+                                >
+                            </div>
+                            <div class="flex items-center mx-16">
+                                <input
+                                    type="radio"
+                                    class="w-20px h-20px m-0 me-3"
+                                /><span class="font-size-18px color-#f72585"
+                                    >ATM轉帳</span
+                                >
+                            </div>
+                        </div>
+                        <div class="contactBox relative mb-5">
+                            <div class="contactContent py-2">
+                                <div class="font-size-18px">聯絡資訊</div>
+                                <div class="absolute top-13px right-20px">
+                                    <img
+                                        class="w-25px"
+                                        src="/images/arrowDown.png"
+                                        alt=""
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contractBox">
+                        <div
+                            class="matchingTitle p-3 absolute flex items-center rounded-10px"
+                        >
+                            <div class="flex items-center me-2">
+                                <img
+                                    class="w-20px"
+                                    src="/images/matchingIcon.png"
+                                    alt="服務條款"
+                                />
+                            </div>
+                            <h3 class="m-0 font-size-20px">服務條款</h3>
+                        </div>
+                        <div class="contractContent">
+                            <div
+                                class="contractDetail"
+                                v-if="storesItem != null"
+                                v-html="storesItem.ContractConetnt"
+                            ></div>
                         </div>
                     </div>
                 </div>
@@ -298,6 +363,11 @@ import { ElMessageBox } from "element-plus";
 
 // loading page
 import { useLoadStore } from "../stores/loading.js";
+
+import { useAlertModalStore } from "../stores/useAlertModal.js";
+const alertModalStore = useAlertModalStore();
+const openAlertModal = alertModalStore.alertShowModal;
+
 const store = useLoadStore();
 const setPageLoading = store.setPageLoading;
 
@@ -339,7 +409,7 @@ async function fetchStoresDetailData(token) {
         if (response.data.Status.Code === 0) {
             storesItem.value = response.data.Data;
         } else {
-            alert(`${response.data.Status.Message}`);
+            await openAlertModal(" ", `${response.data.Status.Message}`);
         }
     } catch (error) {
         console.error("請求失敗:", error);
@@ -398,7 +468,8 @@ const filteredPlatformArray = computed(() => {
 });
 async function sendQAList() {
     if (userToken.value === "" || userToken.value === undefined) {
-        alert("請先登入會員");
+        await openAlertModal(" ", "請先登入會員");
+        
     } else {
         await sendQAApi(userToken.value);
     }
@@ -406,7 +477,7 @@ async function sendQAList() {
 async function sendAccList(event) {
     event.preventDefault();
     if (userToken.value === "" || userToken.value === undefined) {
-        alert("請先登入會員");
+        await openAlertModal(" ", "請先登入會員");
     } else {
         await createAccApi(userToken.value);
     }
@@ -435,7 +506,7 @@ async function sendQAApi(token) {
         if (response.data.Status.Code === 0) {
             storeQAList.value = response.data.Data;
         } else {
-            alert(`${response.data.Status.Message}`);
+            await openAlertModal(" ", `${response.data.Status.Message}`);
         }
     } catch (error) {
         console.error("請求失敗:", error);
@@ -466,7 +537,7 @@ async function createAccApi(token) {
         if (response.data.Status.Code === 0) {
             storeQAList.value = response.data.Data;
         } else {
-            alert(`${response.data.Status.Message}`);
+            await openAlertModal(" ", `${response.data.Status.Message}`);
         }
     } catch (error) {
         console.error("請求失敗:", error);
@@ -516,5 +587,57 @@ watch(
 }
 .entryDetail:focus-visible {
     outline: none;
+}
+.contactBox {
+    width: 50%;
+    position: relative;
+    padding: 1px;
+    background: linear-gradient(to right, #4361ee, #f72585);
+    border-radius: 50px;
+    border: none;
+}
+.contactContent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background: linear-gradient(to right, #4361ee, #f72585);
+    border-radius: 50px;
+    text-indent: 2rem;
+    color: #fff;
+}
+.contractBox {
+    width: 100%;
+    position: relative;
+    padding: 1px;
+    background: linear-gradient(to right, #4361ee, #f72585);
+    border-radius: 20px;
+    border: none;
+}
+.contractContent {
+    background: #fff;
+    color: #8d8d8d;
+    border-radius: 20px;
+    text-align: center;
+    padding: 2rem;
+}
+.contractDetail {
+    padding: 1rem;
+    max-height: 600px;
+    overflow-y: scroll;
+}
+.contractDetail::-webkit-scrollbar {
+    width: 10px;
+}
+.contractDetail::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #666;
+}
+.matchingTitle {
+    top: -1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(to right, #4361ee, #f72585);
+    color: #fff;
 }
 </style>

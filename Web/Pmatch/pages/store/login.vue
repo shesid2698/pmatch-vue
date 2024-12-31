@@ -108,6 +108,11 @@
 // loading page
 import { useLoadStore } from "../stores/loading.js";
 import VueTurnstile from "vue-turnstile";
+
+import { useAlertModalStore } from "../stores/useAlertModal.js";
+const alertModalStore = useAlertModalStore();
+const openAlertModal = alertModalStore.alertShowModal;
+
 const store = useLoadStore();
 const setPageLoading = store.setPageLoading;
 
@@ -181,7 +186,7 @@ async function login(event, encryptedPassword) {
                 console.error("跳轉失敗");
             }
         } else {
-            alert(`${response.data.Status.Message}`);
+            await openAlertModal(" ", `${response.data.Status.Message}`);
         }
     } catch (error) {
         console.error("請求失敗:", error);
@@ -197,7 +202,7 @@ const getSerialNumber = async () => {
 
         // 檢查 HTTP 狀態碼
         if (!response.ok) {
-            alert("請依文件調整瀏覽器設定值,安裝工具再行登入");
+            await openAlertModal(" ", "請依文件調整瀏覽器設定值,安裝工具再行登入");
         }
 
         const result = await response.json(); // 解析 JSON 資料
@@ -214,9 +219,9 @@ onMounted(async () => {
     if (res && res.status && res.status.code === 0) {
         iData.value = res.data;
     } else if (res && res.status && res.status.code !== 0) {
-        alert("安裝工具過程中請記得輸入序號");
+        await openAlertModal(" ", "安裝工具過程中請記得輸入序號");
     } else {
-        alert("請依文件調整瀏覽器設定值,安裝工具再行登入");
+        await openAlertModal(" ", "請依文件調整瀏覽器設定值,安裝工具再行登入");
     }
     await setPageLoading(false);
 });

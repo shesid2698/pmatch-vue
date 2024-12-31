@@ -133,7 +133,7 @@ async function fetchSetting(token) {
                 console.error("無法解析 JSON 字符串:", error);
             }
         } else {
-            alert(`${response.data.Status.Message}`);
+            await openAlertModal(" ", `${response.data.Status.Message}`);
         }
     } catch (error) {
         console.error("請求失敗:", error);

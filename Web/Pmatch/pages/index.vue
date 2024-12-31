@@ -491,7 +491,6 @@ async function testConfirm() {
     );
 }
 async function testAlert() {
-    console.log(alertModalStore.alertShowModal);
     await openAlertModal("標題", "內容", () => console.log("確定按鈕被點擊")); // 確定的回調
 }
 
@@ -554,7 +553,7 @@ async function fetchNewsListData(num, token) {
         if (response.data.Status.Code === 0) {
             newsList.value = response.data.Data;
         } else {
-            alert(`${response.data.Status.Message}`);
+            await openAlertModal(" ", `${response.data.Status.Message}`);
         }
     } catch (error) {
         console.error("請求失敗:", error);
@@ -580,7 +579,7 @@ async function fetchGameList(token) {
         if (response.data.Status.Code === 0) {
             gameList.value = response.data.Data;
         } else {
-            alert(`${response.data.Status.Message}`);
+            await openAlertModal(" ", `${response.data.Status.Message}`);
         }
     } catch (error) {
         console.error("請求失敗:", error);
@@ -608,7 +607,7 @@ async function fetchADList(token) {
         if (response.data.Status.Code === 0) {
             bannerList.value = response.data.Data;
         } else {
-            alert(`${response.data.Status.Message}`);
+            await openAlertModal(" ", `${response.data.Status.Message}`);
         }
     } catch (error) {
         console.error("請求失敗:", error);

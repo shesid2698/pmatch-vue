@@ -88,6 +88,10 @@
     </div>
 </template>
 <script setup>
+import { useAlertModalStore } from "../stores/useAlertModal.js";
+const alertModalStore = useAlertModalStore();
+const openAlertModal = alertModalStore.alertShowModal;
+
 const { $axios } = useNuxtApp();
 const userToken = useCookie('_PmToken');
 const memberId = useCookie('_PmMemberId');
@@ -149,7 +153,7 @@ const GetData = async () => {
 
             if (response.data.Status.Code === 0) {
               if(response.data.Data.length === 0){
-                alert("查無資料");
+                await openAlertModal(" ", "查無資料");
                 return;
               }
                 OriTableData = response.data.Data;
@@ -173,7 +177,7 @@ const GetData = async () => {
                 });
                 tableData.value = [...OriTableData.slice(0, pageCount.value)];
             } else {
-                alert(`${response.data.Status.Message}`);
+                await openAlertModal(" ", `${response.data.Status.Message}`);
             }
         }
     } catch (error) {

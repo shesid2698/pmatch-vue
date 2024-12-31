@@ -388,7 +388,7 @@ async function fetchStoresListData(token) {
         if (response.data.Status.Code === 0) {
             storesList.value = response.data.Data;
         } else {
-            alert(`${response.data.Status.Message}`);
+            await openAlertModal(" ", `${response.data.Status.Message}`);
         }
     } catch (error) {
         console.error("請求失敗:", error);
@@ -414,7 +414,7 @@ async function fetchGameList(token) {
         if (response.data.Status.Code === 0) {
             gameList.value = response.data.Data;
         } else {
-            alert(`${response.data.Status.Message}`);
+            await openAlertModal(" ", `${response.data.Status.Message}`);
         }
     } catch (error) {
         console.error("請求失敗:", error);
@@ -442,7 +442,7 @@ async function fetchADTopList(token) {
         if (response.data.Status.Code === 0) {
             bannerTopList.value = response.data.Data;
         } else {
-            alert(`${response.data.Status.Message}`);
+            await openAlertModal(" ", `${response.data.Status.Message}`);
         }
     } catch (error) {
         console.error("請求失敗:", error);
@@ -470,7 +470,7 @@ async function fetchADDownList(token) {
         if (response.data.Status.Code === 0) {
             bannerDownList.value = response.data.Data;
         } else {
-            alert(`${response.data.Status.Message}`);
+            await openAlertModal(" ", `${response.data.Status.Message}`);
         }
     } catch (error) {
         console.error("請求失敗:", error);
