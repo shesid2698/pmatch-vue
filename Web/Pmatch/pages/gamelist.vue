@@ -78,7 +78,6 @@ async function fetchGameList(token) {
         }
     } catch (error) {
         console.error("請求失敗:", error);
-        data.value = "無法取得資料。"; // 畫面顯示錯誤訊息
     }
 }
 
