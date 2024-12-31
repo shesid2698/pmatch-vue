@@ -265,6 +265,7 @@
                                     class="entryDetail w-90% py-.5rem font-size-18px"
                                     type="text"
                                     placeholder="遊戲暱稱(必填)"
+                                    v-model="accMemberName"
                                 />
                             </div>
                         </div>
@@ -272,17 +273,29 @@
                             <div class="flex items-center mx-10">
                                 <input
                                     type="radio"
-                                    class="w-20px h-20px m-0 me-3"
-                                /><span class="font-size-18px color-#f72585"
-                                    >委買遊戲幣</span
+                                    class="w-20px h-20px m-0 me-3 custom-radio"
+                                    v-model="buyOrSell"
+                                    id="buy"
+                                    :value="true"
+                                />
+                                <label
+                                    for="buy"
+                                    class="radio-label font-size-18px color-#f72585"
+                                    >委買遊戲幣</label
                                 >
                             </div>
                             <div class="flex items-center mx-10">
                                 <input
                                     type="radio"
-                                    class="w-20px h-20px m-0 me-3"
-                                /><span class="font-size-18px color-#4361ee"
-                                    >委賣遊戲幣</span
+                                    class="w-20px h-20px m-0 me-3 custom-radio"
+                                    id="sell"
+                                    v-model="buyOrSell"
+                                    :value="false"
+                                />
+                                <label
+                                    for="sell"
+                                    class="radio-label font-size-18px color-#4361ee"
+                                    >委賣遊戲幣</label
                                 >
                             </div>
                         </div>
@@ -292,24 +305,40 @@
                                     class="entryDetail w-90% py-.5rem font-size-18px"
                                     type="text"
                                     placeholder="委託金額(必填)"
+                                    v-model="accPatch"
                                 />
                             </div>
                         </div>
-                        <div class="w-100% flex justify-center mb-5">
+                        <div
+                            class="w-100% flex justify-center mb-5"
+                            v-show="buyOrSell"
+                        >
                             <div class="flex items-center ms-13 me-9">
                                 <input
                                     type="radio"
-                                    class="w-20px h-20px m-0 me-3"
-                                /><span class="font-size-18px color-#f72585"
-                                    >超商代收</span
+                                    id="shop"
+                                    class="w-20px h-20px m-0 me-3 custom-radio"
+                                    v-model="paymentMethod"
+                                    :value="'convenienceStore'"
+                                />
+                                <label
+                                    for="shop"
+                                    class="radio-label font-size-18px color-#f72585"
+                                    >超商代收</label
                                 >
                             </div>
                             <div class="flex items-center mx-16">
                                 <input
                                     type="radio"
-                                    class="w-20px h-20px m-0 me-3"
-                                /><span class="font-size-18px color-#f72585"
-                                    >ATM轉帳</span
+                                    id="atm"
+                                    class="w-20px h-20px m-0 me-3 custom-radio"
+                                    v-model="paymentMethod"
+                                    :value="'atm'"
+                                />
+                                <label
+                                    for="atm"
+                                    class="radio-label font-size-18px color-#f72585"
+                                    >ATM轉帳</label
                                 >
                             </div>
                         </div>
@@ -324,9 +353,20 @@
                                     />
                                 </div>
                             </div>
+                            <div class="absolute bg-#fff top-0 w-100% h-22px hidden">
+                                <div v-if="!memberPhone1Cookie">
+                                    {{memberPhone1Cookie}}
+                                </div>
+                                <div v-if="!memberPhone2Cookie">
+                                    {{memberPhone2Cookie}}
+                                </div>
+                                <div v-if="!memberPhone3Cookie">
+                                    {{memberPhone3Cookie}}
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="contractBox">
+                    <div class="contractBox mb-5">
                         <div
                             class="matchingTitle p-3 absolute flex items-center rounded-10px"
                         >
@@ -345,6 +385,13 @@
                                 v-if="storesItem != null"
                                 v-html="storesItem.ContractConetnt"
                             ></div>
+                        </div>
+                    </div>
+                    <div class="flex justify-center">
+                        <div class="submitBox relative mb-5">
+                            <div class="submitBtn py-2" @click="sendAccList">
+                                <div class="font-size-18px">確認送出</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -379,10 +426,17 @@ const isLoading = ref(true); // 加載狀態
 const { $axios } = useNuxtApp();
 const jwtStore = useJwtStore();
 const userToken = useCookie("_PmToken");
-const MemberIdCookie = useCookie("_PmMemberId");
+const memberIdCookie = useCookie("_PmMemberId");
+const memberPhone1Cookie = useCookie("_PmMemberPhone1");
+const memberPhone2Cookie = useCookie("_PmMemberPhone2");
+const memberPhone3Cookie = useCookie("_PmMemberPhone3");
 const dialogVisible = ref(false);
+const memberDetailList = ref([]);
 
 let question = ref("");
+
+const buyOrSell = ref(true); // true 表示委買, false 表示委賣
+const paymentMethod = ref(true); // 選擇的付款方式
 
 let accPlatformName = ref("");
 let accMemberName = ref("");
@@ -424,6 +478,7 @@ onMounted(async () => {
             const token = userToken.value;
             if (token != "") {
                 await fetchStoresDetailData(token);
+                await getMemberDetail(token);
             }
         } else {
             // 生成新的 token
@@ -469,16 +524,22 @@ const filteredPlatformArray = computed(() => {
 async function sendQAList() {
     if (userToken.value === "" || userToken.value === undefined) {
         await openAlertModal(" ", "請先登入會員");
-        
     } else {
         await sendQAApi(userToken.value);
     }
 }
-async function sendAccList(event) {
-    event.preventDefault();
+async function sendAccList() {
     if (userToken.value === "" || userToken.value === undefined) {
         await openAlertModal(" ", "請先登入會員");
     } else {
+        if(!accMemberName.value){
+            await openAlertModal(" ", "請填寫遊戲暱稱");
+            return;
+        }
+        if(!accPatch.value){
+            await openAlertModal(" ", "請填寫委託金額");
+            return;
+        }
         await createAccApi(userToken.value);
     }
 }
@@ -492,7 +553,7 @@ async function sendQAApi(token) {
                     {
                         Id: 0,
                         StoreId: routeParamId,
-                        MemberId: MemberIdCookie.value,
+                        MemberId: memberIdCookie.value,
                         Question: question.value,
                     },
                 ],
@@ -522,11 +583,11 @@ async function createAccApi(token) {
                 TeamId: storesItem.value.Teamid,
                 GamePlatformName: accPlatformName.value,
                 MemberCharacterName: accMemberName.value,
-                TransactionMode: Number(accTransaction.value),
+                TransactionMode: buyOrSell.value ? 10 : 20,
                 Patch: Number(accPatch.value),
-                PayMode: Number(accPayMode.value),
+                PayMode: paymentMethod.value ? 1 : 2,
                 Phone: accPhone.value,
-                PmatchMemberId: MemberIdCookie.value,
+                PmatchMemberId: memberIdCookie.value,
             },
             {
                 headers: {
@@ -536,6 +597,32 @@ async function createAccApi(token) {
         );
         if (response.data.Status.Code === 0) {
             storeQAList.value = response.data.Data;
+        } else {
+            await openAlertModal(" ", `${response.data.Status.Message}`);
+        }
+    } catch (error) {
+        console.error("請求失敗:", error);
+    }
+}
+// 取得會員資料
+async function getMemberDetail(token) {
+    try {
+        const response = await $axios.post(
+            "/api/v1/Pmatch/GetMemberDetail",
+            {
+                PmatchMemberId: memberIdCookie.value,
+            },
+            {
+                headers: {
+                    Authorization: token, // 帶上 Token
+                },
+            }
+        );
+        if (response.data.Status.Code === 0) {
+            memberDetailList.value = response.data.Data;
+            memberPhone1Cookie.value = memberDetailList.value.Mobile1;
+            memberPhone2Cookie.value = memberDetailList.value.Mobile2;
+            memberPhone3Cookie.value = memberDetailList.value.Mobile3;
         } else {
             await openAlertModal(" ", `${response.data.Status.Message}`);
         }
@@ -618,7 +705,6 @@ watch(
     background: #fff;
     color: #8d8d8d;
     border-radius: 20px;
-    text-align: center;
     padding: 2rem;
 }
 .contractDetail {
@@ -639,5 +725,53 @@ watch(
     transform: translateX(-50%);
     background: linear-gradient(to right, #4361ee, #f72585);
     color: #fff;
+}
+.submitBox {
+    width: 200px;
+    position: relative;
+    padding: 1px;
+    background: linear-gradient(to right, #4361ee, #f72585);
+    border-radius: 20px;
+    border: none;
+    color: #fff;
+}
+.submitBtn {
+    text-align: center;
+    cursor: pointer;
+}
+.submitBtn:hover {
+    background: #fff;
+    color: #8d8d8d;
+    border-radius: 20px;
+    text-align: center;
+}
+.custom-radio {
+    appearance: none; /* 移除預設樣式 */
+    width: 20px;
+    height: 20px;
+    border: 2px solid #6a6a6a; /* 外圈的灰色邊框 */
+    border-radius: 50%;
+    background-color: #fff; /* 中間的白色底 */
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    transition: border-color 0.2s, background-color 0.2s;
+}
+/* 當選中時 */
+.custom-radio:checked {
+    border-color: #6a6a6a; /* 選中時外圈變為灰色 */
+    background-color: #fff; /* 保持白色底 */
+}
+
+.custom-radio:checked::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10px; /* 中間灰色圓的大小 */
+    height: 10px;
+    background-color: #6a6a6a; /* 灰色圓 */
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
 }
 </style>

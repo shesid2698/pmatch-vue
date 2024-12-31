@@ -1,5 +1,6 @@
 <template>
     <div :class="{ 'pageSetting': isHomePage }">
+        <BuyLog/>
         <AlertModal/>
         <ConfirmModal/>
         <link
