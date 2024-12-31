@@ -119,7 +119,7 @@ const confirmPassword = ref("");
 const CheckPassword = async (e) => {
     e.preventDefault();
     if (newPassword.value !== confirmPassword.value) {
-        alert("新密碼與確認密碼不一致!!");
+        await openAlertModal(" ", "新密碼與確認密碼不一致!!");
         return;
     } else {
         newPassword.value = encrypt.encrypt(newPassword.value);

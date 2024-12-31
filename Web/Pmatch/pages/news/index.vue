@@ -105,7 +105,7 @@ async function fetchNewsListData(token) {
         if (response.data.Status.Code === 0) {
             newsList.value = response.data.Data;
         } else {
-            alert(`${response.data.Status.Message}`);
+            await openAlertModal(" ", `${response.data.Status.Message}`);
         }
     } catch (error) {
         console.error("請求失敗:", error);
