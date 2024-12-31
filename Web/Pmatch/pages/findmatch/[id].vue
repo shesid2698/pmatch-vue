@@ -1,12 +1,13 @@
 <template>
-    <div class="mt-7rem max-w-1110px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3">
-        <div class="mb-7 flex items-center justify-between">
-            <div class="flex items-center">
-                <div class="w-25px h-20px bg-#1a6db4"></div>
-                <span class="font-size-1.4rem ms-3 fw-600">關於商店</span>
-            </div>
-            <!-- 麵包屑 (新版目前沒有 先不刪以防後續需要) -->
-            <!-- <div>
+    <div>
+        <div class="mt-7rem max-w-1110px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3">
+            <div class="mb-7 flex items-center justify-between">
+                <div class="flex items-center">
+                    <div class="w-25px h-20px bg-#1a6db4"></div>
+                    <span class="font-size-1.4rem ms-3 fw-600">關於商店</span>
+                </div>
+                <!-- 麵包屑 (新版目前沒有 先不刪以防後續需要) -->
+                <!-- <div>
                 <ElBreadcrumb :separator-icon="ArrowRight">
                     <ElBreadcrumbItem :to="{ path: '/' }"
                         >首頁</ElBreadcrumbItem
@@ -17,211 +18,271 @@
                     <ElBreadcrumbItem> {{ pageTitle }} </ElBreadcrumbItem>
                 </ElBreadcrumb>
             </div> -->
-        </div>
-        <div>
-            <div class="flex items-center mb-2rem pb-2rem">
-                <div class="flex justify-start md-mb-0 mb-5">
-                    <img class="w-200px" />
-                </div>
-                <div class="ms-2rem">
-                    <div class="mb-3">
-                        <span class="font-size-1.2rem fw-600">商店名稱 : </span>
-                        <span class="font-size-1.2rem fw-600" v-if="storesItem">
-                            {{ storesItem.Name }}
-                        </span>
+            </div>
+            <div>
+                <div class="flex items-center mb-2rem pb-2rem">
+                    <div class="flex justify-start md-mb-0 mb-5">
+                        <img class="w-200px" />
                     </div>
-                    <div class="mb-2">
-                        <span class="fw-600">遊戲平台 : </span>
-                        <span>{{ filteredPlatform }}</span>
-                    </div>
-                    <div class="mb-2">
-                        <span class="fw-600">商店簡介 : </span>
-                        <span v-if="storesItem">{{ storesItem.About }}</span>
-                    </div>
-                    <div class="flex items-center">
-                        <span class="fw-600">聯絡方式 : </span>
-                        <div class="ms-2 flex">
-                            <NuxtLink
-                                class="flex items-center ms-1 me-1"
+                    <div class="ms-2rem">
+                        <div class="mb-3">
+                            <span class="font-size-1.2rem fw-600"
+                                >商店名稱 :
+                            </span>
+                            <span
+                                class="font-size-1.2rem fw-600"
                                 v-if="storesItem"
-                                :to="storesItem.FB"
                             >
-                                <img
-                                    class="w-20px h-20px"
-                                    src="/images/facebook.png"
-                                    alt=""
-                                />
-                            </NuxtLink>
-                            <NuxtLink
-                                class="flex items-center ms-1 me-1"
-                                v-if="storesItem"
-                                :to="storesItem.LineId"
-                            >
-                                <img
-                                    class="w-20px h-20px"
-                                    src="/images/line.png"
-                                    alt=""
-                                />
-                            </NuxtLink>
-                            <NuxtLink
-                                class="flex items-center ms-1 me-1"
-                                v-if="storesItem"
-                                :to="storesItem.IGId"
-                            >
-                                <img
-                                    class="w-20px h-20px"
-                                    src="/images/instagram.png"
-                                    alt=""
-                                />
-                            </NuxtLink>
-                            <NuxtLink
-                                class="flex items-center ms-1 me-1"
-                                v-if="storesItem"
-                                :to="storesItem.TwitterId"
-                            >
-                                <div
-                                    class="bg-#000 w-20px h-20px rounded-50% color-#fff text-center"
+                                {{ storesItem.Name }}
+                            </span>
+                        </div>
+                        <div class="mb-2">
+                            <span class="fw-600">遊戲平台 : </span>
+                            <span>{{ filteredPlatform }}</span>
+                        </div>
+                        <div class="mb-2">
+                            <span class="fw-600">商店簡介 : </span>
+                            <span v-if="storesItem">{{
+                                storesItem.About
+                            }}</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="fw-600">聯絡方式 : </span>
+                            <div class="ms-2 flex">
+                                <NuxtLink
+                                    class="flex items-center ms-1 me-1"
+                                    v-if="storesItem"
+                                    :to="storesItem.FB"
                                 >
-                                    x
-                                </div>
-                            </NuxtLink>
+                                    <img
+                                        class="w-20px h-20px"
+                                        src="/images/facebook.png"
+                                        alt=""
+                                    />
+                                </NuxtLink>
+                                <NuxtLink
+                                    class="flex items-center ms-1 me-1"
+                                    v-if="storesItem"
+                                    :to="storesItem.LineId"
+                                >
+                                    <img
+                                        class="w-20px h-20px"
+                                        src="/images/line.png"
+                                        alt=""
+                                    />
+                                </NuxtLink>
+                                <NuxtLink
+                                    class="flex items-center ms-1 me-1"
+                                    v-if="storesItem"
+                                    :to="storesItem.IGId"
+                                >
+                                    <img
+                                        class="w-20px h-20px"
+                                        src="/images/instagram.png"
+                                        alt=""
+                                    />
+                                </NuxtLink>
+                                <NuxtLink
+                                    class="flex items-center ms-1 me-1"
+                                    v-if="storesItem"
+                                    :to="storesItem.TwitterId"
+                                >
+                                    <div
+                                        class="bg-#000 w-20px h-20px rounded-50% color-#fff text-center"
+                                    >
+                                        x
+                                    </div>
+                                </NuxtLink>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- 先不刪 設計圖出來之後可能會改 -->
-            <!-- <div>
+                <!-- 先不刪 設計圖出來之後可能會改 -->
+                <!-- <div>
                 <div v-for="(item, index) in filteredPlatformArray" :key="index">
                     <button>{{item}}</button>
                 </div>
             </div> -->
-            <div>
-                <el-tabs
-                    v-model="activeName"
-                    type="card"
-                    class="demo-tabs"
-                    @tab-click="handleClick"
-                >
-                    <el-tab-pane label="開單" name="first">
-                        <div class="b-solid border-1 p-5 b-#212529">
-                            <form action="#" @submit="sendAccList">
-                                <div>
-                                    <p>遊戲平台 :</p>
-                                    <select v-model="accPlatformName" required>
-                                        <option
-                                            v-for="(
-                                                item, index
-                                            ) in filteredPlatformArray"
-                                            :key="index"
-                                            :value="item"
+                <div>
+                    <el-tabs
+                        v-model="activeName"
+                        type="card"
+                        class="demo-tabs"
+                        @tab-click="handleClick"
+                    >
+                        <el-tab-pane label="開單" name="first">
+                            <div class="b-solid border-1 p-5 b-#212529">
+                                <form action="#" @submit="sendAccList">
+                                    <div>
+                                        <p>遊戲平台 :</p>
+                                        <select
+                                            v-model="accPlatformName"
+                                            required
                                         >
-                                            {{ item }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <p>遊戲暱稱 :</p>
-                                    <input
-                                        required
-                                        v-model="accMemberName"
-                                        type="text"
-                                    />
-                                </div>
-                                <div>
-                                    <p>交易種類 :</p>
-                                    <select v-model="accTransaction" required>
-                                        <option value="10">委買</option>
-                                        <option value="12">委賣</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <p>委託金額 :</p>
-                                    <input
-                                        required
-                                        v-model="accPatch"
-                                        type="text"
-                                    />
-                                </div>
-                                <div>
-                                    <p>希望付款方式 :</p>
-                                    <select v-model="accPayMode" required>
-                                        <option value="1">超商代收</option>
-                                        <option value="2">銀行轉帳</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <p>聯絡資料 :</p>
-                                    <input
-                                        v-model="accPhone"
-                                        type="text"
-                                        required
-                                    />
-                                </div>
-                                <ElButton
-                                    class="border-none color-#aaa w-95px h-40px rounded-5px"
-                                    plain
-                                    @click="dialogVisible = true"
-                                >
-                                    檢視合約
-                                </ElButton>
-                                <ElDialog
-                                    v-model="dialogVisible"
-                                    title="合約服務條款"
-                                    width="500"
-                                    :close-on-click-modal="false"
-                                >
-                                    <div
-                                        v-if="storesItem"
-                                        v-html="storesItem.ContractConetnt"
-                                    ></div>
-                                    <template #footer>
-                                        <div class="dialog-footer">
-                                            <ElButton
-                                                type="primary"
-                                                @click="dialogVisible = false"
+                                            <option
+                                                v-for="(
+                                                    item, index
+                                                ) in filteredPlatformArray"
+                                                :key="index"
+                                                :value="item"
                                             >
-                                                同意
-                                            </ElButton>
-                                        </div>
-                                    </template>
-                                </ElDialog>
-                                <button class="mt-5">送出</button>
-                            </form>
-                        </div>
-                    </el-tab-pane>
-                    <el-tab-pane label="問與答" name="second">
-                        <div class="b-solid border-1 b-#212529">
-                            <div class="p-5" v-if="storesItem != null">
-                                <div
-                                    v-if="storesItem.StoreQAs.length > 0"
-                                    v-for="(item, index) in storesItem.StoreQAs"
-                                    :key="index"
-                                >
-                                    <p>問 : {{ item.Question }}</p>
-                                    <p>答 : {{ item.Answer }}</p>
-                                </div>
-                                <div v-else>
-                                    <p>尚未有提問資料...</p>
-                                </div>
-                            </div>
-                            <div class="p-5 bg-#ccc">
-                                <p class="m-0 mb-1rem">我要提問</p>
-                                <textarea
-                                    class="w-100% h-5rem p-0 mb-1rem"
-                                    v-model="question"
-                                ></textarea>
-                                <div class="w-100% flex justify-end">
-                                    <button
-                                        class="w-200px h-38px bg-#1A6DB4 color-#fff border-none fw-bold font-size-1rem"
-                                        @click="sendQAList"
+                                                {{ item }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <p>遊戲暱稱 :</p>
+                                        <input
+                                            required
+                                            v-model="accMemberName"
+                                            type="text"
+                                        />
+                                    </div>
+                                    <div>
+                                        <p>交易種類 :</p>
+                                        <select
+                                            v-model="accTransaction"
+                                            required
+                                        >
+                                            <option value="10">委買</option>
+                                            <option value="12">委賣</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <p>委託金額 :</p>
+                                        <input
+                                            required
+                                            v-model="accPatch"
+                                            type="text"
+                                        />
+                                    </div>
+                                    <div>
+                                        <p>希望付款方式 :</p>
+                                        <select v-model="accPayMode" required>
+                                            <option value="1">超商代收</option>
+                                            <option value="2">銀行轉帳</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <p>聯絡資料 :</p>
+                                        <input
+                                            v-model="accPhone"
+                                            type="text"
+                                            required
+                                        />
+                                    </div>
+                                    <ElButton
+                                        class="border-none color-#aaa w-95px h-40px rounded-5px"
+                                        plain
+                                        @click="dialogVisible = true"
                                     >
-                                        送出
-                                    </button>
+                                        檢視合約
+                                    </ElButton>
+                                    <ElDialog
+                                        v-model="dialogVisible"
+                                        title="合約服務條款"
+                                        width="500"
+                                        :close-on-click-modal="false"
+                                    >
+                                        <div
+                                            v-if="storesItem"
+                                            v-html="storesItem.ContractConetnt"
+                                        ></div>
+                                        <template #footer>
+                                            <div class="dialog-footer">
+                                                <ElButton
+                                                    type="primary"
+                                                    @click="
+                                                        dialogVisible = false
+                                                    "
+                                                >
+                                                    同意
+                                                </ElButton>
+                                            </div>
+                                        </template>
+                                    </ElDialog>
+                                    <button class="mt-5">送出</button>
+                                </form>
+                            </div>
+                        </el-tab-pane>
+                        <el-tab-pane label="問與答" name="second">
+                            <div class="b-solid border-1 b-#212529">
+                                <div class="p-5" v-if="storesItem != null">
+                                    <div
+                                        v-if="storesItem.StoreQAs.length > 0"
+                                        v-for="(
+                                            item, index
+                                        ) in storesItem.StoreQAs"
+                                        :key="index"
+                                    >
+                                        <p>問 : {{ item.Question }}</p>
+                                        <p>答 : {{ item.Answer }}</p>
+                                    </div>
+                                    <div v-else>
+                                        <p>尚未有提問資料...</p>
+                                    </div>
+                                </div>
+                                <div class="p-5 bg-#ccc">
+                                    <p class="m-0 mb-1rem">我要提問</p>
+                                    <textarea
+                                        class="w-100% h-5rem p-0 mb-1rem"
+                                        v-model="question"
+                                    ></textarea>
+                                    <div class="w-100% flex justify-end">
+                                        <button
+                                            class="w-200px h-38px bg-#1A6DB4 color-#fff border-none fw-bold font-size-1rem"
+                                            @click="sendQAList"
+                                        >
+                                            送出
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
+                        </el-tab-pane>
+                    </el-tabs>
+                </div>
+            </div>
+        </div>
+        <div class="w-full bg-#fff relative mt-5rem">
+            <div class="mt-7rem max-w-1110px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3">
+                <div class="mb-5rem relative">
+                    <h1 class="buyTitle m-0 text-center font-size-50px">
+                        我的需求
+                    </h1>
+                    <div class="flex justify-center">
+                        <img
+                            class="w-250px"
+                            src="/images/ourService.png"
+                            alt="我們的服務"
+                        />
+                    </div>
+                </div>
+                <div>
+                    <div class="w-100% flex justify-center flex-wrap">
+                        <div class="entryBox mb-5">
+                            <div class="entryContent">
+                                <input
+                                    class="entryDetail w-90% py-.5rem font-size-18px"
+                                    type="text"
+                                    placeholder="遊戲暱稱(必填)"
+                                />
+                            </div>
                         </div>
-                    </el-tab-pane>
-                </el-tabs>
+                        <div class="w-100% flex justify-center mb-5">
+                            <input type="radio"/><span>委買遊戲幣</span>
+                            <input type="radio"/><span>委賣遊戲幣</span>
+                        </div>
+                        <div class="entryBox">
+                            <div class="entryContent">
+                                <input
+                                    class="entryDetail w-90% py-.5rem font-size-18px"
+                                    type="text"
+                                    placeholder="委託金額(必填)"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -425,5 +486,35 @@ watch(
 <style scoped>
 :deep(.el-icon) {
     z-index: -1;
+}
+.buyTitle {
+    background: linear-gradient(to right, #4361ee, #7b2cbf);
+    background: -webkit-linear-gradient(to right, #4361ee, #7b2cbf);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(200, 200, 200, 0.1);
+}
+.entryBox {
+    width: 50%;
+    position: relative;
+    padding: 1px;
+    background: linear-gradient(to right, #4361ee, #f72585);
+    border-radius: 50px;
+    border: none;
+}
+.entryContent {
+    background: #fff;
+    color: #f72585;
+    border-radius: 50px;
+    text-align: center;
+}
+.entryDetail {
+    border: none;
+    color: #8d8d8d;
+    border-radius: 50px;
+}
+.entryDetail:focus-visible {
+    outline: none;
 }
 </style>

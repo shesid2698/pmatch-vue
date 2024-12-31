@@ -309,7 +309,7 @@
                                 ALL
                             </button>
                             <button
-                                class="newsSystemBtn font-size-15px bg-#fff border-1px-solid-7B2CBF p-3 ms-3 color-#7B2CBF rounded-50px"
+                                class="newsSystemBtn font-size-15px bg-#fff p-3 ms-3 color-#7B2CBF rounded-50px"
                                 @click="fetchNewsListData([1], '')"
                             >
                                 系統公告
@@ -863,6 +863,7 @@ onBeforeUnmount(() => {
 .newsAllBtn {
     border: 1px solid #4361ee;
     cursor: pointer;
+    line-height: 20px;
 }
 .newsSystemBtn {
     border: 1px solid #7b2cbf;
