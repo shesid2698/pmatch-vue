@@ -1,5 +1,6 @@
 <template>
     <div :class="{ 'pageSetting': isHomePage }">
+        <BuyLog/>
         <AlertModal/>
         <ConfirmModal/>
         <link
@@ -10,7 +11,7 @@
         />
         <LoadingPage />
         <Header />
-        <div class="pt-120px pb- 60px page">
+        <div class="pt-70px pb-60px page">
             <NuxtPage />
         </div>
         <Footer />
@@ -80,6 +81,8 @@ let assetsUrl = useCookie("_PmAssetsUrl");
 const userToken = useCookie("_PmToken");
 const route = useRoute();
 const isHomePage = computed(() => route.path === '/');
+const router = useRouter();
+
 
 onMounted(async () => {
     await setPageLoading(true);
@@ -98,6 +101,7 @@ onMounted(async () => {
             }
         }
         await setPageLoading(false);
+        
     } catch (error) {
         console.error("頁面初始化失敗:", error);
     }
@@ -130,12 +134,13 @@ async function fetchSetting(token) {
                 console.error("無法解析 JSON 字符串:", error);
             }
         } else {
-            alert(`${response.data.Status.Message}`);
+            await openAlertModal(" ", `${response.data.Status.Message}`);
         }
     } catch (error) {
         console.error("請求失敗:", error);
         data.value = "無法取得資料。"; // 畫面顯示錯誤訊息
     }
 }
+
 </script>
 

@@ -14,11 +14,8 @@
                 <h3 class="m-0">最新比值</h3>
             </div>
             <div class="flex titleBox">
-                <div class="w-200px font-size-15px text-center mt-1 mb-1">
-                    時間
-                </div>
                 <div
-                    class="w-full font-size-15px text-center titleBorder mt-1 mb-1"
+                    class="w-full font-size-15px text-center mt-1 mb-1"
                 >
                     遊戲平台
                 </div>
@@ -35,21 +32,18 @@
             </div>
             <div v-for="(item, index) in visibleList" :key="index">
                 <div class="w-full flex rotatingBox">
-                    <div class="w-200px font-size-15px pt-3 pb-3 text-center">
-                        12-11
-                    </div>
                     <div class="w-full font-size-15px pt-3 pb-3 text-center">
                         {{ item.GamePlatform || "　" }}
                     </div>
                     <div
-                        class="patchDetail w-full font-size-15px pt-3 pb-3 text-center"
+                        class="patchDetail w-full font-size-18px pt-3 pb-3 text-center"
                     >
-                        {{ item.SendPatch || "　" }}
+                        {{ formatNumber(item.SendPatch) || "　" }}
                     </div>
                     <div
-                        class="patchDetail w-full font-size-15px pt-3 pb-3 text-center"
+                        class="patchDetail w-full font-size-18px pt-3 pb-3 text-center"
                     >
-                        {{ item.CollectPatch || "　" }}
+                        {{ formatNumber(item.CollectPatch) || "　" }}
                     </div>
                 </div>
             </div>
@@ -148,6 +142,18 @@ const stopInterval = () => {
         intervalId = null;
     }
 };
+// 千分位
+const formatNumber = (value) => {
+    if (value === undefined || value === null || value === "") {
+        return "　"; // 如果值不存在，返回空白字符
+    }
+    const number = Number(value);
+    if (isNaN(number)) {
+        return value; // 如果不是數字，直接返回原始值
+    }
+    return number.toLocaleString(); // 將數字轉換為千分位格式
+};
+
 onMounted(() => {
     startInterval();
 });

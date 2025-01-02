@@ -35,6 +35,10 @@
     </div>
 </template>
 <script setup>
+import { useAlertModalStore } from "../stores/useAlertModal.js";
+const alertModalStore = useAlertModalStore();
+const openAlertModal = alertModalStore.alertShowModal;
+
 const { $axios } = useNuxtApp();
 const userToken = useCookie('_PmToken');
 const stores = ref([]);
@@ -56,7 +60,7 @@ onMounted(async () => {
             if (response.data.Status.Code === 0) {
                 stores.value = response.data.Data;
             } else {
-                alert(`${response.data.Status.Message}`);
+                await openAlertModal(" ", `${response.data.Status.Message}`);
             }
         } catch (error) {
             console.error('請求失敗:', error);

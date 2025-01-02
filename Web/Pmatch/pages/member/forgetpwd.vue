@@ -57,6 +57,11 @@ import { ref, onMounted } from 'vue';
 const routes = useRouter();
 const encrypt = useEncrypt();
 import useCaptcha from '~/composables/captcha';
+
+import { useAlertModalStore } from "../stores/useAlertModal.js";
+const alertModalStore = useAlertModalStore();
+const openAlertModal = alertModalStore.alertShowModal;
+
 const phone = ref('');
 const inputCode = ref('');
 const { GVerify } = useCaptcha();
@@ -93,7 +98,7 @@ const checkCaptcha = async event => {
                     query: { data: encrypt.encrypt(phone.value) }
                 });
             } else {
-                alert(`${response.data.Status.Message}`);
+                await openAlertModal(" ", `${response.data.Status.Message}`);
             }
         } catch (error) {
             console.error('請求失敗:', error);

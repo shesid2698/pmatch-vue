@@ -27,7 +27,7 @@
                     <h1
                         class="m-0 mb-2 text-center font-size-33px md-font-size-44px slogan"
                     >
-                        安心交易的第一選項Pmatch
+                        安心交易的第一選項PMatch
                     </h1>
                     <h3
                         class="m-0 font-size-14px md-font-size-22px text-center subSlogan"
@@ -80,12 +80,14 @@
                             <div class="flex items-center w-100%">
                                 <div class="flex w-100%">
                                     <div class="w-100% storeNameBox">
-                                        <input
-                                            class="storeName max-w-702px md-max-w-517px pt-4 pb-4 w-100% font-size-1.2rem fw-600"
-                                            type="text"
-                                            placeholder="輸入關鍵字..."
-                                            v-model="keywordToSearch"
-                                        />
+                                        <div class="storeName pt-4px pb-4px">
+                                            <input
+                                                class="storeEntry max-w-702px md-max-w-517px pt-12px pb-12px w-80% md-w-80% font-size-1.2rem fw-600"
+                                                type="text"
+                                                placeholder="輸入關鍵字..."
+                                                v-model="keywordToSearch"
+                                            />
+                                        </div>
                                     </div>
                                     <div class="relative">
                                         <button
@@ -117,7 +119,9 @@
                     </div> -->
                     </div>
                 </div>
-                <div class="mt-4 md-mt-0 ms-2rem fw-600 color-#F72585 flex items-center">
+                <div
+                    class="mt-4 md-mt-0 md-ms-2rem fw-600 color-#F72585 flex items-center"
+                >
                     <div class="flex items-center">
                         <img
                             class="w-25px"
@@ -125,18 +129,38 @@
                             alt="遊戲搜尋icon"
                         />
                     </div>
-                    <span class="ms-3"> 搜尋紀錄??? </span>
+                    <div class="ms-3 flex flex-wrap">
+                        <div
+                            v-if="!plaformLog.value"
+                            v-for="(item, index) in plaformLog"
+                            :key="index"
+                        >
+                            <button
+                                @click="searchLog(item)"
+                                class="searchLogBtn"
+                            >
+                                <span>{{ item }}</span>
+                                <span
+                                    class="m-2"
+                                    v-if="index !== plaformLog.length - 1"
+                                    >/</span
+                                >
+                            </button>
+                        </div>
+                    </div>
+
+                    <span class=""> </span>
                 </div>
-                <div class="pt-1rem">
+                <div class="pt-2rem">
                     <div class="bannerBox">
                         <ElCarousel
                             v-if="bannerList.length > 0"
-                            class="h-400px bannerDetail"
+                            class="h-420px bannerDetail"
                             :interval="2000"
                             arrow="always"
                         >
                             <ElCarouselItem
-                                class="h-400px"
+                                class="h-420px"
                                 v-for="(item, index) in bannerList"
                                 :key="index"
                             >
@@ -285,7 +309,7 @@
                                 ALL
                             </button>
                             <button
-                                class="newsSystemBtn font-size-15px bg-#fff border-1px-solid-7B2CBF p-3 ms-3 color-#7B2CBF rounded-50px"
+                                class="newsSystemBtn font-size-15px bg-#fff p-3 ms-3 color-#7B2CBF rounded-50px"
                                 @click="fetchNewsListData([1], '')"
                             >
                                 系統公告
@@ -441,6 +465,7 @@ const alertModalStore = useAlertModalStore();
 const openModal = modalStore.showModal;
 const openAlertModal = alertModalStore.alertShowModal;
 const setPageLoading = store.setPageLoading;
+const route = useRoute();
 const router = useRouter();
 
 const newsList = ref([]);
@@ -450,8 +475,11 @@ const { $axios } = useNuxtApp();
 const jwtStore = useJwtStore();
 const userToken = useCookie("_PmToken");
 const assetsUrl = useCookie("_PmAssetsUrl");
+const serchPlatformLogCookies = useCookie("_PmSearchLog");
+const plaformLog = ref([]);
 const showPlatformBox = ref(false);
 const selectedGame = ref("");
+let isBackNavigation = false;
 
 // alert & confirm function
 async function testConfirm() {
@@ -463,7 +491,6 @@ async function testConfirm() {
     );
 }
 async function testAlert() {
-    console.log(alertModalStore.alertShowModal);
     await openAlertModal("標題", "內容", () => console.log("確定按鈕被點擊")); // 確定的回調
 }
 
@@ -482,7 +509,6 @@ const togglePlatformBox = () => {
 const selectGame = (item) => {
     selectedGame.value = item.PlatformName; // 或 item.value 根據需要
     showPlatformBox.value = false; // 隱藏選單
-    console.log(showPlatformBox.value);
 };
 
 const serviceList = [
@@ -527,7 +553,7 @@ async function fetchNewsListData(num, token) {
         if (response.data.Status.Code === 0) {
             newsList.value = response.data.Data;
         } else {
-            alert(`${response.data.Status.Message}`);
+            await openAlertModal(" ", `${response.data.Status.Message}`);
         }
     } catch (error) {
         console.error("請求失敗:", error);
@@ -553,7 +579,7 @@ async function fetchGameList(token) {
         if (response.data.Status.Code === 0) {
             gameList.value = response.data.Data;
         } else {
-            alert(`${response.data.Status.Message}`);
+            await openAlertModal(" ", `${response.data.Status.Message}`);
         }
     } catch (error) {
         console.error("請求失敗:", error);
@@ -581,20 +607,35 @@ async function fetchADList(token) {
         if (response.data.Status.Code === 0) {
             bannerList.value = response.data.Data;
         } else {
-            alert(`${response.data.Status.Message}`);
+            await openAlertModal(" ", `${response.data.Status.Message}`);
         }
     } catch (error) {
         console.error("請求失敗:", error);
         data.value = "無法取得資料。"; // 畫面顯示錯誤訊息
     }
 }
-
+// 找媒合搜尋
 const searchToFindMatch = () => {
+    if (selectedGame.value.trim() !== "") {
+        updateNameArray(selectedGame.value.trim());
+        selectedGame.value = ""; // 清空搜索框
+    } else {
+        return;
+    }
     router.push({
         path: "/findmatch",
         query: {
             platformName: selectedGame.value || "", // 平台名稱
             keyword: keywordToSearch.value || "", // 關鍵字
+        },
+    });
+};
+// 搜尋紀錄
+const searchLog = (item) => {
+    router.push({
+        path: "/findmatch",
+        query: {
+            platformName: item || "", // 平台名稱
         },
     });
 };
@@ -604,8 +645,64 @@ const handleClickOutside = (event) => {
         showPlatformBox.value = false;
     }
 };
+
+// 搜尋紀錄更新陣列並保存到 Cookie
+const updateNameArray = (searchValue) => {
+    const index = plaformLog.value.indexOf(searchValue);
+    if (index !== -1) {
+        // 如果搜索值已存在，移到陣列開頭
+        console.log(plaformLog.value);
+        plaformLog.value.splice(index, 1);
+    }
+    // 添加到陣列開頭
+    plaformLog.value.unshift(searchValue);
+
+    // 限制陣列長度（例如限制為 3）
+    if (plaformLog.value.length > 6) {
+        plaformLog.value.pop();
+    }
+
+    // 更新 Cookie
+    serchPlatformLogCookies.value = JSON.stringify(plaformLog.value);
+};
+
+// 儲存滾動位置
+const saveScrollPosition = () => {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    sessionStorage.setItem(
+        `scroll-position-${route.fullPath}`,
+        scrollTop.toString()
+    );
+};
+
+// 恢復滾動位置
+const restoreScrollPosition = () => {
+    const scrollPosition = sessionStorage.getItem(
+        `scroll-position-${route.fullPath}`
+    );
+    if (scrollPosition) {
+        // 延遲滾動確保 DOM 已渲染
+        setTimeout(() => {
+            window.scrollTo({ top: Number(scrollPosition), behavior: "auto" });
+        }, 50);
+    }
+};
+
+// 監聽路由變化
+watch(
+    () => route.fullPath,
+    (newPath, oldPath) => {
+        if (oldPath) {
+            // 儲存上一頁的滾動位置
+            saveScrollPosition();
+        }
+        restoreScrollPosition();
+    }
+);
+
 onMounted(async () => {
     await setPageLoading(true);
+
     try {
         if (userToken.value != "" && userToken.value != undefined) {
             const token = userToken.value;
@@ -624,6 +721,25 @@ onMounted(async () => {
                 await fetchADList(token);
             }
         }
+
+        if (!serchPlatformLogCookies.value) {
+            plaformLog.value = [
+                "包你發娛樂城",
+                "滿貫大亨",
+                "聚寶Online",
+                "金好運娛樂城",
+                "寶島娛樂城",
+                "老子有錢",
+            ];
+            serchPlatformLogCookies.value = JSON.stringify(plaformLog.value);
+        } else {
+            plaformLog.value = serchPlatformLogCookies.value;
+        }
+        // 監聽「上一頁」按鈕
+        window.addEventListener("popstate", () => {
+            isBackNavigation = true; // 標記為「上一頁」返回
+        });
+        restoreScrollPosition();
     } catch (error) {
         console.error("頁面初始化失敗:", error);
     } finally {
@@ -632,19 +748,20 @@ onMounted(async () => {
 });
 onBeforeUnmount(() => {
     document.removeEventListener("click", handleClickOutside);
+    saveScrollPosition();
 });
 </script>
 
 <style scoped>
 .headerLeft {
-    width: 100%; /* 限制区域宽度 */
+    width: 100%; 
     height: auto;
-    overflow: hidden; /* 隐藏超出部分 */
-    clip-path: inset(0 0 0 0); /* 裁剪区域 */
+    overflow: hidden; 
+    clip-path: inset(0 0 0 0); 
 }
 
 .headerLeft img {
-    width: 85%; /* 设置图片宽度 */
+    width: 85%;
     max-width: 1630px;
     min-width: 980px;
 }
@@ -672,11 +789,15 @@ onBeforeUnmount(() => {
     border-radius: 50px;
     border: none;
     text-indent: 1rem;
-    color: #8d8d8d;
 }
-.storeName:focus-visible {
+.storeEntry:focus-visible {
     outline: none;
 }
+.storeEntry {
+    border: none;
+    color: #8d8d8d;
+}
+
 .searchBtn {
     background-color: rgba(0, 0, 0, 0);
 }
@@ -696,13 +817,13 @@ onBeforeUnmount(() => {
 }
 .bannerBox {
     position: relative;
-    padding: 3px;
+    /* padding: 3px;
     background: linear-gradient(
         to right,
         rgba(67, 97, 238),
         rgba(247, 37, 133)
     );
-    border-radius: 1rem;
+    border-radius: 1rem; */
 }
 .bannerDetail {
     background: #fff;
@@ -710,7 +831,7 @@ onBeforeUnmount(() => {
 }
 .slogan {
     background: linear-gradient(to bottom, #f72585, #7b2cbf);
-    background: -webkit-linear-gradient(to bottom, #f72585, #7b2cbf);
+    background: -webkit-linear-gradient(#f72585, #7b2cbf);
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
@@ -733,7 +854,7 @@ onBeforeUnmount(() => {
     background-repeat: no-repeat;
     background-position: right bottom;
     background-size: 100%;
-    top: -300px;
+    top: -295px;
     left: 0;
     width: 100%;
     min-height: 300px;
@@ -741,6 +862,7 @@ onBeforeUnmount(() => {
 .newsAllBtn {
     border: 1px solid #4361ee;
     cursor: pointer;
+    line-height: 20px;
 }
 .newsSystemBtn {
     border: 1px solid #7b2cbf;
@@ -765,14 +887,14 @@ onBeforeUnmount(() => {
     background: #f72585;
     color: #fff;
 }
-.newsLink:hover .newsItem1{
+.newsLink:hover .newsItem1 {
     background: linear-gradient(to right, #7b2cbf, #4361ee);
     background: -webkit-linear-gradient(to right, #7b2cbf, #4361ee);
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
 }
-.newsLink:hover .newsItem2{
+.newsLink:hover .newsItem2 {
     background: linear-gradient(to right, #7b2cbf, #f72585);
     background: -webkit-linear-gradient(to right, #7b2cbf, #f72585);
     background-clip: text;
@@ -901,11 +1023,7 @@ onBeforeUnmount(() => {
 .gameItemBox2 {
     position: relative;
     padding: 1px;
-    background: linear-gradient(
-        to bottom,
-        rgba(247, 37, 133),
-        #7b2cbf
-    );
+    background: linear-gradient(to bottom, rgba(247, 37, 133), #7b2cbf);
     border-radius: 10px;
     border: none;
 }
@@ -965,20 +1083,34 @@ onBeforeUnmount(() => {
     left: 50%;
     transform: translateX(-50%);
 }
-.moreGameBtnBox{
+.moreGameBtnBox {
     position: relative;
     padding: 1px;
-    background: linear-gradient(
-        to right,
-        #7b2cbf,
-        rgba(247, 37, 133)
-    );
+    background: linear-gradient(to right, #7b2cbf, rgba(247, 37, 133));
     border-radius: 50px;
     border: none;
 }
-.moreGameBtn:hover{
+.moreGameBtn:hover {
     background: #fff;
     color: #f72585;
+}
+.searchLogBtn {
+    font-family: Microsoft JhengHei;
+    background: rgba(0, 0, 0, 0);
+    color: #f72585;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    margin: 0.2rem;
+    font-size: 16px;
+    font-weight: 600;
+}
+@media screen and (max-width: 1024px) {
+    .arrowRight {
+        transform: rotate(180deg);
+        right: 0;
+        top: 0;
+    }
 }
 @media screen and (max-width: 768px) {
     .gameBox0,

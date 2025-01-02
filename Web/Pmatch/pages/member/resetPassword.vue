@@ -72,6 +72,10 @@
     </div>
 </template>
 <script setup>
+import { useAlertModalStore } from "../stores/useAlertModal.js";
+const alertModalStore = useAlertModalStore();
+const openAlertModal = alertModalStore.alertShowModal;
+
 const route = useRoute();
 const router= useRouter();
 const phone = ref('');
@@ -100,9 +104,9 @@ const ResendVerifyCode = async () => {
         );
 
         if (response.data.Status.Code === 0) {
-            alert('簡訊驗證碼已發送');
+            await openAlertModal(" ", "簡訊驗證碼已發送");
         } else {
-            alert(`${response.data.Status.Message}`);
+            await openAlertModal(" ", `${response.data.Status.Message}`);
         }
     } catch (error) {
         console.error('請求失敗:', error);
@@ -134,16 +138,16 @@ const ChangePwd = async event => {
             );
 
             if (response.data.Status.Code === 0) {
-                alert('密碼更改成功');
+                await openAlertModal(" ", "密碼更改成功!!");
                 router.push("/member/login");
             } else {
-                alert(`${response.data.Status.Message}`);
+                await openAlertModal(" ", `${response.data.Status.Message}`);
             }
         } catch (error) {
             console.error('請求失敗:', error);
         }
     } else {
-        alert('密碼與確認密碼不一致');
+        await openAlertModal(" ", "密碼與確認密碼不一致!!");
     }
 };
 onMounted(() => {

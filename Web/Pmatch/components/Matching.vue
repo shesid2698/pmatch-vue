@@ -53,9 +53,9 @@
                         {{ item.GamePlatform || "　" }}
                     </div>
                     <div
-                        class="patchDetail w-full font-size-15px pt-3 pb-3 text-center"
+                        class="patchDetail w-full font-size-18px pt-3 pb-3 text-center"
                     >
-                        {{ item.Patch || "　" }}
+                        {{ formatNumber(item.Patch) || "　" }}
                     </div>
                     <div class="w-full font-size-15px pt-3 pb-3 text-center">
                         {{ item.MobileNumber || "　" }}
@@ -68,6 +68,9 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from "vue";
+import { useAlertModalStore } from "../stores/useAlertModal.js";
+const alertModalStore = useAlertModalStore();
+const openAlertModal = alertModalStore.alertShowModal;
 const matchingList = ref([]);
 const { $axios } = useNuxtApp();
 const jwtStore = useJwtStore();
@@ -78,12 +81,20 @@ const currentIndex = ref(0); // 當前的起始索引
 let intervalId = null; // 計時器 ID
 
 const updateVisibleList = () => {
+    const itemsPerPage = 5; // 每頁顯示的項目數量
+    const maxPages = 5; // 最多顯示的頁數
+    const totalItems = matchingList.value.length;
+    const totalPages = Math.ceil(totalItems / itemsPerPage); // 總頁數
+
+    // 限制最多顯示的頁數
+    const maxItems = Math.min(maxPages * itemsPerPage, totalItems);
     const start = currentIndex.value;
-    const end = Math.min(start + 5, matchingList.value.length); // 確保不超過數據長度
+    const end = Math.min(start + itemsPerPage, maxItems); // 確保不超過最大數量
+
     const slice = matchingList.value.slice(start, end);
 
-    // 如果不足 5 個，補空白項
-    while (slice.length < 5) {
+    // 如果不足 itemsPerPage 個，補空白項
+    while (slice.length < itemsPerPage) {
         slice.push({
             EndTime: null,
             GamePlatform: null,
@@ -95,11 +106,11 @@ const updateVisibleList = () => {
     visibleList.value = slice;
 
     // 更新索引
-    if (end >= matchingList.value.length) {
+    if (end >= maxItems) {
         // 如果到達末尾，回到起點
         currentIndex.value = 0;
     } else {
-        currentIndex.value += 5;
+        currentIndex.value += itemsPerPage;
     }
 };
 const startInterval = () => {
@@ -145,14 +156,24 @@ async function fetchMatchingListData(token, platformName) {
         if (response.data.Status.Code === 0) {
             matchingList.value = response.data.Datas;
         } else {
-            alert(`${response.data.Status.Message}`);
+            await openAlertModal(" ", `${response.data.Status.Message}`);
         }
     } catch (error) {
         console.error("請求失敗:", error);
         data.value = "無法取得資料。"; // 畫面顯示錯誤訊息
     }
 }
-
+// 千分位
+const formatNumber = (value) => {
+    if (value === undefined || value === null || value === "") {
+        return "　"; // 如果值不存在，返回空白字符
+    }
+    const number = Number(value);
+    if (isNaN(number)) {
+        return value; // 如果不是數字，直接返回原始值
+    }
+    return number.toLocaleString(); // 將數字轉換為千分位格式
+};
 // 監聽傳遞即時媒合值的變化去call api
 watch(
     () => props.param,

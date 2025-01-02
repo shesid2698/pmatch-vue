@@ -80,7 +80,6 @@
                         <div class="flex-1">
                             <button @click="login"
                                     type="button"
-                                    :disabled="!loginToken"
                                     class="disabled:opacity-70 p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#e93470] hover:bg-[#bb2d3b] transition duration-200 cursor-pointer">
                                 登入
                             </button>
@@ -99,6 +98,11 @@
 
 <script setup>
 import VueTurnstile from 'vue-turnstile';
+
+import { useAlertModalStore } from "../stores/useAlertModal.js";
+const alertModalStore = useAlertModalStore();
+const openAlertModal = alertModalStore.alertShowModal;
+
 const encrypt = useEncrypt();
 const eyes = ref(null);
 const i_password = ref(null);
@@ -162,7 +166,7 @@ async function Login(encryptedPassword) {
             MemberIdCookie.value = response.data.Data.PmatchMemberId;
             window.location.href = '/';
         } else {
-            alert(`${response.data.Status.Message}`);
+            await openAlertModal(" ", `${response.data.Status.Message}`);
         }
     } catch (error) {
         console.error('請求失敗:', error);

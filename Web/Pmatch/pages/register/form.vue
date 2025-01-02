@@ -265,6 +265,11 @@
 <script setup>
 // loading page
 import { useLoadStore } from '../stores/loading.js';
+
+import { useAlertModalStore } from "../stores/useAlertModal.js";
+const alertModalStore = useAlertModalStore();
+const openAlertModal = alertModalStore.alertShowModal;
+
 const store = useLoadStore();
 const contractStores = ref('');
 const setPageLoading = store.setPageLoading;
@@ -379,14 +384,14 @@ const GetRegions = async () => {
 const SubmitForm = async e => {
     e.preventDefault();
     if (mobileVerify.value === false) {
-        alert('手機號碼尚未驗證');
+        await openAlertModal(" ", "手機號碼尚未驗證");
         return;
     }
     var password1 = encrypt.encrypt(i_password.value.value);
     var password2 = encrypt.encrypt(i_password2.value.value);
     token.value = await jwtStore.generateToken();
     if (password1 !== password2) {
-        alert('密碼與確認密碼不一致');
+        await openAlertModal(" ", "密碼與確認密碼不一致");
         return;
     }
     try {
@@ -407,7 +412,7 @@ const SubmitForm = async e => {
             if (shortUrlResponse.data.Status.Code === 0) {
                 await RegisterMember(password1);
             } else {
-                alert(`${shortUrlResponse.data.Status.Message}`);
+                await openAlertModal(" ", `${shortUrlResponse.data.Status.Message}`);
                 return;
             }
         } else {
@@ -445,7 +450,7 @@ const RegisterMember = async password1 => {
     if (response.data.Status.Code === 0) {
         router.push(`/register/done?account=${encrypt.encrypt(phoneValue)}`);
     } else {
-        alert(`${response.data.Status.Message}`);
+        await openAlertModal(" ", `${response.data.Status.Message}`);
     }
 };
 onMounted(async () => {

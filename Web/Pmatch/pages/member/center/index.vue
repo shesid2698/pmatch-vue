@@ -328,6 +328,9 @@
     </div>
 </template>
 <script setup>
+import { useAlertModalStore } from "../stores/useAlertModal.js";
+const alertModalStore = useAlertModalStore();
+const openAlertModal = alertModalStore.alertShowModal;
 const modalStore = useModalStore();
 const alertModal = useAlertModalStore();
 const recommendDisabled = ref(false);

@@ -2,6 +2,10 @@
   <div></div>
 </template>
 <script setup>
+import { useAlertModalStore } from "../stores/useAlertModal.js";
+const alertModalStore = useAlertModalStore();
+const openAlertModal = alertModalStore.alertShowModal;
+
 const { $axios } = useNuxtApp();
 const code = ref('');
 const route = useRoute();
@@ -39,7 +43,7 @@ onMounted(async () => {
                   query:{Phone:t_Phone,PmatchStoreIds:t_PmatchStoreIds,D:t_Id}
                 });
             } else {
-                alert(`${response.data.Status.Message}`);
+                await openAlertModal(" ", `${response.data.Status.Message}`);
                 router.push("/");
             }
         }

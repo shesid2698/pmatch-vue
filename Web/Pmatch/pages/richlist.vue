@@ -41,6 +41,9 @@ ChartJS.register(
 
 // loading page
 import { useLoadStore } from "../stores/loading.js";
+import { useAlertModalStore } from "../stores/useAlertModal.js";
+const alertModalStore = useAlertModalStore();
+const openAlertModal = alertModalStore.alertShowModal;
 const store = useLoadStore();
 const setPageLoading = store.setPageLoading;
 
@@ -177,7 +180,7 @@ async function fetchRichList(token, type) {
         if (response.data.Status.Code === 0) {
             dailyPatchList.value = response.data.Data;
         } else {
-            alert(`${response.data.Status.Message}`);
+            await openAlertModal(" ", `${response.data.Status.Message}`);
         }
     } catch (error) {
         console.error("請求失敗:", error);
