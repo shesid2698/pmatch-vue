@@ -171,36 +171,6 @@
                                             required
                                         />
                                     </div>
-                                    <ElButton
-                                        class="border-none color-#aaa w-95px h-40px rounded-5px"
-                                        plain
-                                        @click="dialogVisible = true"
-                                    >
-                                        檢視合約
-                                    </ElButton>
-                                    <ElDialog
-                                        v-model="dialogVisible"
-                                        title="合約服務條款"
-                                        width="500"
-                                        :close-on-click-modal="false"
-                                    >
-                                        <div
-                                            v-if="storesItem"
-                                            v-html="storesItem.ContractConetnt"
-                                        ></div>
-                                        <template #footer>
-                                            <div class="dialog-footer">
-                                                <ElButton
-                                                    type="primary"
-                                                    @click="
-                                                        dialogVisible = false
-                                                    "
-                                                >
-                                                    同意
-                                                </ElButton>
-                                            </div>
-                                        </template>
-                                    </ElDialog>
                                     <button class="mt-5">送出</button>
                                 </form>
                             </div>
@@ -343,25 +313,32 @@
                             </div>
                         </div>
                         <div class="contactBox relative mb-5">
-                            <div class="contactContent py-2">
-                                <div class="font-size-18px">聯絡資訊</div>
+                            <div class="contactContent py-2" @click.stop="contactToggle">
+                                <div class="font-size-18px">
+                                    {{
+                                selectedContact || "聯絡資訊"
+                            }}
+                                </div>
                                 <div class="absolute top-13px right-20px">
                                     <img
                                         class="w-25px"
                                         src="/images/arrowDown.png"
-                                        alt=""
+                                        alt="下拉icon"
                                     />
                                 </div>
                             </div>
-                            <div class="absolute bg-#fff top-0 w-100% h-22px hidden">
-                                <div v-if="!memberPhone1Cookie">
-                                    {{memberPhone1Cookie}}
+                            <div
+                                v-show="contactBox"
+                                class="contactPhoneBox absolute bg-#fff top-0 w-100% z-2"
+                            >
+                                <div class="bg-#fff py-2" v-if="!memberPhone1Cookie" @click.stop="selectedPhone(memberPhone1Cookie)">
+                                    {{ memberPhone1Cookie }}
                                 </div>
-                                <div v-if="!memberPhone2Cookie">
-                                    {{memberPhone2Cookie}}
+                                <div class="bg-#fff py-2" v-if="!memberPhone2Cookie" @click.stop="selectedPhone(memberPhone2Cookie)">
+                                    {{ memberPhone2Cookie }}
                                 </div>
-                                <div v-if="!memberPhone3Cookie">
-                                    {{memberPhone3Cookie}}
+                                <div class="bg-#fff py-2" v-if="!memberPhone3Cookie" @click.stop="selectedPhone(memberPhone3Cookie)">
+                                    {{ memberPhone3Cookie }}
                                 </div>
                             </div>
                         </div>
@@ -388,9 +365,60 @@
                         </div>
                     </div>
                     <div class="flex justify-center">
+                        <div class="relative mb-5">
+                            <div class="flex items-center font-size-18px">
+                                <input
+                                    type="radio"
+                                    class="w-20px h-20px m-0 me-3 custom-radio"
+                                    id="read"
+                                    v-model="readContract"
+                                    :value="true"
+                                />
+                                <label
+                                    for="read"
+                                    class="radio-label font-size-18px color-#f72585"
+                                    >我已詳細閱讀此服務條款</label
+                                >
+                                <ElButton
+                                        class="border-none color-#aaa w-95px h-40px rounded-5px"
+                                        plain
+                                        @click="dialogVisible = true"
+                                    >
+                                        檢視合約
+                                    </ElButton>
+                                    <ElDialog
+                                        v-model="dialogVisible"
+                                        title="合約服務條款"
+                                        width="500"
+                                        :close-on-click-modal="false"
+                                    >
+                                        <div
+                                            v-if="storesItem"
+                                            v-html="storesItem.ContractConetnt"
+                                        ></div>
+                                        <template #footer>
+                                            <div class="dialog-footer">
+                                                <ElButton
+                                                    type="primary"
+                                                    @click="
+                                                        dialogVisible = false
+                                                    "
+                                                >
+                                                    同意
+                                                </ElButton>
+                                            </div>
+                                        </template>
+                                    </ElDialog>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-center">
                         <div class="submitBox relative mb-5">
-                            <div class="submitBtn py-2" @click="sendAccList">
-                                <div class="font-size-18px">確認送出</div>
+                            <div
+                                class="submitBtn font-size-18px px-2rem py-1rem"
+                                @click="sendAccList"
+                            >
+                                確認送出
                             </div>
                         </div>
                     </div>
@@ -437,14 +465,33 @@ let question = ref("");
 
 const buyOrSell = ref(true); // true 表示委買, false 表示委賣
 const paymentMethod = ref(true); // 選擇的付款方式
+const readContract = ref(false); // 是否閱讀並同意合約
+const contactBox = ref(false); // 聯絡資訊開關
+const selectedContact = ref("");
 
 let accPlatformName = ref("");
 let accMemberName = ref("");
-let accTransaction = ref("10");
 let accPatch = ref("");
 let accPayMode = ref("1");
 let accPhone = ref("");
 
+// 聯絡資訊
+// 切換下拉選單的顯示/隱藏
+const contactToggle = () => {
+    contactBox.value = !contactBox.value;
+    // 選單開啟時添加全域點擊監聽
+    if (contactBox.value) {
+        document.addEventListener("click", handleClickOutside);
+    } else {
+        document.removeEventListener("click", handleClickOutside);
+    }
+};
+const handleClickOutside = (event) => {
+    const dropdown = document.querySelector(".contactPhoneBox");
+    if (dropdown && !dropdown.contains(event.target)) {
+        contactBox.value = false;
+    }
+};
 // 取得GetNewsDetail
 async function fetchStoresDetailData(token) {
     try {
@@ -532,17 +579,26 @@ async function sendAccList() {
     if (userToken.value === "" || userToken.value === undefined) {
         await openAlertModal(" ", "請先登入會員");
     } else {
-        if(!accMemberName.value){
+        if (!accMemberName.value) {
             await openAlertModal(" ", "請填寫遊戲暱稱");
             return;
         }
-        if(!accPatch.value){
+        if (!accPatch.value) {
             await openAlertModal(" ", "請填寫委託金額");
+            return;
+        }
+        if (readContract.value !== true) {
+            await openAlertModal(" ", "請選擇是否已詳細閱讀服務條款");
             return;
         }
         await createAccApi(userToken.value);
     }
 }
+// 選擇遊戲並關閉選單
+const selectedPhone = (item) => {
+    selectedContact.value = item;
+    contactBox.value = false; // 隱藏選單
+};
 // 送出問與答列表
 async function sendQAApi(token) {
     try {
@@ -586,7 +642,7 @@ async function createAccApi(token) {
                 TransactionMode: buyOrSell.value ? 10 : 20,
                 Patch: Number(accPatch.value),
                 PayMode: paymentMethod.value ? 1 : 2,
-                Phone: accPhone.value,
+                Phone: selectedContact.value,
                 PmatchMemberId: memberIdCookie.value,
             },
             {
@@ -597,11 +653,38 @@ async function createAccApi(token) {
         );
         if (response.data.Status.Code === 0) {
             storeQAList.value = response.data.Data;
+
+            const newItem = {
+                Name: storesItem.value.Name,
+                Id: storesItem.value.Id,
+            };
+
+            const buyLogKey = "buyLog";
+            let buyLog = JSON.parse(localStorage.getItem(buyLogKey)) || [];
+            const existingIndex = buyLog.findIndex(
+                (item) => item.Id === newItem.Id
+            );
+            if (existingIndex !== -1) {
+                // 如果已存在，移除原有位置的元素
+                buyLog.splice(existingIndex, 1);
+            }
+
+            buyLog.unshift(newItem);
+
+            // 如果陣列超過 5 筆，移除最後一筆
+            if (buyLog.length > 5) {
+                buyLog.pop();
+            }
+
+            // 將更新後的 buyLog 存入 localStorage
+            localStorage.setItem(buyLogKey, JSON.stringify(buyLog));
+            await openAlertModal(" ", "單據已送出");
         } else {
             await openAlertModal(" ", `${response.data.Status.Message}`);
         }
     } catch (error) {
         console.error("請求失敗:", error);
+        await openAlertModal(" ", `請求失敗: ${error}`);
     }
 }
 // 取得會員資料
@@ -620,9 +703,9 @@ async function getMemberDetail(token) {
         );
         if (response.data.Status.Code === 0) {
             memberDetailList.value = response.data.Data;
-            memberPhone1Cookie.value = memberDetailList.value.Mobile1;
-            memberPhone2Cookie.value = memberDetailList.value.Mobile2;
-            memberPhone3Cookie.value = memberDetailList.value.Mobile3;
+            memberPhone1Cookie.value = memberDetailList.value[0].Mobile1;
+            memberPhone2Cookie.value = memberDetailList.value[0].Mobile2;
+            memberPhone3Cookie.value = memberDetailList.value[0].Mobile3;
         } else {
             await openAlertModal(" ", `${response.data.Status.Message}`);
         }
@@ -682,6 +765,7 @@ watch(
     background: linear-gradient(to right, #4361ee, #f72585);
     border-radius: 50px;
     border: none;
+    cursor: pointer;
 }
 .contactContent {
     display: flex;
@@ -727,11 +811,10 @@ watch(
     color: #fff;
 }
 .submitBox {
-    width: 200px;
     position: relative;
     padding: 1px;
     background: linear-gradient(to right, #4361ee, #f72585);
-    border-radius: 20px;
+    border-radius: 50px;
     border: none;
     color: #fff;
 }
@@ -742,7 +825,7 @@ watch(
 .submitBtn:hover {
     background: #fff;
     color: #8d8d8d;
-    border-radius: 20px;
+    border-radius: 50px;
     text-align: center;
 }
 .custom-radio {
@@ -773,5 +856,8 @@ watch(
     background-color: #6a6a6a; /* 灰色圓 */
     border-radius: 50%;
     transform: translate(-50%, -50%);
+}
+.contactPhoneBox{
+    border: 1px solid #ccc;
 }
 </style>

@@ -4,7 +4,7 @@ import axios from 'axios';
 const axiosInstance = axios.create({
   baseURL: 'http://192.168.10.206:3310', // 206 URL
   // baseURL: 'http://localhost:2310', // docker URL
-  timeout: 5000, // 請求逾時時間
+  timeout: 12000, // 請求逾時時間
 });
 
 // 定義插件

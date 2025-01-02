@@ -1,6 +1,6 @@
 <template>
-    <div class="ccontainer">
-        <div class="w-68.75%">
+    <div class="max-w-1110px m-auto pt-60px ps-5 pe-5 relative z-2">
+        <div class="w-100%">
             <div class="flex items-center">
                 <div class="w-25px h-20px bg-#1a6db4"></div>
                 <span class="font-size-1.4rem ms-3 fw-600">服務條款</span>

@@ -13,7 +13,7 @@
                             alt="pmatch頁尾Logo"
                         />
                         <p class="color-#fff m-0 text-center">
-                            © 2020~2024 版權所有
+                            © 2020~2025 版權所有
                         </p>
                         <p class="color-#fff m-0 mb-2 text-center">
                             PMatch 遊戲道具媒合網

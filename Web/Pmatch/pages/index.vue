@@ -481,19 +481,6 @@ const showPlatformBox = ref(false);
 const selectedGame = ref("");
 let isBackNavigation = false;
 
-// alert & confirm function
-async function testConfirm() {
-    await openModal(
-        "標題",
-        "內容",
-        () => console.log("確定按鈕被點擊"), // 確定的回調
-        () => console.log("取消按鈕被點擊")
-    );
-}
-async function testAlert() {
-    await openAlertModal("標題", "內容", () => console.log("確定按鈕被點擊")); // 確定的回調
-}
-
 // 切換下拉選單的顯示/隱藏
 const togglePlatformBox = () => {
     showPlatformBox.value = !showPlatformBox.value;
@@ -519,7 +506,7 @@ const serviceList = [
     },
     {
         title: "精選優質媒合商，詐騙走開",
-        detail: "平台上的媒合商均經過Pmatch平台嚴格篩選，交易信用有保障，告別詐騙交易",
+        detail: "平台上的媒合商均經過PMatch平台嚴格篩選，交易信用有保障，告別詐騙交易",
         img: "/images/service2.png",
     },
     {
@@ -1085,7 +1072,7 @@ onBeforeUnmount(() => {
 }
 .moreGameBtnBox {
     position: relative;
-    padding: 1px;
+    padding: 17px 1px;
     background: linear-gradient(to right, #7b2cbf, rgba(247, 37, 133));
     border-radius: 50px;
     border: none;

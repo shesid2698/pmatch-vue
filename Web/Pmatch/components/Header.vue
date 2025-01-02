@@ -223,7 +223,6 @@ const setDropdownRef = (id) => (el) => {
 const handleDropdown = (item) => {
     const currentState = dropdownStates.value[item.id];
     dropdownStates.value[item.id] = !currentState;
-    console.log(item.showDropdown);
 };
 // 點擊外部關閉下拉選單
 const closeDropdownOutside = (event) => {
@@ -237,6 +236,7 @@ const closeDropdownOutside = (event) => {
 const logout = () => {
     userToken.value = undefined;
     userToken.maxAge = -1;
+    const pmName = localStorage.getItem('_PmLocalName');
     userNameCookie.value = undefined;
     userNameCookie.maxAge = -1;
     MemberIdCookie.value = undefined;
