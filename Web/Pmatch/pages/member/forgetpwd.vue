@@ -79,15 +79,13 @@ const checkCaptcha = async event => {
         try {
             token.value = await jwtStore.generateToken();
             const response = await $axios.post(
-                '/api/v1/Pmatch/SendVerifyCode',
+                '/api/v1/Pmatch/ForgotPassword',
                 {
                     MobileNumber: phone.value
                 },
                 {
                     headers: {
-                        // Authorization: token.value
-                        Authorization:
-                            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InN5c3RlbSIsIm5iZiI6MTcwNjU4Mzc2MywiZXhwIjoxNzkyOTgzNzYzLCJpYXQiOjE3MDY1ODM3NjN9.wxFnZD-cJjL3ehDzgxhmhFg4KDtULB-ptleQEcBNnfg'
+                        Authorization: token.value
                     }
                 }
             );
