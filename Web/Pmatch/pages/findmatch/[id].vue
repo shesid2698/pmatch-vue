@@ -1,53 +1,28 @@
 <template>
     <div>
-        <div class="mt-7rem max-w-1110px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3">
-            <div class="mb-7 flex items-center justify-between">
-                <div class="flex items-center">
-                    <div class="w-25px h-20px bg-#1a6db4"></div>
-                    <span class="font-size-1.4rem ms-3 fw-600">關於商店</span>
-                </div>
-                <!-- 麵包屑 (新版目前沒有 先不刪以防後續需要) -->
-                <!-- <div>
-                <ElBreadcrumb :separator-icon="ArrowRight">
-                    <ElBreadcrumbItem :to="{ path: '/' }"
-                        >首頁</ElBreadcrumbItem
-                    >
-                    <ElBreadcrumbItem :to="{ path: '/findmatch' }">
-                        找媒合
-                    </ElBreadcrumbItem>
-                    <ElBreadcrumbItem> {{ pageTitle }} </ElBreadcrumbItem>
-                </ElBreadcrumb>
-            </div> -->
-            </div>
-            <div>
-                <div class="flex items-center mb-2rem pb-2rem">
-                    <div class="flex justify-start md-mb-0 mb-5">
-                        <img class="w-200px" />
-                    </div>
-                    <div class="ms-2rem">
-                        <div class="mb-3">
-                            <span class="font-size-1.2rem fw-600"
-                                >商店名稱 :
-                            </span>
-                            <span
-                                class="font-size-1.2rem fw-600"
+        <div class="w-full bg-#fff relative mt-5rem">
+            <div class="mt-7rem max-w-1110px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3">
+                <div class="flex">
+                    <div class="w-50%">
+                        <div class="flex mb-3">
+                            <div>
+                                <img src="" alt="商店圖" />
+                            </div>
+                            <h2
+                                class="storeTitle font-size-36px"
                                 v-if="storesItem"
                             >
                                 {{ storesItem.Name }}
-                            </span>
+                            </h2>
                         </div>
-                        <div class="mb-2">
-                            <span class="fw-600">遊戲平台 : </span>
-                            <span>{{ filteredPlatform }}</span>
+                        <div class="mb-3 storeAboutBox">
+                            <div class="storeAboutContent">
+                                <span v-if="storesItem">{{
+                                    storesItem.About
+                                }}</span>
+                            </div>
                         </div>
-                        <div class="mb-2">
-                            <span class="fw-600">商店簡介 : </span>
-                            <span v-if="storesItem">{{
-                                storesItem.About
-                            }}</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="fw-600">聯絡方式 : </span>
+                        <div>
                             <div class="ms-2 flex">
                                 <NuxtLink
                                     class="flex items-center ms-1 me-1"
@@ -55,7 +30,7 @@
                                     :to="storesItem.FB"
                                 >
                                     <img
-                                        class="w-20px h-20px"
+                                        class="w-30px h-30px"
                                         src="/images/facebook.png"
                                         alt=""
                                     />
@@ -66,7 +41,7 @@
                                     :to="storesItem.LineId"
                                 >
                                     <img
-                                        class="w-20px h-20px"
+                                        class="w-30px h-30px"
                                         src="/images/line.png"
                                         alt=""
                                     />
@@ -77,7 +52,7 @@
                                     :to="storesItem.IGId"
                                 >
                                     <img
-                                        class="w-20px h-20px"
+                                        class="w-30px h-30px"
                                         src="/images/instagram.png"
                                         alt=""
                                     />
@@ -88,7 +63,7 @@
                                     :to="storesItem.TwitterId"
                                 >
                                     <div
-                                        class="bg-#000 w-20px h-20px rounded-50% color-#fff text-center"
+                                        class="bg-#000 w-30px h-30px rounded-50% color-#fff text-center"
                                     >
                                         x
                                     </div>
@@ -96,120 +71,19 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <!-- 先不刪 設計圖出來之後可能會改 -->
-                <!-- <div>
-                <div v-for="(item, index) in filteredPlatformArray" :key="index">
-                    <button>{{item}}</button>
-                </div>
-            </div> -->
-                <div>
-                    <el-tabs
-                        v-model="activeName"
-                        type="card"
-                        class="demo-tabs"
-                        @tab-click="handleClick"
-                    >
-                        <el-tab-pane label="開單" name="first">
-                            <div class="b-solid border-1 p-5 b-#212529">
-                                <form action="#" @submit="sendAccList">
-                                    <div>
-                                        <p>遊戲平台 :</p>
-                                        <select
-                                            v-model="accPlatformName"
-                                            required
-                                        >
-                                            <option
-                                                v-for="(
-                                                    item, index
-                                                ) in filteredPlatformArray"
-                                                :key="index"
-                                                :value="item"
-                                            >
-                                                {{ item }}
-                                            </option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <p>遊戲暱稱 :</p>
-                                        <input
-                                            required
-                                            v-model="accMemberName"
-                                            type="text"
-                                        />
-                                    </div>
-                                    <div>
-                                        <p>交易種類 :</p>
-                                        <select
-                                            v-model="accTransaction"
-                                            required
-                                        >
-                                            <option value="10">委買</option>
-                                            <option value="12">委賣</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <p>委託金額 :</p>
-                                        <input
-                                            required
-                                            v-model="accPatch"
-                                            type="text"
-                                        />
-                                    </div>
-                                    <div>
-                                        <p>希望付款方式 :</p>
-                                        <select v-model="accPayMode" required>
-                                            <option value="1">超商代收</option>
-                                            <option value="2">銀行轉帳</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <p>聯絡資料 :</p>
-                                        <input
-                                            v-model="accPhone"
-                                            type="text"
-                                            required
-                                        />
-                                    </div>
-                                    <button class="mt-5">送出</button>
-                                </form>
-                            </div>
-                        </el-tab-pane>
-                        <el-tab-pane label="問與答" name="second">
-                            <div class="b-solid border-1 b-#212529">
-                                <div class="p-5" v-if="storesItem != null">
-                                    <div
-                                        v-if="storesItem.StoreQAs.length > 0"
-                                        v-for="(
-                                            item, index
-                                        ) in storesItem.StoreQAs"
-                                        :key="index"
-                                    >
-                                        <p>問 : {{ item.Question }}</p>
-                                        <p>答 : {{ item.Answer }}</p>
-                                    </div>
-                                    <div v-else>
-                                        <p>尚未有提問資料...</p>
-                                    </div>
-                                </div>
-                                <div class="p-5 bg-#ccc">
-                                    <p class="m-0 mb-1rem">我要提問</p>
-                                    <textarea
-                                        class="w-100% h-5rem p-0 mb-1rem"
-                                        v-model="question"
-                                    ></textarea>
-                                    <div class="w-100% flex justify-end">
-                                        <button
-                                            class="w-200px h-38px bg-#1A6DB4 color-#fff border-none fw-bold font-size-1rem"
-                                            @click="sendQAList"
-                                        >
-                                            送出
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </el-tab-pane>
-                    </el-tabs>
+                    <div class="w-50% flex items-center justify-center">
+                        <ElCarousel
+                            type="card"
+                            height="200px"
+                            class="w-100%"
+                            arrow="always"
+                            :autoplay="false"
+                        >
+                            <ElCarouselItem v-for="item in 3" :key="item">
+                                <h3 class="carousel-item" text="2xl" justify="center">{{ item }}</h3>
+                            </ElCarouselItem>
+                        </ElCarousel>
+                    </div>
                 </div>
             </div>
         </div>
@@ -228,7 +102,7 @@
                     </div>
                 </div>
                 <div>
-                    <div class="w-100% flex justify-center flex-wrap mb-10">
+                    <div class="w-100% flex justify-center flex-wrap">
                         <div class="entryBox mb-5">
                             <div class="entryContent">
                                 <input
@@ -313,11 +187,12 @@
                             </div>
                         </div>
                         <div class="contactBox relative mb-5">
-                            <div class="contactContent py-2" @click.stop="contactToggle">
+                            <div
+                                class="contactContent py-2"
+                                @click.stop="contactToggle"
+                            >
                                 <div class="font-size-18px">
-                                    {{
-                                selectedContact || "聯絡資訊"
-                            }}
+                                    {{ selectedContact || "聯絡資訊" }}
                                 </div>
                                 <div class="absolute top-13px right-20px">
                                     <img
@@ -331,37 +206,34 @@
                                 v-show="contactBox"
                                 class="contactPhoneBox absolute bg-#fff top-0 w-100% z-2"
                             >
-                                <div class="bg-#fff py-2" v-if="!memberPhone1Cookie" @click.stop="selectedPhone(memberPhone1Cookie)">
+                                <div
+                                    class="bg-#fff py-2"
+                                    v-if="!memberPhone1Cookie"
+                                    @click.stop="
+                                        selectedPhone(memberPhone1Cookie)
+                                    "
+                                >
                                     {{ memberPhone1Cookie }}
                                 </div>
-                                <div class="bg-#fff py-2" v-if="!memberPhone2Cookie" @click.stop="selectedPhone(memberPhone2Cookie)">
+                                <div
+                                    class="bg-#fff py-2"
+                                    v-if="!memberPhone2Cookie"
+                                    @click.stop="
+                                        selectedPhone(memberPhone2Cookie)
+                                    "
+                                >
                                     {{ memberPhone2Cookie }}
                                 </div>
-                                <div class="bg-#fff py-2" v-if="!memberPhone3Cookie" @click.stop="selectedPhone(memberPhone3Cookie)">
+                                <div
+                                    class="bg-#fff py-2"
+                                    v-if="!memberPhone3Cookie"
+                                    @click.stop="
+                                        selectedPhone(memberPhone3Cookie)
+                                    "
+                                >
                                     {{ memberPhone3Cookie }}
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="contractBox mb-5">
-                        <div
-                            class="matchingTitle p-3 absolute flex items-center rounded-10px"
-                        >
-                            <div class="flex items-center me-2">
-                                <img
-                                    class="w-20px"
-                                    src="/images/matchingIcon.png"
-                                    alt="服務條款"
-                                />
-                            </div>
-                            <h3 class="m-0 font-size-20px">服務條款</h3>
-                        </div>
-                        <div class="contractContent">
-                            <div
-                                class="contractDetail"
-                                v-if="storesItem != null"
-                                v-html="storesItem.ContractConetnt"
-                            ></div>
                         </div>
                     </div>
                     <div class="flex justify-center">
@@ -374,41 +246,32 @@
                                     v-model="readContract"
                                     :value="true"
                                 />
-                                <label
-                                    for="read"
-                                    class="radio-label font-size-18px color-#f72585"
-                                    >我已詳細閱讀此服務條款</label
+                                <ElButton plain @click="readContact">
+                                    我已詳細閱讀此服務條款(必填)
+                                </ElButton>
+                                <ElDialog
+                                    v-model="dialogVisible"
+                                    :close-on-click-modal="false"
                                 >
-                                <ElButton
-                                        class="border-none color-#aaa w-95px h-40px rounded-5px"
-                                        plain
-                                        @click="dialogVisible = true"
-                                    >
-                                        檢視合約
-                                    </ElButton>
-                                    <ElDialog
-                                        v-model="dialogVisible"
-                                        title="合約服務條款"
-                                        width="500"
-                                        :close-on-click-modal="false"
-                                    >
+                                    <div class="dialogHeader absolute">
+                                        服務條款
+                                    </div>
+                                    <div class="dialogBody">
                                         <div
                                             v-if="storesItem"
                                             v-html="storesItem.ContractConetnt"
                                         ></div>
-                                        <template #footer>
-                                            <div class="dialog-footer">
-                                                <ElButton
-                                                    type="primary"
-                                                    @click="
-                                                        dialogVisible = false
-                                                    "
-                                                >
-                                                    同意
-                                                </ElButton>
-                                            </div>
-                                        </template>
-                                    </ElDialog>
+                                        <div class="flex justify-end mt-5">
+                                            <ElButton
+                                                class="agreeBtn"
+                                                type="primary"
+                                                @click="dialogVisible = false"
+                                            >
+                                                同意
+                                            </ElButton>
+                                        </div>
+                                    </div>
+                                </ElDialog>
                             </div>
                         </div>
                     </div>
@@ -430,11 +293,11 @@
 
 <script setup>
 import { ArrowRight } from "@element-plus/icons-vue";
-import { ElBreadcrumb } from "element-plus";
-import { ElBreadcrumbItem } from "element-plus";
 import { ElButton } from "element-plus";
 import { ElDialog } from "element-plus";
 import { ElMessageBox } from "element-plus";
+import { ElCarousel } from "element-plus";
+import { ElCarouselItem } from "element-plus";
 
 // loading page
 import { useLoadStore } from "../stores/loading.js";
@@ -517,7 +380,10 @@ async function fetchStoresDetailData(token) {
         data.value = "無法取得資料。"; // 畫面顯示錯誤訊息
     }
 }
-
+const readContact = () => {
+    dialogVisible.value = true;
+    readContract.value = true;
+};
 onMounted(async () => {
     await setPageLoading(true);
     try {
@@ -728,6 +594,89 @@ watch(
 :deep(.el-icon) {
     z-index: -1;
 }
+.storeTitle {
+    background: linear-gradient(to bottom, #f72585, #7b2cbf);
+    background: -webkit-linear-gradient(to bottom, #f72585, #7b2cbf);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(200, 200, 200, 0.1);
+}
+.storeAboutBox {
+    position: relative;
+    padding: 1px 0;
+    background: linear-gradient(to right, #4361ee, #f72585);
+    border: none;
+}
+.storeAboutContent {
+    background: #fff;
+    color: #6b6b6b;
+    padding: 2rem;
+}
+
+
+:deep(.el-carousel__arrow){
+    background-color: rgba(0,0,0,0);
+}
+:deep(.el-carousel__arrow--left > .el-icon),
+:deep(.el-carousel__arrow--right > .el-icon) {
+    font-size: 2.5rem;
+    font-weight: 800;
+}
+:deep(.el-carousel__button) {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+:deep(.el-carousel__indicators){
+    display: none;
+}
+/* 彈窗控制 */
+:deep(.el-button) {
+    border: none;
+    color: #f72585;
+    font-size: 18px;
+}
+:deep(.el-dialog__header) {
+    position: absolute;
+}
+:deep(.el-dialog) {
+    position: relative;
+    padding: 1px;
+    background: linear-gradient(to right, #4361ee, #f72585);
+    border-radius: 20px;
+    border: none;
+}
+:deep(.el-dialog__header) {
+    position: absolute;
+}
+:deep(.el-button:focus-visible) {
+    outline: none;
+}
+.dialogHeader {
+    background: linear-gradient(to right, #4361ee, #f72585);
+    color: #fff;
+    padding: 0.75rem;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 10px;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.dialogBody {
+    background: #fff;
+    color: #8d8d8d;
+    border-radius: 20px;
+    padding: 2rem;
+}
+.agreeBtn {
+    background: linear-gradient(to right, #4361ee, #f72585);
+    color: #fff;
+    padding: 1.2rem 2rem;
+    border-radius: 50px;
+}
 .buyTitle {
     background: linear-gradient(to right, #4361ee, #7b2cbf);
     background: -webkit-linear-gradient(to right, #4361ee, #7b2cbf);
@@ -857,7 +806,23 @@ watch(
     border-radius: 50%;
     transform: translate(-50%, -50%);
 }
-.contactPhoneBox{
+.contactPhoneBox {
     border: 1px solid #ccc;
+}
+
+.el-carousel__item h3 {
+  color: #475669;
+  opacity: 0.75;
+  line-height: 200px;
+  margin: 0;
+  text-align: center;
+}
+
+.el-carousel__item:nth-child(2n) {
+  background-color: #99a9bf;
+}
+
+.el-carousel__item:nth-child(2n + 1) {
+  background-color: #d3dce6;
 }
 </style>

@@ -156,7 +156,7 @@
                         <ElCarousel
                             v-if="bannerList.length > 0"
                             class="h-420px bannerDetail"
-                            :interval="2000"
+                            :interval="5000"
                             arrow="always"
                         >
                             <ElCarouselItem
@@ -178,8 +178,6 @@
                         <h1 class="color-#fff m-0 text-center font-size-50px">
                             熱門媒合商
                         </h1>
-                        <!-- <button @click="testAlert">點擊開啟alert彈窗</button>
-                    <button @click="testConfirm">點擊開啟confirm彈窗</button> -->
                         <div class="flex justify-center">
                             <img
                                 class="w-250px"

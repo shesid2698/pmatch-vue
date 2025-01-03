@@ -87,7 +87,7 @@ const matchingList = [
     },
     {
         GamePlatform: "滿貫大亨",
-        SendPatch: "1.35",
+        SendPatch: "1.4",
         CollectPatch: "1.5",
     },
     {
