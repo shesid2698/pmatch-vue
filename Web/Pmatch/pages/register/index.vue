@@ -142,7 +142,7 @@ const ToFormPage = () => {
     if (route.query.PmatchStoreIds) {
         router.push({
             path: '/register/form',
-            query: { Phone: route.query.Phone, ContractStores:encrypt.encrypt(contractStores.value),D:route.query.D }
+            query: { Phone: route.query.Phone, ContractStores: encrypt.encrypt(contractStores.value), D: route.query.D, IsPromoteCode: route.query.IsPromoteCode }
         });
     } else {
         router.push('/register/form');
@@ -160,6 +160,8 @@ onMounted(async () => {
         storeIds = storeIds.split(',');
         await GetStoreService(storeIds);
     }
+    //
+
 });
 </script>
 <style scoped>
