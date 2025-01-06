@@ -1,5 +1,5 @@
 <template>
-    <div class="ccontainer w-90% xl:w-70%">
+    <div class="ccontainer pt-60px ps-5 pe-5 w-90% xl:w-70%">
         <div class="lg:w-160px">
             <MemberCenter></MemberCenter>
         </div>

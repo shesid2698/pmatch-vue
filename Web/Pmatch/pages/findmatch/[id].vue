@@ -3,10 +3,10 @@
         <div class="w-full bg-#fff relative mt-5rem">
             <div class="mt-7rem max-w-1110px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3">
                 <div class="flex">
-                    <div class="w-50%">
+                    <div class="w-50% lg-me-1rem">
                         <div class="flex mb-3">
                             <div>
-                                <img src="" alt="商店圖" />
+                                <img :src="`${assetsUrl}${storesItem.IMGFiles}`" :alt="storesItem.Name">
                             </div>
                             <h2
                                 class="storeTitle font-size-36px"
@@ -71,7 +71,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="w-50% flex items-center justify-center">
+                    <div
+                        class="w-50% flex items-center justify-center lg-ms-1rem"
+                    >
                         <ElCarousel
                             type="card"
                             height="200px"
@@ -80,7 +82,13 @@
                             :autoplay="false"
                         >
                             <ElCarouselItem v-for="item in 3" :key="item">
-                                <h3 class="carousel-item" text="2xl" justify="center">{{ item }}</h3>
+                                <h3
+                                    class="carousel-item"
+                                    text="2xl"
+                                    justify="center"
+                                >
+                                    {{ item }}
+                                </h3>
                             </ElCarouselItem>
                         </ElCarousel>
                     </div>
@@ -89,18 +97,6 @@
         </div>
         <div class="w-full bg-#fff relative mt-5rem">
             <div class="mt-7rem max-w-1110px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3">
-                <div class="mb-5rem relative">
-                    <h1 class="buyTitle m-0 text-center font-size-50px">
-                        我的需求
-                    </h1>
-                    <div class="flex justify-center">
-                        <img
-                            class="w-250px"
-                            src="/images/ourService.png"
-                            alt="我們的服務"
-                        />
-                    </div>
-                </div>
                 <div>
                     <div class="w-100% flex justify-center flex-wrap">
                         <div class="entryBox mb-5">
@@ -288,6 +284,81 @@
                 </div>
             </div>
         </div>
+        <div class="w-full bg-#fff relative mt-5rem">
+            <div class="mt-5rem max-w-1110px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3">
+                <div class="flex justify-center">
+                    <div class="w-80% pt-5rem qaTitle">
+                        <div class="mb-5rem relative">
+                            <h1 class="buyTitle m-0 text-center font-size-50px">
+                                問與答
+                            </h1>
+                            <div class="flex justify-center">
+                                <img
+                                    class="w-250px"
+                                    src="/images/ourService.png"
+                                    alt="問與答"
+                                />
+                            </div>
+                        </div>
+                        <div>
+                            <textarea
+                                class="questionEntry w-100% h-5rem p-0 mb-1rem font-size-18px b-none bg-#f8f8f8"
+                                placeholder="我的提問..."
+                                v-model="question"
+                            ></textarea>
+                        </div>
+                        <div class="flex justify-center">
+                            <div class="submitBox relative mb-5">
+                                <div
+                                    class="submitBtn font-size-18px px-2rem py-1rem"
+                                    @click="sendQAList"
+                                >
+                                    確認送出
+                                </div>
+                            </div>
+                        </div>
+                        <div v-if="storesItem != null">
+                            <div
+                                class="qaBox"
+                                v-if="storesItem.StoreQAs.length > 0"
+                                v-for="(item, index) in storesItem.StoreQAs"
+                                :key="index"
+                            >
+                                <div class="qaContent">
+                                    <div class="flex justify-between p-1rem" @click="answerBoxToggle(index)">
+                                        <div class="flex">
+                                            <div>圖</div>
+                                            <div class="ms-5">
+                                                <h4 class="m-0">
+                                                    {{ item.Mobile }}
+                                                </h4>
+                                                <p
+                                                    class="m-0 font-size-12px color-#6a6a6a"
+                                                >
+                                                    {{ item.CreateTime }}
+                                                </p>
+                                                <h3 class="m-0 mt-3">
+                                                    {{ item.Question }}
+                                                </h3>
+                                            </div>
+                                        </div>
+                                        <div>箭頭</div>
+                                    </div>
+                                    <div v-show="answerShow === index && item.Answer !== ''" class="qaAnswer flex p-1rem">
+                                        <div>
+                                            <img :src="`${assetsUrl}${storesItem.IMGFiles}`" :alt="storesItem.Name">
+                                        </div>
+                                        <div class="ms-5">
+                                            <h3 class="m-0">{{item.Answer}}</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -321,6 +392,7 @@ const memberIdCookie = useCookie("_PmMemberId");
 const memberPhone1Cookie = useCookie("_PmMemberPhone1");
 const memberPhone2Cookie = useCookie("_PmMemberPhone2");
 const memberPhone3Cookie = useCookie("_PmMemberPhone3");
+const assetsUrl = useCookie("_PmAssetsUrl");
 const dialogVisible = ref(false);
 const memberDetailList = ref([]);
 
@@ -331,6 +403,7 @@ const paymentMethod = ref(true); // 選擇的付款方式
 const readContract = ref(false); // 是否閱讀並同意合約
 const contactBox = ref(false); // 聯絡資訊開關
 const selectedContact = ref("");
+const answerShow = ref(null);
 
 let accPlatformName = ref("");
 let accMemberName = ref("");
@@ -338,7 +411,6 @@ let accPatch = ref("");
 let accPayMode = ref("1");
 let accPhone = ref("");
 
-// 聯絡資訊
 // 切換下拉選單的顯示/隱藏
 const contactToggle = () => {
     contactBox.value = !contactBox.value;
@@ -349,12 +421,17 @@ const contactToggle = () => {
         document.removeEventListener("click", handleClickOutside);
     }
 };
+// 點擊超過範圍
 const handleClickOutside = (event) => {
     const dropdown = document.querySelector(".contactPhoneBox");
     if (dropdown && !dropdown.contains(event.target)) {
         contactBox.value = false;
     }
 };
+// 問答開關
+const answerBoxToggle = (index) => {
+    answerShow.value = answerShow.value === index ? null : index;
+}
 // 取得GetNewsDetail
 async function fetchStoresDetailData(token) {
     try {
@@ -614,9 +691,19 @@ watch(
     padding: 2rem;
 }
 
+:deep(.el-carousel__item) {
+    box-shadow: 0px 20px 20px -13px #bbb;
+}
+/* :deep(.el-carousel__item:nth-child(2n):not(.is-active)){
+    transform: translateX(-22.9075px) scale(0.83) rotateY(-55deg) !important;
+}
 
-:deep(.el-carousel__arrow){
-    background-color: rgba(0,0,0,0);
+:deep(.el-carousel__item:nth-child(2n+1):not(.is-active)){
+    transform: translateX(292.407px) scale(0.83) rotateY(55deg) !important;
+} */
+
+:deep(.el-carousel__arrow) {
+    background-color: rgba(0, 0, 0, 0);
 }
 :deep(.el-carousel__arrow--left > .el-icon),
 :deep(.el-carousel__arrow--right > .el-icon) {
@@ -629,7 +716,7 @@ watch(
     border-radius: 50%;
 }
 
-:deep(.el-carousel__indicators){
+:deep(.el-carousel__indicators) {
     display: none;
 }
 /* 彈窗控制 */
@@ -811,18 +898,52 @@ watch(
 }
 
 .el-carousel__item h3 {
-  color: #475669;
-  opacity: 0.75;
-  line-height: 200px;
-  margin: 0;
-  text-align: center;
+    color: #475669;
+    opacity: 0.75;
+    line-height: 200px;
+    margin: 0;
+    text-align: center;
 }
 
 .el-carousel__item:nth-child(2n) {
-  background-color: #99a9bf;
+    background-color: #99a9bf;
 }
 
 .el-carousel__item:nth-child(2n + 1) {
-  background-color: #d3dce6;
+    background-color: #d3dce6;
+}
+
+.qaTitle {
+    border-top: 2px solid transparent;
+    border-image: linear-gradient(to right, #f72585 0%, #7b2cbf 100%);
+    border-image-slice: 1;
+}
+.questionEntry {
+    text-indent: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid #f72585;
+    font-weight: 600;
+    height: 120px;
+}
+.questionEntry:focus-visible {
+    outline: none;
+}
+.qaBox {
+    width: 100%;
+    position: relative;
+    padding: 1px;
+    background: linear-gradient(to right, #4361ee, #f72585);
+    border-radius: 10px;
+    border: none;
+    margin: 1.5rem 0;
+}
+.qaContent {
+    background: #fff;
+    color: #f72585;
+    border-radius: 10px;
+    padding: 1rem;
+}
+.qaAnswer{
+    border-top: 1px dashed #ccc;
 }
 </style>
