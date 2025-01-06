@@ -299,8 +299,6 @@ const updateTimeRange = async () => {
         showDateChoose.value = true;
     } else {
         showDateChoose.value = false;
-        console.log(dataDate.value);
-        console.log(showDateChoose.value);
         const now = new Date();
         const offsetDays = {
             0: 30, // 近30日
@@ -317,9 +315,6 @@ const updateTimeRange = async () => {
             startTime.value = start.toISOString().split(".")[0];
             endTime.value = now.toISOString().split(".")[0];
         }
-        console.log(startTime.value);
-        console.log(endTime.value);
-        console.log(typeof(startTime.value));
         await fetchOrderListData();
     }
 };

@@ -139,7 +139,6 @@ async function fetchRewardListData() {
         );
         if (response.data.Status.Code === 0) {
             memberRewardList.value = response.data.Data;
-            console.log(memberRewardList.value.MRewardValue);
             if(memberRewardList.value != null){
                 mainPercent.value = memberRewardList.value.MRewardValue;
                 secondPercent.value = 100 - mainPercent.value;
