@@ -9,11 +9,19 @@ export const useModalStore = defineStore("modal", () => {
 
     // 顯示彈窗
     const showModal = (modalTitle, modalMessage, onConfirm, onCancel) => {
-        title.value = modalTitle;
-        message.value = modalMessage;
-        modalStatus.value = true;
-        confirmCallback = onConfirm || null;
-        cancelCallback = onCancel || null;
+        return new Promise((resolve, reject) => {
+            title.value = modalTitle;
+            message.value = modalMessage;
+            modalStatus.value = true;
+            confirmCallback = () => {
+                resolve(); // 當點擊確定時，解析 Promise
+                if (onConfirm) onConfirm();
+            };
+            cancelCallback = () => {
+                reject(); // 當點擊取消時，拒絕 Promise
+                if (onCancel) onCancel();
+            };
+        });
     };
 
     // 關閉彈窗

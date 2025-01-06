@@ -43,6 +43,7 @@
                                     <input type="number"
                                            v-model="mainPercent"
                                            @input="SettingPercent"
+                                           @change="settingMemberPercent"
                                            class="text-16px text-black left-0 text-end bg-transparent absolute outline-none w-70% border-none top-50% transform-translate-y-[-50%]">
                                     <div class="text-black absolute right-5px top-43% transform-translate-y-[-50%]">%</div>
                                 </div>
@@ -155,7 +156,6 @@ async function fetchDetailListData() {
     if (!tokenCookie.value && !MemberIdCookie.value) {
         await openAlertModal(" ", "請先登入會員");
     }
-
     try {
         const response = await $axios.post(
             "/api/v1/Pmatch/GetDownlineDetail",
@@ -170,6 +170,37 @@ async function fetchDetailListData() {
         );
         if (response.data.Status.Code === 0) {
             tableData.value = response.data.Data;
+        } else {
+            await openAlertModal(" ", `${response.data.Status.Message}`);
+        }
+    } catch (error) {
+        console.error("請求失敗:", error);
+    }
+}
+// 分潤設定
+const settingMemberPercent = async() =>{
+    if(mainPercent.value !== 0) await settingPercent();
+}
+// 取得回饋資訊
+async function settingPercent() {
+    if (!tokenCookie.value && !MemberIdCookie.value) {
+        await openAlertModal(" ", "請先登入會員");
+    }
+    try {
+        const response = await $axios.post(
+            "/api/v1/Pmatch/UpdateMemberReward",
+            {
+                MemberId: MemberIdCookie.value,
+                RewardValue: mainPercent.value,
+            },
+            {
+                headers: {
+                    Authorization: tokenCookie.value, // 帶上 Token
+                },
+            }
+        );
+        if (response.data.Status.Code === 0) {
+            await openAlertModal(" ", "已更新分潤設定");
         } else {
             await openAlertModal(" ", `${response.data.Status.Message}`);
         }

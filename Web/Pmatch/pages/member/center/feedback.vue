@@ -42,8 +42,17 @@
                                         開啟中
                                     </div>
                                 </div>
-                                <div class="text-end m-t-10px">
-                                    剩餘時間&emsp;12天 15:20:36
+                                <div class="text-end m-t-10px flex items-center justify-end">
+                                    <div class="me-5">
+                                        剩餘時間
+                                    </div>
+                                    <div>
+                                        <el-countdown
+                                        :value="Date.now() + timeValue"
+                                        format="DD [天] HH:mm:ss"
+                                    />
+                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -59,6 +68,7 @@
                             <div class="h-100% flex">
                                 <div class="w-100px lg:w-180px relative">
                                     <select
+                                        v-model="selectedPlatform"
                                         @change="RewardPlatformChange"
                                         class="text-[16px] bg-transparent absolute left-0 top-0 z-1 outline-none p-e-25px border-1 border-solid border-[#ced2db] font-500 text-black text-center w-100% h-100%"
                                     >
@@ -293,6 +303,7 @@ const startTime = ref("");
 const endTime = ref("");
 const showDateChoose = ref(false);
 const currentPage = ref(1);
+const timeValue = ref(0);
 // 更新時間範圍的方法
 const updateTimeRange = async () => {
     if (dataDate.value === "4") {
@@ -353,6 +364,17 @@ async function fetchRewardListData() {
         );
         if (response.data.Status.Code === 0) {
             memberRewardList.value = response.data.Data;
+            if (memberRewardList.value != null) {
+                const endTimeString = memberRewardList.value.EndTime; 
+        const endTime = new Date(endTimeString).getTime(); 
+        const now = Date.now(); 
+
+        // 計算差值
+        const difference = endTime - now;
+
+        // 確保不會有負值
+        timeValue.value = Math.max(difference, 0);
+            }
         } else {
             await openAlertModal(" ", `${response.data.Status.Message}`);
         }
@@ -386,7 +408,7 @@ async function fetchOrderListData() {
         );
         if (response.data.Status.Code === 0) {
             tableData.value = response.data.Data;
-            if(tableData.value != null && tableData.value.length > 0){
+            if (tableData.value != null && tableData.value.length > 0) {
                 currentPage.value = tableData.value.CurrentPage;
             }
         } else {
@@ -396,8 +418,6 @@ async function fetchOrderListData() {
         console.error("請求失敗:", error);
     }
 }
-
-
 
 const count = ref(10); // 模擬加載數據用的計數器
 
@@ -428,20 +448,19 @@ const load = async () => {
             tableData.value.push(...newData);
             currentPage.value++;
         } else {
-            if(firstLoad === true){
+            if (firstLoad === true) {
                 return;
-            }else{
+            } else {
                 await openAlertModal(" ", "已經是最後一頁了"); // 無更多數據
             }
         }
     } catch (error) {
         console.error("加載數據失敗：", error);
     } finally {
-        
     }
 };
 
-const Getdate = async() => {
+const Getdate = async () => {
     if (dataDate.value === "4" && dateValue.value.length === 2) {
         startTime.value = dateValue.value[0];
         endTime.value = dateValue.value[1];
