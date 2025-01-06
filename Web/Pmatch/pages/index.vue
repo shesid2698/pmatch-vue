@@ -398,7 +398,7 @@
             </div>
         </div>
         <div class="w-full bg-#fff pt-5rem pb-5 relative">
-            <div class="waveBottom absolute"></div>
+            
             <div class="arrowLeft absolute">
                 <img src="/images/corner.png" alt="左邊箭頭" />
             </div>
@@ -923,16 +923,7 @@ onBeforeUnmount(() => {
     border-bottom: 1px solid;
     border-image: linear-gradient(to right, #f72585, #7b2cbf) 1;
 }
-.waveBottom {
-    background-image: url("/images/waveTop.svg");
-    background-repeat: no-repeat;
-    background-position: left top;
-    background-size: 100%;
-    bottom: -480px;
-    left: 0;
-    width: 100%;
-    height: 480px;
-}
+
 .arrowLeft {
     top: -150px;
 }

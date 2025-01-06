@@ -10,9 +10,9 @@
                     <div class="w-300px border-1 border-solid border-[#ced2db]">
                         <el-scrollbar max-height="200px">
                             <div class="flex border-b-1px border-b-solid border-[#ced2db] last:border-none"
-                                 v-for="i in 100">
-                                <div class="w-50% text-16px text-black font-500 p-2 border-r-1px border-r-solid border-[#ced2db]">錢街online</div>
-                                <div class="flex-1 p-2 text-16px text-black font-500 text-end">952</div>
+                                 v-for="(item, index) in memberRewardList.PlatformsReward" :key="index">
+                                <div class="w-50% text-16px text-black font-500 p-2 border-r-1px border-r-solid border-[#ced2db]">{{item.PlatformName}}</div>
+                                <div class="flex-1 p-2 text-16px text-black font-500 text-end">{{item.Value}}</div>
                             </div>
                         </el-scrollbar>
                     </div>
@@ -68,19 +68,17 @@
                       :header-cell-style="{ color: 'white', background: '#3CAADC', fontSize: '20px', fontWeight: '500' }"
                       stripe
                       border>
-                <el-table-column prop="Num"
-                                 label="序號"
-                                 sortable
-                                 :sort-orders="['ascending', 'descending']" />
+                <el-table-column prop=""
+                                 label=" " />
                 <el-table-column prop="Account"
                                  label="被推薦人帳號"
                                  sortable
                                  :sort-orders="['ascending', 'descending']" />
-                <el-table-column prop="BindingTime"
+                <el-table-column prop="CreateTime"
                                  label="綁定時間"
                                  sortable
                                  :sort-orders="['ascending', 'descending']" />
-                <el-table-column prop="Patch"
+                <el-table-column prop="RewardPatch"
                                  label="已回饋遊戲幣"
                                  sortable
                                  :sort-orders="['ascending', 'descending']">
@@ -88,7 +86,7 @@
                         <div v-html="formatPatch(scope.row.Patch)"></div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="FeedbackTime"
+                <el-table-column prop="LastRewardTime"
                                  label="最後回饋日"
                                  sortable
                                  :sort-orders="['ascending', 'descending']" />
@@ -97,9 +95,18 @@
     </div>
 </template>
 <script setup>
+import { useAlertModalStore } from "../stores/useAlertModal.js";
+const alertModalStore = useAlertModalStore();
+const openAlertModal = alertModalStore.alertShowModal;
+const MemberIdCookie = useCookie("_PmMemberId");
+const tokenCookie = useCookie("_PmToken");
+const { $axios } = useNuxtApp();
+
 const mainPercent = ref(0);
 const secondPercent = ref(0);
 const tableData = ref([]);
+const memberRewardList = ref([]);
+
 const formatPatch = patch => {
     if (Array.isArray(patch)) {
         return patch.map(item => `${item}`).join('<br/>');
@@ -112,47 +119,75 @@ const SettingPercent = () => {
     }
     secondPercent.value = 100 - mainPercent.value;
 };
-onMounted(() => {
-    tableData.value = [
-        {
-            Num: 1,
-            Account: '09*****165',
-            BindingTime: '2024-11-02 08:46:58',
-            Patch: ['(包)1,200', '(包)1,100', '(包)3,200'],
-            FeedbackTime: '2024-06-21'
-        },
-        {
-            Num: 2,
-            Account: '09*****165',
-            BindingTime: '2024-11-02 08:46:58',
-            Patch: '(包)1,200',
-            FeedbackTime: '2024-06-21'
-        },
-        {
-            Num: 3,
-            Account: '09*****165',
-            BindingTime: '2024-11-02 08:46:58',
-            Patch: '(包)1,200',
-            FeedbackTime: '2024-06-21'
-        },
-        {
-            Num: 4,
-            Account: '09*****165',
-            BindingTime: '2024-11-02 08:46:58',
-            Patch: '(包)1,200',
-            FeedbackTime: '2024-06-21'
-        },
-        {
-            Num: 5,
-            Account: '09*****165',
-            BindingTime: '2024-11-02 08:46:58',
-            Patch: '(包)1,200',
-            FeedbackTime: '2024-06-21'
+// 取得回饋資訊
+async function fetchRewardListData() {
+    if (!tokenCookie.value && !MemberIdCookie.value) {
+        await openAlertModal(" ", "請先登入會員");
+    }
+
+    try {
+        const response = await $axios.post(
+            "/api/v1/Pmatch/GetMemberReward",
+            {
+                MemberId: MemberIdCookie.value,
+            },
+            {
+                headers: {
+                    Authorization: tokenCookie.value, // 帶上 Token
+                },
+            }
+        );
+        if (response.data.Status.Code === 0) {
+            memberRewardList.value = response.data.Data;
+            console.log(memberRewardList.value.MRewardValue);
+            if(memberRewardList.value != null){
+                mainPercent.value = memberRewardList.value.MRewardValue;
+                secondPercent.value = 100 - mainPercent.value;
+            }
+        } else {
+            await openAlertModal(" ", `${response.data.Status.Message}`);
         }
-    ];
+    } catch (error) {
+        console.error("請求失敗:", error);
+    }
+}
+// 取得回饋資訊
+async function fetchDetailListData() {
+    if (!tokenCookie.value && !MemberIdCookie.value) {
+        await openAlertModal(" ", "請先登入會員");
+    }
+
+    try {
+        const response = await $axios.post(
+            "/api/v1/Pmatch/GetDownlineDetail",
+            {
+                MemberId: MemberIdCookie.value,
+            },
+            {
+                headers: {
+                    Authorization: tokenCookie.value, // 帶上 Token
+                },
+            }
+        );
+        if (response.data.Status.Code === 0) {
+            tableData.value = response.data.Data;
+        } else {
+            await openAlertModal(" ", `${response.data.Status.Message}`);
+        }
+    } catch (error) {
+        console.error("請求失敗:", error);
+    }
+}
+onMounted( async() => {
+    try{
+        await fetchRewardListData();
+        await fetchDetailListData();
+    }catch(error){
+        console.log(error)
+    }
 });
 </script>
-<style>
+<style scoped>
 .ccontainer {
     height: fit-content;
     display: flex;
@@ -163,6 +198,7 @@ input[type='number']::-webkit-outer-spin-button {
     appearance: none;
     margin: 0;
 }
+
 :deep(.el-table .descending .sort-caret.descending) {
     border-top-color: white;
 }

@@ -5,7 +5,7 @@
                 <div class="flex">
                     <div class="w-50% lg-me-1rem">
                         <div class="flex mb-3">
-                            <div>
+                            <div v-if="storesItem != null">
                                 <img :src="`${assetsUrl}${storesItem.IMGFiles}`" :alt="storesItem.Name">
                             </div>
                             <h2

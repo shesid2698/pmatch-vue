@@ -1,8 +1,9 @@
 <template>
     <div
-        class="w-100% flex justify-center items-center relative z-2 mt-8rem lg-mt-23rem pt-5rem pb-5rem footerBox"
+        class="w-100% flex justify-center items-center relative z-2  pt-17rem lg-pt-32rem pb-5rem footerBox"
         :class="{ homeBackground: isHomePage }"
     >
+        <div class="waveBottom absolute"></div>
         <div class="max-w-1110px w-100% ps-5 pe-5">
             <div class="lg-flex">
                 <div class="w-100% flex lg-justify-start justify-center mb-5">
@@ -153,5 +154,16 @@ const footerLinkRight = ref([
 }
 .homeBackground {
     background: rgba(0, 0, 0, 0);
+}
+.waveBottom {
+    background-image: url("/images/waveTop.svg");
+    background-repeat: no-repeat;
+    background-position: left top;
+    background-size: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 500px;
+    
 }
 </style>

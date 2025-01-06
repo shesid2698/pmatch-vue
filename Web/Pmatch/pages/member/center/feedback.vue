@@ -11,7 +11,7 @@
             </div>
             <!-- <div class="flex lg:pl-20px w-100% flex-col lg:flex-row"> -->
             <div class="lg:pl-20px w-100%">
-                <div class="flex flex-col lg:flex-row">
+                <div class="flex flex-col lg:flex-row mb-10">
                     <div
                         class="w-100% lg:w-43% flex flex-col justify-between h-50px lg:h-250px"
                     >
@@ -19,14 +19,22 @@
                             <div
                                 class="whitespace-nowrap text-[20px] font-500 text-black line-height-50px"
                             >
-                                {{ memberRewardList.Type === 2 ? "我的推薦碼" : "綁定推薦碼" }}
+                                {{
+                                    memberRewardList.Type === 2
+                                        ? "我的推薦碼"
+                                        : "綁定推薦碼"
+                                }}
                             </div>
                             <div>
                                 <div class="flex h-55px">
                                     <div
                                         class="w-100px lg:w-235px border-solid border-1 border-[#ced2db] text-end content-center p-x-10px text-[24px] text-black font-500"
                                     >
-                                        {{ memberRewardList.Type === 2 ? memberRewardList.InviteCode : memberRewardList.RefferCode }}
+                                        {{
+                                            memberRewardList.Type === 2
+                                                ? memberRewardList.InviteCode
+                                                : memberRewardList.RefferCode
+                                        }}
                                     </div>
                                     <div
                                         class="w-75px lg:w-95px h-100% text-center bg-[#3caadc] content-center text-white font-500 text-[20px] font-500 text-[18px] text-[#757575]"
@@ -49,16 +57,21 @@
                                 當前回饋%數
                             </div>
                             <div class="h-100% flex">
-                                <div
-                                    class="bg-[#f5f6f8] font-500 text-black text-end p-e-10px content-center w-84px me-20px border-solid border-1 border-[#ced2db] text-[16px]"
-                                >
-                                    0.70 %
-                                </div>
                                 <div class="w-100px lg:w-180px relative">
                                     <select
+                                        @change="RewardPlatformChange"
                                         class="text-[16px] bg-transparent absolute left-0 top-0 z-1 outline-none p-e-25px border-1 border-solid border-[#ced2db] font-500 text-black text-center w-100% h-100%"
                                     >
                                         <option value="">-選擇平台-</option>
+                                        <option
+                                            v-for="(
+                                                item, index
+                                            ) in memberRewardList.PlatformsReward"
+                                            :key="index"
+                                            :value="item.PlatformName"
+                                        >
+                                            {{ item.PlatformName }}
+                                        </option>
                                     </select>
                                     <div
                                         class="z-0 inline-block absolute right-10px top-50% transform-translate-y-[-50%]"
@@ -80,6 +93,25 @@
                                         </svg>
                                     </div>
                                 </div>
+                                <div class="ms-5">
+                                    <div class="flex">
+                                        <span class="me-3">委買</span>
+                                        <div
+                                            class="bg-[#f5f6f8] font-500 text-black mb-3 text-end content-center w-84px border-solid border-1 border-[#ced2db] text-[16px]"
+                                        >
+                                            {{ buyRewardValue }} %
+                                        </div>
+                                    </div>
+
+                                    <div class="flex">
+                                        <span class="me-3">委賣</span>
+                                        <div
+                                            class="bg-[#f5f6f8] font-500 text-black text-end content-center w-84px border-solid border-1 border-[#ced2db] text-[16px]"
+                                        >
+                                            {{ sellRewardValue }} %
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -87,54 +119,24 @@
                     <div
                         class="w-100% lg:w-55% flex flex-wrap mt-150px lg:mt-0"
                     >
-                        <div v-for="(item, index) in memberRewardList.PlatformsReward" :key="index" class="max-w-41% lg:max-w-33% p-e-30px mb-30px">
+                        <div
+                            v-for="(
+                                item, index
+                            ) in memberRewardList.PlatformsReward"
+                            :key="index"
+                            class="max-w-41% lg:max-w-33% p-e-30px mb-30px"
+                        >
                             <div
                                 class="font-500 text-[20px] w-165px h-55px bg-[#ff83ad] border-1 border-solid border-[#ff83ad] text-center content-center text-white"
                             >
-                                {{item.PlatformName}}
+                                {{ item.PlatformName }}
                             </div>
                             <div
                                 class="font-500 text-[20px] text-black w-155px h-55px border-1 border-solid border-[#ced2db] bg-white text-end content-center pr-10px"
                             >
-                                {{item.Value}}&emsp;幣
+                                {{ item.Value }}&emsp;幣
                             </div>
                         </div>
-                        <!-- <div class="max-w-41% lg:max-w-33% p-e-30px mb-30px">
-                            <div
-                                class="font-500 text-[20px] w-165px h-55px bg-[#ff83ad] border-1 border-solid border-[#ff83ad] text-center content-center text-white"
-                            >
-                                滿貫大亨
-                            </div>
-                            <div
-                                class="font-500 text-[20px] text-black w-155px h-55px border-1 border-solid border-[#ced2db] bg-white text-end content-center pr-10px"
-                            >
-                                121&emsp;幣
-                            </div>
-                        </div>
-                        <div class="max-w-41% lg:max-w-33% p-e-30px mb-30px">
-                            <div
-                                class="font-500 text-[20px] w-165px h-55px bg-[#ff83ad] border-1 border-solid border-[#ff83ad] text-center content-center text-white"
-                            >
-                                滿貫大亨
-                            </div>
-                            <div
-                                class="font-500 text-[20px] text-black w-155px h-55px border-1 border-solid border-[#ced2db] bg-white text-end content-center pr-10px"
-                            >
-                                121&emsp;幣
-                            </div>
-                        </div>
-                        <div class="max-w-41% lg:max-w-33% p-e-30px mb-30px">
-                            <div
-                                class="font-500 text-[20px] w-165px h-55px bg-[#ff83ad] border-1 border-solid border-[#ff83ad] text-center content-center text-white"
-                            >
-                                滿貫大亨
-                            </div>
-                            <div
-                                class="font-500 text-[20px] text-black w-155px h-55px border-1 border-solid border-[#ced2db] bg-white text-end content-center pr-10px"
-                            >
-                                121&emsp;幣
-                            </div>
-                        </div> -->
                     </div>
                 </div>
                 <hr />
@@ -152,15 +154,18 @@
                             class="text-[16px] rounded-[10px] z-1 absolute top-0 left-0 outline-none w-100% h-100% bg-transparent border-none text-white text-center content-center"
                         >
                             <option value="0" class="bg-[#14ae5c]">
-                                近3個月
+                                近30日
                             </option>
                             <option value="1" class="bg-[#14ae5c]">
-                                近半年
+                                近3個月
                             </option>
                             <option value="2" class="bg-[#14ae5c]">
+                                近半年
+                            </option>
+                            <option value="3" class="bg-[#14ae5c]">
                                 近1年
                             </option>
-                            <option value="3" class="bg-[#14ae5c]">自訂</option>
+                            <option value="4" class="bg-[#14ae5c]">自訂</option>
                         </select>
                         <div
                             class="absolute right-10% top-50% transform-translate-y-[-50%] z-0"
@@ -200,7 +205,7 @@
                             </svg>
                         </div>
                     </div>
-                    <div v-show="dataDate === '3'" class="ml-10px">
+                    <div v-show="showDateChoose" class="ml-10px">
                         <el-config-provider :locale="zhCn">
                             <el-date-picker
                                 v-model="dateValue"
@@ -213,9 +218,11 @@
                         </el-config-provider>
                     </div>
                 </div>
-                <div v-infinite-scroll="load"
-    class="infinite-table-container"
-    style="overflow: auto; height: 400px">
+                <div
+                    v-infinite-scroll="load"
+                    class="infinite-table-container"
+                    style="overflow: auto; height: 400px"
+                >
                     <el-table
                         :data="tableData"
                         :default-sort="{
@@ -262,17 +269,77 @@
 </template>
 <script setup>
 import zhCn from "element-plus/es/locale/lang/zh-cn";
+import { useAlertModalStore } from "../stores/useAlertModal.js";
+const alertModalStore = useAlertModalStore();
+const openAlertModal = alertModalStore.alertShowModal;
 const MemberIdCookie = useCookie("_PmMemberId");
 const tokenCookie = useCookie("_PmToken");
 const { $axios } = useNuxtApp();
+
 const jwtStore = useJwtStore();
 const dataDate = ref("0");
 const dateValue = ref("");
-// const tableData = ref([]);
 const memberRewardList = ref([]);
+const tableData = ref([]);
+let firstLoad = true;
 
+// 當前選中的平台
+const selectedPlatform = ref("");
+// 委買與委賣值
+const buyRewardValue = ref("0");
+const sellRewardValue = ref("0");
+// 動態計算的開始和結束時間
+const startTime = ref("");
+const endTime = ref("");
+const showDateChoose = ref(false);
+const currentPage = ref(1);
+// 更新時間範圍的方法
+const updateTimeRange = async () => {
+    if (dataDate.value === "4") {
+        showDateChoose.value = true;
+    } else {
+        showDateChoose.value = false;
+        console.log(dataDate.value);
+        console.log(showDateChoose.value);
+        const now = new Date();
+        const offsetDays = {
+            0: 30, // 近30日
+            1: 90, // 近3個月
+            2: 180, // 近半年
+            3: 365, // 近1年
+        };
+        const selectedOffset = offsetDays[dataDate.value];
+        if (selectedOffset) {
+            // 自動計算時間範圍
+            const start = new Date(now);
+            start.setDate(now.getDate() - selectedOffset);
+
+            startTime.value = start.toISOString().split(".")[0];
+            endTime.value = now.toISOString().split(".")[0];
+        }
+        console.log(startTime.value);
+        console.log(endTime.value);
+        console.log(typeof(startTime.value));
+        await fetchOrderListData();
+    }
+};
+
+// 變更委買委賣的值
+const RewardPlatformChange = () => {
+    const platform = memberRewardList.value.PlatformsReward.find(
+        (item) => item.PlatformName === selectedPlatform.value
+    );
+    if (platform) {
+        buyRewardValue.value = platform.BuyRewardValue;
+        sellRewardValue.value = platform.SellRewardValue;
+    } else {
+        // 如果未選擇平台，回退到預設值
+        buyRewardValue.value = "0";
+        sellRewardValue.value = "0";
+    }
+};
 // 取得回饋資訊
-async function fetchNewsListData() {
+async function fetchRewardListData() {
     if (!tokenCookie.value && !MemberIdCookie.value) {
         await openAlertModal(" ", "請先登入會員");
     }
@@ -298,32 +365,93 @@ async function fetchNewsListData() {
         console.error("請求失敗:", error);
     }
 }
+// 取得回饋明細
+async function fetchOrderListData() {
+    if (!tokenCookie.value && !MemberIdCookie.value) {
+        await openAlertModal(" ", "請先登入會員");
+    }
 
-const tableData = ref([
-  { Createtime: "2023-01-01", Name: "項目1", Count: 1, Remark: "備註1" },
-  { Createtime: "2023-01-02", Name: "項目2", Count: 2, Remark: "備註2" },
-  // 初始化資料
-]);
+    try {
+        const formattedStartTime = new Date(startTime.value).toISOString();
+        const formattedEndTime = new Date(endTime.value).toISOString();
+        const response = await $axios.post(
+            "/api/v1/Pmatch/GetDownlineOrder",
+            {
+                PmatchMemberId: MemberIdCookie.value,
+                StartTime: formattedStartTime,
+                EndTime: formattedEndTime,
+                PageSize: 10,
+                PageNo: currentPage.value,
+            },
+            {
+                headers: {
+                    Authorization: tokenCookie.value, // 帶上 Token
+                },
+            }
+        );
+        if (response.data.Status.Code === 0) {
+            tableData.value = response.data.Data;
+            if(tableData.value != null && tableData.value.length > 0){
+                currentPage.value = tableData.value.CurrentPage;
+            }
+        } else {
+            await openAlertModal(" ", `${response.data.Status.Message}`);
+        }
+    } catch (error) {
+        console.error("請求失敗:", error);
+    }
+}
+
+
 
 const count = ref(10); // 模擬加載數據用的計數器
 
-// 加載更多數據
-const load = () => {
-  setTimeout(() => {
-    for (let i = 0; i < 10; i++) {
-      tableData.value.push({
-        Createtime: `2023-01-${Math.floor(Math.random() * 30) + 1}`,
-        Name: `新項目${Math.floor(Math.random() * 100)}`,
-        Count: Math.floor(Math.random() * 100),
-        Remark: "動態生成的備註",
-      });
+const load = async () => {
+    try {
+        const formattedStartTime = new Date(startTime.value).toISOString();
+        const formattedEndTime = new Date(endTime.value).toISOString();
+        // 調用 API 加載數據
+        const response = await $axios.post(
+            "/api/v1/Pmatch/GetDownlineOrder",
+            {
+                PmatchMemberId: MemberIdCookie.value,
+                StartTime: formattedStartTime,
+                EndTime: formattedEndTime,
+                PageSize: 10,
+                PageNo: currentPage.value,
+            },
+            {
+                headers: {
+                    Authorization: tokenCookie.value, // 帶上 Token
+                },
+            }
+        );
+        const newData = response.data.Data;
+
+        // 更新表格數據
+        if (newData.length > 0) {
+            tableData.value.push(...newData);
+            currentPage.value++;
+        } else {
+            if(firstLoad === true){
+                return;
+            }else{
+                await openAlertModal(" ", "已經是最後一頁了"); // 無更多數據
+            }
+        }
+    } catch (error) {
+        console.error("加載數據失敗：", error);
+    } finally {
+        
     }
-  }, 500);
 };
 
-const Getdate = () => {
-    var date1 = DateFormatt(new Date(dateValue.value[1]));
-    console.log(date1);
+const Getdate = async() => {
+    if (dataDate.value === "4" && dateValue.value.length === 2) {
+        startTime.value = dateValue.value[0];
+        endTime.value = dateValue.value[1];
+    }
+    await fetchOrderListData();
 };
 const DateFormatt = (date) => {
     var t_Date =
@@ -342,10 +470,15 @@ const DateFormatt = (date) => {
 };
 onMounted(async () => {
     try {
-        await fetchNewsListData();
+        await fetchRewardListData();
+        await updateTimeRange();
     } catch (error) {
         console.error("請求失敗:", error);
     }
+});
+// 監聽 dataDate 的變化
+watch(dataDate, () => {
+    updateTimeRange();
 });
 </script>
 <style scoped>
