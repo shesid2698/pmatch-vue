@@ -439,7 +439,8 @@ const RegisterMember = async password1 => {
             Name: theName.value,
             BirthDay: birthDayValue,
             Address: allAddress,
-            ContractStores: contractStores.value
+            ContractStores: contractStores.value,
+            IsPromoteCode: recommendCode.value
         },
         {
             headers: {
@@ -461,6 +462,9 @@ onMounted(async () => {
     }
     if (route.query.ContractStores) {
         contractStores.value = encrypt.decrypt(route.query.ContractStores);
+    }
+    if (route.query.IsPromoteCode) {
+        recommendCode.value = encrypt.decrypt(route.query.IsPromoteCode);
     }
     const updateDialogWidth = () => {
         if (window.innerWidth <= 768) {

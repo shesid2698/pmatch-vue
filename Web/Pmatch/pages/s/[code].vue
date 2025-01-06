@@ -37,10 +37,11 @@ onMounted(async () => {
                 console.log(response);
                 var t_Phone = encrypt.encrypt(response.data.Data.Data.Phone);
                 var t_PmatchStoreIds= encrypt.encrypt(response.data.Data.Data.PmatchStoreIds);
+                var t_IsPromoteCode = encrypt.encrypt(response.data.Data.Data.IsPromoteCode);
                 var t_Id= encrypt.encrypt(response.data.Data.Id);
                 router.push({
                   path:'/register',
-                  query:{Phone:t_Phone,PmatchStoreIds:t_PmatchStoreIds,D:t_Id}
+                    query: { Phone: t_Phone, PmatchStoreIds: t_PmatchStoreIds, D: t_Id, IsPromoteCode: t_IsPromoteCode }
                 });
             } else {
                 await openAlertModal(" ", `${response.data.Status.Message}`);
