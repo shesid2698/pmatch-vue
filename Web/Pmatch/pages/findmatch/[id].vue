@@ -56,10 +56,10 @@
                             }}</span>
                         </div>
                         <div class="pt-2rem">
-                            <div class="flex">
+                            <div class="flex" v-if="storesItem">
                                 <NuxtLink
                                     class="flex items-center ms-1 me-1"
-                                    v-if="storesItem"
+                                    v-show="storesItem.FB !== ''"
                                     :to="storesItem.FB"
                                 >
                                     <img
@@ -70,7 +70,7 @@
                                 </NuxtLink>
                                 <NuxtLink
                                     class="flex items-center ms-1 me-1"
-                                    v-if="storesItem"
+                                    v-show="storesItem.LineId !== ''"
                                     :to="storesItem.LineId"
                                 >
                                     <img
@@ -81,7 +81,7 @@
                                 </NuxtLink>
                                 <NuxtLink
                                     class="flex items-center ms-1 me-1"
-                                    v-if="storesItem"
+                                    v-show="storesItem.IGId !== ''"
                                     :to="storesItem.IGId"
                                 >
                                     <img
@@ -92,7 +92,7 @@
                                 </NuxtLink>
                                 <NuxtLink
                                     class="flex items-center ms-1 me-1"
-                                    v-if="storesItem"
+                                    v-show="storesItem.TwitterId !== ''"
                                     :to="storesItem.TwitterId"
                                 >
                                     <img
@@ -101,9 +101,9 @@
                                         alt=""
                                     />
                                 </NuxtLink>
-                                <NuxtLink
+                                <!-- <NuxtLink
                                     class="flex items-center ms-1 me-1"
-                                    v-if="storesItem"
+                                    v-show="storesItem.TwitterId !== ''"
                                     :to="storesItem.TwitterId"
                                 >
                                     <img
@@ -111,11 +111,10 @@
                                         src="/images/iconTikTok.png"
                                         alt=""
                                     />
-                                </NuxtLink>
+                                </NuxtLink> -->
                                 <NuxtLink
                                     class="flex items-center ms-1 me-1"
-                                    v-if="storesItem"
-                                    :to="storesItem.TwitterId"
+                                    v-show="storesItem.PhoneNumber !== ''"
                                 >
                                     <img
                                         class="w-30px h-30px"

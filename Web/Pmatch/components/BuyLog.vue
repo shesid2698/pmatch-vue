@@ -1,5 +1,9 @@
 <template>
-    <div class="buyLogBox relative" @click="toggleBuyLog" v-show="userToken && memberId">
+    <div
+        class="buyLogBox relative"
+        @click="toggleBuyLog"
+        v-show="userToken && memberId"
+    >
         <div class="flex items-center">
             <div class="flex items-center">
                 <img
@@ -43,16 +47,18 @@ const toggleBuyLog = () => {
 const buyLog = ref(null);
 
 onMounted(async () => {
-    const buyLogData = localStorage.getItem("buyLog");
-    if (buyLogData) {
-        // 將字串解析為物件並賦值
-        try {
-            buyLog.value = JSON.parse(buyLogData);
-        } catch (error) {
-            console.error("無法解析 buyLog 的 JSON 數據", error);
+    if (userToken.value && memberId.value) {
+        const buyLogData = localStorage.getItem("buyLog");
+        if (buyLogData) {
+            // 將字串解析為物件並賦值
+            try {
+                buyLog.value = JSON.parse(buyLogData);
+            } catch (error) {
+                console.error("無法解析 buyLog 的 JSON 數據", error);
+            }
+        } else {
+            console.error("localStorage 中未找到 buyLog");
         }
-    } else {
-        console.error("localStorage 中未找到 buyLog");
     }
 });
 </script>
@@ -70,14 +76,13 @@ onMounted(async () => {
     font-weight: 600;
     z-index: 99;
     transition: all 0.3s;
-    
 }
 .buyLogBox:hover {
     right: -2px;
 }
 .buyLogDetailBox {
     padding: 0 1px 1px 1px;
-    border:none;
+    border: none;
     background: linear-gradient(to right, #4361ee, #f72585);
     color: #fff;
     font-size: 18px;
@@ -85,7 +90,7 @@ onMounted(async () => {
     cursor: pointer;
     border-radius: 0 0 0 10px;
 }
-.buyLogDetail{
+.buyLogDetail {
     width: 100%;
     background: #fff;
     color: #f72585;

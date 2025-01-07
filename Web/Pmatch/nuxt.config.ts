@@ -1,4 +1,5 @@
 export default defineNuxtConfig({
+    ssr: true, // 確保 SSR 啟用
     devtools: { enabled: true },
     modules: [
         "@unocss/nuxt",
@@ -6,12 +7,17 @@ export default defineNuxtConfig({
         "@pinia/nuxt",
         "@pinia-plugin-persistedstate/nuxt",
     ],
+    nitro: {
+        prerender: {
+            crawlLinks: true,
+        },
+    },
     css: ["element-plus/dist/index.css"],
     imports: {
         dirs: ["stores"],
     },
     experimental: {
-        appManifest: false,
+        payloadExtraction: false,
     },
     app: {
         head: {
