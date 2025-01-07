@@ -6,15 +6,6 @@
                 <div class="w-25px h-20px bg-#1a6db4"></div>
                 <span class="font-size-1.4rem ms-3 fw-600">委託媒合</span>
             </div>
-            <!-- 麵包屑 (新版目前沒有 先不刪以防後續需要) -->
-            <!-- <div>
-                <ElBreadcrumb :separator-icon="ArrowRight">
-                    <ElBreadcrumbItem :to="{ path: '/' }"
-                        >首頁</ElBreadcrumbItem
-                    >
-                    <ElBreadcrumbItem> 找媒合 </ElBreadcrumbItem>
-                </ElBreadcrumb>
-            </div> -->
         </div>
         <!-- 搜尋列 -->
         <div class="mb-6 md-flex block items-center justify-center">
@@ -91,7 +82,9 @@
             </div>
         </div>
         <div class="mb-6 flex justify-center">
-            <div class="p-5 w-33%">滿貫大亨圖</div>
+            <div class="p-5 w-33%">
+                <img :src="`${assetsUrl}${currentImg}`" alt="">
+            </div>
             <Matching
                 :param="matchingPlatform !== undefined ? matchingPlatform : ''"
                 class="w-33%"
@@ -371,6 +364,12 @@ const activeShowSignedOnly = ref(false);
 // 即時媒合用
 const matchingPlatform = ref("");
 
+const currentImg = computed(() => {
+    const platform = gameList.value.find(
+        (item) => item.PlatformName === platformName
+    );
+    return platform ? platform.ImgFile : "";
+});
 // 取得GetStoreList
 async function fetchStoresListData(token) {
     try {

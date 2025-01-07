@@ -1,5 +1,5 @@
 <template>
-    <div class="buyLogBox relative" @click="toggleBuyLog">
+    <div class="buyLogBox relative" @click="toggleBuyLog" v-show="userToken && memberId">
         <div class="flex items-center">
             <div class="flex items-center">
                 <img
@@ -33,6 +33,8 @@
 </template>
 <script setup>
 import { onMounted } from "vue";
+const userToken = useCookie("_PmToken");
+const memberId = useCookie("_PmMemberId");
 
 const buyLogOpen = ref(false);
 const toggleBuyLog = () => {

@@ -6,7 +6,10 @@
                     <div class="w-50% lg-me-1rem">
                         <div class="flex mb-3">
                             <div v-if="storesItem != null">
-                                <img :src="`${assetsUrl}${storesItem.IMGFiles}`" :alt="storesItem.Name">
+                                <img
+                                    :src="`${assetsUrl}${storesItem.IMGFiles}`"
+                                    :alt="storesItem.Name"
+                                />
                             </div>
                             <h2
                                 class="storeTitle font-size-36px"
@@ -80,18 +83,27 @@
                             class="w-100%"
                             arrow="always"
                             :autoplay="false"
+                            @change="handleChange"
                         >
-                            <ElCarouselItem v-for="item in 3" :key="item">
-                                <h3
-                                    class="carousel-item"
-                                    text="2xl"
-                                    justify="center"
-                                >
-                                    {{ item }}
-                                </h3>
+                            <ElCarouselItem
+                                v-for="(item, index) in filteredPlatformArray"
+                                :key="index"
+                            >
+                                <div class="platformBox">
+                                    <div class="platformContent">
+                                        <img
+                                            class="platformImg w-100%"
+                                            :src="`${assetsUrl}${getImgFile(item)}`"
+                                            :alt="item"
+                                        />
+                                    </div>
+                                </div>
+                                
                             </ElCarouselItem>
                         </ElCarousel>
+                        
                     </div>
+                    <p>{{currentImg}}</p>
                 </div>
             </div>
         </div>
@@ -285,6 +297,12 @@
             </div>
         </div>
         <div class="w-full bg-#fff relative mt-5rem">
+            <div class="arrowRight absolute">
+                <img src="/images/corner.png" alt="右邊箭頭" />
+            </div>
+            <div class="arrowLeft absolute">
+                <img src="/images/corner.png" alt="左邊箭頭" />
+            </div>
             <div class="mt-5rem max-w-1110px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3">
                 <div class="flex justify-center">
                     <div class="w-80% pt-5rem qaTitle">
@@ -325,7 +343,10 @@
                                 :key="index"
                             >
                                 <div class="qaContent">
-                                    <div class="flex justify-between p-1rem" @click="answerBoxToggle(index)">
+                                    <div
+                                        class="flex justify-between p-1rem"
+                                        @click="answerBoxToggle(index)"
+                                    >
                                         <div class="flex">
                                             <div>圖</div>
                                             <div class="ms-5">
@@ -344,12 +365,23 @@
                                         </div>
                                         <div>箭頭</div>
                                     </div>
-                                    <div v-show="answerShow === index && item.Answer !== ''" class="qaAnswer flex p-1rem">
+                                    <div
+                                        v-show="
+                                            answerShow === index &&
+                                            item.Answer !== ''
+                                        "
+                                        class="qaAnswer flex p-1rem"
+                                    >
                                         <div>
-                                            <img :src="`${assetsUrl}${storesItem.IMGFiles}`" :alt="storesItem.Name">
+                                            <img
+                                                :src="`${assetsUrl}${storesItem.IMGFiles}`"
+                                                :alt="storesItem.Name"
+                                            />
                                         </div>
                                         <div class="ms-5">
-                                            <h3 class="m-0">{{item.Answer}}</h3>
+                                            <h3 class="m-0">
+                                                {{ item.Answer }}
+                                            </h3>
                                         </div>
                                     </div>
                                 </div>
@@ -395,6 +427,8 @@ const memberPhone3Cookie = useCookie("_PmMemberPhone3");
 const assetsUrl = useCookie("_PmAssetsUrl");
 const dialogVisible = ref(false);
 const memberDetailList = ref([]);
+const gameList = ref([]);
+const imgCurrent = ref([]);
 
 let question = ref("");
 
@@ -411,6 +445,18 @@ let accPatch = ref("");
 let accPayMode = ref("1");
 let accPhone = ref("");
 
+// 設定目前顯示的項目索引
+const currentIndex = ref(0);
+// 計算目前的值
+const currentPlatform = computed(
+    () => filteredPlatformArray.value[currentIndex.value]
+);
+const getImgFile = (platformName) => {
+    const platform = gameList.value.find(
+        (game) => game.PlatformName === platformName
+    );
+    return platform ? platform.ImgFile : ""; // 如果沒找到，返回預設圖片
+};
 // 切換下拉選單的顯示/隱藏
 const contactToggle = () => {
     contactBox.value = !contactBox.value;
@@ -431,7 +477,7 @@ const handleClickOutside = (event) => {
 // 問答開關
 const answerBoxToggle = (index) => {
     answerShow.value = answerShow.value === index ? null : index;
-}
+};
 // 取得GetNewsDetail
 async function fetchStoresDetailData(token) {
     try {
@@ -469,17 +515,20 @@ onMounted(async () => {
             if (token != "") {
                 await fetchStoresDetailData(token);
                 await getMemberDetail(token);
+                await fetchGameList(token);
             }
         } else {
             // 生成新的 token
             const token = await jwtStore.generateToken();
             if (token != "") {
                 await fetchStoresDetailData(token);
+                await fetchGameList(token);
             }
         }
-        await setPageLoading(false);
     } catch (error) {
         console.error("頁面初始化失敗:", error);
+    } finally {
+        await setPageLoading(false);
     }
 });
 
@@ -487,18 +536,18 @@ const activeName = ref("first");
 
 const handleClick = (tab, event) => {};
 
+// 處理輪播切換的方法
+const handleChange = (index) => {
+    currentIndex.value = index;
+};
 // 篩選後的載台字串
 const filteredPlatform = computed(() => {
     if (!storesItem.value || !storesItem.value.StoreProducts) {
         return; // 如果資料尚未加載，返回空陣列
     }
-
-    // 對 StoreProducts 進行過濾並提取平台資訊
     const platformsSet = new Set(
         storesItem.value.StoreProducts.map((product) => product.GamePlatform)
     );
-
-    // 返回格式化後的平臺列表
     return Array.from(platformsSet).join(", ");
 });
 
@@ -507,10 +556,10 @@ const filteredPlatformArray = computed(() => {
     if (!filteredPlatform.value) {
         return [];
     }
-
     // 使用 split 將逗號分隔的字串轉換為陣列，並移除多餘空白
     return filteredPlatform.value.split(",").map((item) => item.trim());
 });
+
 async function sendQAList() {
     if (userToken.value === "" || userToken.value === undefined) {
         await openAlertModal(" ", "請先登入會員");
@@ -580,7 +629,7 @@ async function createAccApi(token) {
             {
                 SqlIndex: storesItem.value.DB,
                 TeamId: storesItem.value.Teamid,
-                GamePlatformName: accPlatformName.value,
+                GamePlatformName: currentPlatform.value,
                 MemberCharacterName: accMemberName.value,
                 TransactionMode: buyOrSell.value ? 10 : 20,
                 Patch: Number(accPatch.value),
@@ -656,11 +705,43 @@ async function getMemberDetail(token) {
         console.error("請求失敗:", error);
     }
 }
+// 取得GetPlatformAndCharacterList(遊戲平台資訊)
+async function fetchGameList(token) {
+    if (token === "") {
+        token = await jwtStore.generateToken();
+    }
+
+    try {
+        const response = await $axios.post(
+            "/api/v1/Pmatch/GetPlatformAndCharacterList",
+            {},
+            {
+                headers: {
+                    Authorization: token, // 帶上 Token
+                },
+            }
+        );
+        if (response.data.Status.Code === 0) {
+            gameList.value = response.data.Data;
+        } else {
+            await openAlertModal(" ", `${response.data.Status.Message}`);
+        }
+    } catch (error) {
+        console.error("請求失敗:", error);
+        data.value = "無法取得資料。"; // 畫面顯示錯誤訊息
+    }
+}
 watch(
-    filteredPlatform,
-    (newValue) => {
-        if (newValue) {
-            accPlatformName.value = newValue;
+    [filteredPlatform, filteredPlatformArray, gameList],
+    ([newFilteredPlatform, newFilteredPlatformArray]) => {
+        // 更新 accPlatformName
+        if (newFilteredPlatform) {
+            accPlatformName.value = newFilteredPlatform;
+        }
+
+        // 更新 currentIndex
+        if (newFilteredPlatformArray.length > 0 && !currentPlatform.value) {
+            currentIndex.value = 0;
         }
     },
     { immediate: true } // 立刻執行一次，將初始值設置進去
@@ -693,6 +774,7 @@ watch(
 
 :deep(.el-carousel__item) {
     box-shadow: 0px 20px 20px -13px #bbb;
+    border-radius: 10px;
 }
 /* :deep(.el-carousel__item:nth-child(2n):not(.is-active)){
     transform: translateX(-22.9075px) scale(0.83) rotateY(-55deg) !important;
@@ -943,7 +1025,28 @@ watch(
     border-radius: 10px;
     padding: 1rem;
 }
-.qaAnswer{
+.qaAnswer {
     border-top: 1px dashed #ccc;
+}
+.platformBox {
+    background: linear-gradient(to right, #4361ee, #f72585);
+    border-radius: 10px;
+    padding: 4px;
+    border: none;
+}
+.platformContent {
+    color: #f72585;
+    border-radius: 10px;
+}
+.platformImg {
+    border-radius: 10px;
+}
+.arrowLeft {
+    top: 200px;
+}
+.arrowRight {
+    transform: rotate(180deg);
+    right: 0;
+    top: -250px;
 }
 </style>

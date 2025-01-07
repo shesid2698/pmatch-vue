@@ -93,13 +93,13 @@
                 </div>
             </form>
 
-            <div class="mt-15px text-center">
+            <!-- <div class="mt-15px text-center">
                 已經註冊?<NuxtLink
                     to="#"
                     class="text-[#0d6efd] hover:opacity-70 hover:underline text-15px no-underline"
                     >忘記密碼</NuxtLink
                 >
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
