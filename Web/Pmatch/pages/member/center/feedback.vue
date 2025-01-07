@@ -42,17 +42,16 @@
                                         開啟中
                                     </div>
                                 </div>
-                                <div class="text-end m-t-10px flex items-center justify-end">
-                                    <div class="me-5">
-                                        剩餘時間
-                                    </div>
+                                <div
+                                    class="text-end m-t-10px flex items-center justify-end"
+                                >
+                                    <div class="me-5">剩餘時間</div>
                                     <div>
                                         <el-countdown
-                                        :value="Date.now() + timeValue"
-                                        format="DD [天] HH:mm:ss"
-                                    />
+                                            :value="Date.now() + timeValue"
+                                            format="DD [天] HH:mm:ss"
+                                        />
                                     </div>
-                                    
                                 </div>
                             </div>
                         </div>
@@ -365,15 +364,15 @@ async function fetchRewardListData() {
         if (response.data.Status.Code === 0) {
             memberRewardList.value = response.data.Data;
             if (memberRewardList.value != null) {
-                const endTimeString = memberRewardList.value.EndTime; 
-        const endTime = new Date(endTimeString).getTime(); 
-        const now = Date.now(); 
+                const endTimeString = memberRewardList.value.EndTime;
+                const endTime = new Date(endTimeString).getTime();
+                const now = Date.now();
 
-        // 計算差值
-        const difference = endTime - now;
+                // 計算差值
+                const difference = endTime - now;
 
-        // 確保不會有負值
-        timeValue.value = Math.max(difference, 0);
+                // 確保不會有負值
+                timeValue.value = Math.max(difference, 0);
             }
         } else {
             await openAlertModal(" ", `${response.data.Status.Message}`);
@@ -387,7 +386,7 @@ async function fetchOrderListData() {
     if (!tokenCookie.value && !MemberIdCookie.value) {
         await openAlertModal(" ", "請先登入會員");
     }
-
+    console.log("++" + currentPage.value);
     try {
         const formattedStartTime = new Date(startTime.value).toISOString();
         const formattedEndTime = new Date(endTime.value).toISOString();
@@ -419,44 +418,44 @@ async function fetchOrderListData() {
     }
 }
 
-const count = ref(10); // 模擬加載數據用的計數器
-
 const load = async () => {
-    try {
-        const formattedStartTime = new Date(startTime.value).toISOString();
-        const formattedEndTime = new Date(endTime.value).toISOString();
-        // 調用 API 加載數據
-        const response = await $axios.post(
-            "/api/v1/Pmatch/GetDownlineOrder",
-            {
-                PmatchMemberId: MemberIdCookie.value,
-                StartTime: formattedStartTime,
-                EndTime: formattedEndTime,
-                PageSize: 10,
-                PageNo: currentPage.value,
-            },
-            {
-                headers: {
-                    Authorization: tokenCookie.value, // 帶上 Token
+    if (tableData.value.length > 0 && currentPage.value) {
+        try {
+            const formattedStartTime = new Date(startTime.value).toISOString();
+            const formattedEndTime = new Date(endTime.value).toISOString();
+            // 調用 API 加載數據
+            const response = await $axios.post(
+                "/api/v1/Pmatch/GetDownlineOrder",
+                {
+                    PmatchMemberId: MemberIdCookie.value,
+                    StartTime: formattedStartTime,
+                    EndTime: formattedEndTime,
+                    PageSize: 10,
+                    PageNo: currentPage.value,
                 },
-            }
-        );
-        const newData = response.data.Data;
+                {
+                    headers: {
+                        Authorization: tokenCookie.value, // 帶上 Token
+                    },
+                }
+            );
+            const newData = response.data.Data;
 
-        // 更新表格數據
-        if (newData.length > 0) {
-            tableData.value.push(...newData);
-            currentPage.value++;
-        } else {
-            if (firstLoad === true) {
-                return;
+            // 更新表格數據
+            if (newData.length > 0) {
+                tableData.value.push(...newData);
+                currentPage.value++;
             } else {
-                await openAlertModal(" ", "已經是最後一頁了"); // 無更多數據
+                if (firstLoad === true) {
+                    return;
+                } else {
+                    await openAlertModal(" ", "已經是最後一頁了"); // 無更多數據
+                }
             }
+        } catch (error) {
+            console.error("加載數據失敗：", error);
+        } finally {
         }
-    } catch (error) {
-        console.error("加載數據失敗：", error);
-    } finally {
     }
 };
 

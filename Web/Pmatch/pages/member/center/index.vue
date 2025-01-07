@@ -445,7 +445,7 @@
                             </div>
                         </div>
 
-                        <div class="mt-15px">
+                        <div class="mt-15px" v-show="theUser[0].Type !== 2">
                             <div
                                 class="mb-5px text-[#484646] font-400 text-15px"
                             >
