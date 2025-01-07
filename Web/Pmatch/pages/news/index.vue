@@ -1,4 +1,20 @@
 <template>
+    <Head>
+        <title>PMatch遊戲道具媒合網</title>
+        <Meta property="og:title" content="PMatch遊戲道具媒合網" />
+        <Meta
+            name="keywords"
+            content="pmatch,pmatch交易,博奕遊戲,幣商,媒合商,遊戲幣,虛擬幣,遊戲交易,媒合交易,買幣,賣幣,虛寶交易"
+        />
+        <Meta
+            name="description"
+            content="Pmatch遊戲道具媒合網 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
+        />
+        <Meta
+            property="og:description"
+            content="Pmatch遊戲道具媒合網 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
+        />
+    </Head>
     <div class="mt-7rem max-w-1110px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3">
         <div class="mb-5 flex items-center justify-between">
             <!-- title -->
@@ -94,7 +110,7 @@ async function fetchNewsListData(token) {
         const response = await $axios.post(
             "/api/v1/Pmatch/GetNewsList",
             {
-                Categorys: [1,2],
+                Categorys: [1, 2],
             },
             {
                 headers: {
@@ -116,7 +132,6 @@ async function fetchNewsListData(token) {
 onMounted(async () => {
     try {
         if (userToken.value != "" && userToken.value != undefined) {
-
             const token = userToken.value;
             if (token != "") {
                 fetchNewsListData(token);
@@ -124,7 +139,6 @@ onMounted(async () => {
         } else {
             // 生成新的 token
             const token = await jwtStore.generateToken();
-            console.log("token",token);
             if (token != "") {
                 fetchNewsListData(token);
             }

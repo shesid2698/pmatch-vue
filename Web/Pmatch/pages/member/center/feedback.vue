@@ -1,5 +1,21 @@
 
 <template>
+    <Head>
+        <title>PMatch遊戲道具媒合網</title>
+        <Meta property="og:title" content="PMatch遊戲道具媒合網" />
+        <Meta
+            name="keywords"
+            content="pmatch,pmatch交易,博奕遊戲,幣商,媒合商,遊戲幣,虛擬幣,遊戲交易,媒合交易,買幣,賣幣,虛寶交易"
+        />
+        <Meta
+            name="description"
+            content="Pmatch遊戲道具媒合網 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
+        />
+        <Meta
+            property="og:description"
+            content="Pmatch遊戲道具媒合網 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
+        />
+    </Head>
     <link
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css?version='0.0.1.10'"
@@ -386,7 +402,6 @@ async function fetchOrderListData() {
     if (!tokenCookie.value && !MemberIdCookie.value) {
         await openAlertModal(" ", "請先登入會員");
     }
-    console.log("++" + currentPage.value);
     try {
         const formattedStartTime = new Date(startTime.value).toISOString();
         const formattedEndTime = new Date(endTime.value).toISOString();

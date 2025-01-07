@@ -83,7 +83,7 @@
         </div>
         <div class="mb-6 flex justify-center">
             <div class="p-5 w-33%">
-                <img :src="`${assetsUrl}${currentImg}`" alt="">
+                <img :src="`${assetsUrl}${currentImg}`" :alt="platformName">
             </div>
             <Matching
                 :param="matchingPlatform !== undefined ? matchingPlatform : ''"
@@ -171,7 +171,7 @@
                                                     >
                                                         <img
                                                             class="w-20px h-20px"
-                                                            src="/images/facebook.png"
+                                                            src="/images/iconFB.png"
                                                             alt=""
                                                         />
                                                     </NuxtLink>
@@ -182,7 +182,7 @@
                                                     >
                                                         <img
                                                             class="w-20px h-20px"
-                                                            src="/images/line.png"
+                                                            src="/images/iconLine.png"
                                                             alt=""
                                                         />
                                                     </NuxtLink>
@@ -193,7 +193,7 @@
                                                     >
                                                         <img
                                                             class="w-20px h-20px"
-                                                            src="/images/instagram.png"
+                                                            src="/images/iconIG.png"
                                                             alt=""
                                                         />
                                                     </NuxtLink>

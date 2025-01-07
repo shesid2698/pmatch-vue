@@ -1,4 +1,20 @@
 <template>
+    <Head>
+        <title>PMatch遊戲道具媒合網</title>
+        <Meta property="og:title" content="PMatch遊戲道具媒合網" />
+        <Meta
+            name="keywords"
+            content="pmatch,pmatch交易,博奕遊戲,幣商,媒合商,遊戲幣,虛擬幣,遊戲交易,媒合交易,買幣,賣幣,虛寶交易"
+        />
+        <Meta
+            name="description"
+            content="Pmatch遊戲道具媒合網 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
+        />
+        <Meta
+            property="og:description"
+            content="Pmatch遊戲道具媒合網 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
+        />
+    </Head>
     <div class="ccontainer md:pt-60px">
         <div class="login-card w-100% md:w-378px">
             <div class="flex flex-items-center">
@@ -6,62 +22,76 @@
                 <div class="text-20px">更改密碼</div>
             </div>
 
-            <form action=""
-                  @submit="ChangePwd">
+            <form action="" @submit="ChangePwd">
                 <div class="mt-15px">
                     <div class="mb-5px">簡訊驗證碼</div>
-                    <input type="text"
-                           required
-                           v-model="verifyCode"
-                           class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
+                    <input
+                        type="text"
+                        required
+                        v-model="verifyCode"
+                        class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200"
+                    />
                 </div>
 
                 <div class="mt-15px">
                     <div class="mb-5px">密碼</div>
                     <div class="relative">
-                        <input type="password"
-                               required
-                               v-model="newPassword"
-                               ref="i_password"
-                               class="password box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200"
-                               pattern="(?=.*\d)(?=.*[a-zA-Z])[A-Za-z0-9!@#$%&*]{8,20}" />
-                        <div @click="turnInputType"
-                             class="cursor-pointer absolute top-50% transform translate-y-[-45%] left-92%">
-                            <i ref="eyes"
-                               class="fa-solid fa-eye text-gray"></i>
+                        <input
+                            type="password"
+                            required
+                            v-model="newPassword"
+                            ref="i_password"
+                            class="password box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200"
+                            pattern="(?=.*\d)(?=.*[a-zA-Z])[A-Za-z0-9!@#$%&*]{8,20}"
+                        />
+                        <div
+                            @click="turnInputType"
+                            class="cursor-pointer absolute top-50% transform translate-y-[-45%] left-92%"
+                        >
+                            <i ref="eyes" class="fa-solid fa-eye text-gray"></i>
                         </div>
 
-                        <div class="tips absolute text-14px w-200px h-auto bg-dark left-25% bottom-130% text-white p-10px rounded-1">
+                        <div
+                            class="tips absolute text-14px w-200px h-auto bg-dark left-25% bottom-130% text-white p-10px rounded-1"
+                        >
                             密碼長度必須為8~20位,
                             其中必須包含至少一位數字、一位英文，若需有特殊符號僅限於
                             ! @ # $ % & *
                         </div>
-                        <div class="tips absolute clip-path-custom w-15px h-15px bg-dark left-52% bottom-110%"></div>
+                        <div
+                            class="tips absolute clip-path-custom w-15px h-15px bg-dark left-52% bottom-110%"
+                        ></div>
                     </div>
                 </div>
 
                 <div class="mt-15px">
                     <div class="mb-5px">再次確認密碼</div>
-                    <input type="password"
-                           required
-                           v-model="confirmPassword"
-                           pattern="(?=.*\d)(?=.*[a-zA-Z])[A-Za-z0-9!@#$%&*]{8,20}"
-                           class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
+                    <input
+                        type="password"
+                        required
+                        v-model="confirmPassword"
+                        pattern="(?=.*\d)(?=.*[a-zA-Z])[A-Za-z0-9!@#$%&*]{8,20}"
+                        class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200"
+                    />
                 </div>
 
                 <div class="mt-15px">
                     <div class="flex">
                         <div class="flex-1">
-                            <button type="button"
-                                    @click="ResendVerifyCode"
-                                    class="p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#1a6db4] hover:opacity-70 transition duration-200 cursor-pointer">
+                            <button
+                                type="button"
+                                @click="ResendVerifyCode"
+                                class="p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#1a6db4] hover:opacity-70 transition duration-200 cursor-pointer"
+                            >
                                 重新取得驗證碼
                             </button>
                         </div>
                         <div class="w-10px"></div>
                         <div class="flex-1">
-                            <button type="submit"
-                                    class="disabled:opacity-70 p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#e93470] hover:bg-[#bb2d3b] transition duration-200 cursor-pointer">
+                            <button
+                                type="submit"
+                                class="disabled:opacity-70 p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#e93470] hover:bg-[#bb2d3b] transition duration-200 cursor-pointer"
+                            >
                                 更改密碼
                             </button>
                         </div>
@@ -77,12 +107,12 @@ const alertModalStore = useAlertModalStore();
 const openAlertModal = alertModalStore.alertShowModal;
 
 const route = useRoute();
-const router= useRouter();
-const phone = ref('');
-const token = ref('');
-const newPassword = ref('');
-const confirmPassword = ref('');
-const verifyCode = ref('');
+const router = useRouter();
+const phone = ref("");
+const token = ref("");
+const newPassword = ref("");
+const confirmPassword = ref("");
+const verifyCode = ref("");
 const jwtStore = useJwtStore();
 const encrypt = useEncrypt();
 const { $axios } = useNuxtApp();
@@ -90,14 +120,14 @@ const ResendVerifyCode = async () => {
     try {
         token.value = await jwtStore.generateToken();
         const response = await $axios.post(
-            '/api/v1/Pmatch/ForgotPassword',
+            "/api/v1/Pmatch/ForgotPassword",
             {
-                MobileNumber: phone.value
+                MobileNumber: phone.value,
             },
             {
                 headers: {
-                    Authorization: token.value
-                }
+                    Authorization: token.value,
+                },
             }
         );
 
@@ -107,29 +137,29 @@ const ResendVerifyCode = async () => {
             await openAlertModal(" ", `${response.data.Status.Message}`);
         }
     } catch (error) {
-        console.error('請求失敗:', error);
+        console.error("請求失敗:", error);
     }
 };
 /**
  * 更換密碼(提交表單)
  * @param event
  */
-const ChangePwd = async event => {
+const ChangePwd = async (event) => {
     event.preventDefault();
     if (newPassword.value == confirmPassword.value) {
         try {
             token.value = await jwtStore.generateToken();
             const password = encrypt.encrypt(newPassword.value);
             const response = await $axios.post(
-                '/api/v1/Pmatch/ChangedPassword',
+                "/api/v1/Pmatch/ChangedPassword",
                 {
                     NewPassword: password,
-                    VerifyCode: verifyCode.value
+                    VerifyCode: verifyCode.value,
                 },
                 {
                     headers: {
-                        Authorization: token.value
-                    }
+                        Authorization: token.value,
+                    },
                 }
             );
 
@@ -140,7 +170,7 @@ const ChangePwd = async event => {
                 await openAlertModal(" ", `${response.data.Status.Message}`);
             }
         } catch (error) {
-            console.error('請求失敗:', error);
+            console.error("請求失敗:", error);
         }
     } else {
         await openAlertModal(" ", "密碼與確認密碼不一致!!");
@@ -159,7 +189,7 @@ onMounted(() => {
     width: 100%;
 }
 .font-sans {
-    font-family: Arial, 'Noto Sans TC', sans-serif;
+    font-family: Arial, "Noto Sans TC", sans-serif;
 }
 .clip-path-custom {
     clip-path: polygon(50% 100%, 0 50%, 100% 50%);

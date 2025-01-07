@@ -10,7 +10,6 @@ export default defineEventHandler((event) => {
     const m_strSecret = "WmlIYWkgSldUIFNlY3JldCBLZXkgNTA5MjIzMTAgMjAyMw=="; // 替換為實際密鑰
     const symmetricKey = Buffer.from(m_strSecret, "base64");
 
-    console.log(" -- symmetricKey" + " " + symmetricKey);
     // Payload 與過期時間設置
     const payload = {
         unique_name: strUserName,

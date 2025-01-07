@@ -1,5 +1,21 @@
 <template>
     <div>
+        <Head>
+            <title>PMatch遊戲道具媒合網</title>
+            <Meta property="og:title" content="PMatch遊戲道具媒合網" />
+            <Meta
+                name="keywords"
+                content="pmatch,pmatch交易,博奕遊戲,幣商,媒合商,遊戲幣,虛擬幣,遊戲交易,媒合交易,買幣,賣幣,虛寶交易"
+            />
+            <Meta
+                name="description"
+                content="Pmatch遊戲道具媒合網 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
+            />
+            <Meta
+                property="og:description"
+                content="Pmatch遊戲道具媒合網 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
+            />
+        </Head>
         <div class="headerLeft absolute top-0">
             <img
                 class="w-85% max-w-1630px min-w-980px"
@@ -398,7 +414,6 @@
             </div>
         </div>
         <div class="w-full bg-#fff pt-5rem pb-5 relative">
-            
             <div class="arrowLeft absolute">
                 <img src="/images/corner.png" alt="左邊箭頭" />
             </div>
@@ -636,7 +651,6 @@ const updateNameArray = (searchValue) => {
     const index = plaformLog.value.indexOf(searchValue);
     if (index !== -1) {
         // 如果搜索值已存在，移到陣列開頭
-        console.log(plaformLog.value);
         plaformLog.value.splice(index, 1);
     }
     // 添加到陣列開頭
@@ -739,10 +753,10 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .headerLeft {
-    width: 100%; 
+    width: 100%;
     height: auto;
-    overflow: hidden; 
-    clip-path: inset(0 0 0 0); 
+    overflow: hidden;
+    clip-path: inset(0 0 0 0);
 }
 
 .headerLeft img {

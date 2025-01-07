@@ -1,10 +1,42 @@
 <template>
     <div>
-        <div class="w-full bg-#fff relative mt-5rem">
-            <div class="mt-7rem max-w-1110px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3">
-                <div class="flex">
-                    <div class="w-50% lg-me-1rem">
-                        <div class="flex mb-3">
+        <Head>
+            <title>{{metaTitle}}</title>
+            <Meta
+                property="og:title"
+                :content="metaTitle"
+            />
+            <Meta
+                property="title"
+                :content="metaTitle"
+            />
+            <Meta
+                name="keywords"
+                content="星城online,包你發娛樂城,聚寶Online,老子有錢Online,寶島娛樂城,錢街Online,金好運娛樂城,滿貫大亨,豪神娛樂城,辣財神,金爸爸,HUGA野蠻世界娛樂城,明星3缺1,大福娛樂城"
+            />
+            <Meta
+                name="description"
+                content="Pmatch遊戲道具媒合網 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
+            />
+            <Meta
+                property="og:description"
+                content="Pmatch遊戲道具媒合網 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
+            />
+        </Head>
+        <div class="absolute right-0 top-0">
+            <div class="flex justify-end">
+                <img
+                    class="w-60%"
+                    src="/images/bgDot03.png"
+                    alt="header右邊點點圖"
+                />
+            </div>
+        </div>
+        <div class="w-full relative mt-5rem">
+            <div class="mt-9rem max-w-1110px m-auto ps-5 pe-5">
+                <div class="lg-flex">
+                    <div class="w-100% lg-w-50% lg-me-1rem">
+                        <div class="flex mb-3 pb-2rem">
                             <div v-if="storesItem != null">
                                 <img
                                     :src="`${assetsUrl}${storesItem.IMGFiles}`"
@@ -18,15 +50,13 @@
                                 {{ storesItem.Name }}
                             </h2>
                         </div>
-                        <div class="mb-3 storeAboutBox">
-                            <div class="storeAboutContent">
-                                <span v-if="storesItem">{{
-                                    storesItem.About
-                                }}</span>
-                            </div>
+                        <div class="storeAboutContent py-2rem">
+                            <span v-if="storesItem">{{
+                                storesItem.About
+                            }}</span>
                         </div>
-                        <div>
-                            <div class="ms-2 flex">
+                        <div class="pt-2rem">
+                            <div class="flex">
                                 <NuxtLink
                                     class="flex items-center ms-1 me-1"
                                     v-if="storesItem"
@@ -34,7 +64,7 @@
                                 >
                                     <img
                                         class="w-30px h-30px"
-                                        src="/images/facebook.png"
+                                        src="/images/iconFB.png"
                                         alt=""
                                     />
                                 </NuxtLink>
@@ -45,7 +75,7 @@
                                 >
                                     <img
                                         class="w-30px h-30px"
-                                        src="/images/line.png"
+                                        src="/images/iconLine.png"
                                         alt=""
                                     />
                                 </NuxtLink>
@@ -56,7 +86,7 @@
                                 >
                                     <img
                                         class="w-30px h-30px"
-                                        src="/images/instagram.png"
+                                        src="/images/iconIG.png"
                                         alt=""
                                     />
                                 </NuxtLink>
@@ -65,21 +95,42 @@
                                     v-if="storesItem"
                                     :to="storesItem.TwitterId"
                                 >
-                                    <div
-                                        class="bg-#000 w-30px h-30px rounded-50% color-#fff text-center"
-                                    >
-                                        x
-                                    </div>
+                                    <img
+                                        class="w-30px h-30px"
+                                        src="/images/iconX.png"
+                                        alt=""
+                                    />
+                                </NuxtLink>
+                                <NuxtLink
+                                    class="flex items-center ms-1 me-1"
+                                    v-if="storesItem"
+                                    :to="storesItem.TwitterId"
+                                >
+                                    <img
+                                        class="w-30px h-30px"
+                                        src="/images/iconTikTok.png"
+                                        alt=""
+                                    />
+                                </NuxtLink>
+                                <NuxtLink
+                                    class="flex items-center ms-1 me-1"
+                                    v-if="storesItem"
+                                    :to="storesItem.TwitterId"
+                                >
+                                    <img
+                                        class="w-30px h-30px"
+                                        src="/images/iconPhone.png"
+                                        alt=""
+                                    />
                                 </NuxtLink>
                             </div>
                         </div>
                     </div>
                     <div
-                        class="w-50% flex items-center justify-center lg-ms-1rem"
+                        class="w-100% lg-w-50% flex items-center justify-center lg-mt-0 mt-2rem lg-ms-1rem"
                     >
                         <ElCarousel
                             type="card"
-                            height="200px"
                             class="w-100%"
                             arrow="always"
                             :autoplay="false"
@@ -89,30 +140,44 @@
                                 v-for="(item, index) in filteredPlatformArray"
                                 :key="index"
                             >
-                                <div class="platformBox">
-                                    <div class="platformContent">
-                                        <img
-                                            class="platformImg w-100%"
-                                            :src="`${assetsUrl}${getImgFile(item)}`"
-                                            :alt="item"
-                                        />
+                                <div
+                                    class="flex items-center justify-center w-100%"
+                                >
+                                    <div class="platformBox">
+                                        <div class="platformContent">
+                                            <img
+                                                class="platformImg w-100%"
+                                                :src="`${assetsUrl}${getImgFile(
+                                                    item
+                                                )}`"
+                                                :alt="item"
+                                            />
+                                        </div>
                                     </div>
                                 </div>
-                                
                             </ElCarouselItem>
                         </ElCarousel>
-                        
                     </div>
-                    <p>{{currentImg}}</p>
                 </div>
             </div>
         </div>
-        <div class="w-full bg-#fff relative mt-5rem">
-            <div class="mt-7rem max-w-1110px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3">
-                <div>
-                    <div class="w-100% flex justify-center flex-wrap">
-                        <div class="entryBox mb-5">
-                            <div class="entryContent">
+        <div class="w-full relative mt-2rem md-mt-5rem">
+            <div class="absolute left-0 top-0">
+                <div class="flex justify-start">
+                    <img
+                        class="w-60%"
+                        src="/images/bgDot04.png"
+                        alt="header左邊點點圖"
+                    />
+                </div>
+            </div>
+            <div
+                class="mt-2rem md-mt-7rem max-w-1110px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3 relative z-2"
+            >
+                <div class="w-100% block md-flex justify-center flex-wrap">
+                    <div>
+                        <div class="entryBox w-100% mb-5">
+                            <div class="entryContent w-100%">
                                 <input
                                     class="entryDetail w-90% py-.5rem font-size-18px"
                                     type="text"
@@ -121,8 +186,10 @@
                                 />
                             </div>
                         </div>
-                        <div class="w-100% flex justify-center mb-5">
-                            <div class="flex items-center mx-10">
+                        <div  class="w-100% flex justify-center mb-5">
+                            <!-- v-if="storesItem != null"
+                            v-show="storesItem.IsEnabledBuy" -->
+                            <div  class="flex items-center mx-10">
                                 <input
                                     type="radio"
                                     class="w-20px h-20px m-0 me-3 custom-radio"
@@ -136,7 +203,8 @@
                                     >委買遊戲幣</label
                                 >
                             </div>
-                            <div class="flex items-center mx-10">
+                            <div  class="flex items-center mx-10">
+                                <!-- v-show="storesItem.IsEnabledSell" -->
                                 <input
                                     type="radio"
                                     class="w-20px h-20px m-0 me-3 custom-radio"
@@ -165,7 +233,9 @@
                             class="w-100% flex justify-center mb-5"
                             v-show="buyOrSell"
                         >
-                            <div class="flex items-center ms-13 me-9">
+                        <!-- v-if="storesItem != null" -->
+                            <!-- v-show="buyOrSell && storesItem.IsEnabledBuy" -->
+                            <div class="flex items-center ms-13 me-9" >
                                 <input
                                     type="radio"
                                     id="shop"
@@ -244,53 +314,53 @@
                             </div>
                         </div>
                     </div>
-                    <div class="flex justify-center">
-                        <div class="relative mb-5">
-                            <div class="flex items-center font-size-18px">
-                                <input
-                                    type="radio"
-                                    class="w-20px h-20px m-0 me-3 custom-radio"
-                                    id="read"
-                                    v-model="readContract"
-                                    :value="true"
-                                />
-                                <ElButton plain @click="readContact">
-                                    我已詳細閱讀此服務條款(必填)
-                                </ElButton>
-                                <ElDialog
-                                    v-model="dialogVisible"
-                                    :close-on-click-modal="false"
-                                >
-                                    <div class="dialogHeader absolute">
-                                        服務條款
+                </div>
+                <div class="flex justify-center">
+                    <div class="relative mb-5">
+                        <div class="flex items-center font-size-18px">
+                            <input
+                                type="radio"
+                                class="w-20px h-20px m-0 me-3 custom-radio"
+                                id="read"
+                                v-model="readContract"
+                                :value="true"
+                            />
+                            <ElButton plain @click="readContact">
+                                我已詳細閱讀此服務條款(必填)
+                            </ElButton>
+                            <ElDialog
+                                v-model="dialogVisible"
+                                :close-on-click-modal="false"
+                            >
+                                <div class="dialogHeader absolute">
+                                    服務條款
+                                </div>
+                                <div class="dialogBody">
+                                    <div
+                                        v-if="storesItem"
+                                        v-html="storesItem.ContractConetnt"
+                                    ></div>
+                                    <div class="flex justify-end mt-5">
+                                        <ElButton
+                                            class="agreeBtn"
+                                            type="primary"
+                                            @click="dialogVisible = false"
+                                        >
+                                            同意
+                                        </ElButton>
                                     </div>
-                                    <div class="dialogBody">
-                                        <div
-                                            v-if="storesItem"
-                                            v-html="storesItem.ContractConetnt"
-                                        ></div>
-                                        <div class="flex justify-end mt-5">
-                                            <ElButton
-                                                class="agreeBtn"
-                                                type="primary"
-                                                @click="dialogVisible = false"
-                                            >
-                                                同意
-                                            </ElButton>
-                                        </div>
-                                    </div>
-                                </ElDialog>
-                            </div>
+                                </div>
+                            </ElDialog>
                         </div>
                     </div>
-                    <div class="flex justify-center">
-                        <div class="submitBox relative mb-5">
-                            <div
-                                class="submitBtn font-size-18px px-2rem py-1rem"
-                                @click="sendAccList"
-                            >
-                                確認送出
-                            </div>
+                </div>
+                <div class="flex justify-center">
+                    <div class="submitBox relative mb-5">
+                        <div
+                            class="submitBtn font-size-18px px-2rem py-1rem"
+                            @click="sendAccList"
+                        >
+                            確認送出
                         </div>
                     </div>
                 </div>
@@ -300,10 +370,15 @@
             <div class="arrowRight absolute">
                 <img src="/images/corner.png" alt="右邊箭頭" />
             </div>
+            <div class="arrowRight top-0 bottom-0 absolute">
+                <img src="/images/corner.png" alt="右邊箭頭" />
+            </div>
             <div class="arrowLeft absolute">
                 <img src="/images/corner.png" alt="左邊箭頭" />
             </div>
-            <div class="mt-5rem max-w-1110px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3">
+            <div
+                class="mt-5rem max-w-1110px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3 relative z-2"
+            >
                 <div class="flex justify-center">
                     <div class="w-80% pt-5rem qaTitle">
                         <div class="mb-5rem relative">
@@ -312,8 +387,8 @@
                             </h1>
                             <div class="flex justify-center">
                                 <img
-                                    class="w-250px"
-                                    src="/images/ourService.png"
+                                    class="w-150px"
+                                    src="/images/faq.png"
                                     alt="問與答"
                                 />
                             </div>
@@ -348,7 +423,13 @@
                                         @click="answerBoxToggle(index)"
                                     >
                                         <div class="flex">
-                                            <div>圖</div>
+                                            <div>
+                                                <img
+                                                    class="w-40px"
+                                                    src="/images/iconUser.png"
+                                                    alt="使用者icon"
+                                                />
+                                            </div>
                                             <div class="ms-5">
                                                 <h4 class="m-0">
                                                     {{ item.Mobile }}
@@ -363,7 +444,21 @@
                                                 </h3>
                                             </div>
                                         </div>
-                                        <div>箭頭</div>
+                                        <div>
+                                            <img
+                                                :class="
+                                                    answerShow === index
+                                                        ? 'w-30px'
+                                                        : 'w-20px'
+                                                "
+                                                :src="
+                                                    answerShow === index
+                                                        ? '/images/arrowDownLine.png'
+                                                        : '/images/arrowRightLine.png'
+                                                "
+                                                alt="右箭頭漸層"
+                                            />
+                                        </div>
                                     </div>
                                     <div
                                         v-show="
@@ -386,6 +481,9 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="flex justify-center mt-6rem">
+                                <el-pagination layout="prev, pager, next" :total="50" />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -406,6 +504,8 @@ import { ElCarouselItem } from "element-plus";
 import { useLoadStore } from "../stores/loading.js";
 
 import { useAlertModalStore } from "../stores/useAlertModal.js";
+
+
 const alertModalStore = useAlertModalStore();
 const openAlertModal = alertModalStore.alertShowModal;
 
@@ -429,7 +529,7 @@ const dialogVisible = ref(false);
 const memberDetailList = ref([]);
 const gameList = ref([]);
 const imgCurrent = ref([]);
-
+const metaTitle = ref("PMatch遊戲道具媒合網");
 let question = ref("");
 
 const buyOrSell = ref(true); // true 表示委買, false 表示委賣
@@ -495,6 +595,9 @@ async function fetchStoresDetailData(token) {
         );
         if (response.data.Status.Code === 0) {
             storesItem.value = response.data.Data;
+            if(storesItem.value != null){
+                metaTitle.value = `${storesItem.value.Name} – 最安全的交易平台PMatch`;
+            }
         } else {
             await openAlertModal(" ", `${response.data.Status.Message}`);
         }
@@ -760,29 +863,19 @@ watch(
     color: transparent;
     -webkit-text-stroke: 1px rgba(200, 200, 200, 0.1);
 }
-.storeAboutBox {
-    position: relative;
-    padding: 1px 0;
-    background: linear-gradient(to right, #4361ee, #f72585);
-    border: none;
-}
 .storeAboutContent {
-    background: #fff;
-    color: #6b6b6b;
-    padding: 2rem;
+    border-top: 2px solid transparent;
+    border-bottom: 2px solid transparent;
+    border-image: linear-gradient(to right, #4361ee 0%, #f72585 100%);
+    border-image-slice: 1;
 }
 
 :deep(.el-carousel__item) {
-    box-shadow: 0px 20px 20px -13px #bbb;
+    display: flex;
+    align-items: center;
     border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0) !important;
 }
-/* :deep(.el-carousel__item:nth-child(2n):not(.is-active)){
-    transform: translateX(-22.9075px) scale(0.83) rotateY(-55deg) !important;
-}
-
-:deep(.el-carousel__item:nth-child(2n+1):not(.is-active)){
-    transform: translateX(292.407px) scale(0.83) rotateY(55deg) !important;
-} */
 
 :deep(.el-carousel__arrow) {
     background-color: rgba(0, 0, 0, 0);
@@ -823,6 +916,32 @@ watch(
 :deep(.el-button:focus-visible) {
     outline: none;
 }
+:deep(.el-pager > .number) {
+    color: #f72585;
+    margin: 0 5px;
+    font-size: 20px;
+}
+:deep(.el-pagination > .btn-prev > .el-icon) {
+    color: #f72585;
+    font-size: 20px;
+    margin: 0 5px;
+}
+:deep(.el-pagination > .btn-next > .el-icon) {
+    color: #f72585;
+    font-size: 20px;
+    margin: 0 5px;
+}
+:deep(.el-pagination){
+    --el-pagination-bg-color: rgba(0, 0, 0, 0);
+    --el-pagination-button-disabled-bg-color: rgba(0, 0, 0, 0);
+}
+:deep(.el-pager > .is-active){
+    background: linear-gradient(to right, #4361ee, #f72585);
+    border-radius: 50%;
+    color: #fff;
+}
+
+
 .dialogHeader {
     background: linear-gradient(to right, #4361ee, #f72585);
     color: #fff;
@@ -855,7 +974,7 @@ watch(
     -webkit-text-stroke: 1px rgba(200, 200, 200, 0.1);
 }
 .entryBox {
-    width: 50%;
+    width: 100%;
     position: relative;
     padding: 1px;
     background: linear-gradient(to right, #4361ee, #f72585);
@@ -877,7 +996,7 @@ watch(
     outline: none;
 }
 .contactBox {
-    width: 50%;
+    width: 100%;
     position: relative;
     padding: 1px;
     background: linear-gradient(to right, #4361ee, #f72585);
@@ -1033,6 +1152,7 @@ watch(
     border-radius: 10px;
     padding: 4px;
     border: none;
+    box-shadow: 0px 20px 20px -13px #bbb;
 }
 .platformContent {
     color: #f72585;
@@ -1048,5 +1168,7 @@ watch(
     transform: rotate(180deg);
     right: 0;
     top: -250px;
+}
+@media screen and (max-width: 768px) {
 }
 </style>

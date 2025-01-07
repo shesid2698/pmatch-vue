@@ -1,4 +1,20 @@
 <template>
+    <Head>
+        <title>PMatch遊戲道具媒合網</title>
+        <Meta property="og:title" content="PMatch遊戲道具媒合網" />
+        <Meta
+            name="keywords"
+            content="pmatch,pmatch交易,博奕遊戲,幣商,媒合商,遊戲幣,虛擬幣,遊戲交易,媒合交易,買幣,賣幣,虛寶交易"
+        />
+        <Meta
+            name="description"
+            content="Pmatch遊戲道具媒合網 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
+        />
+        <Meta
+            property="og:description"
+            content="Pmatch遊戲道具媒合網 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
+        />
+    </Head>
     <div class="pt-60px ps-5 pe-5 ccontainer w-90% lg:w-70%">
         <div class="lg:w-160px">
             <MemberCenter></MemberCenter>
@@ -40,20 +56,20 @@ const alertModalStore = useAlertModalStore();
 const openAlertModal = alertModalStore.alertShowModal;
 
 const { $axios } = useNuxtApp();
-const userToken = useCookie('_PmToken');
+const userToken = useCookie("_PmToken");
 const stores = ref([]);
 onMounted(async () => {
-    if (userToken.value != undefined && userToken.value != '') {
+    if (userToken.value != undefined && userToken.value != "") {
         try {
             const response = await $axios.post(
-                '/api/v1/Pmatch/GetContractedStoreList',
+                "/api/v1/Pmatch/GetContractedStoreList",
                 {
-                    category: 1
+                    category: 1,
                 },
                 {
                     headers: {
-                        Authorization: userToken.value
-                    }
+                        Authorization: userToken.value,
+                    },
                 }
             );
 
@@ -63,7 +79,7 @@ onMounted(async () => {
                 await openAlertModal(" ", `${response.data.Status.Message}`);
             }
         } catch (error) {
-            console.error('請求失敗:', error);
+            console.error("請求失敗:", error);
         }
     }
 });

@@ -1,4 +1,20 @@
 <template>
+    <Head>
+        <title>PMatch遊戲道具媒合網</title>
+        <Meta property="og:title" content="PMatch遊戲道具媒合網" />
+        <Meta
+            name="keywords"
+            content="pmatch,pmatch交易,博奕遊戲,幣商,媒合商,遊戲幣,虛擬幣,遊戲交易,媒合交易,買幣,賣幣,虛寶交易"
+        />
+        <Meta
+            name="description"
+            content="Pmatch遊戲道具媒合網 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
+        />
+        <Meta
+            property="og:description"
+            content="Pmatch遊戲道具媒合網 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
+        />
+    </Head>
     <div class="ccontainer md:pt-60px">
         <div class="login-card md:w-378px w-100%">
             <!-- 登入Title -->
@@ -129,7 +145,7 @@ const s = reactive({});
 const i_password = ref(null);
 const { md5 } = crypto();
 
-const loginToken = useCookie('tstToken');
+const loginToken = useCookie("tstToken");
 const hasToken = ref(loginToken.value !== undefined);
 
 let accountId = ref("");
@@ -176,11 +192,10 @@ async function login(event, encryptedPassword) {
                 const token = matchMemberList.value.Token;
                 const base64UrlToken = btoa(token)
                     .replace(/\+/g, "-")
-                    .replace(/\//g, "_")
+                    .replace(/\//g, "_");
 
                 // 跳轉到目標網站
                 const targetUrl = `http://192.168.10.206:6092/l/${base64UrlToken}`;
-                console.log(base64UrlToken);
                 window.location.href = targetUrl;
             } else {
                 console.error("跳轉失敗");
@@ -202,7 +217,10 @@ const getSerialNumber = async () => {
 
         // 檢查 HTTP 狀態碼
         if (!response.ok) {
-            await openAlertModal(" ", "請依文件調整瀏覽器設定值,安裝工具再行登入");
+            await openAlertModal(
+                " ",
+                "請依文件調整瀏覽器設定值,安裝工具再行登入"
+            );
         }
 
         const result = await response.json(); // 解析 JSON 資料

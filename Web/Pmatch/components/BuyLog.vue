@@ -48,12 +48,11 @@ onMounted(async () => {
         // 將字串解析為物件並賦值
         try {
             buyLog.value = JSON.parse(buyLogData);
-            console.log(buyLog.value);
         } catch (error) {
             console.error("無法解析 buyLog 的 JSON 數據", error);
         }
     } else {
-        console.log("localStorage 中未找到 buyLog");
+        console.error("localStorage 中未找到 buyLog");
     }
 });
 </script>
