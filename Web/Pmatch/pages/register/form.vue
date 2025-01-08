@@ -364,6 +364,7 @@ const store = useLoadStore();
 const contractStores = ref("");
 const setPageLoading = store.setPageLoading;
 const encrypt = useEncrypt();
+const {md5} = crypto();
 const theCities = useGetCities();
 const jwtStore = useJwtStore();
 const router = useRouter();
@@ -477,8 +478,8 @@ const SubmitForm = async (e) => {
         await openAlertModal(" ", "手機號碼尚未驗證");
         return;
     }
-    var password1 = encrypt.encrypt(i_password.value.value);
-    var password2 = encrypt.encrypt(i_password2.value.value);
+    var password1 = md5(i_password.value.value);
+    var password2 = md5(i_password2.value.value);
     token.value = await jwtStore.generateToken();
     if (password1 !== password2) {
         await openAlertModal(" ", "密碼與確認密碼不一致");

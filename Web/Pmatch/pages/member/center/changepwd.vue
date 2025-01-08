@@ -127,7 +127,7 @@ const alertModalStore = useAlertModalStore();
 const openAlertModal = alertModalStore.alertShowModal;
 
 const { $axios } = useNuxtApp();
-const encrypt = useEncrypt();
+const { md5 } = crypto();
 const userToken = useCookie("_PmToken");
 const oldPassword = ref("");
 const newPassword = ref("");
@@ -138,8 +138,8 @@ const CheckPassword = async (e) => {
         await openAlertModal(" ", "新密碼與確認密碼不一致!!");
         return;
     } else {
-        newPassword.value = encrypt.encrypt(newPassword.value);
-        oldPassword.value = encrypt.encrypt(oldPassword.value);
+        newPassword.value = md5(newPassword.value);
+        oldPassword.value = md5(oldPassword.value);
         try {
             const response = await $axios.post(
                 "/api/v1/Pmatch/ChangedPassword",

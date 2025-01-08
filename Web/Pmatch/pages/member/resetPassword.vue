@@ -103,6 +103,7 @@
 </template>
 <script setup>
 import { useAlertModalStore } from "../stores/useAlertModal.js";
+const { md5 } = crypto();
 const alertModalStore = useAlertModalStore();
 const openAlertModal = alertModalStore.alertShowModal;
 
@@ -149,7 +150,7 @@ const ChangePwd = async (event) => {
     if (newPassword.value == confirmPassword.value) {
         try {
             token.value = await jwtStore.generateToken();
-            const password = encrypt.encrypt(newPassword.value);
+            const password = md5(newPassword.value);
             const response = await $axios.post(
                 "/api/v1/Pmatch/ChangedPassword",
                 {
