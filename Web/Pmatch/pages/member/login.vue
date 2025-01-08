@@ -136,8 +136,7 @@ import VueTurnstile from "vue-turnstile";
 import { useAlertModalStore } from "../stores/useAlertModal.js";
 const alertModalStore = useAlertModalStore();
 const openAlertModal = alertModalStore.alertShowModal;
-
-const encrypt = useEncrypt();
+const{md5} = crypto();
 const eyes = ref(null);
 const i_password = ref(null);
 const loginToken = useCookie("loginToken");
@@ -173,7 +172,7 @@ const onVerify = (tokenValue) => {
 // 登入傳送帳密
 const login = async () => {
     // 加密密碼
-    const encryptedPassword = encrypt.encrypt(password.value);
+    const encryptedPassword = md5(password.value);
     // 等待登入結果
     await Login(encryptedPassword);
 };
