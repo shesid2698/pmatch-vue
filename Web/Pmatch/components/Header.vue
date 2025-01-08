@@ -274,7 +274,7 @@ onMounted(() => {
                 title: `Hi , ${userNameCookie.value}`,
                 link: "#",
                 icon: "",
-                className: "nav4",
+                className: "loginnav4",
             },
         ];
     } else {
@@ -476,7 +476,7 @@ onBeforeUnmount(() => {
     border: none;
     margin-left: 10px;
 }
-.nav4Box {
+.nav4Box,.loginnav4Box {
     position: relative;
     padding: 1px;
     background: linear-gradient(
@@ -505,6 +505,8 @@ onBeforeUnmount(() => {
     border: none;
     width: 100%;
     color: #f72585;
+    display: flex;
+    align-items: center;
 }
 .loginLink {
     border-radius: 50px;
