@@ -109,6 +109,7 @@
                                 <NuxtLink
                                     class="flex items-center ms-1 me-1"
                                     v-show="storesItem.PhoneNumber !== ''"
+                                    :href="`tel:${storesItem.PhoneNumber}`"
                                 >
                                     <img
                                         class="w-30px h-30px"

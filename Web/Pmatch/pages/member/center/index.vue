@@ -470,6 +470,7 @@
                             <input
                                 type="text"
                                 v-model="recommendStr"
+                                :disabled="usedRecommendStr"
                                 class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200"
                             />
                         </div>
@@ -506,6 +507,7 @@ const selectedCity = ref("");
 const selectedRegion = ref("");
 const addressDetail = ref("");
 const recommendStr = ref("");
+const usedRecommendStr = ref(false);
 /**正在驗證的手機號碼 */
 const verifyingMobile = useCookie("editMobile");
 /**手機/信箱驗證視窗寬度 */
@@ -666,8 +668,11 @@ onMounted(async () => {
                 if (theUser[0].CarrierType === 1 && theUser[0].Carrier !== "") {
                     theUser[0].Carrier = theUser[0].Carrier.replace("/", "");
                 }
-                if (theUser[0].RefferCode !== "")
+                if (theUser[0].RefferCode !== ""){
                     recommendStr.value = theUser[0].RefferCode;
+                    usedRecommendStr.value = true;
+                }
+                    
             } else {
                 alert(`${response.data.Status.Message}`);
             }
