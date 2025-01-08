@@ -1,15 +1,9 @@
 <template>
     <div>
         <Head>
-            <title>{{metaTitle}}</title>
-            <Meta
-                property="og:title"
-                :content="metaTitle"
-            />
-            <Meta
-                property="title"
-                :content="metaTitle"
-            />
+            <title>{{ metaTitle }}</title>
+            <Meta property="og:title" :content="metaTitle" />
+            <Meta property="title" :content="metaTitle" />
             <Meta
                 name="keywords"
                 content="星城online,包你發娛樂城,聚寶Online,老子有錢Online,寶島娛樂城,錢街Online,金好運娛樂城,滿貫大亨,豪神娛樂城,辣財神,金爸爸,HUGA野蠻世界娛樂城,明星3缺1,大福娛樂城"
@@ -185,10 +179,16 @@
                                 />
                             </div>
                         </div>
-                        <div v-if="storesItem != null" class="w-100% flex justify-center mb-5">
+                        <div
+                            v-if="storesItem != null"
+                            class="w-100% flex justify-center mb-5"
+                        >
                             <!-- v-if="storesItem != null"
                             v-show="storesItem.IsEnabledBuy" -->
-                            <div v-show="storesItem.IsEnabledBuy" class="flex items-center mx-10">
+                            <div
+                                v-show="storesItem.IsEnabledBuy"
+                                class="flex items-center mx-10"
+                            >
                                 <input
                                     type="radio"
                                     class="w-20px h-20px m-0 me-3 custom-radio"
@@ -202,7 +202,10 @@
                                     >委買遊戲幣</label
                                 >
                             </div>
-                            <div v-show="storesItem.IsEnabledSell" class="flex items-center mx-10">
+                            <div
+                                v-show="storesItem.IsEnabledSell"
+                                class="flex items-center mx-10"
+                            >
                                 <!-- v-show="storesItem.IsEnabledSell" -->
                                 <input
                                     type="radio"
@@ -233,9 +236,9 @@
                             v-if="storesItem != null"
                             v-show="buyOrSell && storesItem.IsEnabledBuy"
                         >
-                        <!-- v-if="storesItem != null" -->
+                            <!-- v-if="storesItem != null" -->
                             <!-- v-show="buyOrSell && storesItem.IsEnabledBuy" -->
-                            <div class="flex items-center ms-13 me-9" >
+                            <div class="flex items-center ms-13 me-9">
                                 <input
                                     type="radio"
                                     id="shop"
@@ -282,11 +285,17 @@
                             </div>
                             <div
                                 v-show="contactBox"
-                                class="contactPhoneBox absolute bg-#fff top-0 w-100% z-2"
+                                class="contactPhoneBox absolute top-0 w-100% z-2"
                             >
+                            <div class="contactPhoneContent">
                                 <div
-                                    class="bg-#fff py-2"
-                                    v-if="!memberPhone1Cookie"
+                                    class="py-2"
+                                >
+                                    聯絡資訊
+                                </div>
+                                <div
+                                    class="py-2 contactPhone"
+                                    v-show="memberPhone1Cookie"
                                     @click.stop="
                                         selectedPhone(memberPhone1Cookie)
                                     "
@@ -294,8 +303,8 @@
                                     {{ memberPhone1Cookie }}
                                 </div>
                                 <div
-                                    class="bg-#fff py-2"
-                                    v-if="!memberPhone2Cookie"
+                                    class="py-2 contactPhone"
+                                    v-show="memberPhone2Cookie"
                                     @click.stop="
                                         selectedPhone(memberPhone2Cookie)
                                     "
@@ -303,14 +312,15 @@
                                     {{ memberPhone2Cookie }}
                                 </div>
                                 <div
-                                    class="bg-#fff py-2"
-                                    v-if="!memberPhone3Cookie"
+                                    class="py-2 contactPhone"
+                                    v-show="memberPhone3Cookie"
                                     @click.stop="
                                         selectedPhone(memberPhone3Cookie)
                                     "
                                 >
                                     {{ memberPhone3Cookie }}
                                 </div>
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -414,7 +424,7 @@
                             <div
                                 class="qaBox"
                                 v-if="storesItem.StoreQAs.length > 0"
-                                v-for="(item, index) in storesItem.StoreQAs"
+                                v-for="(item, index) in paginatedQAs"
                                 :key="index"
                             >
                                 <div class="qaContent">
@@ -482,7 +492,13 @@
                                 </div>
                             </div>
                             <div class="flex justify-center mt-6rem">
-                                <el-pagination layout="prev, pager, next" :total="50" />
+                                <el-pagination
+                                    layout="prev, pager, next"
+                                    :current-page="currentPage"
+                                    :page-size="itemsPerPage"
+                                    :total="storesItem.StoreQAs.length"
+                                    @current-change="changePage"
+                                />
                             </div>
                         </div>
                     </div>
@@ -504,7 +520,6 @@ import { ElCarouselItem } from "element-plus";
 import { useLoadStore } from "../stores/loading.js";
 
 import { useAlertModalStore } from "../stores/useAlertModal.js";
-
 
 const alertModalStore = useAlertModalStore();
 const openAlertModal = alertModalStore.alertShowModal;
@@ -551,6 +566,27 @@ const currentIndex = ref(0);
 const currentPlatform = computed(
     () => filteredPlatformArray.value[currentIndex.value]
 );
+
+// 分頁tab用
+const currentPage = ref(1); // 當前頁碼
+const itemsPerPage = 5; // 每頁筆數
+// 計算總頁數
+const totalPages = computed(() =>
+    Math.ceil(storesItem.value.StoreQAs.length / itemsPerPage)
+);
+
+// 計算當前頁需要顯示的資料
+const paginatedQAs = computed(() => {
+    const start = (currentPage.value - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    return storesItem.value.StoreQAs.slice(start, end);
+});
+
+// 切換頁碼
+const changePage = (page) => {
+    currentPage.value = page;
+};
+
 const getImgFile = (platformName) => {
     const platform = gameList.value.find(
         (game) => game.PlatformName === platformName
@@ -595,7 +631,7 @@ async function fetchStoresDetailData(token) {
         );
         if (response.data.Status.Code === 0) {
             storesItem.value = response.data.Data;
-            if(storesItem.value != null){
+            if (storesItem.value != null) {
                 metaTitle.value = `${storesItem.value.Name} – 最安全的交易平台PMatch`;
             }
         } else {
@@ -931,16 +967,15 @@ watch(
     font-size: 20px;
     margin: 0 5px;
 }
-:deep(.el-pagination){
+:deep(.el-pagination) {
     --el-pagination-bg-color: rgba(0, 0, 0, 0);
     --el-pagination-button-disabled-bg-color: rgba(0, 0, 0, 0);
 }
-:deep(.el-pager > .is-active){
+:deep(.el-pager > .is-active) {
     background: linear-gradient(to right, #4361ee, #f72585);
     border-radius: 50%;
     color: #fff;
 }
-
 
 .dialogHeader {
     background: linear-gradient(to right, #4361ee, #f72585);
@@ -1095,9 +1130,32 @@ watch(
     transform: translate(-50%, -50%);
 }
 .contactPhoneBox {
-    border: 1px solid #ccc;
+    padding: 1px;
+    background: linear-gradient(
+        to right,
+        rgba(67, 97, 238),
+        rgba(247, 37, 133)
+    );
+    border-radius: 25px;
+    border: none;
 }
-
+.contactPhoneContent{
+    position: relative;
+    background: #fafafa;
+    border-radius: 25px;
+    border: none;
+    text-indent: 2rem;
+    width: 100%;
+    color: #f72585;
+    font-size: 18px;
+}
+.contactPhone {
+    border-radius: 25px;
+}
+.contactPhone:hover {
+    background-color: #f72585;
+    color: #fff;
+}
 .el-carousel__item h3 {
     color: #475669;
     opacity: 0.75;

@@ -191,12 +191,12 @@ const formatPatch = (patch) => {
     }
     return patch;
 };
-const SettingPercent = () => {
-    if (mainPercent.value > 100) {
-        mainPercent.value = 100;
-    }
-    secondPercent.value = 100 - mainPercent.value;
-};
+// const SettingPercent = () => {
+//     if (mainPercent.value > 100) {
+//         mainPercent.value = 100;
+//     }
+//     secondPercent.value = 100 - mainPercent.value;
+// };
 // 取得回饋資訊
 async function fetchRewardListData() {
     if (!tokenCookie.value && !MemberIdCookie.value) {
@@ -267,7 +267,7 @@ async function settingPercent() {
         const response = await $axios.post(
             "/api/v1/Pmatch/UpdateMemberReward",
             {
-                MemberId: MemberIdCookie.value,
+                PMatchMemberId: MemberIdCookie.value,
                 RewardValue: mainPercent.value,
             },
             {
