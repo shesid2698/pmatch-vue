@@ -133,13 +133,19 @@
                 :header-cell-style="{
                     color: 'white',
                     background: '#3CAADC',
-                    fontSize: '20px',
-                    fontWeight: '500',
+                    fontSize: '14px',
+                    fontWeight: '600',
                 }"
                 stripe
                 border
             >
-                <el-table-column prop="" label=" " />
+                <el-table-column label="" width="50">
+                    <template #default="scope">
+                        <div class="text-center">
+                            {{ scope.$index + 1 }}
+                        </div>
+                    </template>
+                </el-table-column>
                 <el-table-column
                     prop="Account"
                     label="被推薦人帳號"
@@ -151,7 +157,11 @@
                     label="綁定時間"
                     sortable
                     :sort-orders="['ascending', 'descending']"
-                />
+                >
+                    <template #default="scope">
+                        {{ formatDate(scope.row.CreateTime) }}
+                    </template>
+                </el-table-column>
                 <el-table-column
                     prop="RewardPatch"
                     label="已回饋遊戲幣"
@@ -159,7 +169,9 @@
                     :sort-orders="['ascending', 'descending']"
                 >
                     <template #default="scope">
-                        <div v-html="formatPatch(scope.row.Patch)"></div>
+                        <div
+                            v-html="formatRewardPatch(scope.row.RewardPatch)"
+                        ></div>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -167,7 +179,11 @@
                     label="最後回饋日"
                     sortable
                     :sort-orders="['ascending', 'descending']"
-                />
+                >
+                    <template #default="scope">
+                        {{ formatDate(scope.row.LastRewardTime) }}
+                    </template>
+                </el-table-column>
             </el-table>
         </div>
     </div>
@@ -185,12 +201,15 @@ const secondPercent = ref(0);
 const tableData = ref([]);
 const memberRewardList = ref([]);
 
-const formatPatch = (patch) => {
-    if (Array.isArray(patch)) {
-        return patch.map((item) => `${item}`).join("<br/>");
-    }
-    return patch;
+const formatRewardPatch = (rewardPatch) => {
+  if (!rewardPatch) return "";
+  return rewardPatch.replace(/;/g, "<br>");
 };
+
+const formatDate = (dateTime) => {
+    return dateTime.split("T")[0];
+};
+
 // const SettingPercent = () => {
 //     if (mainPercent.value > 100) {
 //         mainPercent.value = 100;
