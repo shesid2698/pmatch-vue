@@ -169,6 +169,14 @@
             >
                 <div class="w-100% block md-flex justify-center flex-wrap">
                     <div class="md-w-460px">
+                        <div class="mb-5">
+                            <span
+                                class="platformTitle font-size-30px fw-600"
+                            >
+                                {{currentPlatform}}
+                            </span>
+                            
+                        </div>
                         <div class="entryBox w-100% mb-5">
                             <div class="entryContent w-100%">
                                 <input
@@ -899,6 +907,14 @@ watch(
     color: transparent;
     -webkit-text-stroke: 1px rgba(200, 200, 200, 0.1);
 }
+.platformTitle{
+    background: linear-gradient(to right, #4361ee, #f72585);
+    background: -webkit-linear-gradient(to right, #4361ee, #f72585);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(200, 200, 200, 0.1);
+}
 .storeAboutContent {
     border-top: 2px solid transparent;
     border-bottom: 2px solid transparent;
@@ -1130,19 +1146,21 @@ watch(
     transform: translate(-50%, -50%);
 }
 .contactPhoneBox {
+    position: absolute;
+    left: 0;
     padding: 1px;
     background: linear-gradient(
         to right,
         rgba(67, 97, 238),
         rgba(247, 37, 133)
     );
-    border-radius: 25px;
+    border-radius: 20px;
     border: none;
 }
 .contactPhoneContent{
     position: relative;
     background: #fafafa;
-    border-radius: 25px;
+    border-radius: 20px;
     border: none;
     text-indent: 2rem;
     width: 100%;
