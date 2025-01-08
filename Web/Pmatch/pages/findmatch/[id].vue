@@ -65,7 +65,7 @@
                                     <img
                                         class="w-30px h-30px"
                                         src="/images/iconFB.png"
-                                        alt=""
+                                        alt="fbIcon"
                                     />
                                 </NuxtLink>
                                 <NuxtLink
@@ -76,7 +76,7 @@
                                     <img
                                         class="w-30px h-30px"
                                         src="/images/iconLine.png"
-                                        alt=""
+                                        alt="lineIcon"
                                     />
                                 </NuxtLink>
                                 <NuxtLink
@@ -87,7 +87,7 @@
                                     <img
                                         class="w-30px h-30px"
                                         src="/images/iconIG.png"
-                                        alt=""
+                                        alt="igIcon"
                                     />
                                 </NuxtLink>
                                 <NuxtLink
@@ -98,7 +98,7 @@
                                     <img
                                         class="w-30px h-30px"
                                         src="/images/iconX.png"
-                                        alt=""
+                                        alt="推特icon"
                                     />
                                 </NuxtLink>
                                 <!-- <NuxtLink
@@ -119,7 +119,7 @@
                                     <img
                                         class="w-30px h-30px"
                                         src="/images/iconPhone.png"
-                                        alt=""
+                                        alt="phoneIcon"
                                     />
                                 </NuxtLink>
                             </div>
@@ -174,7 +174,7 @@
                 class="mt-2rem md-mt-7rem max-w-1110px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3 relative z-2"
             >
                 <div class="w-100% block md-flex justify-center flex-wrap">
-                    <div>
+                    <div class="md-w-460px">
                         <div class="entryBox w-100% mb-5">
                             <div class="entryContent w-100%">
                                 <input
@@ -185,10 +185,10 @@
                                 />
                             </div>
                         </div>
-                        <div  class="w-100% flex justify-center mb-5">
+                        <div v-if="storesItem != null" class="w-100% flex justify-center mb-5">
                             <!-- v-if="storesItem != null"
                             v-show="storesItem.IsEnabledBuy" -->
-                            <div  class="flex items-center mx-10">
+                            <div v-show="storesItem.IsEnabledBuy" class="flex items-center mx-10">
                                 <input
                                     type="radio"
                                     class="w-20px h-20px m-0 me-3 custom-radio"
@@ -202,7 +202,7 @@
                                     >委買遊戲幣</label
                                 >
                             </div>
-                            <div  class="flex items-center mx-10">
+                            <div v-show="storesItem.IsEnabledSell" class="flex items-center mx-10">
                                 <!-- v-show="storesItem.IsEnabledSell" -->
                                 <input
                                     type="radio"
@@ -230,7 +230,8 @@
                         </div>
                         <div
                             class="w-100% flex justify-center mb-5"
-                            v-show="buyOrSell"
+                            v-if="storesItem != null"
+                            v-show="buyOrSell && storesItem.IsEnabledBuy"
                         >
                         <!-- v-if="storesItem != null" -->
                             <!-- v-show="buyOrSell && storesItem.IsEnabledBuy" -->
