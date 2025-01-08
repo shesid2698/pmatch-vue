@@ -235,7 +235,7 @@
                                 <input
                                     class="entryDetail w-90% py-.5rem font-size-18px"
                                     type="text"
-                                    :placeholder="buyOrSell ? '委託遊戲幣(必填)' : '委託金額(必填)' "
+                                    :placeholder="buyOrSell ? '委託金額(必填)' : '委託遊戲幣(必填)' "
                                     v-model="accPatch"
                                 />
                             </div>
