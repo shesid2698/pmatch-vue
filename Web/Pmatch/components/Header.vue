@@ -253,24 +253,28 @@ onMounted(() => {
                 title: "會員中心",
                 link: "/member/center",
                 icon: "",
+                className: "nav0",
             },
             {
                 id: 1,
                 title: "幫助中心",
                 link: "/helpcenter",
                 icon: "",
+                className: "nav1",
             },
             {
                 id: 2,
                 title: "找媒合",
                 link: "/findmatch",
                 icon: "",
+                className: "nav2",
             },
             {
                 id: 3,
-                title: `${userNameCookie.value} 您好`,
+                title: `Hi , ${userNameCookie.value}`,
                 link: "#",
                 icon: "",
+                className: "nav4",
             },
         ];
     } else {
