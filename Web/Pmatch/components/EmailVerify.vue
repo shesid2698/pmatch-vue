@@ -66,14 +66,14 @@ const timer = ref(null); // 計時器
 const startCountdown = () => {
     {
         const now = Date.now();
-        const endTime = localStorage.getItem('countdownEndTime');
+        const endTime = localStorage.getItem('countdownEndTime2');
 
         // 如果已存在倒計時結束時間，計算剩餘時間
         if (endTime) {
             countdown.value = Math.max(0, Math.floor((+endTime - now) / 1000));
         } else {
             // 初始化倒計時結束時間
-            localStorage.setItem('countdownEndTime', now + COUNTDOWN_DURATION * 1000);
+            localStorage.setItem('countdownEndTime2', now + COUNTDOWN_DURATION * 1000);
         }
 
         // 啟動計時器
@@ -81,7 +81,7 @@ const startCountdown = () => {
             countdown.value -= 1;
             if (countdown.value <= 0) {
                 clearInterval(timer.value);
-                localStorage.removeItem('countdownEndTime'); // 清理存儲
+                localStorage.removeItem('countdownEndTime2'); // 清理存儲
                 countdown.value = COUNTDOWN_DURATION;
             }
         }, 1000);
@@ -184,7 +184,7 @@ const openSendBtn = () => {
     return open;
 };
 onMounted(async () => {
-    var plusTime = localStorage.getItem('countdownEndTime');
+    var plusTime = localStorage.getItem('countdownEndTime2');
     if (plusTime !== null) {
         startCountdown();
     }

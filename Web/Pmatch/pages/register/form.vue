@@ -300,7 +300,7 @@
                         </div>
                     </div>
 
-                    <div class="mt-15px">
+                    <div class="mt-15px" v-if="!route.query.IsPromoteCode">
                         <div class="mb-5px text-[#484646] font-400 text-15px">
                             推薦碼(推薦人)
                         </div>
@@ -538,7 +538,8 @@ const RegisterMember = async (password1) => {
             BirthDay: birthDayValue,
             Address: allAddress,
             ContractStores: contractStores.value,
-            IsPromoteCode: recommendCode.value,
+            RefferCode: recommendCode.value,
+            IsPromoteCode:recommendCode.value!==""?true:false
         },
         {
             headers: {
