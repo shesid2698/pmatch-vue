@@ -155,7 +155,7 @@
                 </div>
             </div>
         </div>
-        <div class="w-full relative mt-2rem md-mt-5rem">
+        <div class="w-full relative mt-2rem md-mt-5rem z-10">
             <div class="absolute left-0 top-0">
                 <div class="flex justify-start">
                     <img
@@ -235,7 +235,7 @@
                                 <input
                                     class="entryDetail w-90% py-.5rem font-size-18px"
                                     type="text"
-                                    placeholder="委託金額(必填)"
+                                    :placeholder="buyOrSell ? '委託遊戲幣(必填)' : '委託金額(必填)' "
                                     v-model="accPatch"
                                 />
                             </div>
@@ -556,8 +556,8 @@ const imgCurrent = ref([]);
 const metaTitle = ref("PMatch遊戲道具媒合網");
 let question = ref("");
 
-const buyOrSell = ref(true); // true 表示委買, false 表示委賣
-const paymentMethod = ref(true); // 選擇的付款方式
+const buyOrSell = ref(null); // true 委買, false 委賣
+const paymentMethod = ref(null); // 選擇的付款方式 true 超商繳費, false ATM轉帳
 const readContract = ref(false); // 是否閱讀並同意合約
 const contactBox = ref(false); // 聯絡資訊開關
 const selectedContact = ref("");
@@ -719,6 +719,14 @@ async function sendAccList() {
     if (userToken.value === "" || userToken.value === undefined) {
         await openAlertModal(" ", "請先登入會員");
     } else {
+        if(buyOrSell.value === null){
+            await openAlertModal(" ", "請先選擇委買或委賣");
+            return;
+        }
+        if(paymentMethod.value === null){
+            await openAlertModal(" ", "請先選擇繳費方式");
+            return;
+        }
         if (!accMemberName.value) {
             await openAlertModal(" ", "請填寫遊戲暱稱");
             return;
@@ -779,7 +787,7 @@ async function createAccApi(token) {
                 TeamId: storesItem.value.Teamid,
                 GamePlatformName: currentPlatform.value,
                 MemberCharacterName: accMemberName.value,
-                TransactionMode: buyOrSell.value ? 10 : 20,
+                TransactionMode: buyOrSell.value === true ? 10 : buyOrSell.value === false ? 20 : null,
                 Patch: Number(accPatch.value),
                 PayMode: paymentMethod.value ? 1 : 2,
                 Phone: selectedContact.value,

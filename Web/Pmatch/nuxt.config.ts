@@ -19,6 +19,10 @@ export default defineNuxtConfig({
     experimental: {
         payloadExtraction: false,
     },
+    // // 添加這個配置
+    // routeRules: {
+    //     '/s/**': { ssr: true }
+    // },
     app: {
         head: {
             script: [

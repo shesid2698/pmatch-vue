@@ -210,12 +210,6 @@ const formatDate = (dateTime) => {
     return dateTime.split("T")[0];
 };
 
-// const SettingPercent = () => {
-//     if (mainPercent.value > 100) {
-//         mainPercent.value = 100;
-//     }
-//     secondPercent.value = 100 - mainPercent.value;
-// };
 // 取得回饋資訊
 async function fetchRewardListData() {
     if (!tokenCookie.value && !MemberIdCookie.value) {

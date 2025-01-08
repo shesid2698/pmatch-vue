@@ -16,6 +16,7 @@
                 content="Pmatch遊戲道具媒合網 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
             />
         </Head>
+        <div>test123</div>
     </div>
 </template>
 <script setup>
@@ -24,18 +25,18 @@ const alertModalStore = useAlertModalStore();
 const openAlertModal = alertModalStore.alertShowModal;
 
 const { $axios } = useNuxtApp();
-const code = ref("");
 const route = useRoute();
 const router = useRouter();
 const token = ref("");
 const jwtStore = useJwtStore();
 const encrypt = useEncrypt();
+const code = computed(() => route.params.code);
 onMounted(async () => {
     try {
-        if (route.params.code !== "" && route.params.code !== undefined) {
+        console.log(routeParamCode);
+        if (routeParamCode !== "" && routeParamCode !== undefined) {
             token.value = await jwtStore.generateToken();
             code.value = route.params.code;
-
             const response = await $axios.post(
                 "/api/v1/ShortUrl/PmatchGetData",
                 {
@@ -49,7 +50,7 @@ onMounted(async () => {
                     },
                 }
             );
-
+            console.log("--"+response.data.Status.Code);
             if (response.data.Status.Code === 0 && response.data.Data != null) {
                 var t_Phone = encrypt.encrypt(response.data.Data.Data.Phone);
                 var t_PmatchStoreIds = encrypt.encrypt(
@@ -72,6 +73,7 @@ onMounted(async () => {
                 await openAlertModal(" ", `${response.data.Status.Message}`);
                 router.push("/");
             }
+        }else{
         }
     } catch (error) {
         console.error("請求失敗:", error);
