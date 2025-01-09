@@ -109,6 +109,15 @@
             </div>
         </div>
         <div class="w-full relative mt-3rem md-mt-5rem">
+            <div class="absolute left-0 top-0">
+                <div class="flex justify-start">
+                    <img
+                        class="w-60%"
+                        src="/images/bgDot04.png"
+                        alt="header左邊點點圖"
+                    />
+                </div>
+            </div>
             <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
                 <div
                     class="mb-6 flex flex-wrap md-flex-nowrap item-center justify-center"
@@ -149,7 +158,7 @@
                 </div>
             </div>
         </div>
-        <div class="w-full relative mt-5rem">
+        <div class="w-full relative mt-10rem md-mt-5rem">
             <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
                 <div class="flex flex-wrap justify-center">
                     <NuxtLink v-for="(item, index) in filteredStores"
@@ -248,254 +257,160 @@
                                                 />
                                             </NuxtLink>
                                             <!-- <NuxtLink
+                    <NuxtLink
+                        v-for="(item, index) in filteredStores"
+                        :key="index"
+                        :to="`/findmatch/${item.Id}`"
+                        class="decoration-none w-100% mb-7rem md-mb-2rem"
+                    >
+                        <div
+                            class="storeBox w-95% flex flex-wrap justify-center"
+                        >
+                            <div class="storeContent w-100%">
+                                <div
+                                    class="flex md-flex-nowrap flex-wrap justify-between"
+                                >
+                                    <div class="w-200px storeImgCol">
+                                        <div class="w-100% storeImgBox">
+                                            <img
+                                                :src="`${assetsUrl}${item.IMGFiles}`"
+                                                :alt="item.Name"
+                                                class="w-100% storeImg"
+                                            />
+                                        </div>
+                                        <div class="flex justify-center mt-3">
+                                            <div>
+                                                <!-- 顯示完整星星 -->
+                                                <img
+                                                    v-for="n in Math.floor(
+                                                        item.Score
+                                                    )"
+                                                    :key="`filled-${index}-${n}`"
+                                                    class="m-1 w-25px h-25px"
+                                                    src="/images/Star.svg"
+                                                    alt="評分整顆星星"
+                                                />
+                                                <!-- 顯示半顆星星 -->
+                                                <img
+                                                    v-if="item.Score % 1 !== 0"
+                                                    :key="`half-${index}`"
+                                                    class="m-1 w-25px h-25px"
+                                                    src="/images/StarHalf.svg"
+                                                    alt="評分半顆星星"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="storeDetailCol">
+                                        <div class="mb-5 w-100%">
+                                            <h2 class="text-center md-text-start m-0 mb-3 font-size-30px fw-900 color-#4361ee">
+                                                {{ item.Name }}
+                                            </h2>
+                                            <p class="m-0 color-#555553">
+                                                {{ item.About }}
+                                            </p>
+                                        </div>
+                                        <div class="w-100%">
+                                            <div class="flex justify-center" v-if="item">
+                                                <NuxtLink
+                                                    class="flex items-center ms-1 me-1"
+                                                    v-show="item.FB !== ''"
+                                                    :to="item.FB"
+                                                >
+                                                    <img
+                                                        class="w-40px h-40px"
+                                                        src="/images/iconFB.png"
+                                                        alt="fbIcon"
+                                                    />
+                                                </NuxtLink>
+                                                <NuxtLink
+                                                    class="flex items-center ms-1 me-1"
+                                                    v-show="item.LineId !== ''"
+                                                    :to="item.LineId"
+                                                >
+                                                    <img
+                                                        class="w-40px h-40px"
+                                                        src="/images/iconLine.png"
+                                                        alt="lineIcon"
+                                                    />
+                                                </NuxtLink>
+                                                <NuxtLink
+                                                    class="flex items-center ms-1 me-1"
+                                                    v-show="item.IGId !== ''"
+                                                    :to="item.IGId"
+                                                >
+                                                    <img
+                                                        class="w-40px h-40px"
+                                                        src="/images/iconIG.png"
+                                                        alt="igIcon"
+                                                    />
+                                                </NuxtLink>
+                                                <NuxtLink
+                                                    class="flex items-center ms-1 me-1"
+                                                    v-show="
+                                                        item.TwitterId !== ''
+                                                    "
+                                                    :to="item.TwitterId"
+                                                >
+                                                    <img
+                                                        class="w-40px h-40px"
+                                                        src="/images/iconX.png"
+                                                        alt="推特icon"
+                                                    />
+                                                </NuxtLink>
+                                                <!-- <NuxtLink
                                     class="flex items-center ms-1 me-1"
                                     v-show="item.TwitterId !== ''"
                                     :to="item.TwitterId"
                                 >
                                     <img
-                                        class="w-30px h-30px"
+                                        class="w-40px h-40px"
                                         src="/images/iconTikTok.png"
                                         alt=""
                                     />
                                 </NuxtLink> -->
-                                            <NuxtLink
-                                                class="flex items-center ms-1 me-1"
-                                                v-show="item.PhoneNumber !== ''"
-                                                :href="`tel:${item.PhoneNumber}`"
-                                            >
-                                                <img
-                                                    class="w-30px h-30px"
-                                                    src="/images/iconPhone.png"
-                                                    alt="phoneIcon"
-                                                />
-                                            </NuxtLink>
+                                                <NuxtLink
+                                                    class="flex items-center ms-1 me-1"
+                                                    v-show="
+                                                        item.PhoneNumber !== ''
+                                                    "
+                                                    :href="`tel:${item.PhoneNumber}`"
+                                                >
+                                                    <img
+                                                        class="w-40px h-40px"
+                                                        src="/images/iconPhone.png"
+                                                        alt="phoneIcon"
+                                                    />
+                                                </NuxtLink>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div
-                                    class="w-200px flex justify-center items-center"
-                                >
-                                    <NuxtLink :to="`/findmatch/${item.Id}`" class="decoration-none">
-                                        <div class="orderBox">
-                                            <button class="orderBtn">
-                                                我要下單
-                                            </button>
-                                        </div>
-                                    </NuxtLink>
+                                    <div class="w-100% md-w-200px flex justify-center">
+                                        <div
+                                        class="w-200px flex justify-center items-center"
+                                    >
+                                        <NuxtLink
+                                            :to="`/findmatch/${item.Id}`"
+                                            class="decoration-none"
+                                        >
+                                            <div class="orderBox">
+                                                <button class="orderBtn">
+                                                    我要下單
+                                                </button>
+                                            </div>
+                                        </NuxtLink>
+                                    </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
-                    </div>
                     </NuxtLink>
                 </div>
 
                 <!-- 各媒合商 -->
                 <div class="flex relative w-100%">
-                    <div class="w-75% overflow-y-auto">
-                        <div class="flex">
-                            <div
-                                class="storeTitle w-full flex bg-#D5ECFF pt-2 pb-2"
-                            >
-                                <div class="w-75% text-center mainContent">
-                                    <span>商家資訊</span>
-                                </div>
-                                <div class="w-25% text-center">
-                                    <span>簽約狀況</span>
-                                </div>
-                            </div>
-                            <div
-                                class="storeTitle w-150px flex bg-#D5ECFF ms-3 pt-2 pb-2"
-                            >
-                                <div class="w-full text-center mainContent">
-                                    <span>評分</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div
-                            class="flex"
-                            v-for="(item, index) in filteredStores"
-                            :key="index"
-                        >
-                            <div class="w-full">
-                                <div
-                                    class="storeDetail flex border-b b-b-solid b-#D5ECFF"
-                                >
-                                    <NuxtLink
-                                        :to="`/findmatch/${item.Id}`"
-                                        class="decoration-none color-#000 w-75%"
-                                    >
-                                        <div class="">
-                                            <div
-                                                class="md-flex block items-center p-3"
-                                            >
-                                                <div
-                                                    class="flex justify-start md-mb-0 mb-5"
-                                                >
-                                                    <img
-                                                        class="storeImg w-130px"
-                                                        :src="`${assetsUrl}${item.ImgFile}`"
-                                                        :alt="item.Name"
-                                                    />
-                                                </div>
-                                                <div class="md-ms-2rem ms-0">
-                                                    <div class="mb-3">
-                                                        <span
-                                                            class="fw-600 color-#496BBB"
-                                                            >{{
-                                                                item.Name
-                                                            }}</span
-                                                        >
-                                                    </div>
-                                                    <div class="mb-2">
-                                                        <span>遊戲平台 : </span>
-                                                        <span
-                                                            v-if="
-                                                                item
-                                                                    .GamePlatforms
-                                                                    .length > 0
-                                                            "
-                                                            >{{
-                                                                filteredProcessedGamePlatforms[
-                                                                    index
-                                                                ]
-                                                            }}</span
-                                                        >
-                                                    </div>
-                                                    <div class="mb-2">
-                                                        <span>商店簡介 : </span>
-                                                        <span>{{
-                                                            item.About
-                                                        }}</span>
-                                                    </div>
-                                                    <div
-                                                        class="flex items-center"
-                                                    >
-                                                        <span>聯絡方式 : </span>
 
-                                                        <div class="ms-2 flex">
-                                                            <NuxtLink
-                                                                class="flex items-center ms-1 me-1"
-                                                                v-if="item.FB"
-                                                                :to="item.FB"
-                                                            >
-                                                                <img
-                                                                    class="w-20px h-20px"
-                                                                    src="/images/iconFB.png"
-                                                                    alt=""
-                                                                />
-                                                            </NuxtLink>
-                                                            <NuxtLink
-                                                                class="flex items-center ms-1 me-1"
-                                                                v-if="
-                                                                    item.LineId
-                                                                "
-                                                                :to="
-                                                                    item.LineId
-                                                                "
-                                                            >
-                                                                <img
-                                                                    class="w-20px h-20px"
-                                                                    src="/images/iconLine.png"
-                                                                    alt=""
-                                                                />
-                                                            </NuxtLink>
-                                                            <NuxtLink
-                                                                class="flex items-center ms-1 me-1"
-                                                                v-if="item.IGId"
-                                                                :to="item.IGId"
-                                                            >
-                                                                <img
-                                                                    class="w-20px h-20px"
-                                                                    src="/images/iconIG.png"
-                                                                    alt=""
-                                                                />
-                                                            </NuxtLink>
-                                                            <NuxtLink
-                                                                class="flex items-center ms-1 me-1"
-                                                                v-if="
-                                                                    item.TwitterId
-                                                                "
-                                                                :to="
-                                                                    item.TwitterId
-                                                                "
-                                                            >
-                                                                <div
-                                                                    class="bg-#000 w-20px h-20px rounded-50% color-#fff text-center"
-                                                                >
-                                                                    x
-                                                                </div>
-                                                            </NuxtLink>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </NuxtLink>
-                                    <div
-                                        class="w-25% flex justify-center items-center"
-                                    >
-                                        <el-button
-                                            class="border-none color-#aaa w-95px h-40px rounded-5px"
-                                            plain
-                                            @click="item.dialogVisible = true"
-                                        >
-                                            檢視合約
-                                        </el-button>
-                                        <el-dialog
-                                            v-model="item.dialogVisible"
-                                            title="合約服務條款"
-                                            width="500"
-                                            :close-on-click-modal="false"
-                                        >
-                                            <div
-                                                v-html="item.ContractConetnt"
-                                            ></div>
-                                            <template #footer>
-                                                <div class="dialog-footer">
-                                                    <el-button
-                                                        @click="
-                                                            item.dialogVisible = false
-                                                        "
-                                                        >取消</el-button
-                                                    >
-                                                    <el-button
-                                                        type="primary"
-                                                        @click="
-                                                            item.dialogVisible = false
-                                                        "
-                                                    >
-                                                        同意
-                                                    </el-button>
-                                                </div>
-                                            </template>
-                                        </el-dialog>
-                                    </div>
-                                </div>
-                            </div>
-                            <div
-                                class="w-150px ms-3 flex items-center justify-center"
-                            >
-                                <div>
-                                    <!-- 顯示完整星星 -->
-                                    <img
-                                        v-for="n in Math.floor(item.Score)"
-                                        :key="`filled-${index}-${n}`"
-                                        class="w-20px h-20px"
-                                        src="/images/Star.svg"
-                                        alt=""
-                                    />
-                                    <!-- 顯示半顆星星 -->
-                                    <img
-                                        v-if="item.Score % 1 !== 0"
-                                        :key="`half-${index}`"
-                                        class="w-20px h-20px"
-                                        src="/images/StarHalf.svg"
-                                        alt=""
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="sideBar">
                         <div class="mb-5">
                             <ElCarousel
@@ -973,9 +888,6 @@ const filteredProcessedGamePlatforms = computed(() => {
     padding: 2rem;
 }
 /* 商家資訊 */
-.storeTitle {
-    border-radius: 10px 10px 0 0;
-}
 .storeImg {
     border-radius: 10px;
 }
@@ -1031,6 +943,7 @@ const filteredProcessedGamePlatforms = computed(() => {
     font-size: 22px;
     font-weight: 600;
     padding: 0.5rem 1.2rem;
+    cursor: pointer;
 }
 .orderBtn:hover {
     background: #fff;
@@ -1044,24 +957,6 @@ const filteredProcessedGamePlatforms = computed(() => {
     right: 8px;
     margin-top: 14.5rem;
 }
-.totalMatchNumber {
-    border-radius: 5px 5px 0 0;
-}
-.matchNumber {
-    border-radius: 0 0 5px 5px;
-}
-.joinCartBtn {
-    color: #e93470;
-    border: 1px solid #e93470;
-    border-radius: 5px;
-    padding: 0.3rem;
-    width: 110px;
-    background-color: rgba(0, 0, 0, 0);
-}
-.joinCartBtn:hover {
-    color: #fff;
-    background-color: #e93470;
-}
 :deep(.el-overlay) {
     background-color: rgba(0, 0, 0, 0.1);
 }
@@ -1069,13 +964,36 @@ const filteredProcessedGamePlatforms = computed(() => {
     box-shadow: none;
     border-radius: 10px;
 }
-@media screen and (min-width: 1300px) {
-    .sideBar {
-        position: absolute;
-        margin-top: 0rem;
-        top: 0;
-        right: 0;
-        height: 300px;
+@media screen and (max-width: 768px) {
+    .storeDetailCol {
+        width: 100%;
+        padding: 0;
+        margin-bottom: 4rem;
     }
+    .storeImgCol {
+    padding-right: 0rem;
+    border-right: none;
+    position: absolute;
+    top: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.storeContent {
+    position: relative;
+    background: #fff;
+    border-radius: 10px;
+    border: none;
+    padding: 8rem 1rem 1rem 1rem;
+}
+.orderBtn {
+    border-radius: 50px;
+    border: none;
+    display: flex;
+    align-content: center;
+    color: #fff;
+    font-size: 22px;
+    font-weight: 600;
+    padding: 1rem 1.8rem;
+}
 }
 </style>
