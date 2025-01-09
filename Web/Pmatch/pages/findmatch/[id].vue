@@ -166,7 +166,7 @@
                 </div>
             </div>
             <div
-                class="mt-2rem md-mt-7rem max-w-1110px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3 relative z-2"
+                v-if="storesItem != null" v-show="storesItem.IsEnabledBuy || storesItem.IsEnabledSell" class="mt-2rem md-mt-7rem max-w-1110px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3 relative z-2"
             >
                 <div class="w-100% block md-flex justify-center flex-wrap">
                     <div class="md-w-460px">
