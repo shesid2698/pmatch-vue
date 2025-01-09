@@ -539,7 +539,7 @@ const RegisterMember = async (password1) => {
             Address: allAddress,
             ContractStores: contractStores.value,
             RefferCode: recommendCode.value,
-            IsPromoteCode:recommendCode.value!==""?true:false
+            IsPromoteCode: route.query.IsPromoteCode // 是否為下線經營者
         },
         {
             headers: {
