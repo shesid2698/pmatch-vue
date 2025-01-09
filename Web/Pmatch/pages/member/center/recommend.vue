@@ -290,6 +290,7 @@ async function settingPercent() {
             }
         );
         if (response.data.Status.Code === 0) {
+            secondPercent.value = 100 - mainPercent.value;
             await openAlertModal(" ", "已更新分潤設定");
         } else {
             await openAlertModal(" ", `${response.data.Status.Message}`);
