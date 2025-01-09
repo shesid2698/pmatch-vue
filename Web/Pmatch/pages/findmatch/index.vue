@@ -1,318 +1,397 @@
 <template>
-    <div class="max-w-1110px m-auto pt-60px ps-5 pe-5 relative z-2">
-        <div class="mb-5 flex items-center justify-between">
-            <!-- title -->
-            <div class="flex items-center">
-                <div class="w-25px h-20px bg-#1a6db4"></div>
-                <span class="font-size-1.4rem ms-3 fw-600">委託媒合</span>
+    <Head>
+        <title>PMatch遊戲道具媒合網</title>
+        <Meta property="og:title" content="PMatch遊戲道具媒合網" />
+        <Meta
+            name="keywords"
+            content="pmatch,pmatch交易,博奕遊戲,幣商,媒合商,遊戲幣,虛擬幣,遊戲交易,媒合交易,買幣,賣幣,虛寶交易"
+        />
+        <Meta
+            name="description"
+            content="Pmatch遊戲道具媒合網 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
+        />
+        <Meta
+            property="og:description"
+            content="Pmatch遊戲道具媒合網 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
+        />
+    </Head>
+    <div>
+        <div class="absolute right-0 top-0">
+            <div class="flex justify-end">
+                <img
+                    class="w-60%"
+                    src="/images/bgDot03.png"
+                    alt="header右邊點點圖"
+                />
             </div>
         </div>
-        <!-- 搜尋列 -->
-        <div class="mb-6 md-flex block items-center justify-center">
-            <div class="flex items-center">
-                <div class="flex items-center w-100%">
-                    <div class="w-100%">
-                        <select
-                            class="platformName md-w-270px w-100% h-43px font-size-1rem b-#a9d8f8 rounded-5px p-5px"
-                            v-model="tempSelectedPlatform"
-                        >
-                            <option value="">選擇遊戲...</option>
-                            <option
-                                v-for="(item, index) in gameList"
-                                :key="index"
-                                :value="item.PlatformName"
-                            >
-                                {{ item.PlatformName }}
-                            </option>
-                        </select>
-                    </div>
-                </div>
-                <div class="md-ms-3 md-mt-0 mt-3 flex w-100%">
-                    <div class="flex items-center w-100%">
-                        <div class="flex w-100%">
-                            <div class="w-100%">
-                                <input
-                                    v-model="tempSearchQuery"
-                                    class="storeName md-ms-3 w-100% md-w-270px h-36px p-0 rounded-5px font-size-1rem p-3px"
-                                    type="text"
-                                    placeholder="輸入關鍵字..."
-                                />
-                            </div>
-                            <div class="relative">
-                                <button
-                                    class="h-38px border-none searchBtn absolute top-4px right-0"
-                                >
-                                    <svg
-                                        class="w-23px searchIcon"
-                                        version="1.1"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                                        x="0px"
-                                        y="0px"
-                                        viewBox="0 0 512 512"
-                                        enable-background="new 0 0 512 512"
-                                        xml:space="preserve"
-                                        fill="#50B0FF"
-                                    >
-                                        <path
-                                            d="M443.5,420.2L336.7,312.4c20.9-26.2,33.5-59.4,33.5-95.5c0-84.5-68.5-153-153.1-153S64,132.5,64,217s68.5,153,153.1,153
-	c36.6,0,70.1-12.8,96.5-34.2l106.1,107.1c3.2,3.4,7.6,5.1,11.9,5.1c4.1,0,8.2-1.5,11.3-4.5C449.5,437.2,449.7,426.8,443.5,420.2z
-	 M217.1,337.1c-32.1,0-62.3-12.5-85-35.2c-22.7-22.7-35.2-52.9-35.2-84.9c0-32.1,12.5-62.3,35.2-84.9c22.7-22.7,52.9-35.2,85-35.2
-	c32.1,0,62.3,12.5,85,35.2c22.7,22.7,35.2,52.9,35.2,84.9c0,32.1-12.5,62.3-35.2,84.9C279.4,324.6,249.2,337.1,217.1,337.1z"
-                                        ></path>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="w-100% md-ms-3 flex items-center">
-                    <input
-                        type="checkbox"
-                        class="w-20px h-20px"
-                        v-model="tempShowSignedOnly"
-                    />
-                    <span>查看已簽約媒合商</span>
-                </div>
-                <div>
-                    <button class="ms-3 w-100px" @click="handleSearch">
-                        搜尋
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="mb-6 flex justify-center">
-            <div class="p-5 w-33%">
-                <img :src="`${assetsUrl}${currentImg}`" :alt="platformName">
-            </div>
-            <Matching
-                :param="matchingPlatform !== undefined ? matchingPlatform : ''"
-                class="w-33%"
-            />
-            <!-- <NewRatio class="w-33%" /> -->
-        </div>
-        <!-- 各媒合商 -->
-        <div class="flex relative w-100%">
-            <div class="w-75% overflow-y-auto">
-                <div class="flex">
-                    <div class="storeTitle w-full flex bg-#D5ECFF pt-2 pb-2">
-                        <div class="w-75% text-center mainContent">
-                            <span>商家資訊</span>
-                        </div>
-                        <div class="w-25% text-center">
-                            <span>簽約狀況</span>
-                        </div>
-                    </div>
-                    <div
-                        class="storeTitle w-150px flex bg-#D5ECFF ms-3 pt-2 pb-2"
-                    >
-                        <div class="w-full text-center mainContent">
-                            <span>評分</span>
-                        </div>
-                    </div>
-                </div>
+        <div class="w-full relative mt-5rem">
+            <div class="max-w-1110px m-auto pt-60px ps-5 pe-5 relative z-2">
+                <!-- 搜尋列 -->
                 <div
-                    class="flex"
-                    v-for="(item, index) in filteredStores"
-                    :key="index"
+                    class="block md-flex items-center w-100% pb-3rem searchCol justify-between"
                 >
-                    <div class="w-full">
-                        <div
-                            class="storeDetail flex border-b b-b-solid b-#D5ECFF"
+                    <div
+                        class="relative m-0 md-m-4 pt-4 pb-4 w-100% md-w-50% font-size-1.2rem gameSelect color-#fff"
+                        @click.stop="togglePlatformBox"
+                    >
+                        <span class="fw-600">{{
+                            selectedGame || "遊戲選擇 ..."
+                        }}</span>
+                        <div class="absolute top-17px right-20px">
+                            <img
+                                class="w-25px"
+                                src="/images/arrowDown.png"
+                                alt="選擇遊戲下拉箭頭"
+                            />
+                        </div>
+                        <div class="absolute top-0 w-100% z-99">
+                            <div class="platformBox" v-show="showPlatformBox">
+                                <div class="platformBoxContent">
+                                    <div
+                                        class="relative pt-2 pb-2 w-100% fw-600"
+                                    >
+                                        遊戲選擇 ...
+                                    </div>
+                                    <div
+                                        class="platformItem pt-2 pb-2 w-100% fw-600"
+                                        v-for="(item, index) in gameList"
+                                        :key="index"
+                                        @click.stop="selectGame(item)"
+                                    >
+                                        {{ item.PlatformName }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-1rem m-0 md-m-4 flex w-100% md-w-50%">
+                        <div class="flex items-center w-100%">
+                            <div class="flex w-100%">
+                                <div class="w-100% storeNameBox">
+                                    <div class="storeName pt-4px pb-4px">
+                                        <input
+                                            class="storeEntry max-w-702px md-max-w-517px pt-12px pb-12px w-80% md-w-80% font-size-1.2rem fw-600"
+                                            type="text"
+                                            placeholder="輸入關鍵字..."
+                                            v-model="keywordToSearch"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="relative">
+                                    <button
+                                        class="h-38px border-none searchBtn absolute top-10px right-10px"
+                                        @click="handleSearch"
+                                    >
+                                        <img
+                                            class="w-25px"
+                                            src="/images/searchIcon.png"
+                                            alt="搜尋按鈕"
+                                        />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-240px mt-1rem md-mt-0 md-ms-3 flex items-center">
+                        <input
+                            type="checkbox"
+                            class="w-20px h-20px"
+                            v-model="contractToSearch"
+                        />
+                        <span class="ms-3 font-size-18px color-#8d8d8d fw-600"
+                            >查看已簽約媒合商</span
                         >
-                            <NuxtLink
-                                :to="`/findmatch/${item.Id}`"
-                                class="decoration-none color-#000 w-75%"
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="w-full relative mt-3rem md-mt-5rem">
+            <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
+                <div class="mb-6 flex flex-wrap md-flex-nowrap item-center justify-center w-100% md-w-95%">
+                    <div
+                        class="w-100% md-w-40% mb-6rem md-mb-0 flex flex-wrap item-center justify-center md-me-1rem"
+                    >
+                        <div class="w-100% flex justify-center mb-2rem md-mb-0">
+                            <span class="platformTitle">{{
+                                selectedGame
+                            }}</span>
+                        </div>
+                        <div class="w-100% flex justify-center">
+                            <div>
+                                <div class="platformImgBox">
+                                    <img
+                                        :src="`${assetsUrl}${currentImg}`"
+                                        :alt="platformName"
+                                        class="platformImg"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <Matching
+                        :param="
+                            matchingPlatform !== undefined
+                                ? matchingPlatform
+                                : ''
+                        "
+                        class="md-ms-1rem w-100% md-w-60%"
+                    />
+                    <!-- <NewRatio class="w-33%" /> -->
+                </div>
+            </div>
+        </div>
+        <div class="w-full relative mt-5rem">
+            <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
+                <!-- 各媒合商 -->
+                <div class="flex relative w-100%">
+                    <div class="w-75% overflow-y-auto">
+                        <div class="flex">
+                            <div
+                                class="storeTitle w-full flex bg-#D5ECFF pt-2 pb-2"
                             >
-                                <div class="">
-                                    <div class="md-flex block items-center p-3">
-                                        <div
-                                            class="flex justify-start md-mb-0 mb-5"
-                                        >
-                                            <img
-                                                class="storeImg w-130px"
-                                                :src="`${assetsUrl}${item.ImgFile}`"
-                                                :alt="item.Name"
-                                            />
-                                        </div>
-                                        <div class="md-ms-2rem ms-0">
-                                            <div class="mb-3">
-                                                <span
-                                                    class="fw-600 color-#496BBB"
-                                                    >{{ item.Name }}</span
+                                <div class="w-75% text-center mainContent">
+                                    <span>商家資訊</span>
+                                </div>
+                                <div class="w-25% text-center">
+                                    <span>簽約狀況</span>
+                                </div>
+                            </div>
+                            <div
+                                class="storeTitle w-150px flex bg-#D5ECFF ms-3 pt-2 pb-2"
+                            >
+                                <div class="w-full text-center mainContent">
+                                    <span>評分</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="flex"
+                            v-for="(item, index) in filteredStores"
+                            :key="index"
+                        >
+                            <div class="w-full">
+                                <div
+                                    class="storeDetail flex border-b b-b-solid b-#D5ECFF"
+                                >
+                                    <NuxtLink
+                                        :to="`/findmatch/${item.Id}`"
+                                        class="decoration-none color-#000 w-75%"
+                                    >
+                                        <div class="">
+                                            <div
+                                                class="md-flex block items-center p-3"
+                                            >
+                                                <div
+                                                    class="flex justify-start md-mb-0 mb-5"
                                                 >
-                                            </div>
-                                            <div class="mb-2">
-                                                <span>遊戲平台 : </span>
-                                                <span
-                                                    v-if="
-                                                        item.GamePlatforms
-                                                            .length > 0
-                                                    "
-                                                    >{{
-                                                        filteredProcessedGamePlatforms[
-                                                            index
-                                                        ]
-                                                    }}</span
-                                                >
-                                            </div>
-                                            <div class="mb-2">
-                                                <span>商店簡介 : </span>
-                                                <span>{{ item.About }}</span>
-                                            </div>
-                                            <div class="flex items-center">
-                                                <span>聯絡方式 : </span>
-
-                                                <div class="ms-2 flex">
-                                                    <NuxtLink
-                                                        class="flex items-center ms-1 me-1"
-                                                        v-if="item.FB"
-                                                        :to="item.FB"
-                                                    >
-                                                        <img
-                                                            class="w-20px h-20px"
-                                                            src="/images/iconFB.png"
-                                                            alt=""
-                                                        />
-                                                    </NuxtLink>
-                                                    <NuxtLink
-                                                        class="flex items-center ms-1 me-1"
-                                                        v-if="item.LineId"
-                                                        :to="item.LineId"
-                                                    >
-                                                        <img
-                                                            class="w-20px h-20px"
-                                                            src="/images/iconLine.png"
-                                                            alt=""
-                                                        />
-                                                    </NuxtLink>
-                                                    <NuxtLink
-                                                        class="flex items-center ms-1 me-1"
-                                                        v-if="item.IGId"
-                                                        :to="item.IGId"
-                                                    >
-                                                        <img
-                                                            class="w-20px h-20px"
-                                                            src="/images/iconIG.png"
-                                                            alt=""
-                                                        />
-                                                    </NuxtLink>
-                                                    <NuxtLink
-                                                        class="flex items-center ms-1 me-1"
-                                                        v-if="item.TwitterId"
-                                                        :to="item.TwitterId"
-                                                    >
-                                                        <div
-                                                            class="bg-#000 w-20px h-20px rounded-50% color-#fff text-center"
+                                                    <img
+                                                        class="storeImg w-130px"
+                                                        :src="`${assetsUrl}${item.ImgFile}`"
+                                                        :alt="item.Name"
+                                                    />
+                                                </div>
+                                                <div class="md-ms-2rem ms-0">
+                                                    <div class="mb-3">
+                                                        <span
+                                                            class="fw-600 color-#496BBB"
+                                                            >{{
+                                                                item.Name
+                                                            }}</span
                                                         >
-                                                            x
+                                                    </div>
+                                                    <div class="mb-2">
+                                                        <span>遊戲平台 : </span>
+                                                        <span
+                                                            v-if="
+                                                                item
+                                                                    .GamePlatforms
+                                                                    .length > 0
+                                                            "
+                                                            >{{
+                                                                filteredProcessedGamePlatforms[
+                                                                    index
+                                                                ]
+                                                            }}</span
+                                                        >
+                                                    </div>
+                                                    <div class="mb-2">
+                                                        <span>商店簡介 : </span>
+                                                        <span>{{
+                                                            item.About
+                                                        }}</span>
+                                                    </div>
+                                                    <div
+                                                        class="flex items-center"
+                                                    >
+                                                        <span>聯絡方式 : </span>
+
+                                                        <div class="ms-2 flex">
+                                                            <NuxtLink
+                                                                class="flex items-center ms-1 me-1"
+                                                                v-if="item.FB"
+                                                                :to="item.FB"
+                                                            >
+                                                                <img
+                                                                    class="w-20px h-20px"
+                                                                    src="/images/iconFB.png"
+                                                                    alt=""
+                                                                />
+                                                            </NuxtLink>
+                                                            <NuxtLink
+                                                                class="flex items-center ms-1 me-1"
+                                                                v-if="
+                                                                    item.LineId
+                                                                "
+                                                                :to="
+                                                                    item.LineId
+                                                                "
+                                                            >
+                                                                <img
+                                                                    class="w-20px h-20px"
+                                                                    src="/images/iconLine.png"
+                                                                    alt=""
+                                                                />
+                                                            </NuxtLink>
+                                                            <NuxtLink
+                                                                class="flex items-center ms-1 me-1"
+                                                                v-if="item.IGId"
+                                                                :to="item.IGId"
+                                                            >
+                                                                <img
+                                                                    class="w-20px h-20px"
+                                                                    src="/images/iconIG.png"
+                                                                    alt=""
+                                                                />
+                                                            </NuxtLink>
+                                                            <NuxtLink
+                                                                class="flex items-center ms-1 me-1"
+                                                                v-if="
+                                                                    item.TwitterId
+                                                                "
+                                                                :to="
+                                                                    item.TwitterId
+                                                                "
+                                                            >
+                                                                <div
+                                                                    class="bg-#000 w-20px h-20px rounded-50% color-#fff text-center"
+                                                                >
+                                                                    x
+                                                                </div>
+                                                            </NuxtLink>
                                                         </div>
-                                                    </NuxtLink>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+                                    </NuxtLink>
+                                    <div
+                                        class="w-25% flex justify-center items-center"
+                                    >
+                                        <el-button
+                                            class="border-none color-#aaa w-95px h-40px rounded-5px"
+                                            plain
+                                            @click="item.dialogVisible = true"
+                                        >
+                                            檢視合約
+                                        </el-button>
+                                        <el-dialog
+                                            v-model="item.dialogVisible"
+                                            title="合約服務條款"
+                                            width="500"
+                                            :close-on-click-modal="false"
+                                        >
+                                            <div
+                                                v-html="item.ContractConetnt"
+                                            ></div>
+                                            <template #footer>
+                                                <div class="dialog-footer">
+                                                    <el-button
+                                                        @click="
+                                                            item.dialogVisible = false
+                                                        "
+                                                        >取消</el-button
+                                                    >
+                                                    <el-button
+                                                        type="primary"
+                                                        @click="
+                                                            item.dialogVisible = false
+                                                        "
+                                                    >
+                                                        同意
+                                                    </el-button>
+                                                </div>
+                                            </template>
+                                        </el-dialog>
                                     </div>
                                 </div>
-                            </NuxtLink>
-                            <div class="w-25% flex justify-center items-center">
-                                <el-button
-                                    class="border-none color-#aaa w-95px h-40px rounded-5px"
-                                    plain
-                                    @click="item.dialogVisible = true"
-                                >
-                                    檢視合約
-                                </el-button>
-                                <el-dialog
-                                    v-model="item.dialogVisible"
-                                    title="合約服務條款"
-                                    width="500"
-                                    :close-on-click-modal="false"
-                                >
-                                    <div v-html="item.ContractConetnt"></div>
-                                    <template #footer>
-                                        <div class="dialog-footer">
-                                            <el-button
-                                                @click="
-                                                    item.dialogVisible = false
-                                                "
-                                                >取消</el-button
-                                            >
-                                            <el-button
-                                                type="primary"
-                                                @click="
-                                                    item.dialogVisible = false
-                                                "
-                                            >
-                                                同意
-                                            </el-button>
-                                        </div>
-                                    </template>
-                                </el-dialog>
+                            </div>
+                            <div
+                                class="w-150px ms-3 flex items-center justify-center"
+                            >
+                                <div>
+                                    <!-- 顯示完整星星 -->
+                                    <img
+                                        v-for="n in Math.floor(item.Score)"
+                                        :key="`filled-${index}-${n}`"
+                                        class="w-20px h-20px"
+                                        src="/images/Star.svg"
+                                        alt=""
+                                    />
+                                    <!-- 顯示半顆星星 -->
+                                    <img
+                                        v-if="item.Score % 1 !== 0"
+                                        :key="`half-${index}`"
+                                        class="w-20px h-20px"
+                                        src="/images/StarHalf.svg"
+                                        alt=""
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="w-150px ms-3 flex items-center justify-center">
+                    <div class="sideBar">
+                        <div class="mb-5">
+                            <ElCarousel
+                                v-if="bannerTopList.length > 0"
+                                class="h-200px"
+                                :interval="2000"
+                                arrow="always"
+                            >
+                                <ElCarouselItem
+                                    class="h-200px"
+                                    v-for="(item, index) in bannerTopList"
+                                    :key="index"
+                                >
+                                    <img
+                                        class="w-100% h-200px"
+                                        :src="`${assetsUrl}${item.ImgFile}`"
+                                        :alt="item.PlatformName"
+                                    />
+                                </ElCarouselItem>
+                            </ElCarousel>
+                        </div>
                         <div>
-                            <!-- 顯示完整星星 -->
-                            <img
-                                v-for="n in Math.floor(item.Score)"
-                                :key="`filled-${index}-${n}`"
-                                class="w-20px h-20px"
-                                src="/images/Star.svg"
-                                alt=""
-                            />
-                            <!-- 顯示半顆星星 -->
-                            <img
-                                v-if="item.Score % 1 !== 0"
-                                :key="`half-${index}`"
-                                class="w-20px h-20px"
-                                src="/images/StarHalf.svg"
-                                alt=""
-                            />
+                            <ElCarousel
+                                v-if="bannerDownList.length > 0"
+                                class="h-200px"
+                                :interval="2000"
+                                arrow="always"
+                            >
+                                <ElCarouselItem
+                                    class="h-200px"
+                                    v-for="(item, index) in bannerDownList"
+                                    :key="index"
+                                >
+                                    <img
+                                        class="w-100% h-200px"
+                                        :src="`${assetsUrl}${item.ImgFile}`"
+                                        :alt="item.PlatformName"
+                                    />
+                                </ElCarouselItem>
+                            </ElCarousel>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="sideBar">
-                <div class="mb-5">
-                    <ElCarousel
-                        v-if="bannerTopList.length > 0"
-                        class="h-200px"
-                        :interval="2000"
-                        arrow="always"
-                    >
-                        <ElCarouselItem
-                            class="h-200px"
-                            v-for="(item, index) in bannerTopList"
-                            :key="index"
-                        >
-                            <img
-                                class="w-100% h-200px"
-                                :src="`${assetsUrl}${item.ImgFile}`"
-                                :alt="item.PlatformName"
-                            />
-                        </ElCarouselItem>
-                    </ElCarousel>
-                </div>
-                <div>
-                    <ElCarousel
-                        v-if="bannerDownList.length > 0"
-                        class="h-200px"
-                        :interval="2000"
-                        arrow="always"
-                    >
-                        <ElCarouselItem
-                            class="h-200px"
-                            v-for="(item, index) in bannerDownList"
-                            :key="index"
-                        >
-                            <img
-                                class="w-100% h-200px"
-                                :src="`${assetsUrl}${item.ImgFile}`"
-                                :alt="item.PlatformName"
-                            />
-                        </ElCarouselItem>
-                    </ElCarousel>
                 </div>
             </div>
         </div>
@@ -363,6 +442,35 @@ const activeShowSignedOnly = ref(false);
 
 // 即時媒合用
 const matchingPlatform = ref("");
+
+// 遊戲選擇器用
+let contractToSearch = ref(false);
+const selectedGame = ref("");
+const showPlatformBox = ref(false);
+
+// 切換下拉選單的顯示/隱藏
+const togglePlatformBox = () => {
+    showPlatformBox.value = !showPlatformBox.value;
+    // 選單開啟時添加全域點擊監聽
+    if (showPlatformBox.value) {
+        document.addEventListener("click", handleClickOutside);
+    } else {
+        document.removeEventListener("click", handleClickOutside);
+    }
+};
+
+// 選擇遊戲並關閉選單
+const selectGame = (item) => {
+    selectedGame.value = item.PlatformName; // 或 item.value 根據需要
+    showPlatformBox.value = false; // 隱藏選單
+};
+
+const handleClickOutside = (event) => {
+    const dropdown = document.querySelector(".platformBox");
+    if (dropdown && !dropdown.contains(event.target)) {
+        showPlatformBox.value = false;
+    }
+};
 
 const currentImg = computed(() => {
     const platform = gameList.value.find(
@@ -503,7 +611,7 @@ onMounted(async () => {
             keyword !== undefined &&
             contract !== undefined
         ) {
-            tempSelectedPlatform.value = platformName;
+            selectedGame.value = platformName;
             tempSearchQuery.value = keyword;
             if (contract === "1") {
                 tempShowSignedOnly.value = true;
@@ -514,7 +622,7 @@ onMounted(async () => {
         }
 
         if (platformName !== undefined) {
-            tempSelectedPlatform.value = platformName;
+            selectedGame.value = platformName;
             handleSearch();
         }
 
@@ -551,9 +659,9 @@ const stores = ref(
 const handleSearch = () => {
     // 更新實際用於篩選的值
     activeSearchQuery.value = tempSearchQuery.value;
-    activeSelectedPlatform.value = tempSelectedPlatform.value;
+    activeSelectedPlatform.value = selectedGame.value;
     activeShowSignedOnly.value = tempShowSignedOnly.value;
-    matchingPlatform.value = tempSelectedPlatform.value;
+    matchingPlatform.value = selectedGame.value;
 };
 
 // 篩選邏輯
@@ -599,19 +707,62 @@ const filteredProcessedGamePlatforms = computed(() => {
 </script>
 
 <style scoped>
-/* 搜尋欄位樣式 */
-.platformName:focus {
-    border-color: #a9d8f8;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-    outline: none;
+.gameSelect {
+    background: linear-gradient(to right, #4361ee, #f72585);
+    border-radius: 50px;
+    text-indent: 1rem;
+}
+.platformBox {
+    position: relative;
+    padding: 1px;
+    background: linear-gradient(
+        to right,
+        rgba(67, 97, 238),
+        rgba(247, 37, 133)
+    );
+    border-radius: 25px;
+    border: none;
+}
+.platformBoxContent {
+    position: relative;
+    background: #fafafa;
+    border-radius: 25px;
+    border: none;
+    text-indent: 1rem;
+    width: 100%;
+    color: #f72585;
+}
+.platformItem {
+    border-radius: 25px;
+}
+.platformItem:hover {
+    background-color: #f72585;
+    color: #fff;
+}
+.storeNameBox {
+    position: relative;
+    padding: 1px;
+    background: linear-gradient(
+        to right,
+        rgba(67, 97, 238),
+        rgba(247, 37, 133)
+    );
+    border-radius: 50px;
+    border: none;
 }
 .storeName {
-    border: 1px solid #a9d8f8;
+    position: relative;
+    background: #fff;
+    border-radius: 50px;
+    border: none;
+    text-indent: 1rem;
 }
-.storeName:focus {
-    border-color: #a9d8f8;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+.storeEntry:focus-visible {
     outline: none;
+}
+.storeEntry {
+    border: none;
+    color: #8d8d8d;
 }
 .searchBtn {
     background-color: rgba(0, 0, 0, 0);
@@ -621,6 +772,41 @@ const filteredProcessedGamePlatforms = computed(() => {
 }
 :deep(.el-icon) {
     z-index: -1;
+}
+.searchCol {
+    border-bottom: 2px solid transparent;
+    border-image: linear-gradient(to right, #4361ee 0%, #f72585 100%);
+    border-image-slice: 1;
+}
+
+.platformTitle {
+    background: linear-gradient(to bottom, #f72585, #7b2cbf);
+    background: -webkit-linear-gradient(#f72585, #7b2cbf);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    font-weight: 900;
+    -webkit-text-stroke: 1px rgba(200, 200, 200, 0.1);
+    font-size: 44px;
+}
+.platformImgBox {
+    position: relative;
+    background: linear-gradient(
+        to right,
+        rgba(67, 97, 238),
+        rgba(247, 37, 133)
+    );
+    border-radius: 10px;
+    border: none;
+    display: flex;
+    align-content: center;
+    padding: 2px;
+    box-shadow: 0px 10px 10px 2px #ccc;
+}
+.platformImg {
+    border-radius: 10px;
+    padding: 1px;
+    border: none;
 }
 /* 商家資訊 */
 .storeTitle {
