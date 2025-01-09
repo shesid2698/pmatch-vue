@@ -788,10 +788,12 @@ async function createAccApi(token) {
                 GamePlatformName: currentPlatform.value,
                 MemberCharacterName: accMemberName.value,
                 TransactionMode: buyOrSell.value === true ? 10 : buyOrSell.value === false ? 20 : null,
-                Patch: Number(accPatch.value),
+                Value: Number(accPatch.value),
                 PayMode: paymentMethod.value ? 1 : 2,
                 Phone: selectedContact.value,
                 PmatchMemberId: memberIdCookie.value,
+                StoreId: storesItem.value.Id,
+                ContractId: storesItem.value.ContractId,
             },
             {
                 headers: {
