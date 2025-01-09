@@ -113,82 +113,87 @@
                 <div
                     class="mb-6 flex flex-wrap md-flex-nowrap item-center justify-center"
                 >
-                <div class=" flex flex-wrap md-flex-nowrap w-100% md-w-95%">
-                    <div
-                        class="w-100% md-w-40% mb-6rem md-mb-0 flex flex-wrap item-center justify-center md-me-1rem"
-                    >
-                        <div class="w-100% flex justify-center mb-2rem md-mb-0">
-                            <span class="platformTitle">{{
-                                selectedGame
-                            }}</span>
-                        </div>
-                        <div class="w-100% flex justify-center">
-                            <div>
-                                <div class="platformImgBox">
-                                    <img
-                                        :src="`${assetsUrl}${currentImg}`"
-                                        :alt="platformName"
-                                        class="platformImg"
-                                    />
+                    <div class="flex flex-wrap md-flex-nowrap w-100% md-w-95%">
+                        <div
+                            class="w-100% md-w-40% mb-6rem md-mb-0 flex flex-wrap item-center justify-center md-me-1rem"
+                        >
+                            <div
+                                class="w-100% flex justify-center mb-2rem md-mb-0"
+                            >
+                                <span class="platformTitle">{{
+                                    selectedGame
+                                }}</span>
+                            </div>
+                            <div class="w-100% flex justify-center">
+                                <div>
+                                    <div class="platformImgBox">
+                                        <img
+                                            :src="`${assetsUrl}${currentImg}`"
+                                            :alt="platformName"
+                                            class="platformImg"
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <Matching
+                            :param="
+                                matchingPlatform !== undefined
+                                    ? matchingPlatform
+                                    : ''
+                            "
+                            class="md-ms-1rem w-100% md-w-60%"
+                        />
+                        <!-- <NewRatio class="w-33%" /> -->
                     </div>
-                    <Matching
-                        :param="
-                            matchingPlatform !== undefined
-                                ? matchingPlatform
-                                : ''
-                        "
-                        class="md-ms-1rem w-100% md-w-60%"
-                    />
-                    <!-- <NewRatio class="w-33%" /> -->
-                </div>
-                    
                 </div>
             </div>
         </div>
         <div class="w-full relative mt-5rem">
             <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
                 <div class="flex flex-wrap justify-center">
+                    <NuxtLink v-for="(item, index) in filteredStores"
+                        :key="index" :to="`/findmatch/${item.Id}`" class="decoration-none">
                     <div
                         class="storeBox w-95% flex flex-wrap justify-center"
-                        v-for="(item, index) in filteredStores"
-                        :key="index"
+                        
                     >
                         <div class="storeContent w-100%">
-                            <div class="flex">
-                                <div class="w-200px">
-                                    <div class="w-100%">
+                            <div class="flex justify-between">
+                                
+                                <div class="w-200px storeImgCol">
+                                    <div class="w-100% storeImgBox">
                                         <img
                                             :src="`${assetsUrl}${item.IMGFiles}`"
                                             :alt="item.Name"
-                                            class="w-100%"
+                                            class="w-100% storeImg"
                                         />
                                     </div>
-                                    <div class="flex justify-center">
+                                    <div class="flex justify-center mt-3">
                                         <div>
                                             <!-- 顯示完整星星 -->
-                                        <img
-                                            v-for="n in Math.floor(item.Score)"
-                                            :key="`filled-${index}-${n}`"
-                                            class="m-1 w-25px h-25px"
-                                            src="/images/Star.svg"
-                                            alt="評分整顆星星"
-                                        />
-                                        <!-- 顯示半顆星星 -->
-                                        <img
-                                            v-if="item.Score % 1 !== 0"
-                                            :key="`half-${index}`"
-                                            class="m-1 w-25px h-25px"
-                                            src="/images/StarHalf.svg"
-                                            alt="評分半顆星星"
-                                        />
+                                            <img
+                                                v-for="n in Math.floor(
+                                                    item.Score
+                                                )"
+                                                :key="`filled-${index}-${n}`"
+                                                class="m-1 w-25px h-25px"
+                                                src="/images/Star.svg"
+                                                alt="評分整顆星星"
+                                            />
+                                            <!-- 顯示半顆星星 -->
+                                            <img
+                                                v-if="item.Score % 1 !== 0"
+                                                :key="`half-${index}`"
+                                                class="m-1 w-25px h-25px"
+                                                src="/images/StarHalf.svg"
+                                                alt="評分半顆星星"
+                                            />
                                         </div>
                                     </div>
                                 </div>
-                                <div>
-                                    <div class="mb-5">
+                                <div class="storeDetailCol">
+                                    <div class="mb-5 w-100%">
                                         <h2 class="m-0 mb-3 color-#4361ee">
                                             {{ item.Name }}
                                         </h2>
@@ -196,7 +201,7 @@
                                             {{ item.About }}
                                         </p>
                                     </div>
-                                    <div>
+                                    <div class="w-100%">
                                         <div class="flex" v-if="item">
                                             <NuxtLink
                                                 class="flex items-center ms-1 me-1"
@@ -267,9 +272,21 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div
+                                    class="w-200px flex justify-center items-center"
+                                >
+                                    <NuxtLink :to="`/findmatch/${item.Id}`" class="decoration-none">
+                                        <div class="orderBox">
+                                            <button class="orderBtn">
+                                                我要下單
+                                            </button>
+                                        </div>
+                                    </NuxtLink>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    </NuxtLink>
                 </div>
 
                 <!-- 各媒合商 -->
@@ -959,12 +976,65 @@ const filteredProcessedGamePlatforms = computed(() => {
 .storeTitle {
     border-radius: 10px 10px 0 0;
 }
-.storeDetail:hover {
-    background-color: #f2f9fd;
-}
 .storeImg {
-    border: 2px solid #f2f9fd;
-    border-radius: 1rem;
+    border-radius: 10px;
+}
+.storeImgBox {
+    position: relative;
+    background: linear-gradient(
+        to right,
+        rgba(67, 97, 238),
+        rgba(247, 37, 133)
+    );
+    border-radius: 10px;
+    border: none;
+    display: flex;
+    align-content: center;
+    padding: 2px;
+}
+.storeImgCol {
+    padding-right: 2rem;
+    border-right: 3px #ccc dashed;
+}
+.storeDetailCol {
+    width: calc(100% - 400px);
+    padding: 0 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-between;
+}
+.orderBox {
+    position: relative;
+    background: linear-gradient(
+        to right,
+        rgba(67, 97, 238),
+        rgba(247, 37, 133)
+    );
+    border-radius: 50px;
+    border: none;
+    display: flex;
+    align-content: center;
+    padding: 1px;
+}
+.orderBtn {
+    position: relative;
+    background: linear-gradient(
+        to right,
+        rgba(67, 97, 238),
+        rgba(247, 37, 133)
+    );
+    border-radius: 50px;
+    border: none;
+    display: flex;
+    align-content: center;
+    color: #fff;
+    font-size: 22px;
+    font-weight: 600;
+    padding: 0.5rem 1.2rem;
+}
+.orderBtn:hover {
+    background: #fff;
+    color: #f72585;
 }
 /* 側邊欄 */
 .sideBar {
