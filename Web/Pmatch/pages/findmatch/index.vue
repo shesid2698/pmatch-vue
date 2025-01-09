@@ -156,11 +156,11 @@
                         :key="index" :to="`/findmatch/${item.Id}`" class="decoration-none">
                     <div
                         class="storeBox w-95% flex flex-wrap justify-center"
-                        
+
                     >
                         <div class="storeContent w-100%">
                             <div class="flex justify-between">
-                                
+
                                 <div class="w-200px storeImgCol">
                                     <div class="w-100% storeImgBox">
                                         <img
