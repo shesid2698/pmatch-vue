@@ -25,7 +25,7 @@
                 />
             </div>
         </div>
-        <div class="w-full relative mt-5rem">
+        <div class="w-full relative mt-5rem z-3">
             <div class="max-w-1110px m-auto pt-60px ps-5 pe-5 relative z-2">
                 <!-- 搜尋列 -->
                 <div
@@ -93,7 +93,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="w-240px mt-1rem md-mt-0 md-ms-3 flex items-center">
+                    <div
+                        class="w-240px mt-1rem md-mt-0 md-ms-3 flex items-center"
+                    >
                         <input
                             type="checkbox"
                             class="w-20px h-20px"
@@ -108,7 +110,10 @@
         </div>
         <div class="w-full relative mt-3rem md-mt-5rem">
             <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
-                <div class="mb-6 flex flex-wrap md-flex-nowrap item-center justify-center w-100% md-w-95%">
+                <div
+                    class="mb-6 flex flex-wrap md-flex-nowrap item-center justify-center"
+                >
+                <div class=" flex flex-wrap md-flex-nowrap w-100% md-w-95%">
                     <div
                         class="w-100% md-w-40% mb-6rem md-mb-0 flex flex-wrap item-center justify-center md-me-1rem"
                     >
@@ -139,10 +144,134 @@
                     />
                     <!-- <NewRatio class="w-33%" /> -->
                 </div>
+                    
+                </div>
             </div>
         </div>
         <div class="w-full relative mt-5rem">
             <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
+                <div class="flex flex-wrap justify-center">
+                    <div
+                        class="storeBox w-95% flex flex-wrap justify-center"
+                        v-for="(item, index) in filteredStores"
+                        :key="index"
+                    >
+                        <div class="storeContent w-100%">
+                            <div class="flex">
+                                <div class="w-200px">
+                                    <div class="w-100%">
+                                        <img
+                                            :src="`${assetsUrl}${item.IMGFiles}`"
+                                            :alt="item.Name"
+                                            class="w-100%"
+                                        />
+                                    </div>
+                                    <div class="flex justify-center">
+                                        <div>
+                                            <!-- 顯示完整星星 -->
+                                        <img
+                                            v-for="n in Math.floor(item.Score)"
+                                            :key="`filled-${index}-${n}`"
+                                            class="m-1 w-25px h-25px"
+                                            src="/images/Star.svg"
+                                            alt="評分整顆星星"
+                                        />
+                                        <!-- 顯示半顆星星 -->
+                                        <img
+                                            v-if="item.Score % 1 !== 0"
+                                            :key="`half-${index}`"
+                                            class="m-1 w-25px h-25px"
+                                            src="/images/StarHalf.svg"
+                                            alt="評分半顆星星"
+                                        />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="mb-5">
+                                        <h2 class="m-0 mb-3 color-#4361ee">
+                                            {{ item.Name }}
+                                        </h2>
+                                        <p class="m-0">
+                                            {{ item.About }}
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <div class="flex" v-if="item">
+                                            <NuxtLink
+                                                class="flex items-center ms-1 me-1"
+                                                v-show="item.FB !== ''"
+                                                :to="item.FB"
+                                            >
+                                                <img
+                                                    class="w-30px h-30px"
+                                                    src="/images/iconFB.png"
+                                                    alt="fbIcon"
+                                                />
+                                            </NuxtLink>
+                                            <NuxtLink
+                                                class="flex items-center ms-1 me-1"
+                                                v-show="item.LineId !== ''"
+                                                :to="item.LineId"
+                                            >
+                                                <img
+                                                    class="w-30px h-30px"
+                                                    src="/images/iconLine.png"
+                                                    alt="lineIcon"
+                                                />
+                                            </NuxtLink>
+                                            <NuxtLink
+                                                class="flex items-center ms-1 me-1"
+                                                v-show="item.IGId !== ''"
+                                                :to="item.IGId"
+                                            >
+                                                <img
+                                                    class="w-30px h-30px"
+                                                    src="/images/iconIG.png"
+                                                    alt="igIcon"
+                                                />
+                                            </NuxtLink>
+                                            <NuxtLink
+                                                class="flex items-center ms-1 me-1"
+                                                v-show="item.TwitterId !== ''"
+                                                :to="item.TwitterId"
+                                            >
+                                                <img
+                                                    class="w-30px h-30px"
+                                                    src="/images/iconX.png"
+                                                    alt="推特icon"
+                                                />
+                                            </NuxtLink>
+                                            <!-- <NuxtLink
+                                    class="flex items-center ms-1 me-1"
+                                    v-show="item.TwitterId !== ''"
+                                    :to="item.TwitterId"
+                                >
+                                    <img
+                                        class="w-30px h-30px"
+                                        src="/images/iconTikTok.png"
+                                        alt=""
+                                    />
+                                </NuxtLink> -->
+                                            <NuxtLink
+                                                class="flex items-center ms-1 me-1"
+                                                v-show="item.PhoneNumber !== ''"
+                                                :href="`tel:${item.PhoneNumber}`"
+                                            >
+                                                <img
+                                                    class="w-30px h-30px"
+                                                    src="/images/iconPhone.png"
+                                                    alt="phoneIcon"
+                                                />
+                                            </NuxtLink>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- 各媒合商 -->
                 <div class="flex relative w-100%">
                     <div class="w-75% overflow-y-auto">
@@ -807,6 +936,24 @@ const filteredProcessedGamePlatforms = computed(() => {
     border-radius: 10px;
     padding: 1px;
     border: none;
+}
+.storeBox {
+    position: relative;
+    padding: 1px;
+    background: linear-gradient(
+        to right,
+        rgba(67, 97, 238),
+        rgba(247, 37, 133)
+    );
+    border-radius: 10px;
+    border: none;
+}
+.storeContent {
+    position: relative;
+    background: #fff;
+    border-radius: 10px;
+    border: none;
+    padding: 2rem;
 }
 /* 商家資訊 */
 .storeTitle {
