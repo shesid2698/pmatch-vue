@@ -52,10 +52,10 @@
                                                 : memberRewardList.RefferCode
                                         }}
                                     </div>
-                                    <div
-                                        class="w-75px lg:w-95px h-100% text-center bg-[#3caadc] content-center text-white font-500 text-[20px] font-500 text-[18px] text-[#757575]"
-                                    >
-                                        開啟中
+                                    <div 
+                                         class="w-75px lg:w-95px h-100% text-center bg-[#3caadc] content-center text-white font-500 text-[20px] font-500 text-[18px] text-[#757575]"
+                                         :class="`Date.now() < timeValue ? 'bg-#3caadc' : 'bg-#959595'`">
+                                        {{ Date.now() < timeValue ? "開啟中" : "關閉中" }}
                                     </div>
                                 </div>
                                 <div
