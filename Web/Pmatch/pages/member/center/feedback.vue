@@ -339,12 +339,26 @@ const updateTimeRange = async () => {
             const start = new Date(now);
             start.setDate(now.getDate() - selectedOffset);
 
-            startTime.value = start.toISOString().split(".")[0];
-            endTime.value = now.toISOString().split(".")[0];
+            startTime.value = await formatDate(start);
+            endTime.value = await formatDate(now);
         }
         await fetchOrderListData();
     }
 };
+
+//
+async function formatDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // 月份從 0 開始
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');   
+
+    const ret = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+
+    return ret;
+    };
 
 // 變更委買委賣的值
 const RewardPlatformChange = () => {
@@ -404,14 +418,16 @@ async function fetchOrderListData() {
         await openAlertModal(" ", "請先登入會員");
     }
     try {
-        const formattedStartTime = new Date(startTime.value).toISOString();
-        const formattedEndTime = new Date(endTime.value).toISOString();
+        console.log(startTime.value);
+        console.log(endTime.value);
+        //const formattedStartTime = new Date(startTime.value).toISOString();
+        //const formattedEndTime = new Date(endTime.value).toISOString();
         const response = await $axios.post(
             "/api/v1/Pmatch/GetDownlineOrder",
             {
                 PmatchMemberId: MemberIdCookie.value,
-                StartTime: formattedStartTime,
-                EndTime: formattedEndTime,
+                StartTime: startTime.value,
+                EndTime: endTime.value,
                 PageSize: 10,
                 PageNo: currentPage.value,
             },
