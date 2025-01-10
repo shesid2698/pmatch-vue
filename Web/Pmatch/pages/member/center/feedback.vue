@@ -264,28 +264,20 @@
                         border
                     >
                         <el-table-column
-                            prop="Createtime"
+                            prop="EndTime"
                             label="日期"
-                            sortable
-                            :sort-orders="['ascending', 'descending']"
                         />
                         <el-table-column
-                            prop="Name"
+                            prop="Item"
                             label="項目"
-                            sortable
-                            :sort-orders="['ascending', 'descending']"
                         />
                         <el-table-column
-                            prop="Count"
+                            prop="Amount"
                             label="數量"
-                            sortable
-                            :sort-orders="['ascending', 'descending']"
                         />
                         <el-table-column
                             prop="Remark"
                             label="備註"
-                            sortable
-                            :sort-orders="['ascending', 'descending']"
                         />
                     </el-table>
                 </div>

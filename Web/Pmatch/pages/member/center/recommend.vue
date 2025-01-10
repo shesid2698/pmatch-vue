@@ -149,14 +149,10 @@
                 <el-table-column
                     prop="Account"
                     label="被推薦人帳號"
-                    sortable
-                    :sort-orders="['ascending', 'descending']"
                 />
                 <el-table-column
                     prop="CreateTime"
                     label="綁定時間"
-                    sortable
-                    :sort-orders="['ascending', 'descending']"
                 >
                     <template #default="scope">
                         {{ formatDate(scope.row.CreateTime) }}
@@ -165,8 +161,6 @@
                 <el-table-column
                     prop="RewardPatch"
                     label="已回饋遊戲幣"
-                    sortable
-                    :sort-orders="['ascending', 'descending']"
                 >
                     <template #default="scope">
                         <div
@@ -177,8 +171,6 @@
                 <el-table-column
                     prop="LastRewardTime"
                     label="最後回饋日"
-                    sortable
-                    :sort-orders="['ascending', 'descending']"
                 >
                     <template #default="scope">
                         {{ formatDate(scope.row.LastRewardTime) }}
