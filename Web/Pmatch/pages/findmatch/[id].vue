@@ -856,6 +856,16 @@ async function getMemberDetail(token) {
             memberPhone1Cookie.value = memberDetailList.value[0].Mobile1;
             memberPhone2Cookie.value = memberDetailList.value[0].Mobile2;
             memberPhone3Cookie.value = memberDetailList.value[0].Mobile3;
+
+            // 檢查合約是否已簽署
+            // 把 memberDetailList.value.ContractStores 拆解成陣列 格式為 [32^1003,31^100]
+            const contractStores = memberDetailList.value[0].ContractStores.split(",");
+            contractStores.forEach((item) => {
+                const store = item.split("^");
+                if (store[0] == storesItem.value.Id) {
+                    readContract.value = true;
+                }
+            });
         } else {
             await openAlertModal(" ", `${response.data.Status.Message}`);
         }
