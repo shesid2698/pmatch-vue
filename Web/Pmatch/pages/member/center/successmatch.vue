@@ -214,13 +214,12 @@ onMounted(async () => {
             );
 
             if (response.data.Status.Code === 0) {
-                let mobileArr = [];
                 if (response.data.Data[0].Mobile1 !== "")
-                    mobileArr.push(response.data.Data[0].Mobile1);
-                if (response.data.Data[0].Mobile2 !== "")
-                    mobileArr.push(response.data.Data[0].Mobile2);
+                    mobileArr.value.push(response.data.Data[0].Mobile1);
+                if (response.value.data.Data[0].Mobile2 !== "")
+                    mobileArr.value.push(response.data.Data[0].Mobile2);
                 if (response.data.Data[0].Mobile3 !== "")
-                    mobileArr.push(response.data.Data[0].Mobile3);
+                    mobileArr.value.push(response.data.Data[0].Mobile3);
             } else {
                 await openAlertModal(" ", `${response.data.Status.Message}`);
             }
@@ -240,7 +239,7 @@ const GetData = async () => {
             const response = await $axios.post(
                 "/api/v1/Pmatch/GetMatchDealList",
                 {
-                    Phones: mobileArr,
+                    Phones: mobileArr.value,
                     StartTime: startTime.value,
                     EndTime: endTime.value,
                     PageNo: curPage.value,
