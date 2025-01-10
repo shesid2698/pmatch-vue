@@ -410,10 +410,6 @@ async function fetchOrderListData() {
         await openAlertModal(" ", "請先登入會員");
     }
     try {
-        console.log(startTime.value);
-        console.log(endTime.value);
-        //const formattedStartTime = new Date(startTime.value).toISOString();
-        //const formattedEndTime = new Date(endTime.value).toISOString();
         const response = await $axios.post(
             "/api/v1/Pmatch/GetDownlineOrder",
             {
