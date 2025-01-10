@@ -723,7 +723,7 @@ async function sendAccList() {
             await openAlertModal(" ", "請先選擇委買或委賣");
             return;
         }
-        if(paymentMethod.value === null){
+        if (buyOrSell.value === true && paymentMethod.value === null){
             await openAlertModal(" ", "請先選擇繳費方式");
             return;
         }
