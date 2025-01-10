@@ -252,7 +252,7 @@
                     <el-table
                         :data="tableData"
                         :default-sort="{
-                            prop: 'Createtime',
+                            prop: 'EndTime',
                             order: 'descending',
                         }"
                         style="width: 100%"
