@@ -183,8 +183,8 @@ const GetData = async () => {
                 "/api/v1/Pmatch/GetAccountingList",
                 {
                     PmatchMemberId: memberId.value,
-                    StartTime: startTime.value,
-                    EndTime: endTime.value,
+                    StartTime: startTime.value + "T00:00:00",
+                    EndTime: endTime.value + "T23:59:59",
                     PageNo: curPage.value,
                     PageSize: pageCount.value,
                 },

@@ -227,8 +227,8 @@ const GetData = async () => {
                 "/api/v1/Pmatch/GetMatchDealList",
                 {
                     Phones: mobileArr,
-                    StartTime: startTime.value,
-                    EndTime: endTime.value,
+                    StartTime: startTime.value + "T00:00:00",
+                    EndTime: endTime.value + "T23:59:59",
                     PageNo: curPage.value,
                     PageSize: pageCount.value,
                 },
