@@ -14,7 +14,10 @@
 </template>
 
 <script setup>
+const { $axios } = useNuxtApp();
 const route = useRoute();
+const memberId = useCookie('_PmMemberId');
+const userToken = useCookie('_PmToken');
 const curPage = ref([
     {
         title: '會員資訊維護',
@@ -52,10 +55,37 @@ const curPage = ref([
         link: '/member/center/recommend'
     }
 ]);
-onMounted(() => {
+
+onMounted(async () => {
     curPage.value.forEach(x => {
         x.show = '';
     });
+    if (memberId.value != '' && memberId.value != undefined) {
+        try {
+            if (userToken.value != '' && userToken.value != undefined) {
+
+                const response = await $axios.post(
+                    '/api/v1/Pmatch/GetMemberDetail',
+                    {
+                        PmatchMemberId: memberId.value
+                    },
+                    {
+                        headers: {
+                            Authorization: userToken.value
+                        }
+                    }
+                );
+
+                if (response.data.Status.Code === 0) {
+                   console.log(response.data.Data[0].Type);
+                } else {
+                    alert(`${response.data.Status.Message}`);
+                }
+            }
+        } catch (error) {
+            console.error('請求失敗:', error);
+        }
+    }
     // curPage.value=curPage.value.filter(item=>item.title!=="會員回饋累積");
     switch (route.path) {
         case '/member/center':
