@@ -118,7 +118,9 @@ const { $axios } = useNuxtApp();
 const jwtStore = useJwtStore();
 const userToken = useCookie('_PmToken');
 const assetsUrl = useCookie('_PmAssetsUrl');
-
+/**
+ * 遊戲列表
+ */
 async function fetchGameList(token) {
     if (token === '') {
         token = await jwtStore.generateToken();
@@ -147,6 +149,7 @@ async function fetchGameList(token) {
         console.error('請求失敗:', error);
     }
 }
+/**更多遊戲 */
 const AddGames = () => {
     gameGroup.value.some(group => {
         if (!gameList.value.includes(...group)) {
@@ -157,6 +160,7 @@ const AddGames = () => {
 };
 const bannerDownList = ref([]);
 // 找媒合GetAdvertisementList(下banner)
+/**banner輪播 */
 async function fetchADDownList(token) {
     if (token === '') {
         token = await jwtStore.generateToken();
