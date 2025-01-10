@@ -253,7 +253,7 @@
                                     id="shop"
                                     class="w-20px h-20px m-0 me-3 custom-radio"
                                     v-model="paymentMethod"
-                                    :value="'convenienceStore'"
+                                    :value=true
                                 />
                                 <label
                                     for="shop"
@@ -267,7 +267,7 @@
                                     id="atm"
                                     class="w-20px h-20px m-0 me-3 custom-radio"
                                     v-model="paymentMethod"
-                                    :value="'atm'"
+                                    :value=false
                                 />
                                 <label
                                     for="atm"
