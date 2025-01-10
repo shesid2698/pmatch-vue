@@ -86,44 +86,30 @@
                     <el-table-column
                         prop="Time"
                         label="時間"
-                        sortable
-                        :sort-orders="['ascending', 'descending']"
                     />
                     <el-table-column
                         prop="GamePlat"
                         label="營運平台"
-                        sortable
-                        :sort-orders="['ascending', 'descending']"
                     />
                     <el-table-column
                         prop="GameRole"
                         label="媒合商"
-                        sortable
-                        :sort-orders="['ascending', 'descending']"
                     />
                     <el-table-column
                         prop="Status"
                         label="委託狀態"
-                        sortable
-                        :sort-orders="['ascending', 'descending']"
                     />
                     <el-table-column
                         prop="Amount"
                         label="數量"
-                        sortable
-                        :sort-orders="['ascending', 'descending']"
                     />
                     <el-table-column
                         prop="Gamecurrency"
                         label="單位"
-                        sortable
-                        :sort-orders="['ascending', 'descending']"
                     />
                     <el-table-column
                         prop="Phone"
                         label="電話"
-                        sortable
-                        :sort-orders="['ascending', 'descending']"
                     />
                 </el-table>
                 <div class="flex justify-between">
@@ -240,8 +226,8 @@ const GetData = async () => {
                 "/api/v1/Pmatch/GetMatchDealList",
                 {
                     Phones: mobileArr.value,
-                    StartTime: startTime.value,
-                    EndTime: endTime.value,
+                    StartTime: startTime.value + "T00:00:00",
+                    EndTime: endTime.value + "T23:59:59",
                     PageNo: curPage.value,
                     PageSize: pageCount.value,
                 },

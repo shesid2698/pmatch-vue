@@ -196,7 +196,7 @@ async function login(event, encryptedPassword) {
 
                 // 跳轉到目標網站
                 const targetUrl = `http://192.168.10.206:6092/l/${base64UrlToken}`;
-                // const targetUrl = `https://acctest.pmatch.com.tw/l/${base64UrlToken}`;
+                //const targetUrl = `https://acctest.pmatch.com.tw/l/${base64UrlToken}`; // MASTER 留正式環境
                 window.location.href = targetUrl;
             } else {
                 console.error("跳轉失敗");

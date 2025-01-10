@@ -86,38 +86,26 @@
                     <el-table-column
                         prop="Createtime"
                         label="日期"
-                        sortable
-                        :sort-orders="['ascending', 'descending']"
                     />
                     <el-table-column
                         prop="GameplatformName"
                         label="營運平台"
-                        sortable
-                        :sort-orders="['ascending', 'descending']"
                     />
                     <el-table-column
                         prop="NickName"
                         label="媒合商"
-                        sortable
-                        :sort-orders="['ascending', 'descending']"
                     />
                     <el-table-column
                         prop="Patch"
                         label="數量"
-                        sortable
-                        :sort-orders="['ascending', 'descending']"
                     />
                     <el-table-column
                         prop="GamecurrencyName"
                         label="單位"
-                        sortable
-                        :sort-orders="['ascending', 'descending']"
                     />
                     <el-table-column
                         prop="Status"
                         label="狀態"
-                        sortable
-                        :sort-orders="['ascending', 'descending']"
                     />
                 </el-table>
                 <div class="flex justify-between">
@@ -195,8 +183,8 @@ const GetData = async () => {
                 "/api/v1/Pmatch/GetAccountingList",
                 {
                     PmatchMemberId: memberId.value,
-                    StartTime: startTime.value,
-                    EndTime: endTime.value,
+                    StartTime: startTime.value + "T00:00:00",
+                    EndTime: endTime.value + "T23:59:59",
                     PageNo: curPage.value,
                     PageSize: pageCount.value,
                 },

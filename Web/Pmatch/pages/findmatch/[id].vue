@@ -166,7 +166,7 @@
                 </div>
             </div>
             <div
-                v-if="storesItem != null" v-show="storesItem.IsEnabledBuy || storesItem.IsEnabledSell" class="mt-2rem md-mt-7rem max-w-1110px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3 relative z-2"
+                v-if="storesItem != null" v-show="(storesItem.IsEnabledBuy || storesItem.IsEnabledSell) && (storesItem.ContractId !== 0)" class="mt-2rem md-mt-7rem max-w-1110px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3 relative z-2"
             >
                 <div class="w-100% block md-flex justify-center flex-wrap">
                     <div class="md-w-460px">
@@ -253,7 +253,7 @@
                                     id="shop"
                                     class="w-20px h-20px m-0 me-3 custom-radio"
                                     v-model="paymentMethod"
-                                    :value="'convenienceStore'"
+                                    :value=true
                                 />
                                 <label
                                     for="shop"
@@ -267,7 +267,7 @@
                                     id="atm"
                                     class="w-20px h-20px m-0 me-3 custom-radio"
                                     v-model="paymentMethod"
-                                    :value="'atm'"
+                                    :value=false
                                 />
                                 <label
                                     for="atm"
@@ -723,7 +723,7 @@ async function sendAccList() {
             await openAlertModal(" ", "請先選擇委買或委賣");
             return;
         }
-        if(paymentMethod.value === null){
+        if (buyOrSell.value === true && paymentMethod.value === null){
             await openAlertModal(" ", "請先選擇繳費方式");
             return;
         }
@@ -856,6 +856,16 @@ async function getMemberDetail(token) {
             memberPhone1Cookie.value = memberDetailList.value[0].Mobile1;
             memberPhone2Cookie.value = memberDetailList.value[0].Mobile2;
             memberPhone3Cookie.value = memberDetailList.value[0].Mobile3;
+
+            // 檢查合約是否已簽署
+            // 把 memberDetailList.value.ContractStores 拆解成陣列 格式為 [32^1003,31^100]
+            const contractStores = memberDetailList.value[0].ContractStores.split(",");
+            contractStores.forEach((item) => {
+                const store = item.split("^");
+                if (store[0] == storesItem.value.Id) {
+                    readContract.value = true;
+                }
+            });
         } else {
             await openAlertModal(" ", `${response.data.Status.Message}`);
         }
