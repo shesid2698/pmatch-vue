@@ -58,6 +58,14 @@ const recommendManages = [
         link: '/member/center/recommend'
     }
 ];
+watch(()=>props.type,(newValue,oldValue)=>{
+  console.log(`Message changed from "${oldValue}" to "${newValue}"`);
+  if(newValue ==2||newValue==3){
+    if(!curPage.value.includes(...recommendManages))curPage.value.push(...recommendManages);
+  }else{
+    if(curPage.value.includes(...recommendManages))curPage.value.splice(5,7);
+  }
+});
 onMounted(async () => {
     curPage.value.forEach(x => {
         x.show = '';
@@ -72,9 +80,7 @@ onMounted(async () => {
             curPage.value.push(...recommendManages);
         }
     }
-    if(props.type == 2 || props.type ==3){
-      if(!curPage.value.includes(...recommendManages))curPage.value.push(...recommendManages);
-    }
+
     // curPage.value=curPage.value.filter(item=>item.title!=="會員回饋累積");
     switch (route.path) {
         case '/member/center':
