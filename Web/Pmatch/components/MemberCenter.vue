@@ -14,10 +14,9 @@
 </template>
 
 <script setup>
-const { $axios } = useNuxtApp();
 const route = useRoute();
-const memberId = useCookie('_PmMemberId');
-const userToken = useCookie('_PmToken');
+const encrypt = useEncrypt();
+const MemberTypeCookie = useCookie('_PmMemberType');
 const curPage = ref([
     {
         title: '會員資訊維護',
@@ -43,7 +42,19 @@ const curPage = ref([
         title: '簽約媒合商',
         show: '',
         link: '/member/center/contract'
-    },
+    }
+    // {
+    //     title: '會員回饋累積',
+    //     show: '',
+    //     link: '/member/center/feedback'
+    // },
+    // {
+    //     title: '推薦管理',
+    //     show: '',
+    //     link: '/member/center/recommend'
+    // }
+]);
+const recommendManages = [
     {
         title: '會員回饋累積',
         show: '',
@@ -54,36 +65,19 @@ const curPage = ref([
         show: '',
         link: '/member/center/recommend'
     }
-]);
-
+];
 onMounted(async () => {
     curPage.value.forEach(x => {
         x.show = '';
     });
-    if (memberId.value != '' && memberId.value != undefined) {
-        try {
-            if (userToken.value != '' && userToken.value != undefined) {
-
-                const response = await $axios.post(
-                    '/api/v1/Pmatch/GetMemberDetail',
-                    {
-                        PmatchMemberId: memberId.value
-                    },
-                    {
-                        headers: {
-                            Authorization: userToken.value
-                        }
-                    }
-                );
-
-                if (response.data.Status.Code === 0) {
-                   console.log(response.data.Data[0].Type);
-                } else {
-                    alert(`${response.data.Status.Message}`);
-                }
-            }
-        } catch (error) {
-            console.error('請求失敗:', error);
+    if (
+        MemberTypeCookie.value != null &&
+        MemberTypeCookie.value != '' &&
+        MemberTypeCookie.value != undefined
+    ) {
+        let typeNum = encrypt.decrypt(MemberTypeCookie.value);
+        if (typeNum == '2' || typeNum == '3') {
+            curPage.value.push(...recommendManages);
         }
     }
     // curPage.value=curPage.value.filter(item=>item.title!=="會員回饋累積");
