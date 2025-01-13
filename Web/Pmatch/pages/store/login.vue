@@ -1,19 +1,15 @@
 <template>
+
     <Head>
         <title>PMatch遊戲道具媒合網</title>
-        <Meta property="og:title" content="PMatch遊戲道具媒合網" />
-        <Meta
-            name="keywords"
-            content="pmatch,pmatch交易,博奕遊戲,幣商,媒合商,遊戲幣,虛擬幣,遊戲交易,媒合交易,買幣,賣幣,虛寶交易"
-        />
-        <Meta
-            name="description"
-            content="Pmatch遊戲道具媒合網 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
-        />
-        <Meta
-            property="og:description"
-            content="Pmatch遊戲道具媒合網 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
-        />
+        <Meta property="og:title"
+              content="PMatch遊戲道具媒合網" />
+        <Meta name="keywords"
+              content="pmatch,pmatch交易,博奕遊戲,幣商,媒合商,遊戲幣,虛擬幣,遊戲交易,媒合交易,買幣,賣幣,虛寶交易" />
+        <Meta name="description"
+              content="Pmatch遊戲道具媒合網 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
+        <Meta property="og:description"
+              content="Pmatch遊戲道具媒合網 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
     </Head>
     <div class="ccontainer md:pt-60px">
         <div class="login-card md:w-378px w-100%">
@@ -39,69 +35,55 @@
                     </button>
                 </div>
             </div> -->
-            <form
-                action=""
-                method="POST"
-                @submit.prevent="login"
-                class="mt-3rem"
-            >
+            <form action=""
+                  method="POST"
+                  @submit.prevent="login"
+                  class="mt-3rem">
                 <div class="mt-15px">
                     <div class="mb-5px">登入帳號</div>
-                    <input
-                        type="text"
-                        required
-                        v-model="accountId"
-                        autocomplete
-                        class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200"
-                    />
+                    <input type="text"
+                           required
+                           v-model="accountId"
+                           autocomplete
+                           class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
                 </div>
 
                 <div class="mt-15px">
                     <div class="mb-5px">密碼</div>
                     <div class="relative">
-                        <input
-                            type="password"
-                            ref="i_password"
-                            autocomplete="current-password"
-                            v-model="password"
-                            class="password box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200"
-                        />
-                        <div
-                            @click="turnInputType"
-                            class="cursor-pointer absolute top-50% transform translate-y-[-45%] left-92%"
-                        >
-                            <i ref="eyes" class="fa-solid fa-eye text-gray"></i>
+                        <input type="password"
+                               ref="i_password"
+                               autocomplete="current-password"
+                               v-model="password"
+                               class="password box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
+                        <div @click="turnInputType"
+                             class="cursor-pointer absolute top-50% transform translate-y-[-45%] left-92%">
+                            <i ref="eyes"
+                               class="fa-solid fa-eye text-gray"></i>
                         </div>
 
-                        <div
-                            class="tips absolute text-14px w-200px h-auto bg-dark left-25% bottom-130% text-white p-10px rounded-1"
-                        >
+                        <div class="tips absolute text-14px w-200px h-auto bg-dark left-25% bottom-130% text-white p-10px rounded-1">
                             密碼長度必須為8~20位,
                             其中必須包含至少一位數字、一位英文，若需有特殊符號僅限於
                             ! @ # $ % & *
                         </div>
-                        <div
-                            class="tips absolute clip-path-custom w-15px h-15px bg-dark left-52% bottom-110%"
-                        ></div>
+                        <div class="tips absolute clip-path-custom w-15px h-15px bg-dark left-52% bottom-110%"></div>
                     </div>
                 </div>
-                <div v-if="!hasToken" class="w-100% mt-15px">
-                    <VueTurnstile
-                        site-key="1x00000000000000000000AA"
-                        size="normal"
-                        @update:model-value="onVerify"
-                    ></VueTurnstile>
+                <div v-if="!hasToken"
+                     class="w-100% mt-15px">
+                    <VueTurnstile site-key="1x00000000000000000000AA"
+                                  size="normal"
+                                  @update:model-value="onVerify"></VueTurnstile>
                 </div>
                 <!-- 登入/註冊 -->
                 <div class="mt-15px">
                     <div class="flex">
                         <div class="flex-1">
-                            <button
-                                type="submit"
-                                v-if="iData !== null"
-                                :disabled="iData.length === 0"
-                                class="disabled:opacity-70 p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#e93470] hover:bg-[#bb2d3b] transition duration-200 cursor-pointer"
-                            >
+                            <button type="submit"
+                                    v-if="iData !== null"
+                                    :disabled="iData.length === 0"
+                                    class="disabled:opacity-70 p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#e93470] hover:bg-[#bb2d3b] transition duration-200 cursor-pointer">
                                 登入
                             </button>
                         </div>
@@ -122,13 +104,13 @@
 
 <script setup>
 // loading page
-import { useLoadStore } from "../stores/loading.js";
-import VueTurnstile from "vue-turnstile";
+import { useLoadStore } from '../stores/loading.js';
+import VueTurnstile from 'vue-turnstile';
 
-import { useAlertModalStore } from "../stores/useAlertModal.js";
+import { useAlertModalStore } from '../stores/useAlertModal.js';
 const alertModalStore = useAlertModalStore();
 const openAlertModal = alertModalStore.alertShowModal;
-
+const config = useRuntimeConfig();
 const store = useLoadStore();
 const setPageLoading = store.setPageLoading;
 
@@ -138,29 +120,29 @@ const encrypt = useEncrypt();
 const matchMemberList = ref([]);
 
 const iData = ref([]);
-const password = ref("");
+const password = ref('');
 const eyes = ref(null);
 const data = reactive({});
 const s = reactive({});
 const i_password = ref(null);
 const { md5 } = crypto();
 
-const loginToken = useCookie("tstToken");
+const loginToken = useCookie('tstToken');
 const hasToken = ref(loginToken.value !== undefined);
 
-let accountId = ref("");
+let accountId = ref('');
 const turnInputType = () => {
-    if (i_password.value.type === "password") {
-        i_password.value.type = "text";
-        eyes.value.classList.remove("fa-eye");
-        eyes.value.classList.add("fa-eye-slash");
+    if (i_password.value.type === 'password') {
+        i_password.value.type = 'text';
+        eyes.value.classList.remove('fa-eye');
+        eyes.value.classList.add('fa-eye-slash');
     } else {
-        i_password.value.type = "password";
-        eyes.value.classList.remove("fa-eye-slash");
-        eyes.value.classList.add("fa-eye");
+        i_password.value.type = 'password';
+        eyes.value.classList.remove('fa-eye-slash');
+        eyes.value.classList.add('fa-eye');
     }
 };
-const onVerify = (tokenValue) => {
+const onVerify = tokenValue => {
     loginToken.value = tokenValue;
     setTimeout(() => {
         hasToken.value = true;
@@ -172,15 +154,15 @@ async function login(event, encryptedPassword) {
     event.preventDefault();
     try {
         const response = await $axios.post(
-            "/api/v1/User/Logon",
+            '/api/v1/User/Logon',
             {
                 Account: accountId.value,
                 Password: md5(password.value), // 使用加密後的密碼
                 MacAddress: iData.value.m,
-                SerialNumber: iData.value.s,
+                SerialNumber: iData.value.s
             },
             {
-                headers: {},
+                headers: {}
             }
         );
 
@@ -190,44 +172,38 @@ async function login(event, encryptedPassword) {
             if (matchMemberList.value.Token) {
                 // 編碼為 Base64 URL 格式
                 const token = matchMemberList.value.Token;
-                const base64UrlToken = btoa(token)
-                    .replace(/\+/g, "-")
-                    .replace(/\//g, "_");
+                const base64UrlToken = btoa(token).replace(/\+/g, '-').replace(/\//g, '_');
 
                 // 跳轉到目標網站
-                const targetUrl = `http://192.168.10.206:6092/l/${base64UrlToken}`;
-                //const targetUrl = `https://acctest.pmatch.com.tw/l/${base64UrlToken}`; // MASTER 留正式環境
+                const targetUrl = `${config.public.envUrl}${base64UrlToken}`;
                 window.location.href = targetUrl;
             } else {
-                console.error("跳轉失敗");
+                console.error('跳轉失敗');
             }
         } else {
-            await openAlertModal(" ", `${response.data.Status.Message}`);
+            await openAlertModal(' ', `${response.data.Status.Message}`);
         }
     } catch (error) {
-        console.error("請求失敗:", error);
+        console.error('請求失敗:', error);
     }
 }
 // 檢查工具安裝
 const getSerialNumber = async () => {
     try {
-        const response = await fetch("http://localhost:23100/EIS/I", {
-            method: "POST",
-            body: null,
+        const response = await fetch('http://localhost:23100/EIS/I', {
+            method: 'POST',
+            body: null
         });
 
         // 檢查 HTTP 狀態碼
         if (!response.ok) {
-            await openAlertModal(
-                " ",
-                "請依文件調整瀏覽器設定值,安裝工具再行登入"
-            );
+            await openAlertModal(' ', '請依文件調整瀏覽器設定值,安裝工具再行登入');
         }
 
         const result = await response.json(); // 解析 JSON 資料
         return result;
     } catch (error) {
-        console.error("Fetching serial number failed:", error);
+        console.error('Fetching serial number failed:', error);
     }
 };
 onMounted(async () => {
@@ -238,9 +214,9 @@ onMounted(async () => {
     if (res && res.status && res.status.code === 0) {
         iData.value = res.data;
     } else if (res && res.status && res.status.code !== 0) {
-        await openAlertModal(" ", "安裝工具過程中請記得輸入序號");
+        await openAlertModal(' ', '安裝工具過程中請記得輸入序號');
     } else {
-        await openAlertModal(" ", "請依文件調整瀏覽器設定值,安裝工具再行登入");
+        await openAlertModal(' ', '請依文件調整瀏覽器設定值,安裝工具再行登入');
     }
     await setPageLoading(false);
 });
@@ -255,7 +231,7 @@ onMounted(async () => {
     width: 100%;
 }
 .font-sans {
-    font-family: Arial, "Noto Sans TC", sans-serif;
+    font-family: Arial, 'Noto Sans TC', sans-serif;
 }
 .clip-path-custom {
     clip-path: polygon(50% 100%, 0 50%, 100% 50%);
