@@ -23,7 +23,7 @@
                             <ElCarouselItem class="h-200px"
                                             v-for="(item, index) in bannerDownList"
                                             :key="index">
-                                            <span></span>
+                                <span></span>
                                 <img class="w-100% h-200px"
                                      :src="`${assetsUrl}${item.ImgFile}`"
                                      :alt="item.PlatformName" />
@@ -88,13 +88,30 @@
                             </div>
                         </div>
                     </div>
-                    <div class="m-x-auto pt-3 pb-3 mt-10">
-                        <div class="moreGameBtnBox"
-                             :class="gameList.length === allGameList.length?`moreGameBtnBoxDisabled`:``">
-                            <span @click="AddGames"
-                                  class="moreGameBtn color-#fff font-size-22px decoration-none"
-                                  :class="gameList.length === allGameList.length?`moreGameDisabled`:``">更多遊戲</span>
-                        </div>
+
+                </div>
+                <div class="m-x-auto pt-3 pb-3">
+                    <div class="moreGameBtnBox"
+                         :class="gameList.length === allGameList.length?`moreGameBtnBoxDisabled`:``">
+                        <span @click="AddGames"
+                              class="moreGameBtn color-#fff font-size-22px decoration-none"
+                              :class="gameList.length === allGameList.length?`moreGameDisabled`:``">更多遊戲</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center companyInfoContainer">
+            <div class="companyInfoTitle">廠商資訊</div>
+        </div>
+        <div class="max-w-1110px m-auto ps-5 pe-5 m-t-100px">
+            <div class="flex flex-wrap w-100%">
+                <div v-for="(item) in companies"
+                     :key="item.Id"
+                     class="w-100% md:w-1/3 pr-15px box-border">
+                    <div class="companyCard w-100%">
+                        <div class="companyName">{{ item.Name }}</div>
+                        <div class="companyId">統編</div>
+                        <div class="companyIdNum">{{ item.IdNum }}</div>
                     </div>
                 </div>
             </div>
@@ -118,6 +135,43 @@ const { $axios } = useNuxtApp();
 const jwtStore = useJwtStore();
 const userToken = useCookie('_PmToken');
 const assetsUrl = useCookie('_PmAssetsUrl');
+const companies = ref([
+    {
+        Id: 1,
+        Name: '紫海數位有限公司',
+        IdNum: '50922310'
+    },
+    {
+        Id: 2,
+        Name: '紫海數位有限公司',
+        IdNum: '50922310'
+    },
+    {
+        Id: 3,
+        Name: '紫海數位有限公司',
+        IdNum: '50922310'
+    },
+    {
+        Id: 4,
+        Name: '日商滿貫全壘打股份有限公司',
+        IdNum: '50922310'
+    },
+    {
+        Id: 5,
+        Name: '紫海數位有限公司',
+        IdNum: '50922310'
+    },
+    {
+        Id: 6,
+        Name: '紫海數位有限公司',
+        IdNum: '50922310'
+    },
+    {
+        Id: 7,
+        Name: '紫海數位有限公司',
+        IdNum: '50922310'
+    }
+]);
 /**
  * 遊戲列表
  */
@@ -311,6 +365,77 @@ onMounted(async () => {
     background: gray;
     color: lightgray;
 }
+.companyInfoContainer {
+    background-image: url('/public/images/bg-dot05.png'), linear-gradient(45deg, #7b2cbf, #f72585);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    color: white;
+    width: 100%;
+    aspect-ratio: 1512/308.2;
+    align-content: center;
+    font-size: 66px;
+    margin-top: 50px;
+}
+.companyCard {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3/2;
+    background-image: url('/public/images/bg-wave03.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    color: white;
+    margin-bottom:30px;
+}
+.companyName {
+    position: absolute;
+    text-align: center;
+    width: 80%;
+    left: 50%;
+    transform: translateX(-52%);
+    top: 20%;
+    font-size: 26px;
+    font-weight: 600;
+}
+.companyId {
+    position: absolute;
+    width: 80%;
+    left: 50%;
+    top: 55%;
+    font-weight: 600;
+    transform: translateX(-52%);
+    text-align: center;
+}
+.companyId::after {
+    position: absolute;
+    content: '';
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10%;
+    width: 30%;
+    height: 1px;
+    border-top: 1px solid white;
+}
+.companyId::before {
+    position: absolute;
+    content: '';
+    top: 50%;
+    transform: translateY(-50%);
+    left: 10%;
+    width: 30%;
+    height: 1px;
+    border-top: 1px solid white;
+}
+.companyIdNum {
+    position: absolute;
+    left: 50%;
+    width: 80%;
+    text-align: center;
+    transform: translateX(-52%);
+    top: 73%;
+    font-size: 25px;
+    font-weight: 600;
+}
 @media screen and (max-width: 768px) {
     .gameBoxOdd {
         width: 100%;
@@ -321,6 +446,10 @@ onMounted(async () => {
         width: 100%;
         margin-left: 0rem;
         margin-bottom: 2rem;
+    }
+    .companyInfoContainer{
+      aspect-ratio: 765.838/308.154;
+      font-size: 50px;
     }
 }
 </style>
