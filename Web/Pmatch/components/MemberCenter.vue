@@ -46,7 +46,7 @@ const curPage = ref([
         link: '/member/center/contract'
     }
 ]);
-const recommendManages = [
+const recommendManages2 = [
     {
         title: '會員回饋累積',
         show: '',
@@ -57,14 +57,25 @@ const recommendManages = [
         show: '',
         link: '/member/center/recommend'
     }
-];
+    ];
+const recommendManages3 = [
+        {
+            title: '會員回饋累積',
+            show: '',
+            link: '/member/center/feedback'
+        }
+    ];
+
 watch(()=>props.type,(newValue,oldValue)=>{
   console.log(`Message changed from "${oldValue}" to "${newValue}"`);
-  if(newValue ==2||newValue==3){
-    if(!curPage.value.includes(...recommendManages))curPage.value.push(...recommendManages);
-  }else{
-    if(curPage.value.includes(...recommendManages))curPage.value.splice(5,7);
-  }
+    if (newValue == 2) // 下線經營者
+    {
+      if(!curPage.value.includes(...recommendManages2))curPage.value.push(...recommendManages2);
+    }
+    else if (newValue == 3) // 下線
+    {
+        if (!curPage.value.includes(...recommendManages3)) curPage.value.push(...recommendManages3);
+    }
 });
 onMounted(async () => {
     curPage.value.forEach(x => {
@@ -76,8 +87,12 @@ onMounted(async () => {
         MemberTypeCookie.value != undefined
     ) {
         let typeNum = MemberTypeCookie.value;
-        if (typeNum == 2 || typeNum == 3) {
-            curPage.value.push(...recommendManages);
+        if (typeNum == 2)
+        {
+            curPage.value.push(...recommendManages2);
+        }
+        else if (typeNum == 3) {
+            curPage.value.push(...recommendManages3);
         }
     }
 
