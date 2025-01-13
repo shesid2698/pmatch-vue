@@ -521,7 +521,7 @@ async function fetchADList(token) {
 const searchToFindMatch = () => {
     if (selectedGame.value.trim() !== '') {
         updateNameArray(selectedGame.value.trim());
-        selectedGame.value = ''; // 清空搜索框
+        //selectedGame.value = ''; // 清空搜索框
     } else {
         return;
     }

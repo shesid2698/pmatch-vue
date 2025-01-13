@@ -616,7 +616,9 @@ const handleSearch = () => {
 const filteredStores = computed(() => {
     return storesList.value.filter(store => {
         const matchesSearchQuery = activeSearchQuery.value
-            ? store.Name.toLowerCase().includes(activeSearchQuery.value.toLowerCase())
+            ? store.Name().includes(
+                  activeSearchQuery.value.toLowerCase()
+              )
             : true;
 
         const matchesSelectedPlatform = activeSelectedPlatform.value
