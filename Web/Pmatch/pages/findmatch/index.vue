@@ -729,7 +729,7 @@ const handleSearch = () => {
 const filteredStores = computed(() => {
     return storesList.value.filter((store) => {
         const matchesSearchQuery = activeSearchQuery.value
-            ? store.Name.toLowerCase().includes(
+            ? store.Name().includes(
                   activeSearchQuery.value.toLowerCase()
               )
             : true;
