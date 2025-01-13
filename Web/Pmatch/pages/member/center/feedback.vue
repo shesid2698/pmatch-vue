@@ -52,7 +52,7 @@
                                                 : memberRewardList.RefferCode
                                         }}
                                     </div>
-                                    <div 
+                                    <div
                                          class="w-75px lg:w-95px h-100% text-center bg-[#3caadc] content-center text-white font-500 text-[20px] font-500 text-[18px] text-[#757575]"
                                          :class="timeValue !== 0 ? 'bg-#3caadc' : 'bg-#959595'">
                                         {{ timeValue !== 0 ? "開啟中" : "關閉中" }}
@@ -66,6 +66,7 @@
                                     <div>
                                         <el-countdown
                                             :value="Date.now() + timeValue"
+                                            v-on:change="GetTimes"
                                             format="DD [天] HH:mm:ss"
                                         />
                                     </div>
@@ -345,7 +346,7 @@ async function formatDate(date) {
     const day = String(date.getDate()).padStart(2, '0');
     const hours = String(date.getHours()).padStart(2, '0');
     const minutes = String(date.getMinutes()).padStart(2, '0');
-    const seconds = String(date.getSeconds()).padStart(2, '0');   
+    const seconds = String(date.getSeconds()).padStart(2, '0');
 
     const ret = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
 
@@ -501,6 +502,9 @@ const DateFormatt = (date) => {
         String(date.getSeconds()).padStart(2, "0");
     return t_Date;
 };
+const GetTimes = time=>{
+  timeValue.value = time;
+}
 onMounted(async () => {
     try {
         await fetchRewardListData();
