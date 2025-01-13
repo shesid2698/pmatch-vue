@@ -14,8 +14,10 @@
 </template>
 
 <script setup>
+const props = defineProps({
+    type:Number
+});
 const route = useRoute();
-const encrypt = useEncrypt();
 const MemberTypeCookie = useCookie('_PmMemberType');
 const curPage = ref([
     {
@@ -43,16 +45,6 @@ const curPage = ref([
         show: '',
         link: '/member/center/contract'
     }
-    // {
-    //     title: '會員回饋累積',
-    //     show: '',
-    //     link: '/member/center/feedback'
-    // },
-    // {
-    //     title: '推薦管理',
-    //     show: '',
-    //     link: '/member/center/recommend'
-    // }
 ]);
 const recommendManages = [
     {
@@ -75,10 +67,13 @@ onMounted(async () => {
         MemberTypeCookie.value != '' &&
         MemberTypeCookie.value != undefined
     ) {
-        let typeNum = encrypt.decrypt(MemberTypeCookie.value);
-        if (typeNum == '2' || typeNum == '3') {
+        let typeNum = MemberTypeCookie.value;
+        if (typeNum == 2 || typeNum == 3) {
             curPage.value.push(...recommendManages);
         }
+    }
+    if(props.type == 2 || props.type ==3){
+      if(!curPage.value.includes(...recommendManages))curPage.value.push(...recommendManages);
     }
     // curPage.value=curPage.value.filter(item=>item.title!=="會員回饋累積");
     switch (route.path) {

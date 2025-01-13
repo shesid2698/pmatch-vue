@@ -112,7 +112,6 @@
 import VueTurnstile from 'vue-turnstile';
 
 import { useAlertModalStore } from '../stores/useAlertModal.js';
-const encrypt = useEncrypt();
 const alertModalStore = useAlertModalStore();
 const openAlertModal = alertModalStore.alertShowModal;
 const { md5 } = crypto();
@@ -170,7 +169,7 @@ const GetMemberDetail = async (memberId, token) => {
         }
     );
     if (response.data.Status.Code === 0) {
-        MemberTypeCookie.value = encrypt.encrypt(response.data.Data[0].Type);
+        MemberTypeCookie.value = response.data.Data[0].Type;
     }
 };
 // login

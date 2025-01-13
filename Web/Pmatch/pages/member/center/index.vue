@@ -37,7 +37,8 @@
     </el-dialog>
     <div class="ccontainer pt-60px ps-5 pe-5 w-90% lg:w-70%">
         <div class="lg:w-160px">
-            <MemberCenter></MemberCenter>
+            <MemberCenter
+            :type="memberType"></MemberCenter>
         </div>
         <div
             class="flex-1 md:pl-20px"
@@ -508,6 +509,7 @@ const selectedRegion = ref("");
 const addressDetail = ref("");
 const recommendStr = ref("");
 const usedRecommendStr = ref(false);
+const memberType = useCookie("_PmMemberType");
 /**正在驗證的手機號碼 */
 const verifyingMobile = useCookie("editMobile");
 /**手機/信箱驗證視窗寬度 */
@@ -610,7 +612,6 @@ const checkForm = async (event) => {
             return;
         }
     }
-
     try {
         const response = await $axios.post(
             "/api/v1/Pmatch/UpdatedMemberData",
@@ -643,7 +644,6 @@ function formatToDateInput(dateStr) {
     const day = String(date.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`; // return YYYY-MM-DD 格式
 }
-
 onMounted(async () => {
     // modalStore.showModal("提示測試","這是談窗測試",confirmOK,confirmCancel);
     try {
@@ -672,7 +672,7 @@ onMounted(async () => {
                     recommendStr.value = theUser[0].RefferCode;
                     usedRecommendStr.value = true;
                 }
-                    
+                memberType.value = theUser[0].Type;
             } else {
                 alert(`${response.data.Status.Message}`);
             }

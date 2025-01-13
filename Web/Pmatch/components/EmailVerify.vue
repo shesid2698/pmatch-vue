@@ -95,7 +95,6 @@ const isValid = ref(false);
 const ansCode = ref('');
 let num = '';
 const { $axios } = useNuxtApp();
-const { encrypt, decrypt } = crypto();
 const props = defineProps({
     from: String,
     index: String,
