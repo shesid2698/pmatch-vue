@@ -25,10 +25,12 @@
             <div class="mt-9rem max-w-1110px m-auto ps-5 pe-5">
                 <div class="lg-flex">
                     <div class="w-100% lg-w-50% lg-me-1rem">
-                        <div class="flex mb-3 pb-2rem">
-                            <div v-if="storesItem != null">
+                        <div class="flex mb-3 pb-2rem items-center">
+                            <div v-if="storesItem != null"
+                                 class="imgContainer">
                                 <img :src="`${assetsUrl}${storesItem.IMGFiles}`"
-                                     :alt="storesItem.Name" />
+                                     :alt="storesItem.Name"
+                                     class="imgContainerItem" />
                             </div>
                             <h2 class="storeTitle font-size-36px"
                                 v-if="storesItem">
@@ -103,10 +105,13 @@
                                 <div class="flex items-center justify-center w-100%">
                                     <div class="platformBox">
                                         <div class="platformContent">
-                                            <img class="platformImg w-100%"
+                                            <!-- <img class="platformImg w-100%"
                                                  :src="`${assetsUrl}${getImgFile(
                                                     item
                                                 )}`"
+                                                 :alt="item" /> -->
+                                            <img class="platformImg w-100%"
+                                                 src="/images/2025/21186e6643a9046b10830fee3cc823c0.jpg"
                                                  :alt="item" />
                                         </div>
                                     </div>
@@ -816,6 +821,7 @@ watch(
     border-bottom: 2px solid transparent;
     border-image: linear-gradient(to right, #4361ee 0%, #f72585 100%);
     border-image-slice: 1;
+    font-size: 20px;
 }
 
 :deep(.el-carousel__item) {
@@ -1118,16 +1124,25 @@ watch(
 .platformBox {
     background: linear-gradient(to right, #4361ee, #f72585);
     border-radius: 10px;
-    padding: 4px;
     border: none;
     box-shadow: 0px 20px 20px -13px #bbb;
+    aspect-ratio: 1/1;
+    border-width: 4px;
+    border-style: solid;
+    border-color: transparent;
+    background-image: linear-gradient(white, white),
+        linear-gradient(to right, #4361ee, #f72585);
+    background-clip: padding-box, border-box;
+    background-origin: padding-box, border-box;
+    overflow: hidden;
 }
 .platformContent {
+  height: 100%;
     color: #f72585;
-    border-radius: 10px;
 }
 .platformImg {
-    border-radius: 10px;
+  width: 100%;
+  height: 100%;
 }
 .arrowLeft {
     top: 200px;
@@ -1137,6 +1152,30 @@ watch(
     right: 0;
     top: -250px;
 }
-@media screen and (max-width: 768px) {
+.imgContainer {
+    border-width: 2px;
+    border-style: solid;
+    border-color: transparent;
+    border-radius: 10px;
+    background-image: linear-gradient(white, white), linear-gradient(to right, #4361ee, #f72585);
+    background-clip: padding-box, border-box;
+    background-origin: padding-box, border-box;
+    width: 25%;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    box-sizing: border-box;
+    margin-right: 20px;
+}
+.imgContainerItem {
+    width: 100%;
+    height: 100%;
+}
+:deep(.el-carousel__item[data-v-0b1d1463]:nth-child(2n)){
+
+}
+@media screen and (max-width: 1024px) {
+  .platformBox{
+    max-height: 290px;
+  }
 }
 </style>
