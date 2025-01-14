@@ -610,8 +610,6 @@ const handleSearch = () => {
     activeSelectedPlatform.value = selectedGame.value;
     activeShowSignedOnly.value = tempShowSignedOnly.value;
     matchingPlatform.value = selectedGame.value;
-
-    //platformName2 = selectedGame.value;
 };
 
 // 篩選邏輯
