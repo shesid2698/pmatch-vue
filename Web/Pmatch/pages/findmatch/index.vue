@@ -122,7 +122,7 @@
         <div class="w-full relative mt-10rem md-mt-5rem">
             <div class="max-w-1110px m-auto md:p-x-5 p-x-2 relative z-2">
                 <div class="flex flex-wrap justify-center">
-                    <NuxtLink v-for="(item, index) in filteredStores"
+                    <NuxtLink v-for="(item, index) in filteredStores.slice((currentPage-1)*7,(currentPage-1)*7+6)"
                               :key="index"
                               :to="`/findmatch/${item.Id}?pn=${selectedGame}`"
                               class="decoration-none">
@@ -313,8 +313,21 @@
                             </div>
                         </div>
                     </NuxtLink>
-                </div>
 
+                </div>
+                <div class="">
+                    <el-pagination layout="prev, pager, next"
+                                   :current-page="currentPage"
+                                   :page-size="itemsPerPage"
+                                   :total="filteredStores.length"
+                                   class="w-fit m-y-0 m-x-auto"
+                                   @current-change="changePage" />
+                    <!-- <el-pagination layout="prev, pager, next"
+                                               :current-page="currentPage"
+                                               :page-size="itemsPerPage"
+                                               :total="storesItem.StoreQAs.length"
+                                               @current-change="changePage" /> -->
+                </div>
                 <!-- 各媒合商 -->
                 <div class="flex relative w-100%">
 
@@ -385,7 +398,8 @@ const contract = route.query.contract;
 
 const searchQuery = ref('');
 const selectedPlatform = ref('');
-
+const currentPage = ref(1); // 當前頁碼
+const itemsPerPage = 6; // 每頁筆數
 // 用於暫存搜尋條件的變數
 const tempSearchQuery = ref('');
 const tempSelectedPlatform = ref('');
@@ -418,7 +432,7 @@ const togglePlatformBox = () => {
 // 選擇遊戲並關閉選單
 const selectGame = item => {
     selectedGame.value = item.PlatformName; // 或 item.value 根據需要
-    showPlatformBox.value = false; // 隱藏選單   
+    showPlatformBox.value = false; // 隱藏選單
 };
 
 const handleClickOutside = event => {
@@ -538,6 +552,23 @@ async function fetchADDownList(token) {
         data.value = '無法取得資料。'; // 畫面顯示錯誤訊息
     }
 }
+// 計算總頁數
+const totalPages = computed(() => Math.ceil(filteredStores.value.length / itemsPerPage));
+
+// 計算當前頁需要顯示的資料
+const paginatedQAs = computed(() => {
+    console.log(2266);
+    const start = (currentPage.value - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    return filteredStores.value.slice(start, end);
+});
+const changePage = page => {
+    currentPage.value = page;
+    const start = (currentPage.value - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    const arr = filteredStores.value.slice(start, end);
+    filteredStores.value = arr;
+};
 onMounted(async () => {
     await setPageLoading(true);
     try {
@@ -843,6 +874,30 @@ const filteredProcessedGamePlatforms = computed(() => {
     -webkit-box-orient: vertical; /* 設置為垂直方向 */
     -webkit-line-clamp: 3; /* 限制顯示的行數 */
     line-height: 35px;
+}
+:deep(.el-pager > .number) {
+    color: #f72585;
+    margin: 0 5px;
+    font-size: 20px;
+}
+:deep(.el-pagination > .btn-prev > .el-icon) {
+    color: #f72585;
+    font-size: 20px;
+    margin: 0 5px;
+}
+:deep(.el-pagination > .btn-next > .el-icon) {
+    color: #f72585;
+    font-size: 20px;
+    margin: 0 5px;
+}
+:deep(.el-pagination) {
+    --el-pagination-bg-color: rgba(0, 0, 0, 0);
+    --el-pagination-button-disabled-bg-color: rgba(0, 0, 0, 0);
+}
+:deep(.el-pager > .is-active) {
+    background: linear-gradient(to right, #4361ee, #f72585);
+    border-radius: 50%;
+    color: #fff;
 }
 @media screen and (max-width: 768px) {
     .storeBox {
