@@ -199,6 +199,7 @@ const formatRewardPatch = (rewardPatch) => {
 };
 
 const formatDate = (dateTime) => {
+        if (!dateTime) return "";
     return dateTime.split("T")[0];
 };
 
