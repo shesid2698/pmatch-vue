@@ -737,7 +737,7 @@ const filteredProcessedGamePlatforms = computed(() => {
 }
 .storeBox {
     position: relative;
-    padding: 4px 1px;
+    /* padding: 4px 1px; */
     background: linear-gradient(to right, rgba(67, 97, 238), rgba(247, 37, 133));
     border-radius: 15px;
     border: none;
@@ -745,6 +745,16 @@ const filteredProcessedGamePlatforms = computed(() => {
     max-height: 280px;
     /* max-height: 240px; */
     margin-bottom: 20px;
+
+
+    border-width: 0.5rem;
+  border-style: solid;
+  border-color: transparent;
+  border-radius: 2rem;
+  background-image: linear-gradient(white, white), linear-gradient(to right, #68e2ff, #4253eb, #d851ff);
+  background-clip: padding-box, border-box;
+  background-origin: padding-box, border-box;
+  overflow: hidden
 }
 .storeContent {
     position: relative;
@@ -752,7 +762,7 @@ const filteredProcessedGamePlatforms = computed(() => {
     border-radius: 10px;
     border: none;
     padding: 2rem;
-    width: 92%;
+    width: 100%;
     aspect-ratio: 1800/465;
     background-image: url('/images/bg-wave01.png');
     background-size: contain;

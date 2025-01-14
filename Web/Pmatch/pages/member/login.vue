@@ -153,8 +153,8 @@ const onVerify = tokenValue => {
 // 登入傳送帳密
 const login = async () => {
     // 加密密碼
-    const encryptedPassword = md5(password.value);
-    // const encryptedPassword = CrypTo.loginEncrypt(password.value);
+    // const encryptedPassword = md5(password.value);
+    const encryptedPassword = CrypTo.loginEncrypt(password.value);
     // 等待登入結果
     await Login(encryptedPassword);
 };
