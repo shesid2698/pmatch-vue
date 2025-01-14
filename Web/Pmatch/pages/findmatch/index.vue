@@ -92,7 +92,7 @@
             <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
                 <div class="mb-6 flex flex-wrap md-flex-nowrap item-center justify-center">
                     <div class="flex flex-wrap md-flex-nowrap w-100% md-w-95%">
-                        <div class="w-100% md-w-40% mb-6rem md-mb-0 flex flex-wrap item-center justify-center md-me-1rem">
+                        <div class="w-100% md-w-40% mb-6rem  md-mb-0 flex flex-wrap item-center justify-center md-me-1rem">
                             <div class="w-100% flex justify-center mb-2rem md-mb-0">
                                 <span class="platformTitle">{{
                                     selectedGame
@@ -127,7 +127,7 @@
                               :to="`/findmatch/${item.Id}`"
                               class="decoration-none">
                         <div class="storeBox md:w-95% w-1/2 flex flex-wrap justify-center"
-                              :class="index%2==0?'md:mr-0 mr-20px':'mr-0'">
+                             :class="index%2==0?'md:mr-0 mr-20px':'mr-0'">
                             <div class="storeContent">
                                 <div class="flex md:flex-row flex-col justify-between">
                                     <div class="w-100% md:w-22% storeImgCol">
@@ -616,9 +616,7 @@ const handleSearch = () => {
 const filteredStores = computed(() => {
     return storesList.value.filter(store => {
         const matchesSearchQuery = activeSearchQuery.value
-            ? store.Name().includes(
-                  activeSearchQuery.value.toLowerCase()
-              )
+            ? store.Name().includes(activeSearchQuery.value.toLowerCase())
             : true;
 
         const matchesSelectedPlatform = activeSelectedPlatform.value
@@ -721,19 +719,21 @@ const filteredProcessedGamePlatforms = computed(() => {
     font-size: 44px;
 }
 .platformImgBox {
-    position: relative;
-    background: linear-gradient(to right, rgba(67, 97, 238), rgba(247, 37, 133));
-    border-radius: 10px;
-    border: none;
     display: flex;
     align-content: center;
-    padding: 2px;
     box-shadow: 0px 10px 10px 2px #ccc;
+    border-width: 2px;
+    border-style: solid;
+    border-color: transparent;
+    border-radius: 10px;
+    background-image: linear-gradient(white, white),
+        linear-gradient(to right, rgba(67, 97, 238), rgba(247, 37, 133));
+    background-clip: padding-box, border-box;
+    background-origin: padding-box, border-box;
+    overflow: hidden;
 }
 .platformImg {
-    border-radius: 10px;
-    padding: 1px;
-    border: none;
+    width: 100%;
 }
 .storeBox {
     position: relative;
@@ -839,25 +839,25 @@ const filteredProcessedGamePlatforms = computed(() => {
     line-height: 35px;
 }
 @media screen and (max-width: 768px) {
- .storeBox{
-    max-height: unset;
-    width: fit-content;
-    aspect-ratio: unset;
-    border-radius: 13px;
-    padding: 2px 2px;
-    margin-bottom: 120px;
-  }
+    .storeBox {
+        max-height: unset;
+        width: fit-content;
+        aspect-ratio: unset;
+        border-radius: 13px;
+        padding: 2px 2px;
+        margin-bottom: 120px;
+    }
 
     .storeDetailCol {
         width: 100%;
         padding: 0;
-        padding-top:6rem;
+        padding-top: 6rem;
         margin-bottom: 1rem;
     }
-    .storeImgBox{
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100px;
+    .storeImgBox {
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
     }
     .storeImgCol {
         padding-right: 0;
@@ -873,13 +873,13 @@ const filteredProcessedGamePlatforms = computed(() => {
         /* padding: 8rem 1rem 1rem 1rem; */
         width: 185px;
         max-height: 343px;
-        padding:0;
-        aspect-ratio:290/537.6499;
+        padding: 0;
+        aspect-ratio: 290/537.6499;
 
         /* aspect-ratio: 290/537.6499; */
     }
-    .orderBox{
-      border-radius: 20px;
+    .orderBox {
+        border-radius: 20px;
     }
     .orderBtn {
         border-radius: 20px;
