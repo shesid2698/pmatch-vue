@@ -72,7 +72,7 @@ const userToken = useCookie('_PmToken');
 const stores = ref([]);
 const getImgSrc = src => {
     let realSrc = '';
-    realSrc = `/images/2025/${src}`;
+    realSrc = `/images/${src}`;
     return realSrc;
 };
 onMounted(async () => {
