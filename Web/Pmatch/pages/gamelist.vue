@@ -366,7 +366,7 @@ onMounted(async () => {
     color: lightgray;
 }
 .companyInfoContainer {
-    background-image: url('/public/images/bg-dot05.png'), linear-gradient(45deg, #7b2cbf, #f72585);
+    background-image: url('/images/bg-dot05.png'), linear-gradient(45deg, #7b2cbf, #f72585);
     background-size: contain;
     background-repeat: no-repeat;
     background-position: bottom;
@@ -381,7 +381,7 @@ onMounted(async () => {
     position: relative;
     width: 100%;
     aspect-ratio: 3/2;
-    background-image: url('/public/images/bg-wave03.png');
+    background-image: url('/images/bg-wave03.png');
     background-size: contain;
     background-repeat: no-repeat;
     color: white;

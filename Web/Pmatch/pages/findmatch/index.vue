@@ -145,14 +145,14 @@
                                                      :key="`filled-${index}-${n}`"
                                                      class="m-1"
                                                      width="20"
-                                                     src="/public/images/icon-star.png"
+                                                     src="/images/icon-star.png"
                                                      alt="評分整顆星星" />
                                                 <!-- 顯示半顆星星 -->
                                                 <img v-if="item.Score % 1 !== 0"
                                                      :key="`half-${index}`"
                                                      class="m-1"
                                                      width="20"
-                                                     src="/public/images/icon-star03.png"
+                                                     src="/images/icon-star03.png"
                                                      alt="評分半顆星星" />
                                             </div>
                                         </div>
@@ -230,14 +230,14 @@
                                                      :key="`filled-${index}-${n}`"
                                                      class="m-1"
                                                      width="20"
-                                                     src="/public/images/icon-star.png"
+                                                     src="/images/icon-star.png"
                                                      alt="評分整顆星星" /> -->
                                                 <!-- 顯示半顆星星 -->
                                                 <!-- <img v-if="item.Score % 1 !== 0"
                                                      :key="`half-${index}`"
                                                      class="m-1"
                                                      width="20"
-                                                     src="/public/images/icon-star03.png"
+                                                     src="/images/icon-star03.png"
                                                      alt="評分半顆星星" /> -->
                                             </div>
                                         </div>
@@ -754,7 +754,7 @@ const filteredProcessedGamePlatforms = computed(() => {
     padding: 2rem;
     width: 92%;
     aspect-ratio: 1800/465;
-    background-image: url('/public/images/bg-wave01.png');
+    background-image: url('/images/bg-wave01.png');
     background-size: contain;
     background-repeat: no-repeat;
 }

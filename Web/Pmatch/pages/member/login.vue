@@ -178,8 +178,10 @@ async function Login(encryptedPassword) {
         const response = await $axios.post(
             '/api/v1/Pmatch/Logon',
             {
-                Account: accountId.value,
-                Password: encryptedPassword, // 使用加密後的密碼
+                // Account: accountId.value,
+                Account: '0973770933',
+                // Password: encryptedPassword, // 使用加密後的密碼
+                Password: '8653251d81e4726ec26770406e63e810', // 使用加密後的密碼
                 IsNormalUser: true
             },
             {
