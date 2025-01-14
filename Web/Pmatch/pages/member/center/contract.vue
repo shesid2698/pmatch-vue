@@ -46,11 +46,15 @@
             <div class="flex">
                 <div v-for="store in stores"
                      :key="store.Id">
-                    <div class="imgContainer">
-                        <img :src="getImgSrc(store.IMGFiles)"
-                             alt="null pic"
-                             width="150"
-                             height="150">
+                    <div class="relative w-fit h-fit">
+                        <div class="imgContainer">
+                            <img :src="getImgSrc(store.IMGFiles)"
+                                 alt="null pic"
+                                 width="150"
+                                 height="150">
+
+                        </div>
+                        <div class="GameName">{{ store.Name }}</div>
                     </div>
 
                 </div>
@@ -108,18 +112,37 @@ onMounted(async () => {
     color: #3d8dcc;
     border-bottom: 3px solid #3d8dcc;
 }
-.imgContainer{
-  border-width: 2px;
-  border-style: solid;
-  border-color: transparent;
-  border-radius: 15px;
-  background-image: linear-gradient(white, white), linear-gradient(to right, #4361ee, #f72585);
-  background-clip: padding-box, border-box;
-  background-origin: padding-box, border-box;
-  overflow: hidden;
-  box-sizing: border-box;
-  width: 150px;
-  height: 150px;
-  margin-right: 15px ;
+.imgContainer {
+    position: relative;
+    border-width: 2px;
+    border-style: solid;
+    border-color: transparent;
+    border-radius: 15px;
+    background-image: linear-gradient(white, white), linear-gradient(to right, #4361ee, #f72585);
+    background-clip: padding-box, border-box;
+    background-origin: padding-box, border-box;
+    overflow: hidden;
+    box-sizing: border-box;
+    width: 150px;
+    height: 150px;
+    margin-right: 15px;
+}
+.GameName {
+    position: absolute;
+    bottom: 2px;
+    left: 2px;
+    background: rgba(255, 255, 255, 0.5);
+    width: 146px;
+    height: 0;
+    text-align: center;
+    border-radius: 0 0 15px 15px;
+    align-content: center;
+    font-weight: 600;
+    font-size: 20px;
+    transition: 0.5s;
+    overflow: hidden;
+}
+.imgContainer:hover~.GameName{
+height: 40px;
 }
 </style>
