@@ -102,7 +102,7 @@
                                 <div>
                                     <div class="platformImgBox">
                                         <img :src="`${assetsUrl}${currentImg}`"
-                                             :alt="platformName"
+                                             :alt="`${selectedGame}`"
                                              class="platformImg" />
                                     </div>
                                 </div>
@@ -124,7 +124,7 @@
                 <div class="flex flex-wrap justify-center">
                     <NuxtLink v-for="(item, index) in filteredStores"
                               :key="index"
-                              :to="`/findmatch/${item.Id}`"
+                              :to="`/findmatch/${item.Id}?pn=${selectedGame}`"
                               class="decoration-none">
                         <div class="storeBox md:w-95% w-1/2 flex flex-wrap justify-center"
                              :class="index%2==0?'md:mr-0 mr-20px':'mr-0'">
@@ -299,7 +299,7 @@
                                     </div> -->
                                     <div class="w-100% md-w-200px flex justify-center">
                                         <div class="w-200px flex justify-center items-center">
-                                            <NuxtLink :to="`/findmatch/${item.Id}`"
+                                            <NuxtLink :to="`/findmatch/${item.Id}?pn=${selectedGame}`"
                                                       class="decoration-none">
                                                 <div class="orderBox">
                                                     <button class="orderBtn">
@@ -418,7 +418,7 @@ const togglePlatformBox = () => {
 // 選擇遊戲並關閉選單
 const selectGame = item => {
     selectedGame.value = item.PlatformName; // 或 item.value 根據需要
-    showPlatformBox.value = false; // 隱藏選單
+    showPlatformBox.value = false; // 隱藏選單   
 };
 
 const handleClickOutside = event => {
@@ -610,6 +610,8 @@ const handleSearch = () => {
     activeSelectedPlatform.value = selectedGame.value;
     activeShowSignedOnly.value = tempShowSignedOnly.value;
     matchingPlatform.value = selectedGame.value;
+
+    //platformName2 = selectedGame.value;
 };
 
 // 篩選邏輯

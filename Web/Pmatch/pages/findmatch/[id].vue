@@ -418,8 +418,10 @@ const openAlertModal = alertModalStore.alertShowModal;
 const store = useLoadStore();
 const setPageLoading = store.setPageLoading;
 
+// 路由參數 id?pn=包你發娛樂城
 const route = useRoute();
 const routeParamId = route.params.id;
+const routeParamPlatformName = route.query.pn;
 const storesItem = ref(null);
 const storeQAList = ref([]);
 const isLoading = ref(true); // 加載狀態
@@ -455,6 +457,7 @@ let accPhone = ref('');
 const currentIndex = ref(0);
 // 計算目前的值
 const currentPlatform = computed(() => filteredPlatformArray.value[currentIndex.value]);
+//const currentPlatform = routeParamPlatformName;
 
 // 分頁tab用
 const currentPage = ref(1); // 當前頁碼
@@ -777,14 +780,23 @@ async function fetchGameList(token) {
 watch(
     [filteredPlatform, filteredPlatformArray, gameList],
     ([newFilteredPlatform, newFilteredPlatformArray]) => {
+            
         // 更新 accPlatformName
         if (newFilteredPlatform) {
             accPlatformName.value = newFilteredPlatform;
         }
 
+        // 如果有路由參數，則將路由參數的值設置為 currentPlatform
+        const currentPlatformIndex = newFilteredPlatformArray.findIndex(
+            platform => platform === routeParamPlatformName
+        );
         // 更新 currentIndex
         if (newFilteredPlatformArray.length > 0 && !currentPlatform.value) {
             currentIndex.value = 0;
+        }
+        else
+        if (currentPlatformIndex !== -1) { // 如果有找到，則將索引設置為 currentIndex
+            currentIndex.value = currentPlatformIndex;
         }
     },
     { immediate: true } // 立刻執行一次，將初始值設置進去
