@@ -99,7 +99,7 @@
                                 }}</span>
                             </div>
                             <div class="w-100% flex justify-center">
-                                <div>
+                                <div class="w-100% h-100%">
                                     <div class="platformImgBox">
                                         <img :src="`${assetsUrl}${currentImg}`"
                                              :alt="`${selectedGame}`"
@@ -731,13 +731,14 @@ const filteredProcessedGamePlatforms = computed(() => {
     background-clip: padding-box, border-box;
     background-origin: padding-box, border-box;
     overflow: hidden;
+    height: 100%;
+    width: 100%;
 }
 .platformImg {
     width: 100%;
 }
 .storeBox {
     position: relative;
-    background: linear-gradient(to right, rgba(67, 97, 238), rgba(247, 37, 133));
     border-radius: 15px;
     border: none;
     margin-bottom: 20px;
@@ -745,7 +746,7 @@ const filteredProcessedGamePlatforms = computed(() => {
     border-style: solid;
     border-color: transparent;
     background-image: linear-gradient(white, white),
-        linear-gradient(to right, #68e2ff, #4253eb, #d851ff);
+        linear-gradient(to right, rgba(67, 97, 238), rgba(247, 37, 133));
     background-clip: padding-box, border-box;
     background-origin: padding-box, border-box;
     overflow: hidden;
