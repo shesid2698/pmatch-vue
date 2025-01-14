@@ -183,10 +183,6 @@
                      class="infinite-table-container"
                      style="overflow: auto; height: 400px">
                     <el-table :data="tableData"
-                              :default-sort="{
-                            prop: 'EndTime',
-                            order: 'descending',
-                        }"
                               style="width: 100%"
                               :header-cell-style="{
                             color: 'white',
@@ -195,7 +191,8 @@
                               stripe
                               border>
                         <el-table-column prop="EndTime"
-                                         label="日期" />
+                                         label="日期"
+                                         :formatter="formatDate2" />
                         <el-table-column prop="Item"
                                          label="項目" />
                         <el-table-column prop="Amount"
@@ -254,15 +251,15 @@
                 const start = new Date(now);
                 start.setDate(now.getDate() - selectedOffset);
 
-                startTime.value = await formatDate(start);
-                endTime.value = await formatDate(now);
+                startTime.value = formatDate(start, true);
+                endTime.value = formatDate(now, true);
             }
             await fetchOrderListData();
         }
     };
 
     //
-    async function formatDate(date) {
+    const formatDate=(date, isIncludeT)=>{
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, '0'); // 月份從 0 開始
         const day = String(date.getDate()).padStart(2, '0');
@@ -270,7 +267,19 @@
         const minutes = String(date.getMinutes()).padStart(2, '0');
         const seconds = String(date.getSeconds()).padStart(2, '0');
 
-        const ret = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+        var ret = '';
+
+        if (isIncludeT == true) { ret = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`; }
+        else { ret = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`; }
+
+        return ret;
+    };
+
+    //
+    const formatDate2=(row, column, cellValue)=> {
+        // Localtime to ISO
+        var date = new Date(cellValue);
+        var ret = formatDate(date, false);
 
         return ret;
     };
