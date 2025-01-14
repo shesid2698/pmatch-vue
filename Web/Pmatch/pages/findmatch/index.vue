@@ -159,7 +159,7 @@
                                     </div>
                                     <div class="storeDetailCol">
                                         <div class="md:mb-5 mb-1 w-100%">
-                                            <h2 class="m-0 mb-3 color-#4361ee text-22px md:text-32px text-center">
+                                            <h2 class="m-0 mb-3 color-#4361ee text-22px md:text-32px md:text-start text-center">
                                                 {{ item.Name }}
                                             </h2>
                                             <a :title="item.About">
@@ -169,7 +169,7 @@
                                             </a>
                                         </div>
                                         <div class="w-100%">
-                                            <div class="flex md:pl-5px pl-0 justify-center"
+                                            <div class="flex md:pl-5px pl-0 justify-center md:justify-start"
                                                  v-if="item">
                                                 <NuxtLink class="flex items-center ms-1 me-1"
                                                           v-show="item.FB !== ''"
@@ -737,24 +737,18 @@ const filteredProcessedGamePlatforms = computed(() => {
 }
 .storeBox {
     position: relative;
-    /* padding: 4px 1px; */
     background: linear-gradient(to right, rgba(67, 97, 238), rgba(247, 37, 133));
     border-radius: 15px;
     border: none;
-    width: 900px;
-    max-height: 280px;
-    /* max-height: 240px; */
     margin-bottom: 20px;
-
-
-    border-width: 0.5rem;
-  border-style: solid;
-  border-color: transparent;
-  border-radius: 2rem;
-  background-image: linear-gradient(white, white), linear-gradient(to right, #68e2ff, #4253eb, #d851ff);
-  background-clip: padding-box, border-box;
-  background-origin: padding-box, border-box;
-  overflow: hidden
+    border-width: 2px;
+    border-style: solid;
+    border-color: transparent;
+    background-image: linear-gradient(white, white),
+        linear-gradient(to right, #68e2ff, #4253eb, #d851ff);
+    background-clip: padding-box, border-box;
+    background-origin: padding-box, border-box;
+    overflow: hidden;
 }
 .storeContent {
     position: relative;
@@ -762,11 +756,12 @@ const filteredProcessedGamePlatforms = computed(() => {
     border-radius: 10px;
     border: none;
     padding: 2rem;
-    width: 100%;
-    aspect-ratio: 1800/465;
+    width: 900px;
+    aspect-ratio: 1876/584;
     background-image: url('/images/bg-wave01.png');
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
+    box-sizing: border-box;
 }
 /* 商家資訊 */
 .storeImg {
@@ -854,8 +849,8 @@ const filteredProcessedGamePlatforms = computed(() => {
         width: fit-content;
         aspect-ratio: unset;
         border-radius: 13px;
-        padding: 2px 2px;
         margin-bottom: 120px;
+        overflow: visible;
     }
 
     .storeDetailCol {
@@ -880,13 +875,10 @@ const filteredProcessedGamePlatforms = computed(() => {
         position: relative;
         border-radius: 12px;
         border: none;
-        /* padding: 8rem 1rem 1rem 1rem; */
         width: 185px;
         max-height: 343px;
         padding: 0;
-        aspect-ratio: 290/537.6499;
-
-        /* aspect-ratio: 290/537.6499; */
+        background-image: url('/images/bg-wave02.png');
     }
     .orderBox {
         border-radius: 20px;
