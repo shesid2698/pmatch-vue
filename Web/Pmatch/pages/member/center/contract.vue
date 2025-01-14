@@ -142,7 +142,8 @@ onMounted(async () => {
     transition: 0.5s;
     overflow: hidden;
 }
-.imgContainer:hover~.GameName{
-height: 40px;
+.GameName:hover,
+.imgContainer:hover ~ .GameName {
+    height: 40px;
 }
 </style>

@@ -110,8 +110,10 @@
 
 <script setup>
 import VueTurnstile from 'vue-turnstile';
+import useCryptTo from '~/composables/crypto.js';
 
 import { useAlertModalStore } from '../stores/useAlertModal.js';
+const CrypTo = useCryptTo();
 const alertModalStore = useAlertModalStore();
 const openAlertModal = alertModalStore.alertShowModal;
 const { md5 } = crypto();
@@ -152,6 +154,7 @@ const onVerify = tokenValue => {
 const login = async () => {
     // 加密密碼
     const encryptedPassword = md5(password.value);
+    // const encryptedPassword = CrypTo.loginEncrypt(password.value);
     // 等待登入結果
     await Login(encryptedPassword);
 };
@@ -178,10 +181,8 @@ async function Login(encryptedPassword) {
         const response = await $axios.post(
             '/api/v1/Pmatch/Logon',
             {
-                // Account: accountId.value,
-                Account: '0973770933',
-                // Password: encryptedPassword, // 使用加密後的密碼
-                Password: '8653251d81e4726ec26770406e63e810', // 使用加密後的密碼
+                Account: accountId.value,
+                Password: encryptedPassword, // 使用加密後的密碼
                 IsNormalUser: true
             },
             {

@@ -100,21 +100,23 @@
                 </div>
             </div>
         </div>
-        <div class="text-center companyInfoContainer">
-            <div class="companyInfoTitle">廠商資訊</div>
-        </div>
-        <div class="max-w-1110px m-auto ps-5 pe-5 m-t-100px">
-            <div class="flex flex-wrap w-100%">
-                <div v-for="(item) in companies"
-                     :key="item.Id"
-                     class="w-100% md:w-1/3 pr-15px box-border">
-                    <div class="companyCard w-100%">
-                        <div class="companyName">{{ item.Name }}</div>
-                        <div class="companyId">統編</div>
-                        <div class="companyIdNum">{{ item.IdNum }}</div>
-                    </div>
-                </div>
-            </div>
+        <div v-show="userToken!=null && userToken!=''&& userToken!=undefined">
+          <div class="text-center companyInfoContainer">
+              <div class="companyInfoTitle">廠商資訊</div>
+          </div>
+          <div class="max-w-1110px m-auto ps-5 pe-5 m-t-100px">
+              <div class="flex flex-wrap w-100%">
+                  <div v-for="(item) in companies"
+                      :key="item.Id"
+                      class="w-100% md:w-1/3 pr-15px box-border">
+                      <div class="companyCard w-100%">
+                          <div class="companyName">{{ item.Name }}</div>
+                          <div class="companyId">統編</div>
+                          <div class="companyIdNum">{{ item.IdNum }}</div>
+                      </div>
+                  </div>
+              </div>
+          </div>
         </div>
     </div>
 </template>
@@ -138,38 +140,53 @@ const assetsUrl = useCookie('_PmAssetsUrl');
 const companies = ref([
     {
         Id: 1,
-        Name: '紫海數位有限公司',
-        IdNum: '50922310'
+        Name: '聖吉科技有限公司',
+        IdNum: '67379896'
     },
     {
         Id: 2,
-        Name: '紫海數位有限公司',
-        IdNum: '50922310'
+        Name: '聖印數位有限公司',
+        IdNum: '90376983'
     },
     {
         Id: 3,
-        Name: '紫海數位有限公司',
-        IdNum: '50922310'
+        Name: '宸運網路有限公司',
+        IdNum: '83791731'
     },
     {
         Id: 4,
-        Name: '日商滿貫全壘打股份有限公司',
-        IdNum: '50922310'
+        Name: '宇郅國際有限公司',
+        IdNum: '82868789'
     },
     {
         Id: 5,
-        Name: '紫海數位有限公司',
-        IdNum: '50922310'
+        Name: '向鴻有限公司',
+        IdNum: '50996109'
     },
     {
         Id: 6,
-        Name: '紫海數位有限公司',
-        IdNum: '50922310'
+        Name: '正毓有限公司',
+        IdNum: '50855754'
     },
     {
         Id: 7,
-        Name: '紫海數位有限公司',
-        IdNum: '50922310'
+        Name: '笠榮興業有限公司',
+        IdNum: '55865653'
+    },
+    {
+        Id: 8,
+        Name: '馥楹實業有限公司',
+        IdNum: '55865675'
+    },
+    {
+        Id: 9,
+        Name: '富聿甲有限公司',
+        IdNum: '50896951'
+    },
+    {
+        Id: 10,
+        Name: '訊邑科技有限公司',
+        IdNum: '83633065'
     }
 ]);
 /**
@@ -385,7 +402,7 @@ onMounted(async () => {
     background-size: contain;
     background-repeat: no-repeat;
     color: white;
-    margin-bottom:30px;
+    margin-bottom: 30px;
 }
 .companyName {
     position: absolute;
@@ -447,9 +464,9 @@ onMounted(async () => {
         margin-left: 0rem;
         margin-bottom: 2rem;
     }
-    .companyInfoContainer{
-      aspect-ratio: 765.838/308.154;
-      font-size: 50px;
+    .companyInfoContainer {
+        aspect-ratio: 765.838/308.154;
+        font-size: 50px;
     }
 }
 </style>
