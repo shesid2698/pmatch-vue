@@ -9,6 +9,15 @@
                 </div>
             </div>
         </div>
+        <div class="bg-red">
+            <div class="box">
+                <div>123456</div>
+                <div>789</div>
+            </div>
+        </div>
+        <div class="box2">
+            rotateY(45deg)
+        </div>
     </div>
 </template>
 
@@ -39,5 +48,42 @@
 
 .flip-card-front {
     background-color: #fff;
+}
+.box {
+    box-sizing: border-box;
+    width: fit-content;
+    aspect-ratio: 3/2;
+    color: white;
+    position: relative;
+    padding: 8px;
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-width: 0;
+        border-bottom-width: 3px;
+        border-style: solid;
+        border-color: transparent;
+        background-image: linear-gradient(to right, #68e2ff, #4253eb, #d851ff);
+        background-origin: border-box;
+        mask-image: linear-gradient(white, white), linear-gradient(white, white);
+        mask-clip: padding-box, border-box;
+        mask-composite: exclude, add;
+    }
+}
+.box2 {
+    background: #2db34a;
+    border-radius: 6px;
+    height: 95px;
+    width: 95px;
+    line-height: 95px;
+    text-align: center;
+    color: white;
+    font-size: 11px;
+    transform: perspective(250px) rotateY(30deg);
+    transition: 0.5s;
+    &:hover{
+      transform: perspective(250px) rotateY(40deg);
+    }
 }
 </style>

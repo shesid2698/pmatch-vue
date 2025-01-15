@@ -785,7 +785,7 @@ async function fetchGameList(token) {
 watch(
     [filteredPlatform, filteredPlatformArray, gameList],
     ([newFilteredPlatform, newFilteredPlatformArray]) => {
-            
+
         // 更新 accPlatformName
         if (newFilteredPlatform) {
             accPlatformName.value = newFilteredPlatform;
@@ -1182,6 +1182,9 @@ watch(
     width: 100%;
     height: 100%;
 }
+/* :deep(.el-carousel__item.is-in-stage.el-carousel__item--card:nth-of-type(2)){
+  transform: translateX(292.407px) perspective(1000px) rotateY(-40deg)!important;
+} */
 @media screen and (max-width: 1024px) {
   .platformBox{
     max-height: 290px;
