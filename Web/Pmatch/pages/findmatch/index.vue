@@ -58,7 +58,7 @@
                                         <input class="storeEntry max-w-702px md-max-w-517px pt-12px pb-12px w-80% md-w-80% font-size-1.2rem fw-600"
                                                type="text"
                                                placeholder="輸入關鍵字..."
-                                               v-model="keywordToSearch" />
+                                               v-model="selectedKeyword" />
                                     </div>
                                 </div>
                                 <div class="relative">
@@ -95,14 +95,14 @@
                         <div class="w-100% md-w-40% mb-6rem  md-mb-0 flex flex-wrap item-center justify-center md-me-1rem">
                             <div class="w-100% flex justify-center mb-2rem md-mb-0">
                                 <span class="platformTitle">{{
-                                    selectedGame
+                                    selectedSearchGame
                                 }}</span>
                             </div>
                             <div class="w-100% flex justify-center">
                                 <div class="w-100% h-100%">
                                     <div class="platformImgBox">
                                         <img :src="`${assetsUrl}${currentImg}`"
-                                             :alt="`${selectedGame}`"
+                                             :alt="`${selectedSearchGame}`"
                                              class="platformImg" />
                                     </div>
                                 </div>
@@ -418,6 +418,8 @@ const matchingPlatform = ref('');
 let contractToSearch = ref(false);
 const activeContractSearch = ref(false);
 const selectedGame = ref('');
+const selectedKeyword = ref('');
+const selectedSearchGame = ref('');
 const showPlatformBox = ref(false);
 
 // 切換下拉選單的顯示/隱藏
@@ -445,7 +447,7 @@ const handleClickOutside = event => {
 };
 
 const currentImg = computed(() => {
-    const platform = gameList.value.find(item => item.PlatformName === platformName);
+    const platform = gameList.value.find(item => item.PlatformName === selectedSearchGame.value);
     return platform ? platform.ImgFile : '';
 });
 // 取得GetStoreList
@@ -587,7 +589,6 @@ const totalPages = computed(() => Math.ceil(filteredStores.value.length / itemsP
 
 // 計算當前頁需要顯示的資料
 const paginatedQAs = computed(() => {
-    console.log(2266);
     const start = (currentPage.value - 1) * itemsPerPage;
     const end = start + itemsPerPage;
     return filteredStores.value.slice(start, end);
@@ -624,7 +625,7 @@ onMounted(async () => {
 
         if (platformName !== undefined && keyword !== undefined && contract !== undefined) {
             selectedGame.value = platformName;
-            tempSearchQuery.value = keyword;
+            selectedKeyword.value = keyword
             if (contract === '1') {
                 tempShowSignedOnly.value = true;
             } else {
@@ -666,19 +667,22 @@ const stores = ref(
     }))
 );
 
-const handleSearch = () => {
+const handleSearch = async() => {
+    await setPageLoading(true);
     // 更新實際用於篩選的值
-    activeSearchQuery.value = tempSearchQuery.value;
+    activeSearchQuery.value = selectedKeyword.value;
     activeSelectedPlatform.value = selectedGame.value;
     matchingPlatform.value = selectedGame.value;
     activeContractSearch.value = contractToSearch.value;
+    selectedSearchGame.value = selectedGame.value;
+    await setPageLoading(false);
 };
 
 // 篩選邏輯
 const filteredStores = computed(() => {
     return storesList.value.filter(store => {
         const matchesSearchQuery = activeSearchQuery.value
-            ? store.Name().includes(activeSearchQuery.value.toLowerCase())
+            ? store.Name.toLowerCase().includes(activeSearchQuery.value.toLowerCase())
             : true;
 
         const matchesSelectedPlatform = activeSelectedPlatform.value
