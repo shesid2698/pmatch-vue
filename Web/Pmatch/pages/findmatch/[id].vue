@@ -1182,9 +1182,6 @@ watch(
     width: 100%;
     height: 100%;
 }
-:deep(.el-carousel__item[data-v-0b1d1463]:nth-child(2n)){
-
-}
 @media screen and (max-width: 1024px) {
   .platformBox{
     max-height: 290px;

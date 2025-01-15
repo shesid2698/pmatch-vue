@@ -137,6 +137,7 @@ const props = defineProps({
 
 // 取得MatchingList
 async function fetchMatchingListData(token, platformName) {
+    if (!process.client) return; // 確保只在客戶端執行
     if (token === "") {
         token = await jwtStore.generateToken();
     }
@@ -190,7 +191,7 @@ watch(
 // 在組件載入時啟動計時器
 onMounted(async () => {
     if (!props.param) {
-        fetchMatchingListData("", "");
+        await fetchMatchingListData("", "");
     }
 });
 onBeforeUnmount(() => {
