@@ -145,8 +145,7 @@ const verifyCode = async () => {
             '/api/v1/Pmatch/Verify',
             {
                 MobileNumber: mobile.value,
-                VerifyCode: ansCode.value,
-                IsOnRegistering:IsNew
+                VerifyCode: ansCode.value
             },
             {
                 headers: {
