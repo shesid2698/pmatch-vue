@@ -81,6 +81,9 @@
     color: white;
     font-size: 11px;
     transform: perspective(250px) rotateY(30deg);
-    &:ho
+    transition: 0.5s;
+    &:hover{
+      transform: perspective(250px) rotateY(40deg);
+    }
 }
 </style>

@@ -437,6 +437,8 @@ const getEmailVerify = async(result, resEmail) => {
         emailVerify.value = result;
         emailTableVisible.value = false;
         email.value = resEmail;
+        theUser[0].Email = resEmail;
+        theUser[0].Email_Verified = result;
         await checkForm(null);
     }
 };
