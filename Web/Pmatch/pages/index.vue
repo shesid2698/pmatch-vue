@@ -249,7 +249,7 @@
                                         >
                                             <NuxtLink
                                                 class="decoration-none"
-                                                :to="`/findmatch/${character.Id}`"
+                                                :to="`/findmatch/${character.Id}?pn=${item.PlatformName}`"
                                             >
                                                 <div
                                                     class="gameItem pt-3 pb-3 w-100%"
