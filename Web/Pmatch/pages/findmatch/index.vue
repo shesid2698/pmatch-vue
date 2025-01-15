@@ -385,6 +385,7 @@ const storesList = ref([]);
 const gameList = ref([]);
 const bannerTopList = ref([]);
 const bannerDownList = ref([]);
+const contractedStoreList = ref([]);
 
 const { $axios } = useNuxtApp();
 const jwtStore = useJwtStore();
@@ -415,6 +416,7 @@ const matchingPlatform = ref('');
 
 // 遊戲選擇器用
 let contractToSearch = ref(false);
+const activeContractSearch = ref(false);
 const selectedGame = ref('');
 const showPlatformBox = ref(false);
 
@@ -552,6 +554,34 @@ async function fetchADDownList(token) {
         data.value = '無法取得資料。'; // 畫面顯示錯誤訊息
     }
 }
+// GetContractedStoreList(已簽約媒合)
+async function fetchContractedList(token) {
+    if (token === '') {
+        token = await jwtStore.generateToken();
+    }
+
+    try {
+        const response = await $axios.post(
+            '/api/v1/Pmatch/GetContractedStoreList',
+            {
+                category: 1
+            },
+            {
+                headers: {
+                    Authorization: token // 帶上 Token
+                }
+            }
+        );
+        if (response.data.Status.Code === 0) {
+            contractedStoreList.value = response.data.Data;
+        } else {
+            await openAlertModal(' ', `${response.data.Status.Message}`);
+        }
+    } catch (error) {
+        console.error('請求失敗:', error);
+        data.value = '無法取得資料。'; // 畫面顯示錯誤訊息
+    }
+}
 // 計算總頁數
 const totalPages = computed(() => Math.ceil(filteredStores.value.length / itemsPerPage));
 
@@ -579,6 +609,7 @@ onMounted(async () => {
                 await fetchGameList(token);
                 await fetchADTopList(token);
                 await fetchADDownList(token);
+                await fetchContractedList(token);
             }
         } else {
             // 生成新的 token
@@ -639,8 +670,8 @@ const handleSearch = () => {
     // 更新實際用於篩選的值
     activeSearchQuery.value = tempSearchQuery.value;
     activeSelectedPlatform.value = selectedGame.value;
-    activeShowSignedOnly.value = tempShowSignedOnly.value;
     matchingPlatform.value = selectedGame.value;
+    activeContractSearch.value = contractToSearch.value;
 };
 
 // 篩選邏輯
@@ -656,10 +687,17 @@ const filteredStores = computed(() => {
               )
             : true;
 
-        const matchesShowSignedOnly =
-            activeShowSignedOnly.value === true ? store.MemberContractId !== 0 : true;
+        // 新增：檢查是否需要比對已簽約商店列表
+        const matchesContractedStore = activeContractSearch.value
+            ? contractedStoreList.value.some(
+                  (contractedStore) =>
+                      contractedStore.Id === store.Id &&
+                      contractedStore.Name === store.Name
+              )
+            : true;
 
-        return matchesSearchQuery && matchesSelectedPlatform && matchesShowSignedOnly;
+        return matchesSearchQuery && matchesSelectedPlatform &&
+            matchesContractedStore;
     });
 });
 
