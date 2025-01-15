@@ -100,23 +100,27 @@
                 </div>
             </div>
         </div>
-        <div v-show="userToken!=null && userToken!=''&& userToken!=undefined">
-          <div class="text-center companyInfoContainer">
-              <div class="companyInfoTitle">廠商資訊</div>
-          </div>
-          <div class="max-w-1110px m-auto ps-5 pe-5 m-t-100px">
-              <div class="flex flex-wrap w-100%">
-                  <div v-for="(item) in companies"
-                      :key="item.Id"
-                      class="w-100% md:w-1/3 pr-15px box-border">
-                      <div class="companyCard w-100%">
-                          <div class="companyName">{{ item.Name }}</div>
-                          <div class="companyId">統編</div>
-                          <div class="companyIdNum">{{ item.IdNum }}</div>
-                      </div>
-                  </div>
-              </div>
-          </div>
+        <div>
+            <div class="text-center companyInfoContainer">
+                <div class="companyInfoTitle">廠商資訊</div>
+            </div>
+            <div class="relative">
+              <div class="tips" v-show="userToken === null || userToken==='' ||userToken===undefined">若要看到完整資訊請完成註冊與實名認證</div>
+                <div class="max-w-1110px m-auto ps-5 pe-5 p-t-100px" :class="userToken === null || userToken==='' ||userToken===undefined?'cardInfoContainer':''">
+                    <div class="flex flex-wrap w-100%">
+                        <div v-for="(item) in companies"
+                             :key="item.Id"
+                             class="w-100% md:w-1/3 pr-15px box-border">
+                            <div class="companyCard w-100%">
+                                <div class="companyName">{{ item.Name }}</div>
+                                <div class="companyId">統編</div>
+                                <div class="companyIdNum">{{ item.IdNum }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </template>
@@ -452,6 +456,19 @@ onMounted(async () => {
     top: 73%;
     font-size: 25px;
     font-weight: 600;
+}
+.cardInfoContainer {
+    filter: blur(5px);
+}
+.tips{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  text-shadow: 0px 0px 10px white;
+  font-size: 50px;
+  text-align: center;
+  align-content: center;
+  z-index: 99;
 }
 @media screen and (max-width: 768px) {
     .gameBoxOdd {

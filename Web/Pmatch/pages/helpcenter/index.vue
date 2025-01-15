@@ -81,7 +81,10 @@
                 <div class="newsContanier text-center"
                      v-html="content">
                 </div>
-                <div class="w-100% text-center mt-50px"><button class="backBtn" @click="GetSearchQuery">回上頁</button></div>
+                <div class="w-100% text-center mt-50px sid">
+                    <button class="backBtn"
+                            @click="GetSearchQuery">回上頁</button>
+                </div>
             </div>
         </div>
     </div>
@@ -178,16 +181,24 @@ const GetSearchQuery = () => {
     font-weight: 600;
 }
 .newsContanier {
-    padding: 2rem 0;
-    border-bottom: 1px solid black;
-    border-width: 0;
-    border-bottom-width: 3px;
-    border-style: solid;
-    border-color: transparent;
-    background-image: linear-gradient(white, white),
-        linear-gradient(to right, rgba(67, 97, 238), rgba(247, 37, 133));
-    background-clip: padding-box, border-box;
-    background-origin: padding-box, border-box;
+    padding: 2rem 5px;
+    box-sizing: border-box;
+    width: 100%;
+    position: relative;
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-width: 0;
+        border-bottom-width: 3px;
+        border-style: solid;
+        border-color: transparent;
+        background-image: linear-gradient(to right, rgba(67, 97, 238), rgba(247, 37, 133));
+        background-origin: border-box;
+        mask-image: linear-gradient(white, white), linear-gradient(white, white);
+        mask-clip: padding-box, border-box;
+        mask-composite: exclude, add;
+    }
 }
 .dot1 {
     position: absolute;
@@ -211,8 +222,10 @@ const GetSearchQuery = () => {
 .searchBoxContainer {
     width: 300px;
     height: 55px;
+    background-color: transparent;
 }
 .searchBox {
+    background-color: transparent;
     width: 100%;
     height: 100%;
     font-size: 25px;
@@ -220,6 +233,7 @@ const GetSearchQuery = () => {
     padding-right: 55px;
     box-sizing: border-box;
     outline: none;
+    border: none;
     border-width: 2px;
     border-style: solid;
     border-color: transparent;
@@ -242,12 +256,12 @@ const GetSearchQuery = () => {
     background-clip: padding-box, border-box;
     background-origin: padding-box, border-box;
     color: white;
-    cursor:pointer;
+    cursor: pointer;
 }
-.backBtn:hover{
-background-image: linear-gradient(white, white),
+.backBtn:hover {
+    background-image: linear-gradient(white, white),
         linear-gradient(to right, rgba(67, 97, 238), rgba(247, 37, 133));
-        color: rgba(247, 37, 133);
+    color: rgba(247, 37, 133);
 }
 @media screen and (max-width: 768px) {
     .searchBoxContainer {
