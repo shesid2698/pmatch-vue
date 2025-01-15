@@ -104,13 +104,17 @@
             <div class="text-center companyInfoContainer">
                 <div class="companyInfoTitle">廠商資訊</div>
             </div>
-            <div class="relative">
-              <div class="tips" v-show="userToken === null || userToken==='' ||userToken===undefined">若要看到完整資訊請完成註冊與實名認證</div>
-                <div class="max-w-1110px m-auto ps-5 pe-5 p-t-100px" :class="userToken === null || userToken==='' ||userToken===undefined?'cardInfoContainer':''">
+            <div class="relative"
+                 id="cardContainer">
+                <div class="tips"
+                :class="thePosition<=20?'tipsMove':''"
+                     v-show="userToken === null || userToken==='' ||userToken===undefined">若要看到完整資訊請完成註冊與實名認證</div>
+                <div class="max-w-1110px m-auto ps-5 pe-5 p-t-100px"
+                     :class="userToken === null || userToken==='' ||userToken===undefined?'cardInfoContainer':''">
                     <div class="flex flex-wrap w-100%">
                         <div v-for="(item) in companies"
                              :key="item.Id"
-                             class="w-100% md:w-1/3 pr-15px box-border">
+                             class="w-100% md:w-1/3 pr-0 md:pr-15px box-border">
                             <div class="companyCard w-100%">
                                 <div class="companyName">{{ item.Name }}</div>
                                 <div class="companyId">統編</div>
@@ -141,6 +145,7 @@ const { $axios } = useNuxtApp();
 const jwtStore = useJwtStore();
 const userToken = useCookie('_PmToken');
 const assetsUrl = useCookie('_PmAssetsUrl');
+const thePosition = ref(0.0);
 const companies = ref([
     {
         Id: 1,
@@ -262,8 +267,17 @@ async function fetchADDownList(token) {
         data.value = '無法取得資料。'; // 畫面顯示錯誤訊息
     }
 }
+
 onMounted(async () => {
     await setPageLoading(true);
+    const filters = document.querySelector('#cardContainer'); // 替換成你的元素選擇器
+    window.addEventListener('scroll', e => {
+        const rect = filters.getBoundingClientRect();
+        if (filters) {
+          thePosition.value =rect.top;
+            console.log('距離視窗頂部的距離:', thePosition.value); // 元素的上邊緣到視窗頂部的距離
+        }
+    });
     try {
         if (userToken.value != '' && userToken.value != undefined) {
             const token = userToken.value;
@@ -460,15 +474,20 @@ onMounted(async () => {
 .cardInfoContainer {
     filter: blur(5px);
 }
-.tips{
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  text-shadow: 0px 0px 10px white;
-  font-size: 50px;
-  text-align: center;
-  align-content: center;
-  z-index: 99;
+.tips {
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+    text-shadow: 0px 0px 10px white;
+    font-size: 50px;
+    text-align: center;
+    align-content: center;
+    z-index: 99;
+}
+.tipsMove {
+    position: fixed;
+    top: 7%;
 }
 @media screen and (max-width: 768px) {
     .gameBoxOdd {
