@@ -114,8 +114,10 @@ const updateVisibleList = () => {
     }
 };
 const startInterval = () => {
-    updateVisibleList(); // 初始化顯示
-    intervalId = setInterval(updateVisibleList, 5000); // 每 5 秒更新
+    stopInterval(); // 確保先停止現有的 interval
+    currentIndex.value = 0; // 重置索引
+    updateVisibleList(); // 立即更新一次
+    intervalId = setInterval(updateVisibleList, 5000);
 };
 
 const stopInterval = () => {
@@ -155,6 +157,8 @@ async function fetchMatchingListData(token, platformName) {
         );
         if (response.data.Status.Code === 0) {
             matchingList.value = response.data.Datas;
+            // 獲取新數據後立即重新開始輪播
+            startInterval();
         } else {
             await openAlertModal(" ", `${response.data.Status.Message}`);
         }
@@ -177,15 +181,17 @@ const formatNumber = (value) => {
 // 監聽傳遞即時媒合值的變化去call api
 watch(
     () => props.param,
-    (newParam) => {
-        fetchMatchingListData("", newParam);
+    async (newParam) => {
+        stopInterval(); // 先停止現有的輪播
+        await fetchMatchingListData("", newParam);
     },
-    { immediate: true } // 頁面初始化時立即執行一次
+    { immediate: true }
 );
 // 在組件載入時啟動計時器
 onMounted(async () => {
-    await fetchMatchingListData("", ""); // 初次呼叫 API
-    startInterval();
+    if (!props.param) {
+        fetchMatchingListData("", "");
+    }
 });
 onBeforeUnmount(() => {
     stopInterval();
