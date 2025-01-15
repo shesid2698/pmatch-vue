@@ -105,14 +105,14 @@
                                 <div class="flex items-center justify-center w-100%">
                                     <div class="platformBox">
                                         <div class="platformContent">
-                                            <!-- <img class="platformImg w-100%"
+                                            <img class="platformImg w-100%"
                                                  :src="`${assetsUrl}${getImgFile(
                                                     item
                                                 )}`"
-                                                 :alt="item" /> -->
-                                            <img class="platformImg w-100%"
-                                                 src="/images/2025/21186e6643a9046b10830fee3cc823c0.jpg"
                                                  :alt="item" />
+                                            <!-- <img class="platformImg w-100%"
+                                                 src="/images/2025/21186e6643a9046b10830fee3cc823c0.jpg"
+                                                 :alt="item" /> -->
                                         </div>
                                     </div>
                                 </div>
@@ -557,6 +557,11 @@ onMounted(async () => {
                 await fetchGameList(token);
             }
         }
+        const items = document.querySelectorAll('.el-carousel__item');
+        if (items.length > 2) {
+            items[items.length - 1].classList.add('leftItem');
+            items[1].classList.add('rightItem');
+        }
     } catch (error) {
         console.error('頁面初始化失敗:', error);
     } finally {
@@ -571,6 +576,34 @@ const handleClick = (tab, event) => {};
 // 處理輪播切換的方法
 const handleChange = index => {
     currentIndex.value = index;
+    setTimeout(() => {
+        const items = document.querySelectorAll('.el-carousel__item');
+        var els = document.querySelector(
+            '.el-carousel__item.is-active.is-in-stage.el-carousel__item--card'
+        );
+        if (items.length > 2) {
+            var leftItem = null;
+            var rightItem = null;
+            const activeIndex = Array.from(items).indexOf(els);
+            if (items.length - 1 - activeIndex >= items.length - 2) {
+                if (items.length - 1 - activeIndex !== items.length - 1) {
+                    leftItem = els.previousElementSibling;
+                    rightItem = els.nextElementSibling;
+                } else {
+                    leftItem = items[items.length - 1];
+                    rightItem = els.nextElementSibling;
+                }
+            } else if (items.length - 1 - activeIndex === 0) {
+                leftItem = items[activeIndex - 1] || items[items.length - 1];
+                rightItem = items[0];
+            } else {
+                leftItem = els.previousElementSibling;
+                rightItem = els.nextElementSibling;
+            }
+            rightItem.classList.add('rightItem');
+            leftItem.classList.add('leftItem');
+        }
+    }, 20);
 };
 // 篩選後的載台字串
 const filteredPlatform = computed(() => {
@@ -785,7 +818,6 @@ async function fetchGameList(token) {
 watch(
     [filteredPlatform, filteredPlatformArray, gameList],
     ([newFilteredPlatform, newFilteredPlatformArray]) => {
-
         // 更新 accPlatformName
         if (newFilteredPlatform) {
             accPlatformName.value = newFilteredPlatform;
@@ -798,9 +830,8 @@ watch(
         // 更新 currentIndex
         if (newFilteredPlatformArray.length > 0 && !currentPlatform.value) {
             currentIndex.value = 0;
-        }
-        else
-        if (currentPlatformIndex !== -1) { // 如果有找到，則將索引設置為 currentIndex
+        } else if (currentPlatformIndex !== -1) {
+            // 如果有找到，則將索引設置為 currentIndex
             currentIndex.value = currentPlatformIndex;
         }
     },
@@ -1142,19 +1173,18 @@ watch(
     border-width: 4px;
     border-style: solid;
     border-color: transparent;
-    background-image: linear-gradient(white, white),
-        linear-gradient(to right, #4361ee, #f72585);
+    background-image: linear-gradient(white, white), linear-gradient(to right, #4361ee, #f72585);
     background-clip: padding-box, border-box;
     background-origin: padding-box, border-box;
     overflow: hidden;
 }
 .platformContent {
-  height: 100%;
+    height: 100%;
     color: #f72585;
 }
 .platformImg {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
 .arrowLeft {
     top: 200px;
@@ -1182,12 +1212,15 @@ watch(
     width: 100%;
     height: 100%;
 }
-/* :deep(.el-carousel__item.is-in-stage.el-carousel__item--card:nth-of-type(2)){
-  transform: translateX(292.407px) perspective(1000px) rotateY(-40deg)!important;
-} */
+.rightItem {
+    transform: translateX(292.407px) scale(0.83) perspective(1000px) rotateY(-40deg) !important;
+}
+.leftItem {
+    transform: translateX(-22.9075px) scale(0.83) perspective(1000px) rotateY(40deg) !important;
+}
 @media screen and (max-width: 1024px) {
-  .platformBox{
-    max-height: 290px;
-  }
+    .platformBox {
+        max-height: 290px;
+    }
 }
 </style>
