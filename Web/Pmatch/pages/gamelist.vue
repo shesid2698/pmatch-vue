@@ -16,15 +16,13 @@
             <div class="flex flex-wrap">
                 <div class="block md-flex flex-wrap gameOutside w-100%">
                     <div class="w-80% m-x-auto rounded-10px overflow-hidden m-b-30px">
-                        <ElCarousel v-if="bannerDownList.length > 0"
-                                    class="h-200px"
-                                    :interval="2000"
+                        <ElCarousel class="h-auto"
+                                    :interval="3000"
                                     arrow="always">
-                            <ElCarouselItem class="h-200px"
+                            <ElCarouselItem class="h-auto"
                                             v-for="(item, index) in bannerDownList"
                                             :key="index">
-                                <span></span>
-                                <img class="w-100% h-200px"
+                                <img class="w-100% h-auto"
                                      :src="`${assetsUrl}${item.ImgFile}`"
                                      :alt="item.PlatformName" />
                             </ElCarouselItem>
@@ -107,7 +105,7 @@
             <div class="relative"
                  id="cardContainer">
                 <div class="tips"
-                :class="thePosition<=20?'tipsMove':''"
+                     :class="thePosition<=20?'tipsMove':''"
                      v-show="userToken === null || userToken==='' ||userToken===undefined">若要看到完整資訊請完成註冊與實名認證</div>
                 <div class="max-w-1110px m-auto ps-5 pe-5 p-t-100px"
                      :class="userToken === null || userToken==='' ||userToken===undefined?'cardInfoContainer':''">
@@ -249,7 +247,7 @@ async function fetchADDownList(token) {
         const response = await $axios.post(
             '/api/v1/Pmatch/GetAdvertisementList',
             {
-                Category: [3]
+                Category: [1, 3]
             },
             {
                 headers: {
@@ -271,10 +269,12 @@ async function fetchADDownList(token) {
 onMounted(async () => {
     await setPageLoading(true);
     const filters = document.querySelector('#cardContainer'); // 替換成你的元素選擇器
+    const initRect = filters.getBoundingClientRect();
+    thePosition.value = initRect.top;
     window.addEventListener('scroll', e => {
-        const rect = filters.getBoundingClientRect();
         if (filters) {
-          thePosition.value =rect.top;
+            const rect = filters.getBoundingClientRect();
+            thePosition.value = rect.top;
         }
     });
     try {
@@ -487,6 +487,9 @@ onMounted(async () => {
 .tipsMove {
     position: fixed;
     top: 7%;
+}
+:deep(.el-carousel__container) {
+    height: 250px;
 }
 @media screen and (max-width: 768px) {
     .gameBoxOdd {

@@ -127,7 +127,7 @@
                 <div class="pt-2rem">
                     <div class="bannerBox h-auto">
                         <ElCarousel class="h-auto"
-                                    :interval="2000"
+                                    :interval="3000"
                                     arrow="always">
                             <ElCarouselItem class="h-auto"
                                             v-for="(item, index) in bannerList"
@@ -868,7 +868,9 @@ onBeforeUnmount(() => {
 :deep(.el-carousel__container) {
     height: auto;
 } */
-
+:deep(.el-carousel__container) {
+    height: 420px;
+}
 .moreGameBtn {
     padding: 1rem 2rem;
     background: linear-gradient(to right, #7b2cbf, #f72585);
