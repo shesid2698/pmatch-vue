@@ -123,13 +123,13 @@
             <div class="max-w-1110px m-auto md:p-x-5 p-x-2 relative z-2">
                 <div class="flex flex-wrap justify-center">
                     <div v-for="(item, index) in filteredStores.slice(
-                            (currentPage - 1) * 6,
-                            (currentPage - 1) * 6 + 6
+                            (currentPage - 1) * itemsPerPage,
+                            (currentPage - 1) * itemsPerPage + itemsPerPage
                         )"
                          :key="index">
                         <NuxtLink :to="`/findmatch/${item.Id}?pn=${selectedGame}`"
                                   class="decoration-none flex items-center justify-center">
-                            <div class="storeBox md:w-95% w-1/2 flex flex-wrap justify-center"
+                            <div class="storeBox md:w-900px w-1/2 flex flex-wrap justify-center"
                                  :class="
                                     index % 2 == 0 ? 'md:mr-0 mr-20px' : 'mr-0'
                                 ">
@@ -234,8 +234,26 @@
                             </div>
                         </NuxtLink>
                         <!-- 在第一筆資料後插入輪播 -->
-                        <div v-if="index === 0 && bannerTopList.length > 0"
+                        <div v-if="index === 1 && bannerTopList.length > 0"
                              class="w-100% mb-7rem md-mb-2rem">
+                            <ElCarousel class="h-auto"
+                                        :interval="3000"
+                                        arrow="always">
+                                <ElCarouselItem class="h-auto"
+                                                v-for="(
+                                        banner, bannerIndex
+                                    ) in bannerTopList"
+                                                :key="bannerIndex">
+                                    <img class="w-100% h-auto"
+                                         :src="`${assetsUrl}${banner.ImgFile}`"
+                                         :alt="banner.PlatformName" />
+                                </ElCarouselItem>
+                            </ElCarousel>
+                        </div>
+                        <div v-else-if="filteredStores.slice(
+                            (currentPage - 1) * itemsPerPage,
+                            (currentPage - 1) * itemsPerPage + itemsPerPage
+                        ).length ==1">
                             <ElCarousel class="h-auto"
                                         :interval="3000"
                                         arrow="always">
@@ -453,7 +471,7 @@ async function fetchADTopList(token) {
         const response = await $axios.post(
             '/api/v1/Pmatch/GetAdvertisementList',
             {
-                Category: [1,2]
+                Category: [2]
             },
             {
                 headers: {
@@ -884,8 +902,8 @@ const filteredProcessedGamePlatforms = computed(() => {
 :deep(.el-carousel__container) {
     height: 250px;
 }
-:deep(.el-carousel__item){
-  border-radius: 10px;
+:deep(.el-carousel__item) {
+    border-radius: 10px;
 }
 @media screen and (max-width: 768px) {
     .storeBox {

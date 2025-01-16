@@ -15,7 +15,7 @@
         <div class="max-w-1110px m-auto ps-5 pe-5 m-t-100px">
             <div class="flex flex-wrap">
                 <div class="block md-flex flex-wrap gameOutside w-100%">
-                    <div class="w-80% m-x-auto rounded-10px overflow-hidden m-b-30px">
+                    <div class="w-900px m-x-auto rounded-10px overflow-hidden m-b-30px">
                         <ElCarousel class="h-auto"
                                     :interval="3000"
                                     arrow="always">
@@ -247,7 +247,7 @@ async function fetchADDownList(token) {
         const response = await $axios.post(
             '/api/v1/Pmatch/GetAdvertisementList',
             {
-                Category: [1, 3]
+                Category: [3]
             },
             {
                 headers: {
