@@ -161,155 +161,107 @@
         <div class="w-full relative mt-10rem md-mt-5rem">
             <div class="max-w-1110px m-auto md:p-x-5 p-x-2 relative z-2">
                 <div class="flex flex-wrap justify-center">
-                    <div
-                        v-for="(item, index) in filteredStores.slice(
-                            (currentPage - 1) * 7,
-                            (currentPage - 1) * 7 + 6
+                    <div v-for="(item, index) in filteredStores.slice(
+                            (currentPage - 1) * 6,
+                            (currentPage - 1) * 6 + 6
                         )"
-                        :key="index"
-                    >
-                        <NuxtLink
-                            :to="`/findmatch/${item.Id}?pn=${selectedGame}`"
-                            class="decoration-none flex items-center justify-center"
-                        >
-                            <div
-                                class="storeBox md:w-95% w-1/2 flex flex-wrap justify-center"
-                                :class="
+                         :key="index">
+                        <NuxtLink :to="`/findmatch/${item.Id}?pn=${selectedGame}`"
+                                  class="decoration-none flex items-center justify-center">
+                            <div class="storeBox md:w-95% w-1/2 flex flex-wrap justify-center"
+                                 :class="
                                     index % 2 == 0 ? 'md:mr-0 mr-20px' : 'mr-0'
-                                "
-                            >
+                                ">
                                 <div class="storeContent">
-                                    <div
-                                        class="flex md:flex-row flex-col justify-between"
-                                    >
-                                        <div
-                                            class="w-100% md:w-22% storeImgCol"
-                                        >
+                                    <div class="flex md:flex-row flex-col justify-between">
+                                        <div class="w-100% md:w-22% storeImgCol">
                                             <div class="w-100% storeImgBox">
-                                                <img
-                                                    :src="`${assetsUrl}${item.IMGFiles}`"
-                                                    :alt="item.Name"
-                                                    class="w-100% storeImg"
-                                                />
+                                                <img :src="`${assetsUrl}${item.IMGFiles}`"
+                                                     :alt="item.Name"
+                                                     class="w-100% storeImg" />
                                             </div>
-                                            <div
-                                                class="flex justify-center mt-3"
-                                            >
+                                            <div class="flex justify-center mt-3">
                                                 <div class="flex">
                                                     <!-- 顯示完整星星 -->
-                                                    <img
-                                                        v-for="n in Math.floor(
+                                                    <img v-for="n in Math.floor(
                                                             item.Score
                                                         )"
-                                                        :key="`filled-${index}-${n}`"
-                                                        class="m-1"
-                                                        width="20"
-                                                        src="/images/icon-star.png"
-                                                        alt="評分整顆星星"
-                                                    />
+                                                         :key="`filled-${index}-${n}`"
+                                                         class="m-1"
+                                                         width="20"
+                                                         src="/images/icon-star.png"
+                                                         alt="評分整顆星星" />
                                                     <!-- 顯示半顆星星 -->
-                                                    <img
-                                                        v-if="
+                                                    <img v-if="
                                                             item.Score % 1 !== 0
                                                         "
-                                                        :key="`half-${index}`"
-                                                        class="m-1"
-                                                        width="20"
-                                                        src="/images/icon-star03.png"
-                                                        alt="評分半顆星星"
-                                                    />
+                                                         :key="`half-${index}`"
+                                                         class="m-1"
+                                                         width="20"
+                                                         src="/images/icon-star03.png"
+                                                         alt="評分半顆星星" />
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="storeDetailCol">
                                             <div class="md:mb-5 mb-1 w-100%">
-                                                <h2
-                                                    class="m-0 mb-3 color-#4361ee text-22px md:text-32px md:text-start text-center"
-                                                >
+                                                <h2 class="m-0 mb-3 color-#4361ee text-22px md:text-32px md:text-start text-center">
                                                     {{ item.Name }}
                                                 </h2>
                                                 <a :title="item.About">
-                                                    <p
-                                                        class="m-0 text-15px md:text-22px text-gray-5 aboutContent pl-10px md:pl-0"
-                                                    >
+                                                    <p class="m-0 text-15px md:text-22px text-gray-5 aboutContent pl-10px md:pl-0">
                                                         {{ item.About }}
                                                     </p>
                                                 </a>
                                             </div>
                                             <div class="w-100%">
-                                                <div
-                                                    class="flex md:pl-5px pl-0 justify-center md:justify-start"
-                                                    v-if="item"
-                                                >
-                                                    <NuxtLink
-                                                        class="flex items-center ms-1 me-1"
-                                                        v-show="item.FB !== ''"
-                                                        :to="item.FB"
-                                                    >
-                                                        <img
-                                                            class="w-30px h-30px"
-                                                            src="/images/iconFB.png"
-                                                            alt="fbIcon"
-                                                        />
+                                                <div class="flex md:pl-5px pl-0 justify-center md:justify-start"
+                                                     v-if="item">
+                                                    <NuxtLink class="flex items-center ms-1 me-1"
+                                                              v-show="item.FB !== ''"
+                                                              :to="item.FB">
+                                                        <img class="w-30px h-30px"
+                                                             src="/images/iconFB.png"
+                                                             alt="fbIcon" />
                                                     </NuxtLink>
-                                                    <NuxtLink
-                                                        class="flex items-center ms-1 me-1"
-                                                        v-show="
+                                                    <NuxtLink class="flex items-center ms-1 me-1"
+                                                              v-show="
                                                             item.LineId !== ''
                                                         "
-                                                        :to="item.LineId"
-                                                    >
-                                                        <img
-                                                            class="w-30px h-30px"
-                                                            src="/images/iconLine.png"
-                                                            alt="lineIcon"
-                                                        />
+                                                              :to="item.LineId">
+                                                        <img class="w-30px h-30px"
+                                                             src="/images/iconLine.png"
+                                                             alt="lineIcon" />
                                                     </NuxtLink>
-                                                    <NuxtLink
-                                                        class="flex items-center ms-1 me-1"
-                                                        v-show="
+                                                    <NuxtLink class="flex items-center ms-1 me-1"
+                                                              v-show="
                                                             item.IGId !== ''
                                                         "
-                                                        :to="item.IGId"
-                                                    >
-                                                        <img
-                                                            class="w-30px h-30px"
-                                                            src="/images/iconIG.png"
-                                                            alt="igIcon"
-                                                        />
+                                                              :to="item.IGId">
+                                                        <img class="w-30px h-30px"
+                                                             src="/images/iconIG.png"
+                                                             alt="igIcon" />
                                                     </NuxtLink>
-                                                    <NuxtLink
-                                                        class="flex items-center ms-1 me-1"
-                                                        v-show="
+                                                    <NuxtLink class="flex items-center ms-1 me-1"
+                                                              v-show="
                                                             item.TwitterId !==
                                                             ''
                                                         "
-                                                        :to="item.TwitterId"
-                                                    >
-                                                        <img
-                                                            class="w-30px h-30px"
-                                                            src="/images/iconX.png"
-                                                            alt="推特icon"
-                                                        />
+                                                              :to="item.TwitterId">
+                                                        <img class="w-30px h-30px"
+                                                             src="/images/iconX.png"
+                                                             alt="推特icon" />
                                                     </NuxtLink>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div
-                                            class="w-100% md-w-200px flex justify-center"
-                                        >
-                                            <div
-                                                class="w-200px flex justify-center items-center"
-                                            >
-                                                <NuxtLink
-                                                    :to="`/findmatch/${item.Id}?pn=${selectedGame}`"
-                                                    class="decoration-none"
-                                                >
+                                        <div class="w-100% md-w-200px flex justify-center">
+                                            <div class="w-200px flex justify-center items-center">
+                                                <NuxtLink :to="`/findmatch/${item.Id}?pn=${selectedGame}`"
+                                                          class="decoration-none">
                                                     <div class="orderBox">
-                                                        <button
-                                                            class="orderBtn"
-                                                        >
+                                                        <button class="orderBtn">
                                                             我要下單
                                                         </button>
                                                     </div>
@@ -321,27 +273,19 @@
                             </div>
                         </NuxtLink>
                         <!-- 在第一筆資料後插入輪播 -->
-                        <div
-                            v-if="index === 0 && bannerTopList.length > 0"
-                            class="w-100% mb-7rem md-mb-2rem"
-                        >
-                            <ElCarousel
-                                class="h-200px"
-                                :interval="2000"
-                                arrow="always"
-                            >
-                                <ElCarouselItem
-                                    class="h-200px"
-                                    v-for="(
+                        <div v-if="index === 0 && bannerTopList.length > 0"
+                             class="w-100% mb-7rem md-mb-2rem">
+                            <ElCarousel class="h-200px"
+                                        :interval="2000"
+                                        arrow="always">
+                                <ElCarouselItem class="h-200px"
+                                                v-for="(
                                         banner, bannerIndex
                                     ) in bannerTopList"
-                                    :key="bannerIndex"
-                                >
-                                    <img
-                                        class="w-100% h-200px"
-                                        :src="`${assetsUrl}${banner.ImgFile}`"
-                                        :alt="banner.PlatformName"
-                                    />
+                                                :key="bannerIndex">
+                                    <img class="w-100% h-200px"
+                                         :src="`${assetsUrl}${banner.ImgFile}`"
+                                         :alt="banner.PlatformName" />
                                 </ElCarouselItem>
                             </ElCarousel>
                         </div>
@@ -754,9 +698,9 @@ const filteredStores = computed(() => {
             : true;
 
         return (
-            matchesSearchQuery &&
-            matchesSelectedPlatform &&
-            matchesContractedStore
+            matchesSearchQuery
+            && matchesSelectedPlatform
+            && matchesContractedStore
         );
     });
 });
@@ -768,7 +712,6 @@ const filteredProcessedGamePlatforms = computed(() => {
         const platformsSet = new Set(
             store.GamePlatforms.map((platform) => platform.GamePlatform)
         );
-
         return Array.from(platformsSet).join(", ");
     });
 });
