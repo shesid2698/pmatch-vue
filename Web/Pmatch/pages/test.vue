@@ -82,8 +82,8 @@
     font-size: 11px;
     transform: perspective(250px) rotateY(30deg);
     transition: 0.5s;
-    &:hover{
-      transform: perspective(250px) rotateY(40deg);
+    &:hover {
+        transform: perspective(250px) rotateY(40deg);
     }
 }
 </style>

@@ -275,7 +275,6 @@ onMounted(async () => {
         const rect = filters.getBoundingClientRect();
         if (filters) {
           thePosition.value =rect.top;
-            console.log('距離視窗頂部的距離:', thePosition.value); // 元素的上邊緣到視窗頂部的距離
         }
     });
     try {
