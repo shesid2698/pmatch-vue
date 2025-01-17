@@ -85,17 +85,34 @@
                                     本會員
                                 </div>
                                 <div
-                                    class="w-80px h-30px relative border-1px border-solid border-#ced2db"
+                                    v-show="timeValue === 0"
+                                    class="flex items-center w-80px h-30px relative border-1px border-solid border-#ced2db"
                                 >
                                     <input
                                         type="number"
                                         v-model="mainPercent"
                                         @input="SettingPercent"
                                         @change="settingMemberPercent"
-                                        class="text-16px text-black left-0 text-end bg-transparent absolute outline-none w-70% border-none top-50% transform-translate-y-[-50%]"
+                                        class="flex items-center p-0 text-16px text-black left-0 text-end bg-transparent absolute outline-none w-70% border-none top-50% transform-translate-y-[-50%]"
                                     />
                                     <div
-                                        class="text-black absolute right-5px top-43% transform-translate-y-[-50%]"
+                                        class="text-black absolute right-5px top-48% transform-translate-y-[-50%]"
+                                    >
+                                        %
+                                    </div>
+                                </div>
+                                <div
+                                    v-show="timeValue !== 0"
+                                    class="flex items-center w-80px h-30px relative border-1px border-solid border-#ced2db"
+                                >
+                                    <div
+                                        @click="CannotSettingMemberPercent"
+                                        class="fw-600 text-15px text-black left-0 text-end bg-transparent absolute outline-none w-70% border-none top-50% transform-translate-y-[-50%]"
+                                    >
+                                    {{mainPercent}}
+                                    </div>
+                                    <div
+                                        class="text-black absolute right-5px top-50% transform-translate-y-[-50%]"
                                     >
                                         %
                                     </div>
@@ -192,6 +209,7 @@ const mainPercent = ref(0);
 const secondPercent = ref(0);
 const tableData = ref([]);
 const memberRewardList = ref([]);
+const timeValue = ref(0);
 
 const formatRewardPatch = (rewardPatch) => {
   if (!rewardPatch) return "";
@@ -226,6 +244,15 @@ async function fetchRewardListData() {
             if (memberRewardList.value != null) {
                 mainPercent.value = memberRewardList.value.MRewardValue;
                 secondPercent.value = 100 - mainPercent.value;
+                const endTimeString = memberRewardList.value.EndTime;
+                const endTime = new Date(endTimeString).getTime();
+                const now = Date.now();
+
+                // 計算差值
+                const difference = endTime - now;
+
+                // 確保不會有負值
+                timeValue.value = Math.max(difference, 0);
             }
         } else {
             await openAlertModal(" ", `${response.data.Status.Message}`);
@@ -264,6 +291,9 @@ async function fetchDetailListData() {
 const settingMemberPercent = async () => {
     if (mainPercent.value !== 0) await settingPercent();
 };
+const CannotSettingMemberPercent = async () =>{
+    await openAlertModal(" ", "目前推薦碼為開啟中，無法修改設定");
+}
 // 取得回饋資訊
 async function settingPercent() {
     if (!tokenCookie.value && !MemberIdCookie.value) {
