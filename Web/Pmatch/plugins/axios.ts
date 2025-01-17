@@ -1,25 +1,20 @@
 import axios from "axios";
-// 建立 Axios 實例
-export default defineNuxtPlugin(async() => {
-  let runtimeConfig = { baseUrl: "", envUrl: "" };
+import { useConfigStore } from "../stores/config.js";
 
-  // 確保只在瀏覽器環境執行
-  if (typeof window !== "undefined") {
-    try {
-      const response = await fetch("/config.json");
-      runtimeConfig = await response.json();
-    } catch (error) {
-      console.error("Failed to load config.json:", error);
-    }
+export default defineNuxtPlugin(async() => {
+  const configStore = useConfigStore();
+  
+  if (!configStore.baseUrl) {
+    await configStore.loadConfig();
   }
   const axiosInstance = axios.create({
-    baseURL: runtimeConfig.baseUrl,
+    baseURL: configStore.baseUrl, // 使用從 Pinia 載入的 baseUrl
     timeout: 12000,
-  })
+  });
 
   return {
     provide: {
-      axios: axiosInstance
-    }
-  }
-})
+      axios: axiosInstance,
+    },
+  };
+});

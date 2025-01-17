@@ -123,6 +123,7 @@
 <script setup>
 // loading page
 import { useLoadStore } from "../stores/loading.js";
+import { useConfigStore } from "../stores/config.js";
 import VueTurnstile from "vue-turnstile";
 
 import { useAlertModalStore } from "../stores/useAlertModal.js";
@@ -131,6 +132,7 @@ const openAlertModal = alertModalStore.alertShowModal;
 const config = useRuntimeConfig();
 const store = useLoadStore();
 const setPageLoading = store.setPageLoading;
+const configStore = useConfigStore();
 
 const { $axios } = useNuxtApp();
 const encrypt = useEncrypt();
@@ -183,7 +185,6 @@ async function login(event, encryptedPassword) {
                 headers: {},
             }
         );
-        
 
         if (response.data.Status.Code === 0) {
             matchMemberList.value = response.data.Data;
@@ -191,22 +192,16 @@ async function login(event, encryptedPassword) {
             if (matchMemberList.value.Token) {
                 // 編碼為 Base64 URL 格式
                 const token = matchMemberList.value.Token;
-                // 確保只在瀏覽器環境執行
-                let runtimeConfig = { baseUrl: "", envUrl: "" };
-                if (typeof window !== "undefined") {
-                    try {
-                        const response = await fetch("/config.json");
-                        runtimeConfig = await response.json();
-                    } catch (error) {
-                        console.error("Failed to load config.json:", error);
-                    }
-                }
+
                 const base64UrlToken = btoa(token)
                     .replace(/\+/g, "-")
                     .replace(/\//g, "_");
 
                 // 跳轉到目標網站
-                const targetUrl = `${runtimeConfig.envUrl}${base64UrlToken}`;
+                if (!configStore.envUrl) {
+                    await configStore.loadConfig();
+                }
+                const targetUrl = `${configStore.envUrl}${base64UrlToken}`;
                 window.location.href = targetUrl;
             } else {
                 console.error("跳轉失敗");

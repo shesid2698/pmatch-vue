@@ -1,8 +1,8 @@
 export default defineNuxtConfig({
     runtimeConfig: {
         public: {
-            envUrl: process.env.NUXT_PUBLIC_ENV_URL,
-            baseUrl: process.env.NUXT_PUBLIC_BASE_URL,
+            envUrl: '',
+            baseUrl: '',
         },
     },
 

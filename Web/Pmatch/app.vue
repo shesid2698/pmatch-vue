@@ -91,9 +91,12 @@ body {
 import { useLoadStore } from "./stores/loading.js";
 import { useModalStore } from "./stores/useModal.js";
 import { useAlertModalStore } from "./stores/useAlertModal.js";
+import { useConfigStore } from "./stores/config.js";
+
 const store = useLoadStore();
 const modal = useModalStore();
 const alertModal = useAlertModalStore();
+const configStore = useConfigStore();
 const setPageLoading = store.setPageLoading;
 
 const settingList = ref("");
@@ -109,6 +112,9 @@ const router = useRouter();
 onMounted(async () => {
     await setPageLoading(true);
     try {
+        if (!configStore.baseUrl) {
+            await configStore.loadConfig();
+        }
         if (userToken.value != "" && userToken.value != undefined) {
             const token = userToken.value;
 
