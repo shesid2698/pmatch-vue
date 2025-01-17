@@ -353,6 +353,7 @@ const jwtStore = useJwtStore();
 const userToken = useCookie('_PmToken');
 const assetsUrl = useCookie('_PmAssetsUrl');
 
+const router = useRouter();
 const route = useRoute();
 const platformName = route.query.platformName;
 const keyword = route.query.keyword;
@@ -636,6 +637,12 @@ const handleSearch = async () => {
     matchingPlatform.value = selectedGame.value;
     activeContractSearch.value = contractToSearch.value;
     selectedSearchGame.value = selectedGame.value;
+    await router.replace({
+    query: {
+        platformName: selectedGame.value,
+        keyword: selectedKeyword.value,
+    }
+});
     await setPageLoading(false);
 };
 
