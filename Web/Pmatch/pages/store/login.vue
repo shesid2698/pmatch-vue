@@ -195,10 +195,10 @@ async function login(event, encryptedPassword) {
                 let runtimeConfig = { baseUrl: "", envUrl: "" };
                 if (typeof window !== "undefined") {
                     try {
-                        const response = await fetch("/urlConfig.json");
+                        const response = await fetch("/config.json");
                         runtimeConfig = await response.json();
                     } catch (error) {
-                        console.error("Failed to load urlConfig.json:", error);
+                        console.error("Failed to load config.json:", error);
                     }
                 }
                 const base64UrlToken = btoa(token)
