@@ -1,7 +1,9 @@
 export default defineNuxtConfig({
     runtimeConfig: {
         public: {
-            envUrl: 'http://192.168.10.206:6092/l/',
+            envUrl: process.env.ENV_URL,
+            baseUrl: process.env.BASE_URL,
+            // envUrl: 'http://192.168.10.206:6092/l/',
             // envUrl: 'https://acctest.pmatch.com.tw/l/',
         },
     },
