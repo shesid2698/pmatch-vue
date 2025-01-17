@@ -258,7 +258,7 @@
         }
     };
 
-    //
+    // 轉換日期格式為 yyyy-MM-dd(T)HH:mm:ss
     const formatDate=(date, isIncludeT)=>{
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, '0'); // 月份從 0 開始
@@ -413,8 +413,12 @@
 
     const Getdate = async () => {
         if (dataDate.value === "4" && dateValue.value.length === 2) {
-            startTime.value = dateValue.value[0];
-            endTime.value = dateValue.value[1];
+            startTime.value = formatDate(dateValue.value[0], true);
+
+            // 結束時間設定為當天的 23:59:59
+            var ed = new Date(dateValue.value[1]).setHours(23, 59, 59, 0);
+            var ed2 = new Date(ed);
+            endTime.value = formatDate(ed2, true);
         }
         await fetchOrderListData();
     };
