@@ -48,6 +48,7 @@
                                     <div class="me-5">剩餘時間</div>
                                     <div>
                                         <el-countdown :value="Date.now() + timeValue"
+                                                      v-on:change="GetTimes"
                                                       format="DD [天] HH:mm:ss" />
                                     </div>
                                 </div>
@@ -437,6 +438,9 @@
             String(date.getSeconds()).padStart(2, "0");
         return t_Date;
     };
+    const GetTimes = time => {
+        timeValue.value = time;
+    }
     onMounted(async () => {
         try {
             await fetchRewardListData();
