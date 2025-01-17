@@ -494,7 +494,7 @@ const checkForm = async event => {
         allAddress = selectedCity.value + selectedRegion.value + addressDetail.value;
     theUser[0].Address = allAddress;
 
-    if (recommendStr.value !== '') {
+    if (recommendStr.value !== '' && usedRecommendStr.value === false) {
         try {
             await modalStore.showModal(
                 ' ',
