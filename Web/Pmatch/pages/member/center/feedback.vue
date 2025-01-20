@@ -39,12 +39,12 @@
                                         }}
                                     </div>
                                     <div class="w-75px lg:w-95px h-100% text-center bg-[#3caadc] content-center text-white font-500 text-[20px] font-500 text-[18px] text-[#757575]"
-                                         :class="timeValue !== 0 ? 'bg-#3caadc' : 'bg-#959595'">
-                                        {{ timeValue !== 0 ? "開啟中" : "關閉中" }}
+                                         :class="timeValue > 0 ? 'bg-#3caadc' : 'bg-#959595'">
+                                        {{ timeValue > 0 ? "開啟中" : "關閉中" }}
                                     </div>
                                 </div>
                                 <div class="text-end m-t-10px flex items-center justify-end"
-                                     v-show="timeValue !== 0">
+                                     v-show="timeValue > 0">
                                     <div class="me-5">剩餘時間</div>
                                     <div>
                                         <el-countdown :value="Date.now() + timeValue"
