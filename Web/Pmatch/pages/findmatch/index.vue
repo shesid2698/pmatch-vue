@@ -130,8 +130,10 @@
                         <NuxtLink :to="`/findmatch/${item.Id}?pn=${selectedGame}`"
                                   class="decoration-none flex items-center justify-center">
                             <div class="storeBox md:w-900px w-1/2 flex flex-wrap justify-center"
-                                 :class="
-                                    index % 2 == 0 ? 'md:mr-0 mr-20px' : 'mr-0'
+                                 :class="[
+                                  // index % 2 == 0 ? 'md:mr-0 mr-20px' : 'mr-0',
+                                  index == 1?'mb-300px-important':''
+                                 ]
                                 ">
                                 <div class="storeContent">
                                     <div class="flex md:flex-row flex-col justify-between">
@@ -235,7 +237,7 @@
                         </NuxtLink>
                         <!-- 在第一筆資料後插入輪播 -->
                         <div v-if="index === 1 && bannerTopList.length > 0"
-                             class="w-100% mb-7rem md-mb-2rem">
+                             class="w-100% mb-7rem md-mb-2rem carouselContainer">
                             <ElCarousel class="h-auto"
                                         :interval="3000"
                                         arrow="always">
@@ -253,7 +255,8 @@
                         <div v-else-if="filteredStores.slice(
                             (currentPage - 1) * itemsPerPage,
                             (currentPage - 1) * itemsPerPage + itemsPerPage
-                        ).length ==1">
+                        ).length ==1"
+                             class="w-100% mb-7rem md-mb-2rem carouselContainer">
                             <ElCarousel class="h-auto"
                                         :interval="3000"
                                         arrow="always">
@@ -638,11 +641,11 @@ const handleSearch = async () => {
     activeContractSearch.value = contractToSearch.value;
     selectedSearchGame.value = selectedGame.value;
     await router.replace({
-    query: {
-        platformName: selectedGame.value,
-        keyword: selectedKeyword.value,
-    }
-});
+        query: {
+            platformName: selectedGame.value,
+            keyword: selectedKeyword.value
+        }
+    });
     await setPageLoading(false);
 };
 
@@ -907,7 +910,11 @@ const filteredProcessedGamePlatforms = computed(() => {
     color: #fff;
 }
 :deep(.el-carousel__container) {
-    height: 250px;
+    width: 100%;
+    max-height: 250px;
+    aspect-ratio: 900/250;
+    overflow: hidden;
+    border-radius: 10px;
 }
 :deep(.el-carousel__item) {
     border-radius: 10px;
@@ -951,6 +958,7 @@ const filteredProcessedGamePlatforms = computed(() => {
     }
     .orderBox {
         border-radius: 20px;
+        margin-bottom: 10px;
     }
     .orderBtn {
         border-radius: 20px;
@@ -963,6 +971,23 @@ const filteredProcessedGamePlatforms = computed(() => {
         width: 120px;
         height: 40px;
         font-size: 16px;
+    }
+    .carouselContainer {
+        position: absolute;
+        left: 0;
+        top: 25%;
+        margin: 0 10%;
+        width: 80%;
+    }
+    .mb-300px-important {
+        margin-bottom: 220px !important;
+    }
+    :deep(.el-carousel__container) {
+        width: 100%;
+        max-height: 110px;
+        /* aspect-ratio: 900/250; */
+        overflow: hidden;
+        border-radius: 10px;
     }
 }
 </style>
