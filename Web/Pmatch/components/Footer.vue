@@ -61,7 +61,7 @@
                                 客服信箱 : service@zihai.com.tw
                             </p>
                             <p class="color-#fff m-0 text-center lg-text-start">
-                                客服時間 : 週一至週五0900〜1800
+                                客服時間 : 週一至週五09:00〜18:00
                             </p>
                         </div>
                     </div>
