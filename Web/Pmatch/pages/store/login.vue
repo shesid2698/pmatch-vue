@@ -15,7 +15,7 @@
             content="Pmatch遊戲道具媒合網 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
         />
     </Head>
-    <div class="ccontainer md:pt-60px">
+    <div class="ccontainer md:pt-130px">
         <div class="login-card md:w-378px w-100%">
             <!-- 登入Title -->
             <div class="flex flex-items-center">

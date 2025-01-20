@@ -33,8 +33,8 @@
             crossorigin="anonymous"
         />
         <LoadingPage />
-        <Header />
-        <div class="pt-70px page">
+        <component :is="isStorePage ? StoreHeader : Header" />
+        <div class="page" :class="isStorePage ? 'pt-0px' : 'pt-70px'">
             <NuxtPage />
         </div>
         <Footer />
@@ -87,6 +87,8 @@ body {
 </style>
 
 <script setup>
+import Header from "~/components/Header.vue";
+import StoreHeader from "~/components/StoreHeader.vue";
 // loading page
 import { useLoadStore } from "./stores/loading.js";
 import { useModalStore } from "./stores/useModal.js";
@@ -107,6 +109,9 @@ let assetsUrl = useCookie("_PmAssetsUrl");
 const userToken = useCookie("_PmToken");
 const route = useRoute();
 const isHomePage = computed(() => route.path === "/");
+const isStorePage = computed(() => {
+  return route.path.startsWith("/store") && route.path !== "/store/login";
+});
 const router = useRouter();
 
 onMounted(async () => {

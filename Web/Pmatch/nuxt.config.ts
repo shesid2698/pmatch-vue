@@ -54,5 +54,5 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         },
     },
 
-    compatibilityDate: "2025-01-17",
+    compatibilityDate: "2025-01-20",
 });
