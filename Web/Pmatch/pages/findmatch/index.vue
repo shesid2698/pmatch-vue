@@ -131,7 +131,7 @@
                                   class="decoration-none flex items-center justify-center">
                             <div class="storeBox md:w-900px w-1/2 flex flex-wrap justify-center"
                                  :class="[
-                                  // index % 2 == 0 ? 'md:mr-0 mr-20px' : 'mr-0',
+                                  index % 2 == 0 ? 'md:mr-0 mr-20px' : 'mr-0',
                                   index == 1?'mb-300px-important':''
                                  ]
                                 ">
@@ -975,9 +975,10 @@ const filteredProcessedGamePlatforms = computed(() => {
     .carouselContainer {
         position: absolute;
         left: 0;
-        top: 25%;
-        margin: 0 10%;
-        width: 80%;
+        top: 36%;
+        width:100%;
+        display: flex;
+        justify-content: center;
     }
     .mb-300px-important {
         margin-bottom: 220px !important;
