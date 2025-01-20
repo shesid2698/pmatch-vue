@@ -257,7 +257,7 @@
                         </div>
                         <div v-if="newsList.length > 0">
                             <NuxtLink :to="`/news/${item.Id}`"
-                                      v-for="(item, index) in newsList.slice(0, 5)"
+                                      v-for="(item, index) in newsList.slice(0, 5).reverse()"
                                       :key="index"
                                       class="newsLink color-#555553 decoration-none">
                                 <div class="w-full mt-1.8rem">
