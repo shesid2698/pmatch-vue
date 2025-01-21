@@ -129,7 +129,6 @@ import VueTurnstile from "vue-turnstile";
 import { useAlertModalStore } from "../stores/useAlertModal.js";
 const alertModalStore = useAlertModalStore();
 const openAlertModal = alertModalStore.alertShowModal;
-const config = useRuntimeConfig();
 const store = useLoadStore();
 const setPageLoading = store.setPageLoading;
 const configStore = useConfigStore();
