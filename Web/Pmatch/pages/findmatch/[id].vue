@@ -306,9 +306,9 @@
                 <img src="/images/corner.png"
                      alt="左邊箭頭" />
             </div>
-            <div class="mt-5rem max-w-1110px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3 relative z-2">
+            <div class="mt-5rem max-w-1110px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3 relative z-11">
                 <div class="flex justify-center">
-                    <div class="w-80% pt-5rem qaTitle">
+                    <div class="w-80% pt-5rem qaTitle ">
                         <div class="mb-5rem relative">
                             <h1 class="buyTitle m-0 text-center font-size-50px">
                                 問與答

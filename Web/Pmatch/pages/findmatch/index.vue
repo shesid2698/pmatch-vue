@@ -126,13 +126,14 @@
                             (currentPage - 1) * itemsPerPage,
                             (currentPage - 1) * itemsPerPage + itemsPerPage
                         )"
-                         :key="index">
+                         :key="index"
+                         class="w-90%">
                         <NuxtLink :to="`/findmatch/${item.Id}?pn=${selectedGame}`"
-                                  class="decoration-none flex items-center justify-center">
-                            <div class="storeBox md:w-900px w-1/2 flex flex-wrap justify-center"
+                                  class="decoration-none w-90%">
+                            <div class="storeBox flex-wrap justify-center"
                                  :class="[
                                   index % 2 == 0 ? 'md:mr-0 mr-20px' : 'mr-0',
-                                  index == 1?'mb-300px-important':''
+                                  index == 1?'md-mb-300px-important':''
                                  ]
                                 ">
                                 <div class="storeContent">
@@ -252,7 +253,7 @@
                                 </ElCarouselItem>
                             </ElCarousel>
                         </div>
-                        <div v-else-if="filteredStores.slice(
+                        <!-- <div v-else-if="filteredStores.slice(
                             (currentPage - 1) * itemsPerPage,
                             (currentPage - 1) * itemsPerPage + itemsPerPage
                         ).length ==1"
@@ -270,7 +271,7 @@
                                          :alt="banner.PlatformName" />
                                 </ElCarouselItem>
                             </ElCarousel>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="">
@@ -743,6 +744,10 @@ const filteredProcessedGamePlatforms = computed(() => {
 :deep(.el-icon) {
     z-index: -1;
 }
+:deep(.el-carousel__container) {
+    height: 100%;
+    padding-top: 28%;
+}
 .searchCol {
     border-bottom: 2px solid transparent;
     border-image: linear-gradient(to right, #4361ee 0%, #f72585 100%);
@@ -798,7 +803,7 @@ const filteredProcessedGamePlatforms = computed(() => {
     border-radius: 10px;
     border: none;
     padding: 2rem;
-    width: 900px;
+    width: 100%;
     aspect-ratio: 1876/584;
     background-image: url('/images/bg-wave01.png');
     background-size: cover;
@@ -909,23 +914,18 @@ const filteredProcessedGamePlatforms = computed(() => {
     border-radius: 50%;
     color: #fff;
 }
-:deep(.el-carousel__container) {
-    width: 100%;
-    max-height: 250px;
-    aspect-ratio: 900/250;
-    overflow: hidden;
-    border-radius: 10px;
-}
 :deep(.el-carousel__item) {
     border-radius: 10px;
+    display: flex;
+    align-content: center;
 }
 @media screen and (max-width: 768px) {
     .storeBox {
         max-height: unset;
-        width: fit-content;
+        width: 100%;
         aspect-ratio: unset;
         border-radius: 13px;
-        margin-bottom: 120px;
+        margin-bottom: 80px;
         overflow: visible;
     }
 
@@ -951,7 +951,7 @@ const filteredProcessedGamePlatforms = computed(() => {
         position: relative;
         border-radius: 12px;
         border: none;
-        width: 185px;
+        width: 100%;
         max-height: 343px;
         padding: 0;
         background-image: url('/images/bg-wave02.png');
@@ -972,23 +972,14 @@ const filteredProcessedGamePlatforms = computed(() => {
         height: 40px;
         font-size: 16px;
     }
-    .carouselContainer {
-        position: absolute;
-        left: 0;
-        top: 36%;
+    /* .carouselContainer {
+        position: relative;
         width:100%;
         display: flex;
         justify-content: center;
-    }
+    } */
     .mb-300px-important {
         margin-bottom: 220px !important;
-    }
-    :deep(.el-carousel__container) {
-        width: 100%;
-        max-height: 110px;
-        /* aspect-ratio: 900/250; */
-        overflow: hidden;
-        border-radius: 10px;
     }
 }
 </style>
