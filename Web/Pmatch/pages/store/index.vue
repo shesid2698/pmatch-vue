@@ -30,12 +30,12 @@
             <div class="max-w-1110px m-auto pt-180px ps-5 pe-5 relative z-2">
                 <div class="mb-3">
                     <h1
-                        class="m-0 mb-2 text-center font-size-33px md-font-size-44px slogan"
+                        class="m-0 mb-2 text-center font-size-33px md-font-size-48px slogan"
                     >
                         PMatch是你事業上的全能助手 !
                     </h1>
                     <h3
-                        class="m-0 font-size-14px md-font-size-22px text-center subSlogan"
+                        class="m-0 font-size-14px md-font-size-26px text-center subSlogan"
                     >
                         讓你的廣告被看見，讓對的人找到你，還能輕鬆的記帳與報稅
                     </h3>
@@ -313,6 +313,72 @@
                 </div>
             </div>
         </div>
+        <div class="pb-5rem">
+            <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
+                <div>
+                    <h1
+                        class="m-0 mb-2 text-center font-size-33px md-font-size-48px pushSlogan color-#fff"
+                    >
+                        我們將成為您
+                    </h1>
+                    <h1
+                        class="m-0 mb-8 text-center font-size-33px md-font-size-48px slogan"
+                    >
+                        『業務成長的推助器』
+                    </h1>
+                    <h3
+                        class="m-0 font-size-14px md-font-size-26px text-center subSlogan"
+                    >
+                        以專注於解決商家在市場中遇到的曝光和客戶開發問題
+                    </h3>
+                    <h3
+                        class="m-0 font-size-14px md-font-size-26px text-center subSlogan"
+                    >
+                        並結合行業創新的記帳、報稅以及實名制系統，為您提供全面支持
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="pb-5rem">
+            <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
+                <div class="flex items-center justify-center mb-3rem">
+                    <div class="titleLeftBorder"></div>
+                    <span class="hotTitle">我們</span>
+                    <span class="gameTitle">的優勢</span>
+                    <div class="titleRightBorder"></div>
+                </div>
+                <div
+                    v-for="(item, index) in advantagesList"
+                    :key="index"
+                    class="md-flex adBox"
+                    :class="{ advantagesEven: index % 2 !== 0 }"
+                >
+                    <div class="w-100% lg-w-50%">
+                        <div class="ps-5 pe-5">
+                            <img class="w-100%" :src="item.img" :alt="item.title" />
+                        </div>
+                        
+                    </div>
+                    <div class="adContentBox w-100% lg-w-50% flex items-center">
+                        <div class="lg-ms-5 lg-me-5">
+                            <div class="mb-2rem">
+                                <img
+                                    class="w-80px"
+                                    :src="item.icon"
+                                    :alt="item.detail"
+                                />
+                            </div>
+                            <div class="mb-1.5rem">
+                                <span class="adTitle">{{ item.title }}</span>
+                            </div>
+                            <div>
+                                <span class="adContent">{{ item.detail }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script setup>
@@ -374,6 +440,33 @@ const matchValue3 = useTransition(source3, {
 });
 source3.value = 100;
 
+// 優勢列表
+const advantagesList = [
+    {
+        title: "打廣告不再難",
+        detail: "整合多個渠道資源，幫助媒合商快速曝光，解決您推廣的難題，輕鬆找到核心玩家",
+        img: "/images/advantages1.png",
+        icon: "/images/adIcon-01.png",
+    },
+    {
+        title: "讓需求來找你",
+        detail: "我們匯聚了有各種遊戲的玩家，與我們合作即可快速與核心市場連結，節省媒合商的寶貴時間",
+        img: "/images/advantages2.png",
+        icon: "/images/adIcon-02.png",
+    },
+    {
+        title: "記帳、報稅一步到位",
+        detail: "一站式財務處理系統，幫助媒合商簡化紀錄和計算的流程，提升財務效率與準確性",
+        img: "/images/advantages3.png",
+        icon: "/images/adIcon-03.png",
+    },
+    {
+        title: "交易的守護者",
+        detail: "提供專業身分認證系統，保證交易雙方的安全，防範欺詐風險，讓交易更安心",
+        img: "/images/advantages4.png",
+        icon: "/images/adIcon-04.png",
+    },
+];
 // 為完整版圖表準備數據
 const chartDataComputed = computed(() => {
     return dialogVisible.value.map((_, index) => getChartData(index));
@@ -383,7 +476,7 @@ const simpleChartData = computed(() => {
     // 假設這裡使用 endDate 的數據
     const { EndTime } = calculateWeekRange();
     const endDateData = dailyPatchList0.value; // 或其他數據來源
-    
+
     return getSimpleChartData(endDateData);
 });
 // 為簡化版圖表準備數據
@@ -391,7 +484,7 @@ const simpleChartData1 = computed(() => {
     // 假設這裡使用 endDate 的數據
     const { EndTime } = calculateWeekRange();
     const endDateData = dailyPatchList1.value; // 或其他數據來源
-    
+
     return getSimpleChartData(endDateData);
 });
 // 修改 getChartData 函數
@@ -679,6 +772,15 @@ onMounted(async () => {
 .subSlogan {
     color: #fff;
 }
+.pushSlogan {
+    background: linear-gradient(to bottom, #fff, #fff);
+    background: -webkit-linear-gradient(#fff, #fff);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    font-weight: 900;
+    -webkit-text-stroke: 1px rgba(200, 200, 200, 0.1);
+}
 :deep(.el-statistic__number) {
     background: linear-gradient(to bottom, #fff, #7b2cbf);
     background: -webkit-linear-gradient(#fff, #7b2cbf);
@@ -764,7 +866,7 @@ onMounted(async () => {
     -webkit-background-clip: text;
     color: transparent;
     font-weight: 900;
-    font-size: 36px;
+    font-size: 40px;
     -webkit-text-stroke: 1px rgba(200, 200, 200, 0.1);
 }
 .gameTitle {
@@ -774,7 +876,7 @@ onMounted(async () => {
     -webkit-background-clip: text;
     color: transparent;
     font-weight: 900;
-    font-size: 36px;
+    font-size: 40px;
     -webkit-text-stroke: 1px rgba(200, 200, 200, 0.1);
 }
 .titleLeftBorder {
@@ -847,10 +949,47 @@ onMounted(async () => {
     font-weight: 900;
     font-size: 20px;
 }
-:deep(.el-button.is-plain){
-    --el-button-hover-bg-color: rgba(0,0,0,0);
-    --el-button-hover-border-color: rgba(0,0,0,0);
-    --el-button-bg-color: rgba(0,0,0,0);
-    --el-button-border-color: rgba(0,0,0,0);
+:deep(.el-button.is-plain) {
+    --el-button-hover-bg-color: rgba(0, 0, 0, 0);
+    --el-button-hover-border-color: rgba(0, 0, 0, 0);
+    --el-button-bg-color: rgba(0, 0, 0, 0);
+    --el-button-border-color: rgba(0, 0, 0, 0);
+}
+.adBox{
+    margin-bottom: 3rem;
+}
+.adBox:last-child{
+    margin-bottom: 0rem;
+}
+.adTitle{
+    background: linear-gradient(to bottom, #fff, #43A5EE);
+    background: -webkit-linear-gradient(#fff, #43A5EE);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    font-weight: 900;
+    font-size: 30px;
+}
+.adContentBox{
+    position: relative;
+}
+.adContentBox::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to right, #43A5EE, #fff);
+    mask-image: linear-gradient(to right, black 10px, transparent 10px, transparent 20px);
+    mask-size: 20px 100%;
+    mask-repeat: repeat-x;
+}
+.adContent{
+    color: #fff;
+    font-size: 20px;
+}
+.advantagesEven{
+    flex-direction: row-reverse;
 }
 </style>
