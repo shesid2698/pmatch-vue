@@ -11,7 +11,7 @@
                     <NuxtLink to="/"
                         ><img
                             class="md-w-240px w-160px"
-                            src="/images/logo.png"
+                            src="/images/Pmatch-logo-white-03.png"
                             alt="pmatch的logo"
                     /></NuxtLink>
                 </div>

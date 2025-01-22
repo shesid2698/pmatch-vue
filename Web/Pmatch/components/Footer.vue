@@ -88,11 +88,6 @@ const footerLinkLeft = ref([
         link: "/",
     },
     {
-        id: 1,
-        title: "會員中心",
-        link: "/member/center",
-    },
-    {
         id: 2,
         title: "幫助中心",
         link: "/helpcenter",

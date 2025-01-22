@@ -245,7 +245,7 @@ onMounted(() => {
             {
                 id: 3,
                 title: '媒合商',
-                link: '/store/login',
+                link: '/store',
                 className: 'nav3',
                 icon: '/images/linkIcon.png'
             },

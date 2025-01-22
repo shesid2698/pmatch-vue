@@ -32,279 +32,58 @@
                     <h1
                         class="m-0 mb-2 text-center font-size-33px md-font-size-48px slogan"
                     >
-                        PMatch是你事業上的全能助手 !
+                        PMatch付費方案
                     </h1>
                     <h3
                         class="m-0 font-size-14px md-font-size-26px text-center subSlogan"
                     >
-                        讓你的廣告被看見，讓對的人找到你，還能輕鬆的記帳與報稅
+                        PMatch擁有超過 3 億筆跨國資料，即時收集 Facebook、YouTube、Instagram、X、TikTok 上龐大的社群資料，並結合人工智慧技術做到最佳的網紅推薦。加入 PMatch 專業版，享有豐富的專業版功能與進階應用。透過大數據與AI運算，達到精準行銷。
                     </h3>
                 </div>
             </div>
         </div>
         <div class="pb-7rem">
             <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
-                <div class="md-flex">
-                    <div class="w-100%">
-                        <div class="matchBox">
-                            <div class="matchContent">
-                                <div class="flex justify-center pb-3">
-                                    <el-statistic :value="matchValue1" />
-                                    <span class="plus">+</span>
-                                </div>
-                                <div class="matchDetail">
-                                    <span
-                                        class="m-0 md-block inline color-#fff text-center w-100%"
-                                    >
-                                        已經促成"百萬筆"
-                                    </span>
-                                    <span
-                                        class="m-0 md-block inline color-#fff text-center w-100%"
-                                    >
-                                        以上的媒合
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-100%">
-                        <div class="matchBox">
-                            <div class="matchContent">
-                                <div class="flex justify-center pb-3">
-                                    <el-statistic :value="matchValue2" />
-                                    <span class="plus">+</span>
-                                </div>
-                                <div class="matchDetail">
-                                    <span
-                                        class="m-0 md-block inline color-#fff text-center w-100%"
-                                    >
-                                        已協助"130+"媒合商
-                                    </span>
-                                    <span
-                                        class="m-0 md-block inline color-#fff text-center w-100%"
-                                    >
-                                        完成報稅
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-100%">
-                        <div class="matchBox">
-                            <div class="matchContent">
-                                <div class="flex justify-center pb-3">
-                                    <el-statistic :value="matchValue3" />
-                                    <span class="plus">+</span>
-                                </div>
-                                <div class="matchDetail">
-                                    <span
-                                        class="m-0 md-block inline color-#fff text-center md-w-100%"
-                                    >
-                                        已成功協助"100+"
-                                    </span>
-                                    <span
-                                        class="m-0 md-block inline color-#fff text-center md-w-100%"
-                                    >
-                                        媒合商轉型成功
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="pb-7rem">
-            <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
-                <div class="flex justify-center">
-                    <div class="w-90%">
-                        <div class="flex tableTh">
-                            <div
-                                class="w-100% font-size-1.2rem text-center color-#beffff"
-                            >
-                                遊戲平台
-                            </div>
-                            <div
-                                class="w-100% font-size-1.2rem text-center color-#beffff"
-                            >
-                                遊戲幣數量
-                            </div>
-                            <div
-                                class="w-100% font-size-1.2rem text-center color-#beffff"
-                            >
-                                遊戲幣走向
-                            </div>
-                        </div>
-                        <div class="flex tableTd">
-                            <div
-                                class="w-100% platformName font-size-1.5rem text-center color-#beffff"
-                            >
-                                滿貫大亨
-                            </div>
-                            <div
-                                class="w-100% patchNumber font-size-1.5rem text-center color-#beffff"
-                            >
-                                1000
-                            </div>
-                            <div
-                                class="w-100% font-size-1.2rem text-center color-#beffff"
-                            >
-                                <ElButton plain @click="openDialog(0)">
-                                    <!-- 簡化縮小版折線圖 -->
-                                    <Line
-                                        :data="simpleChartData"
-                                        :options="simpleChartOptions"
-                                        class="w-150px"
-                                    />
-                                </ElButton>
-                            </div>
-                        </div>
-                        <div class="flex tableTd">
-                            <div
-                                class="w-100% platformName font-size-1.5rem text-center color-#beffff"
-                            >
-                                老子有錢
-                            </div>
-                            <div
-                                class="w-100% patchNumber font-size-1.5rem text-center color-#beffff"
-                            >
-                                13000
-                            </div>
-                            <div
-                                class="w-100% font-size-1.2rem text-center color-#beffff"
-                            >
-                                <ElButton plain @click="openDialog(1)">
-                                    <!-- 簡化縮小版折線圖 -->
-                                    <Line
-                                        :data="simpleChartData1"
-                                        :options="simpleChartOptions"
-                                        class="w-150px"
-                                    />
-                                </ElButton>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="pb-7rem">
-            <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
-                <div class="md-flex">
-                    <div class="w-100% md-w-50% md-mb-0 mb-3rem">
-                        <div class="flex items-center justify-center mb-8">
-                            <div class="titleLeftBorder"></div>
-                            <span class="hotTitle">熱門</span>
-                            <span class="gameTitle">遊戲</span>
-                            <div class="titleRightBorder"></div>
-                        </div>
+                <div class="flex md-flex-nowrap flex-wrap justify-center">
+                    <div
+                        v-for="(item, index) in programList"
+                        :key="index"
+                        :class="`${item.className}`"
+                        class="p-1rem md-p-2rem md-m-1rem my-1rem"
+                    >
                         <div>
-                            <div class="topTableBorder">
-                                <div class="flex justify-center">
-                                    <span class="topTitle p-3">TOP 5</span>
-                                </div>
-                                <div class="topTableTh flex">
-                                    <div class="p-3 w-50%">
-                                        <span class="px-3">遊戲平台</span>
-                                    </div>
-                                    <div class="p-3 w-50%">
-                                        <span class="px-3 topTableThRight"
-                                            >遊戲幣數量</span
-                                        >
-                                    </div>
-                                </div>
-                                <div class="topTableTd flex">
-                                    <div class="p-3 w-50%">
-                                        <span class="px-3">包你發</span>
-                                    </div>
-                                    <div class="p-3 w-50%">
-                                        <span class="topPatch px-3">10000</span>
-                                    </div>
-                                </div>
-                                <div class="topTableTd flex">
-                                    <div class="p-3 w-50%">
-                                        <span class="px-3">包你發</span>
-                                    </div>
-                                    <div class="p-3 w-50%">
-                                        <span class="topPatch px-3">10000</span>
-                                    </div>
-                                </div>
-                                <div class="topTableTd flex">
-                                    <div class="p-3 w-50%">
-                                        <span class="px-3">包你發</span>
-                                    </div>
-                                    <div class="p-3 w-50%">
-                                        <span class="topPatch px-3">10000</span>
-                                    </div>
-                                </div>
-                                <div class="topTableTd flex">
-                                    <div class="p-3 w-50%">
-                                        <span class="px-3">包你發</span>
-                                    </div>
-                                    <div class="p-3 w-50%">
-                                        <span class="topPatch px-3">10000</span>
-                                    </div>
-                                </div>
-                                <div class="topTableTd flex">
-                                    <div class="p-3 w-50%">
-                                        <span class="px-3">包你發</span>
-                                    </div>
-                                    <div class="p-3 w-50%">
-                                        <span class="topPatch px-3">10000</span>
-                                    </div>
+                            <div class="flex justify-center pb-1rem">
+                                <span class="programTitle">
+                                    {{ item.title }}
+                                </span>
+                            </div>
+                            <div
+                                class="flex justify-center pb-2rem mb-2rem programPriceBox"
+                            >
+                                <div>
+                                    <span>NT</span>
+                                    <span class="programPrice">{{
+                                        item.price
+                                    }}</span>
+                                    <span> / 月</span>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="w-100% md-w-50%">
-                        <div class="flex items-center justify-center mb-8">
-                            <div class="titleLeftBorder"></div>
-                            <span class="hotTitle">新進</span>
-                            <span class="gameTitle">遊戲</span>
-                            <div class="titleRightBorder"></div>
-                        </div>
-                        <div>
-                            <div class="topTableBorder">
-                                <div class="flex justify-center">
-                                    <span class="topTitle p-3">TOP 3</span>
-                                </div>
-                                <div class="topTableTh flex">
-                                    <div class="p-3 w-50%">
-                                        <span class="px-3">遊戲平台</span>
-                                    </div>
-                                    <div class="p-3 w-50%">
-                                        <span class="px-3 topTableThRight"
-                                            >上線日期</span
-                                        >
-                                    </div>
-                                </div>
-                                <div class="topTableTd flex">
-                                    <div class="px-3 py-29px w-50%">
-                                        <span class="px-3">包你爽</span>
-                                    </div>
-                                    <div class="px-3 py-29px w-50%">
-                                        <span class="topPatch px-3"
-                                            >2025-01-21</span
-                                        >
-                                    </div>
-                                </div>
-                                <div class="topTableTd flex">
-                                    <div class="px-3 py-29px w-50%">
-                                        <span class="px-3">包你書</span>
-                                    </div>
-                                    <div class="px-3 py-29px w-50%">
-                                        <span class="topPatch px-3"
-                                            >2025-01-21</span
-                                        >
-                                    </div>
-                                </div>
-                                <div class="topTableTd flex">
-                                    <div class="px-3 py-29px w-50%">
-                                        <span class="px-3">包你哭</span>
-                                    </div>
-                                    <div class="px-3 py-29px w-50%">
-                                        <span class="topPatch px-3"
-                                            >2025-01-21</span
-                                        >
+                            <div class="flex justify-center">
+                                <div>
+                                    <div
+                                        class="flex mb-1rem lg-px-1.5rem"
+                                        v-for="it in item.detail"
+                                    >
+                                        <div class="me-1.5rem">
+                                            <img
+                                                class="w-20px"
+                                                src="/images/icon-check-01.png"
+                                                alt=""
+                                            />
+                                        </div>
+                                        <div>
+                                            <span>{{ it }}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -315,27 +94,36 @@
         </div>
         <div class="pb-7rem">
             <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
-                <div>
-                    <h1
-                        class="m-0 mb-2 text-center font-size-33px md-font-size-48px pushSlogan color-#fff"
-                    >
-                        我們將成為您
-                    </h1>
-                    <h1
-                        class="m-0 mb-8 text-center font-size-33px md-font-size-48px slogan"
-                    >
-                        『業務成長的推助器』
-                    </h1>
-                    <h3
-                        class="m-0 font-size-14px md-font-size-26px text-center subSlogan"
-                    >
-                        以專注於解決商家在市場中遇到的曝光和客戶開發問題
-                    </h3>
-                    <h3
-                        class="m-0 font-size-14px md-font-size-26px text-center subSlogan"
-                    >
-                        並結合行業創新的記帳、報稅以及實名制系統，為您提供全面支持
-                    </h3>
+                <div class="flex items-center justify-center mb-3rem">
+                    <div class="titleLeftBorder"></div>
+                    <span class="hotTitle">選擇</span>
+                    <span class="gameTitle">最適合的方案</span>
+                    <div class="titleRightBorder"></div>
+                </div>
+                <div class="color-#fff flex justify-end">
+                    <div class="flex py-3">
+                        <div class="px-1rem w-80px text-center">入門版</div>
+                        <div class="px-1rem w-80px text-center">專業版</div>
+                        <div class="px-1rem w-80px text-center">企業版</div>
+                    </div>
+                </div>
+                <div class="color-#fff">
+                    <div class="flex justify-between py-3 planBox">
+                        <div class="flex items-center">
+                            <span>無成交手續費</span>
+                            </div>
+                        <div class="flex">
+                            <div class="flex justify-center items-center px-1rem w-80px">
+                                <img class="w-20px" src="/images/icon-check-01.png" alt="白色勾勾">
+                            </div>
+                            <div class="flex justify-center items-center px-1rem w-80px">
+                                <img class="w-20px" src="/images/icon-check-02.png" alt="藍色勾勾">
+                            </div>
+                            <div class="flex justify-center items-center px-1rem w-80px">
+                                <img class="w-20px" src="/images/icon-check-01.png" alt="白色勾勾">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -386,71 +174,7 @@
                 </div>
             </div>
         </div>
-        <div class="pb-7rem">
-            <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
-                <div class="flex items-center justify-center mb-3rem">
-                    <div class="titleLeftBorder"></div>
-                    <span class="hotTitle">方案</span>
-                    <span class="gameTitle">費用</span>
-                    <div class="titleRightBorder"></div>
-                </div>
-                <div class="flex md-flex-nowrap flex-wrap justify-center">
-                    <div
-                        v-for="(item, index) in programList"
-                        :key="index"
-                        :class="`${item.className}`"
-                        class="p-1rem md-p-2rem md-m-1rem my-1rem"
-                    >
-                        <div>
-                            <div class="flex justify-center pb-1rem">
-                                <span class="programTitle">
-                                    {{ item.title }}
-                                </span>
-                            </div>
-                            <div
-                                class="flex justify-center pb-2rem mb-2rem programPriceBox"
-                            >
-                                <div>
-                                    <span>NT</span>
-                                    <span class="programPrice">{{
-                                        item.price
-                                    }}</span>
-                                    <span> / 月</span>
-                                </div>
-                            </div>
-                            <div class="flex justify-center">
-                                <div>
-                                    <div
-                                        class="flex mb-1rem lg-px-1.5rem"
-                                        v-for="it in item.detail"
-                                    >
-                                        <div class="me-1.5rem">
-                                            <img
-                                                class="w-20px"
-                                                src="/images/icon-check-01.png"
-                                                alt=""
-                                            />
-                                        </div>
-                                        <div>
-                                            <span>{{ it }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="flex justify-center pt-3 pb-3 mt-10">
-                    <div class="moreBtnBox">
-                        <NuxtLink
-                            class="moreBtn color-#fff font-size-22px decoration-none"
-                            to="/store/program"
-                            >了解更多</NuxtLink
-                        >
-                    </div>
-                </div>
-            </div>
-        </div>
+        
         <div class="pb-25rem">
             <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
                 <div class="flex items-center justify-center mb-3rem">
@@ -1309,6 +1033,10 @@ onMounted(async () => {
 }
 .contactEntry::placeholder {
     color: #fff; /* 設定 placeholder 的顏色 */
+}
+.planBox{
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
 }
 @media screen and (max-width: 1024px) {
     .programPro {
