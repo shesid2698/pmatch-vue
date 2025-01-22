@@ -37,7 +37,7 @@
                             v-if="item.id !== 5"
                             :title="item.title"
                             :to="item.link"
-                            :class="` decoration-none ps-1.2rem pe-1.2rem font-bold ${item.className}`"
+                            :class="`decoration-none ps-1.2rem pe-1.2rem font-bold ${item.className}`"
                             :alt="item.title"
                         >
                             {{ item.title }}
@@ -195,62 +195,29 @@ const logout = () => {
 // 在組件掛載時添加全局點擊事件監聽器
 onMounted(() => {
     document.addEventListener("click", closeDropdownOutside);
-    if (userNameCookie.value !== "" && userNameCookie.value != undefined) {
-        headerLink.value = [
-            {
-                id: 0,
-                title: "會員中心",
-                link: "/member/center",
-                icon: "",
-                className: "nav0",
-            },
-            {
-                id: 1,
-                title: "幫助中心",
-                link: "/helpcenter",
-                icon: "",
-                className: "nav1",
-            },
-            {
-                id: 2,
-                title: "找媒合",
-                link: "/findmatch",
-                icon: "",
-                className: "nav2",
-            },
-            {
-                id: 3,
-                title: `Hi , ${userNameCookie.value}`,
-                link: "#",
-                icon: "",
-                className: "loginnav4",
-            },
-        ];
-    } else {
-        headerLink.value = [
-            {
-                id: 0,
-                title: "返回首頁",
-                link: "/",
-                className: "nav0",
-                icon: "",
-            },
-            {
-                id: 1,
-                title: "操作手冊",
-                link: "/",
-                className: "nav1",
-                icon: "",
-            },
-            {
-                id: 3,
-                title: "登入",
-                link: "/store/login",
-                className: "nav3",
-                icon: "/images/linkIcon.png",
-            },
-        ];
-    }
+    headerLink.value = [
+        {
+            id: 0,
+            title: "返回首頁",
+            link: "/",
+            className: "nav0",
+            icon: "",
+        },
+        {
+            id: 1,
+            title: "操作手冊",
+            link: "/",
+            className: "nav1",
+            icon: "",
+        },
+        {
+            id: 3,
+            title: "登入",
+            link: "/store/login",
+            className: "nav3",
+            icon: "/images/icon-people-white.png",
+        },
+    ];
     window.addEventListener("scroll", () => {
         const header = document.querySelector(".headerBox");
         const headerMenu = document.querySelector(".headerBoxMenu");
@@ -263,16 +230,16 @@ onMounted(() => {
             headerMenuLink.forEach((link) => {
                 link.classList.add("scrolledMenuLink");
             });
-            headerMenuNav0.classList.add('scrolledMenuNav0');
-            headerMenuNav1.classList.add('scrolledMenuNav1');
+            headerMenuNav0.classList.add("scrolledMenuNav0");
+            headerMenuNav1.classList.add("scrolledMenuNav1");
         } else {
             header.classList.remove("scrolled");
             headerMenu.classList.remove("scrolledMenu");
             headerMenuLink.forEach((link) => {
                 link.classList.remove("scrolledMenuLink");
             });
-            headerMenuNav0.classList.remove('scrolledMenuNav0');
-            headerMenuNav1.classList.remove('scrolledMenuNav1');
+            headerMenuNav0.classList.remove("scrolledMenuNav0");
+            headerMenuNav1.classList.remove("scrolledMenuNav1");
         }
     });
 });
@@ -364,7 +331,7 @@ onBeforeUnmount(() => {
     height: 40px;
 }
 .nav3:hover img {
-    content: url("/images/linkIconPink.png");
+    content: url("/images/icon-people.png");
 }
 .nav3Box:hover {
     position: relative;
@@ -481,7 +448,8 @@ onBeforeUnmount(() => {
 .scrolledMenuLink {
     color: #555553 !important;
 }
-.scrolledMenuNav0,.scrolledMenuNav1{
+.scrolledMenuNav0,
+.scrolledMenuNav1 {
     color: #555553 !important;
 }
 </style>

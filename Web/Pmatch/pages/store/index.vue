@@ -44,7 +44,7 @@
         </div>
         <div class="pb-7rem">
             <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
-                <div class="flex">
+                <div class="md-flex">
                     <div class="w-100%">
                         <div class="matchBox">
                             <div class="matchContent">
@@ -187,10 +187,10 @@
                 </div>
             </div>
         </div>
-        <div class="pb-5rem">
+        <div class="pb-7rem">
             <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
-                <div class="flex">
-                    <div class="w-50%">
+                <div class="md-flex">
+                    <div class="w-100% md-w-50% md-mb-0 mb-3rem">
                         <div class="flex items-center justify-center mb-8">
                             <div class="titleLeftBorder"></div>
                             <span class="hotTitle">熱門</span>
@@ -255,7 +255,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="w-50%">
+                    <div class="w-100% md-w-50%">
                         <div class="flex items-center justify-center mb-8">
                             <div class="titleLeftBorder"></div>
                             <span class="hotTitle">新進</span>
@@ -313,7 +313,7 @@
                 </div>
             </div>
         </div>
-        <div class="pb-5rem">
+        <div class="pb-7rem">
             <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
                 <div>
                     <h1
@@ -339,7 +339,7 @@
                 </div>
             </div>
         </div>
-        <div class="pb-5rem">
+        <div class="pb-7rem">
             <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
                 <div class="flex items-center justify-center mb-3rem">
                     <div class="titleLeftBorder"></div>
@@ -353,26 +353,150 @@
                     class="md-flex adBox"
                     :class="{ advantagesEven: index % 2 !== 0 }"
                 >
-                    <div class="w-100% lg-w-50%">
-                        <div class="ps-5 pe-5">
-                            <img class="w-100%" :src="item.img" :alt="item.title" />
+                    <div class="w-100% lg-w-50% md-mb-0rem mb-2rem">
+                        <div class="ps-5 pe-5 flex items-center">
+                            <img
+                                class="w-100%"
+                                :src="item.img"
+                                :alt="item.title"
+                            />
                         </div>
-                        
                     </div>
                     <div class="adContentBox w-100% lg-w-50% flex items-center">
                         <div class="lg-ms-5 lg-me-5">
-                            <div class="mb-2rem">
+                            <div class="mb-2rem md-block flex justify-center">
                                 <img
-                                    class="w-80px"
+                                    class="w-70px"
                                     :src="item.icon"
                                     :alt="item.detail"
                                 />
                             </div>
-                            <div class="mb-1.5rem">
+                            <div
+                                class="mb-1rem md-mb-1.5rem md-block flex justify-center"
+                            >
                                 <span class="adTitle">{{ item.title }}</span>
                             </div>
-                            <div>
+                            <div
+                                class="mb-2rem md-mb-1rem md-block flex justify-center"
+                            >
                                 <span class="adContent">{{ item.detail }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pb-7rem">
+            <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
+                <div class="flex items-center justify-center mb-3rem">
+                    <div class="titleLeftBorder"></div>
+                    <span class="hotTitle">方案</span>
+                    <span class="gameTitle">費用</span>
+                    <div class="titleRightBorder"></div>
+                </div>
+                <div class="flex md-flex-nowrap flex-wrap justify-center">
+                    <div
+                        v-for="(item, index) in programList"
+                        :key="index"
+                        :class="`${item.className}`"
+                        class="p-1rem md-p-2rem md-m-1rem my-1rem"
+                    >
+                        <div>
+                            <div class="flex justify-center pb-1rem">
+                                <span class="programTitle">
+                                    {{ item.title }}
+                                </span>
+                            </div>
+                            <div
+                                class="flex justify-center pb-2rem mb-2rem programPriceBox"
+                            >
+                                <div>
+                                    <span>NT</span>
+                                    <span class="programPrice">{{
+                                        item.price
+                                    }}</span>
+                                    <span> / 月</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-center">
+                                <div>
+                                    <div
+                                        class="flex mb-1rem lg-px-1.5rem"
+                                        v-for="it in item.detail"
+                                    >
+                                        <div class="me-1.5rem">
+                                            <img
+                                                class="w-20px"
+                                                src="/images/icon-check-01.png"
+                                                alt=""
+                                            />
+                                        </div>
+                                        <div>
+                                            <span>{{ it }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-center pt-3 pb-3 mt-10">
+                    <div class="moreBtnBox">
+                        <NuxtLink
+                            class="moreBtn color-#fff font-size-22px decoration-none"
+                            to="/gamelist"
+                            >了解更多</NuxtLink
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pb-25rem">
+            <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
+                <div class="flex items-center justify-center mb-3rem">
+                    <div class="titleLeftBorder"></div>
+                    <span class="hotTitle">聯絡</span>
+                    <span class="gameTitle">我們</span>
+                    <div class="titleRightBorder"></div>
+                </div>
+                <div class="flex justify-center">
+                    <div class="contactBox py-2rem px-3rem">
+                        <div>
+                            <input
+                                class="contactEntry"
+                                placeholder="姓名"
+                                type="text"
+                            />
+                        </div>
+                        <div>
+                            <input
+                                class="contactEntry"
+                                placeholder="電話"
+                                type="text"
+                            />
+                        </div>
+                        <div>
+                            <input
+                                class="contactEntry"
+                                placeholder="Email"
+                                type="text"
+                            />
+                        </div>
+                        <div>
+                            <textarea
+                                class="contactEntry"
+                                placeholder="留言"
+                                cols="30"
+                                rows="10"
+                            ></textarea>
+                        </div>
+                        <div class="flex justify-center pt-3 pb-3 mt-4">
+                            <div class="moreBtnBox">
+                                <NuxtLink
+                                    class="moreBtn color-#fff font-size-22px decoration-none"
+                                    to="/gamelist"
+                                    >送出</NuxtLink
+                                >
                             </div>
                         </div>
                     </div>
@@ -465,6 +589,56 @@ const advantagesList = [
         detail: "提供專業身分認證系統，保證交易雙方的安全，防範欺詐風險，讓交易更安心",
         img: "/images/advantages4.png",
         icon: "/images/adIcon-04.png",
+    },
+];
+const programList = [
+    {
+        title: "入門版",
+        price: "1,299",
+        detail: [
+            "無成交手續費",
+            "可開通3個銷售管道",
+            "推薦分潤行銷",
+            "會員分級",
+            "訊息管理中心",
+            "3管理員帳號",
+            "5應用擴充",
+        ],
+        className: "programStart",
+    },
+    {
+        title: "專業版",
+        price: "2,899",
+        detail: [
+            "無成交手續費",
+            "可開通10個銷售管道",
+            "推薦分潤行銷",
+            "會員分級",
+            "訊息管理中心",
+            "進階促銷優惠工具",
+            "群發行銷訊息",
+            "行銷預測功能",
+            "10管理員帳號",
+            "25應用擴充",
+        ],
+        className: "programPro",
+    },
+    {
+        title: "企業版",
+        price: "6,999",
+        detail: [
+            "無成交手續費",
+            "可開通30個銷售管道",
+            "推薦分潤行銷",
+            "會員分級",
+            "訊息管理中心",
+            "進階促銷優惠工具",
+            "群發行銷訊息",
+            "行銷預測功能",
+            "20管理員帳號",
+            "35應用擴充",
+        ],
+        className: "programEnterprise",
     },
 ];
 // 為完整版圖表準備數據
@@ -806,6 +980,11 @@ onMounted(async () => {
     border-radius: 25px;
     background: transparent;
     margin: 1rem;
+    background: linear-gradient(
+        to bottom,
+        rgba(123, 44, 191, 0.1) 50%,
+        rgba(255, 255, 255, 0.1) 100%
+    );
 }
 
 .matchBox::before {
@@ -955,41 +1134,195 @@ onMounted(async () => {
     --el-button-bg-color: rgba(0, 0, 0, 0);
     --el-button-border-color: rgba(0, 0, 0, 0);
 }
-.adBox{
+.adBox {
     margin-bottom: 3rem;
 }
-.adBox:last-child{
+.adBox:last-child {
     margin-bottom: 0rem;
 }
-.adTitle{
-    background: linear-gradient(to bottom, #fff, #43A5EE);
-    background: -webkit-linear-gradient(#fff, #43A5EE);
+.adTitle {
+    background: linear-gradient(to bottom, #fff, #43a5ee);
+    background: -webkit-linear-gradient(#fff, #43a5ee);
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
     font-weight: 900;
     font-size: 30px;
 }
-.adContentBox{
+.adContentBox {
     position: relative;
 }
 .adContentBox::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 100%;
     left: 0;
     width: 100%;
     height: 2px;
-    background: linear-gradient(to right, #43A5EE, #fff);
-    mask-image: linear-gradient(to right, black 10px, transparent 10px, transparent 20px);
+    background: linear-gradient(to right, #43a5ee, #fff);
+    mask-image: linear-gradient(
+        to right,
+        black 10px,
+        transparent 10px,
+        transparent 20px
+    );
     mask-size: 20px 100%;
     mask-repeat: repeat-x;
 }
-.adContent{
+.adContent {
     color: #fff;
     font-size: 20px;
 }
-.advantagesEven{
+.advantagesEven {
     flex-direction: row-reverse;
+}
+.programStart,
+.programEnterprise {
+    position: relative;
+    color: #fff;
+    width: calc(100% / 3);
+    background: linear-gradient(
+        to bottom,
+        rgba(123, 44, 191, 0.1) 50%,
+        rgba(255, 255, 255, 0.1) 100%
+    );
+}
+.programStart::before,
+.programEnterprise::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 10px;
+    padding: 2px;
+    background: linear-gradient(to right, #43edff, #fff);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+.programPro {
+    color: #fff;
+    width: calc(100% / 3);
+    background: linear-gradient(to right, #4361ee, #f72585);
+    border-radius: 10px;
+    position: relative;
+}
+.programPro::before {
+    content: "";
+    position: absolute;
+    top: -20px;
+    left: -3px;
+    right: -3px;
+    bottom: -20px;
+    border-radius: 10px;
+    background: linear-gradient(to right, #4361ee, #f72585);
+    z-index: -1;
+}
+.programTitle {
+    background: linear-gradient(to bottom, #fff, #fff);
+    background: -webkit-linear-gradient(#fff, #fff);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    font-weight: 900;
+    font-size: 26px;
+    -webkit-text-stroke: 1px rgba(200, 200, 200, 0.1);
+}
+.programPriceBox {
+    border-bottom: 1px solid #fff;
+}
+.programPrice {
+    background: linear-gradient(to bottom, #fff, #7b2cbf 175%);
+    background: -webkit-linear-gradient(#fff, #7b2cbf 175%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    font-weight: 900;
+    font-size: 36px;
+    padding: 0 1rem;
+    -webkit-text-stroke: 1px rgba(200, 200, 200, 0.1);
+}
+.moreBtnBox {
+    position: relative;
+    padding: 17px 1px;
+    background: linear-gradient(to right, #7b2cbf, rgba(247, 37, 133));
+    border-radius: 50px;
+    border: none;
+}
+.moreBtn {
+    padding: 1rem 2rem;
+    background: linear-gradient(to right, #7b2cbf, #f72585);
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+.moreBtn:hover {
+    background: #fff;
+    color: #f72585;
+}
+.contactBox {
+    position: relative;
+    width: 50%;
+    background: linear-gradient(
+        to bottom,
+        rgba(123, 44, 191, 0.1) 50%,
+        rgba(255, 255, 255, 0.1) 100%
+    );
+}
+.contactBox::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 10px;
+    padding: 2px;
+    background: linear-gradient(to right, #43edff, #fff);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+.contactEntry {
+    color: #fff;
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0.15),
+        rgba(255, 255, 255, 0.15)
+    );
+    width: 100%;
+    border: none;
+    text-indent: 1rem;
+    padding: 1rem 0;
+    border-radius: 10px;
+    margin: 0.5rem 0;
+    position: relative;
+}
+.contactEntry:focus-visible {
+    outline: none;
+}
+.contactEntry::placeholder {
+    color: #fff; /* 設定 placeholder 的顏色 */
+}
+@media screen and (max-width: 1024px) {
+    .programPro {
+        width: 85%;
+    }
+    .programStart,
+    .programEnterprise {
+        width: 85%;
+    }
+}
+@media screen and (max-width: 768px) {
+    .contactBox {
+        position: relative;
+        width: 100%;
+    }
 }
 </style>

@@ -15,107 +15,94 @@
             content="Pmatch遊戲道具媒合網 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
         />
     </Head>
-    <div class="ccontainer md:pt-130px">
-        <div class="login-card md:w-378px w-100%">
-            <!-- 登入Title -->
-            <div class="flex flex-items-center">
-                <div class="w-25px h-20px bg-#1a6db4 mr-8px mt-3px"></div>
-                <div class="text-20px">媒合商登入</div>
-            </div>
-
-            <!-- 頁面切換鈕 -->
-            <!-- <div class="flex flex-items-center mt-24px">
-                <div class="flex-1">
-                    <NuxtLink to="/member/login">
-                        <button class="w-100% outline-none bg-white border-1 p-y-1.5 p-x-3 text-16px rounded-1 cursor-pointer text-[#212529] font-sans">
-                            會員登入
-                        </button>
-                    </NuxtLink>
+    <div class="ccontainer pt-130px pb-25rem">
+        <div class="max-w-1110px w-100% md-w-50% m-auto ps-5 pe-5 relative z-2">
+            <div class="w-100%">
+                <!-- 登入Title -->
+                <div class="flex items-center justify-center mb-3rem">
+                    <div class="titleLeftBorder"></div>
+                    <span class="hotTitle">媒合商</span>
+                    <span class="gameTitle">登入</span>
+                    <div class="titleRightBorder"></div>
                 </div>
-                <div class="w-10px"></div>
-                <div class="flex-1">
-                    <button class="font-sans w-100% bg-#e93470 outline-none border border-solid border-[#e93470] border-1 hover:bg-#bb2d3b transition duration-200 p-y-1.5 p-x-3 text-16px text-white rounded-1 cursor-pointer">
-                        媒合商登入
-                    </button>
-                </div>
-            </div> -->
-            <form
-                action=""
-                method="POST"
-                @submit.prevent="login"
-                class="mt-3rem"
-            >
-                <div class="mt-15px">
-                    <div class="mb-5px">登入帳號</div>
-                    <input
-                        type="text"
-                        required
-                        v-model="accountId"
-                        autocomplete
-                        class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200"
-                    />
-                </div>
-
-                <div class="mt-15px">
-                    <div class="mb-5px">密碼</div>
-                    <div class="relative">
-                        <input
-                            type="password"
-                            ref="i_password"
-                            autocomplete="current-password"
-                            v-model="password"
-                            class="password box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200"
-                        />
-                        <div
-                            @click="turnInputType"
-                            class="cursor-pointer absolute top-50% transform translate-y-[-45%] left-92%"
-                        >
-                            <i ref="eyes" class="fa-solid fa-eye text-gray"></i>
+                <div class="mt-3rem loginBox p-2rem">
+                    <form action="" method="POST" @submit.prevent="login">
+                        <div class="mt-15px">
+                            <div class="mb-5px color-#fff">登入帳號</div>
+                            <input
+                                type="text"
+                                required
+                                v-model="accountId"
+                                autocomplete
+                                class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200"
+                            />
                         </div>
 
-                        <div
-                            class="tips absolute text-14px w-200px h-auto bg-dark left-25% bottom-130% text-white p-10px rounded-1"
-                        >
-                            密碼長度必須為8~20位,
-                            其中必須包含至少一位數字、一位英文，若需有特殊符號僅限於
-                            ! @ # $ % & *
-                        </div>
-                        <div
-                            class="tips absolute clip-path-custom w-15px h-15px bg-dark left-52% bottom-110%"
-                        ></div>
-                    </div>
-                </div>
-                <div v-if="!hasToken" class="w-100% mt-15px">
-                    <VueTurnstile
-                        site-key="1x00000000000000000000AA"
-                        size="normal"
-                        @update:model-value="onVerify"
-                    ></VueTurnstile>
-                </div>
-                <!-- 登入/註冊 -->
-                <div class="mt-15px">
-                    <div class="flex">
-                        <div class="flex-1">
-                            <button
-                                type="submit"
-                                v-if="iData !== null"
-                                :disabled="iData.length === 0"
-                                class="disabled:opacity-70 p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#e93470] hover:bg-[#bb2d3b] transition duration-200 cursor-pointer"
-                            >
-                                登入
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </form>
+                        <div class="mt-15px">
+                            <div class="mb-5px color-#fff">密碼</div>
+                            <div class="relative">
+                                <input
+                                    type="password"
+                                    ref="i_password"
+                                    autocomplete="current-password"
+                                    v-model="password"
+                                    class="password box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200"
+                                />
+                                <div
+                                    @click="turnInputType"
+                                    class="cursor-pointer absolute top-50% transform translate-y-[-45%] right-20px"
+                                >
+                                    <i
+                                        ref="eyes"
+                                        class="fa-solid fa-eye text-gray"
+                                    ></i>
+                                </div>
 
-            <!-- <div class="mt-15px text-center">
+                                <div
+                                    class="tips absolute text-14px w-200px h-auto bg-dark left-25% bottom-130% text-white p-10px rounded-1"
+                                >
+                                    密碼長度必須為8~20位,
+                                    其中必須包含至少一位數字、一位英文，若需有特殊符號僅限於
+                                    ! @ # $ % & *
+                                </div>
+                                <div
+                                    class="tips absolute clip-path-custom w-15px h-15px bg-dark left-52% bottom-110%"
+                                ></div>
+                            </div>
+                        </div>
+                        <div v-if="!hasToken" class="w-100% mt-15px">
+                            <VueTurnstile
+                                site-key="1x00000000000000000000AA"
+                                size="normal"
+                                @update:model-value="onVerify"
+                            ></VueTurnstile>
+                        </div>
+                        <!-- 登入/註冊 -->
+                        <div class="mt-15px">
+                            <div class="flex">
+                                <div class="flex-1">
+                                    <button
+                                        type="submit"
+                                        v-if="iData !== null"
+                                        :disabled="iData.length === 0"
+                                        class="disabled:opacity-70 p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#e93470] hover:bg-[#bb2d3b] transition duration-200 cursor-pointer"
+                                    >
+                                        登入
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- <div class="mt-15px text-center">
                 已經註冊?<NuxtLink
                     to="#"
                     class="text-[#0d6efd] hover:opacity-70 hover:underline text-15px no-underline"
                     >忘記密碼</NuxtLink
                 >
             </div> -->
+            </div>
         </div>
     </div>
 </template>
@@ -257,6 +244,11 @@ onMounted(async () => {
     justify-content: center;
     align-items: center;
     width: 100%;
+    background: url(/images/bg-halo-01.png), url(/images/bg-Texture-01.png),
+        url(/images/bg-02.png);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 .font-sans {
     font-family: Arial, "Noto Sans TC", sans-serif;
@@ -272,5 +264,60 @@ onMounted(async () => {
 .password:hover ~ .tips {
     opacity: 1;
     z-index: 1;
+}
+.hotTitle {
+    background: linear-gradient(to bottom, #fff, #43edff);
+    background: -webkit-linear-gradient(#fff, #43edff);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    font-weight: 900;
+    font-size: 40px;
+    -webkit-text-stroke: 1px rgba(200, 200, 200, 0.1);
+}
+.gameTitle {
+    background: linear-gradient(to bottom, #43edff, #fff);
+    background: -webkit-linear-gradient(#43edff, #fff);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    font-weight: 900;
+    font-size: 40px;
+    -webkit-text-stroke: 1px rgba(200, 200, 200, 0.1);
+}
+.titleLeftBorder {
+    width: 40px;
+    border: 2px solid;
+    border-right: none;
+    height: 10px;
+    border-image: linear-gradient(to right, #fff, #43edff) 1;
+    margin-right: 1rem;
+}
+.titleRightBorder {
+    width: 40px;
+    border: 2px solid;
+    border-left: none;
+    height: 10px;
+    border-image: linear-gradient(to left, #fff, #43edff) 1;
+    margin-left: 1rem;
+}
+.loginBox {
+    position: relative;
+}
+.loginBox::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 10px;
+    padding: 2px;
+    background: linear-gradient(to right, #43edff, #fff);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
 }
 </style>
