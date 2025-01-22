@@ -83,7 +83,7 @@
                 <div class="w-100% flex justify-center mt-3 mb-3"
                      v-for="item of headerLink"
                      :key="item.id">
-                    <div v-if="item.title === '會員中心'"
+                    <!-- <div v-if="item.title === '會員中心'"
                          class="text-center">
                         <div class="headerLink color-#555553 decoration-none font-bold w-100% cursor-pointer"
                              @click="show = !show">
@@ -100,8 +100,8 @@
                                 </div>
                             </el-collapse-transition>
                         </div>
-                    </div>
-                    <div v-else>
+                    </div> -->
+                    <div>
                         <NuxtLink :title="item.title"
                                   :to="item.link"
                                   class="headerLink color-#555553 decoration-none font-bold w-100%"
@@ -236,13 +236,6 @@ onMounted(() => {
                 icon: ''
             },
             {
-                id: 1,
-                title: '會員中心',
-                link: '/member/center',
-                className: 'nav1',
-                icon: ''
-            },
-            {
                 id: 2,
                 title: '幫助中心',
                 link: '/helpcenter',
@@ -327,9 +320,11 @@ onBeforeUnmount(() => {
 .logoutBtn:hover {
     color: #999;
 }
+.nav0{
+    border-right: 2px solid #ccc;
+}
 .nav1 {
     border-right: 2px solid #ccc;
-    border-left: 2px solid #ccc;
 }
 .nav3 {
     background: linear-gradient(to right, #4361ee, #f72585);

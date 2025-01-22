@@ -385,7 +385,7 @@ onBeforeUnmount(() => {
     );
     border-radius: 50px;
     border: none;
-    padding: 0 1px;
+    padding: 1px;
 }
 .nav3:focus {
     background: linear-gradient(to right, #f72585, #4361ee);
