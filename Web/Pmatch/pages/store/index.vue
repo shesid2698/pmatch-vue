@@ -187,7 +187,7 @@
                 </div>
             </div>
         </div>
-        <div class="pb-7rem">
+        <!-- <div class="pb-7rem">
             <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
                 <div class="md-flex">
                     <div class="w-100% md-w-50% md-mb-0 mb-3rem">
@@ -312,7 +312,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="pb-7rem">
             <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
                 <div>
