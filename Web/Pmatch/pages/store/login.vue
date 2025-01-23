@@ -355,4 +355,18 @@ onMounted(async () => {
     background: #fff;
     color: #f72585;
 }
+@media screen and (max-width: 768px) {
+    .hotTitle {
+        font-size: 32px;
+    }
+    .gameTitle {
+        font-size: 32px;
+    }
+    .titleLeftBorder {
+        width: 20px;
+    }
+    .titleRightBorder {
+        width: 20px;
+    }
+}
 </style>

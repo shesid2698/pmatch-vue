@@ -1,30 +1,4 @@
 <template>
-    <ElDialog
-        v-for="(dialog, index) in dialogVisible"
-        :key="index"
-        v-model="dialogVisible[index]"
-        :close-on-click-modal="false"
-    >
-        <div class="dialogHeader absolute">遊戲幣走向{{ index }}</div>
-        <div class="dialogBody">
-            <div>
-                <Line
-                    :id="`my-chart-${index}`"
-                    :options="chartOptions"
-                    :data="chartDataComputed[index]"
-                />
-            </div>
-            <div class="flex justify-end mt-5">
-                <ElButton
-                    class="agreeBtn"
-                    type="primary"
-                    @click="dialogVisible[index] = false"
-                >
-                    關閉
-                </ElButton>
-            </div>
-        </div>
-    </ElDialog>
     <div class="storeBac">
         <div class="pb-5rem">
             <div class="max-w-1110px m-auto pt-180px ps-5 pe-5 relative z-2">
@@ -35,9 +9,13 @@
                         PMatch付費方案
                     </h1>
                     <h3
-                        class="m-0 font-size-14px md-font-size-26px text-center subSlogan"
+                        class="m-0 font-size-20px md-font-size-26px text-center subSlogan"
                     >
-                        PMatch擁有超過 3 億筆跨國資料，即時收集 Facebook、YouTube、Instagram、X、TikTok 上龐大的社群資料，並結合人工智慧技術做到最佳的網紅推薦。加入 PMatch 專業版，享有豐富的專業版功能與進階應用。透過大數據與AI運算，達到精準行銷。
+                        PMatch擁有超過 3 億筆跨國資料，即時收集
+                        Facebook、YouTube、Instagram、X、TikTok
+                        上龐大的社群資料，並結合人工智慧技術做到最佳的網紅推薦。加入
+                        PMatch
+                        專業版，享有豐富的專業版功能與進階應用。透過大數據與AI運算，達到精準行銷。
                     </h3>
                 </div>
             </div>
@@ -100,27 +78,49 @@
                     <span class="gameTitle">最適合的方案</span>
                     <div class="titleRightBorder"></div>
                 </div>
-                <div class="color-#fff flex justify-end">
-                    <div class="flex py-3">
-                        <div class="px-1rem w-80px text-center">入門版</div>
-                        <div class="px-1rem w-80px text-center">專業版</div>
-                        <div class="px-1rem w-80px text-center">企業版</div>
+                <div class="planTable">
+                    <div class="color-#fff flex justify-end min-w-600px">
+                        <div class="flex py-3">
+                            <div class="px-1rem w-80px text-center">入門版</div>
+                            <div
+                                class="px-1rem w-80px text-center color-#43edff"
+                            >
+                                專業版
+                            </div>
+                            <div class="px-1rem w-80px text-center">企業版</div>
+                        </div>
                     </div>
-                </div>
-                <div class="color-#fff">
-                    <div class="flex justify-between py-3 planBox">
-                        <div class="flex items-center">
-                            <span>無成交手續費</span>
+                    <div class="color-#fff planBox">
+                        <div
+                            v-for="(row, rowIndex) in planList"
+                            :key="rowIndex"
+                            class="flex justify-between py-4 planCol"
+                        >
+                            <!-- 左側描述文字 -->
+                            <div class="flex items-center px-1rem">
+                                <span>{{ row.label }}</span>
                             </div>
-                        <div class="flex">
-                            <div class="flex justify-center items-center px-1rem w-80px">
-                                <img class="w-20px" src="/images/icon-check-01.png" alt="白色勾勾">
-                            </div>
-                            <div class="flex justify-center items-center px-1rem w-80px">
-                                <img class="w-20px" src="/images/icon-check-02.png" alt="藍色勾勾">
-                            </div>
-                            <div class="flex justify-center items-center px-1rem w-80px">
-                                <img class="w-20px" src="/images/icon-check-01.png" alt="白色勾勾">
+                            <!-- 右側內容 -->
+                            <div class="flex">
+                                <div
+                                    v-for="(item, itemIndex) in row.values"
+                                    :key="itemIndex"
+                                    class="flex justify-center items-center px-1rem w-80px"
+                                    :class="item.colorClass"
+                                >
+                                    <template v-if="item.type === 'image'">
+                                        <img
+                                            :src="item.src"
+                                            :alt="item.alt"
+                                            class="w-20px"
+                                        />
+                                    </template>
+                                    <template v-else>
+                                        <span class="fw-600">{{
+                                            item.value
+                                        }}</span>
+                                    </template>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -174,7 +174,52 @@
                 </div>
             </div>
         </div>
-        
+        <div class="pb-7rem">
+            <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
+                <div class="flex items-center justify-center mb-3rem">
+                    <div class="titleLeftBorder"></div>
+                    <span class="hotTitle">常見問題</span>
+                    <span class="gameTitle">FAQ</span>
+                    <div class="titleRightBorder"></div>
+                </div>
+                <div
+                    class="qaBox mb-3"
+                    v-for="(item, index) in qaList"
+                    :key="index"
+                    @click="answerBoxToggle(index)"
+                >
+                    <div class="w-100% p-1rem md-p-1.5rem">
+                        <div class="w-100% flex justify-between items-center">
+                            <div
+                                class="font-size-20px color-#43edff flex items-center"
+                            >
+                                <span>{{ item.Title }}</span>
+                            </div>
+                            <div class="flex items-center">
+                                <img
+                                    :class="
+                                        answerShow === index
+                                            ? 'w-20px'
+                                            : 'w-13px'
+                                    "
+                                    :src="
+                                        answerShow === index
+                                            ? '/images/arrowDownLine.png'
+                                            : '/images/arrowRightLine.png'
+                                    "
+                                    alt="箭頭向右"
+                                />
+                            </div>
+                        </div>
+                        <div
+                            v-show="answerShow === index && item.Answer !== ''"
+                            v-html="item.Content"
+                            class="answerBox font-size-20px color-#fff"
+                        ></div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="pb-25rem">
             <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
                 <div class="flex items-center justify-center mb-3rem">
@@ -184,7 +229,7 @@
                     <div class="titleRightBorder"></div>
                 </div>
                 <div class="flex justify-center">
-                    <div class="contactBox py-2rem px-3rem">
+                    <div class="contactBox py-2rem px-1rem md-px-3rem">
                         <div>
                             <input
                                 class="contactEntry"
@@ -261,33 +306,7 @@ const jwtStore = useJwtStore();
 const setPageLoading = store.setPageLoading;
 const userToken = useCookie("_PmToken");
 
-const source1 = ref(0);
-const source2 = ref(0);
-const source3 = ref(0);
-const dailyPatchList0 = ref([]);
-const dailyPatchList1 = ref([]);
-const dailyPatchLists = [dailyPatchList0, dailyPatchList1];
-// 用來控制每個對話框的開關狀態
-const dialogVisible = ref([false, false]);
-
-// 開啟指定的對話框
-function openDialog(index) {
-    dialogVisible.value[index] = true;
-}
-
-const matchValue1 = useTransition(source1, {
-    duration: 1500,
-});
-source1.value = 1000000;
-const matchValue2 = useTransition(source2, {
-    duration: 1500,
-});
-source2.value = 130;
-const matchValue3 = useTransition(source3, {
-    duration: 1500,
-});
-source3.value = 100;
-
+const answerShow = ref(null);
 // 優勢列表
 const advantagesList = [
     {
@@ -365,245 +384,197 @@ const programList = [
         className: "programEnterprise",
     },
 ];
-// 為完整版圖表準備數據
-const chartDataComputed = computed(() => {
-    return dialogVisible.value.map((_, index) => getChartData(index));
-});
-// 為簡化版圖表準備數據
-const simpleChartData = computed(() => {
-    // 假設這裡使用 endDate 的數據
-    const { EndTime } = calculateWeekRange();
-    const endDateData = dailyPatchList0.value; // 或其他數據來源
-
-    return getSimpleChartData(endDateData);
-});
-// 為簡化版圖表準備數據
-const simpleChartData1 = computed(() => {
-    // 假設這裡使用 endDate 的數據
-    const { EndTime } = calculateWeekRange();
-    const endDateData = dailyPatchList1.value; // 或其他數據來源
-
-    return getSimpleChartData(endDateData);
-});
-// 修改 getChartData 函數
-const getChartData = (index) => {
-    // 先確保 dailyPatchLists[index] 存在
-    if (!dailyPatchLists[index]) {
-        console.log(`索引 ${index} 的資料清單不存在`);
-        return getEmptyChartData();
-    }
-
-    // 確保 .value 有值且是陣列
-    const dataList = dailyPatchLists[index].value;
-    console.log("當前資料:", dataList);
-
-    if (!Array.isArray(dataList) || dataList.length === 0) {
-        console.log(`資料清單為空或無效：Index ${index}`);
-        return getEmptyChartData();
-    }
-
-    // 確保每個項目都有需要的屬性
-    if (
-        !dataList.every(
-            (item) =>
-                item && item.Time !== undefined && item.Total !== undefined
-        )
-    ) {
-        console.log("資料結構不完整");
-        return getEmptyChartData();
-    }
-
-    // 正常生成圖表資料
-    return {
-        labels: dataList.map((item) => formatDate(item.Time)),
-        datasets: [
+const planList = [
+    {
+        label: "無成交手續費",
+        values: [
             {
-                label: "總計",
-                data: dataList.map((item) => item.Total),
-                backgroundColor: "rgb(90,155,213)",
-                borderColor: "#36A2EB",
-                tension: 0.4,
-                fill: false,
-                borderWidth: 2,
+                type: "image",
+                src: "/images/icon-check-01.png",
+                alt: "白色勾勾",
+            },
+            {
+                type: "image",
+                src: "/images/icon-check-02.png",
+                alt: "藍色勾勾",
+            },
+            {
+                type: "image",
+                src: "/images/icon-check-01.png",
+                alt: "白色勾勾",
             },
         ],
-    };
-};
-// 輔助函數：格式化日期
-function formatDate(timeString) {
-    const date = new Date(timeString);
-    return `${date.getFullYear()}-${
-        date.getMonth() + 1
-    }-${date.getDate()} ${date.getHours()}:00`;
-}
-// 輔助函數：取得空的圖表資料
-function getEmptyChartData() {
-    return {
-        labels: ["No data"],
-        datasets: [
+    },
+    {
+        label: "可開通個銷售管道",
+        values: [
+            { type: "text", value: "3" },
+            { type: "text", value: "10", colorClass: "color-#43edff" },
+            { type: "text", value: "30" },
+        ],
+    },
+    {
+        label: "推薦分潤行銷",
+        values: [
             {
-                label: "總計",
-                data: [0],
-                backgroundColor: "rgb(90,155,213)",
-                borderColor: "#36A2EB",
-                tension: 0.4,
-                fill: false,
-                borderWidth: 2,
+                type: "image",
+                src: "/images/icon-check-01.png",
+                alt: "白色勾勾",
+            },
+            {
+                type: "image",
+                src: "/images/icon-check-02.png",
+                alt: "藍色勾勾",
+            },
+            {
+                type: "image",
+                src: "/images/icon-check-01.png",
+                alt: "白色勾勾",
             },
         ],
-    };
-}
-const chartOptions = {
-    responsive: true,
-    plugins: {
-        legend: {
-            position: "top",
-        },
-        title: {
-            display: true,
-            text: "富豪榜數據圖",
-        },
     },
-    scales: {
-        y: {
-            display: true,
-            stacked: false,
-            position: "left",
-        },
-        x: {
-            ticks: {
-                maxRotation: 45,
-                minRotation: 45,
-            },
-            grid: {
-                display: false,
-            },
-        },
-    },
-};
-// 計算日期
-const calculateWeekRange = () => {
-    const today = new Date(); // 取得今天的日期
-    const dayOfWeek = today.getDay(); // 取得今天是星期幾 (0:週日, 1:週一, ..., 6:週六)
-
-    // 初始化範圍日期
-    let startDate = new Date(today);
-    let endDate = new Date(today);
-
-    if (dayOfWeek === 0) {
-        // 如果今天是禮拜日，抓上上週的禮拜日到上週的禮拜六
-        startDate.setDate(today.getDate() - 13); // 上上週禮拜一
-        endDate.setDate(today.getDate() - 7); // 上週禮拜日
-    } else {
-        // 其他情況，抓上週的禮拜一到禮拜日
-        startDate.setDate(today.getDate() - dayOfWeek - 6); // 上週禮拜一
-        endDate.setDate(today.getDate() - dayOfWeek); // 上週禮拜日
-    }
-
-    // 格式化日期為 "YYYY-MM-DD"
-    const formatDate = (date) => {
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, "0"); // 月份從 0 開始
-        const day = String(date.getDate()).padStart(2, "0");
-        return `${year}-${month}-${day}`;
-    };
-
-    return {
-        StartTime: formatDate(startDate),
-        EndTime: formatDate(endDate),
-    };
-};
-// 簡化版折線圖的數據生成函數
-const getSimpleChartData = (data) => {
-    if (!Array.isArray(data) || data.length === 0) {
-        return getEmptySimpleChartData();
-    }
-
-    return {
-        labels: data.map((item) => formatDate(item.Time)),
-        datasets: [
+    {
+        label: "會員分級",
+        values: [
             {
-                data: data.map((item) => item.Total),
-                borderColor: "#36A2EB",
-                tension: 0.4,
-                fill: false,
-                type: "line",
-                pointRadius: 0, // 隱藏數據點
-                pointRadius: 3, // 外圈大小
-                pointBackgroundColor: "#36A2EB", // 點的背景色（白色）
-                pointBorderColor: "#fff", // 點的邊框色（藍色）
-                pointBorderWidth: 2, // 點的邊框寬度
+                type: "image",
+                src: "/images/icon-check-01.png",
+                alt: "白色勾勾",
+            },
+            {
+                type: "image",
+                src: "/images/icon-check-02.png",
+                alt: "藍色勾勾",
+            },
+            {
+                type: "image",
+                src: "/images/icon-check-01.png",
+                alt: "白色勾勾",
             },
         ],
-    };
-};
-
-// 簡化版空數據
-function getEmptySimpleChartData() {
-    return {
-        labels: ["No data"],
-        datasets: [
+    },
+    {
+        label: "訊息管理中心",
+        values: [
             {
-                data: [0],
-                borderColor: "#36A2EB",
-                tension: 0.4,
-                fill: false,
-                type: "line",
-                pointRadius: 0, // 隱藏數據點
-                pointRadius: 3, // 外圈大小
-                pointBackgroundColor: "#36A2EB", // 點的背景色（白色）
-                pointBorderColor: "#fff", // 點的邊框色（藍色）
-                pointBorderWidth: 2, // 點的邊框寬度
+                type: "image",
+                src: "/images/icon-check-01.png",
+                alt: "白色勾勾",
+            },
+            {
+                type: "image",
+                src: "/images/icon-check-02.png",
+                alt: "藍色勾勾",
+            },
+            {
+                type: "image",
+                src: "/images/icon-check-01.png",
+                alt: "白色勾勾",
             },
         ],
-    };
-}
+    },
+    {
+        label: "進階促銷優惠工具",
+        values: [
+            {
+                type: "image",
+                src: "/images/icon-endash-white.png",
+                alt: "白色dash",
+            },
+            {
+                type: "image",
+                src: "/images/icon-check-02.png",
+                alt: "藍色勾勾",
+            },
+            {
+                type: "image",
+                src: "/images/icon-check-01.png",
+                alt: "白色勾勾",
+            },
+        ],
+    },
+    {
+        label: "群發行銷訊息",
+        values: [
+            {
+                type: "image",
+                src: "/images/icon-endash-white.png",
+                alt: "白色dash",
+            },
+            {
+                type: "image",
+                src: "/images/icon-check-02.png",
+                alt: "藍色勾勾",
+            },
+            {
+                type: "image",
+                src: "/images/icon-check-01.png",
+                alt: "白色勾勾",
+            },
+        ],
+    },
+    {
+        label: "行銷預測功能",
+        values: [
+            {
+                type: "image",
+                src: "/images/icon-endash-white.png",
+                alt: "白色dash",
+            },
+            {
+                type: "image",
+                src: "/images/icon-check-02.png",
+                alt: "藍色勾勾",
+            },
+            {
+                type: "image",
+                src: "/images/icon-check-01.png",
+                alt: "白色勾勾",
+            },
+        ],
+    },
+    {
+        label: "管理員帳號",
+        values: [
+            {
+                type: "image",
+                src: "/images/icon-endash-white.png",
+                alt: "白色dash",
+            },
+            { type: "text", value: "10", colorClass: "color-#43edff" },
+            { type: "text", value: "20" },
+        ],
+    },
+    {
+        label: "應用擴充",
+        values: [
+            {
+                type: "image",
+                src: "/images/icon-endash-white.png",
+                alt: "白色dash",
+            },
+            { type: "text", value: "25", colorClass: "color-#43edff" },
+            { type: "text", value: "35" },
+        ],
+    },
+];
+const qaList = ref([]);
 
-// 簡化版圖表配置
-const simpleChartOptions = {
-    responsive: true,
-    plugins: {
-        legend: {
-            display: false, // 隱藏圖例
-        },
-        title: {
-            display: false, // 隱藏標題
-        },
-        tooltip: {
-            enabled: false, // 禁用提示框
-        },
-    },
-    scales: {
-        y: {
-            display: false, // 隱藏Y軸
-        },
-        x: {
-            display: false, // 隱藏X軸
-        },
-    },
-    elements: {
-        point: {
-            radius: 0, // 隱藏數據點
-        },
-    },
+// 問答開關
+const answerBoxToggle = (index) => {
+    answerShow.value = answerShow.value === index ? null : index;
 };
-// 取得富豪榜
-async function fetchRichList(token, type) {
+// 取得GetNewsList(最新消息)
+async function fetchNewsListData(num, token) {
     if (token === "") {
         token = await jwtStore.generateToken();
     }
-    const { StartTime, EndTime } = calculateWeekRange();
-    const useStartTime = StartTime;
-    const useEndTime = EndTime;
+
     try {
         const response = await $axios.post(
-            "/api/v1/Statist/GetDailyPatchList",
+            "/api/v1/Pmatch/GetNewsList",
             {
-                GamePlatformType: type, // 1錢街, 2滿貫, 3包你發, 4老子有錢, 5聚寶, 6金爸爸,
-                // StartTime: useStartTime,
-                // EndTime: useEndTime,
-                StartTime: "2024-12-01",
-                EndTime: "2024-12-05",
+                Categorys: num,
             },
             {
                 headers: {
@@ -612,16 +583,13 @@ async function fetchRichList(token, type) {
             }
         );
         if (response.data.Status.Code === 0) {
-            if (type === 2) {
-                dailyPatchList0.value = response.data.Data;
-            } else if (type === 4) {
-                dailyPatchList1.value = response.data.Data;
-            }
+            qaList.value = response.data.Data;
         } else {
             await openAlertModal(" ", `${response.data.Status.Message}`);
         }
     } catch (error) {
         console.error("請求失敗:", error);
+        data.value = "無法取得資料。"; // 畫面顯示錯誤訊息
     }
 }
 onMounted(async () => {
@@ -631,15 +599,13 @@ onMounted(async () => {
             const token = userToken.value;
 
             if (token != "") {
-                await fetchRichList(token, 2);
-                await fetchRichList(token, 4);
+                await fetchNewsListData([1], token);
             }
         } else {
             // 生成新的 token
             const token = await jwtStore.generateToken();
             if (token != "") {
-                await fetchRichList(token, 2);
-                await fetchRichList(token, 4);
+                await fetchNewsListData([1], token);
             }
         }
     } catch (error) {
@@ -1034,9 +1000,57 @@ onMounted(async () => {
 .contactEntry::placeholder {
     color: #fff; /* 設定 placeholder 的顏色 */
 }
-.planBox{
+.planTable {
+    overflow-x: auto;
+    width: 100%;
+}
+.planTable::-webkit-scrollbar {
+    width: 3px;
+}
+.planTable::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #fff;
+}
+.planBox {
     border-top: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
+    min-width: 600px;
+}
+.planCol:nth-child(2n) {
+    background: rgba(255, 255, 255, 0.15);
+}
+.qaBox {
+    position: relative;
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+    width: 100%;
+    background: linear-gradient(
+        to bottom,
+        rgba(123, 44, 191, 0.1) 50%,
+        rgba(255, 255, 255, 0.1) 100%
+    );
+}
+.qaBox::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 10px;
+    padding: 2px;
+    background: linear-gradient(to right, #43edff, #fff);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+.answerBox {
+    padding-top: 1.5rem;
+    margin-top: 1.5rem;
+    border-top: 1px solid #fff;
 }
 @media screen and (max-width: 1024px) {
     .programPro {
@@ -1051,6 +1065,18 @@ onMounted(async () => {
     .contactBox {
         position: relative;
         width: 100%;
+    }
+    .hotTitle {
+        font-size: 32px;
+    }
+    .gameTitle {
+        font-size: 32px;
+    }
+    .titleLeftBorder {
+        width: 20px;
+    }
+    .titleRightBorder {
+        width: 20px;
     }
 }
 </style>

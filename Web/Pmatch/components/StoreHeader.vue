@@ -205,8 +205,8 @@ onMounted(() => {
         },
         {
             id: 1,
-            title: "操作手冊",
-            link: "/",
+            title: "付費方案",
+            link: "/store/program",
             className: "nav1",
             icon: "",
         },

@@ -3,7 +3,7 @@
         class="w-100% flex justify-center items-center relative z-2 footerBox"
         :class="{ homeBackground: isHomePage }"
     >
-        <div class="max-w-1110px w-100% ps-5 pe-5 absolute bottom-100%">
+        <div class="max-w-1110px w-100% absolute bottom-100%">
             <div class="lg-flex">
                 <div class="w-100% flex lg-justify-start justify-center mb-5">
                     <div>
@@ -91,7 +91,7 @@ const footerLinkRight = ref([
     {
         id: 0,
         title: "付費方案",
-        link: "/company/about",
+        link: "/store/program",
     },
 ]);
 </script>

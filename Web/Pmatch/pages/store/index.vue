@@ -35,7 +35,7 @@
                         PMatch是你事業上的全能助手 !
                     </h1>
                     <h3
-                        class="m-0 font-size-14px md-font-size-26px text-center subSlogan"
+                        class="m-0 font-size-20px md-font-size-26px text-center subSlogan"
                     >
                         讓你的廣告被看見，讓對的人找到你，還能輕鬆的記帳與報稅
                     </h3>
@@ -154,7 +154,7 @@
                                     <Line
                                         :data="simpleChartData"
                                         :options="simpleChartOptions"
-                                        class="w-150px"
+                                        class="md-w-150px w-80px"
                                     />
                                 </ElButton>
                             </div>
@@ -178,7 +178,7 @@
                                     <Line
                                         :data="simpleChartData1"
                                         :options="simpleChartOptions"
-                                        class="w-150px"
+                                        class="md-w-150px w-80px"
                                     />
                                 </ElButton>
                             </div>
@@ -460,7 +460,7 @@
                     <div class="titleRightBorder"></div>
                 </div>
                 <div class="flex justify-center">
-                    <div class="contactBox py-2rem px-3rem">
+                    <div class="contactBox py-2rem px-1rem md-px-3rem">
                         <div>
                             <input
                                 class="contactEntry"
@@ -649,7 +649,9 @@ const chartDataComputed = computed(() => {
 const simpleChartData = computed(() => {
     // 假設這裡使用 endDate 的數據
     const { EndTime } = calculateWeekRange();
-    const endDateData = dailyPatchList0.value; // 或其他數據來源
+    const endDateData = dailyPatchList0.value.filter(item => 
+        item.Time.split('T')[0] === EndTime
+    );
 
     return getSimpleChartData(endDateData);
 });
@@ -657,8 +659,9 @@ const simpleChartData = computed(() => {
 const simpleChartData1 = computed(() => {
     // 假設這裡使用 endDate 的數據
     const { EndTime } = calculateWeekRange();
-    const endDateData = dailyPatchList1.value; // 或其他數據來源
-
+    const endDateData = dailyPatchList1.value.filter(item => 
+        item.Time.split('T')[0] === EndTime
+    );
     return getSimpleChartData(endDateData);
 });
 // 修改 getChartData 函數
@@ -876,10 +879,8 @@ async function fetchRichList(token, type) {
             "/api/v1/Statist/GetDailyPatchList",
             {
                 GamePlatformType: type, // 1錢街, 2滿貫, 3包你發, 4老子有錢, 5聚寶, 6金爸爸,
-                // StartTime: useStartTime,
-                // EndTime: useEndTime,
-                StartTime: "2024-12-01",
-                EndTime: "2024-12-05",
+                StartTime: useStartTime,
+                EndTime: useEndTime,
             },
             {
                 headers: {
@@ -1303,6 +1304,7 @@ onMounted(async () => {
     border-radius: 10px;
     margin: 0.5rem 0;
     position: relative;
+    font-size: 16px;
 }
 .contactEntry:focus-visible {
     outline: none;
@@ -1323,6 +1325,18 @@ onMounted(async () => {
     .contactBox {
         position: relative;
         width: 100%;
+    }
+    .hotTitle {
+        font-size: 32px;
+    }
+    .gameTitle {
+        font-size: 32px;
+    }
+    .titleLeftBorder {
+        width: 20px;
+    }
+    .titleRightBorder {
+        width: 20px;
     }
 }
 </style>
