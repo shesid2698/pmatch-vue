@@ -34,7 +34,7 @@
                                 required
                                 v-model="accountId"
                                 autocomplete
-                                class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200"
+                                class="loginEntry box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200"
                             />
                         </div>
 
@@ -46,7 +46,7 @@
                                     ref="i_password"
                                     autocomplete="current-password"
                                     v-model="password"
-                                    class="password box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200"
+                                    class="loginEntry password box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200"
                                 />
                                 <div
                                     @click="turnInputType"
@@ -80,15 +80,18 @@
                         <!-- 登入/註冊 -->
                         <div class="mt-15px">
                             <div class="flex">
-                                <div class="flex-1">
-                                    <button
+                                <div class="w-100%">
+                                    <div class="loginBtnBox">
+                                        <button
                                         type="submit"
                                         v-if="iData !== null"
                                         :disabled="iData.length === 0"
-                                        class="disabled:opacity-70 p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#e93470] hover:bg-[#bb2d3b] transition duration-200 cursor-pointer"
+                                        class="loginBtn disabled:opacity-70 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#e93470] hover:bg-[#bb2d3b] transition duration-200 cursor-pointer"
                                     >
                                         登入
                                     </button>
+                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -319,5 +322,37 @@ onMounted(async () => {
     -webkit-mask-composite: xor;
     mask-composite: exclude;
     pointer-events: none;
+}
+.loginEntry{
+    color: #fff;
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0.15),
+        rgba(255, 255, 255, 0.15)
+    );
+    width: 100%;
+    border: none;
+    text-indent: 1rem;
+    border-radius: 10px;
+    margin: 0.5rem 0;
+    position: relative;
+}
+.loginBtnBox {
+    position: relative;
+    padding: 1px;
+    background: linear-gradient(to right, #7b2cbf, rgba(247, 37, 133));
+    border-radius: 50px;
+    border: none;
+}
+.loginBtn {
+    padding: 10px 0;
+    background: linear-gradient(to right, #7b2cbf, #f72585);
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+.loginBtn:hover {
+    background: #fff;
+    color: #f72585;
 }
 </style>
