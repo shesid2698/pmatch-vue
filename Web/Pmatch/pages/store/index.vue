@@ -901,6 +901,34 @@ async function fetchRichList(token, type) {
         console.error("請求失敗:", error);
     }
 }
+// 聯絡我們
+async function sendMail() {
+    if (token === "") {
+        token = await jwtStore.generateToken();
+    }
+    try {
+        const response = await $axios.post(
+            "/api/v1/Pmatch/SendEmail",
+            {
+                Email: "",
+                Subject: "",
+                Content: "",
+            },
+            {
+                headers: {
+                    Authorization: token, // 帶上 Token
+                },
+            }
+        );
+        if (response.data.Status.Code === 0) {
+            await openAlertModal(" ", "已成功寄信完成，將有專員馬上回覆您 !");
+        } else {
+            await openAlertModal(" ", `${response.data.Status.Message}`);
+        }
+    } catch (error) {
+        console.error("請求失敗:", error);
+    }
+}
 onMounted(async () => {
     await setPageLoading(true);
     try {
