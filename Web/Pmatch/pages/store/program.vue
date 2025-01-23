@@ -599,13 +599,13 @@ onMounted(async () => {
             const token = userToken.value;
 
             if (token != "") {
-                await fetchNewsListData([1], token);
+                await fetchNewsListData([4], token);
             }
         } else {
             // 生成新的 token
             const token = await jwtStore.generateToken();
             if (token != "") {
-                await fetchNewsListData([1], token);
+                await fetchNewsListData([4], token);
             }
         }
     } catch (error) {

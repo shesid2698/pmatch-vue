@@ -4,7 +4,7 @@
         :class="{ homeBackground: isHomePage }"
     >
         <div class="max-w-1110px w-100% absolute bottom-100%">
-            <div class="lg-flex">
+            <div class="lg-flex ps-5 pe-5">
                 <div class="w-100% flex lg-justify-start justify-center mb-5">
                     <div>
                         <img
@@ -83,7 +83,7 @@ const isHomePage = computed(() => route.path === "/");
 const footerLinkLeft = ref([
     {
         id: 0,
-        title: "首頁",
+        title: "會員頁面",
         link: "/",
     },
 ]);

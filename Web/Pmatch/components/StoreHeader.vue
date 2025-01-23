@@ -8,7 +8,7 @@
             <!-- Logo -->
             <div class="lg-w-80% w-100% flex items-center">
                 <div @click="navigateIndex" class="cursor-pointer">
-                    <NuxtLink to="/"
+                    <NuxtLink to="/store"
                         ><img
                             class="md-w-240px w-160px"
                             src="/images/Pmatch-logo-white-03.png"
@@ -198,7 +198,7 @@ onMounted(() => {
     headerLink.value = [
         {
             id: 0,
-            title: "返回首頁",
+            title: "返回會員頁面",
             link: "/",
             className: "nav0",
             icon: "",
