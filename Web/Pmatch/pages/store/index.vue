@@ -466,13 +466,15 @@
                                 class="contactEntry"
                                 placeholder="姓名"
                                 type="text"
+                                v-model="contactName"
                             />
                         </div>
                         <div>
                             <input
                                 class="contactEntry"
-                                placeholder="電話"
+                                placeholder="手機號碼"
                                 type="text"
+                                v-model="contactPhone"
                             />
                         </div>
                         <div>
@@ -480,14 +482,54 @@
                                 class="contactEntry"
                                 placeholder="Email"
                                 type="text"
+                                v-model="contactMail"
                             />
+                        </div>
+                        <div>
+                            <div
+                                class="contactEntry purposeSelect relative"
+                                @click.stop="togglePurposeBox"
+                            >
+                                <span>{{ selectedPurpose || "主旨 ..." }}</span>
+                                <div class="purposeBox" v-show="showPurposeBox">
+                                    <div class="purposeBoxContent">
+                                        <div
+                                            class="relative w-100% purposeOption"
+                                            v-for="(option, index) in purposeOptions"
+                                            :key="option"
+                                            @click.stop="selectPurpose(option)"
+                                        >
+                                            {{ option }}
+                                            <div
+                                                v-show="index === 0"
+                                                class="absolute top-15px right-15px"
+                                            >
+                                                <img
+                                                    class="w-15px"
+                                                    src="/images/icon-arrow-down-02.png"
+                                                    alt="下拉選單箭頭"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="absolute top-15px right-15px">
+                                    <img
+                                        class="w-15px"
+                                        src="/images/icon-arrow-down-02.png"
+                                        alt="下拉選單箭頭"
+                                    />
+                                </div>
+                            </div>
                         </div>
                         <div>
                             <textarea
                                 class="contactEntry"
-                                placeholder="留言"
+                                placeholder="留言 (請輸入100字以內的訊息)"
                                 cols="30"
                                 rows="10"
+                                maxlength="100"
+                                v-model="contactContent"
                             ></textarea>
                         </div>
                         <div class="flex justify-center pt-3 pb-3 mt-4">
@@ -495,8 +537,10 @@
                                 <button
                                     class="moreBtn color-#fff font-size-22px decoration-none"
                                     to="/gamelist"
-                                    >送出</button
+                                    @click="sendForm"
                                 >
+                                    送出
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -531,6 +575,9 @@ ChartJS.register(
 );
 import { useTransition } from "@vueuse/core";
 import { useLoadStore } from "../stores/loading.js";
+import { useAlertModalStore } from "../stores/useAlertModal.js";
+const alertModalStore = useAlertModalStore();
+const openAlertModal = alertModalStore.alertShowModal;
 const store = useLoadStore();
 const { $axios } = useNuxtApp();
 const jwtStore = useJwtStore();
@@ -545,6 +592,20 @@ const dailyPatchList1 = ref([]);
 const dailyPatchLists = [dailyPatchList0, dailyPatchList1];
 // 用來控制每個對話框的開關狀態
 const dialogVisible = ref([false, false]);
+
+const contactName = ref("");
+const contactPhone = ref("");
+const contactMail = ref("");
+const contactContent = ref("");
+const showPurposeBox = ref(false);
+const selectedPurpose = ref("");
+const purposeOptions = ref([
+    "主旨 ...",
+    "商務洽談",
+    "合作邀請",
+    "網站使用問題",
+    "其他",
+]);
 
 // 開啟指定的對話框
 function openDialog(index) {
@@ -899,6 +960,38 @@ async function fetchRichList(token, type) {
         }
     } catch (error) {
         console.error("請求失敗:", error);
+    }
+}
+// 切換下拉選單的顯示/隱藏
+const togglePurposeBox = () => {
+    showPurposeBox.value = !showPurposeBox.value;
+    // 選單開啟時添加全域點擊監聽
+    if (showPurposeBox.value) {
+        document.addEventListener("click", handleClickOutside);
+    } else {
+        document.removeEventListener("click", handleClickOutside);
+    }
+};
+const handleClickOutside = (event) => {
+    const dropdown = document.querySelector(".purposeBox");
+    if (dropdown && !dropdown.contains(event.target)) {
+        showPurposeBox.value = false;
+    }
+};
+const selectPurpose = item =>{
+    selectedPurpose.value = item;
+    showPurposeBox.value = false;
+}
+// 檢查電話
+const validatePhone = () => {
+    const phoneRegex = /^09\d{8}$/; // 09 開頭，後接 8 位數字
+    return phoneRegex.test(contactPhone.value);
+};
+// 送出信件
+async function sendForm() {
+    if (!validatePhone()) {
+        await openAlertModal(" ", "手機號碼必須是 09 開頭且為 10 碼");
+        return;
     }
 }
 // 聯絡我們
@@ -1334,13 +1427,35 @@ onMounted(async () => {
     border-radius: 10px;
     margin: 0.5rem 0;
     position: relative;
-    font-size: 16px;
+    font-size: 1rem;
 }
 .contactEntry:focus-visible {
     outline: none;
 }
 .contactEntry::placeholder {
     color: #fff; /* 設定 placeholder 的顏色 */
+}
+.purposeSelect{
+    cursor: pointer;
+}
+.purposeBox {
+    position: absolute;
+    top: 0;
+    background-color: #fff;
+    width: 100%;
+    border-radius: 10px;
+    z-index: 2;
+}
+.purposeOption {
+    padding: 1rem 0;
+    color: #4361ee;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.purposeOption:hover:not(:first-child) {
+    padding: 1rem 0;
+    background-color: #4361ee;
+    color: #fff;
 }
 @media screen and (max-width: 1024px) {
     .programPro {
