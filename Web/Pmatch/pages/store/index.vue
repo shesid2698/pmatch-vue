@@ -492,10 +492,10 @@
                         </div>
                         <div class="flex justify-center pt-3 pb-3 mt-4">
                             <div class="moreBtnBox">
-                                <NuxtLink
+                                <button
                                     class="moreBtn color-#fff font-size-22px decoration-none"
                                     to="/gamelist"
-                                    >送出</NuxtLink
+                                    >送出</button
                                 >
                             </div>
                         </div>
@@ -567,26 +567,26 @@ source3.value = 100;
 // 優勢列表
 const advantagesList = [
     {
-        title: "打廣告不再難",
-        detail: "整合多個渠道資源，幫助媒合商快速曝光，解決您推廣的難題，輕鬆找到核心玩家",
-        img: "/images/advantages1.png",
-        icon: "/images/adIcon-01.png",
-    },
-    {
-        title: "讓需求來找你",
-        detail: "我們匯聚了有各種遊戲的玩家，與我們合作即可快速與核心市場連結，節省媒合商的寶貴時間",
-        img: "/images/advantages2.png",
-        icon: "/images/adIcon-02.png",
-    },
-    {
         title: "記帳、報稅一步到位",
-        detail: "一站式財務處理系統，幫助媒合商簡化紀錄和計算的流程，提升財務效率與準確性",
+        detail: "一站式財務處理系統，幫助媒合商簡化記錄和計算的流程，利用我們的系統來自動組建媒合的狀況，讓媒合結果一目了然",
         img: "/images/advantages3.png",
         icon: "/images/adIcon-03.png",
     },
     {
+        title: "專業的實名制認證",
+        detail: "我們與各大銀行以及電信商合作，能夠用客戶提供的資料來驗證此人的電話或者銀行帳戶是否正確，大大降低媒合商的交易風險",
+        img: "/images/advantages2.png",
+        icon: "/images/adIcon-02.png",
+    },
+    {
+        title: "整合您的客戶資料",
+        detail: "還在煩惱客戶的資料太多太雜嗎?我們提供了專業的整合服務，將您的客戶資料整理到一起，讓您在查詢後夠快速地了解客戶的狀況，節省你交易的時間。",
+        img: "/images/advantages1.png",
+        icon: "/images/adIcon-01.png",
+    },
+    {
         title: "交易的守護者",
-        detail: "提供專業身分認證系統，保證交易雙方的安全，防範欺詐風險，讓交易更安心",
+        detail: "提供時時監控的服務，當此客戶的身分有疑慮時，將立即提出警告，保障交易您的安全，防範欺詐風險，讓交易更安心。",
         img: "/images/advantages4.png",
         icon: "/images/adIcon-04.png",
     },
@@ -1277,7 +1277,7 @@ onMounted(async () => {
 }
 .moreBtnBox {
     position: relative;
-    padding: 17px 1px;
+    padding: 1px;
     background: linear-gradient(to right, #7b2cbf, rgba(247, 37, 133));
     border-radius: 50px;
     border: none;
@@ -1288,6 +1288,8 @@ onMounted(async () => {
     border-radius: 50px;
     font-size: 1.2rem;
     font-weight: 600;
+    cursor: pointer;
+    border: none;
 }
 .moreBtn:hover {
     background: #fff;
