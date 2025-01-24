@@ -5,7 +5,7 @@
         v-model="dialogVisible[index]"
         :close-on-click-modal="false"
     >
-        <div class="dialogHeader absolute">遊戲幣走向{{ index }}</div>
+        <div class="dialogHeader absolute">遊戲幣走向</div>
         <div class="dialogBody">
             <div>
                 <Line
@@ -144,7 +144,7 @@
                             <div
                                 class="w-100% patchNumber font-size-1.5rem text-center color-#beffff"
                             >
-                                1000
+                                {{ dailyPatchList0.length ? dailyPatchList0[dailyPatchList0.length - 1].money : '0' }}
                             </div>
                             <div
                                 class="w-100% font-size-1.2rem text-center color-#beffff"
@@ -779,7 +779,7 @@ function formatDate(timeString) {
 // 輔助函數：取得空的圖表資料
 function getEmptyChartData() {
     return {
-        labels: ["No data"],
+        labels: ["沒有資料"],
         datasets: [
             {
                 label: "總計",
@@ -881,7 +881,7 @@ const getSimpleChartData = (data) => {
 // 簡化版空數據
 function getEmptySimpleChartData() {
     return {
-        labels: ["No data"],
+        labels: ["沒有資料"],
         datasets: [
             {
                 data: [0],
