@@ -703,13 +703,12 @@ watch(
 
 onMounted(async () => {
     await setPageLoading(true);
-
     try {
         if (userToken.value != "" && userToken.value != undefined) {
             const token = userToken.value;
 
             if (token != "") {
-                await fetchNewsListData([], token);
+                await fetchNewsListData([1,2], token);
                 await fetchGameList(token);
                 await fetchADList(token);
             }
@@ -717,7 +716,7 @@ onMounted(async () => {
             // 生成新的 token
             const token = await jwtStore.generateToken();
             if (token != "") {
-                await fetchNewsListData([], token);
+                await fetchNewsListData([1,2], token);
                 await fetchGameList(token);
                 await fetchADList(token);
             }
