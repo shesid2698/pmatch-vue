@@ -95,7 +95,7 @@ const footerLinkLeft = ref([
     {
         id: 3,
         title: "找媒合",
-        link: "/findmatch",
+        link: "/gamelist",
     },
     {
         id: 4,

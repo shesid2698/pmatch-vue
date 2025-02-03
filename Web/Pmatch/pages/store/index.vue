@@ -144,7 +144,13 @@
                             <div
                                 class="w-100% patchNumber font-size-1.5rem text-center color-#beffff"
                             >
-                                {{ dailyPatchList0.length ? dailyPatchList0[dailyPatchList0.length - 1].money : '0' }}
+                                {{
+                                    dailyPatchList0.length
+                                        ? dailyPatchList0[
+                                              dailyPatchList0.length - 1
+                                          ].money
+                                        : "0"
+                                }}
                             </div>
                             <div
                                 class="w-100% font-size-1.2rem text-center color-#beffff"
@@ -168,7 +174,13 @@
                             <div
                                 class="w-100% patchNumber font-size-1.5rem text-center color-#beffff"
                             >
-                                13000
+                                {{
+                                    dailyPatchList1.length
+                                        ? dailyPatchList1[
+                                              dailyPatchList1.length - 1
+                                          ].money
+                                        : "0"
+                                }}
                             </div>
                             <div
                                 class="w-100% font-size-1.2rem text-center color-#beffff"
@@ -187,6 +199,7 @@
                 </div>
             </div>
         </div>
+        <!-- 先不開 -->
         <!-- <div class="pb-7rem">
             <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
                 <div class="md-flex">
@@ -461,7 +474,7 @@
                 </div>
                 <div class="flex justify-center">
                     <div class="contactBox py-2rem px-1rem md-px-3rem">
-                        <div>
+                        <div class="mb-1rem">
                             <input
                                 class="contactEntry"
                                 placeholder="姓名"
@@ -469,15 +482,32 @@
                                 v-model="contactName"
                             />
                         </div>
-                        <div>
+                        <div class="relative mb-1rem">
                             <input
                                 class="contactEntry"
                                 placeholder="手機號碼"
+                                :class="{ 'error-input': isPhoneError }"
                                 type="text"
                                 v-model="contactPhone"
                             />
+                            <div
+                                v-show="isPhoneError"
+                                class="absolute right-5px top-12px"
+                            >
+                                <img
+                                    class="w-30px"
+                                    src="/images/icon-alert.png"
+                                    alt="警示的圖"
+                                />
+                            </div>
+                            <div v-show="isPhoneError">
+                                <p class="m-0 fw-600 color-#ff2400">
+                                    請輸入正確手機格式，共10碼
+                                </p>
+                            </div>
                         </div>
-                        <div>
+
+                        <div class="mb-1rem">
                             <input
                                 class="contactEntry"
                                 placeholder="Email"
@@ -485,7 +515,7 @@
                                 v-model="contactMail"
                             />
                         </div>
-                        <div>
+                        <div class="mb-1rem">
                             <div
                                 class="contactEntry purposeSelect relative"
                                 @click.stop="togglePurposeBox"
@@ -495,7 +525,9 @@
                                     <div class="purposeBoxContent">
                                         <div
                                             class="relative w-100% purposeOption"
-                                            v-for="(option, index) in purposeOptions"
+                                            v-for="(
+                                                option, index
+                                            ) in purposeOptions"
                                             :key="option"
                                             @click.stop="selectPurpose(option)"
                                         >
@@ -506,7 +538,7 @@
                                             >
                                                 <img
                                                     class="w-15px"
-                                                    src="/images/icon-arrow-down-02.png"
+                                                    src="/images/icon-arrow-down-03.png"
                                                     alt="下拉選單箭頭"
                                                 />
                                             </div>
@@ -522,7 +554,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div>
+                        <div class="mb-1rem">
                             <textarea
                                 class="contactEntry"
                                 placeholder="留言 (請輸入100字以內的訊息)"
@@ -532,7 +564,49 @@
                                 v-model="contactContent"
                             ></textarea>
                         </div>
-                        <div class="flex justify-center pt-3 pb-3 mt-4">
+                        <div class="flex items-center justify-between">
+                            <div class="w-60% me-1rem relative">
+                                <input
+                                    class="contactCap"
+                                    :class="{ 'error-input': isCapError }"
+                                    placeholder="輸入驗證碼"
+                                    type="text"
+                                    v-model="contactCap"
+                                />
+                                <div
+                                    v-show="isCapError"
+                                    class="absolute right-5px top-12px"
+                                >
+                                    <img
+                                        class="w-30px"
+                                        src="/images/icon-alert.png"
+                                        alt="警示的圖"
+                                    />
+                                </div>
+                            </div>
+                            <div class="w-200px flex">
+                                <div
+                                    id="captchaContainer"
+                                    class="w-100% h-51px me-.5rem"
+                                ></div>
+                                <div
+                                    @click="refreshCaptcha"
+                                    class="refreshBtn flex items-center"
+                                >
+                                    <img
+                                        class="w-35px"
+                                        src="/images/icon-refresh.png"
+                                        alt="重整的圖"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-1rem" v-show="isCapError">
+                            <p class="m-0 fw-600 color-#ff2400">
+                                請輸入正確的驗證碼
+                            </p>
+                        </div>
+                        <div class="flex justify-center pt-3 mt-4">
                             <div class="moreBtnBox">
                                 <button
                                     class="moreBtn color-#fff font-size-22px decoration-none"
@@ -576,13 +650,16 @@ ChartJS.register(
 import { useTransition } from "@vueuse/core";
 import { useLoadStore } from "../stores/loading.js";
 import { useAlertModalStore } from "../stores/useAlertModal.js";
+import useCaptcha from "~/composables/captcha";
 const alertModalStore = useAlertModalStore();
 const openAlertModal = alertModalStore.alertShowModal;
 const store = useLoadStore();
+const { GVerify } = useCaptcha();
 const { $axios } = useNuxtApp();
 const jwtStore = useJwtStore();
 const setPageLoading = store.setPageLoading;
 const userToken = useCookie("_PmToken");
+let captcha = null;
 
 const source1 = ref(0);
 const source2 = ref(0);
@@ -597,6 +674,7 @@ const contactName = ref("");
 const contactPhone = ref("");
 const contactMail = ref("");
 const contactContent = ref("");
+const contactCap = ref("");
 const showPurposeBox = ref(false);
 const selectedPurpose = ref("");
 const purposeOptions = ref([
@@ -606,7 +684,8 @@ const purposeOptions = ref([
     "網站使用問題",
     "其他",
 ]);
-
+const isCapError = ref(false);
+const isPhoneError = ref(false);
 // 開啟指定的對話框
 function openDialog(index) {
     dialogVisible.value[index] = true;
@@ -710,8 +789,8 @@ const chartDataComputed = computed(() => {
 const simpleChartData = computed(() => {
     // 假設這裡使用 endDate 的數據
     const { EndTime } = calculateWeekRange();
-    const endDateData = dailyPatchList0.value.filter(item => 
-        item.Time.split('T')[0] === EndTime
+    const endDateData = dailyPatchList0.value.filter(
+        (item) => item.Time.split("T")[0] === EndTime
     );
 
     return getSimpleChartData(endDateData);
@@ -720,8 +799,8 @@ const simpleChartData = computed(() => {
 const simpleChartData1 = computed(() => {
     // 假設這裡使用 endDate 的數據
     const { EndTime } = calculateWeekRange();
-    const endDateData = dailyPatchList1.value.filter(item => 
-        item.Time.split('T')[0] === EndTime
+    const endDateData = dailyPatchList1.value.filter(
+        (item) => item.Time.split("T")[0] === EndTime
     );
     return getSimpleChartData(endDateData);
 });
@@ -978,34 +1057,69 @@ const handleClickOutside = (event) => {
         showPurposeBox.value = false;
     }
 };
-const selectPurpose = item =>{
+const selectPurpose = (item) => {
     selectedPurpose.value = item;
     showPurposeBox.value = false;
-}
+};
 // 檢查電話
 const validatePhone = () => {
     const phoneRegex = /^09\d{8}$/; // 09 開頭，後接 8 位數字
-    return phoneRegex.test(contactPhone.value);
+    const result = phoneRegex.test(contactPhone.value);
+    isPhoneError.value = !result;
+    return result;
+};
+// 刷新驗證碼
+const refreshCaptcha = () => {
+    captcha.refresh();
+};
+// 驗證用戶輸入
+const validateCaptcha = () => {
+    const result = captcha.validate(contactCap.value);
+    isCapError.value = !result;
+    return result; // 會返回 true 或 false
 };
 // 送出信件
 async function sendForm() {
+    if (!contactName.value) {
+        await openAlertModal(" ", "請輸入姓名");
+        return;
+    }
+    if (!validatePhone() && !validateCaptcha()) {
+        await openAlertModal(" ", "請輸入正確的手機號碼及驗證碼");
+        return;
+    }
     if (!validatePhone()) {
         await openAlertModal(" ", "手機號碼必須是 09 開頭且為 10 碼");
         return;
     }
+    if (!contactMail.value) {
+        await openAlertModal(" ", "請輸入Email");
+        return;
+    }
+    if (selectedPurpose.value === "主旨 ..." || !selectedPurpose.value) {
+        await openAlertModal(" ", "請先選擇主旨內容");
+        return;
+    }
+    if (!contactContent.value) {
+        await openAlertModal(" ", "請輸入留言內容");
+        return;
+    }
+    if (!validateCaptcha()) {
+        await openAlertModal(" ", "請輸入正確的驗證碼");
+        return;
+    }
+    await sendMail();
 }
 // 聯絡我們
 async function sendMail() {
-    if (token === "") {
-        token = await jwtStore.generateToken();
-    }
+    const token = await jwtStore.generateToken();
     try {
         const response = await $axios.post(
             "/api/v1/Pmatch/SendEmail",
             {
-                Email: "",
-                Subject: "",
-                Content: "",
+                Email: contactMail.value,
+                Subject: selectedPurpose.value,
+                Content: contactContent.value,
             },
             {
                 headers: {
@@ -1014,7 +1128,7 @@ async function sendMail() {
             }
         );
         if (response.data.Status.Code === 0) {
-            await openAlertModal(" ", "已成功寄信完成，將有專員馬上回覆您 !");
+            await openAlertModal(" ", "已成功寄信完成，將有專員回覆您 !");
         } else {
             await openAlertModal(" ", `${response.data.Status.Message}`);
         }
@@ -1025,6 +1139,7 @@ async function sendMail() {
 onMounted(async () => {
     await setPageLoading(true);
     try {
+        captcha = new GVerify({ id: "captchaContainer" }); // 初始化畫布驗證碼
         if (userToken.value != "" && userToken.value != undefined) {
             const token = userToken.value;
 
@@ -1425,7 +1540,6 @@ onMounted(async () => {
     text-indent: 1rem;
     padding: 1rem 0;
     border-radius: 10px;
-    margin: 0.5rem 0;
     position: relative;
     font-size: 1rem;
 }
@@ -1435,7 +1549,38 @@ onMounted(async () => {
 .contactEntry::placeholder {
     color: #fff; /* 設定 placeholder 的顏色 */
 }
-.purposeSelect{
+.contactCap {
+    color: #fff;
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0.15),
+        rgba(255, 255, 255, 0.15)
+    );
+    width: 100%;
+    border: none;
+    text-indent: 1rem;
+    padding: 1rem 0;
+    border-radius: 10px;
+    position: relative;
+    font-size: 1rem;
+}
+.contactCap:focus-visible {
+    outline: none;
+}
+.contactCap::placeholder {
+    color: #fff; /* 設定 placeholder 的顏色 */
+}
+#captchaContainer {
+    border-radius: 10px;
+    overflow: hidden;
+}
+.refreshBtn {
+    cursor: pointer;
+}
+.error-input {
+    border: 1px solid red !important;
+}
+.purposeSelect {
     cursor: pointer;
 }
 .purposeBox {
