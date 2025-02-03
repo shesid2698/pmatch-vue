@@ -1,23 +1,30 @@
 import { defineStore } from "pinia";
 
 export const useAlertModalStore = defineStore("alertModal", () => {
-    const alertModalStatus = ref(false); // 彈窗的顯示狀態
-    const alertTitle = ref(""); // 彈窗的標題
-    const alertMessage = ref(""); // 彈窗的內容
-    let alertConfirmCallback = null; // 確定按鈕的動作
+    const alertModalStatus = ref(false);
+    const alertTitle = ref("");
+    const alertMessage = ref("");
+    let resolvePromise = null; // 添加這個來存儲 Promise 的 resolve 函數
 
-    // 顯示彈窗
-    const alertShowModal = (modalTitle, modalMessage, onConfirm) => {
+    // 修改為返回 Promise 的版本
+    const alertShowModal = (modalTitle, modalMessage) => {
         alertTitle.value = modalTitle;
         alertMessage.value = modalMessage;
         alertModalStatus.value = true;
-        alertConfirmCallback = onConfirm || null;
+        
+        // 返回一個新的 Promise
+        return new Promise((resolve) => {
+            resolvePromise = resolve;
+        });
     };
 
-    // 點擊確定
+    // 點擊確定時，調用 resolve
     const alertConfirmModal = () => {
         alertModalStatus.value = false;
-        if (alertConfirmCallback) alertConfirmCallback();
+        if (resolvePromise) {
+            resolvePromise();
+            resolvePromise = null;
+        }
     };
 
     return {

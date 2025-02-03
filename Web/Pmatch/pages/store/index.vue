@@ -1117,6 +1117,8 @@ async function sendMail() {
         const response = await $axios.post(
             "/api/v1/Pmatch/SendEmail",
             {
+                Name: contactName.value,
+                MobileNumber: contactPhone.value,
                 Email: contactMail.value,
                 Subject: selectedPurpose.value,
                 Content: contactContent.value,
@@ -1128,7 +1130,8 @@ async function sendMail() {
             }
         );
         if (response.data.Status.Code === 0) {
-            await openAlertModal(" ", "已成功寄信完成，將有專員回覆您 !");
+            await openAlertModal(" ", "已成功寄信完成，將有專員回覆您 !")
+            window.location.reload();
         } else {
             await openAlertModal(" ", `${response.data.Status.Message}`);
         }

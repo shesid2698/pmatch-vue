@@ -255,8 +255,7 @@ onBeforeUnmount(() => {
     z-index: 99;
 }
 .scrolled {
-    background: #fff;
-    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(to bottom, #572CBF, #160081)!important;
 }
 .loginDropdown {
     border: 1px solid #ccc;
@@ -313,12 +312,12 @@ onBeforeUnmount(() => {
 .nav0:hover,
 .nav1:hover,
 .nav2:hover {
-    color: #4361ee;
+    color: #00F3FF;
 }
 .nav0:focus,
 .nav1:focus,
 .nav2:focus {
-    color: #4361ee;
+    color: #00F3FF;
     text-decoration: underline;
 }
 .nav3:hover {
@@ -363,7 +362,7 @@ onBeforeUnmount(() => {
     align-items: center;
 }
 .nav3:focus img {
-    content: url("/images/linkIcon.png");
+    content: url("/images/icon-people-white.png");
 }
 .nav3Box:focus-within {
     position: relative;
@@ -436,7 +435,7 @@ onBeforeUnmount(() => {
     justify-content: center;
 }
 .headerBoxMenu {
-    background: url(/images/bg-02.png);
+    background: linear-gradient(to bottom, #572CBF, #160081)!important;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -446,10 +445,14 @@ onBeforeUnmount(() => {
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
 }
 .scrolledMenuLink {
-    color: #555553 !important;
+    color: #fff !important;
 }
 .scrolledMenuNav0,
 .scrolledMenuNav1 {
-    color: #555553 !important;
+    color: #fff !important;
+}
+.scrolledMenuNav0:hover,
+.scrolledMenuNav1:hover {
+    color: #00F3FF !important;
 }
 </style>
