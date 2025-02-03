@@ -435,13 +435,13 @@ onBeforeUnmount(() => {
     justify-content: center;
 }
 .headerBoxMenu {
-    background: linear-gradient(to bottom, #572CBF, #160081)!important;
+    background: url(/images/bg-02.png);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
 }
 .scrolledMenu {
-    background: #fff !important;
+    background: #160081 !important;
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
 }
 .scrolledMenuLink {
