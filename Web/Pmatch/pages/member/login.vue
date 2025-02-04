@@ -47,6 +47,7 @@
                     <input v-model="accountId"
                            type="text"
                            required
+                           autofocus
                            class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
                 </div>
 
@@ -92,6 +93,7 @@
                         <div class="flex-1">
                             <button @click="login"
                                     type="button"
+                                    :disabled="hasToken == false"
                                     class="disabled:opacity-70 p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#e93470] hover:bg-[#bb2d3b] transition duration-200 cursor-pointer">
                                 登入
                             </button>
