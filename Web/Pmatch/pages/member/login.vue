@@ -106,6 +106,14 @@
                 已經註冊?<NuxtLink to="/member/forgetpwd"
                           class="text-[#0d6efd] hover:opacity-70 hover:underline text-15px no-underline">忘記密碼</NuxtLink>
             </div>
+            <div>
+                <div class="otherLogin mt-2rem mb-1rem">以其他方式登入</div>
+            </div>
+            <div class="flex justify-center">
+                <button class="otherLoginBtn mx-3"><img class="w-30px" src="/images/iconGoogle.png" alt="GOOGLE帳號登入"></button>
+                <button class="otherLoginBtn mx-3"><img class="w-30px" src="/images/iconLine.png" alt="LINE帳號登入"></button>
+                <button class="otherLoginBtn mx-3"><img class="w-30px" src="/images/iconFB.png" alt="FB帳號登入"></button>
+            </div>
         </div>
     </div>
 </template>
@@ -242,5 +250,26 @@ function EnterLogin(e) {
 .password:hover ~ .tips {
     opacity: 1;
     z-index: 1;
+}
+.otherLogin{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    font-size: 14px;
+    color: #333;
+    white-space: nowrap;
+}
+.otherLogin::before,
+.otherLogin::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background-color: #ccc; /* 這是線的顏色 */
+    margin: 0 10px;
+}
+.otherLoginBtn{
+    cursor: pointer;
+    border: none;
+    background-color: rgba(0,0,0,0);
 }
 </style>

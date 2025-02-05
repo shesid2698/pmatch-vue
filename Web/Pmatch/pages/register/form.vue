@@ -313,6 +313,34 @@
                         </div>
                     </div>
                     <div class="mt-15px">
+                        <div class="mb-5px text-[#484646] font-400 text-15px">
+                            綁定社群帳號
+                        </div>
+                        <div class="flex justify-center">
+                            <button class="otherLoginBtn mx-3">
+                                <img
+                                    class="w-25px"
+                                    src="/images/iconGoogle.png"
+                                    alt="GOOGLE帳號登入"
+                                />
+                            </button>
+                            <button class="otherLoginBtn mx-3">
+                                <img
+                                    class="w-25px"
+                                    src="/images/iconLine.png"
+                                    alt="LINE帳號登入"
+                                />
+                            </button>
+                            <button class="otherLoginBtn mx-3">
+                                <img
+                                    class="w-25px"
+                                    src="/images/iconFB.png"
+                                    alt="FB帳號登入"
+                                />
+                            </button>
+                        </div>
+                    </div>
+                    <div class="mt-15px">
                         <div class="flex">
                             <div>
                                 <input type="checkbox" required checked />
@@ -364,7 +392,7 @@ const store = useLoadStore();
 const contractStores = ref("");
 const setPageLoading = store.setPageLoading;
 const encrypt = useEncrypt();
-const {md5} = crypto();
+const { md5 } = crypto();
 const theCities = useGetCities();
 const jwtStore = useJwtStore();
 const router = useRouter();
@@ -539,7 +567,7 @@ const RegisterMember = async (password1) => {
             Address: allAddress,
             ContractStores: contractStores.value,
             RefferCode: recommendCode.value,
-            IsPromoteCode: route.query.IsPromoteCode // 是否為下線經營者
+            IsPromoteCode: route.query.IsPromoteCode, // 是否為下線經營者
         },
         {
             headers: {
@@ -609,5 +637,10 @@ onMounted(async () => {
     background: #e93470;
     position: absolute;
     top: 50%;
+}
+.otherLoginBtn{
+    cursor: pointer;
+    border: none;
+    background-color: rgba(0,0,0,0);
 }
 </style>
