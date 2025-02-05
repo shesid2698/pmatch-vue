@@ -259,7 +259,7 @@ onMounted(() => {
     window.addEventListener("keydown", EnterLogin);
     window.fbAsyncInit = function () {
         FB.init({
-            appId: "你的FacebookAppID", // Facebook App ID
+            appId: "1190957575714723", // Facebook App ID
             cookie: true,
             xfbml: true,
             version: "v22.0", // 最新版FB版本 API
@@ -283,19 +283,22 @@ function EnterLogin(e) {
     }
 }
 const loginFb = () => {
-    FB.login(response => {
-    if (response.authResponse) {
-      console.log('登入成功！', response)
+    FB.login(
+        (response) => {
+            if (response.authResponse) {
+                console.log("登入成功！", response);
 
-      // 取得使用者資料
-      FB.api('/me', { fields: 'id,name,email' }, function (userData) {
-        console.log('用戶資料:', userData)
-        fbUser.value = userData
-      })
-    } else {
-      console.log('Facebook 登入失敗')
-    }
-  }, { scope: 'email,public_profile' }) // 需要取得 email & 公開資訊
+                // 取得使用者資料
+                FB.api("/me", { fields: "id,name,email" }, function (userData) {
+                    console.log("用戶資料:", userData);
+                    fbUser.value = userData;
+                });
+            } else {
+                console.log("Facebook 登入失敗");
+            }
+        },
+        { scope: "email,public_profile" }
+    ); // 需要取得 email & 公開資訊
 };
 </script>
 
