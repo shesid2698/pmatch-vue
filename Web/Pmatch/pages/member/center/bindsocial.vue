@@ -106,6 +106,7 @@ onMounted(() => {});
     margin: 1rem 0;
 }
 .bindBtn{
+    cursor: pointer;
     border: none;
     padding: .5rem 1rem;
     background-color: #e93470;

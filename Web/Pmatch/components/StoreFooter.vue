@@ -88,11 +88,11 @@ const footerLinkLeft = ref([
     },
 ]);
 const footerLinkRight = ref([
-    {
-        id: 0,
-        title: "付費方案",
-        link: "/store/program",
-    },
+    // {
+    //     id: 0,
+    //     title: "付費方案",
+    //     link: "/store/program",
+    // },
 ]);
 </script>
 

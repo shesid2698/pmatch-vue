@@ -399,7 +399,7 @@
                 </div>
             </div>
         </div>
-        <div class="pb-7rem">
+        <!-- <div class="pb-7rem">
             <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
                 <div class="flex items-center justify-center mb-3rem">
                     <div class="titleLeftBorder"></div>
@@ -463,7 +463,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="pb-25rem">
             <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
                 <div class="flex items-center justify-center mb-3rem">

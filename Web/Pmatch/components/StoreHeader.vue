@@ -203,13 +203,13 @@ onMounted(() => {
             className: "nav0",
             icon: "",
         },
-        {
-            id: 1,
-            title: "付費方案",
-            link: "/store/program",
-            className: "nav1",
-            icon: "",
-        },
+        // {
+        //     id: 1,
+        //     title: "付費方案",
+        //     link: "/store/program",
+        //     className: "nav1",
+        //     icon: "",
+        // },
         {
             id: 3,
             title: "登入",
@@ -440,7 +440,7 @@ onBeforeUnmount(() => {
     background-size: cover;
     background-repeat: no-repeat;
 }
-.scrolledMenu {
+.scrolledMenu { 
     background: #160081 !important;
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
 }
