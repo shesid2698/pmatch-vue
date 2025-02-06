@@ -38,5 +38,25 @@ export const useThirdPartyLoginStore = defineStore('thirdPartyLogin', {
                 `width=500,height=550,left=${(screen.width - 500) / 2},top=${(screen.height - 550) / 2},resizable=yes`
             );
         },
+        async loginWithFacebook() {
+            return new Promise((resolve, reject) => {
+                FB.login(
+                    (response) => {
+                        if (response.authResponse) {
+                            FB.api('/me', { fields: 'id,name,email' }, (userData) => {
+                                if (userData) {
+                                    resolve(userData);
+                                } else {
+                                    reject(new Error('無法獲取用戶資料'));
+                                }
+                            });
+                        } else {
+                            reject(new Error('Facebook 登入失敗'));
+                        }
+                    },
+                    { scope: 'email,public_profile' }
+                );
+            });
+        },
     },
 });
