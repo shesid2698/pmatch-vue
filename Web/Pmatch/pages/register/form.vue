@@ -258,19 +258,27 @@
                                              popup-type="TOKEN">
                                     <button class="otherLoginBtn mx-3"
                                             type="button"
-                                            @click="">
-                                        <img class="w-25px"
-                                             src="/images/iconGoogle.png"
-                                             alt="GOOGLE帳號登入" />
+                                            :disabled="thirdPartyPlatform.some(x=>x.Category==1)">
+                                        <a :title="googleBind"><img class="w-25px"
+                                                 :class="{ 'filterLight': !!thirdPartyPlatform.some(x => x.Category === 1) }"
+                                                 src="/images/iconGoogle.png"
+                                                 alt="GOOGLE帳號登入" /></a>
                                     </button>
                                 </GoogleLogin>
 
                             </ClientOnly>
 
-                            <button class="otherLoginBtn mx-3">
-                                <img class="w-25px"
-                                     src="/images/iconLine.png"
-                                     alt="LINE帳號登入" />
+                            <button class="otherLoginBtn mx-3"
+                                    type="button"
+                                    :disabled="thirdPartyPlatform.some(x=>x.Category==3)"
+                                    @click="thirdPartyLogin.LineLogin">
+                                <a :title="lineBind">
+                                    <img class="w-25px"
+                                         src="/images/iconLine.png"
+                                         alt="LINE帳號登入"
+                                         :class="{ 'filterLight': !!thirdPartyPlatform.some(x => x.Category === 3) }" />
+                                </a>
+
                             </button>
                             <button class="otherLoginBtn mx-3">
                                 <img class="w-25px"
@@ -365,7 +373,12 @@ const recommendCode = ref('');
 const thirdPartyLogin = useThirdPartyLoginStore();
 const { userInfo } = storeToRefs(thirdPartyLogin);
 const thirdPartyPlatform = ref([]);
-
+const googleBind = computed(() =>
+    thirdPartyPlatform.value.some(x => x.Category === 1) ? '已綁定' : '未綁定'
+);
+const lineBind = computed(() =>
+    thirdPartyPlatform.value.some(x => x.Category === 3) ? '已綁定' : '未綁定'
+);
 const turnInputType = () => {
     if (i_password.value.type === 'password') {
         i_password.value.type = 'text';
@@ -506,7 +519,8 @@ const RegisterMember = async password1 => {
             Address: allAddress,
             ContractStores: contractStores.value,
             RefferCode: recommendCode.value,
-            IsPromoteCode: route.query.IsPromoteCode // 是否為下線經營者
+            IsPromoteCode: route.query.IsPromoteCode, // 是否為下線經營者
+            ThirdPartyPlatform:thirdPartyPlatform.value
         },
         {
             headers: {
@@ -535,7 +549,30 @@ const ThirdPartyLogin = async (category, clientId) => {
         return false;
     }
 };
+/**
+ * 監聽line登入後身分驗證
+ */
+const syncStorage = async event => {
+    if (event.key === 'lineUserSub') {
+        if (event.newValue != null && event.newValue != undefined && event.newValue != '') {
+            var IsRegistered = await ThirdPartyLogin(3, event.newValue);
+            if (IsRegistered === false) {
+                const thirdPlat = {
+                    Category: 3,
+                    ClientId: event.newValue
+                };
+                if (!thirdPartyPlatform.value.includes(thirdPlat)) {
+                    thirdPartyPlatform.value.push(thirdPlat);
+                    console.log('未綁定過', thirdPartyPlatform.value);
+                }
+            }
+            localStorage.removeItem('lineUserSub');
+        }
+    }
+};
 onMounted(async () => {
+    //監聽line登入後身分驗證
+    window.addEventListener('storage', syncStorage);
     await setPageLoading(true);
     if (route.query.Phone) {
         phone.value = encrypt.decrypt(route.query.Phone);
@@ -563,6 +600,10 @@ onMounted(async () => {
     window.addEventListener('resize', updateDialogWidth);
     await setPageLoading(false);
 });
+onUnmounted(() => {
+    //清除三方登入的使用者資訊
+    thirdPartyLogin.userInfo = '';
+});
 watch(userInfo, async (newVal, oldVal) => {
     if (newVal != '') {
         var IsRegistered = await ThirdPartyLogin(thirdPartyLogin.category, newVal);
@@ -572,10 +613,7 @@ watch(userInfo, async (newVal, oldVal) => {
                 ClientId: newVal
             };
             if (!thirdPartyPlatform.value.includes(thirdPlat)) {
-                thirdPartyPlatform.value.push({
-                    Category: thirdPartyLogin.category,
-                    ClientId: newVal
-                });
+                thirdPartyPlatform.value.push(thirdPlat);
                 console.log('未綁定過', thirdPartyPlatform.value);
             }
         }
@@ -614,5 +652,8 @@ watch(userInfo, async (newVal, oldVal) => {
     cursor: pointer;
     border: none;
     background-color: rgba(0, 0, 0, 0);
+}
+.filterLight {
+    opacity: 0.5;
 }
 </style>
