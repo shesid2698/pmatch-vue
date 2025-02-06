@@ -110,7 +110,7 @@
             </div>
             <div class="flex justify-center">
                 <ClientOnly>
-                    <GoogleLogin :callback="googleCallback"
+                    <GoogleLogin :callback="thirdPartyLogin.googleCallback"
                                  prompt
                                  popup-type="TOKEN">
                         <button class="otherLoginBtn mx-3">
@@ -121,7 +121,7 @@
                     </GoogleLogin>
                 </ClientOnly>
                 <button class="otherLoginBtn mx-3"
-                        @click="LineLogin">
+                        @click="thirdPartyLogin.LineLogin">
                     <img class="w-30px"
                          src="/images/iconLine.png"
                          alt="LINE帳號登入" />
@@ -140,7 +140,6 @@
 <script setup>
 import VueTurnstile from 'vue-turnstile';
 import useCryptTo from '~/composables/crypto.js';
-import { GoogleLogin } from 'vue3-google-login';
 import { useAlertModalStore } from '../stores/useAlertModal.js';
 const CrypTo = useCryptTo();
 const alertModalStore = useAlertModalStore();
@@ -162,10 +161,9 @@ let MemberIdCookie = useCookie('_PmMemberId');
 let MemberTypeCookie = useCookie('_PmMemberType');
 
 //社群登入
-const runtime = useRuntimeConfig();
-const userInfo = ref(null);
-const client_id = ref(runtime.public.lineClientId);
-const redirect_uri = ref(runtime.public.lineReturnUrl);
+const thirdPartyLogin = useThirdPartyLoginStore();
+const { userInfo } = storeToRefs(thirdPartyLogin);
+const TuserInfo = ref(null);
 
 const turnInputType = () => {
     if (i_password.value.type === 'password') {
@@ -240,52 +238,14 @@ async function Login(encryptedPassword) {
     }
 }
 /**
- * google登入回傳
- * @param response
- */
-const googleCallback = async response => {
-    try {
-        const accessToken = response.access_token;
-        await useFetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-            method: 'GET',
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            }
-        })
-            .then(async response => {
-                userInfo.value = response.data.value.sub;
-                await ThirdPartyLogin(1, userInfo.value);
-            })
-            .catch(error => {
-                console.error('Error fetching user info:', error);
-            });
-    } catch (error) {
-        console.error('google callback error..', error);
-    }
-};
-/**
- * 開啟Line登入視窗
- */
-const LineLogin = () => {
-    let link = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${client_id.value}&redirect_uri=${redirect_uri.value}&state=login&scope=openid%20profile`;
-    window.open(
-        link, // 網址
-        '_blank', // 在新視窗開啟
-        `width=500,height=550,left=${(screen.width - 500) / 2},top=${
-            (screen.height - 550) / 2
-        },resizable=yes`
-    );
-};
-/**
  * 監聽line身分驗證
  * @param event
  */
 const syncStorage = async event => {
     if (event.key === 'lineUserSub') {
-        userInfo.value = event.newValue;
-        localStorage.removeItem('lineUserSub');
-        if (userInfo.value != null && userInfo.value != undefined && userInfo.value != '') {
-            await ThirdPartyLogin(3, userInfo.value);
+        if (event.newValue != null && event.newValue != undefined && event.newValue != '') {
+            await ThirdPartyLogin(3, event.newValue);
+            localStorage.removeItem('lineUserSub');
         }
     }
 };
@@ -304,6 +264,31 @@ const ThirdPartyLogin = async (category, clientId) => {
     } else {
         await openAlertModal(' ', `${response.data.Status.Message}`);
     }
+};
+
+function EnterLogin(e) {
+    // e.preventDefault();
+    if (e.key == 'Enter') {
+        login();
+    }
+}
+const loginFb = () => {
+    FB.login(
+        response => {
+            if (response.authResponse) {
+                console.log('登入成功！', response);
+
+                // 取得使用者資料
+                FB.api('/me', { fields: 'id,name,email' }, async function (userData) {
+                    TuserInfo.value = userData.id;
+                    await ThirdPartyLogin(2, TuserInfo.value);
+                });
+            } else {
+                console.log('Facebook 登入失敗');
+            }
+        },
+        { scope: 'email,public_profile' }
+    ); // 需要取得 email & 公開資訊
 };
 onMounted(() => {
     window.addEventListener('keydown', EnterLogin);
@@ -327,30 +312,10 @@ onMounted(() => {
 onBeforeUnmount(() => {
     window.removeEventListener('keydown', EnterLogin);
 });
-function EnterLogin(e) {
-    // e.preventDefault();
-    if (e.key == 'Enter') {
-        login();
-    }
-}
-const loginFb = () => {
-    FB.login(
-        response => {
-            if (response.authResponse) {
-                console.log('登入成功！', response);
-
-                // 取得使用者資料
-                FB.api('/me', { fields: 'id,name,email' }, async function (userData) {
-                    userInfo.value = userData.id;
-                    await ThirdPartyLogin(2, userInfo.value);
-                });
-            } else {
-                console.log('Facebook 登入失敗');
-            }
-        },
-        { scope: 'email,public_profile' }
-    ); // 需要取得 email & 公開資訊
-};
+watch(userInfo, (newVal, oldVal) => {
+    console.log('newVal=', newVal);
+    console.log('category=', thirdPartyLogin.category);
+});
 </script>
 
 <style scoped>
