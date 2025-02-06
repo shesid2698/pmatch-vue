@@ -148,7 +148,7 @@
                                     dailyPatchList0.length
                                         ? dailyPatchList0[
                                               dailyPatchList0.length - 1
-                                          ].money
+                                          ].Total.toLocaleString()
                                         : "0"
                                 }}
                             </div>
@@ -178,7 +178,7 @@
                                     dailyPatchList1.length
                                         ? dailyPatchList1[
                                               dailyPatchList1.length - 1
-                                          ].money
+                                          ].Total.toLocaleString()
                                         : "0"
                                 }}
                             </div>
@@ -1130,7 +1130,7 @@ async function sendMail() {
             }
         );
         if (response.data.Status.Code === 0) {
-            await openAlertModal(" ", "已成功寄信完成，將有專員回覆您 !")
+            await openAlertModal(" ", "已成功寄信完成，將有專員回覆您 !");
             window.location.reload();
         } else {
             await openAlertModal(" ", `${response.data.Status.Message}`);
