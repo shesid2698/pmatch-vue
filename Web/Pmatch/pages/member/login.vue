@@ -94,8 +94,7 @@
                             <button @click="login"
                                     type="button"
                                     :disabled="hasToken == false"
-                                    class="disabled:opacity-70 p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#e93470] hover:bg-[#bb2d3b] transition duration-200 cursor-pointer">
-                                登入
+                                    class="disabled:opacity-70 p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#e93470] hover:bg-[#bb2d3b] transition duration-200 cursor-pointer">登入
                             </button>
                         </div>
                     </div>
@@ -240,30 +239,6 @@ async function Login(encryptedPassword) {
         console.error('請求失敗:', error);
     }
 }
-
-function EnterLogin(e) {
-    // e.preventDefault();
-    if (e.key == 'Enter') {
-        login();
-    }
-}
-const loginFb = () => {
-    FB.login(
-        response => {
-            if (response.authResponse) {
-                // 取得使用者資料
-                FB.api('/me', { fields: 'id,name,email' }, async function (userData) {
-                    console.log('用戶資料:', userData);
-                    userInfo.value = userData.id;
-                    await ThirdPartyLogin(2, userInfo.value);
-                });
-            } else {
-                console.log('Facebook 登入失敗');
-            }
-        },
-        { scope: 'email,public_profile' }
-    ); // 需要取得 email & 公開資訊
-};
 /**
  * google登入回傳
  * @param response
@@ -335,7 +310,7 @@ onMounted(() => {
     window.addEventListener('storage', syncStorage);
     window.fbAsyncInit = function () {
         FB.init({
-            appId: '你的FacebookAppID', // Facebook App ID
+            appId: '1190957575714723', // Facebook App ID
             cookie: true,
             xfbml: true,
             version: 'v22.0' // 最新版FB版本 API
@@ -352,6 +327,30 @@ onMounted(() => {
 onBeforeUnmount(() => {
     window.removeEventListener('keydown', EnterLogin);
 });
+function EnterLogin(e) {
+    // e.preventDefault();
+    if (e.key == 'Enter') {
+        login();
+    }
+}
+const loginFb = () => {
+    FB.login(
+        response => {
+            if (response.authResponse) {
+                console.log('登入成功！', response);
+
+                // 取得使用者資料
+                FB.api('/me', { fields: 'id,name,email' }, async function (userData) {
+                    userInfo.value = userData.id;
+                    await ThirdPartyLogin(2, userInfo.value);
+                });
+            } else {
+                console.log('Facebook 登入失敗');
+            }
+        },
+        { scope: 'email,public_profile' }
+    ); // 需要取得 email & 公開資訊
+};
 </script>
 
 <style scoped>
