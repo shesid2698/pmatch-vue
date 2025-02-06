@@ -140,8 +140,10 @@
 import VueTurnstile from 'vue-turnstile';
 import useCryptTo from '~/composables/crypto.js';
 import { useAlertModalStore } from '../stores/useAlertModal.js';
+import { useConfigStore } from '../stores/config.js';
 const CrypTo = useCryptTo();
 const alertModalStore = useAlertModalStore();
+const configStore = useConfigStore();
 const openAlertModal = alertModalStore.alertShowModal;
 const { md5 } = crypto();
 const eyes = ref(null);
@@ -269,44 +271,22 @@ function EnterLogin(e) {
         login();
     }
 }
-const loginFb = () => {
-    FB.login(
-        response => {
-            if (response.authResponse) {
-                console.log('登入成功！', response);
-
-                // 取得使用者資料
-                FB.api('/me', { fields: 'id,name,email' }, async function (userData) {
-                    await ThirdPartyLogin(2, userData.id);
-                });
-            } else {
-                console.log('Facebook 登入失敗');
-            }
-        },
-        { scope: 'email,public_profile' }
-    ); // 需要取得 email & 公開資訊
+const loginFb = async () => {
+    try {
+        const userData = await thirdPartyLogin.loginWithFacebook();
+        if (userData && userData.id) {
+            await ThirdPartyLogin(2, userData.id);
+        }
+    } catch (error) {
+        console.error('Facebook 登入失敗:', error);
+    }
 };
-onMounted(() => {
+onMounted(async() => {
     window.addEventListener('keydown', EnterLogin);
 
     //監聽line登入後身分驗證
     window.addEventListener('storage', syncStorage);
-
-    window.fbAsyncInit = function () {
-        FB.init({
-            appId: '1190957575714723', // Facebook App ID
-            cookie: true,
-            xfbml: true,
-            version: 'v22.0' // 最新版FB版本 API
-        });
-    };
-
-    // 動態載入 Facebook SDK
-    let script = document.createElement('script');
-    script.src = 'https://connect.facebook.net/zh_TW/sdk.js';
-    script.async = true;
-    script.defer = true;
-    document.body.appendChild(script);
+    await configStore.initFacebook();
 });
 onBeforeUnmount(() => {
     window.removeEventListener('keydown', EnterLogin);

@@ -31,5 +31,24 @@ export const useConfigStore = defineStore('config', {
                 this.lineReturnUrl = '';
             }
         },
+        initFacebook() {
+            return new Promise((resolve) => {
+                window.fbAsyncInit = function () {
+                    FB.init({
+                        appId: '1190957575714723',
+                        cookie: true,
+                        xfbml: true,
+                        version: 'v22.0'
+                    });
+                    resolve();
+                };
+
+                const script = document.createElement('script');
+                script.src = 'https://connect.facebook.net/zh_TW/sdk.js';
+                script.async = true;
+                script.defer = true;
+                document.body.appendChild(script);
+            });
+        },
     },
 });
