@@ -253,13 +253,20 @@
                             綁定社群帳號
                         </div>
                         <div class="flex justify-center">
-                            <button class="otherLoginBtn mx-3"
-                                    type="button"
-                                    @click="">
-                                <img class="w-25px"
-                                     src="/images/iconGoogle.png"
-                                     alt="GOOGLE帳號登入" />
-                            </button>
+                            <ClientOnly>
+                                <GoogleLogin :callback="thirdPartyLogin.googleCallback"
+                                             popup-type="TOKEN">
+                                    <button class="otherLoginBtn mx-3"
+                                            type="button"
+                                            @click="">
+                                        <img class="w-25px"
+                                             src="/images/iconGoogle.png"
+                                             alt="GOOGLE帳號登入" />
+                                    </button>
+                                </GoogleLogin>
+
+                            </ClientOnly>
+
                             <button class="otherLoginBtn mx-3">
                                 <img class="w-25px"
                                      src="/images/iconLine.png"
@@ -310,6 +317,7 @@
 </template>
 <script setup>
 // loading page
+import { GoogleLogin } from 'vue3-google-login';
 import { useLoadStore } from '../stores/loading.js';
 
 import { useAlertModalStore } from '../stores/useAlertModal.js';
@@ -352,6 +360,11 @@ const districts = ref([]);
 const selectedCity = ref('');
 const selectedRegion = ref('');
 const recommendCode = ref('');
+
+//三方登入
+const thirdPartyLogin = useThirdPartyLoginStore();
+const { userInfo } = storeToRefs(thirdPartyLogin);
+
 const turnInputType = () => {
     if (i_password.value.type === 'password') {
         i_password.value.type = 'text';
@@ -469,6 +482,10 @@ const SubmitForm = async e => {
         console.error('請求失敗:', error);
     }
 };
+/**
+ * 註冊會員
+ * @param password1
+ */
 const RegisterMember = async password1 => {
     token.value = await jwtStore.generateToken();
     var allAddress = '';
@@ -502,6 +519,21 @@ const RegisterMember = async password1 => {
         await openAlertModal(' ', `${response.data.Status.Message}`);
     }
 };
+/**
+ * 三方登入驗證
+ */
+const ThirdPartyLogin = async (category, clientId) => {
+    const response = await $axios.post('/api/v1/User/ThirdPartyVerify', {
+        Category: category,
+        ClientId: clientId
+    });
+    if (response.data.Status.Code === 0) {
+        console.log(response.data.Data);
+    } else {
+        // await openAlertModal(' ', `${response.data.Status.Message}`);
+        console.error(response.data);
+    }
+};
 onMounted(async () => {
     await setPageLoading(true);
     if (route.query.Phone) {
@@ -529,6 +561,9 @@ onMounted(async () => {
     // 監聽視窗尺寸變化
     window.addEventListener('resize', updateDialogWidth);
     await setPageLoading(false);
+});
+watch(userInfo, (newVal, oldVal) => {
+    if (newVal != '') ThirdPartyLogin(thirdPartyLogin.category, newVal);
 });
 </script>
 <style scoped>

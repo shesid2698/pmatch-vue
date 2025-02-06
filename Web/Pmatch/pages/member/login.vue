@@ -288,7 +288,10 @@ const loginFb = () => {
 };
 onMounted(() => {
     window.addEventListener('keydown', EnterLogin);
+
+    //監聽line登入後身分驗證
     window.addEventListener('storage', syncStorage);
+
     window.fbAsyncInit = function () {
         FB.init({
             appId: '1190957575714723', // Facebook App ID
