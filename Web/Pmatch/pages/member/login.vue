@@ -111,7 +111,6 @@
             <div class="flex justify-center">
                 <ClientOnly>
                     <GoogleLogin :callback="thirdPartyLogin.googleCallback"
-                                 prompt
                                  popup-type="TOKEN">
                         <button class="otherLoginBtn mx-3">
                             <img class="w-30px"
@@ -163,8 +162,6 @@ let MemberTypeCookie = useCookie('_PmMemberType');
 //社群登入
 const thirdPartyLogin = useThirdPartyLoginStore();
 const { userInfo } = storeToRefs(thirdPartyLogin);
-const TuserInfo = ref(null);
-
 const turnInputType = () => {
     if (i_password.value.type === 'password') {
         i_password.value.type = 'text';
@@ -280,8 +277,7 @@ const loginFb = () => {
 
                 // 取得使用者資料
                 FB.api('/me', { fields: 'id,name,email' }, async function (userData) {
-                    TuserInfo.value = userData.id;
-                    await ThirdPartyLogin(2, TuserInfo.value);
+                    await ThirdPartyLogin(2, userData.id);
                 });
             } else {
                 console.log('Facebook 登入失敗');
@@ -312,9 +308,8 @@ onMounted(() => {
 onBeforeUnmount(() => {
     window.removeEventListener('keydown', EnterLogin);
 });
-watch(userInfo, (newVal, oldVal) => {
-    console.log('newVal=', newVal);
-    console.log('category=', thirdPartyLogin.category);
+watch(userInfo,(newVal, oldVal) => {
+    if (newVal != '') ThirdPartyLogin(thirdPartyLogin.category, newVal);
 });
 </script>
 
