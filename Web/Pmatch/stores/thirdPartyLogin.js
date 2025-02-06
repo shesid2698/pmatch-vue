@@ -1,25 +1,13 @@
-const runtime = useRuntimeConfig();
+
 import { GoogleLogin } from 'vue3-google-login';
 import { defineStore } from 'pinia';
+import { useConfigStore } from '../stores/config.js';
 export const useThirdPartyLoginStore = defineStore('thirdPartyLogin', {
     state: () => ({
         userInfo: '',
         category: 0,
     }),
     actions: {
-        async loadConfig() {
-            try {
-                const response = await fetch('/config.json');
-                const config = await response.json();
-                this.baseUrl = config.baseUrl || '';
-                this.envUrl = config.envUrl || '';
-            } catch (error) {
-                console.error('Failed to load config.json:', error);
-                // 設定預設值以避免錯誤
-                this.baseUrl = '';
-                this.envUrl = '';
-            }
-        },
         async googleCallback(response) {
             try {
                 const accessToken = response.access_token;
@@ -41,7 +29,9 @@ export const useThirdPartyLoginStore = defineStore('thirdPartyLogin', {
             }
         },
         async LineLogin() {
-            let link = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${runtime.public.lineClientId}&redirect_uri=${runtime.public.lineReturnUrl}&state=login&scope=openid%20profile`;
+            const config = useConfigStore();
+            await config.loadConfig();
+            let link = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${config.lineClientId}&redirect_uri=${config.lineReturnUrl}&state=login&scope=openid%20profile`;
             window.open(
                 link, // 網址
                 '_blank', // 在新視窗開啟

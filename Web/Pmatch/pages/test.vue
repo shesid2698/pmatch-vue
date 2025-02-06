@@ -10,7 +10,6 @@
 </template>
 
 <script setup>
-const runtimeConfig = useRuntimeConfig();
 </script>
 <style scoped>
 .box {
@@ -34,5 +33,4 @@ const runtimeConfig = useRuntimeConfig();
         mask-composite: exclude, add;
     }
 }
-
 </style>

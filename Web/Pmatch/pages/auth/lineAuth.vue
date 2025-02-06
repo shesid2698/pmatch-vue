@@ -2,20 +2,22 @@
     <div>Line user verifying. Please wait...</div>
 </template>
 <script setup>
+import { useConfigStore } from '../stores/config.js';
 const route = useRoute();
 const realCode = useState('realCode', () => route.query.code || '');
-const runtime = useRuntimeConfig();
+const config = useConfigStore();
 const realUser = useState('realUser', () => null);
 const verifiedUser = useState('verifiedUser', () => null);
 (async () => {
     try {
+        await config.loadConfig();
         // line登入後取得token
         const params = new URLSearchParams({
             grant_type: 'authorization_code',
             code: realCode.value,
-            redirect_uri: runtime.public.lineReturnUrl,
-            client_id: runtime.public.lineClientId,
-            client_secret: runtime.public.lineSecret
+            redirect_uri: config.lineReturnUrl,
+            client_id: config.lineClientId,
+            client_secret: config.lineSecret
         });
         const { data, error } = await useFetch('https://api.line.me/oauth2/v2.1/token', {
             method: 'POST',
@@ -32,7 +34,7 @@ const verifiedUser = useState('verifiedUser', () => null);
         // 驗證line使用者身分
         const params2 = new URLSearchParams({
             id_token: realUser.value.id_token,
-            client_id: runtime.public.lineClientId
+            client_id: config.lineClientId
         });
         await useFetch('https://api.line.me/oauth2/v2.1/verify', {
             method: 'POST',

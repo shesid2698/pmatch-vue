@@ -311,7 +311,7 @@ onMounted(() => {
 onBeforeUnmount(() => {
     window.removeEventListener('keydown', EnterLogin);
 });
-watch(userInfo,(newVal, oldVal) => {
+watch(userInfo, (newVal, oldVal) => {
     if (newVal != '') ThirdPartyLogin(thirdPartyLogin.category, newVal);
 });
 </script>

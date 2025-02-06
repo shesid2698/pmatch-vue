@@ -1,10 +1,6 @@
 export default defineNuxtConfig({
     runtimeConfig: {
         public: {
-            googleClientId: '',
-            lineClientId: '',
-            lineSecret: '',
-            lineReturnUrl:'',
         },
     },
 
