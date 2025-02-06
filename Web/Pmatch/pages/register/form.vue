@@ -364,6 +364,7 @@ const recommendCode = ref('');
 //三方登入
 const thirdPartyLogin = useThirdPartyLoginStore();
 const { userInfo } = storeToRefs(thirdPartyLogin);
+const thirdPartyPlatform = ref([]);
 
 const turnInputType = () => {
     if (i_password.value.type === 'password') {
@@ -528,10 +529,10 @@ const ThirdPartyLogin = async (category, clientId) => {
         ClientId: clientId
     });
     if (response.data.Status.Code === 0) {
-        console.log(response.data.Data);
+        return true;
     } else {
-        // await openAlertModal(' ', `${response.data.Status.Message}`);
-        console.error(response.data);
+        //未綁定過
+        return false;
     }
 };
 onMounted(async () => {
@@ -562,8 +563,23 @@ onMounted(async () => {
     window.addEventListener('resize', updateDialogWidth);
     await setPageLoading(false);
 });
-watch(userInfo, (newVal, oldVal) => {
-    if (newVal != '') ThirdPartyLogin(thirdPartyLogin.category, newVal);
+watch(userInfo, async (newVal, oldVal) => {
+    if (newVal != '') {
+        var IsRegistered = await ThirdPartyLogin(thirdPartyLogin.category, newVal);
+        if (IsRegistered === false) {
+            const thirdPlat = {
+                Category: thirdPartyLogin.category,
+                ClientId: newVal
+            };
+            if (!thirdPartyPlatform.value.includes(thirdPlat)) {
+                thirdPartyPlatform.value.push({
+                    Category: thirdPartyLogin.category,
+                    ClientId: newVal
+                });
+                console.log('未綁定過', thirdPartyPlatform.value);
+            }
+        }
+    }
 });
 </script>
 <style scoped>
