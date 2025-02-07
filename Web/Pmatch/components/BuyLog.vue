@@ -25,7 +25,7 @@
                     class="decoration-none color-#f72585"
                     v-for="(item, index) in buyLog"
                     :key="index"
-                    :to="`findmatch/${item.Id}`"
+                    :to="`/findmatch/${item.Id}`"
                 >
                     <div class="buyItem px-2rem py-.8rem">
                         {{ item.Name }}
