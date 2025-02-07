@@ -29,40 +29,93 @@
                         >綁定社群帳號
                     </div>
                     <div>
-                        <p class="m-0 font-size-14px">社群帳號綁定後，PMatch會員可以透過該社群帳號登入平台，每一種社群平台僅能綁定一個帳號。</p>
+                        <p class="m-0 font-size-14px">
+                            社群帳號綁定後，PMatch會員可以透過該社群帳號登入平台，每一種社群平台僅能綁定一個帳號。
+                        </p>
                     </div>
                     <div>
                         <div class="socialBox flex justify-between w-100%">
                             <div class="flex items-center">
                                 <div class="flex items-center me-1rem">
-                                    <img class="w-40px" src="/images/iconGoogle.png" alt="google綁定">
+                                    <img
+                                        class="w-40px"
+                                        src="/images/iconGoogle.png"
+                                        alt="google綁定"
+                                    />
                                 </div>
                                 <div><span>Google</span></div>
                             </div>
                             <div class="flex items-center">
-                                <button class="bindBtn">進行綁定</button>
+                                <button
+                                    class="bindBtn"
+                                    :class="{
+                                        'bg-#e93470 color-#fff cursor-pointer': !isPlatformBound(1),
+                                    }"
+                                    :disabled="isPlatformBound(1)"
+                                    @click="bindGoogle"
+                                >
+                                    {{
+                                        !isPlatformBound(1)
+                                            ? "進行綁定"
+                                            : "已綁定"
+                                    }}
+                                </button>
                             </div>
                         </div>
                         <div class="socialBox flex justify-between w-100%">
                             <div class="flex items-center">
                                 <div class="flex items-center me-1rem">
-                                    <img class="w-40px" src="/images/iconFB.png" alt="FB綁定">
+                                    <img
+                                        class="w-40px"
+                                        src="/images/iconFB.png"
+                                        alt="FB綁定"
+                                    />
                                 </div>
                                 <div><span>Facebook</span></div>
                             </div>
                             <div class="flex items-center">
-                                <button class="bindBtn">進行綁定</button>
+                                <button
+                                    class="bindBtn"
+                                    :class="{
+                                        'bg-#e93470 color-#fff cursor-pointer': !isPlatformBound(2),
+                                    }"
+                                    :disabled="isPlatformBound(2)"
+                                    @click="bindFb"
+                                >
+                                    {{
+                                        !isPlatformBound(2)
+                                            ? "進行綁定"
+                                            : "已綁定"
+                                    }}
+                                </button>
                             </div>
                         </div>
                         <div class="socialBox flex justify-between w-100%">
                             <div class="flex items-center">
                                 <div class="flex items-center me-1rem">
-                                    <img class="w-40px" src="/images/iconLine.png" alt="LINE綁定">
+                                    <img
+                                        class="w-40px"
+                                        src="/images/iconLine.png"
+                                        alt="LINE綁定"
+                                    />
                                 </div>
                                 <div><span>Line</span></div>
                             </div>
                             <div class="flex items-center">
-                                <button class="bindBtn">進行綁定</button>
+                                <button
+                                    class="bindBtn"
+                                    :class="{
+                                        'bg-#e93470 color-#fff cursor-pointer': !isPlatformBound(3),
+                                    }"
+                                    :disabled="isPlatformBound(3)"
+                                    @click="bindLine"
+                                >
+                                    {{
+                                        !isPlatformBound(3)
+                                            ? "進行綁定"
+                                            : "已綁定"
+                                    }}
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -73,14 +126,80 @@
 </template>
 <script setup>
 import { useAlertModalStore } from "../stores/useAlertModal.js";
+import { useConfigStore } from '../stores/config.js';
+import { useThirdPartyLoginStore } from '../stores/thirdPartyLogin.js';
 const alertModalStore = useAlertModalStore();
 const openAlertModal = alertModalStore.alertShowModal;
+const configStore = useConfigStore();
+const thirdPartyLogin = useThirdPartyLoginStore();
 
 const { $axios } = useNuxtApp();
 const userToken = useCookie("_PmToken");
+const memberId = useCookie("_PmMemberId");
+const userDetail = ref([]);
 
+// 檢查指定平台是否已綁定
+const isPlatformBound = (platformNum) => {
+    if (!userDetail.value?.[0]?.ThirdPartyPlatform) return false;
 
-onMounted(() => {});
+    const platform = userDetail.value[0].ThirdPartyPlatform.find(
+        (platform) => platform.Category === platformNum
+    );
+
+    return platform?.ClientId !== "";
+};
+
+const bindFb = async() =>{
+    console.log("111");
+    const userData = await thirdPartyLogin.loginWithFacebook();
+    await bindThird(2, userData.id);
+}
+
+const bindThird = async(category, id) =>{
+    const response = await $axios.post(
+            "/api/v1/User/ThirdPartyVerify",
+            {
+                Category: category,
+                ClientId: id,
+            },
+            {
+                headers: {
+                    Authorization: userToken.value,
+                },
+            }
+        );
+
+        if (response.data.Status.Code === 0) {
+            await openAlertModal(" ", "已綁定成功");
+        } else {
+            await openAlertModal(" ", `${response.data.Status.Message}`);
+        }
+}
+onMounted(async () => {
+    if (userToken.value != "" && userToken.value != undefined) {
+        const response = await $axios.post(
+            "/api/v1/Pmatch/GetMemberDetail",
+            {
+                PmatchMemberId: memberId.value,
+            },
+            {
+                headers: {
+                    Authorization: userToken.value,
+                },
+            }
+        );
+
+        if (response.data.Status.Code === 0) {
+            userDetail.value = response.data.Data;
+        } else {
+            alert(`${response.data.Status.Message}`);
+        }
+    } else {
+        router.push("/member/login");
+        return;
+    }
+    await configStore.initFacebook();
+});
 </script>
 <style scoped>
 .ccontainer {
@@ -100,17 +219,14 @@ onMounted(() => {});
 .clip-path-custom {
     clip-path: polygon(50% 100%, 0 50%, 100% 50%);
 }
-.socialBox{
+.socialBox {
     border: 1px solid #ccc;
     padding: 1rem;
     margin: 1rem 0;
 }
-.bindBtn{
-    cursor: pointer;
+.bindBtn {
     border: none;
-    padding: .5rem 1rem;
-    background-color: #e93470;
-    color: #fff;
+    padding: 0.5rem 1rem;
     border-radius: 5px;
     box-shadow: 1px 2px 3px 1px #ccc;
 }
