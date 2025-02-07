@@ -575,7 +575,6 @@ const loginFb = async () => {
                 };
                 if (!thirdPartyPlatform.value.includes(thirdPlat)) {
                     thirdPartyPlatform.value.push(thirdPlat);
-                    console.log('未綁定過', thirdPartyPlatform.value);
                 }
             } else {
                 await openAlertModal(' ', '綁定失敗，此社群帳號已被其他會員綁定。');
@@ -599,7 +598,6 @@ const syncStorage = async event => {
                 };
                 if (!thirdPartyPlatform.value.includes(thirdPlat)) {
                     thirdPartyPlatform.value.push(thirdPlat);
-                    console.log('未綁定過', thirdPartyPlatform.value);
                 }
             } else {
                 await openAlertModal(' ', '綁定失敗，此社群帳號已被其他會員綁定。');
