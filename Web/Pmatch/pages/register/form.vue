@@ -254,7 +254,7 @@
                         </div>
                         <div class="flex justify-center">
                             <ClientOnly>
-                                <GoogleLogin :callback="thirdPartyLogin.googleCallback"
+                                <GoogleLogin :callback="GoogleCallback"
                                              popup-type="TOKEN">
                                     <button class="otherLoginBtn mx-3"
                                             type="button"
@@ -280,8 +280,9 @@
                                 </a>
 
                             </button>
-                            <button class="otherLoginBtn mx-3" type="button"
-                            @click="loginFb">
+                            <button class="otherLoginBtn mx-3"
+                                    type="button"
+                                    @click="loginFb">
                                 <img class="w-25px"
                                      src="/images/iconFB.png"
                                      alt="FB帳號登入" />
@@ -380,7 +381,6 @@ const googleBind = computed(() =>
 const lineBind = computed(() =>
     thirdPartyPlatform.value.some(x => x.Category === 3) ? '已綁定' : '未綁定'
 );
-
 
 const turnInputType = () => {
     if (i_password.value.type === 'password') {
@@ -523,7 +523,7 @@ const RegisterMember = async password1 => {
             ContractStores: contractStores.value,
             RefferCode: recommendCode.value,
             IsPromoteCode: route.query.IsPromoteCode, // 是否為下線經營者
-            ThirdPartyPlatform:thirdPartyPlatform.value
+            ThirdPartyPlatform: thirdPartyPlatform.value
         },
         {
             headers: {
@@ -545,6 +545,7 @@ const ThirdPartyLogin = async (category, clientId) => {
         Category: category,
         ClientId: clientId
     });
+    console.log(response);
     if (response.data.Status.Code === 0) {
         return true;
     } else {
@@ -560,8 +561,8 @@ const loginFb = async () => {
         const userData = await thirdPartyLogin.loginWithFacebook();
         if (userData && userData.id) {
             const IsRegistered = await ThirdPartyLogin(2, userData.id);
-            if(IsRegistered===false){
-              //未綁定
+            if (IsRegistered === false) {
+                //未綁定
             }
         }
     } catch (error) {
@@ -586,6 +587,22 @@ const syncStorage = async event => {
                 }
             }
             localStorage.removeItem('lineUserSub');
+        }
+    }
+};
+const GoogleCallback = async response => {
+    const data = await thirdPartyLogin.googleCallback(response);
+    if (data != '' && data != null && data != undefined) {
+        var IsRegistered = await ThirdPartyLogin(1, data);
+        if (IsRegistered === false) {
+            const thirdPlat = {
+                Category: thirdPartyLogin.category,
+                ClientId: newVal
+            };
+            if (!thirdPartyPlatform.value.includes(thirdPlat)) {
+                thirdPartyPlatform.value.push(thirdPlat);
+                console.log('未綁定過', thirdPartyPlatform.value);
+            }
         }
     }
 };
@@ -618,25 +635,6 @@ onMounted(async () => {
     // 監聽視窗尺寸變化
     window.addEventListener('resize', updateDialogWidth);
     await setPageLoading(false);
-});
-onUnmounted(() => {
-    //清除三方登入的使用者資訊
-    thirdPartyLogin.userInfo = '';
-});
-watch(userInfo, async (newVal, oldVal) => {
-    if (newVal != '') {
-        var IsRegistered = await ThirdPartyLogin(thirdPartyLogin.category, newVal);
-        if (IsRegistered === false) {
-            const thirdPlat = {
-                Category: thirdPartyLogin.category,
-                ClientId: newVal
-            };
-            if (!thirdPartyPlatform.value.includes(thirdPlat)) {
-                thirdPartyPlatform.value.push(thirdPlat);
-                console.log('未綁定過', thirdPartyPlatform.value);
-            }
-        }
-    }
 });
 </script>
 <style scoped>
