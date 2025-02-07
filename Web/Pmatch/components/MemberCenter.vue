@@ -30,11 +30,11 @@ const curPage = ref([
         show: "showTitle",
         link: "/member/center",
     },
-    {
-        title: "綁定社群帳號",
-        show: "",
-        link: "/member/center/bindsocial",
-    },
+    // {
+    //     title: "綁定社群帳號",
+    //     show: "",
+    //     link: "/member/center/bindsocial",
+    // },
     {
         title: "更改密碼",
         show: "",
@@ -113,26 +113,26 @@ onMounted(async () => {
         case "/member/center":
             curPage.value[0].show = "showTitle";
             break;
-        case "/member/center/bindsocial":
+        // case "/member/center/bindsocial":
+        //     curPage.value[1].show = "showTitle";
+        //     break;
+        case "/member/center/changepwd":
             curPage.value[1].show = "showTitle";
             break;
-        case "/member/center/changepwd":
+        case "/member/center/matchlog":
             curPage.value[2].show = "showTitle";
             break;
-        case "/member/center/matchlog":
+        case "/member/center/successmatch":
             curPage.value[3].show = "showTitle";
             break;
-        case "/member/center/successmatch":
+        case "/member/center/contract":
             curPage.value[4].show = "showTitle";
             break;
-        case "/member/center/contract":
+        case "/member/center/feedback":
             curPage.value[5].show = "showTitle";
             break;
-        case "/member/center/feedback":
-            curPage.value[6].show = "showTitle";
-            break;
         case "/member/center/recommend":
-            curPage.value[7].show = "showTitle";
+            curPage.value[6].show = "showTitle";
             break;
     }
 });

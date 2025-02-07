@@ -248,7 +248,7 @@
                                    class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
                         </div>
                     </div>
-                    <div class="mt-15px">
+                    <!-- <div class="mt-15px">
                         <div class="mb-5px text-[#484646] font-400 text-15px">
                             綁定社群帳號
                         </div>
@@ -292,7 +292,7 @@
                                 </a>
                             </button>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="mt-15px">
                         <div class="flex">
                             <div>
