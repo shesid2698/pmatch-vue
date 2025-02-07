@@ -837,7 +837,7 @@ const getChartData = (index) => {
         labels: dataList.map((item) => formatDate(item.Time)),
         datasets: [
             {
-                label: "總計",
+                label: "",
                 data: dataList.map((item) => item.Total),
                 backgroundColor: "rgb(90,155,213)",
                 borderColor: "#36A2EB",
@@ -861,7 +861,7 @@ function getEmptyChartData() {
         labels: ["沒有資料"],
         datasets: [
             {
-                label: "總計",
+                label: "",
                 data: [0],
                 backgroundColor: "rgb(90,155,213)",
                 borderColor: "#36A2EB",
@@ -876,11 +876,23 @@ const chartOptions = {
     responsive: true,
     plugins: {
         legend: {
+            display: false,
             position: "top",
         },
         title: {
             display: true,
-            text: "富豪榜數據圖",
+            text: (context) => {
+                // 獲取當前圖表的索引
+                const chartId = context.chart.canvas.id;
+                const index = parseInt(chartId.split('-')[2]); // 從 'my-chart-0' 取得索引
+                return index === 0 ? "滿貫大亨" : "老子有錢";
+            },
+            font: {
+                size: 24 // 設置字體大小為 24px
+            },
+            padding: {
+                bottom: 10 // 設置下方間距為 10px
+            }
         },
     },
     scales: {
