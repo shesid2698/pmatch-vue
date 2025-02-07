@@ -46,20 +46,27 @@
                                 <div><span>Google</span></div>
                             </div>
                             <div class="flex items-center">
-                                <button
-                                    class="bindBtn"
-                                    :class="{
-                                        'bg-#e93470 color-#fff cursor-pointer': !isPlatformBound(1),
-                                    }"
-                                    :disabled="isPlatformBound(1)"
-                                    @click="bindGoogle"
-                                >
-                                    {{
-                                        !isPlatformBound(1)
-                                            ? "進行綁定"
-                                            : "已綁定"
-                                    }}
-                                </button>
+                                <ClientOnly>
+                                    <GoogleLogin
+                                        :callback="bindGoogle"
+                                        popup-type="TOKEN"
+                                    >
+                                        <button
+                                            class="bindBtn"
+                                            :class="{
+                                                'bg-#e93470 color-#fff cursor-pointer':
+                                                    isPlatformBound(1),
+                                            }"
+                                            :disabled="!isPlatformBound(1)"
+                                        >
+                                            {{
+                                                isPlatformBound(1)
+                                                    ? "進行綁定"
+                                                    : "已綁定"
+                                            }}
+                                        </button>
+                                    </GoogleLogin>
+                                </ClientOnly>
                             </div>
                         </div>
                         <div class="socialBox flex justify-between w-100%">
@@ -77,13 +84,14 @@
                                 <button
                                     class="bindBtn"
                                     :class="{
-                                        'bg-#e93470 color-#fff cursor-pointer': !isPlatformBound(2),
+                                        'bg-#e93470 color-#fff cursor-pointer':
+                                            isPlatformBound(2),
                                     }"
-                                    :disabled="isPlatformBound(2)"
+                                    :disabled="!isPlatformBound(2)"
                                     @click="bindFb"
                                 >
                                     {{
-                                        !isPlatformBound(2)
+                                        isPlatformBound(2)
                                             ? "進行綁定"
                                             : "已綁定"
                                     }}
@@ -105,13 +113,14 @@
                                 <button
                                     class="bindBtn"
                                     :class="{
-                                        'bg-#e93470 color-#fff cursor-pointer': !isPlatformBound(3),
+                                        'bg-#e93470 color-#fff cursor-pointer':
+                                            isPlatformBound(3),
                                     }"
-                                    :disabled="isPlatformBound(3)"
+                                    :disabled="!isPlatformBound(3)"
                                     @click="bindLine"
                                 >
                                     {{
-                                        !isPlatformBound(3)
+                                        isPlatformBound(3)
                                             ? "進行綁定"
                                             : "已綁定"
                                     }}
@@ -126,8 +135,8 @@
 </template>
 <script setup>
 import { useAlertModalStore } from "../stores/useAlertModal.js";
-import { useConfigStore } from '../stores/config.js';
-import { useThirdPartyLoginStore } from '../stores/thirdPartyLogin.js';
+import { useConfigStore } from "../stores/config.js";
+import { useThirdPartyLoginStore } from "../stores/thirdPartyLogin.js";
 const alertModalStore = useAlertModalStore();
 const openAlertModal = alertModalStore.alertShowModal;
 const configStore = useConfigStore();
@@ -149,55 +158,79 @@ const isPlatformBound = (platformNum) => {
     return platform?.ClientId !== "";
 };
 
-const bindFb = async() =>{
-    console.log("111");
+const bindGoogle = async (res) => {
+    const userData = await thirdPartyLogin.googleCallback(res);
+    await bindThird(1, userData);
+};
+
+const bindFb = async () => {
     const userData = await thirdPartyLogin.loginWithFacebook();
     await bindThird(2, userData.id);
-}
+};
 
-const bindThird = async(category, id) =>{
-    const response = await $axios.post(
-            "/api/v1/User/ThirdPartyVerify",
-            {
-                Category: category,
-                ClientId: id,
-            },
-            {
-                headers: {
-                    Authorization: userToken.value,
-                },
-            }
-        );
-
-        if (response.data.Status.Code === 0) {
-            await openAlertModal(" ", "已綁定成功");
-        } else {
-            await openAlertModal(" ", `${response.data.Status.Message}`);
+const bindLine = async () => {
+    await thirdPartyLogin.LineLogin();
+};
+/**
+ * 監聽line身分驗證
+ * @param event
+ */
+const syncStorage = async event => {
+    if (event.key === 'lineUserSub') {
+        if (event.newValue != null && event.newValue != undefined && event.newValue != '') {
+            await bindThird(3, event.newValue);
+            localStorage.removeItem('lineUserSub');
         }
-}
+    }
+};
+const bindThird = async (category, id) => {
+    const response = await $axios.post(
+        "/api/v1/User/ThirdPartyVerify",
+        {
+            Category: category,
+            ClientId: id,
+        },
+        {
+            headers: {
+                Authorization: userToken.value,
+            },
+        }
+    );
+    if (response.data.Status.Code === 0) {
+        await getMember();
+        await openAlertModal(" ", "已綁定成功");
+    } else {
+        await openAlertModal(" ", `${response.data.Status.Message}`);
+    }
+};
+const getMember = async () => {
+    const response = await $axios.post(
+        "/api/v1/Pmatch/GetMemberDetail",
+        {
+            PmatchMemberId: memberId.value,
+        },
+        {
+            headers: {
+                Authorization: userToken.value,
+            },
+        }
+    );
+
+    if (response.data.Status.Code === 0) {
+        userDetail.value = response.data.Data;
+    } else {
+        alert(`${response.data.Status.Message}`);
+    }
+};
 onMounted(async () => {
     if (userToken.value != "" && userToken.value != undefined) {
-        const response = await $axios.post(
-            "/api/v1/Pmatch/GetMemberDetail",
-            {
-                PmatchMemberId: memberId.value,
-            },
-            {
-                headers: {
-                    Authorization: userToken.value,
-                },
-            }
-        );
-
-        if (response.data.Status.Code === 0) {
-            userDetail.value = response.data.Data;
-        } else {
-            alert(`${response.data.Status.Message}`);
-        }
+        await getMember();
     } else {
         router.push("/member/login");
         return;
     }
+    //監聽line登入後身分驗證
+    window.addEventListener('storage', syncStorage);
     await configStore.initFacebook();
 });
 </script>
