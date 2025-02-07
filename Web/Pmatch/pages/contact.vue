@@ -34,6 +34,7 @@
                         class="entryCol w-100% lg-w-380px rounded-5px h-25px lg-ps-1rem lg-pe-1rem ps-0 pe-0 pt-.2rem pb-.2rem font-size-1rem mb-3"
                         type="text"
                         v-model="accountId"
+                        disabled
                     />
                     <p class="m-0 mb-3">
                         遊戲平台： <span class="color-red">*</span>
@@ -69,6 +70,7 @@
                         class="entryCol w-100% lg-w-380px rounded-5px h-25px lg-ps-1rem lg-pe-1rem ps-0 pe-0 pt-.2rem pb-.2rem font-size-1rem mb-3"
                         type="text"
                         v-model="name"
+                        disabled
                     />
                     <p class="m-0 mb-3">
                         聯絡人信箱： <span class="color-red">*</span>
@@ -193,6 +195,7 @@ async function contactList(token) {
 async function submitForm(event) {
     event.preventDefault();
     await contactList(userToken.value);
+    window.location.reload();
 }
 
 // 取得GetPlatformAndCharacterList
