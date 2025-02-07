@@ -282,10 +282,14 @@
                             </button>
                             <button class="otherLoginBtn mx-3"
                                     type="button"
+                                    :disabled="thirdPartyPlatform.some(x=>x.Category==2)"
                                     @click="loginFb">
-                                <img class="w-25px"
-                                     src="/images/iconFB.png"
-                                     alt="FB帳號登入" />
+                                <a :title="fbBind">
+                                    <img class="w-25px"
+                                         src="/images/iconFB.png"
+                                         alt="FB帳號登入"
+                                         :class="{ 'filterLight': !!thirdPartyPlatform.some(x => x.Category === 2) }" />
+                                </a>
                             </button>
                         </div>
                     </div>
@@ -329,11 +333,11 @@
 // loading page
 import { GoogleLogin } from 'vue3-google-login';
 import { useLoadStore } from '../stores/loading.js';
-
+import { useConfigStore } from '../stores/config.js';
 import { useAlertModalStore } from '../stores/useAlertModal.js';
 const alertModalStore = useAlertModalStore();
 const openAlertModal = alertModalStore.alertShowModal;
-
+const configStore = useConfigStore();
 const store = useLoadStore();
 const contractStores = ref('');
 const setPageLoading = store.setPageLoading;
@@ -380,6 +384,9 @@ const googleBind = computed(() =>
 );
 const lineBind = computed(() =>
     thirdPartyPlatform.value.some(x => x.Category === 3) ? '已綁定' : '未綁定'
+);
+const fbBind = computed(() =>
+    thirdPartyPlatform.value.some(x => x.Category === 2) ? '已綁定' : '未綁定'
 );
 
 const turnInputType = () => {
@@ -545,7 +552,6 @@ const ThirdPartyLogin = async (category, clientId) => {
         Category: category,
         ClientId: clientId
     });
-    console.log(response);
     if (response.data.Status.Code === 0) {
         return true;
     } else {
@@ -563,6 +569,16 @@ const loginFb = async () => {
             const IsRegistered = await ThirdPartyLogin(2, userData.id);
             if (IsRegistered === false) {
                 //未綁定
+                const thirdPlat = {
+                    Category: 2,
+                    ClientId: userData.id
+                };
+                if (!thirdPartyPlatform.value.includes(thirdPlat)) {
+                    thirdPartyPlatform.value.push(thirdPlat);
+                    console.log('未綁定過', thirdPartyPlatform.value);
+                }
+            } else {
+                await openAlertModal(' ', '綁定失敗，此社群帳號已被其他會員綁定。');
             }
         }
     } catch (error) {
@@ -585,11 +601,17 @@ const syncStorage = async event => {
                     thirdPartyPlatform.value.push(thirdPlat);
                     console.log('未綁定過', thirdPartyPlatform.value);
                 }
+            } else {
+                await openAlertModal(' ', '綁定失敗，此社群帳號已被其他會員綁定。');
             }
             localStorage.removeItem('lineUserSub');
         }
     }
 };
+/**
+ * google登入事件
+ * @param response
+ */
 const GoogleCallback = async response => {
     const data = await thirdPartyLogin.googleCallback(response);
     if (data != '' && data != null && data != undefined) {
@@ -601,8 +623,9 @@ const GoogleCallback = async response => {
             };
             if (!thirdPartyPlatform.value.includes(thirdPlat)) {
                 thirdPartyPlatform.value.push(thirdPlat);
-                console.log('未綁定過', thirdPartyPlatform.value);
             }
+        } else {
+            await openAlertModal(' ', '綁定失敗，此社群帳號已被其他會員綁定。');
         }
     }
 };
@@ -635,6 +658,7 @@ onMounted(async () => {
     // 監聽視窗尺寸變化
     window.addEventListener('resize', updateDialogWidth);
     await setPageLoading(false);
+    await configStore.initFacebook();
 });
 </script>
 <style scoped>
