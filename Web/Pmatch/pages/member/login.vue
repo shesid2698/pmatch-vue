@@ -110,7 +110,7 @@
             </div>
             <div class="flex justify-center">
                 <ClientOnly>
-                    <GoogleLogin :callback="thirdPartyLogin.googleCallback"
+                    <GoogleLogin :callback="GoogleCallback"
                                  popup-type="TOKEN">
                         <button class="otherLoginBtn mx-3">
                             <img class="w-30px"
@@ -281,6 +281,10 @@ const loginFb = async () => {
         console.error('Facebook 登入失敗:', error);
     }
 };
+const GoogleCallback = async(response)=>{
+  const data = await thirdPartyLogin.googleCallback(response);
+  if(data!="" && data!=null && data!=undefined)ThirdPartyLogin(1, data);
+}
 onMounted(async() => {
     window.addEventListener('keydown', EnterLogin);
 
@@ -290,9 +294,6 @@ onMounted(async() => {
 });
 onBeforeUnmount(() => {
     window.removeEventListener('keydown', EnterLogin);
-});
-watch(userInfo, (newVal, oldVal) => {
-    if (newVal != '') ThirdPartyLogin(thirdPartyLogin.category, newVal);
 });
 </script>
 

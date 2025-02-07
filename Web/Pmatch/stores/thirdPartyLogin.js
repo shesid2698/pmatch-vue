@@ -8,22 +8,24 @@ export const useThirdPartyLoginStore = defineStore('thirdPartyLogin', {
         category: 0,
     }),
     actions: {
-        async googleCallback(response) {
+        async googleCallback(res) {
             try {
-                const accessToken = response.access_token;
-                await useFetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-                    method: 'GET',
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                    },
-                })
-                    .then(async response => {
-                        this.userInfo = response.data.value.sub;
-                        this.category = 1;
+                return new Promise((resolve,reject)=>{
+                    const accessToken = res.access_token;
+                    useFetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+                        method: 'GET',
+                        headers: {
+                            Authorization: `Bearer ${accessToken}`,
+                        },
+                    })
+                    .then(response => {
+                        resolve(response.data.value.sub);
                     })
                     .catch(error => {
                         console.error('Error fetching user info:', error);
+                        reject(error);
                     });
+                });
             } catch (error) {
                 console.error('google callback error..', error);
             }

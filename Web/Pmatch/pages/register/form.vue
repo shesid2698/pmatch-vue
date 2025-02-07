@@ -280,7 +280,8 @@
                                 </a>
 
                             </button>
-                            <button class="otherLoginBtn mx-3">
+                            <button class="otherLoginBtn mx-3" type="button"
+                            @click="loginFb">
                                 <img class="w-25px"
                                      src="/images/iconFB.png"
                                      alt="FB帳號登入" />
@@ -379,6 +380,8 @@ const googleBind = computed(() =>
 const lineBind = computed(() =>
     thirdPartyPlatform.value.some(x => x.Category === 3) ? '已綁定' : '未綁定'
 );
+
+
 const turnInputType = () => {
     if (i_password.value.type === 'password') {
         i_password.value.type = 'text';
@@ -547,6 +550,22 @@ const ThirdPartyLogin = async (category, clientId) => {
     } else {
         //未綁定過
         return false;
+    }
+};
+/**
+ * 臉書登入
+ */
+const loginFb = async () => {
+    try {
+        const userData = await thirdPartyLogin.loginWithFacebook();
+        if (userData && userData.id) {
+            const IsRegistered = await ThirdPartyLogin(2, userData.id);
+            if(IsRegistered===false){
+              //未綁定
+            }
+        }
+    } catch (error) {
+        console.error('Facebook 登入失敗:', error);
     }
 };
 /**
