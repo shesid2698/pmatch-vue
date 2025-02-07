@@ -378,7 +378,7 @@
                                         "
                                          class="qaAnswer flex p-1rem">
                                         <div>
-                                            <img :src="`${assetsUrl}${storesItem.IMGFiles}`"
+                                            <img class="w-40px h-40px rounded-50%" :src="`${assetsUrl}${storesItem.IMGFiles}`"
                                                  :alt="storesItem.Name" />
                                         </div>
                                         <div class="ms-5">
@@ -630,6 +630,7 @@ async function sendQAList() {
         await openAlertModal(' ', '請先登入會員');
     } else {
         await sendQAApi(userToken.value);
+        window.location.reload();
     }
 }
 async function sendAccList() {
@@ -687,6 +688,7 @@ async function sendQAApi(token) {
         );
         if (response.data.Status.Code === 0) {
             storeQAList.value = response.data.Data;
+            await openAlertModal(' ', "問題已送出");
         } else {
             await openAlertModal(' ', `${response.data.Status.Message}`);
         }
