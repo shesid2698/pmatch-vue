@@ -80,7 +80,7 @@
                         placeholder="ex: johnny.doe@mail.com"
                         v-model="mail"
                     />
-                    <p class="m-0 mb-3">聯絡人電話：</p>
+                    <p class="m-0 mb-3">聯絡人電話： <span class="color-red">*</span></p>
                     <input
                         required
                         class="entryCol w-100% lg-w-380px rounded-5px h-25px lg-ps-1rem lg-pe-1rem ps-0 pe-0 pt-.2rem pb-.2rem font-size-1rem mb-3"

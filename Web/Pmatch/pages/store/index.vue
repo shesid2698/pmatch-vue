@@ -556,7 +556,7 @@
                         </div>
                         <div class="mb-1rem">
                             <textarea
-                                class="contactEntry"
+                                class="contactEntryArea"
                                 placeholder="留言 (請輸入100字以內的訊息)"
                                 cols="30"
                                 rows="10"
@@ -1550,6 +1550,26 @@ onMounted(async () => {
     outline: none;
 }
 .contactEntry::placeholder {
+    color: #fff; /* 設定 placeholder 的顏色 */
+}
+.contactEntryArea{
+    color: #fff;
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0.15),
+        rgba(255, 255, 255, 0.15)
+    );
+    width: calc(100% - 2rem);
+    border: none;
+    padding: 1rem;
+    border-radius: 10px;
+    position: relative;
+    font-size: 1rem;
+}
+.contactEntryArea:focus-visible {
+    outline: none;
+}
+.contactEntryArea::placeholder {
     color: #fff; /* 設定 placeholder 的顏色 */
 }
 .contactCap {
