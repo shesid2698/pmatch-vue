@@ -965,7 +965,7 @@ onBeforeUnmount(() => {
 } */
 :deep(.el-carousel__container) {
     height: 100%;
-    padding-top: 35%;
+    padding-top: 43%;
 }
 :deep(.el-carousel__item) {
     display: flex;
