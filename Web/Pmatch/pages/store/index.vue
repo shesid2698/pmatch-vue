@@ -71,28 +71,6 @@
                         <div class="matchBox">
                             <div class="matchContent">
                                 <div class="flex justify-center pb-3">
-                                    <el-statistic :value="matchValue2" />
-                                    <span class="plus">+</span>
-                                </div>
-                                <div class="matchDetail">
-                                    <span
-                                        class="m-0 md-block inline color-#fff text-center w-100%"
-                                    >
-                                        已協助"130+"媒合商
-                                    </span>
-                                    <span
-                                        class="m-0 md-block inline color-#fff text-center w-100%"
-                                    >
-                                        完成報稅
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-100%">
-                        <div class="matchBox">
-                            <div class="matchContent">
-                                <div class="flex justify-center pb-3">
                                     <el-statistic :value="matchValue3" />
                                     <span class="plus">+</span>
                                 </div>
@@ -100,12 +78,12 @@
                                     <span
                                         class="m-0 md-block inline color-#fff text-center md-w-100%"
                                     >
-                                        已成功協助"100+"
+                                        已幫助"100+"
                                     </span>
                                     <span
                                         class="m-0 md-block inline color-#fff text-center md-w-100%"
                                     >
-                                        媒合商轉型成功
+                                        玩家完成媒合
                                     </span>
                                 </div>
                             </div>
