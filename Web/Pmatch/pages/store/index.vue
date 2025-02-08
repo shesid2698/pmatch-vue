@@ -37,7 +37,7 @@
                     <h3
                         class="m-0 font-size-20px md-font-size-26px text-center subSlogan"
                     >
-                        讓你的廣告被看見，讓對的人找到你，還能輕鬆的記帳與報稅
+                        讓你的廣告被看見，讓對的人找到你，還能輕鬆完成的記帳與實名制
                     </h3>
                 </div>
             </div>
@@ -347,7 +347,7 @@
                     <h3
                         class="m-0 font-size-14px md-font-size-26px text-center subSlogan"
                     >
-                        並結合行業創新的記帳、報稅以及實名制系統，為您提供全面支持
+                        並結合行業創新的C2B2C模式、記帳以及實名制系統，為您提供全面支持
                     </h3>
                 </div>
             </div>
@@ -707,7 +707,7 @@ source3.value = 100;
 // 優勢列表
 const advantagesList = [
     {
-        title: "記帳、報稅一步到位",
+        title: "記帳、媒合、實名驗證一步到位",
         detail: "一站式財務處理系統，幫助媒合商簡化記錄和計算的流程，利用我們的系統來自動組建媒合的狀況，讓媒合結果一目了然",
         img: "/images/advantages3.png",
         icon: "/images/adIcon-03.png",

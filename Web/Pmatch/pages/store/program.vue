@@ -436,7 +436,7 @@ const purposeOptions = ref([
 // 優勢列表
 const advantagesList = [
     {
-        title: "記帳、報稅一步到位",
+        title: "記帳、媒合、實名驗證一步到位",
         detail: "一站式財務處理系統，幫助媒合商簡化記錄和計算的流程，利用我們的系統來自動組建媒合的狀況，讓媒合結果一目了然",
         img: "/images/advantages3.png",
         icon: "/images/adIcon-03.png",
