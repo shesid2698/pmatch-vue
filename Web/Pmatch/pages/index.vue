@@ -226,14 +226,18 @@
                                                         item.PlatformName,
                                                 },
                                             }"
-                                            class="w-100% m-1"
+                                            class="w-100% m-1 decoration-none color-#fff"
                                         >
-                                            <div class="w-100% flex">
+                                            <div class="w-100% flex justify-center">
                                                 <img
+                                                    v-show="item.ImgFile"
                                                     :src="`${assetsUrl}${item.ImgFile}`"
                                                     :alt="item.PlatformName"
-                                                    class="w-100% rounded-10px"
+                                                    class="w-full"
                                                 />
+                                                <p v-show="!item.ImgFile">
+                                                   {{item.PlatformName}}
+                                                </p>
                                             </div>
                                         </NuxtLink>
                                     </div>
@@ -708,7 +712,7 @@ onMounted(async () => {
             const token = userToken.value;
 
             if (token != "") {
-                await fetchNewsListData([1,2], token);
+                await fetchNewsListData([1, 2], token);
                 await fetchGameList(token);
                 await fetchADList(token);
             }
@@ -716,7 +720,7 @@ onMounted(async () => {
             // 生成新的 token
             const token = await jwtStore.generateToken();
             if (token != "") {
-                await fetchNewsListData([1,2], token);
+                await fetchNewsListData([1, 2], token);
                 await fetchGameList(token);
                 await fetchADList(token);
             }

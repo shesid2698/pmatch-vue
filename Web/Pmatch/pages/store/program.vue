@@ -1,4 +1,20 @@
 <template>
+    <Head>
+        <title>PMatch遊戲道具媒合網</title>
+        <Meta property="og:title" content="PMatch遊戲道具媒合網" />
+        <Meta
+            name="keywords"
+            content="pmatch,pmatch交易,博奕遊戲,幣商,媒合商,遊戲幣,虛擬幣,遊戲交易,媒合交易,買幣,賣幣,虛寶交易"
+        />
+        <Meta
+            name="description"
+            content="Pmatch遊戲道具媒合網 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
+        />
+        <Meta
+            property="og:description"
+            content="Pmatch遊戲道具媒合網 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
+        />
+    </Head>
     <div class="storeBac">
         <div class="pb-5rem">
             <div class="max-w-1110px m-auto pt-180px ps-5 pe-5 relative z-2">
@@ -779,7 +795,7 @@ async function sendMail() {
             }
         );
         if (response.data.Status.Code === 0) {
-            await openAlertModal(" ", "已成功寄信完成，將有專員回覆您 !")
+            await openAlertModal(" ", "已成功寄信完成，將有專員回覆您 !");
             window.location.reload();
         } else {
             await openAlertModal(" ", `${response.data.Status.Message}`);
@@ -1227,7 +1243,7 @@ onMounted(async () => {
 .contactEntry::placeholder {
     color: #fff; /* 設定 placeholder 的顏色 */
 }
-.contactEntryArea{
+.contactEntryArea {
     color: #fff;
     background: linear-gradient(
         to right,

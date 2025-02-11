@@ -1,4 +1,20 @@
 <template>
+    <Head>
+        <title>PMatch遊戲道具媒合網</title>
+        <Meta property="og:title" content="PMatch遊戲道具媒合網" />
+        <Meta
+            name="keywords"
+            content="pmatch,pmatch交易,博奕遊戲,幣商,媒合商,遊戲幣,虛擬幣,遊戲交易,媒合交易,買幣,賣幣,虛寶交易"
+        />
+        <Meta
+            name="description"
+            content="Pmatch遊戲道具媒合網 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
+        />
+        <Meta
+            property="og:description"
+            content="Pmatch遊戲道具媒合網 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
+        />
+    </Head>
     <ElDialog
         v-for="(dialog, index) in dialogVisible"
         :key="index"
@@ -37,7 +53,7 @@
                     <h3
                         class="m-0 font-size-20px md-font-size-26px text-center subSlogan"
                     >
-                        讓你的廣告被看見，讓對的人找到你，還能輕鬆完成的記帳與實名制
+                        讓你的廣告被看見，讓對的人找到你，還能輕鬆完成記帳與實名制
                     </h3>
                 </div>
             </div>
@@ -78,12 +94,12 @@
                                     <span
                                         class="m-0 md-block inline color-#fff text-center md-w-100%"
                                     >
-                                        已幫助"100+"
+                                        已幫助"三萬+"
                                     </span>
                                     <span
                                         class="m-0 md-block inline color-#fff text-center md-w-100%"
                                     >
-                                        玩家完成媒合
+                                        位玩家完成媒合
                                     </span>
                                 </div>
                             </div>
@@ -680,7 +696,7 @@ source2.value = 130;
 const matchValue3 = useTransition(source3, {
     duration: 1500,
 });
-source3.value = 100;
+source3.value = 30000;
 
 // 優勢列表
 const advantagesList = [
@@ -873,15 +889,15 @@ const chartOptions = {
             text: (context) => {
                 // 獲取當前圖表的索引
                 const chartId = context.chart.canvas.id;
-                const index = parseInt(chartId.split('-')[2]); // 從 'my-chart-0' 取得索引
+                const index = parseInt(chartId.split("-")[2]); // 從 'my-chart-0' 取得索引
                 return index === 0 ? "滿貫大亨" : "老子有錢";
             },
             font: {
-                size: 24 // 設置字體大小為 24px
+                size: 24, // 設置字體大小為 24px
             },
             padding: {
-                bottom: 10 // 設置下方間距為 10px
-            }
+                bottom: 10, // 設置下方間距為 10px
+            },
         },
     },
     scales: {
@@ -1552,7 +1568,7 @@ onMounted(async () => {
 .contactEntry::placeholder {
     color: #fff; /* 設定 placeholder 的顏色 */
 }
-.contactEntryArea{
+.contactEntryArea {
     color: #fff;
     background: linear-gradient(
         to right,
