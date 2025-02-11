@@ -315,7 +315,7 @@
                     <h1
                         class="m-0 mb-8 text-center font-size-33px md-font-size-48px slogan"
                     >
-                        『業務成長的推助器』
+                        『業務成長的助推器』
                     </h1>
                     <h3
                         class="m-0 font-size-14px md-font-size-26px text-center subSlogan"
@@ -767,19 +767,30 @@ const chartDataComputed = computed(() => {
 const simpleChartData = computed(() => {
     // 假設這裡使用 endDate 的數據
     const { EndTime } = calculateWeekRange();
-    const endDateData = dailyPatchList0.value.filter(
+    let endDateData = dailyPatchList0.value.filter(
         (item) => item.Time.split("T")[0] === EndTime
     );
-
+    // 如果沒有找到數據，則取最後最多5筆數據
+    if (endDateData.length === 0) {
+        const totalRecords = dailyPatchList0.value.length;
+        const recordsToTake = Math.min(5, totalRecords); // 如果總數據少於5筆，就取全部
+        endDateData = dailyPatchList0.value.slice(-recordsToTake);
+    }
     return getSimpleChartData(endDateData);
 });
 // 為簡化版圖表準備數據
 const simpleChartData1 = computed(() => {
     // 假設這裡使用 endDate 的數據
     const { EndTime } = calculateWeekRange();
-    const endDateData = dailyPatchList1.value.filter(
+    let endDateData = dailyPatchList1.value.filter(
         (item) => item.Time.split("T")[0] === EndTime
     );
+    // 如果沒有找到數據，則取最後最多5筆數據
+    if (endDateData.length === 0) {
+        const totalRecords = dailyPatchList1.value.length;
+        const recordsToTake = Math.min(5, totalRecords); // 如果總數據少於5筆，就取全部
+        endDateData = dailyPatchList1.value.slice(-recordsToTake);
+    }
     return getSimpleChartData(endDateData);
 });
 // 修改 getChartData 函數
@@ -937,7 +948,6 @@ const getSimpleChartData = (data) => {
                 tension: 0.4,
                 fill: false,
                 type: "line",
-                pointRadius: 0, // 隱藏數據點
                 pointRadius: 3, // 外圈大小
                 pointBackgroundColor: "#36A2EB", // 點的背景色（白色）
                 pointBorderColor: "#fff", // 點的邊框色（藍色）
