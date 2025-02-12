@@ -53,7 +53,7 @@
                     <h3
                         class="m-0 font-size-20px md-font-size-26px text-center subSlogan"
                     >
-                        讓你的廣告被看見，讓對的人找到你，還能輕鬆完成記帳與實名制
+                        讓你的廣告被看見，讓對的人找到你，還能輕鬆完成記帳與實名制全方位服務
                     </h3>
                 </div>
             </div>
