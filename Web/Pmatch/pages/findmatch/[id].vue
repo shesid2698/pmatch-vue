@@ -156,16 +156,16 @@
                                         <div
                                             class="platformContent flex justify-center items-center"
                                         >
-                                        <div>
-                                            <img
-                                                v-show="getImgFile(item)"
-                                                class="platformImg w-100%"
-                                                :src="`${assetsUrl}${getImgFile(
-                                                    item
-                                                )}`"
-                                                :alt="item"
-                                            />
-                                        </div>
+                                            <div>
+                                                <img
+                                                    v-show="getImgFile(item)"
+                                                    class="platformImg w-100%"
+                                                    :src="`${assetsUrl}${getImgFile(
+                                                        item
+                                                    )}`"
+                                                    :alt="item"
+                                                />
+                                            </div>
                                             <p v-show="!getImgFile(item)">
                                                 {{ item }}
                                             </p>
@@ -178,7 +178,7 @@
                 </div>
             </div>
         </div>
-        <div class="w-full relative mt-2rem md-mt-5rem z-10">
+        <div class="w-full relative mt-2rem md-mt-5rem z-12">
             <div class="absolute left-0 top-0">
                 <div class="flex justify-start">
                     <img
@@ -380,10 +380,12 @@
                                     服務條款
                                 </div>
                                 <div class="dialogBody">
-                                    <div
-                                        v-if="storesItem"
-                                        v-html="storesItem.ContractConetnt"
-                                    ></div>
+                                    <div class="dialogContent">
+                                        <div
+                                            v-if="storesItem"
+                                            v-html="storesItem.ContractConetnt"
+                                        ></div>
+                                    </div>
                                     <div class="flex justify-end mt-5">
                                         <ElButton
                                             class="agreeBtn"
@@ -1065,6 +1067,9 @@ watch(
     background: linear-gradient(to right, #4361ee, #f72585);
     border-radius: 20px;
     border: none;
+    --el-dialog-margin-top: 200px;
+    --el-dialog-width: 80%;
+    max-width: 990px;
 }
 :deep(.el-dialog__header) {
     position: absolute;
@@ -1112,7 +1117,18 @@ watch(
     background: #fff;
     color: #8d8d8d;
     border-radius: 20px;
-    padding: 2rem;
+    padding: 3rem 2rem 2rem 2rem;
+}
+.dialogContent{
+    height: 50vh;
+    overflow: auto;
+}
+.dialogContent::-webkit-scrollbar {
+    width: 10px;
+}
+.dialogContent::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #666;
 }
 .agreeBtn {
     background: linear-gradient(to right, #4361ee, #f72585);
@@ -1183,6 +1199,7 @@ watch(
     border-radius: 20px;
     padding: 2rem;
 }
+
 .contractDetail {
     padding: 1rem;
     max-height: 600px;
