@@ -17,7 +17,7 @@
                             © 2020~2025 版權所有
                         </p>
                         <p class="color-#fff m-0 mb-2 text-center">
-                            PMatch 遊戲道具媒合網
+                            PMatch 遊戲道具交易平台
                         </p>
                         <p class="color-#fff m-0 text-center">
                             版本號 : v6.1.1

@@ -11,7 +11,7 @@
                 </div>
                 <div>
                     <h1 class="m-0 ms-3 font-size-22px md-font-size-22px color-#7B2CBF">
-                        遊戲道具媒合網
+                        遊戲道具交易平台
                     </h1>
                 </div>
             </div>

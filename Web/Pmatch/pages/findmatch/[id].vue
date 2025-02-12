@@ -10,11 +10,11 @@
             />
             <Meta
                 name="description"
-                content="Pmatch遊戲道具媒合網 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
+                content="Pmatch遊戲道具交易平台 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
             />
             <Meta
                 property="og:description"
-                content="Pmatch遊戲道具媒合網 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
+                content="Pmatch遊戲道具交易平台 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
             />
         </Head>
         <div class="absolute right-0 top-0">
@@ -588,7 +588,7 @@ const dialogVisible = ref(false);
 const memberDetailList = ref([]);
 const gameList = ref([]);
 const imgCurrent = ref([]);
-const metaTitle = ref("PMatch遊戲道具媒合網");
+const metaTitle = ref("PMatch遊戲道具交易平台");
 let question = ref("");
 
 const buyOrSell = ref(null); // true 委買, false 委賣
