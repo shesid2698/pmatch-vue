@@ -32,7 +32,6 @@ const encrypt = useEncrypt();
 const routeParamCode = route.params.code;
 onMounted(async () => {
     try {
-        console.log(routeParamCode);
         if (routeParamCode !== "" && routeParamCode !== undefined) {
             token.value = await jwtStore.generateToken();
             const response = await $axios.post(

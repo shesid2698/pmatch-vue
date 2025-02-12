@@ -135,7 +135,6 @@ async function fetchNewsListData(token) {
 const GetNewsDetail = id => {
     newsDetail.value = showList.value.find(x => x.Id == id);
     content.value = newsDetail.value.Content;
-    console.log(newsDetail.value);
 };
 onMounted(async () => {
     try {

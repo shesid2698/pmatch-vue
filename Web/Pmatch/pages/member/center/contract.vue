@@ -91,7 +91,6 @@ onMounted(async () => {
             );
 
             if (response.data.Status.Code === 0) {
-                console.log(response.data.Data);
                 stores.value = response.data.Data;
             } else {
                 await openAlertModal(' ', `${response.data.Status.Message}`);
