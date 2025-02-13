@@ -733,7 +733,7 @@ onMounted(async () => {
                 "聚寶Online",
                 "金好運娛樂城",
                 "寶島娛樂城",
-                "老子有錢",
+                "老子有錢Online",
             ];
             serchPlatformLogCookies.value = JSON.stringify(plaformLog.value);
         } else {
