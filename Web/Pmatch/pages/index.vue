@@ -43,12 +43,12 @@
                     <h1
                         class="m-0 mb-2 text-center font-size-33px md-font-size-44px slogan"
                     >
-                        安心交易的第一選項PMatch
+                        PMatch 整合媒合市場的領頭羊
                     </h1>
                     <h3
                         class="m-0 font-size-14px md-font-size-22px text-center subSlogan"
                     >
-                        為你嚴選商家、用合約保障你的權益、繁瑣的事情都再見
+                        為你嚴選媒合商、用合約保障你的權益、讓你每一筆的遊戲幣流向都能被看見
                     </h3>
                 </div>
                 <div
