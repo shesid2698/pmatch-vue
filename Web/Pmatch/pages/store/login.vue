@@ -184,17 +184,18 @@ async function login(event, encryptedPassword) {
 
             if (matchMemberList.value.Token) {
                 // 編碼為 Base64 URL 格式
-                const token = matchMemberList.value.Token;
-
-                const base64UrlToken = btoa(token)
-                    .replace(/\+/g, "-")
-                    .replace(/\//g, "_");
+                let token = matchMemberList.value.Token;
+                token = token.replaceAll(".","%2D");
+                let newToken = encodeURI(token);
+                // const base64UrlToken = btoa(token)
+                //     .replace(/\+/g, "-")
+                //     .replace(/\//g, "_");
 
                 // 跳轉到目標網站
                 if (!configStore.envUrl) {
                     await configStore.loadConfig();
                 }
-                const targetUrl = `${configStore.envUrl}${base64UrlToken}`;
+                const targetUrl = `${configStore.envUrl}${newToken}`;
                 window.location.href = targetUrl;
             } else {
                 console.error("跳轉失敗");
