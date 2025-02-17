@@ -27,7 +27,7 @@ export const useJwtStore = defineStore('jwt', {
                     alg: 'HS256',
                     typ: 'JWT',
                 };
-                let timeTicks = await this.getRightTime();
+                let timeTicks = (await this.getRightTime()) == null ? Date.now() : await this.getRightTime();
                 return new Promise((resolve,reject)=>{
                   if (timeTicks != null) {
                       const now = Math.floor(timeTicks / 1000);
@@ -66,10 +66,12 @@ export const useJwtStore = defineStore('jwt', {
             const { data, error } = await useFetch('https://www.timeapi.io/api/Time/current/zone', {
                 query: { timeZone: 'Asia/Taipei' },
             });
+            if(error.value){
+              console.log(`getRightTime api failed..${error.value}`);
+              return null;
+            }
             if (data.value!=null && data.value.dateTime!=null) {
                 return new Date(data.value.dateTime).getTime();
-            } else {
-                return null;
             }
         },
     },
