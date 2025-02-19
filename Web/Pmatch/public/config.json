@@ -1,6 +1,6 @@
 {
   "baseUrl": "http://192.168.10.206:2310",
-  "envUrl": "http://192.168.10.206:6092/l/",
+  "envUrl": "http://192.168.10.206:5092/l/",
   "googleClientId": "505369110816-adbbmvem49jfer17pdcijimo5k21f724.apps.googleusercontent.com",
   "lineClientId": "2006859760",
   "lineSecret": "0a058518f85f9201cf134506eb255b7c",

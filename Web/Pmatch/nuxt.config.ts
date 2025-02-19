@@ -1,35 +1,20 @@
 export default defineNuxtConfig({
-    runtimeConfig: {
-        public: {
-        },
-    },
-
     // 確保 SSR 啟用
     ssr: true,
-
     devtools: { enabled: true },
     modules: ['@unocss/nuxt', '@element-plus/nuxt', '@pinia/nuxt', '@pinia-plugin-persistedstate/nuxt'],
-
     nitro: {
         prerender: {
             crawlLinks: true,
         },
     },
-
     css: ['element-plus/dist/index.css'],
-
     imports: {
         dirs: ['stores'],
     },
-
     experimental: {
         payloadExtraction: false,
     },
-
-    // // 添加這個配置
-    // routeRules: {
-    //     '/s/**': { ssr: true }
-    // },
     app: {
         head: {
             script: [
@@ -46,6 +31,5 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             ],
         },
     },
-
     compatibilityDate: '2025-01-20',
 });
