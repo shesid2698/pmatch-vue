@@ -1,9 +1,10 @@
 {
     "baseUrl": "http://192.168.10.206:2310",
     "envUrl": "http://192.168.10.206:5092/l/",
-    "turnstilesitekey": "0x4AAAAAAA9saIa8VUnzopGt", // 206用 "1x00000000000000000000AA", 正式區用 "0x4AAAAAAA9saIa8VUnzopGt"
+    "turnstilesitekey": "0x4AAAAAAA9saIa8VUnzopGt",
     "googleClientId": "505369110816-adbbmvem49jfer17pdcijimo5k21f724.apps.googleusercontent.com",
     "lineClientId": "2006859760",
     "lineSecret": "0a058518f85f9201cf134506eb255b7c",
     "lineReturnUrl": "http://localhost:3000/auth/lineauth"
 }
+

@@ -1,1 +1,3 @@
 文件說明
+config.json:
+1.site-key:206用 "1x00000000000000000000AA", 正式區用 "0x4AAAAAAA9saIa8VUnzopGt"
