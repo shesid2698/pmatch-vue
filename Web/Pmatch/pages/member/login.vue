@@ -76,7 +76,7 @@
                 </div>
                 <div v-if="!hasToken"
                      class="w-100% mt-15px">
-                    <VueTurnstile site-key="1x00000000000000000000AA"
+                    <VueTurnstile :site-key="turnstilesitekey"
                                   size="normal"
                                   @update:model-value="onVerify"></VueTurnstile>
                 </div>
@@ -148,6 +148,7 @@ const openAlertModal = alertModalStore.alertShowModal;
 const { md5 } = crypto();
 const eyes = ref(null);
 const i_password = ref(null);
+let turnstilesitekey = '1x00000000000000000000AA'; // 預設測試用KEY
 const loginToken = useCookie('loginToken');
 const hasToken = ref(loginToken.value !== undefined);
 // 登入用
@@ -286,6 +287,12 @@ const GoogleCallback = async(response)=>{
   if(data!="" && data!=null && data!=undefined)ThirdPartyLogin(1, data);
 }
 onMounted(async() => {
+
+    // 取得turnstileKey
+    turnstilesitekey = configStore.turnstilesitekey;
+    //console.log('configStore.turnstilesitekey1', turnstilesitekey);
+
+    //
     window.addEventListener('keydown', EnterLogin);
 
     //監聽line登入後身分驗證

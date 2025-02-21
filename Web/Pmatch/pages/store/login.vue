@@ -73,7 +73,7 @@
                         </div>
                         <div v-if="!hasToken" class="w-100% mt-15px">
                             <VueTurnstile
-                                site-key="1x00000000000000000000AA"
+                                :site-key="turnstilesitekey"
                                 size="normal"
                                 @update:model-value="onVerify"
                             ></VueTurnstile>
@@ -142,7 +142,7 @@ const accountInput = ref(null);
 
 const loginToken = useCookie("tstToken");
 const hasToken = ref(loginToken.value !== undefined);
-
+let turnstilesitekey = '1x00000000000000000000AA'; // 預設測試用KEY
 let accountId = ref("");
 const turnInputType = () => {
     if (i_password.value.type === "password") {
@@ -232,6 +232,11 @@ onMounted(async () => {
     await setPageLoading(true);
     const res = await getSerialNumber(); // 等待回應
     console.log(res);
+
+    // 取得turnstileKey
+    turnstilesitekey = configStore.turnstilesitekey;
+    //console.log('configStore.turnstilesitekey1', turnstilesitekey);
+
     // 驗證 status.code
     if (res && res.status && res.status.code === 0) {
         iData.value = res.data;
