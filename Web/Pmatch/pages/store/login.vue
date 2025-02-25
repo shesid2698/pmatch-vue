@@ -184,8 +184,7 @@ async function login(event, encryptedPassword) {
 
             if (matchMemberList.value.Token) {
                 // 編碼為 Base64 URL 格式
-                const token = matchMemberList.value.Token;
-
+                let token = matchMemberList.value.Token;
                 const base64UrlToken = btoa(token)
                     .replace(/\+/g, "-")
                     .replace(/\//g, "_");
