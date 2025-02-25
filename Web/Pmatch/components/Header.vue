@@ -83,7 +83,7 @@
                 <div class="w-100% flex justify-center mt-3 mb-3"
                      v-for="item of headerLink"
                      :key="item.id">
-                    <!-- <div v-if="item.title === '會員中心'"
+                    <div v-if="item.title === '會員中心'"
                          class="text-center">
                         <div class="headerLink color-#555553 decoration-none font-bold w-100% cursor-pointer"
                              @click="show = !show">
@@ -100,8 +100,8 @@
                                 </div>
                             </el-collapse-transition>
                         </div>
-                    </div> -->
-                    <div>
+                    </div>
+                    <div v-else>
                         <NuxtLink :title="item.title"
                                   :to="item.link"
                                   class="headerLink color-#555553 decoration-none font-bold w-100%"
@@ -120,8 +120,6 @@ const userToken = useCookie('_PmToken');
 const isLoggedIn = computed(() => !!userToken?.value && userToken.value.trim() !== '');
 const userNameCookie = useCookie('_PmUserName');
 const MemberIdCookie = useCookie('_PmMemberId');
-const user = reactive({});
-const router = useRouter();
 const userType = useCookie('_PmMemberType');
 const navOpen = ref(false);
 const toggleNav = () => {
@@ -152,6 +150,9 @@ const memberCenterLink = ref([
     {
         title: '簽約媒合商',
         link: '/member/center/contract'
+    },{
+      title:"領獎中心",
+      link:'/member/center/reward'
     }
 ]);
 const show = ref(false);
