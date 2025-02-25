@@ -48,7 +48,7 @@
                              alt="">
                     </div>
                 </div>
-                <div  class="flex ticket-shadow mb-2">
+                <div class="flex ticket-shadow mb-2">
                     <div class="relative w-fit mr-[-2px] h-fit">
                         <div class="absolute w-67%  right-0 top-50% transform-translate-y-[-50%]">
                             <div class="text-20px text-black mb-2">發財小金豆 1顆</div>
@@ -74,10 +74,38 @@
  */
 const innerPage = ref(0);
 const ticketList = ref([]);
-const memberToken = useCookie("");
+const memberToken = useCookie("_PmToken");
+const memberId = useCookie("_PmMemberId");
 const {$axios} = useNuxtApp();
-onMounted(()=>{
-
+const GetList = async(status,page)=>{
+try {
+        const response = await $axios.post(
+            "/api/v1/PMatch/GetMemberRewardList",
+            {
+                PmatchMemberId: memberId.value,
+                Status:status,
+                PageNo:page,
+                PageSize:20
+            },
+            {
+                headers: {
+                    Authorization: memberToken.value, // 帶上 Token
+                },
+            }
+        );
+        if (response.data.Status.Code === 0) {
+            console.log(response.data.Data);
+        } else {
+            throw new Error(response.data.Status.Message);
+        }
+    } catch (error) {
+        console.error("請求失敗:", error);
+    }
+}
+onMounted(async()=>{
+  if(memberToken.value && memberId.value){
+    await GetList(innerPage.value,1);
+  }
 });
 </script>
 <style scoped>
@@ -117,14 +145,14 @@ onMounted(()=>{
     display: flex;
     flex-direction: column;
     align-items: center;
-    &::-webkit-scrollbar{
-      width: 10px;
-      background: #f1f1f1;
+    &::-webkit-scrollbar {
+        width: 10px;
+        background: #f1f1f1;
     }
-    &::-webkit-scrollbar-thumb{
-      width: 10px;
-      background: #b3b3b3;
-      border-radius: 5px;
+    &::-webkit-scrollbar-thumb {
+        width: 10px;
+        background: #b3b3b3;
+        border-radius: 5px;
     }
 }
 .ticket-shadow {
