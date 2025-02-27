@@ -211,13 +211,13 @@ onMounted(() => {
                 icon: '',
                 className: 'nav1'
             },
-            {
-                id: 2,
-                title: '找媒合',
-                link: '/findmatch',
-                icon: '',
-                className: 'nav2'
-            },
+            // {
+            //     id: 2,
+            //     title: '找媒合',
+            //     link: '/findmatch',
+            //     icon: '',
+            //     className: 'nav2'
+            // },
             {
                 id: 3,
                 title: `Hi , ${userNameCookie.value}`,
@@ -322,9 +322,6 @@ onBeforeUnmount(() => {
     color: #999;
 }
 .nav0{
-    border-right: 2px solid #ccc;
-}
-.nav1 {
     border-right: 2px solid #ccc;
 }
 .nav3 {
