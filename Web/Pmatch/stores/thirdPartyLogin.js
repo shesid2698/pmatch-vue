@@ -32,7 +32,8 @@ export const useThirdPartyLoginStore = defineStore('thirdPartyLogin', {
         },
         async LineLogin() {
             const config = useConfigStore();
-            await config.loadConfig();
+            // await config.loadConfig();
+
             let link = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${config.lineClientId}&redirect_uri=${config.lineReturnUrl}&state=login&scope=openid%20profile`;
             window.open(
                 link, // 網址
