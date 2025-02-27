@@ -4,7 +4,6 @@
 <script setup>
 import { useConfigStore } from '../stores/config.js';
 const route = useRoute();
-const realCode = useState('realCode', () => route.query.code || '');
 const config = useConfigStore();
 const realUser = useState('realUser', () => null);
 const verifiedUser = useState('verifiedUser', () => null);
@@ -14,7 +13,7 @@ try {
         // line登入後取得token
         const params = new URLSearchParams({
             grant_type: 'authorization_code',
-            code: realCode.value,
+            code: route.query.code,
             redirect_uri: config.lineReturnUrl,
             client_id: config.lineClientId,
             client_secret: config.lineSecret
