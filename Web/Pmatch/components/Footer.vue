@@ -146,6 +146,7 @@ const footerLinkRight = ref([
     background-position: center;
     background-size: cover;
     position: relative;
+    z-index: 0;
 }
 .homeBackground {
     background: rgba(0, 0, 0, 0);
@@ -159,6 +160,6 @@ const footerLinkRight = ref([
     left: 0;
     width: 100%;
     height: 500px;
-    
+
 }
 </style>

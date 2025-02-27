@@ -2,7 +2,7 @@
     <div v-show="$store.alertModalStatus" class="modalBox">
         <div class="modalContent">
             <h2>{{ $store.alertTitle }}</h2>
-            <p>{{ $store.alertMessage }}</p>
+            <p v-html="$store.alertMessage"></p>
             <div class="modalBtn">
                 <div class="checkBtnBox">
                     <button class="checkBtn" @click="$store.alertConfirmModal">確定</button>

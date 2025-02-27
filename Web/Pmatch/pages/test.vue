@@ -27,12 +27,9 @@
              class="cropper-container">
             <Cropper class="cropper"
                      :src="image"
-                     :stencil-props="{
-          aspectRatio: 4/3
-        }"
+                     :stencil-props="{aspectRatio: 4/3}"
                      @change="onChange"
                      ref="cropperRef" />
-
             <div class="button-group">
                 <button @click="saveCrop"
                         class="action-btn">確認裁切</button>

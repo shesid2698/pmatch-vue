@@ -17,6 +17,7 @@
         </div>
         <!-- 內容 -->
         <div class="flex-1 md:pl-20px">
+            <!-- 列表 -->
             <div v-if="pageName===''">
                 <div>
                     <button class="non-button"
@@ -50,19 +51,28 @@
                             })}}</div>
                                 </div>
                                 <div class="absolute w-67% bottom-10px right-0 text-end pr-10px text-10px md:text-16px text-black">{{ item.ActivityName }}</div>
-                                <img class="left-img"
-                                     :src="innerPage !== 4 ? '/images/虛擬獎項-l.svg' : '/images/虛擬獎項-disabled-l.svg'"
+                                <img v-if="innerPage !== 4"
+                                     class="left-img"
+                                     :src="item.RewardType === 3 ? '/images/實體獎項-l.svg' : '/images/虛擬獎項-l.svg'"
                                      alt="" />
+                                <img v-else
+                                     class="left-img"
+                                     :src="item.RewardType === 3 ? '/images/實體獎項-disabled-l.svg' : '/images/虛擬獎項-disabled-l.svg'"
+                                     alt="">
                             </div>
-                            <!-- <div class="relative w-fit h-fit cursor-pointer"
-                             @click="GetCode($event,item.RedeemCode)"></div> -->
                             <div class="relative w-fit h-fit cursor-pointer"
-                                 @click="TurnPage('form')">
-                                <div class="absolute w-80px bg-[#3dadff] p-2 rounded-1 text-white text-center top-50% left-50% z-9 tips-shadow">複製成功</div>
-                                <div class="absolute w-100% h-100% flex items-center justify-center"><span class="text-white text-14px md:text-20px font-600">{{item.RedeemCode.length>0?"複製序號":"兌換"}}</span></div>
-                                <img class="right-img"
-                                     :src="innerPage !== 4 ? '/images/虛擬獎項-r.svg' : '/images/獎項-disabled-r.svg'"
+                                 @click="GetReward($event,item)">
+                                <div v-if="item.RewardType === 1"
+                                     class="absolute w-80px bg-[#3dadff] p-2 rounded-1 text-white text-center top-50% left-50% z-9 tips-shadow">複製成功</div>
+                                <div class="absolute w-100% h-100% flex items-center justify-center"><span class="text-white text-14px md:text-20px font-600">{{item.RewardType === 1?"複製序號":item.RewardType === 2? '兌換':"領獎"}}</span></div>
+                                <img v-if="innerPage !== 4"
+                                     class="right-img"
+                                     :src="item.RewardType ===3 ? '/images/實體獎項-r.svg' : '/images/虛擬獎項-r.svg'"
                                      alt="" />
+                                <img v-else
+                                     class="right-img"
+                                     src="/images/獎項-disabled-r.svg"
+                                     alt="">
                             </div>
                         </div>
                         <!-- <div class="flex ticket-shadow mb-2">
@@ -123,6 +133,7 @@
                     8.本活動未盡事宜，係依中華民國相關法令補充之。
                 </div>
             </div>
+            <!-- 領獎表單 -->
             <div v-else-if="pageName==='form'"
                  class="w-370px mx-auto">
                 <div class="mt-20px h-42px flex justify-between relative"
@@ -275,11 +286,114 @@
                                  alt=""><br>拍照或上傳照片</button>
                     </div>
                 </div>
+                <div class="mt-15px">
+                    <div class="mb-5px">身分證件反面</div>
+                    <div class="id-container">
+                        <img v-if="croppedImage"
+                             class="w-85% m-auto"
+                             :src="croppedImage"
+                             alt="">
+                        <button v-else
+                                class="camera-btn"
+                                @click="dialogVisible=true">
+                            <img src="/images/camera.svg"
+                                 alt=""><br>拍照或上傳照片</button>
+                    </div>
+                </div>
+                <el-dialog v-model="dialogVisible"
+                           width="500"
+                           align-center
+                           :show-close="false"
+                           :close-on-click-modal="false">
+                    <div v-if="!image">
+                        <div class="relative w-100% h-40px content-center text-center text-18px font-700 border-0 border-b-[2px] border-solid border-[#dee2e6]">
+                            <span class="cursor-pointer flex  absolute right-10px top-50% transform-translate-y-[-50%]"
+                                  @click="dialogVisible=false">
+                                <img width="20"
+                                     src="/images/close.png"
+                                     alt="">
+                            </span>
+                            證件上傳須知
+                        </div>
+                        <div class="p-3">
+                            1. 請上傳有效之身分證件正面個人資料。
+                            <br>
+                            <span class="p-x-5">1-1.本國人民：國民身分證。</span>
+                            <br>
+                            <span class="p-x-5">1-2.大陸地區人民及香港、澳門居民：入出境許可證或居留證。</span>
+                            <br>
+                            <span class="p-x-5">1-3.外國人民：外國護照或居留證。</span>
+                            <br>
+                            2. 請務必上傳本人證件，若上傳檔案無法確認為本人證件，或不符規定，將以e-mail和簡訊通知。
+                            <br>
+                            3. 在相片中，您的身分證件上的資料必須清晰可見，不可使用翻拍其他螢幕、影印、遮罩、掃描等方式，否則可能必須重新提交。
+                            <br>
+                            4. 檔案格式必須為jpg檔、gif檔或png檔。
+                            <br>
+                            5. 上傳或拍攝身分證件時，請將證件置於紅框內，並儘量貼緊框線邊緣。
+                            <div class="id-sample-container">
+                                <div class="id-sample-inner-container">
+                                    <img class="w-90%"
+                                         src="/images/id-sample.png"
+                                         alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-100% flex justify-between items-center h-85px border-0 border-t-2px border-solid border-[#dee2e6]">
+                            <div class="ml-70px"><button @click="StartCam"
+                                        class="rounded-[20px] border-1px border-solid border-[#4361ee] bg-[#3dadff] w-150px h-50px text-white text-20px flex justify-center items-center cursor-pointer"><img src="/images/camera-btn.png"
+                                         class="mr-5px"
+                                         width="30"
+                                         alt="">拍照</button></div>
+                            <div class="mr-70px"><label for="uploadImg"
+                                       class="rounded-[20px] border-1px border-solid border-[#4361ee] bg-[#3dadff] w-150px h-50px text-white text-20px flex justify-center items-center cursor-pointer"><img src="/images/upload-btn.png"
+                                         class="mr-5px"
+                                         width="30"
+                                         alt="">上傳</label>
+                                <input type="file"
+                                       id="uploadImg"
+                                       ref="fileInput"
+                                       @change="handleFileUpload"
+                                       accept="image/*"
+                                       class="hidden" />
+                            </div>
+                        </div>
+                    </div>
+                    <div v-else>
+                        <div class="flex justify-center px-5 py-2">
+                            <button @click="Rotate('left')"
+                                    class="bg-[#3dadff] rounded-3px text-12px text-white w-80px h-fit border-0 flex justify-center items-center py-1 cursor-pointer mr-10px"><img src="/images/rotate-left.png"
+                                     width="14"
+                                     alt="">向左旋轉</button>
+                            <button @click="Rotate('right')"
+                                    class="bg-[#3dadff] rounded-3px text-12px text-white w-80px h-fit border-0 flex justify-center items-center py-1 cursor-pointer"><img src="/images/rotate-right.png"
+                                     width="14"
+                                     alt="">向右旋轉</button>
+
+                        </div>
+                        <Cropper class=" bg-white"
+                                 :src="image"
+                                 ref="cropperRef" />
+                        <div class="flex flex-row-reverse px-5 py-2">
+                            <button @click="saveCrop"
+                                    class="border-1px border-solid border-[#4fb55f] bg-[#cdf4d3] w-80px h-32px rounded-3px cursor-pointer">確定上傳</button>
+                            <button @click="cancelCrop"
+                                    class="border-1px border-solid border-[#ff978e] bg-[#ffcdc2] w-80px h-32px rounded-3px mr-10px cursor-pointer">重新上傳</button>
+
+                        </div>
+                    </div>
+                </el-dialog>
             </div>
         </div>
     </div>
 </template>
 <script setup>
+import { Cropper } from 'vue-advanced-cropper';
+import 'vue-advanced-cropper/dist/style.css';
+/**
+ * 證件上船視窗開啟
+ */
+const dialogVisible = ref(false);
 /**
  * 0=可使用;1=處理中;2=已使用;3=已過期
  */
@@ -302,6 +416,21 @@ const cities2 = ref([]);
 const districts2 = ref([]);
 const selectedCity2 = ref('');
 const selectedRegion2 = ref('');
+// alert
+const alertModalStore = useAlertModalStore();
+const openAlertModal = alertModalStore.alertShowModal;
+// alert
+
+// file上傳
+/**檔案 */
+const fileInput = ref(null);
+/**初始圖片預覽 */
+const image = ref(null);
+/**裁切物件 */
+const cropperRef = ref(null);
+/**裁切後的圖片 */
+const croppedImage = ref(null);
+// file上傳
 /**
  * 取得列表
  */
@@ -365,10 +494,9 @@ const GetMoreData = async event => {
  * 複製序號
  * @param code 序號
  */
-const GetCode = async (event, code) => {
+const GetCode = async (tipsElement, code) => {
     if (code && innerPage.value == 2) {
-        const parent = event.currentTarget;
-        const tipsElement = parent.querySelector('.tips-shadow');
+        if (!tipsElement) return;
         tipsElement.classList.add('active');
         setTimeout(() => {
             tipsElement.classList.remove('active');
@@ -382,6 +510,24 @@ const TurnPage = page => {
         cities2.value = Object.keys(theCities.getCities());
     }
     pageName.value = page;
+};
+const GetReward = async (event, item) => {
+    const parent = event.currentTarget;
+    const tipsElement = parent.querySelector('.tips-shadow');
+    switch (item.RewardType) {
+        case 1:
+            await GetCode(tipsElement, item.RedeemCode);
+            break;
+        case 2:
+            TurnPage('form');
+            break;
+        case 3:
+            TurnPage('form');
+            break;
+        default:
+            await GetCode(tipsElement, item.RedeemCode);
+            break;
+    }
 };
 const GetRegions = async index => {
     if (index === 1) {
@@ -397,6 +543,64 @@ const GetRegions = async index => {
             districts2.value = [];
         }
     }
+};
+const StartCam = async () => {};
+watch(dialogVisible, newVal => {
+    var header = document.getElementsByClassName('headerBox');
+    if (newVal) {
+        if (header.length > 0) header[0].style.zIndex = 0;
+    } else {
+        if (header.length > 0) header[0].style.zIndex = 99;
+    }
+});
+const handleFileUpload = event => {
+    const file = event.target.files[0];
+    if (file) {
+        loadImage(file);
+    }
+};
+/**載入圖片 */
+const loadImage = file => {
+    const reader = new FileReader();
+    reader.onload = e => {
+        image.value = e.target.result;
+    };
+    reader.readAsDataURL(file);
+};
+/**儲存裁切圖片 */
+const saveCrop = () => {
+    if (!cropperRef.value) return;
+
+    const { canvas } = cropperRef.value.getResult();
+
+    // 轉換為 base64 用於預覽
+    croppedImage.value = canvas.toDataURL('image/jpeg');
+
+    // 轉換為 File 物件
+    canvas.toBlob(
+        blob => {
+            const fileName = `cropped-image-${Date.now()}.jpg`;
+            croppedFile.value = new File([blob], fileName, { type: 'image/jpeg' });
+        },
+        'image/jpeg',
+        0.9
+    );
+    dialogVisible.value=false;
+};
+const Rotate = direction => {
+    if (!cropperRef.value) return;
+    if(direction=="right"){
+      cropperRef.value.rotate(90); // 右轉90度
+    }else{
+      cropperRef.value.rotate(-90); // 左轉90度
+    }
+
+};
+/**取消裁切 */
+const cancelCrop = () => {
+    image.value = null;
+    croppedImage.value = null;
+    croppedFile.value = null;
 };
 onMounted(async () => {
     if (memberToken.value && memberId.value) {
@@ -513,13 +717,41 @@ onMounted(async () => {
     width: 120px;
     border: none;
     border-radius: 5px;
-    padding:10px;
-    font-size:14px;
+    padding: 10px;
+    font-size: 14px;
     font-weight: 400;
-    color:rgba(0, 0, 0, 0.8);
-    cursor:pointer;
+    color: rgba(0, 0, 0, 0.8);
+    cursor: pointer;
 }
-
+:deep(.el-dialog) {
+    padding: 0;
+    border-radius: 5px;
+}
+:deep(.el-dialog__header) {
+    padding: 0;
+}
+.id-sample-container {
+    aspect-ratio: 460/279;
+    width: 79%;
+    border: 2px solid #e3e3e3;
+    margin: 0 auto;
+    margin-top: 10px;
+    border-radius: 5px;
+    align-content: center;
+}
+.id-sample-inner-container {
+    width: 85%;
+    aspect-ratio: 460/279;
+    border: 2px dashed red;
+    border-radius: 5px;
+    margin: auto;
+    text-align: center;
+    align-content: center;
+}
+:deep(.vue-advanced-cropper__background),
+:deep(.vue-advanced-cropper__foreground) {
+    background: white;
+}
 @media screen and (max-width: 768px) {
     .ticket-list {
         width: 352px;
