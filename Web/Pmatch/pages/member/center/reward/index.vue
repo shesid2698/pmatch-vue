@@ -281,7 +281,19 @@
                 <div class="mt-15px">
                     <div class="mb-5px">身分證件正面</div>
                     <div class="id-container">
-                        <button class="camera-btn">
+                        <div v-if="croppedImage"
+                             class="relative w-fit h-fit">
+                            <div @click="cancelCrop"
+                                 class="absolute w-fit h-fit right-20px top-[-10px] cursor-pointer"><img src="/images/remove-btn.png"
+                                     width="20"
+                                     alt=""></div>
+                            <img class="w-85% m-auto"
+                                 :src="croppedImage"
+                                 alt="">
+                        </div>
+                        <button v-else
+                                class="camera-btn"
+                                @click="OpenDialog(true)">
                             <img src="/images/camera.svg"
                                  alt=""><br>拍照或上傳照片</button>
                     </div>
@@ -289,13 +301,19 @@
                 <div class="mt-15px">
                     <div class="mb-5px">身分證件反面</div>
                     <div class="id-container">
-                        <img v-if="croppedImage"
-                             class="w-85% m-auto"
-                             :src="croppedImage"
-                             alt="">
+                        <div v-if="croppedImage"
+                             class="relative w-fit h-fit">
+                            <div @click="cancelCrop"
+                                 class="absolute w-fit h-fit right-20px top-[-10px] cursor-pointer"><img src="/images/remove-btn.png"
+                                     width="20"
+                                     alt=""></div>
+                            <img class="w-85% m-auto"
+                                 :src="croppedImage"
+                                 alt="">
+                        </div>
                         <button v-else
                                 class="camera-btn"
-                                @click="dialogVisible=true">
+                                @click="OpenDialog(false)">
                             <img src="/images/camera.svg"
                                  alt=""><br>拍照或上傳照片</button>
                     </div>
@@ -390,10 +408,7 @@
 <script setup>
 import { Cropper } from 'vue-advanced-cropper';
 import 'vue-advanced-cropper/dist/style.css';
-/**
- * 證件上船視窗開啟
- */
-const dialogVisible = ref(false);
+
 /**
  * 0=可使用;1=處理中;2=已使用;3=已過期
  */
@@ -428,8 +443,18 @@ const fileInput = ref(null);
 const image = ref(null);
 /**裁切物件 */
 const cropperRef = ref(null);
-/**裁切後的圖片 */
+/**裁切後的正面圖片 */
 const croppedImage = ref(null);
+/**裁切後的反面圖片 */
+const croppedImage2 = ref(null);
+/**證件上傳視窗開啟 */
+const dialogVisible = ref(false);
+/**是否上傳正面照片 */
+const IsFrontPic = ref(true);
+/**最終正面圖片檔 */
+const croppedFile = ref(null);
+/**最終反面圖片檔 */
+const croppedFile2 = ref(null);
 // file上傳
 /**
  * 取得列表
@@ -544,6 +569,10 @@ const GetRegions = async index => {
         }
     }
 };
+const OpenDialog = isFrontPic => {
+    dialogVisible.value = true;
+    IsFrontPic.value = isFrontPic;
+};
 const StartCam = async () => {};
 watch(dialogVisible, newVal => {
     var header = document.getElementsByClassName('headerBox');
@@ -574,33 +603,55 @@ const saveCrop = () => {
     const { canvas } = cropperRef.value.getResult();
 
     // 轉換為 base64 用於預覽
-    croppedImage.value = canvas.toDataURL('image/jpeg');
+    if (IsFrontPic.value === true) {
+        croppedImage.value = canvas.toDataURL('image/jpeg');
+    } else {
+        croppedImage2.value = canvas.toDataURL('image/jpeg');
+    }
 
     // 轉換為 File 物件
     canvas.toBlob(
         blob => {
             const fileName = `cropped-image-${Date.now()}.jpg`;
-            croppedFile.value = new File([blob], fileName, { type: 'image/jpeg' });
+            if (IsFrontPic.value === true) {
+                croppedFile.value = new File([blob], fileName, { type: 'image/jpeg' });
+            } else {
+                croppedFile2.value = new File([blob], fileName, { type: 'image/jpeg' });
+            }
         },
         'image/jpeg',
         0.9
     );
-    dialogVisible.value=false;
+    dialogVisible.value = false;
 };
 const Rotate = direction => {
     if (!cropperRef.value) return;
-    if(direction=="right"){
-      cropperRef.value.rotate(90); // 右轉90度
-    }else{
-      cropperRef.value.rotate(-90); // 左轉90度
+    if (direction == 'right') {
+        cropperRef.value.rotate(90); // 右轉90度
+    } else {
+        cropperRef.value.rotate(-90); // 左轉90度
     }
-
 };
 /**取消裁切 */
-const cancelCrop = () => {
+const cancelCrop = t_isFrontPic => {
     image.value = null;
-    croppedImage.value = null;
-    croppedFile.value = null;
+    if (t_isFrontPic) {
+        if (t_isFrontPic === true) {
+            croppedImage.value = null;
+            croppedFile.value = null;
+        } else {
+            croppedImage2.value = null;
+            croppedFile2.value = null;
+        }
+    } else {
+        if (IsFrontPic.value === true) {
+            croppedImage.value = null;
+            croppedFile.value = null;
+        } else {
+            croppedImage2.value = null;
+            croppedFile2.value = null;
+        }
+    }
 };
 onMounted(async () => {
     if (memberToken.value && memberId.value) {
