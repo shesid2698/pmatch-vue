@@ -8,8 +8,8 @@ const realCode = useState('realCode', () => route.query.code || '');
 const config = useConfigStore();
 const realUser = useState('realUser', () => null);
 const verifiedUser = useState('verifiedUser', () => null);
-(async () => {
-    try {
+onMounted(async()=>{
+try {
         await config.loadConfig();
         // line登入後取得token
         const params = new URLSearchParams({
@@ -56,6 +56,6 @@ const verifiedUser = useState('verifiedUser', () => null);
     } catch (error) {
         console.log(error);
     }
-})();
+});
 </script>
 <style scoped></style>
