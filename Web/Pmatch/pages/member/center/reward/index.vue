@@ -159,7 +159,8 @@
                     <div class="mb-5px">活動名稱</div>
                     <div class="relative">
                         <input type="text"
-                               required
+                               v-model="RewardItem.ActivityName"
+                               readonly
                                class="password box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
                     </div>
                 </div>
@@ -167,7 +168,8 @@
                     <div class="mb-5px">得獎獎品</div>
                     <div class="relative">
                         <input type="text"
-                               required
+                               :value="RewardItem.RewardName"
+                               readonly
                                class="password box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
                     </div>
                 </div>
@@ -176,6 +178,7 @@
                     <div class="relative">
                         <input type="text"
                                required
+                               v-model="RewardRequest.RecipientName"
                                class="password box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
                     </div>
                 </div>
@@ -185,6 +188,7 @@
                     <div class="relative">
                         <input type="text"
                                required
+                               v-model="RewardRequest.IdNumber"
                                class="password box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200"
                                pattern="[A-Za-z][12]\d{8}"
                                title="請輸入有效的台灣身分證字號" />
@@ -266,6 +270,7 @@
                     <div class="mb-5px">連絡電話</div>
                     <input type="text"
                            required
+                           v-model="RewardRequest.RecipientPhone"
                            class="password box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200"
                            pattern="\d{10}"
                            title="請輸入10碼數字" />
@@ -283,7 +288,7 @@
                     <div class="id-container">
                         <div v-if="croppedImage"
                              class="relative w-fit h-fit">
-                            <div @click="cancelCrop"
+                            <div @click="cancelCrop(true)"
                                  class="absolute w-fit h-fit right-20px top-[-10px] cursor-pointer"><img src="/images/remove-btn.png"
                                      width="20"
                                      alt=""></div>
@@ -301,14 +306,14 @@
                 <div class="mt-15px">
                     <div class="mb-5px">身分證件反面</div>
                     <div class="id-container">
-                        <div v-if="croppedImage"
+                        <div v-if="croppedImage2"
                              class="relative w-fit h-fit">
-                            <div @click="cancelCrop"
+                            <div @click="cancelCrop(false)"
                                  class="absolute w-fit h-fit right-20px top-[-10px] cursor-pointer"><img src="/images/remove-btn.png"
                                      width="20"
                                      alt=""></div>
                             <img class="w-85% m-auto"
-                                 :src="croppedImage"
+                                 :src="croppedImage2"
                                  alt="">
                         </div>
                         <button v-else
@@ -318,64 +323,142 @@
                                  alt=""><br>拍照或上傳照片</button>
                     </div>
                 </div>
+                <div class="text-15px text-[#f72585] cursor-pointer"
+                     @click="OpenDialog(true,false)"><input type="radio"
+                           value="yes"
+                           v-model="agreeIdRule"
+                           class="pointer-events-none">本人已詳閱並同意 貴公司「蒐集個人資料告知事項」</div>
+                <div class="text-15px text-[#f72585] cursor-pointer"
+                     @click="OpenDialog(true,true)"><input type="radio"
+                           value="yes"
+                           v-model="agreeRewardRule"
+                           class="pointer-events-none">本人已詳閱並同意 貴公司「領獎規則」</div>
+                <div class="text-center mt-20px"><button class="colorful-btn"
+                            @click="ReturnList">回上一頁</button><button class="colorful-btn">確認送出</button></div>
+                <div class="w-100% fixed h-100vh"></div>
                 <el-dialog v-model="dialogVisible"
                            width="500"
                            align-center
                            :show-close="false"
                            :close-on-click-modal="false">
                     <div v-if="!image">
-                        <div class="relative w-100% h-40px content-center text-center text-18px font-700 border-0 border-b-[2px] border-solid border-[#dee2e6]">
-                            <span class="cursor-pointer flex  absolute right-10px top-50% transform-translate-y-[-50%]"
-                                  @click="dialogVisible=false">
-                                <img width="20"
-                                     src="/images/close.png"
-                                     alt="">
-                            </span>
-                            證件上傳須知
-                        </div>
-                        <div class="p-3">
-                            1. 請上傳有效之身分證件正面個人資料。
-                            <br>
-                            <span class="p-x-5">1-1.本國人民：國民身分證。</span>
-                            <br>
-                            <span class="p-x-5">1-2.大陸地區人民及香港、澳門居民：入出境許可證或居留證。</span>
-                            <br>
-                            <span class="p-x-5">1-3.外國人民：外國護照或居留證。</span>
-                            <br>
-                            2. 請務必上傳本人證件，若上傳檔案無法確認為本人證件，或不符規定，將以e-mail和簡訊通知。
-                            <br>
-                            3. 在相片中，您的身分證件上的資料必須清晰可見，不可使用翻拍其他螢幕、影印、遮罩、掃描等方式，否則可能必須重新提交。
-                            <br>
-                            4. 檔案格式必須為jpg檔、gif檔或png檔。
-                            <br>
-                            5. 上傳或拍攝身分證件時，請將證件置於紅框內，並儘量貼緊框線邊緣。
-                            <div class="id-sample-container">
-                                <div class="id-sample-inner-container">
-                                    <img class="w-90%"
-                                         src="/images/id-sample.png"
+                        <div v-if="IsOpenRewardRule === false && IsOpenIdRule === false">
+                            <div class="relative w-100% h-40px content-center text-center text-18px font-700 border-0 border-b-[2px] border-solid border-[#dee2e6]">
+                                <span class="cursor-pointer flex  absolute right-10px top-50% transform-translate-y-[-50%]"
+                                      @click="dialogVisible=false">
+                                    <img width="20"
+                                         src="/images/close.png"
                                          alt="">
+                                </span>
+                                證件上傳須知
+                            </div>
+                            <div class="p-3">
+                                1. 請上傳有效之身分證件正面個人資料。
+                                <br>
+                                <span class="p-x-5">1-1.本國人民：國民身分證。</span>
+                                <br>
+                                <span class="p-x-5">1-2.大陸地區人民及香港、澳門居民：入出境許可證或居留證。</span>
+                                <br>
+                                <span class="p-x-5">1-3.外國人民：外國護照或居留證。</span>
+                                <br>
+                                2. 請務必上傳本人證件，若上傳檔案無法確認為本人證件，或不符規定，將以e-mail和簡訊通知。
+                                <br>
+                                3. 在相片中，您的身分證件上的資料必須清晰可見，不可使用翻拍其他螢幕、影印、遮罩、掃描等方式，否則可能必須重新提交。
+                                <br>
+                                4. 檔案格式必須為jpg檔、gif檔或png檔。
+                                <br>
+                                5. 上傳或拍攝身分證件時，請將證件置於紅框內，並儘量貼緊框線邊緣。
+                                <div class="id-sample-container">
+                                    <div class="id-sample-inner-container">
+                                        <img class="w-90%"
+                                             src="/images/id-sample.png"
+                                             alt="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w-100% flex justify-between items-center h-85px border-0 border-t-2px border-solid border-[#dee2e6]">
+                                <div class="ml-70px"><button @click="StartCam"
+                                            class="rounded-[20px] border-1px border-solid border-[#4361ee] bg-[#3dadff] w-150px h-50px text-white text-20px flex justify-center items-center cursor-pointer"><img src="/images/camera-btn.png"
+                                             class="mr-5px"
+                                             width="30"
+                                             alt="">拍照</button></div>
+                                <div class="mr-70px"><label for="uploadImg"
+                                           class="rounded-[20px] border-1px border-solid border-[#4361ee] bg-[#3dadff] w-150px h-50px text-white text-20px flex justify-center items-center cursor-pointer"><img src="/images/upload-btn.png"
+                                             class="mr-5px"
+                                             width="30"
+                                             alt="">上傳</label>
+                                    <input type="file"
+                                           id="uploadImg"
+                                           ref="fileInput"
+                                           @change="handleFileUpload"
+                                           accept="image/*"
+                                           class="hidden" />
                                 </div>
                             </div>
                         </div>
-                        <div class="w-100% flex justify-between items-center h-85px border-0 border-t-2px border-solid border-[#dee2e6]">
-                            <div class="ml-70px"><button @click="StartCam"
-                                        class="rounded-[20px] border-1px border-solid border-[#4361ee] bg-[#3dadff] w-150px h-50px text-white text-20px flex justify-center items-center cursor-pointer"><img src="/images/camera-btn.png"
-                                         class="mr-5px"
-                                         width="30"
-                                         alt="">拍照</button></div>
-                            <div class="mr-70px"><label for="uploadImg"
-                                       class="rounded-[20px] border-1px border-solid border-[#4361ee] bg-[#3dadff] w-150px h-50px text-white text-20px flex justify-center items-center cursor-pointer"><img src="/images/upload-btn.png"
-                                         class="mr-5px"
-                                         width="30"
-                                         alt="">上傳</label>
-                                <input type="file"
-                                       id="uploadImg"
-                                       ref="fileInput"
-                                       @change="handleFileUpload"
-                                       accept="image/*"
-                                       class="hidden" />
+                        <div v-else-if="IsOpenRewardRule===true">
+                            <div class="relative w-100% h-40px content-center text-center text-18px font-700">
+                                <span class="cursor-pointer flex  absolute right-10px top-50% transform-translate-y-[-50%]"
+                                      @click="AgreeRewardRule">
+                                    <img width="20"
+                                         src="/images/close.png"
+                                         alt="">
+                                </span>
+                            </div>
+                            <div class="px-5 pb-2">
+                                【贈品】規則
+                                <br>
+                                <br>
+                                1. 【贈品兌換】獎項寄送地址以中獎人會員中心之個人資料(姓名、聯絡電話、
+                                聯絡地址)為準，因資料不齊全，以致無法寄送獎項，視為自動放棄。
+                                <br>
+                                <br>
+                                2. 【贈品寄送】主辦單位將所有得獎者資料彙整無誤後，以掛號方式預計於7~10
+                                寄送獎項(若有異動將另行通知)。
+                                <br>
+                                <br>
+                                3. 【贈品說明】活動網站之贈品圖片為示意圖，僅供參考，贈品則以實品為主，
+                                恕不指定顏色及款式、轉讓或要求折換現金或其它商品。
+                                <br>
+                                <br>
+                                4. 主辦單位保留修改活動及獎品等細節之權利。領獎後獎品之使用與維護，主
+                                辦單位概不負責。 贈品運送過程中，因非可歸責於主辦單位之事由造成損壞、
+                                延遲、錯遞或遺失，主辦單位概不負責。
+                                <br>
+                                <br>
+                                5.申報各類所得，依中華民國稅法規定，獎項金額若超過新台幣1,000元，獎項
+                                所得將列入個人年度綜合所得稅申報，故得獎人需提供身份證影本且依規定填寫
+                                並繳交相關收據方可領獎。
+                                <br>
+                                <br>
+                                6.本活動網站係為成年人而設，若您同意未成年子女參加本活動，您需陪伴輔導
+                                未成年子女閱讀、瞭解抽獎活動辦法及注意事項、抽獎活動個資告知事項等相關
+                                規定，您及未成年子女並同意接受本活動相關規定內容及其後修改變更。
+                                <br>
+                                <br>
+                                7.中獎者若為未成年人，須獲得法定代理人(或監護人)同意及代為領取，且應檢
+                                附身分證正反面影本(無國民身分證者，須提供戶籍謄本影本(須為3個月內核發
+                                之版本)與另附法定代理人(或監護人)之身分證正反面影本，及提出法定代理人
+                                (或監護人)同意之證明文件(需簽名或蓋印)。
+                                <br>
+                                <br>
+                                8.本活動未盡事宜，係依中華民國相關法令補充之。
                             </div>
                         </div>
+                        <div v-else-if="IsOpenIdRule===true">
+                            <div class="relative w-100% h-40px content-center text-center text-18px font-700">
+                                <span class="cursor-pointer flex  absolute right-10px top-50% transform-translate-y-[-50%]"
+                                      @click="AgreeIdRule">
+                                    <img width="20"
+                                         src="/images/close.png"
+                                         alt="">
+                                </span>
+                            </div>
+                            <div class="px-5 pb-2">
+                                123c1sa3c4564wd56w4
+                            </div>
+                        </div>
+
                     </div>
                     <div v-else>
                         <div class="flex justify-center px-5 py-2">
@@ -456,6 +539,24 @@ const croppedFile = ref(null);
 /**最終反面圖片檔 */
 const croppedFile2 = ref(null);
 // file上傳
+
+//領獎規則、告知事項
+const IsOpenRewardRule = ref(false);
+const agreeRewardRule = ref('');
+const IsOpenIdRule = ref(false);
+const agreeIdRule = ref('');
+//領獎規則、告知事項
+const RewardItem = ref(null);
+const RewardRequest = reactive({
+    ActivityId: 0,
+    RecipientName: '',
+    RecipientPhone: '',
+    ShippingAddress: '',
+    ResidentialAddress: '',
+    IdNumber: '',
+    IdCardFront: '',
+    IdCardBack: ''
+});
 /**
  * 取得列表
  */
@@ -537,6 +638,8 @@ const TurnPage = page => {
     pageName.value = page;
 };
 const GetReward = async (event, item) => {
+    RewardItem.value = item;
+    RewardRequest.ActivityId = item.ActivityId;
     const parent = event.currentTarget;
     const tipsElement = parent.querySelector('.tips-shadow');
     switch (item.RewardType) {
@@ -569,11 +672,48 @@ const GetRegions = async index => {
         }
     }
 };
-const OpenDialog = isFrontPic => {
+const OpenDialog = (isFrontPic, isRewardRule) => {
     dialogVisible.value = true;
-    IsFrontPic.value = isFrontPic;
+    if (isRewardRule === undefined) {
+        IsFrontPic.value = isFrontPic;
+    } else {
+        if (isRewardRule === true) {
+            IsOpenRewardRule.value = isRewardRule;
+            IsOpenIdRule.value = false;
+        }
+        if (isRewardRule === false) {
+            IsOpenIdRule.value = true;
+            IsOpenRewardRule.value = false;
+        }
+    }
+};
+/**關閉領獎規則 */
+const AgreeRewardRule = () => {
+    dialogVisible.value = false;
+    agreeRewardRule.value = 'yes';
+    IsOpenRewardRule.value = false;
+};
+const AgreeIdRule = () => {
+    dialogVisible.value = false;
+    agreeIdRule.value = 'yes';
+    IsOpenIdRule.value = false;
 };
 const StartCam = async () => {};
+const ReturnList = async () => {
+    if (
+        RewardRequest.RecipientName != '' ||
+        RewardRequest.IdNumber != '' ||
+        RewardRequest.ShippingAddress != '' ||
+        RewardRequest.ResidentialAddress != '' ||
+        RewardRequest.RecipientPhone != '' ||
+        RewardRequest.IdCardBack != '' ||
+        RewardRequest.IdCardFront != ''
+    ) {
+      //do
+    } else {
+      pageName.value='';
+    }
+};
 watch(dialogVisible, newVal => {
     var header = document.getElementsByClassName('headerBox');
     if (newVal) {
@@ -623,6 +763,8 @@ const saveCrop = () => {
         0.9
     );
     dialogVisible.value = false;
+    cropperRef.value = null;
+    image.value = null;
 };
 const Rotate = direction => {
     if (!cropperRef.value) return;
@@ -802,6 +944,27 @@ onMounted(async () => {
 :deep(.vue-advanced-cropper__background),
 :deep(.vue-advanced-cropper__foreground) {
     background: white;
+}
+.colorful-btn {
+    border: none;
+    border-radius: 50px;
+    background-image: linear-gradient(to right, #4361ee, #f72585);
+    background-clip: padding-box, border-box;
+    background-origin: padding-box, border-box;
+    aspect-ratio: 136/56;
+    width: 80px;
+    overflow: hidden;
+    box-sizing: border-box;
+    margin-right: 20px;
+    color: white;
+    cursor: pointer;
+    &:hover {
+        border-width: 2px;
+        border-style: solid;
+        border-color: transparent;
+        background-image: linear-gradient(white, white), linear-gradient(to right, #4361ee, #f72585);
+        color: #f72585;
+    }
 }
 @media screen and (max-width: 768px) {
     .ticket-list {
