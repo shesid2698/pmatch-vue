@@ -11,7 +11,16 @@
         <Meta property="og:description"
               content="Pmatch遊戲道具交易平台 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
     </Head>
-    <div class="ccontainer pt-60px ps-5 pe-5 w-90% lg:w-70%">
+    <div v-if="isCameraOn && !image"
+         class="w-100% h-100vh fixed bg-blue">
+        <video ref="video"
+               autoplay
+               playsinline></video>
+        <button @click="takePhoto"
+                class="rounded-100% absolute left-50% bottom-20% transform-translate-x-[-50%] w-20px h-20px bg-red-6 outline-solid outline-red-6 border-none outline-offset-2"></button>
+    </div>
+    <div v-else
+         class="ccontainer pt-60px ps-5 pe-5 w-90% lg:w-70%">
         <div class="lg:w-160px">
             <MemberCenter></MemberCenter>
         </div>
@@ -681,6 +690,19 @@ const croppedFile = ref(null);
 const croppedFile2 = ref(null);
 // file上傳
 
+// 拍照
+const video = ref(null);
+const isCameraOn = ref(false);
+const takePhoto = () => {
+    isCameraOn.value = false;
+    const canvas = document.createElement('canvas');
+    canvas.width = video.value.videoWidth;
+    canvas.height = video.value.videoHeight;
+    canvas.getContext('2d').drawImage(video.value, 0, 0);
+    image.value = canvas.toDataURL();
+};
+// 拍照
+
 //領獎規則、告知事項
 const IsOpenRewardRule = ref(false);
 const agreeRewardRule = ref('');
@@ -907,7 +929,7 @@ const GetReward = async (event, item) => {
                 if (innerPage.value == 1) await GetCode(tipsElement, item.RedeemCode);
                 break;
             case 2: //媒合商虛擬(Pmatch下單)
-                if (innerPage.value == 1)TurnPage('order', item.ActivityId);
+                if (innerPage.value == 1) TurnPage('order', item.ActivityId);
                 break;
             case 3: //實體兌獎
                 TurnPage('form', item.ActivityId);
@@ -944,7 +966,17 @@ const AgreeIdRule = () => {
     agreeIdRule.value = 'yes';
     IsOpenIdRule.value = false;
 };
-const StartCam = async () => {};
+const StartCam = async () => {
+    try {
+        isCameraOn.value = true;
+        const stream = await navigator.mediaDevices.getUserMedia({
+            video: { facingMode: 'environment' }
+        });
+        video.value.srcObject = stream;
+    } catch (err) {
+        await openAlertModal('', '相機存取錯誤');
+    }
+};
 const ReturnList = async () => {
     if (
         RewardRequest.RecipientName != '' ||
@@ -1130,7 +1162,7 @@ const CreateAcc = async event => {
                 Value: Number(form.get('Value')),
                 Phone: form.get('Phone'),
                 PmatchMemberId: memberId.value,
-                RedeemCode:form.get('RedeemCode')
+                RedeemCode: form.get('RedeemCode')
             },
             {
                 headers: {
@@ -1138,11 +1170,11 @@ const CreateAcc = async event => {
                 }
             }
         );
-        if(response.status===200 && response.data.Status.Code === 0){
-          await openAlertModal("","兌換成功!");
-          ResetData();
-        }else{
-          await openAlertModal("",response.data.Status.Message);
+        if (response.status === 200 && response.data.Status.Code === 0) {
+            await openAlertModal('', '兌換成功!');
+            ResetData();
+        } else {
+            await openAlertModal('', response.data.Status.Message);
         }
     } catch (ex) {
         console.error(`CreateAcc failed..${ex}`);
