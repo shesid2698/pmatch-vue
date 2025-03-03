@@ -301,6 +301,7 @@
                         <div class="mb-5px">電子信箱</div>
                         <input type="text"
                                required
+                               v-model="RewardRequest.Email"
                                :disabled="RewardDetail.ProcessStatus.CurrentStep!==1"
                                class="password box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200"
                                pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
@@ -499,10 +500,12 @@
                         <div v-else>
                             <div class="flex justify-center px-5 py-2">
                                 <button @click="Rotate('left')"
+                                        type="button"
                                         class="bg-[#3dadff] rounded-3px text-12px text-white w-80px h-fit border-0 flex justify-center items-center py-1 cursor-pointer mr-10px"><img src="/images/rotate-left.png"
                                          width="14"
                                          alt="">向左旋轉</button>
                                 <button @click="Rotate('right')"
+                                        type="button"
                                         class="bg-[#3dadff] rounded-3px text-12px text-white w-80px h-fit border-0 flex justify-center items-center py-1 cursor-pointer"><img src="/images/rotate-right.png"
                                          width="14"
                                          alt="">向右旋轉</button>
@@ -548,6 +551,7 @@
                                        checked></span><span class="text-[#E93470]">兌換遊戲幣</span></div>
                         <div><input type="text"
                                    readonly
+                                   :value="RewardItem.Patch"
                                    name="Value"
                                    class="colorful-input"></div>
                         <div class="mb-3">
@@ -718,6 +722,7 @@ const RewardRequest = reactive({
     ActivityId: 0,
     RecipientName: '',
     RecipientPhone: '',
+    Email: '',
     ShippingAddress: '',
     ResidentialAddress: '',
     IdNumber: '',
