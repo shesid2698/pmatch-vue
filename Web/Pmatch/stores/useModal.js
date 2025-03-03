@@ -8,18 +8,16 @@ export const useModalStore = defineStore("modal", () => {
     let cancelCallback = null; // 取消按鈕的動作
 
     // 顯示彈窗
-    const showModal = (modalTitle, modalMessage, onConfirm, onCancel) => {
+    const showModal = (modalTitle, modalMessage) => {
         return new Promise((resolve, reject) => {
             title.value = modalTitle;
             message.value = modalMessage;
             modalStatus.value = true;
             confirmCallback = () => {
-                resolve(); // 當點擊確定時，解析 Promise
-                if (onConfirm) onConfirm();
+                resolve(true); // 當點擊確定時，解析 Promise
             };
             cancelCallback = () => {
-                reject(); // 當點擊取消時，拒絕 Promise
-                if (onCancel) onCancel();
+                resolve(false); // 當點擊取消時，拒絕 Promise
             };
         });
     };
