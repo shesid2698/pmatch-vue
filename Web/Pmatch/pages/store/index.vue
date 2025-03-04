@@ -118,10 +118,8 @@
                             >
                                 遊戲平台
                             </div>
-                            <div
-                                class="w-100% font-size-1.2rem text-center color-#beffff"
-                            >
-                                遊戲幣數量
+                            <div class="w-100% font-size-1.2rem text-center color-#beffff">
+                                富豪榜財產
                             </div>
                             <div
                                 class="w-100% font-size-1.2rem text-center color-#beffff"
