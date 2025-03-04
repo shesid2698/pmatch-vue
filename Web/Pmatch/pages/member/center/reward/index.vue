@@ -760,9 +760,7 @@ const GetList = async (status, page) => {
         const response = await $axios.post(
             '/api/v1/Pmatch/GetMemberRewardList',
             {
-                // PmatchMemberId: memberId.value,
-                MemberId: 1212,
-                // Status:status,
+                MemberId: memberId.value,
                 Status: status,
                 PageNo: page,
                 PageSize: 20
@@ -844,6 +842,7 @@ const GetMemberDetail = async () => {
             RewardRequest.RecipientName = response.data.Data[0].Name;
             RewardRequest.IdNumber = response.data.Data[0].NationalId;
             RewardRequest.ShippingAddress = response.data.Data[0].Address;
+            RewardRequest.Email = response.data.Data[0].Email;
         }
     } catch (ex) {
         console.error(`請求失敗: ${ex}`);
@@ -917,6 +916,7 @@ const GetMemberPhysicalRewardInfo = async actId => {
                 RewardRequest.RecipientPhone = response.data.Data.RewardInfo.RecipientPhone;
                 RewardRequest.IdCardFront = response.data.Data.RewardInfo.IdCardInfo.FrontImage;
                 RewardRequest.IdCardBack = response.data.Data.RewardInfo.IdCardInfo.BackImage;
+                RewardRequest.Email = response.data.Data.RewardInfo.Email;
             }
         }
     } catch (ex) {

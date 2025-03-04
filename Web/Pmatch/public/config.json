@@ -1,5 +1,5 @@
 {
-    "baseUrl": "http://localhost:2310",
+    "baseUrl": "http://192.168.10.206:2310",
     "envUrl": "http://192.168.10.206:5092/l/",
     "turnstilesitekey": "1x00000000000000000000AA",
     "googleClientId": "505369110816-adbbmvem49jfer17pdcijimo5k21f724.apps.googleusercontent.com",
