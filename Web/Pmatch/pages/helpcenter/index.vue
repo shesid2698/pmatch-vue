@@ -83,7 +83,7 @@
                 </div>
                 <div class="w-100% text-center mt-50px sid">
                     <button class="backBtn"
-                            @click="GetSearchQuery">回上頁</button>
+                            @click="GetSearchQuery">回上層</button>
                 </div>
             </div>
         </div>
@@ -135,6 +135,10 @@ async function fetchNewsListData(token) {
 const GetNewsDetail = id => {
     newsDetail.value = showList.value.find(x => x.Id == id);
     content.value = newsDetail.value.Content;
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 };
 onMounted(async () => {
     try {

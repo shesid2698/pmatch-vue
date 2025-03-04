@@ -119,6 +119,7 @@ const router = useRouter();
 onMounted(async () => {
     await setPageLoading(true);
     try {
+        await jwtStore.initializeTime();
         if (!configStore.baseUrl) {
             await configStore.loadConfig();
         }

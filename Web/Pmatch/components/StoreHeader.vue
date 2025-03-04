@@ -212,7 +212,7 @@ onMounted(() => {
         // },
         {
             id: 3,
-            title: "登入",
+            title: "媒合商登入",
             link: "/store/login",
             className: "nav3",
             icon: "/images/icon-people-white.png",

@@ -212,13 +212,13 @@ onMounted(() => {
                 icon: '',
                 className: 'nav1'
             },
-            {
-                id: 2,
-                title: '找媒合',
-                link: '/findmatch',
-                icon: '',
-                className: 'nav2'
-            },
+            // {
+            //     id: 2,
+            //     title: '找媒合',
+            //     link: '/findmatch',
+            //     icon: '',
+            //     className: 'nav2'
+            // },
             {
                 id: 3,
                 title: `Hi , ${userNameCookie.value}`,
@@ -244,21 +244,22 @@ onMounted(() => {
                 icon: ''
             },
             {
+                id: 4,
+                title: userToken.value ? `HI,${userNameCookie.value}` : '登入',
+                link: '/member/login',
+                className: 'nav4',
+                icon: '',
+                dropdown: true,
+                showDropdown: false
+            },
+            {
                 id: 3,
                 title: '媒合商',
                 link: '/store',
                 className: 'nav3',
                 icon: '/images/linkIcon.png'
             },
-            {
-                id: 4,
-                title: userToken.value ? `HI,${userNameCookie.value}` : '登入/註冊',
-                link: '/member/login',
-                className: 'nav4',
-                icon: '',
-                dropdown: true,
-                showDropdown: false
-            }
+            
         ];
     }
     window.addEventListener('scroll', () => {
@@ -324,9 +325,6 @@ onBeforeUnmount(() => {
 .nav0{
     border-right: 2px solid #ccc;
 }
-.nav1 {
-    border-right: 2px solid #ccc;
-}
 .nav3 {
     background: linear-gradient(to right, #4361ee, #f72585);
     border-radius: 50px;
@@ -376,6 +374,7 @@ onBeforeUnmount(() => {
     border-radius: 50px;
     border: none;
     padding: 0 1px;
+    margin-left: 10px;
 }
 .nav3:focus {
     background: linear-gradient(to right, #f72585, #4361ee);
@@ -401,7 +400,6 @@ onBeforeUnmount(() => {
     background: linear-gradient(to right, rgba(247, 37, 133), rgba(67, 97, 238));
     border-radius: 50px;
     border: none;
-    margin-left: 10px;
 }
 .nav4Box,
 .loginnav4Box {
@@ -410,7 +408,6 @@ onBeforeUnmount(() => {
     background: linear-gradient(to right, rgba(67, 97, 238), rgba(247, 37, 133));
     border-radius: 50px;
     border: none;
-    margin-left: 10px;
 }
 .nav4:hover,
 .loginnav4:hover,
