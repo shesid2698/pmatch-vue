@@ -289,7 +289,7 @@ onBeforeUnmount(() => {
 .loginDropdown {
     border: 1px solid #ccc;
     position: absolute;
-    top: 32px;
+    top: 38px;
     left: 12px;
     width: 120px;
     border-radius: 5px;
