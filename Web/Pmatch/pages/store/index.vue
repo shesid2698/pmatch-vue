@@ -21,7 +21,7 @@
         v-model="dialogVisible[index]"
         :close-on-click-modal="false"
     >
-        <div class="dialogHeader absolute">遊戲幣走向</div>
+        <!--<div class="dialogHeader absolute">遊戲幣走向</div>-->
         <div class="dialogBody">
             <div>
                 <Line
@@ -884,13 +884,16 @@ const chartOptions = {
             display: false,
             position: "top",
         },
+        tooltip: {
+            enabled: false, // 禁用提示框
+        },
         title: {
             display: true,
             text: (context) => {
                 // 獲取當前圖表的索引
                 const chartId = context.chart.canvas.id;
                 const index = parseInt(chartId.split("-")[2]); // 從 'my-chart-0' 取得索引
-                return index === 0 ? "滿貫大亨" : "老子有錢";
+                return index === 0 ? "滿貫大亨平台 - 近五日富豪榜財產走勢" : "老子有錢平台 - 近五日富豪榜財產走勢";
             },
             font: {
                 size: 24, // 設置字體大小為 24px
@@ -905,17 +908,22 @@ const chartOptions = {
             display: true,
             stacked: false,
             position: "left",
+            ticks: {
+                display: false,
+            }
         },
         x: {
+            display: false,
             ticks: {
                 maxRotation: 45,
                 minRotation: 45,
             },
             grid: {
-                display: false,
+                display: true,
             },
         },
     },
+    
 };
 // 計算日期
 const calculateWeekRange = () => {
