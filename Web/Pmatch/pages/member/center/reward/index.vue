@@ -597,19 +597,19 @@
                             <select class="colorful-input2"
                                     name="Phone"
                                     required>
-                                <option :value="PmMemberPhone1"
-                                        selected>{{PmMemberPhone1}}</option>
-                                <option :value="PmMemberPhone2">{{PmMemberPhone2}}</option>
-                                <option :value="PmMemberPhone3">{{PmMemberPhone3}}</option>
+                                <option :value="PmMemberPhones[0]"
+                                        selected>{{PmMemberPhones[0]}}</option>
+                                <option :value="PmMemberPhones[1]">{{PmMemberPhones[1]}}</option>
+                                <option :value="PmMemberPhones[2]">{{PmMemberPhones[2]}}</option>
                             </select>
                         </div>
-                        <div class="w-fit m-auto mb-3"><input type="radio"
+                        <div class="w-fit m-auto mb-3" @click='dialogVisible2=true'><input type="radio"
                                    id="pmatchOrder"
                                    name="pmatchOrder"
                                    class="mr-2"
                                    title="請詳閱領獎規則"
                                    required
-                                   @change='dialogVisible2=true'><label for="pmatchOrder"
+                                   ><label for="pmatchOrder"
                                    class="text-[#E93470]">本人已詳閱並同意貴公司「領獎規則」</label></div>
                         <div class="flex justify-center m-0"><button type="button"
                                     class="colorful-btn"
@@ -690,9 +690,7 @@ const pageNo = ref(1);
 const ticketList = ref([]);
 let isGetNewPage = true;
 const memberToken = useCookie('_PmToken');
-const PmMemberPhone1 = useCookie('_PmMemberPhone1');
-const PmMemberPhone2 = useCookie('_PmMemberPhone2');
-const PmMemberPhone3 = useCookie('_PmMemberPhone3');
+const PmMemberPhones = ref([]);
 
 const memberId = useCookie('_PmMemberId');
 const { $axios } = useNuxtApp();
@@ -853,7 +851,7 @@ const GetMoreData = async event => {
  * @param code 序號
  */
 const GetCode = async (tipsElement, code) => {
-    if (code && innerPage.value == 2) {
+    if (code && innerPage.value == 1) {
         if (!tipsElement) return;
         tipsElement.classList.add('active');
         setTimeout(() => {
@@ -877,6 +875,10 @@ const GetMemberDetail = async () => {
             }
         );
         if (response.status === 200 && response.data.Status.Code === 0) {
+            PmMemberPhones.value = [];
+            PmMemberPhones.value.push(response.data.Data[0].Mobile1);
+            PmMemberPhones.value.push(response.data.Data[0].Mobile2);
+            PmMemberPhones.value.push(response.data.Data[0].Mobile3);
             RewardRequest.RecipientPhone = response.data.Data[0].Mobile1;
             RewardRequest.RecipientName = response.data.Data[0].Name;
             RewardRequest.IdNumber = response.data.Data[0].NationalId;
@@ -926,6 +928,8 @@ const TurnPage = async (page, actId) => {
                 address2.value = address2.value.replace(selectedRegion2.value, '');
             }
         }
+    }else{
+      await GetMemberDetail();
     }
     pageName.value = page;
 };
@@ -944,10 +948,11 @@ const GetMemberPhysicalRewardInfo = async actId => {
             }
         );
         if (response.status === 200 && response.data.Status.Code === 0) {
+            RewardDetail.value = response.data.Data;
+            console.log(response.data.Data);
             if (response.data.Data.ProcessStatus.CurrentStep === 1) {
                 await GetMemberDetail();
             } else {
-                RewardDetail.value = response.data.Data;
                 RewardRequest.RecipientName = response.data.Data.RewardInfo.RecipientName;
                 RewardRequest.IdNumber = response.data.Data.RewardInfo.IdNumber;
                 RewardRequest.ShippingAddress = response.data.Data.RewardInfo.ShippingAddress;
@@ -1469,15 +1474,15 @@ onMounted(async () => {
     border-radius: 10px;
     background-color: #666;
 }
-.scrollbar{
-  overflow-y: auto;
+.scrollbar {
+    overflow-y: auto;
 }
-.scrollbar::-webkit-scrollbar{
-  width: 5px;
+.scrollbar::-webkit-scrollbar {
+    width: 5px;
 }
-.scrollbar::-webkit-scrollbar-thumb{
-  border-radius: 5px;
-  background: #afafaf;
+.scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background: #afafaf;
 }
 @media screen and (max-width: 768px) {
     .ticket-list {
