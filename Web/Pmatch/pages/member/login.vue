@@ -105,7 +105,7 @@
                 已經註冊?<NuxtLink to="/member/forgetpwd"
                           class="text-[#0d6efd] hover:opacity-70 hover:underline text-15px no-underline">忘記密碼</NuxtLink>
             </div>
-            <!-- <div>
+            <div>
                 <div class="otherLogin mt-2rem mb-1rem">以其他方式登入</div>
             </div>
             <div class="flex justify-center">
@@ -131,7 +131,7 @@
                          src="/images/iconFB.png"
                          alt="FB帳號登入" />
                 </button>
-            </div> -->
+            </div>
         </div>
     </div>
 </template>
