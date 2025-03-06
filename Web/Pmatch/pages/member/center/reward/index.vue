@@ -1219,7 +1219,7 @@ const CreateAcc = async event => {
             }
         );
         if (response.status === 200 && response.data.Status.Code === 0) {
-            await openAlertModal('', '兌換成功!');
+            await openAlertModal('', '單據已送出，處理中');
             ResetData();
         } else {
             await openAlertModal('', response.data.Status.Message);
