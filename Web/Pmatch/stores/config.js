@@ -38,7 +38,7 @@ export const useConfigStore = defineStore('config', {
             return new Promise((resolve) => {
                 window.fbAsyncInit = function () {
                     FB.init({
-                        appId: '1190957575714723',
+                        appId: '1152746759857296',
                         cookie: true,
                         xfbml: true,
                         version: 'v22.0'
