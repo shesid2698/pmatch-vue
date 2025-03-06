@@ -69,7 +69,7 @@
                                 </ClientOnly>
                             </div>
                         </div>
-                        <div class="socialBox flex justify-between w-100%">
+                        <!-- <div class="socialBox flex justify-between w-100%">
                             <div class="flex items-center">
                                 <div class="flex items-center me-1rem">
                                     <img
@@ -97,7 +97,7 @@
                                     }}
                                 </button>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="socialBox flex justify-between w-100%">
                             <div class="flex items-center">
                                 <div class="flex items-center me-1rem">
