@@ -153,17 +153,17 @@
                             <div class="absolute text-black w-fit whitespace-nowrap top-120% left-50% transform-translate-x-[-50%]">填寫領獎資料</div>
                         </div>
                         <div class="relative  h-100% sticky w-42px border border-[#e93470] border-solid border-[1px] rounded-full text-center content-center text-[#e93470] font-bold"
-                             :class="{'bg-[#e93470] text-white':RewardDetail.ProcessStatus.CurrentStep>=2,'bg-white':RewardDetail.ProcessStatus.CurrentStep<2}">
+                             :class="{'!bg-[#e93470] !text-white':RewardDetail.ProcessStatus.CurrentStep>=2,'bg-white':RewardDetail.ProcessStatus.CurrentStep<2}">
                             2
                             <div class="absolute text-black w-fit whitespace-nowrap top-120% left-50% transform-translate-x-[-50%] font-500">審核中</div>
                         </div>
                         <div class="relative h-100% sticky w-42px border border-[#e93470] border-solid border-[1px] rounded-full text-center content-center text-[#e93470] font-bold"
-                             :class="{'bg-[#e93470] text-white':RewardDetail.ProcessStatus.CurrentStep>=3,'bg-white':RewardDetail.ProcessStatus.CurrentStep<3}">
+                             :class="{'!bg-[#e93470] !text-white':RewardDetail.ProcessStatus.CurrentStep>=3,'bg-white':RewardDetail.ProcessStatus.CurrentStep<3}">
                             3
                             <div class="absolute text-black w-fit whitespace-nowrap top-120% left-50% transform-translate-x-[-50%] font-500">通過審核</div>
                         </div>
                         <div class="relative h-100% sticky w-42px border border-[#e93470] border-solid border-[1px] rounded-full text-center content-center text-[#e93470] font-bold"
-                             :class="{'bg-[#e93470] text-white':RewardDetail.ProcessStatus.CurrentStep>=4,'bg-white':RewardDetail.ProcessStatus.CurrentStep<4}">
+                             :class="{'!bg-[#e93470] !text-white':RewardDetail.ProcessStatus.CurrentStep>=4,'bg-white':RewardDetail.ProcessStatus.CurrentStep<4}">
                             4
                             <div class="absolute text-black w-fit whitespace-nowrap top-120% left-50% transform-translate-x-[-50%] font-500">寄送獎項</div>
                         </div>
@@ -949,7 +949,6 @@ const GetMemberPhysicalRewardInfo = async actId => {
         );
         if (response.status === 200 && response.data.Status.Code === 0) {
             RewardDetail.value = response.data.Data;
-            console.log(response.data.Data);
             if (response.data.Data.ProcessStatus.CurrentStep === 1) {
                 await GetMemberDetail();
             } else {
