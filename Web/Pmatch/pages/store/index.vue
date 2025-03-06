@@ -891,7 +891,7 @@ const chartOptions = {
                 // 獲取當前圖表的索引
                 const chartId = context.chart.canvas.id;
                 const index = parseInt(chartId.split("-")[2]); // 從 'my-chart-0' 取得索引
-                return index === 0 ? "滿貫大亨平台 - 近五日富豪榜財產走勢" : "老子有錢平台 - 近五日富豪榜財產走勢";
+                return index === 0 ? "滿貫大亨 - 近五日富豪榜財產走勢" : "老子有錢 - 近五日富豪榜財產走勢";
             },
             font: {
                 size: 24, // 設置字體大小為 24px
