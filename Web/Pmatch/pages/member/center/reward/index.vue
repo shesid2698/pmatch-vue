@@ -67,8 +67,11 @@
                                              alt="" />
                                     </div>
                                     <div v-else>
-                                        <img class="left-img"
+                                        <!-- <img class="left-img"
                                              :src="item.RewardType === 3 ? '/images/實體獎項-l.svg' : '/images/虛擬獎項-disabled-l.svg'"
+                                             alt="" /> -->
+                                        <img class="left-img"
+                                             :src="item.RewardType === 3 ?(item.ReviewStatus===3? '/images/實體獎項-l.svg':'/images/實體獎項-disabled-l.svg') : '/images/虛擬獎項-disabled-l.svg'"
                                              alt="" />
                                     </div>
                                 </div>
@@ -81,7 +84,7 @@
                                  @click="GetReward($event,item)">
                                 <div v-if="item.RewardType === 1"
                                      class="absolute w-80px bg-[#3dadff] p-2 rounded-1 text-white text-center top-50% left-50% z-9 tips-shadow">複製成功</div>
-                                <div class="absolute w-100% h-100% flex items-center justify-center"><span class="text-white text-14px md:text-20px font-600">{{item.RewardType === 1?"複製序號":item.RewardType === 2? '兌換':"領獎"}}</span></div>
+                                <div class="absolute w-100% h-100% flex items-center justify-center"><span class="text-white text-14px md:text-20px font-600">{{item.ReviewStatus!==3? (item.RewardType === 1?"複製序號":item.RewardType === 2? '兌換':"領獎"):"補件"}}</span></div>
                                 <div v-if="innerPage !== 4">
                                     <div v-if="innerPage===1">
                                         <img class="right-img"
@@ -90,7 +93,7 @@
                                     </div>
                                     <div v-else>
                                         <img class="right-img"
-                                             :src="item.RewardType ===3 ? '/images/實體獎項-r.svg' : '/images/獎項-disabled-r.svg'"
+                                             :src="item.ReviewStatus ===3 ? '/images/實體獎項-r.svg' : '/images/獎項-disabled-r.svg'"
                                              alt="" />
                                     </div>
                                 </div>
@@ -191,7 +194,7 @@
                         <div class="relative">
                             <input type="text"
                                    required
-                                   :disabled="RewardDetail.ProcessStatus.CurrentStep!==1"
+                                   :disabled="RewardDetail.ProcessStatus.CurrentStep!==1 && ticketList.find(x=>x.ActivityId == RewardRequest.ActivityId).ReviewStatus!==3"
                                    v-model="RewardRequest.RecipientName"
                                    class="password box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
                         </div>
@@ -202,7 +205,7 @@
                         <div class="relative">
                             <input type="text"
                                    required
-                                   :disabled="RewardDetail.ProcessStatus.CurrentStep!==1"
+                                   :disabled="RewardDetail.ProcessStatus.CurrentStep!==1&& ticketList.find(x=>x.ActivityId == RewardRequest.ActivityId).ReviewStatus!==3"
                                    v-model="RewardRequest.IdNumber"
                                    class="password box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200"
                                    pattern="[A-Za-z][12]\d{8}"
@@ -216,7 +219,7 @@
                         <div class="flex">
                             <div class="w-49%">
                                 <select v-model="selectedCity"
-                                        :disabled="RewardDetail.ProcessStatus.CurrentStep!==1"
+                                        :disabled="RewardDetail.ProcessStatus.CurrentStep!==1&& ticketList.find(x=>x.ActivityId == RewardRequest.ActivityId).ReviewStatus!==3"
                                         class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200">
                                     <option value="">請選擇</option>
                                     <option v-for="(item, index) in cities"
@@ -229,7 +232,7 @@
                             <div class="w-2%"></div>
                             <div class="w-49%">
                                 <select v-model="selectedRegion"
-                                        :disabled="RewardDetail.ProcessStatus.CurrentStep!==1"
+                                        :disabled="RewardDetail.ProcessStatus.CurrentStep!==1&& ticketList.find(x=>x.ActivityId == RewardRequest.ActivityId).ReviewStatus!==3"
                                         class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200">
                                     <option value="">請選擇</option>
                                     <option v-for="region in cities[
@@ -243,7 +246,7 @@
                         </div>
                         <div class="mt-5px">
                             <input type="text"
-                                   :disabled="RewardDetail.ProcessStatus.CurrentStep!==1"
+                                   :disabled="RewardDetail.ProcessStatus.CurrentStep!==1&& ticketList.find(x=>x.ActivityId == RewardRequest.ActivityId).ReviewStatus!==3"
                                    v-model="address"
                                    class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
                         </div>
@@ -255,7 +258,7 @@
                         <div class="flex">
                             <div class="w-49%">
                                 <select v-model="selectedCity2"
-                                        :disabled="RewardDetail.ProcessStatus.CurrentStep!==1"
+                                        :disabled="RewardDetail.ProcessStatus.CurrentStep!==1&& ticketList.find(x=>x.ActivityId == RewardRequest.ActivityId).ReviewStatus!==3"
                                         class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200">
                                     <option value="">請選擇</option>
                                     <option v-for="(item, index) in cities2"
@@ -268,7 +271,7 @@
                             <div class="w-2%"></div>
                             <div class="w-49%">
                                 <select v-model="selectedRegion2"
-                                        :disabled="RewardDetail.ProcessStatus.CurrentStep!==1"
+                                        :disabled="RewardDetail.ProcessStatus.CurrentStep!==1&& ticketList.find(x=>x.ActivityId == RewardRequest.ActivityId).ReviewStatus!==3"
                                         class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200">
                                     <option value="">請選擇</option>
                                     <option v-for="region in cities2[
@@ -282,7 +285,7 @@
                         </div>
                         <div class="mt-5px">
                             <input type="text"
-                                   :disabled="RewardDetail.ProcessStatus.CurrentStep!==1"
+                                   :disabled="RewardDetail.ProcessStatus.CurrentStep!==1&& ticketList.find(x=>x.ActivityId == RewardRequest.ActivityId).ReviewStatus!==3"
                                    v-model="address2"
                                    class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
                         </div>
@@ -291,7 +294,7 @@
                         <div class="mb-5px">連絡電話</div>
                         <input type="text"
                                required
-                               :disabled="RewardDetail.ProcessStatus.CurrentStep!==1"
+                               :disabled="RewardDetail.ProcessStatus.CurrentStep!==1&& ticketList.find(x=>x.ActivityId == RewardRequest.ActivityId).ReviewStatus!==3"
                                v-model="RewardRequest.RecipientPhone"
                                class="password box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200"
                                pattern="\d{10}"
@@ -302,7 +305,7 @@
                         <input type="text"
                                required
                                v-model="RewardRequest.Email"
-                               :disabled="RewardDetail.ProcessStatus.CurrentStep!==1"
+                               :disabled="RewardDetail.ProcessStatus.CurrentStep!==1&& ticketList.find(x=>x.ActivityId == RewardRequest.ActivityId).ReviewStatus!==3"
                                class="password box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200"
                                pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
                                title="請輸入有效的電子信箱" />
@@ -312,6 +315,11 @@
                         <div class="id-container">
                             <div v-if="RewardDetail.RewardInfo.IdCardInfo.FrontImage!==''">
                                 <div class="relative w-fit h-fit">
+                                    <div @click="cancelImage(true)"
+                                         v-if="ticketList.find(x=>x.ActivityId == RewardRequest.ActivityId).ReviewStatus===3"
+                                         class="absolute w-fit h-fit right-20px top-[-10px] cursor-pointer"><img src="/images/remove-btn.png"
+                                             width="20"
+                                             alt=""></div>
                                     <img class="w-85% m-auto"
                                          :src="`/images/${RewardDetail.RewardInfo.IdCardInfo.FrontImage}`"
                                          alt="">
@@ -331,7 +339,7 @@
                                 <button v-else
                                         type="button"
                                         class="camera-btn"
-                                        :disabled="RewardDetail.ProcessStatus.CurrentStep!==1"
+                                        :disabled="RewardDetail.ProcessStatus.CurrentStep!==1&& ticketList.find(x=>x.ActivityId == RewardRequest.ActivityId).ReviewStatus!==3"
                                         @click="OpenDialog(true)">
                                     <img src="/images/camera.svg"
                                          alt=""><br>拍照或上傳照片</button>
@@ -344,6 +352,11 @@
                         <div class="id-container">
                             <div v-if="RewardDetail.RewardInfo.IdCardInfo.BackImage!==''">
                                 <div class="relative w-fit h-fit">
+                                    <div @click="cancelImage(false)"
+                                         v-if="ticketList.find(x=>x.ActivityId == RewardRequest.ActivityId).ReviewStatus===3"
+                                         class="absolute w-fit h-fit right-20px top-[-10px] cursor-pointer"><img src="/images/remove-btn.png"
+                                             width="20"
+                                             alt=""></div>
                                     <img class="w-85% m-auto"
                                          :src="`/images/${RewardDetail.RewardInfo.IdCardInfo.BackImage}`"
                                          alt="">
@@ -363,7 +376,7 @@
                                 <button v-else
                                         type="button"
                                         class="camera-btn"
-                                        :disabled="RewardDetail.ProcessStatus.CurrentStep!==1"
+                                        :disabled="RewardDetail.ProcessStatus.CurrentStep!==1&& ticketList.find(x=>x.ActivityId == RewardRequest.ActivityId).ReviewStatus!==3"
                                         @click="OpenDialog(false)">
                                     <img src="/images/camera.svg"
                                          alt=""><br>拍照或上傳照片</button>
@@ -385,7 +398,7 @@
                                 @click="ReturnList"
                                 type="button">回上一頁</button>
                         <button class="colorful-btn"
-                                :disabled="RewardDetail.ProcessStatus.CurrentStep!==1"
+                                :disabled="RewardDetail.ProcessStatus.CurrentStep!==1&& ticketList.find(x=>x.ActivityId == RewardRequest.ActivityId).ReviewStatus!==3"
                                 type="submit">確認送出</button>
                     </div>
                     <div class="w-100% fixed h-100vh"></div>
@@ -785,9 +798,15 @@ const RewardRequest = reactive({
     IdCardFront: '',
     IdCardBack: ''
 });
+const DeleteImages = reactive({
+    FrontPic: '',
+    BackPic: ''
+});
 const RewardDetail = ref(null);
 /**清除領獎資料 */
 const ResetData = () => {
+    croppedImage.value = null;
+    croppedImage2.value = null;
     croppedFile.value = null;
     croppedFile2.value = null;
     selectedRegion.value = '';
@@ -807,6 +826,8 @@ const ResetData = () => {
     RewardRequest.ShippingAddress = '';
     agreeRewardRule.value = '';
     agreeIdRule.value = '';
+    DeleteImages.BackPic = '';
+    DeleteImages.FrontPic = '';
 };
 /**
  * 取得票閘列表
@@ -1153,30 +1174,68 @@ const cancelCrop = t_isFrontPic => {
         }
     }
 };
+const cancelImage = t_isFrontPic => {
+    if (t_isFrontPic) {
+        DeleteImages.FrontPic = RewardDetail.value.RewardInfo.IdCardInfo.FrontImage;
+        RewardDetail.value.RewardInfo.IdCardInfo.FrontImage = '';
+        RewardRequest.IdCardFront = '';
+    } else {
+        DeleteImages.BackPic = RewardDetail.value.RewardInfo.IdCardInfo.BackImage;
+        RewardDetail.value.RewardInfo.IdCardInfo.BackImage = '';
+        RewardRequest.IdCardBack = '';
+    }
+};
+/**送出領獎申請表單 */
 const SendRewardForm = async event => {
     event.preventDefault();
-    if (croppedFile.value == null) {
+    if (croppedFile.value == null && RewardDetail.value.RewardInfo.IdCardInfo.FrontImage === '') {
         await openAlertModal('', '身分證件正面未上傳');
         return;
     }
-    if (croppedFile2.value == null) {
+    if (croppedFile2.value == null && RewardDetail.value.RewardInfo.IdCardInfo.BackImage === '') {
         await openAlertModal('', '身分證件反面未上傳');
-        return;
-    }
-    if (agreeRewardRule.value == '') {
-        await openAlertModal('', '請詳閱領獎規則');
         return;
     }
     if (agreeIdRule.value == '') {
         await openAlertModal('', '請詳閱蒐集個人資料告知事項');
         return;
     }
+    if (agreeRewardRule.value == '') {
+        await openAlertModal('', '請詳閱領獎規則');
+        return;
+    }
+
     RewardRequest.ShippingAddress = `${selectedCity.value}${selectedRegion.value}${address.value}`;
     RewardRequest.ResidentialAddress = `${selectedCity2.value}${selectedRegion2.value}${address2.value}`;
-    //先上傳證件正反面再提交表單
-    await UploadPhysicalRewardIdCard(1);
-    await UploadPhysicalRewardIdCard(2);
+    //先更新證件正反面再提交表單
+    if (DeleteImages.FrontPic !== '') await DeletePhysicalRewardIdCard(1);
+    if (DeleteImages.BackPic !== '') await DeletePhysicalRewardIdCard(2);
+    if (RewardRequest.IdCardFront === '') await UploadPhysicalRewardIdCard(1);
+    if (RewardRequest.IdCardBack === '') await UploadPhysicalRewardIdCard(2);
     await SubmitMemberPhysicalReward();
+};
+/**刪除證件圖片 */
+const DeletePhysicalRewardIdCard = async type => {
+    try {
+        const response = await $axios.post(
+            '/api/v1/Pmatch/DeletePhysicalRewardIdCard',
+            {
+                ActivityId: RewardRequest.ActivityId,
+                MemberId: memberId.value,
+                IdCardType: type
+            },
+            {
+                headers: {
+                    Authorization: memberToken.value // 帶上 Token
+                }
+            }
+        );
+        if (response.status === 200 && response.data.Status.Code !== 0) {
+            throw new Error(response.data.Status.Message);
+        }
+    } catch (ex) {
+        console.error(`DeletePhysicalRewardIdCard 請求失敗..${ex}`);
+    }
 };
 /**上傳身分證 */
 const UploadPhysicalRewardIdCard = async type => {
@@ -1220,6 +1279,7 @@ const SubmitMemberPhysicalReward = async () => {
         );
         if (response.status === 200 && response.data.Status.Code === 0) {
             await openAlertModal('', '申請成功!');
+            ResetData();
         }
     } catch (ex) {
         console.error(`SubmitMemberPhysicalReward 請求失敗..${ex}`);
