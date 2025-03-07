@@ -67,7 +67,7 @@
                     <div class="mt-2 flex lg-justify-start justify-center">
                         <img
                             class="w-100px"
-                            src="/images/rapidSSL.gif"
+                            src="/images/positivessl_trust_seal_md_167x42.png"
                             alt="ssl憑證"
                         />
                     </div>
