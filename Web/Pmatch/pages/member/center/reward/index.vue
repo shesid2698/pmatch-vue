@@ -310,45 +310,64 @@
                     <div class="mt-15px">
                         <div class="mb-5px">身分證件正面</div>
                         <div class="id-container">
-                            <div v-if="croppedImage"
-                                 class="relative w-fit h-fit">
-                                <div @click="cancelCrop(true)"
-                                     class="absolute w-fit h-fit right-20px top-[-10px] cursor-pointer"><img src="/images/remove-btn.png"
-                                         width="20"
-                                         alt=""></div>
-                                <img class="w-85% m-auto"
-                                     :src="croppedImage"
-                                     alt="">
+                            <div v-if="RewardDetail.RewardInfo.IdCardInfo.FrontImage!==''">
+                                <div class="relative w-fit h-fit">
+                                    <img class="w-85% m-auto"
+                                         :src="`/images/${RewardDetail.RewardInfo.IdCardInfo.FrontImage}`"
+                                         alt="">
+                                </div>
                             </div>
-                            <button v-else
-                                    type="button"
-                                    class="camera-btn"
-                                    :disabled="RewardDetail.ProcessStatus.CurrentStep!==1"
-                                    @click="OpenDialog(true)">
-                                <img src="/images/camera.svg"
-                                     alt=""><br>拍照或上傳照片</button>
+                            <div v-else>
+                                <div v-if="croppedImage"
+                                     class="relative w-fit h-fit">
+                                    <div @click="cancelCrop(true)"
+                                         class="absolute w-fit h-fit right-20px top-[-10px] cursor-pointer"><img src="/images/remove-btn.png"
+                                             width="20"
+                                             alt=""></div>
+                                    <img class="w-85% m-auto"
+                                         :src="croppedImage"
+                                         alt="">
+                                </div>
+                                <button v-else
+                                        type="button"
+                                        class="camera-btn"
+                                        :disabled="RewardDetail.ProcessStatus.CurrentStep!==1"
+                                        @click="OpenDialog(true)">
+                                    <img src="/images/camera.svg"
+                                         alt=""><br>拍照或上傳照片</button>
+                            </div>
+
                         </div>
                     </div>
                     <div class="mt-15px">
                         <div class="mb-5px">身分證件反面</div>
                         <div class="id-container">
-                            <div v-if="croppedImage2"
-                                 class="relative w-fit h-fit">
-                                <div @click="cancelCrop(false)"
-                                     class="absolute w-fit h-fit right-20px top-[-10px] cursor-pointer"><img src="/images/remove-btn.png"
-                                         width="20"
-                                         alt=""></div>
-                                <img class="w-85% m-auto"
-                                     :src="croppedImage2"
-                                     alt="">
+                            <div v-if="RewardDetail.RewardInfo.IdCardInfo.BackImage!==''">
+                                <div class="relative w-fit h-fit">
+                                    <img class="w-85% m-auto"
+                                         :src="`/images/${RewardDetail.RewardInfo.IdCardInfo.BackImage}`"
+                                         alt="">
+                                </div>
                             </div>
-                            <button v-else
-                                    type="button"
-                                    class="camera-btn"
-                                    :disabled="RewardDetail.ProcessStatus.CurrentStep!==1"
-                                    @click="OpenDialog(false)">
-                                <img src="/images/camera.svg"
-                                     alt=""><br>拍照或上傳照片</button>
+                            <div v-else>
+                                <div v-if="croppedImage2"
+                                     class="relative w-fit h-fit">
+                                    <div @click="cancelCrop(false)"
+                                         class="absolute w-fit h-fit right-20px top-[-10px] cursor-pointer"><img src="/images/remove-btn.png"
+                                             width="20"
+                                             alt=""></div>
+                                    <img class="w-85% m-auto"
+                                         :src="croppedImage2"
+                                         alt="">
+                                </div>
+                                <button v-else
+                                        type="button"
+                                        class="camera-btn"
+                                        :disabled="RewardDetail.ProcessStatus.CurrentStep!==1"
+                                        @click="OpenDialog(false)">
+                                    <img src="/images/camera.svg"
+                                         alt=""><br>拍照或上傳照片</button>
+                            </div>
                         </div>
                     </div>
                     <div class="text-15px text-[#f72585] cursor-pointer"
@@ -850,20 +869,24 @@ const GetMoreData = async event => {
  * 複製序號
  * @param code 序號
  */
-const GetCode = (tipsElement, code) => {
+const GetCode = async (tipsElement, code) => {
     if (code && innerPage.value == 1) {
         if (!tipsElement) return;
         tipsElement.classList.add('active');
         setTimeout(() => {
             tipsElement.classList.remove('active');
         }, 2000);
-        const textArea = document.createElement("textarea");
-        textArea.value = code;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand("copy");
-        document.body.removeChild(textArea);
-        // await navigator.clipboard.writeText(code);
+        try {
+            const textArea = document.createElement('textarea');
+            textArea.value = code;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+        } catch (ex) {
+            console.log(`document.execCommand Err..`);
+            await navigator.clipboard.writeText(code);
+        }
     }
 };
 /**取得會員詳細資料 */
@@ -920,7 +943,7 @@ const TurnPage = async (page, actId) => {
             }
             if (selectedCity2.value != '' && selectedCity2.value != undefined) {
                 for (const [key, value] of Object.entries(cities2.value[selectedCity2.value])) {
-                    if (RewardRequest.ShippingAddress.indexOf(value) !== -1) {
+                    if (RewardRequest.ResidentialAddress.indexOf(value) !== -1) {
                         selectedRegion2.value = value;
                     }
                 }
