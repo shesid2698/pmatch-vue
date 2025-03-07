@@ -603,13 +603,13 @@
                                 <option :value="PmMemberPhones[2]">{{PmMemberPhones[2]}}</option>
                             </select>
                         </div>
-                        <div class="w-fit m-auto mb-3" @click='dialogVisible2=true'><input type="radio"
+                        <div class="w-fit m-auto mb-3"
+                             @click='dialogVisible2=true'><input type="radio"
                                    id="pmatchOrder"
                                    name="pmatchOrder"
                                    class="mr-2"
                                    title="請詳閱領獎規則"
-                                   required
-                                   ><label for="pmatchOrder"
+                                   required><label for="pmatchOrder"
                                    class="text-[#E93470]">本人已詳閱並同意貴公司「領獎規則」</label></div>
                         <div class="flex justify-center m-0"><button type="button"
                                     class="colorful-btn"
@@ -850,14 +850,20 @@ const GetMoreData = async event => {
  * 複製序號
  * @param code 序號
  */
-const GetCode = async (tipsElement, code) => {
+const GetCode = (tipsElement, code) => {
     if (code && innerPage.value == 1) {
         if (!tipsElement) return;
         tipsElement.classList.add('active');
         setTimeout(() => {
             tipsElement.classList.remove('active');
         }, 2000);
-        await navigator.clipboard.writeText(code);
+        const textArea = document.createElement("textarea");
+        textArea.value = code;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textArea);
+        // await navigator.clipboard.writeText(code);
     }
 };
 /**取得會員詳細資料 */
@@ -928,8 +934,8 @@ const TurnPage = async (page, actId) => {
                 address2.value = address2.value.replace(selectedRegion2.value, '');
             }
         }
-    }else{
-      await GetMemberDetail();
+    } else {
+        await GetMemberDetail();
     }
     pageName.value = page;
 };
@@ -966,7 +972,7 @@ const GetMemberPhysicalRewardInfo = async actId => {
         console.error(`GetMemberPhysicalRewardInfo failed..${ex}`);
     }
 };
-const GetReward = async (event, item) => {
+const GetReward = (event, item) => {
     RewardItem.value = item;
     RewardRequest.ActivityId = item.ActivityId;
     const parent = event.currentTarget;
@@ -974,7 +980,7 @@ const GetReward = async (event, item) => {
     if (innerPage.value != 4) {
         switch (item.RewardType) {
             case 1: //遊戲商虛擬
-                if (innerPage.value == 1) await GetCode(tipsElement, item.RedeemCode);
+                if (innerPage.value == 1) GetCode(tipsElement, item.RedeemCode);
                 break;
             case 2: //媒合商虛擬(Pmatch下單)
                 if (innerPage.value == 1) TurnPage('order', item.ActivityId);
@@ -983,7 +989,7 @@ const GetReward = async (event, item) => {
                 TurnPage('form', item.ActivityId);
                 break;
             default:
-                await GetCode(tipsElement, item.RedeemCode);
+                GetCode(tipsElement, item.RedeemCode);
                 break;
         }
     }
