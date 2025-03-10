@@ -1010,6 +1010,12 @@ const GetMemberPhysicalRewardInfo = async actId => {
                 RewardRequest.IdCardFront = response.data.Data.RewardInfo.IdCardInfo.FrontImage;
                 RewardRequest.IdCardBack = response.data.Data.RewardInfo.IdCardInfo.BackImage;
                 RewardRequest.Email = response.data.Data.RewardInfo.Email;
+                // 若進度已在審查中，已不可修改，故直接同意
+                if (response.data.Data.ProcessStatus.CurrentStep === 2)
+                {
+                    agreeIdRule.value = 'yes';
+                    agreeRewardRule.value = 'yes';
+                }
             }
         }
     } catch (ex) {
