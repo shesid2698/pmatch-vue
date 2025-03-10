@@ -852,11 +852,7 @@ const GetList = async (status, page) => {
             if (page == 1) {
                 ticketList.value = [...response.data.Data];
             } else {
-                if (
-                    !ticketList.value.includes([...response.data.Data]) &&
-                    [...response.data.Data].length > 0
-                )
-                    ticketList.value.push([...response.data.Data]);
+                ticketList.value.push(...response.data.Data);
             }
             if (response.data.Data.length < 20) isGetNewPage = false;
         } else {
