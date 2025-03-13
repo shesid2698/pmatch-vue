@@ -160,6 +160,7 @@ const { $axios } = useNuxtApp();
 let userNameCookie = useCookie('_PmUserName');
 let tokenCookie = useCookie('_PmToken');
 let MemberIdCookie = useCookie('_PmMemberId');
+let MemberStaffIdCookie = useCookie('_PmStaffId');
 let MemberTypeCookie = useCookie('_PmMemberType');
 
 //社群登入
@@ -206,6 +207,7 @@ const GetMemberDetail = async (memberId, token) => {
     );
     if (response.data.Status.Code === 0) {
         MemberTypeCookie.value = response.data.Data[0].Type;
+        MemberStaffIdCookie.value = response.data.Data[0].StaffId;
     }
 };
 // login
