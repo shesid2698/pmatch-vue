@@ -125,12 +125,12 @@
                          src="/images/iconLine.png"
                          alt="LINE帳號登入" />
                 </button>
-                <!-- <button @click="loginFb"
+                 <button @click="loginFb"
                         class="otherLoginBtn mx-3">
                     <img class="w-30px"
                          src="/images/iconFB.png"
                          alt="FB帳號登入" />
-                </button> -->
+                </button> 
             </div>
         </div>
     </div>
