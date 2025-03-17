@@ -859,7 +859,7 @@ const OpenChat = async () => {
     };
     const str = JSON.stringify(obj);
     const chatToken = btoa(str).replace(/\+/g, '-').replace(/\//g, '_');
-    window.open("https://google.com","_blank",'toolbar=no,location=no,status=no,menubar=no,resizable=no,width=770,height=677');
+    window.open(`http://localhost:6080?token=${chatToken}`,"_blank",'toolbar=no,location=no,status=no,resizable=no,width=770,height=677');
 };
 watch(
     [filteredPlatform, filteredPlatformArray, gameList],
