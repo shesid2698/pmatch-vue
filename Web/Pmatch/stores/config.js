@@ -4,6 +4,7 @@ export const useConfigStore = defineStore('config', {
     state: () => ({
         baseUrl: '',
         envUrl: '',
+        webChatUrl:'',
         turnstilesitekey:'',
         googleClientId: '',
         lineClientId: '',
@@ -17,6 +18,7 @@ export const useConfigStore = defineStore('config', {
                 const config = await response.json();
                 this.baseUrl = config.baseUrl || '';
                 this.envUrl = config.envUrl || '';
+                this.webChatUrl = config.webChatUrl || '';
                 this.turnstilesitekey = config.turnstilesitekey || '';
                 this.googleClientId = config.googleClientId || '';
                 this.lineClientId = config.lineClientId || '';
@@ -27,6 +29,7 @@ export const useConfigStore = defineStore('config', {
                 // 設定預設值以避免錯誤
                 this.baseUrl = '';
                 this.envUrl = '';
+                this.webChatUrl = '';
                 this.turnstilesitekey = '';
                 this.googleClientId = '';
                 this.lineClientId = '';

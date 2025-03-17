@@ -441,7 +441,7 @@ import { ElCarouselItem } from 'element-plus';
 import { useLoadStore } from '../stores/loading.js';
 
 import { useAlertModalStore } from '../stores/useAlertModal.js';
-
+const config = useConfigStore();
 const alertModalStore = useAlertModalStore();
 const openAlertModal = alertModalStore.alertShowModal;
 
@@ -859,7 +859,13 @@ const OpenChat = async () => {
     };
     const str = JSON.stringify(obj);
     const chatToken = btoa(str).replace(/\+/g, '-').replace(/\//g, '_');
-    window.open(`http://localhost:6080?token=${chatToken}`,"_blank",'toolbar=no,location=no,status=no,resizable=no,width=770,height=677');
+    if (config.webChatUrl !== '') {
+        window.open(
+            `${config.webChatUrl}?token=${chatToken}`,
+            '_blank',
+            'toolbar=no,location=no,status=no,resizable=no,width=770,height=677'
+        );
+    }
 };
 watch(
     [filteredPlatform, filteredPlatformArray, gameList],
