@@ -319,16 +319,24 @@
             );
             if (response.data.Status.Code === 0) {
                 memberRewardList.value = response.data.Data;
-                if (memberRewardList.value != null) {
-                    const endTimeString = memberRewardList.value.ActivityEndTime;
-                    const endTime = new Date(endTimeString).getTime();
-                    const now = Date.now();
+                if (memberRewardList.value != null)
+                {
+                    // 清除時間
+                    timeValue.value = 0;
+                    // EndTime = null 表示推薦碼已經停用
+                    if (memberRewardList.value.EndTime != null) {
 
-                    // 計算差值
-                    const difference = endTime - now;
+                        // 計算推薦碼狀態
+                        const endTimeString = memberRewardList.value.ActivityEndTime;
+                        const endTime = new Date(endTimeString).getTime();
+                        const now = Date.now();
 
-                    // 確保不會有負值
-                    timeValue.value = Math.max(difference, 0);
+                        // 計算差值
+                        const difference = endTime - now;
+
+                        // 確保不會有負值
+                        timeValue.value = Math.max(difference, 0);
+                    }
                 }
             } else {
                 await openAlertModal(" ", `${response.data.Status.Message}`);
