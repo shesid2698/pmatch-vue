@@ -320,7 +320,7 @@
             if (response.data.Status.Code === 0) {
                 memberRewardList.value = response.data.Data;
                 if (memberRewardList.value != null) {
-                    const endTimeString = memberRewardList.value.EndTime;
+                    const endTimeString = memberRewardList.value.ActivityEndTime;
                     const endTime = new Date(endTimeString).getTime();
                     const now = Date.now();
 
