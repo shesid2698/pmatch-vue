@@ -218,7 +218,8 @@
                         </div>
                         <div class="flex">
                             <div class="w-49%">
-                                <select v-model="selectedCity"
+                                <select v-model="selectedCity" 
+                                        required
                                         :disabled="RewardDetail.ProcessStatus.CurrentStep!==1&& ticketList.find(x=>x.ActivityId == RewardRequest.ActivityId).ReviewStatus!==3"
                                         class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200">
                                     <option value="">請選擇</option>
@@ -231,7 +232,8 @@
                             </div>
                             <div class="w-2%"></div>
                             <div class="w-49%">
-                                <select v-model="selectedRegion"
+                                <select v-model="selectedRegion" 
+                                        required
                                         :disabled="RewardDetail.ProcessStatus.CurrentStep!==1&& ticketList.find(x=>x.ActivityId == RewardRequest.ActivityId).ReviewStatus!==3"
                                         class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200">
                                     <option value="">請選擇</option>
@@ -245,7 +247,8 @@
                             </div>
                         </div>
                         <div class="mt-5px">
-                            <input type="text"
+                            <input type="text" 
+                                   required
                                    :disabled="RewardDetail.ProcessStatus.CurrentStep!==1&& ticketList.find(x=>x.ActivityId == RewardRequest.ActivityId).ReviewStatus!==3"
                                    v-model="address"
                                    class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
@@ -257,7 +260,8 @@
                         </div>
                         <div class="flex">
                             <div class="w-49%">
-                                <select v-model="selectedCity2"
+                                <select v-model="selectedCity2" 
+                                        required
                                         :disabled="RewardDetail.ProcessStatus.CurrentStep!==1&& ticketList.find(x=>x.ActivityId == RewardRequest.ActivityId).ReviewStatus!==3"
                                         class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200">
                                     <option value="">請選擇</option>
@@ -270,7 +274,8 @@
                             </div>
                             <div class="w-2%"></div>
                             <div class="w-49%">
-                                <select v-model="selectedRegion2"
+                                <select v-model="selectedRegion2" 
+                                        required
                                         :disabled="RewardDetail.ProcessStatus.CurrentStep!==1&& ticketList.find(x=>x.ActivityId == RewardRequest.ActivityId).ReviewStatus!==3"
                                         class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200">
                                     <option value="">請選擇</option>
@@ -284,7 +289,8 @@
                             </div>
                         </div>
                         <div class="mt-5px">
-                            <input type="text"
+                            <input type="text" 
+                                   required
                                    :disabled="RewardDetail.ProcessStatus.CurrentStep!==1&& ticketList.find(x=>x.ActivityId == RewardRequest.ActivityId).ReviewStatus!==3"
                                    v-model="address2"
                                    class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
