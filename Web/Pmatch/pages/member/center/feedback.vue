@@ -327,15 +327,20 @@
                     if (memberRewardList.value.EndTime != null) {
 
                         // 計算推薦碼狀態
+                        const startTimeString = memberRewardList.value.ActivityStartTime;
+                        const startTime = new Date(startTimeString).getTime();
                         const endTimeString = memberRewardList.value.ActivityEndTime;
                         const endTime = new Date(endTimeString).getTime();
                         const now = Date.now();
 
-                        // 計算差值
-                        const difference = endTime - now;
+                        // 如果現在時間在活動時間內
+                        if (now > startTime && now < endTime) {
+                            // 計算差值
+                            const difference = endTime - now;
 
-                        // 確保不會有負值
-                        timeValue.value = Math.max(difference, 0);
+                            // 確保不會有負值
+                            timeValue.value = Math.max(difference, 0);
+                        }
                     }
                 }
             } else {
