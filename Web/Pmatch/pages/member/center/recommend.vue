@@ -88,8 +88,10 @@
                                     v-show="timeValue === 0"
                                     class="flex items-center w-80px h-30px relative border-1px border-solid border-#ced2db"
                                 >
+                                    <!-- 寶島送很大 -->
                                     <input
-                                        type="number"
+                                        disabled 
+                                        type="number"  
                                         v-model="mainPercent"
                                         @input="SettingPercent"
                                         @change="settingMemberPercent"
