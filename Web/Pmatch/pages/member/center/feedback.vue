@@ -1,8 +1,10 @@
 
 <template>
+
     <Head>
         <title>PMatch遊戲道具交易平台</title>
-        <Meta property="og:title" content="PMatch遊戲道具交易平台" />
+        <Meta property="og:title"
+              content="PMatch遊戲道具交易平台" />
         <Meta name="keywords"
               content="pmatch,pmatch交易,博奕遊戲,幣商,媒合商,遊戲幣,虛擬幣,遊戲交易,媒合交易,買幣,賣幣,虛寶交易" />
         <Meta name="description"
@@ -122,26 +124,32 @@
                     </div>
                 </div>
                 <hr />
-                <div id="detail" class="flex items-center mb-10px mt-30px">
+                <div id="detail"
+                     class="flex items-center mb-10px mt-30px">
                     <div class="mr-15px text-black content-center font-500 text-[20px] border-none">
                         明細
                     </div>
                     <div class="relative rounded-[10px] bg-[#14ae5c] w-117px h-25px">
                         <select v-model="dataDate"
                                 class="text-[16px] rounded-[10px] z-1 absolute top-0 left-0 outline-none w-100% h-100% bg-transparent border-none text-white text-center content-center">
-                            <option value="0" class="bg-[#14ae5c]">
+                            <option value="0"
+                                    class="bg-[#14ae5c]">
                                 近30日
                             </option>
-                            <option value="1" class="bg-[#14ae5c]">
+                            <option value="1"
+                                    class="bg-[#14ae5c]">
                                 近3個月
                             </option>
-                            <option value="2" class="bg-[#14ae5c]">
+                            <option value="2"
+                                    class="bg-[#14ae5c]">
                                 近半年
                             </option>
-                            <option value="3" class="bg-[#14ae5c]">
+                            <option value="3"
+                                    class="bg-[#14ae5c]">
                                 近1年
                             </option>
-                            <option value="4" class="bg-[#14ae5c]">自訂</option>
+                            <option value="4"
+                                    class="bg-[#14ae5c]">自訂</option>
                         </select>
                         <div class="absolute right-10% top-50% transform-translate-y-[-50%] z-0">
                             <svg width="15"
@@ -169,7 +177,8 @@
                             </svg>
                         </div>
                     </div>
-                    <div v-show="showDateChoose" class="ml-10px">
+                    <div v-show="showDateChoose"
+                         class="ml-10px">
                         <el-config-provider :locale="zhCn">
                             <el-date-picker v-model="dateValue"
                                             type="daterange"
@@ -207,304 +216,311 @@
     </div>
 </template>
 <script setup>
-    import zhCn from "element-plus/es/locale/lang/zh-cn";
-    import { useAlertModalStore } from "../stores/useAlertModal.js";
-    const alertModalStore = useAlertModalStore();
-    const openAlertModal = alertModalStore.alertShowModal;
-    const MemberIdCookie = useCookie("_PmMemberId");
-    const tokenCookie = useCookie("_PmToken");
-    const { $axios } = useNuxtApp();
+import zhCn from 'element-plus/es/locale/lang/zh-cn';
+import { useAlertModalStore } from '../stores/useAlertModal.js';
+const alertModalStore = useAlertModalStore();
+const openAlertModal = alertModalStore.alertShowModal;
+const MemberIdCookie = useCookie('_PmMemberId');
+const tokenCookie = useCookie('_PmToken');
+const { $axios } = useNuxtApp();
 
-    const jwtStore = useJwtStore();
-    const dataDate = ref("0");
-    const dateValue = ref("");
-    const memberRewardList = ref([]);
-    const tableData = ref([]);
-    let firstLoad = true;
+const jwtStore = useJwtStore();
+const dataDate = ref('0');
+const dateValue = ref('');
+const memberRewardList = ref([]);
+const tableData = ref([]);
+let firstLoad = true;
 
-    // 當前選中的平台
-    const selectedPlatform = ref("");
-    // 委買與委賣值
-    const buyRewardValue = ref("0");
-    const sellRewardValue = ref("0");
-    // 動態計算的開始和結束時間
-    const startTime = ref("");
-    const endTime = ref("");
-    const showDateChoose = ref(false);
-    const currentPage = ref(1);
-    const timeValue = ref(0);
-    // 更新時間範圍的方法
-    const updateTimeRange = async () => {
-        if (dataDate.value === "4") {
-            showDateChoose.value = true;
-        } else {
-            showDateChoose.value = false;
-            const now = new Date();
-            const offsetDays = {
-                0: 30, // 近30日
-                1: 90, // 近3個月
-                2: 180, // 近半年
-                3: 365, // 近1年
-            };
-            const selectedOffset = offsetDays[dataDate.value];
-            if (selectedOffset) {
-                // 自動計算時間範圍
-                const start = new Date(now);
-                start.setDate(now.getDate() - selectedOffset);
+// 當前選中的平台
+const selectedPlatform = ref('');
+// 委買與委賣值
+const buyRewardValue = ref('0');
+const sellRewardValue = ref('0');
+// 動態計算的開始和結束時間
+const startTime = ref('');
+const endTime = ref('');
+const showDateChoose = ref(false);
+const currentPage = ref(1);
+const timeValue = ref(0);
+// 更新時間範圍的方法
+const updateTimeRange = async () => {
+    if (dataDate.value === '4') {
+        showDateChoose.value = true;
+    } else {
+        showDateChoose.value = false;
+        const now = new Date();
+        const offsetDays = {
+            0: 30, // 近30日
+            1: 90, // 近3個月
+            2: 180, // 近半年
+            3: 365 // 近1年
+        };
+        const selectedOffset = offsetDays[dataDate.value];
+        if (selectedOffset) {
+            // 自動計算時間範圍
+            const start = new Date(now);
+            start.setDate(now.getDate() - selectedOffset);
 
-                startTime.value = formatDate(start, true);
-                endTime.value = formatDate(now, true);
-            }
-            await fetchOrderListData();
-        }
-    };
-
-    // 轉換日期格式為 yyyy-MM-dd(T)HH:mm:ss
-    const formatDate=(date, isIncludeT)=>{
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0'); // 月份從 0 開始
-        const day = String(date.getDate()).padStart(2, '0');
-        const hours = String(date.getHours()).padStart(2, '0');
-        const minutes = String(date.getMinutes()).padStart(2, '0');
-        const seconds = String(date.getSeconds()).padStart(2, '0');
-
-        var ret = '';
-
-        if (isIncludeT == true) { ret = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`; }
-        else { ret = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`; }
-
-        return ret;
-    };
-
-    //
-    const formatDate2=(row, column, cellValue)=> {
-        // Localtime to ISO
-        var date = new Date(cellValue);
-        var ret = formatDate(date, false);
-
-        return ret;
-    };
-
-    // 變更委買委賣的值
-    const RewardPlatformChange = () => {
-        const platform = memberRewardList.value.PlatformsReward.find(
-            (item) => item.PlatformName === selectedPlatform.value
-        );
-        if (platform) {
-            buyRewardValue.value = platform.BuyRewardValue;
-            sellRewardValue.value = platform.SellRewardValue;
-        } else {
-            // 如果未選擇平台，回退到預設值
-            buyRewardValue.value = "0";
-            sellRewardValue.value = "0";
-        }
-    };
-    // 取得回饋資訊
-    async function fetchRewardListData() {
-        if (!tokenCookie.value && !MemberIdCookie.value) {
-            await openAlertModal(" ", "請先登入會員");
-        }
-
-        try {
-            const response = await $axios.post(
-                "/api/v1/Pmatch/GetMemberReward",
-                {
-                    MemberId: MemberIdCookie.value,
-                },
-                {
-                    headers: {
-                        Authorization: tokenCookie.value, // 帶上 Token
-                    },
-                }
-            );
-            if (response.data.Status.Code === 0) {
-                memberRewardList.value = response.data.Data;
-                if (memberRewardList.value != null)
-                {
-                    // 清除時間
-                    timeValue.value = 0;
-                    // EndTime = null 表示推薦碼已經停用
-                    if (memberRewardList.value.EndTime != null) {
-
-                        // 計算推薦碼狀態
-                        const startTimeString = memberRewardList.value.ActivityStartTime;
-                        const startTime = new Date(startTimeString).getTime();
-                        const endTimeString = memberRewardList.value.ActivityEndTime;
-                        const endTime = new Date(endTimeString).getTime();
-                        const now = Date.now();
-
-                        // 如果現在時間在活動時間內
-                        if (now > startTime && now < endTime) {
-                            // 計算差值
-                            const difference = endTime - now;
-
-                            // 確保不會有負值
-                            timeValue.value = Math.max(difference, 0);
-                        }
-                    }
-                }
-            } else {
-                await openAlertModal(" ", `${response.data.Status.Message}`);
-            }
-        } catch (error) {
-            console.error("請求失敗:", error);
-        }
-    }
-    // 取得回饋明細
-    async function fetchOrderListData() {
-        if (!tokenCookie.value && !MemberIdCookie.value) {
-            await openAlertModal(" ", "請先登入會員");
-        }
-        try {
-            const response = await $axios.post(
-                "/api/v1/Pmatch/GetDownlineOrder",
-                {
-                    PmatchMemberId: MemberIdCookie.value,
-                    StartTime: startTime.value,
-                    EndTime: endTime.value,
-                    PageSize: 10,
-                    PageNo: currentPage.value,
-                },
-                {
-                    headers: {
-                        Authorization: tokenCookie.value, // 帶上 Token
-                    },
-                }
-            );
-            if (response.data.Status.Code === 0) {
-                tableData.value = response.data.Data;
-                if (tableData.value != null && tableData.value.length > 0) {
-                    currentPage.value = tableData.value.CurrentPage;
-                }
-            } else {
-                await openAlertModal(" ", `${response.data.Status.Message}`);
-            }
-        } catch (error) {
-            console.error("請求失敗:", error);
-        }
-    }
-
-    const load = async () => {
-        if (tableData.value.length > 0 && currentPage.value) {
-            try {
-                const formattedStartTime = new Date(startTime.value).toISOString();
-                const formattedEndTime = new Date(endTime.value).toISOString();
-                // 調用 API 加載數據
-                const response = await $axios.post(
-                    "/api/v1/Pmatch/GetDownlineOrder",
-                    {
-                        PmatchMemberId: MemberIdCookie.value,
-                        StartTime: formattedStartTime,
-                        EndTime: formattedEndTime,
-                        PageSize: 10,
-                        PageNo: currentPage.value,
-                    },
-                    {
-                        headers: {
-                            Authorization: tokenCookie.value, // 帶上 Token
-                        },
-                    }
-                );
-                const newData = response.data.Data;
-
-                // 更新表格數據
-                if (newData.length > 0) {
-                    tableData.value.push(...newData);
-                    currentPage.value++;
-                } else {
-                    if (firstLoad === true) {
-                        return;
-                    } else {
-                        await openAlertModal(" ", "已經是最後一頁了"); // 無更多數據
-                    }
-                }
-            } catch (error) {
-                console.error("加載數據失敗：", error);
-            } finally {
-            }
-        }
-    };
-
-    const Getdate = async () => {
-        if (dataDate.value === "4" && dateValue.value.length === 2) {
-            startTime.value = formatDate(dateValue.value[0], true);
-
-            // 結束時間設定為當天的 23:59:59
-            var ed = new Date(dateValue.value[1]).setHours(23, 59, 59, 0);
-            var ed2 = new Date(ed);
-            endTime.value = formatDate(ed2, true);
+            startTime.value = formatDate(start, true);
+            endTime.value = formatDate(now, true);
         }
         await fetchOrderListData();
-    };
-    const DateFormatt = (date) => {
-        var t_Date =
-            date.getFullYear() +
-            "-" +
-            String(date.getMonth() + 1).padStart(2, "0") +
-            "-" +
-            String(date.getDate()).padStart(2, "0") +
-            " " +
-            String(date.getHours()).padStart(2, "0") +
-            ":" +
-            String(date.getMinutes()).padStart(2, "0") +
-            ":" +
-            String(date.getSeconds()).padStart(2, "0");
-        return t_Date;
-    };
-    const GetTimes = time => {
-        timeValue.value = time;
     }
-    onMounted(async () => {
-        try {
-            await fetchRewardListData();
-            await updateTimeRange();
-        } catch (error) {
-            console.error("請求失敗:", error);
+};
+
+// 轉換日期格式為 yyyy-MM-dd(T)HH:mm:ss
+const formatDate = (date, isIncludeT) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // 月份從 0 開始
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+
+    var ret = '';
+
+    if (isIncludeT == true) {
+        ret = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+    } else {
+        ret = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    }
+
+    return ret;
+};
+
+//
+const formatDate2 = (row, column, cellValue) => {
+    // Localtime to ISO
+    var date = new Date(cellValue);
+    var ret = formatDate(date, false);
+
+    return ret;
+};
+
+// 變更委買委賣的值
+const RewardPlatformChange = () => {
+    const platform = memberRewardList.value.PlatformsReward.find(
+        item => item.PlatformName === selectedPlatform.value
+    );
+    if (platform) {
+        buyRewardValue.value = platform.BuyRewardValue;
+        sellRewardValue.value = platform.SellRewardValue;
+    } else {
+        // 如果未選擇平台，回退到預設值
+        buyRewardValue.value = '0';
+        sellRewardValue.value = '0';
+    }
+};
+// 取得回饋資訊
+async function fetchRewardListData() {
+    if (!tokenCookie.value && !MemberIdCookie.value) {
+        await openAlertModal(' ', '請先登入會員');
+    }
+
+    try {
+        const response = await $axios.post(
+            '/api/v1/Pmatch/GetMemberReward',
+            {
+                MemberId: MemberIdCookie.value
+            },
+            {
+                headers: {
+                    Authorization: tokenCookie.value // 帶上 Token
+                }
+            }
+        );
+        if (response.data.Status.Code === 0) {
+            memberRewardList.value = response.data.Data;
+            if (memberRewardList.value != null) {
+                // 清除時間
+                timeValue.value = 0;
+                // EndTime = null 表示推薦碼已經停用
+                if (memberRewardList.value.EndTime != null) {
+                    // 計算推薦碼狀態
+                    const startTimeString = memberRewardList.value.ActivityStartTime;
+                    const startTime = new Date(startTimeString).getTime();
+                    const endTimeString = memberRewardList.value.ActivityEndTime;
+                    const endTime = new Date(endTimeString).getTime();
+                    const now = Date.now();
+
+                    // 如果現在時間在活動時間內
+                    if (now > startTime && now < endTime) {
+                        // 計算差值
+                        const difference = endTime - now;
+
+                        // 確保不會有負值
+                        timeValue.value = Math.max(difference, 0);
+                    }
+                }
+            }
+        } else {
+            await openAlertModal(' ', `${response.data.Status.Message}`);
         }
-    });
-    // 監聽 dataDate 的變化
-    watch(dataDate, () => {
-        updateTimeRange();
-    });
+    } catch (error) {
+        console.error('請求失敗:', error);
+    }
+}
+// 取得回饋明細
+async function fetchOrderListData() {
+    if (!tokenCookie.value && !MemberIdCookie.value) {
+        await openAlertModal(' ', '請先登入會員');
+    }
+    try {
+        const response = await $axios.post(
+            '/api/v1/Pmatch/GetDownlineOrder',
+            {
+                PmatchMemberId: MemberIdCookie.value,
+                StartTime: startTime.value,
+                EndTime: endTime.value,
+                PageSize: 10,
+                PageNo: currentPage.value
+            },
+            {
+                headers: {
+                    Authorization: tokenCookie.value // 帶上 Token
+                }
+            }
+        );
+        if (response.data.Status.Code === 0) {
+            tableData.value = response.data.Data;
+            if (tableData.value != null && tableData.value.length > 0) {
+                currentPage.value = tableData.value[0].CurrentPage;
+            }
+        } else {
+            await openAlertModal(' ', `${response.data.Status.Message}`);
+        }
+    } catch (error) {
+        console.error('請求失敗:', error);
+    }
+}
+
+const load = async () => {
+    if (tableData.value.length > 0 && currentPage.value) {
+        currentPage.value++;
+        try {
+            const formattedStartTime = new Date(startTime.value).toISOString();
+            const formattedEndTime = new Date(endTime.value).toISOString();
+            // 調用 API 加載數據
+            const response = await $axios.post(
+                '/api/v1/Pmatch/GetDownlineOrder',
+                {
+                    PmatchMemberId: MemberIdCookie.value,
+                    StartTime: formattedStartTime,
+                    EndTime: formattedEndTime,
+                    PageSize: 10,
+                    PageNo: currentPage.value
+                },
+                {
+                    headers: {
+                        Authorization: tokenCookie.value // 帶上 Token
+                    }
+                }
+            );
+            const newData = response.data.Data;
+
+            // 更新表格數據
+            if (newData.length > 0) {
+                tableData.value.push(...newData);
+                currentPage.value++;
+            } else {
+                if (firstLoad === true) {
+                    return;
+                } else {
+                    await openAlertModal(' ', '已經是最後一頁了'); // 無更多數據
+                }
+            }
+        } catch (error) {
+            console.error('加載數據失敗：', error);
+        } finally {
+        }
+    }
+};
+
+const Getdate = async () => {
+    if (dataDate.value === '4' && dateValue.value.length === 2) {
+        startTime.value = formatDate(dateValue.value[0], true);
+
+        // 結束時間設定為當天的 23:59:59
+        var ed = new Date(dateValue.value[1]).setHours(23, 59, 59, 0);
+        var ed2 = new Date(ed);
+        endTime.value = formatDate(ed2, true);
+    }
+    await fetchOrderListData();
+};
+const DateFormatt = date => {
+    var t_Date =
+        date.getFullYear() +
+        '-' +
+        String(date.getMonth() + 1).padStart(2, '0') +
+        '-' +
+        String(date.getDate()).padStart(2, '0') +
+        ' ' +
+        String(date.getHours()).padStart(2, '0') +
+        ':' +
+        String(date.getMinutes()).padStart(2, '0') +
+        ':' +
+        String(date.getSeconds()).padStart(2, '0');
+    return t_Date;
+};
+const GetTimes = time => {
+    timeValue.value = time;
+};
+const LoadMoreData = async event => {
+    if (event.target.scrollTop + event.target.clientHeight >= event.target.scrollHeight) {
+        await load();
+    }
+};
+onMounted(async () => {
+    try {
+        await fetchRewardListData();
+        await updateTimeRange();
+    } catch (error) {
+        console.error('請求失敗:', error);
+    }
+});
+// 監聽 dataDate 的變化
+watch(dataDate, () => {
+    updateTimeRange();
+});
 </script>
 <style scoped>
-    .ccontainer {
-        height: fit-content;
-        display: flex;
-        margin: 0 auto;
-    }
+.ccontainer {
+    height: fit-content;
+    display: flex;
+    margin: 0 auto;
+}
 
-    select {
-        appearance: none;
-    }
+select {
+    appearance: none;
+}
 
-    :deep(.el-table .descending .sort-caret.descending) {
-        border-top-color: white;
-    }
+:deep(.el-table .descending .sort-caret.descending) {
+    border-top-color: white;
+}
 
-    :deep(.el-table .ascending .sort-caret.ascending) {
-        border-bottom-color: white;
-    }
+:deep(.el-table .ascending .sort-caret.ascending) {
+    border-bottom-color: white;
+}
 
-    :deep(.el-table .sort-caret.ascending) {
-        border-bottom-color: #b1ddf177;
-    }
+:deep(.el-table .sort-caret.ascending) {
+    border-bottom-color: #b1ddf177;
+}
 
-    :deep(.el-table .sort-caret.descending) {
-        border-top-color: #b1ddf177;
-    }
+:deep(.el-table .sort-caret.descending) {
+    border-top-color: #b1ddf177;
+}
 
-    :deep(.el-table tr) {
-        /* background: #e6e6e6; */
-        background: #f2f2f2;
-    }
+:deep(.el-table tr) {
+    /* background: #e6e6e6; */
+    background: #f2f2f2;
+}
 
-    :deep( .el-table--striped .el-table__body tr.el-table__row--striped td.el-table__cell ) {
-        background: #ffffff;
-    }
+:deep(.el-table--striped .el-table__body tr.el-table__row--striped td.el-table__cell) {
+    background: #ffffff;
+}
 
-    :deep(.el-range-editor.el-input__wrapper) {
-        width: 250px;
-        height: 25px;
-    }
+:deep(.el-range-editor.el-input__wrapper) {
+    width: 250px;
+    height: 25px;
+}
 </style>
