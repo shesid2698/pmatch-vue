@@ -501,8 +501,14 @@ const checkForm = async event => {
                     ' ',
                     '綁定推薦碼後，不可再進行變更，確定要綁定此組推薦碼嗎？'
                 )) === true
-            )
+            ) {
                 theUser[0].RefferCode = recommendStr.value;
+            }
+            else {
+                recommendStr.value = '';
+                theUser[0].RefferCode = '';
+                return;
+            }
         } catch {
             return;
         }
