@@ -33,11 +33,11 @@
             crossorigin="anonymous"
         />
         <LoadingPage />
-        <component :is="isStorePage ? StoreHeader : Header" />
-        <div class="page" :class="isStorePage ? 'pt-0px' : 'pt-70px'">
+        <component v-if="route.path.indexOf('/activity')===-1" :is="isStorePage ? StoreHeader : Header" />
+        <div class="page" :class="route.path.indexOf('/activity')!==-1?'pt-0px':isStorePage ? 'pt-0px' : 'pt-70px'">
             <NuxtPage />
         </div>
-        <component :is="isStorePage ? StoreFooter : Footer"/>
+        <component v-if="route.path.indexOf('/activity')===-1" :is="isStorePage ? StoreFooter : Footer"/>
     </div>
 </template>
 
@@ -96,7 +96,6 @@ import { useLoadStore } from "./stores/loading.js";
 import { useModalStore } from "./stores/useModal.js";
 import { useAlertModalStore } from "./stores/useAlertModal.js";
 import { useConfigStore } from "./stores/config.js";
-
 const store = useLoadStore();
 const modal = useModalStore();
 const alertModal = useAlertModalStore();
