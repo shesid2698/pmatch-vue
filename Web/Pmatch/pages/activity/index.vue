@@ -158,7 +158,7 @@ onMounted(async () => {
 <style scoped>
 #page1 {
     width: 100%;
-    background-image: url('/activity/Slice\ 7.png');
+    background-image: url('/activity/Slice_7.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -249,7 +249,7 @@ onMounted(async () => {
     background-repeat: no-repeat;
     background-position: center;
     position: relative;
-    background-image: url('/activity/Slice\ 8.png');
+    background-image: url('/activity/Slice_8.png');
 }
 #innerPage2 {
     min-width: 55%;
