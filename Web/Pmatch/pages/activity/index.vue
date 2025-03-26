@@ -308,64 +308,27 @@ onMounted(async () => {
     }
 }
 @media screen and (max-width: 767px) {
-    /* #page1 {
+    #page1 {
         width: 100%;
         background-image: url('/activity/分頁一背景.png');
         aspect-ratio: 1921/7070;
     }
     #innerPage1 {
         min-width: unset;
-        width: 80%;
+        width: 75%;
         top: 15%;
         left: 54%;
     }
-    .switch-btns-container {
-        position: absolute;
-        top: -10px;
-        left: 0;
-        z-index: 2;
+    #page2 {
+        width: 100%;
+        background-image: url('/activity/分頁二背景.png');
+        aspect-ratio: 1903/8765;
     }
-    .the-btn {
-        font-size: 7px;
+    #innerPage2 {
+        min-width: unset;
+        width: 100%;
+        top: 0;
+        left: 52%;
     }
-    .content-btn {
-        border: none;
-        width: 20%;
-        aspect-ratio: unset;
-        height: 20px;
-    }
-    .detail-btn {
-        background-color: #f6f4e5;
-        width: 24%;
-        aspect-ratio: unset;
-        height: 20px;
-    }
-    .regist-btn {
-        width: 95px;
-        height: 35px;
-        font-size: 14px;
-    }
-    .reward-btn {
-        border: 2px solid rgba(183, 0, 150, 1);
-        color: white;
-        font-size: 15px;
-        padding: 5px 17px;
-    }
-    .game-btn {
-        width: fit-content;
-        height: fit-content;
-        background-image: linear-gradient(to bottom, #7b2cbf, #2587ff);
-        border: 2px solid #541d84;
-        border-radius: 100px;
-        color: white;
-        font-size: 14px;
-        margin: 0;
-        padding: 10px 15px;
-        text-align: center;
-        cursor: pointer;
-        &:hover {
-            filter: brightness(1.1);
-        }
-    } */
 }
 </style>
