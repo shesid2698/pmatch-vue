@@ -48,7 +48,8 @@
                         @click="ToReward">查看領獎中心</button>
             </div>
             <div class="absolute w-92% h-4% left-14.8% top-[92.1%] ">
-                <NuxtLink to="/findmatch?platformName=寶島娛樂城&keyword=">
+                <NuxtLink to="/findmatch?platformName=寶島娛樂城&keyword="
+                          target="_blank">
                     <button class="game-btn"><img src="/activity/squareIcon.svg"
                              alt=""
                              class="md:mr-10px mr-5px md:w-20px w-10px">委買寶島娛樂城遊戲幣<img src="/activity/squareIcon.svg"
@@ -73,13 +74,15 @@
             </div>
             <button @click="ToRegister"
                     class="w-28% h-2% absolute top-64.65% left-35% member-btn">前往會員中心</button>
-            <NuxtLink to="/findmatch?platformName=寶島娛樂城&keyword=">
+            <NuxtLink to="/findmatch?platformName=寶島娛樂城&keyword="
+                      target="_blank">
                 <button class="w-48% h-2.3% absolute top-84.08% left-24.8% game-btn2"><img src="/activity/squareIcon.svg"
                          alt=""
                          class="md:mr-10px mr-5px md:w-20px w-10px">委買寶島娛樂城遊戲幣<img src="/activity/squareIcon.svg"
                          alt=""
                          class="md:ml-10px ml-5px md:w-20px w-10px"></button>
             </NuxtLink>
+
         </div>
     </div>
 </template>
@@ -92,16 +95,20 @@ const { $axios } = useNuxtApp();
 const memberDetail = reactive({});
 const ToRegister = () => {
     if (token.value === '' || token.value === null || token.value === undefined) {
-        navigateTo('/member/login');
+        window.open('/member/login', '_blank');
+        // navigateTo('/member/login');
     } else {
-        navigateTo('/member/center');
+        window.open('/member/center', '_blank');
+        // navigateTo('/member/center');
     }
 };
 const ToReward = () => {
     if (token.value === '' || token.value === null || token.value === undefined) {
-        navigateTo('/member/login');
+        // navigateTo('/member/login');
+        window.open('/member/login', '_blank');
     } else {
-        navigateTo('/member/center/reward');
+        // navigateTo('/member/center/reward');
+        window.open('/member/center/reward', '_blank');
     }
 };
 const GetMemberDetail = async () => {
