@@ -13,8 +13,9 @@
                 </div>
             </div>
             <div class="w-29% h-3.5% absolute top-38.87% left-30.6%">
-                <button class="regist-btn"
-                        @click="ToRegister">我要註冊</button>
+                <button class="regist-btn !disabled:filter-none !disabled:cursor-default"
+                        @click="ToRegister"
+                        :disabled="token!==''&&token!==null&&token!==undefined">{{token!==""&&token!==null&&token!==undefined?'已登入':'我要註冊'}}</button>
             </div>
             <div class="absolute top-[52%]  left-[47%] text-[1.5vw] font-bold ">
                 <div v-if="token===''||token===null||token===undefined"
