@@ -347,18 +347,23 @@
                                 :interval="3000"
                                 arrow="always"
                             >
-                                <ElCarouselItem
-                                    class="h-auto"
-                                    v-for="(
+                                <ElCarouselItem class="h-auto"
+                                                v-for="(
                                         banner, bannerIndex
                                     ) in bannerTopList"
-                                    :key="bannerIndex"
-                                >
-                                    <img
-                                        class="w-100% h-auto"
-                                        :src="`${assetsUrl}${banner.ImgFile}`"
-                                        :alt="banner.PlatformName"
-                                    />
+                                                :key="bannerIndex">
+                                    <div v-if="banner.Url !== ''">
+                                        <a :href="banner.Url" target="_blank">
+                                            <img class="w-100% h-auto"
+                                                 :src="`${assetsUrl}${banner.ImgFile}`"
+                                                 :alt="banner.PlatformName" />
+                                        </a>
+                                    </div>
+                                    <div v-if="banner.Url === ''">
+                                        <img class="w-100% h-auto"
+                                                :src="`${assetsUrl}${banner.ImgFile}`"
+                                                :alt="banner.PlatformName" />
+                                    </div>
                                 </ElCarouselItem>
                             </ElCarousel>
                         </div>

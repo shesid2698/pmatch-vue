@@ -22,9 +22,11 @@
                             <ElCarouselItem class="h-auto"
                                             v-for="(item, index) in bannerDownList"
                                             :key="index">
-                                <img class="w-100% h-auto"
-                                     :src="`${assetsUrl}${item.ImgFile}`"
-                                     :alt="item.PlatformName" />
+                                <a :href="item.Url?item.Url:'#'" :class="item.Url?'':'cursor-default'" :target="item.Url?'_blank':''">
+                                    <img class="w-100% h-auto"
+                                         :src="`${assetsUrl}${item.ImgFile}`"
+                                         :alt="item.PlatformName" />
+                                </a>
                             </ElCarouselItem>
                         </ElCarousel>
                     </div>
