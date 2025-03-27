@@ -264,6 +264,9 @@ const updateTimeRange = async () => {
             startTime.value = formatDate(start, true);
             endTime.value = formatDate(now, true);
         }
+        // 重置頁碼
+        currentPage.value = 1;
+        //
         await fetchOrderListData();
     }
 };
