@@ -531,7 +531,8 @@ const RegisterMember = async password1 => {
             ContractStores: contractStores.value,
             RefferCode: recommendCode.value,
             IsPromoteCode: encrypt.decrypt(route.query.IsPromoteCode) === 'true' ? true : false, // 是否為下線經營者
-            ThirdPartyPlatform: thirdPartyPlatform.value
+            ThirdPartyPlatform: thirdPartyPlatform.value,
+            PmatchStoreIds: encrypt.decrypt(route.query.PmatchStoreIds) // 商家ID
         },
         {
             headers: {
