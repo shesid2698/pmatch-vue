@@ -518,6 +518,7 @@ const RegisterMember = async password1 => {
     var birthDayValue = birthday.value === '' ? null : birthday.value;
     if (address.value != '' && selectedRegion.value != '' && selectedCity.value != '')
         allAddress = selectedCity.value + selectedRegion.value + address.value;
+
     const response = await $axios.post(
         '/api/v1/Pmatch/Register',
         {
@@ -529,7 +530,7 @@ const RegisterMember = async password1 => {
             Address: allAddress,
             ContractStores: contractStores.value,
             RefferCode: recommendCode.value,
-            IsPromoteCode: route.query.IsPromoteCode, // 是否為下線經營者
+            IsPromoteCode: encrypt.decrypt(route.query.IsPromoteCode) === 'true' ? true : false, // 是否為下線經營者
             ThirdPartyPlatform: thirdPartyPlatform.value
         },
         {
@@ -631,16 +632,16 @@ onMounted(async () => {
     //監聽line登入後身分驗證
     window.addEventListener('storage', syncStorage);
     await setPageLoading(true);
-    if (route.query.Phone) {
+    if (route.query.Phone?.length > 0) {
         phone.value = encrypt.decrypt(route.query.Phone);
         mobileVerify.value = true;
     }
-    if (route.query.ContractStores) {
+    if (route.query.ContractStores?.length > 0) {
         contractStores.value = encrypt.decrypt(route.query.ContractStores);
     }
-    if (route.query.IsPromoteCode) {
-        recommendCode.value = encrypt.decrypt(route.query.IsPromoteCode);
-    }
+
+    var is_promotecode = encrypt.decrypt(route.query.IsPromoteCode);
+
     const updateDialogWidth = () => {
         if (window.innerWidth <= 768) {
             dialogWidth.value = '90%'; // MD 裝置或以下設置寬度為 370px
