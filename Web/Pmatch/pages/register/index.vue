@@ -159,6 +159,7 @@ const ToFormPage = () => {
             query: {
                 Phone: route.query.Phone,
                 ContractStores: encrypt.encrypt(contractStores.value),
+                PmatchStoreIds: route.query.PmatchStoreIds,
                 D: route.query.D,
                 IsPromoteCode: route.query.IsPromoteCode
             }
