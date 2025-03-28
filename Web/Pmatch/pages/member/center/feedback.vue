@@ -189,7 +189,8 @@
                         </el-config-provider>
                     </div>
                 </div>
-                <div v-infinite-scroll="load"
+                <div ref="scrollbarContainer"
+                     v-infinite-scroll="load"
                      class="infinite-table-container"
                      style="overflow: auto; height: 400px">
                     <el-table :data="tableData"
@@ -223,7 +224,7 @@ const openAlertModal = alertModalStore.alertShowModal;
 const MemberIdCookie = useCookie('_PmMemberId');
 const tokenCookie = useCookie('_PmToken');
 const { $axios } = useNuxtApp();
-
+const scrollbarContainer = ref(null);
 const jwtStore = useJwtStore();
 const dataDate = ref('0');
 const dateValue = ref('');
@@ -400,6 +401,7 @@ async function fetchOrderListData() {
 const load = async () => {
     if (tableData.value.length > 0 && currentPage.value) {
         currentPage.value++;
+        if (tableData.value[0].TotalPages <= currentPage.value) return;
         try {
             const formattedStartTime = new Date(startTime.value).toISOString();
             const formattedEndTime = new Date(endTime.value).toISOString();
