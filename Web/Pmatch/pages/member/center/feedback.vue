@@ -401,10 +401,13 @@ async function fetchOrderListData() {
 const load = async () => {
     if (tableData.value.length > 0 && currentPage.value) {
         currentPage.value++;
-        if (tableData.value[0].TotalPages <= currentPage.value) return;
+        if (tableData.value[0].TotalPages < currentPage.value) {
+            currentPage.value = tableData.value[0].TotalPages;
+            return;
+        }
         try {
-            const formattedStartTime = new Date(startTime.value).toISOString();
-            const formattedEndTime = new Date(endTime.value).toISOString();
+            const formattedStartTime = formatDate(new Date(startTime.value), true);
+            const formattedEndTime = formatDate(new Date(endTime.value), true);
             // 調用 API 加載數據
             const response = await $axios.post(
                 '/api/v1/Pmatch/GetDownlineOrder',
@@ -426,7 +429,6 @@ const load = async () => {
             // 更新表格數據
             if (newData.length > 0) {
                 tableData.value.push(...newData);
-                currentPage.value++;
             } else {
                 if (firstLoad === true) {
                     return;
