@@ -2,13 +2,13 @@
     <div v-if="innerPage===1"
          id="page1">
         <div id="innerPage1">
-            <div class="w-43% h-2.28% absolute top-0 left-0 box-border">
-                <div class="w-100% h-100% flex ">
-                    <button class="w-40% the-btn2"
+            <div class="w-43% h-2.5% absolute top-0 left-2px box-border">
+                <div class="w-100% h-100% flex items-end">
+                    <button class="w-45% the-btn2 h-100% !bg-[#4361ee] text-white !text-1.7vw !font-400"
                             :class="innerPage!==1?'non-active':''"
                             @click="()=>innerPage=1">活動內容</button>
-                    <button class="flex-1 the-btn2"
-                            :class="innerPage!==2?'non-active':''"
+                    <button class="flex-1 the-btn2 h-85% !bg-[#43d1ee] text-white !font-300 !text-[1.7vw]"
+                    :class="innerPage!==2?'non-active':''"
                             @click="()=>innerPage=2">推薦碼說明</button>
                 </div>
             </div>
@@ -37,10 +37,10 @@
                     <div>未綁定</div>
                 </div>
             </div>
-            <div class="absolute w-35% h-2.8% bg-white top-59.45% left-[48.5%]">
+            <div class="absolute w-35% h-2.8% bg-white top-59.6% left-[48.5%]">
                 <div class="absolute w-100% h-100% text-center content-center text-1.5vw font-bold text-black">{{activityData.TotalValue? activityData.TotalValue.toLocaleString():'0' }}</div>
             </div>
-            <div class="absolute w-35% h-2.8% bg-white top-62.6% left-[48.5%]">
+            <div class="absolute w-35% h-2.8% bg-white top-62.7% left-[48.5%]">
                 <div class="absolute w-100% h-100% text-center content-center text-1.5vw font-bold text-black">{{ activityData.Reward? activityData.Reward.toLocaleString() :'0'}}</div>
             </div>
             <div class="absolute w-37% h-3.5% top-[78.9%] left-[24.7%]">
@@ -62,21 +62,21 @@
     <div id="page2"
          v-else>
         <div id="innerPage2">
-            <div class="w-35% h-1.4% absolute top-12.2% left-13.8%">
-                <div class="w-100% h-100% flex ">
-                    <button class="w-40% the-btn2"
+            <div class="w-39% h-2% absolute top-[-0.1%] left-0%">
+                <div class="w-100% h-100% flex items-end">
+                    <button class="w-43% the-btn2 !h-85% !bg-[#43d1ee] text-white !text-[1.7vw] !font-300"
                             :class="innerPage===2?'non-active':''"
                             @click="()=>innerPage=1">活動內容</button>
-                    <button class="flex-1 the-btn2"
+                    <button class="flex-1 the-btn2 !h-100% !bg-[#4361ee] text-white !text-[1.7vw] !font-400"
                             :class="innerPage===1?'non-active':''"
                             @click="()=>innerPage=2">推薦碼說明</button>
                 </div>
             </div>
             <button @click="ToRegister"
-                    class="w-28% h-2% absolute top-64.65% left-35% member-btn">前往會員中心</button>
+                    class="w-30% h-2.4% absolute top-68.45% left-26% member-btn">前往會員中心</button>
             <NuxtLink to="/findmatch?platformName=寶島娛樂城&keyword="
                       target="_blank">
-                <button class="w-48% h-2.3% absolute top-84.08% left-24.8% game-btn2"><img src="/activity/squareIcon.svg"
+                <button class="w-55% h-3% absolute top-94.9% left-13% game-btn2"><img src="/activity/squareIcon.svg"
                          alt=""
                          class="md:mr-10px mr-5px md:w-20px w-10px">委買寶島娛樂城遊戲幣<img src="/activity/squareIcon.svg"
                          alt=""
@@ -173,7 +173,7 @@ onMounted(async () => {
     background-repeat: no-repeat;
     background-position: center;
     position: relative;
-    aspect-ratio: 1921/4096;
+    aspect-ratio: 3296/7094;
 }
 #innerPage1 {
     min-width: 42%;
@@ -202,7 +202,6 @@ onMounted(async () => {
     background-color: #f6f4e5;
 }
 .non-active {
-    background-color: lightgray !important;
     &:hover {
         filter: brightness(1.1);
     }
@@ -262,21 +261,23 @@ onMounted(async () => {
     background-image: url('/activity/Slice_8.png');
 }
 #innerPage2 {
-    min-width: 55%;
+    min-width: 46.5%;
+    /* background: green; */
     background-image: url('/activity/分頁二.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+
     position: absolute;
-    aspect-ratio: 1952/8765;
-    top: 0;
-    left: 50%;
+    aspect-ratio: 1683/6539;
+    top: 11.8%;
+    left: 54.3%;
     transform: translateX(-50%);
     z-index: 1;
 }
 .the-btn2 {
     border: none;
-    background-color: #f6f4e5;
+    /* background-color: #f6f4e5; */
     font-size: 1vw;
     text-align: center;
     border-radius: 5px 5px 0 0;
@@ -321,7 +322,7 @@ onMounted(async () => {
     #page1 {
         width: 100%;
         background-image: url('/activity/分頁一背景.png');
-        aspect-ratio: 1921/7070;
+        aspect-ratio: 1903/7070;
     }
     #innerPage1 {
         min-width: unset;
@@ -332,13 +333,13 @@ onMounted(async () => {
     #page2 {
         width: 100%;
         background-image: url('/activity/分頁二背景.png');
-        aspect-ratio: 1903/8765;
+        aspect-ratio: 1903/8610;
     }
     #innerPage2 {
         min-width: unset;
-        width: 100%;
-        top: 0;
-        left: 52%;
+        width: 83%;
+        top: 12.3%;
+        left: 58.4%;
     }
 }
 </style>
