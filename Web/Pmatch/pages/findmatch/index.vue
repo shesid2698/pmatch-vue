@@ -204,7 +204,7 @@
                                                     class="w-100% storeImg"
                                                 />
                                                 </div>
-                                                
+
                                                 <div class="flex items-center" v-show="!item.IMGFiles">
                                                     <span>{{ item.Name }}</span>
                                                 </div>
@@ -695,7 +695,7 @@ onMounted(async () => {
                 await fetchStoresListData(token);
                 await fetchGameList(token);
                 await fetchADTopList(token);
-                await fetchADDownList(token);
+                // await fetchADDownList(token);
                 await fetchContractedList(token);
             }
         } else {
@@ -705,7 +705,7 @@ onMounted(async () => {
                 await fetchStoresListData(token);
                 await fetchGameList(token);
                 await fetchADTopList(token);
-                await fetchADDownList(token);
+                // await fetchADDownList(token);
             }
         }
 
