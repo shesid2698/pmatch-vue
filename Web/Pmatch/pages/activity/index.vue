@@ -82,7 +82,17 @@
                          alt=""
                          class="md:ml-10px ml-5px md:w-20px w-10px"></button>
             </NuxtLink>
-
+             <!-- 武財神 -->
+            <div class="absolute w-20% aspect-ratio-[1/1]  top-28.43% left-15.3% cursor-pointer hover:filter-brightness-[1.1]">
+              <NuxtLink to="/findmatch/206?pn=%E5%AF%B6%E5%B3%B6%E5%A8%9B%E6%A8%82%E5%9F%8E" target="_blank">
+                <img class='w-100%' src="/activity/武財神.png" alt="">
+              </NuxtLink>
+            </div>
+            <div class="absolute w-20% aspect-ratio-[1/1]  top-28.43% left-41.3% cursor-pointer hover:filter-brightness-[1.1]">
+              <NuxtLink to="/findmatch/203?pn=%E5%AF%B6%E5%B3%B6%E5%A8%9B%E6%A8%82%E5%9F%8E" target="_blank">
+                <img class='w-100%' src="/activity/夫人.png" alt="">
+              </NuxtLink>
+            </div>
         </div>
     </div>
 </template>
