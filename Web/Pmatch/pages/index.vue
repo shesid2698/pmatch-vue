@@ -809,22 +809,6 @@ onBeforeUnmount(() => {
 :deep(.el-icon) {
     z-index: -1;
 }
-
-/* .el-carousel__item:nth-child(2n) {
-    background-color: #99a9bf;
-}
-
-.el-carousel__item:nth-child(2n + 1) {
-    background-color: #d3dce6;
-}
-.el-carousel__item{
-    position: relative;
-    border-radius: 10px;
-} */
-.el-carousel__item {
-    /* position: relative; */
-    border-radius: 10px;
-}
 .bannerBox {
     position: relative;
     /* padding: 3px;
@@ -956,18 +940,12 @@ onBeforeUnmount(() => {
     right: 0;
     top: -180px;
 }
-/* :deep(.el-carousel) {
-    position: static;
-}
-:deep(.el-carousel__indicators--horizontal) {
-    bottom: -45px;
-}
 :deep(.el-carousel__container) {
-    height: auto;
-} */
-:deep(.el-carousel__container) {
-    height: 100%;
-    padding-top: 43%;
+  aspect-ratio: 1110/418;
+  height: fit-content !important;
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
 }
 :deep(.el-carousel__item) {
     display: flex;
