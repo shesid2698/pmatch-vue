@@ -5,7 +5,7 @@
             <p v-html="$store.alertMessage"></p>
             <div class="modalBtn">
                 <div class="checkBtnBox">
-                    <button class="checkBtn" @click="$store.alertConfirmModal">確定</button>
+                    <button class="checkBtn" @click="$store.alertConfirmModal" :class="`${$store.confirmClass}`">確定</button>
                 </div>
             </div>
         </div>
