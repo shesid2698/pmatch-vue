@@ -3,16 +3,20 @@
 
         <Head>
             <title>{{ metaTitle }}</title>
-            <Meta property="og:title"
-                  :content="metaTitle" />
-            <Meta property="title"
-                  :content="metaTitle" />
-            <Meta name="keywords"
-                  content="星城online,包你發娛樂城,聚寶Online,老子有錢Online,寶島娛樂城,錢街Online,金好運娛樂城,滿貫大亨,豪神娛樂城,辣財神,金爸爸,HUGA野蠻世界娛樂城,明星3缺1,大福娛樂城" />
-            <Meta name="description"
-                  content="Pmatch遊戲道具交易平台 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
-            <Meta property="og:description"
-                  content="Pmatch遊戲道具交易平台 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
+            <Meta property="og:title" :content="metaTitle" />
+            <Meta property="title" :content="metaTitle" />
+            <Meta
+                name="keywords"
+                content="星城online,包你發娛樂城,聚寶Online,老子有錢Online,寶島娛樂城,錢街Online,金好運娛樂城,滿貫大亨,豪神娛樂城,辣財神,金爸爸,HUGA野蠻世界娛樂城,明星3缺1,大福娛樂城"
+            />
+            <Meta
+                name="description"
+                content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
+            />
+            <Meta
+                property="og:description"
+                content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
+            />
         </Head>
         <div class="absolute right-0 top-0">
             <div class="flex justify-end">

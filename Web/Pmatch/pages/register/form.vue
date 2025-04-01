@@ -7,9 +7,9 @@
         <Meta name="keywords"
               content="pmatch,pmatch交易,博奕遊戲,幣商,媒合商,遊戲幣,虛擬幣,遊戲交易,媒合交易,買幣,賣幣,虛寶交易" />
         <Meta name="description"
-              content="Pmatch遊戲道具交易平台 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
+              content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
         <Meta property="og:description"
-              content="Pmatch遊戲道具交易平台 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
+              content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
     </Head>
     <el-dialog v-model="mobileTableVisible"
                :width="dialogWidth">
@@ -518,6 +518,7 @@ const RegisterMember = async password1 => {
     var birthDayValue = birthday.value === '' ? null : birthday.value;
     if (address.value != '' && selectedRegion.value != '' && selectedCity.value != '')
         allAddress = selectedCity.value + selectedRegion.value + address.value;
+
     const response = await $axios.post(
         '/api/v1/Pmatch/Register',
         {
@@ -529,8 +530,9 @@ const RegisterMember = async password1 => {
             Address: allAddress,
             ContractStores: contractStores.value,
             RefferCode: recommendCode.value,
-            IsPromoteCode: route.query.IsPromoteCode, // 是否為下線經營者
-            ThirdPartyPlatform: thirdPartyPlatform.value
+            IsPromoteCode: encrypt.decrypt(route.query.IsPromoteCode) === 'true' ? true : false, // 是否為下線經營者
+            ThirdPartyPlatform: thirdPartyPlatform.value,
+            PmatchStoreIds: encrypt.decrypt(route.query.PmatchStoreIds) // 商家ID
         },
         {
             headers: {
@@ -631,16 +633,16 @@ onMounted(async () => {
     //監聽line登入後身分驗證
     window.addEventListener('storage', syncStorage);
     await setPageLoading(true);
-    if (route.query.Phone) {
+    if (route.query.Phone?.length > 0) {
         phone.value = encrypt.decrypt(route.query.Phone);
         mobileVerify.value = true;
     }
-    if (route.query.ContractStores) {
+    if (route.query.ContractStores?.length > 0) {
         contractStores.value = encrypt.decrypt(route.query.ContractStores);
     }
-    if (route.query.IsPromoteCode) {
-        recommendCode.value = encrypt.decrypt(route.query.IsPromoteCode);
-    }
+
+    var is_promotecode = encrypt.decrypt(route.query.IsPromoteCode);
+
     const updateDialogWidth = () => {
         if (window.innerWidth <= 768) {
             dialogWidth.value = '90%'; // MD 裝置或以下設置寬度為 370px

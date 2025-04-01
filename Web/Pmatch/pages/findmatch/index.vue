@@ -8,11 +8,11 @@
         />
         <Meta
             name="description"
-            content="Pmatch遊戲道具交易平台 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
+            content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
         />
         <Meta
             property="og:description"
-            content="Pmatch遊戲道具交易平台 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
+            content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
         />
     </Head>
     <div>
@@ -189,7 +189,7 @@
                                     index == 1 ? 'md-mb-300px-important' : '',
                                 ]"
                             >
-                                <div class="storeContent">
+                                <div class="storeContent" :class="`game-${item.Name}`">
                                     <div
                                         class="flex md:flex-row flex-col justify-between"
                                     >
@@ -204,7 +204,7 @@
                                                     class="w-100% storeImg"
                                                 />
                                                 </div>
-                                                
+
                                                 <div class="flex items-center" v-show="!item.IMGFiles">
                                                     <span>{{ item.Name }}</span>
                                                 </div>
@@ -347,18 +347,23 @@
                                 :interval="3000"
                                 arrow="always"
                             >
-                                <ElCarouselItem
-                                    class="h-auto"
-                                    v-for="(
+                                <ElCarouselItem class="h-auto"
+                                                v-for="(
                                         banner, bannerIndex
                                     ) in bannerTopList"
-                                    :key="bannerIndex"
-                                >
-                                    <img
-                                        class="w-100% h-auto"
-                                        :src="`${assetsUrl}${banner.ImgFile}`"
-                                        :alt="banner.PlatformName"
-                                    />
+                                                :key="bannerIndex">
+                                    <div v-if="banner.Url !== ''">
+                                        <a :href="banner.Url" target="_blank">
+                                            <img class="w-100% h-auto"
+                                                 :src="`${assetsUrl}${banner.ImgFile}`"
+                                                 :alt="banner.PlatformName" />
+                                        </a>
+                                    </div>
+                                    <div v-if="banner.Url === ''">
+                                        <img class="w-100% h-auto"
+                                                :src="`${assetsUrl}${banner.ImgFile}`"
+                                                :alt="banner.PlatformName" />
+                                    </div>
                                 </ElCarouselItem>
                             </ElCarousel>
                         </div>
@@ -690,7 +695,7 @@ onMounted(async () => {
                 await fetchStoresListData(token);
                 await fetchGameList(token);
                 await fetchADTopList(token);
-                await fetchADDownList(token);
+                // await fetchADDownList(token);
                 await fetchContractedList(token);
             }
         } else {
@@ -700,7 +705,7 @@ onMounted(async () => {
                 await fetchStoresListData(token);
                 await fetchGameList(token);
                 await fetchADTopList(token);
-                await fetchADDownList(token);
+                // await fetchADDownList(token);
             }
         }
 

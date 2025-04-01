@@ -8,11 +8,11 @@
         />
         <Meta
             name="description"
-            content="Pmatch遊戲道具交易平台 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
+            content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
         />
         <Meta
             property="og:description"
-            content="Pmatch遊戲道具交易平台 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
+            content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
         />
     </Head>
     <div class="ccontainer pt-60px ps-5 pe-5 w-90% xl:w-70%">
@@ -88,8 +88,10 @@
                                     v-show="timeValue === 0"
                                     class="flex items-center w-80px h-30px relative border-1px border-solid border-#ced2db"
                                 >
+                                    <!-- 寶島送很大 -->
                                     <input
-                                        type="number"
+                                        disabled 
+                                        type="number"  
                                         v-model="mainPercent"
                                         @input="SettingPercent"
                                         @change="settingMemberPercent"

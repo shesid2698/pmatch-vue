@@ -16,11 +16,11 @@
             />
             <Meta
                 name="description"
-                content="Pmatch遊戲道具交易平台 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
+                content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
             />
             <Meta
                 property="og:description"
-                content="Pmatch遊戲道具交易平台 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
+                content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
             />
         </Head>
         <BuyLog />
@@ -33,11 +33,11 @@
             crossorigin="anonymous"
         />
         <LoadingPage />
-        <component :is="isStorePage ? StoreHeader : Header" />
-        <div class="page" :class="isStorePage ? 'pt-0px' : 'pt-70px'">
+        <component v-if="route.path.indexOf('/activity')===-1" :is="isStorePage ? StoreHeader : Header" />
+        <div class="page" :class="route.path.indexOf('/activity')!==-1?'pt-0px':isStorePage ? 'pt-0px' : 'pt-70px'">
             <NuxtPage />
         </div>
-        <component :is="isStorePage ? StoreFooter : Footer"/>
+        <component v-if="route.path.indexOf('/activity')===-1" :is="isStorePage ? StoreFooter : Footer"/>
     </div>
 </template>
 
@@ -96,7 +96,6 @@ import { useLoadStore } from "./stores/loading.js";
 import { useModalStore } from "./stores/useModal.js";
 import { useAlertModalStore } from "./stores/useAlertModal.js";
 import { useConfigStore } from "./stores/config.js";
-
 const store = useLoadStore();
 const modal = useModalStore();
 const alertModal = useAlertModalStore();

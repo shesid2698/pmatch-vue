@@ -8,9 +8,9 @@
             <Meta name="keywords"
                   content="pmatch,pmatch交易,博奕遊戲,幣商,媒合商,遊戲幣,虛擬幣,遊戲交易,媒合交易,買幣,賣幣,虛寶交易" />
             <Meta name="description"
-                  content="Pmatch遊戲道具交易平台 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
+                  content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
             <Meta property="og:description"
-                  content="Pmatch遊戲道具交易平台 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
+                  content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
         </Head>
         <div class="max-w-1110px m-auto ps-5 pe-5 m-t-100px">
             <div class="flex flex-wrap">
@@ -22,9 +22,13 @@
                             <ElCarouselItem class="h-auto"
                                             v-for="(item, index) in bannerDownList"
                                             :key="index">
-                                <img class="w-100% h-auto"
-                                     :src="`${assetsUrl}${item.ImgFile}`"
-                                     :alt="item.PlatformName" />
+                                <a :href="item.Url?item.Url:'#'"
+                                   :class="item.Url?'':'cursor-default'"
+                                   :target="item.Url?'_blank':''">
+                                    <img class="w-100% h-auto"
+                                         :src="`${assetsUrl}${item.ImgFile}`"
+                                         :alt="item.PlatformName" />
+                                </a>
                             </ElCarouselItem>
                         </ElCarousel>
                     </div>
@@ -39,7 +43,8 @@
                                      alt="熱門媒合logo" />
                             </div>
                             <div class="flex">
-                                <div class="gameImg w-100% me-3">
+                                <div class="gameImg w-100% me-3"
+                                     :class="`game-logo-${item.PlatformName}`">
                                     <NuxtLink :to="{
                                                 path: '/findmatch',
                                                 query: {
@@ -63,7 +68,8 @@
                                          :class="`w-100% gameItemBox${index2}`">
                                         <NuxtLink class="decoration-none"
                                                   :to="`/findmatch/${character.Id}`">
-                                            <div class="gameItem pt-3 pb-3 w-100%">
+                                            <div class="gameItem pt-3 pb-3 w-100%"
+                                                 :class="`gameItem-${item.PlatformName}-${character.Name}`">
                                                 {{ character.Name }}
                                             </div>
                                         </NuxtLink>

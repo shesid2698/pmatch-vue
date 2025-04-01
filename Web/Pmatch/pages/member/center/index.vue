@@ -7,9 +7,9 @@
         <Meta name="keywords"
               content="pmatch,pmatch交易,博奕遊戲,幣商,媒合商,遊戲幣,虛擬幣,遊戲交易,媒合交易,買幣,賣幣,虛寶交易" />
         <Meta name="description"
-              content="Pmatch遊戲道具交易平台 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
+              content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
         <Meta property="og:description"
-              content="Pmatch遊戲道具交易平台 – 博奕遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
+              content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
     </Head>
     <el-dialog v-model="mobileTableVisible"
                :width="dialogWidth">
@@ -432,7 +432,7 @@ const isVerifyingNum = ref(0);
 /**電子載具類型 */
 const invoice = ref('');
 /**電子信箱通過驗證*/
-const getEmailVerify = async(result, resEmail) => {
+const getEmailVerify = async (result, resEmail) => {
     if (result === true) {
         emailVerify.value = result;
         emailTableVisible.value = false;
@@ -496,14 +496,19 @@ const checkForm = async event => {
 
     if (recommendStr.value !== '' && usedRecommendStr.value === false) {
         try {
-            await modalStore.showModal(
-                ' ',
-                '綁定推薦碼後，不可再進行變更，確定要綁定此組推薦碼嗎？',
-                () => {
-                    theUser[0].RefferCode = recommendStr.value;
-                },
-                () => {}
-            );
+            if (
+                (await modalStore.showModal(
+                    ' ',
+                    '綁定推薦碼後，不可再進行變更，確定要綁定此組推薦碼嗎？'
+                )) === true
+            ) {
+                theUser[0].RefferCode = recommendStr.value;
+            }
+            else {
+                recommendStr.value = '';
+                theUser[0].RefferCode = '';
+                return;
+            }
         } catch {
             return;
         }
@@ -555,10 +560,10 @@ onMounted(async () => {
             if (response.data.Status.Code === 0) {
                 Object.assign(theUser, response.data.Data);
                 Birthday.value = formatToDateInput(theUser[0].Birthday);
-                if (theUser[0].Email_Verified ===true) emailVerify.value = true;
-                if (theUser[0].Mobile1_Verified ===true) mobileVerify.value = true;
-                if (theUser[0].Mobile2_Verified ===true) mobileVerify2.value = true;
-                if (theUser[0].Mobile3_Verified ===true) mobileVerify3.value = true;
+                if (theUser[0].Email_Verified === true) emailVerify.value = true;
+                if (theUser[0].Mobile1_Verified === true) mobileVerify.value = true;
+                if (theUser[0].Mobile2_Verified === true) mobileVerify2.value = true;
+                if (theUser[0].Mobile3_Verified === true) mobileVerify3.value = true;
                 if (theUser[0].CarrierType === 1 && theUser[0].Carrier !== '') {
                     theUser[0].Carrier = theUser[0].Carrier.replace('/', '');
                 }
