@@ -8,7 +8,7 @@
                             :class="innerPage!==1?'non-active':''"
                             @click="()=>innerPage=1">活動內容</button>
                     <button class="flex-1 the-btn2 h-85% !bg-[#43d1ee] text-white !font-300 !text-[1.7vw]"
-                    :class="innerPage!==2?'non-active':''"
+                            :class="innerPage!==2?'non-active':''"
                             @click="()=>innerPage=2">推薦碼說明</button>
                 </div>
             </div>
@@ -82,16 +82,22 @@
                          alt=""
                          class="md:ml-10px ml-5px md:w-20px w-10px"></button>
             </NuxtLink>
-             <!-- 武財神 -->
+            <!-- 武財神 -->
             <div class="absolute w-20% aspect-ratio-[1/1]  top-28.43% left-15.3% cursor-pointer hover:filter-brightness-[1.1]">
-              <NuxtLink to="/findmatch/206?pn=%E5%AF%B6%E5%B3%B6%E5%A8%9B%E6%A8%82%E5%9F%8E" target="_blank">
-                <img class='w-100%' src="/activity/武財神.png" alt="">
-              </NuxtLink>
+                <NuxtLink to="/findmatch/206?pn=%E5%AF%B6%E5%B3%B6%E5%A8%9B%E6%A8%82%E5%9F%8E"
+                          target="_blank">
+                    <img class='w-100%'
+                         src="/activity/武財神.png"
+                         alt="">
+                </NuxtLink>
             </div>
             <div class="absolute w-20% aspect-ratio-[1/1]  top-28.43% left-41.3% cursor-pointer hover:filter-brightness-[1.1]">
-              <NuxtLink to="/findmatch/203?pn=%E5%AF%B6%E5%B3%B6%E5%A8%9B%E6%A8%82%E5%9F%8E" target="_blank">
-                <img class='w-100%' src="/activity/夫人.png" alt="">
-              </NuxtLink>
+                <NuxtLink to="/findmatch/203?pn=%E5%AF%B6%E5%B3%B6%E5%A8%9B%E6%A8%82%E5%9F%8E"
+                          target="_blank">
+                    <img class='w-100%'
+                         src="/activity/夫人.png"
+                         alt="">
+                </NuxtLink>
             </div>
         </div>
     </div>
@@ -103,6 +109,9 @@ const token = useCookie('_PmToken');
 const memberId = useCookie('_PmMemberId');
 const { $axios } = useNuxtApp();
 const memberDetail = reactive({});
+const route = useRoute();
+const router = useRouter();
+
 const ToRegister = () => {
     if (token.value === '' || token.value === null || token.value === undefined) {
         window.open('/member/login', '_blank');
@@ -161,6 +170,7 @@ const GetMemberActivityData = async () => {
         console.log(`GetMemberDetail error:${error}`);
     }
 };
+
 onMounted(async () => {
     if (
         memberId.value !== '' &&
@@ -173,6 +183,11 @@ onMounted(async () => {
         await GetMemberActivityData();
         await GetMemberDetail();
     }
+    router.replace({
+        query: {
+            openExternalBrowser: 1
+        }
+    });
 });
 </script>
 <style scoped>

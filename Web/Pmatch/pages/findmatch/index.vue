@@ -189,7 +189,7 @@
                                     index == 1 ? 'md-mb-300px-important' : '',
                                 ]"
                             >
-                                <div class="storeContent">
+                                <div class="storeContent" :class="`game-${item.Name}`">
                                     <div
                                         class="flex md:flex-row flex-col justify-between"
                                     >

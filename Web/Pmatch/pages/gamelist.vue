@@ -22,7 +22,9 @@
                             <ElCarouselItem class="h-auto"
                                             v-for="(item, index) in bannerDownList"
                                             :key="index">
-                                <a :href="item.Url?item.Url:'#'" :class="item.Url?'':'cursor-default'" :target="item.Url?'_blank':''">
+                                <a :href="item.Url?item.Url:'#'"
+                                   :class="item.Url?'':'cursor-default'"
+                                   :target="item.Url?'_blank':''">
                                     <img class="w-100% h-auto"
                                          :src="`${assetsUrl}${item.ImgFile}`"
                                          :alt="item.PlatformName" />
@@ -41,7 +43,8 @@
                                      alt="熱門媒合logo" />
                             </div>
                             <div class="flex">
-                                <div class="gameImg w-100% me-3">
+                                <div class="gameImg w-100% me-3"
+                                     :class="`game-logo-${item.PlatformName}`">
                                     <NuxtLink :to="{
                                                 path: '/findmatch',
                                                 query: {
@@ -65,7 +68,8 @@
                                          :class="`w-100% gameItemBox${index2}`">
                                         <NuxtLink class="decoration-none"
                                                   :to="`/findmatch/${character.Id}`">
-                                            <div class="gameItem pt-3 pb-3 w-100%">
+                                            <div class="gameItem pt-3 pb-3 w-100%"
+                                                 :class="`gameItem-${item.PlatformName}-${character.Name}`">
                                                 {{ character.Name }}
                                             </div>
                                         </NuxtLink>
