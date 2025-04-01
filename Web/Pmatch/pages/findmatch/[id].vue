@@ -81,28 +81,17 @@
                                              src="/images/iconX.png"
                                              alt="推特icon" />
                                     </NuxtLink>
-                                    <!-- <NuxtLink
-                                    class="flex items-center ms-1 me-1"
-                                    v-show="storesItem.TwitterId !== ''"
-                                    :to="storesItem.TwitterId"
-                                >
-                                    <img
-                                        class="w-30px h-30px"
-                                        src="/images/iconTikTok.png"
-                                        alt=""
-                                    />
-                                </NuxtLink> -->
                                     <NuxtLink class="flex items-center ms-1 me-1"
                                               v-show="storesItem.PhoneNumber !== ''"
                                               :href="`tel:${storesItem.PhoneNumber}`">
                                         <img class="w-30px h-30px"
-                                             src="/images/iconPhone.png"
+                                             src="/public/images/iconPhone.png"
                                              alt="phoneIcon" />
                                     </NuxtLink>
                                 </div>
                                 <div>
                                     <button class="chat-btn"
-                                            @click="OpenChat"><img src="/images/chatRoomIcon.svg" /> 聊聊</button>
+                                            @click="OpenChat"><img src="/public/images/chatRoomIcon.svg" /> 聊聊</button>
                                 </div>
                             </div>
                         </div>
