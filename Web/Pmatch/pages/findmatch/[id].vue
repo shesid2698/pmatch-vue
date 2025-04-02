@@ -852,7 +852,7 @@ const OpenChat = async () => {
         window.open(
             `${config.webChatUrl}?token=${chatToken}`,
             '_blank',
-            'toolbar=no,location=no,status=no,resizable=no,width=770,height=720'
+            'toolbar=no,location=no,status=no,resizable=no,width=870,height=720'
         );
     }
 };
