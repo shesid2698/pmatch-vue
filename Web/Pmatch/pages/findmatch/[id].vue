@@ -668,6 +668,10 @@ async function sendAccList() {
             await openAlertModal(' ', '請填寫委託金額');
             return;
         }
+        if (!selectedContact.value) {
+            await openAlertModal(' ', '請先選擇連絡資訊');
+            return;
+        }
         if (readContract.value !== true) {
             await openAlertModal(' ', '請選擇是否已詳細閱讀服務條款');
             return;
