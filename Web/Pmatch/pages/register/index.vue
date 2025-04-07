@@ -137,7 +137,7 @@ const isBottom = ref(false);
 const isBottom2 = ref(true);
 const handleScroll = (event, index) => {
     const target = event.target;
-    const isAtBottom = target.scrollHeight - target.scrollTop === target.clientHeight;
+    const isAtBottom = target.scrollHeight - target.scrollTop <= target.clientHeight + 50;
     if (isAtBottom) {
         switch (index) {
             case 1:
