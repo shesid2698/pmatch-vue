@@ -642,11 +642,6 @@ onMounted(async () => {
         contractStores.value = encrypt.decrypt(route.query.ContractStores);
     }
 
-    var is_promotecode = false;
-    if (route.query.IsPromoteCode?.length > 0) {
-        is_promotecode = encrypt.decrypt(route.query.IsPromoteCode);
-    }
-
     const updateDialogWidth = () => {
         if (window.innerWidth <= 768) {
             dialogWidth.value = '90%'; // MD 裝置或以下設置寬度為 370px
