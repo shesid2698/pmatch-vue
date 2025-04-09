@@ -469,7 +469,7 @@ const GetRegions = async () => {
 const SubmitForm = async e => {
     e.preventDefault();
     if (mobileVerify.value === false) {
-        await openAlertModal(' ', '手機號碼尚未驗證');
+        await openAlertModal(' ', '手機號碼尚未驗證','mobileUnverified');
         return;
     }
     var password1 = md5(i_password.value.value);
