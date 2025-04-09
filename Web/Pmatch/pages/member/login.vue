@@ -264,7 +264,7 @@ const ThirdPartyLogin = async (category, clientId) => {
         await GetMemberDetail(MemberIdCookie.value, tokenCookie.value);
         window.location.href = '/';
     } else {
-        await openAlertModal(' ', `${response.data.Status.Message}`,'loginFailed');
+        await openAlertModal(' ', `${response.data.Status.Message}`,'ThirdPartyLoginFailed');
     }
 };
 
