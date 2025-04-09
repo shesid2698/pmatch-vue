@@ -70,7 +70,7 @@
                 <div class="mt-30px">
                     <NuxtLink to="/member/login"
                         ><button
-                            class="w-100% p-y-1.5 p-x-3 border-none outline-none text-16px text-white rounded-1 bg-#e93470 hover:bg-#bb2d3b transition duration-200 cursor-pointer"
+                            class="w-100% p-y-1.5 p-x-3 border-none outline-none text-16px text-white rounded-1 bg-#e93470 hover:bg-#bb2d3b transition duration-200 cursor-pointer registerSuccess"
                         >
                             確定
                         </button></NuxtLink
