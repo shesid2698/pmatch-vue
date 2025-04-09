@@ -25,48 +25,50 @@ export const useJwtStore = defineStore("jwt", {
 
     actions: {
         async initializeTime() {
-            // 檢查是否已初始化
-            if (this.isTimeInitialized) {
-                return; // 已經初始化過，不再重複執行
-            }
+            // // 檢查是否已初始化
+            // if (this.isTimeInitialized) {
+            //     return; // 已經初始化過，不再重複執行
+            // }
 
-            try {
-                const response = await fetch(
-                    "https://www.timeapi.io/api/Time/current/zone?timeZone=Asia/Taipei"
-                );
+            // try {
+            //     const response = await fetch(
+            //         "https://www.timeapi.io/api/Time/current/zone?timeZone=Asia/Taipei"
+            //     );
 
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
+            //     if (!response.ok) {
+            //         throw new Error(`HTTP error! status: ${response.status}`);
+            //     }
 
-                const data = await response.json();
+            //     const data = await response.json();
 
-                if (data && data.dateTime) {
-                    const serverTime = new Date(data.dateTime).getTime();
-                    const localTime = Date.now();
+            //     if (data && data.dateTime) {
+            //         const serverTime = new Date(data.dateTime).getTime();
+            //         const localTime = Date.now();
 
-                    // 計算時間差
-                    this.timeDifference = serverTime - localTime;
+            //         // 計算時間差
+            //         this.timeDifference = serverTime - localTime;
 
-                    // 檢查時間差是否在可接受範圍內（±20秒）
-                    if (Math.abs(this.timeDifference) <= 20000) {
-                    } else {
-                        // 時間差超出範圍，顯示警告
-                        alert(
-                            "本地時間與服務器時間差異過大，請調整您的系統時間！"
-                        );
-                    }
-                } else {
-                    throw new Error("API 返回無效數據");
-                }
-            } catch (e) {
-                console.error("初始化時間同步失敗:", e);
-                // 失敗時設置誤差為0
-                this.timeDifference = 0;
-            } finally {
-                // 無論成功或失敗，都標記為已初始化
-                this.isTimeInitialized = true;
-            }
+            //         // 檢查時間差是否在可接受範圍內（±20秒）
+            //         if (Math.abs(this.timeDifference) <= 20000) {
+            //         } else {
+            //             // 時間差超出範圍，顯示警告
+            //             alert(
+            //                 "本地時間與服務器時間差異過大，請調整您的系統時間！"
+            //             );
+            //         }
+            //     } else {
+            //         throw new Error("API 返回無效數據");
+            //     }
+            // } catch (e) {
+            //     console.error("初始化時間同步失敗:", e);
+            //     // 失敗時設置誤差為0
+            //     this.timeDifference = 0;
+            // } finally {
+            //     // 無論成功或失敗，都標記為已初始化
+            //     this.isTimeInitialized = true;
+            // }
+            this.timeDifference=0;
+            this.isTimeInitialized = true;
         },
         async generateToken(customPayload = {}) {
             try {
