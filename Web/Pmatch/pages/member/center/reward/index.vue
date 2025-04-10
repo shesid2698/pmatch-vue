@@ -728,9 +728,11 @@
   </div>
 </template>
 <script setup>
+import useStore from 'element-plus/es/components/table/src/store/index.mjs';
 import { Cropper } from 'vue-advanced-cropper';
 import 'vue-advanced-cropper/dist/style.css';
 
+const config = useConfigStore();
 /**
  * 0=可使用;1=處理中;2=已使用;3=已過期
  */
@@ -740,6 +742,7 @@ const pageNo = ref(1);
 const ticketList = ref([]);
 let isGetNewPage = true;
 const memberToken = useCookie('_PmToken');
+const staffId = useCookie('_PmStaffId');
 const PmMemberPhones = ref([]);
 
 const memberId = useCookie('_PmMemberId');
@@ -1309,7 +1312,6 @@ const CreateAcc = async event => {
   try {
     event.preventDefault();
     const form = new FormData(event.target);
-    console.log(form.get('pmatchOrder'));
     const response = await $axios.post(
       '/api/v1/Pmatch/CreateAccounting',
       {
@@ -1328,6 +1330,24 @@ const CreateAcc = async event => {
     );
     if (response.status === 200 && response.data.Status.Code === 0) {
       await openAlertModal('', '單據已送出，處理中');
+      const obj = {
+        RequestBase: {
+          SqlIndex: 0,
+          TeamIDs: `0`
+        },
+        Token: memberToken.value,
+        StoreId: 9999,
+        StaffId: staffId.value
+      };
+      const str = JSON.stringify(obj);
+      const chatToken = btoa(str).replace(/\+/g, '-').replace(/\//g, '_');
+      if (config.webChatUrl !== '') {
+        window.open(
+          `${config.webChatUrl}?token=${chatToken}`,
+          '_blank',
+          'toolbar=no,location=no,status=no,resizable=no,width=870,height=720'
+        );
+      }
       ResetData();
     } else {
       await openAlertModal('', response.data.Status.Message);
