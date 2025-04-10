@@ -9,7 +9,7 @@
   </Head>
   <div v-if="isCameraOn && !image" class="w-100% h-100vh fixed bg-blue">
     <video ref="video" autoplay playsinline></video>
-    <button @click="takePhoto"
+    <button @click="takePhoto" aria-label="拍照"
       class="rounded-100% absolute left-50% bottom-20% transform-translate-x-[-50%] w-20px h-20px bg-red-6 outline-solid outline-red-6 border-none outline-offset-2"></button>
   </div>
   <div v-else class="ccontainer pt-60px ps-5 pe-5 w-90% lg:w-70%">
@@ -66,7 +66,7 @@
                   複製成功</div>
                 <div class="absolute w-100% h-100% flex items-center justify-center"><span
                     class="text-white text-14px md:text-20px font-600">{{ item.ReviewStatus !== 3 ? (item.RewardType ===
-                      1 ? "複製序號" : item.RewardType === 2 ? '兌換':"領獎"):"補件"}}</span></div>
+                      1 ? "複製序號" : item.RewardType === 2 ? '兌換' : "領獎") : "補件" }}</span></div>
                 <div v-if="innerPage !== 4">
                   <div v-if="innerPage === 1">
                     <img class="right-img" :src="item.RewardType === 3 ? '/images/實體獎項-r.svg' : '/images/虛擬獎項-r.svg'"
@@ -363,7 +363,8 @@
               <div v-else>
                 <div v-if="croppedImage2" class="relative w-fit h-fit">
                   <div @click="cancelCrop(false)" class="absolute w-fit h-fit right-20px top-[-10px] cursor-pointer">
-                    <img src="/images/remove-btn.png" width="20" alt=""></div>
+                    <img src="/images/remove-btn.png" width="20" alt="">
+                  </div>
                   <img class="w-85% m-auto" :src="croppedImage2" alt="">
                 </div>
                 <button v-else type="button" class="camera-btn"
