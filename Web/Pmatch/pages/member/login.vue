@@ -130,7 +130,7 @@
                     <img class="w-30px"
                          src="/images/iconFB.png"
                          alt="FB帳號登入" />
-                </button> 
+                </button>
             </div>
         </div>
     </div>
@@ -231,7 +231,7 @@ async function Login(encryptedPassword) {
             await GetMemberDetail(MemberIdCookie.value, tokenCookie.value);
             window.location.href = '/';
         } else {
-            await openAlertModal(' ', `${response.data.Status.Message}`);
+            await openAlertModal(' ', `${response.data.Status.Message}`,'loginFailed');
         }
     } catch (error) {
         console.error('請求失敗:', error);
@@ -262,7 +262,7 @@ const ThirdPartyLogin = async (category, clientId) => {
         await GetMemberDetail(MemberIdCookie.value, tokenCookie.value);
         window.location.href = '/';
     } else {
-        await openAlertModal(' ', `${response.data.Status.Message}`);
+        await openAlertModal(' ', `${response.data.Status.Message}`,'thirdPartyLoginFailed');
     }
 };
 

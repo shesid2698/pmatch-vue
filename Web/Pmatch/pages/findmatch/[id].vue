@@ -794,15 +794,15 @@ async function sendAccList() {
             return;
         }
         if (buyOrSell.value === true && paymentMethod.value === null) {
-            await openAlertModal(" ", "請先選擇繳費方式");
+            await openAlertModal(" ", "請先選擇繳費方式",'nullOfPaymentKind');
             return;
         }
         if (!accMemberName.value) {
-            await openAlertModal(" ", "請填寫遊戲暱稱");
+          await openAlertModal(" ", "請填寫遊戲暱稱",'nullOfNickName');
             return;
         }
         if (!accPatch.value) {
-            await openAlertModal(" ", "請填寫委託金額");
+          await openAlertModal(" ", "請填寫委託金額",'nullOfAmount');
             return;
         }
         if (readContract.value !== true) {
@@ -904,9 +904,9 @@ async function createAccApi(token) {
 
             // 將更新後的 buyLog 存入 localStorage
             localStorage.setItem(buyLogKey, JSON.stringify(buyLog));
-            await openAlertModal(" ", "單據已送出");
+            await openAlertModal(" ", "單據已送出",'sendAcc');
         } else {
-            await openAlertModal(" ", `${response.data.Status.Message}`);
+          await openAlertModal(" ", `${response.data.Status.Message}`,'sendAccFailed');
         }
     } catch (error) {
         console.error("請求失敗:", error);
