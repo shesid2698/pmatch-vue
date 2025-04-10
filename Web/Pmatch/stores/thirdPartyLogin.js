@@ -1,4 +1,3 @@
-
 import { GoogleLogin } from 'vue3-google-login';
 import { defineStore } from 'pinia';
 import { useConfigStore } from '../stores/config.js';
@@ -10,7 +9,7 @@ export const useThirdPartyLoginStore = defineStore('thirdPartyLogin', {
     actions: {
         async googleCallback(res) {
             try {
-                return new Promise((resolve,reject)=>{
+                return new Promise((resolve, reject) => {
                     const accessToken = res.access_token;
                     useFetch('https://www.googleapis.com/oauth2/v3/userinfo', {
                         method: 'GET',
@@ -18,13 +17,13 @@ export const useThirdPartyLoginStore = defineStore('thirdPartyLogin', {
                             Authorization: `Bearer ${accessToken}`,
                         },
                     })
-                    .then(response => {
-                        resolve(response.data.value.sub);
-                    })
-                    .catch(error => {
-                        console.error('Error fetching user info:', error);
-                        reject(error);
-                    });
+                        .then(response => {
+                            resolve(response.data.value.sub);
+                        })
+                        .catch(error => {
+                            console.error('Error fetching user info:', error);
+                            reject(error);
+                        });
                 });
             } catch (error) {
                 console.error('google callback error..', error);
@@ -44,9 +43,9 @@ export const useThirdPartyLoginStore = defineStore('thirdPartyLogin', {
         async loginWithFacebook() {
             return new Promise((resolve, reject) => {
                 FB.login(
-                    (response) => {
+                    response => {
                         if (response.authResponse) {
-                            FB.api('/me', { fields: 'id,name,email' }, (userData) => {
+                            FB.api('/me', { fields: 'id,name,email' }, userData => {
                                 if (userData) {
                                     resolve(userData);
                                 } else {

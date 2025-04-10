@@ -1,25 +1,21 @@
-import { defineStore } from "pinia";
-import CryptoJS from "crypto-js";
-import { resolve } from "chart.js/helpers";
+import { defineStore } from 'pinia';
+import CryptoJS from 'crypto-js';
+import { resolve } from 'chart.js/helpers';
 
 // 輔助函數
-const base64UrlEncode = (str) => {
-    return btoa(str).replace(/=/g, "").replace(/\+/g, "-").replace(/\//g, "_");
+const base64UrlEncode = str => {
+    return btoa(str).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
 };
 
 const hmacSHA256 = (data, secret) => {
     const hmac = CryptoJS.HmacSHA256(data, secret);
-    return hmac
-        .toString(CryptoJS.enc.Base64)
-        .replace(/=/g, "")
-        .replace(/\+/g, "-")
-        .replace(/\//g, "_");
+    return hmac.toString(CryptoJS.enc.Base64).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
 };
 
-export const useJwtStore = defineStore("jwt", {
+export const useJwtStore = defineStore('jwt', {
     state: () => ({
         token: null,
-        secretKey: "WmlIYWkgSldUIFNlY3JldCBLZXkgNTA5MjIzMTAgMjAyMw==",
+        secretKey: 'WmlIYWkgSldUIFNlY3JldCBLZXkgNTA5MjIzMTAgMjAyMw==',
         timeDifference: 0,
     }),
 
@@ -31,9 +27,7 @@ export const useJwtStore = defineStore("jwt", {
             }
 
             try {
-                const response = await fetch(
-                    "https://www.timeapi.io/api/Time/current/zone?timeZone=Asia/Taipei"
-                );
+                const response = await fetch('https://www.timeapi.io/api/Time/current/zone?timeZone=Asia/Taipei');
 
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -52,15 +46,13 @@ export const useJwtStore = defineStore("jwt", {
                     if (Math.abs(this.timeDifference) <= 20000) {
                     } else {
                         // 時間差超出範圍，顯示警告
-                        alert(
-                            "本地時間與服務器時間差異過大，請調整您的系統時間！"
-                        );
+                        alert('本地時間與服務器時間差異過大，請調整您的系統時間！');
                     }
                 } else {
-                    throw new Error("API 返回無效數據");
+                    throw new Error('API 返回無效數據');
                 }
             } catch (e) {
-                console.error("初始化時間同步失敗:", e);
+                console.error('初始化時間同步失敗:', e);
                 // 失敗時設置誤差為0
                 this.timeDifference = 0;
             } finally {
@@ -72,40 +64,33 @@ export const useJwtStore = defineStore("jwt", {
             try {
                 const decodedSecretKey = atob(this.secretKey);
                 const header = {
-                    alg: "HS256",
-                    typ: "JWT",
+                    alg: 'HS256',
+                    typ: 'JWT',
                 };
 
                 // 直接獲取校正時間，不再檢查初始化狀態
                 const timeTicks = this.getRightTime();
 
-                return new Promise((resolve) => {
+                return new Promise(resolve => {
                     const now = Math.floor(timeTicks / 1000);
                     const payload = {
-                        unique_name: "",
+                        unique_name: '',
                         iat: now,
                         nbf: now,
                         exp: now + 20,
                         ...customPayload,
                     };
 
-                    const encodedHeader = base64UrlEncode(
-                        JSON.stringify(header)
-                    );
-                    const encodedPayload = base64UrlEncode(
-                        JSON.stringify(payload)
-                    );
+                    const encodedHeader = base64UrlEncode(JSON.stringify(header));
+                    const encodedPayload = base64UrlEncode(JSON.stringify(payload));
 
-                    const signature = hmacSHA256(
-                        `${encodedHeader}.${encodedPayload}`,
-                        decodedSecretKey
-                    );
+                    const signature = hmacSHA256(`${encodedHeader}.${encodedPayload}`, decodedSecretKey);
 
                     this.token = `${encodedHeader}.${encodedPayload}.${signature}`;
                     resolve(this.token);
                 });
             } catch (error) {
-                console.error("生成 JWT token 失敗:", error);
+                console.error('生成 JWT token 失敗:', error);
                 throw error;
             }
         },

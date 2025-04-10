@@ -1,9 +1,9 @@
-import { defineStore } from "pinia";
+import { defineStore } from 'pinia';
 
-export const useModalStore = defineStore("modal", () => {
+export const useModalStore = defineStore('modal', () => {
     const modalStatus = ref(false); // 彈窗的顯示狀態
-    const title = ref(""); // 彈窗的標題
-    const message = ref(""); // 彈窗的內容
+    const title = ref(''); // 彈窗的標題
+    const message = ref(''); // 彈窗的內容
     let confirmCallback = null; // 確定按鈕的動作
     let cancelCallback = null; // 取消按鈕的動作
 

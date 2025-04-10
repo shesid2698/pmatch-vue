@@ -25,5 +25,5 @@ export default defineEventHandler(async event => {
         path: '/',
     });
 
-    return "登入成功";
+    return '登入成功';
 });
