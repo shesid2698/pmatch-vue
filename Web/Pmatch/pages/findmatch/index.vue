@@ -94,8 +94,8 @@
               </div>
             </div>
             <Matching :param="matchingPlatform !== undefined
-                ? matchingPlatform
-                : ''
+              ? matchingPlatform
+              : ''
               " class="md-ms-1rem w-100% md-w-60%" />
             <!-- <NewRatio class="w-33%" /> -->
           </div>
@@ -131,13 +131,12 @@
                           <!-- 顯示完整星星 -->
                           <img v-for="n in Math.floor(
                             item.Score
-                          )" :key="`filled-${index}-${n}`" class="m-1" width="20"
-                            src="/images/icon-star.png" alt="評分整顆星星" />
+                          )" :key="`filled-${index}-${n}`" class="m-1" width="20" src="/images/icon-star.png"
+                            alt="評分整顆星星" />
                           <!-- 顯示半顆星星 -->
                           <img v-if="
                             item.Score % 1 !== 0
-                          " :key="`half-${index}`" class="m-1" width="20"
-                            src="/images/icon-star03.png" alt="評分半顆星星" />
+                          " :key="`half-${index}`" class="m-1" width="20" src="/images/icon-star03.png" alt="評分半顆星星" />
                         </div>
                       </div>
                     </div>

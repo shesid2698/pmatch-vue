@@ -1,88 +1,78 @@
 <template>
-    <noscript>
-        <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-TBHCXFCD"
-            height="0"
-            width="0"
-            style="display: none; visibility: hidden"
-        ></iframe>
-    </noscript>
-    <div :class="{ pageSetting: isHomePage }">
-        <Head>
-            <Meta property="og:title" content="PMatch遊戲道具交易平台" />
-            <Meta
-                name="keywords"
-                content="pmatch,pmatch交易,博奕遊戲,幣商,媒合商,遊戲幣,虛擬幣,遊戲交易,媒合交易,買幣,賣幣,虛寶交易"
-            />
-            <Meta
-                name="description"
-                content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
-            />
-            <Meta
-                property="og:description"
-                content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全"
-            />
-        </Head>
-        <BuyLog />
-        <AlertModal />
-        <ConfirmModal />
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
-            integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
-            crossorigin="anonymous"
-        />
-        <LoadingPage />
-        <component v-if="route.path.indexOf('/activity')===-1" :is="isStorePage ? StoreHeader : Header" />
-        <div class="page" :class="route.path.indexOf('/activity')!==-1?'pt-0px':isStorePage ? 'pt-0px' : 'pt-70px'">
-            <NuxtPage />
-        </div>
-        <component v-if="route.path.indexOf('/activity')===-1" :is="isStorePage ? StoreFooter : Footer"/>
+  <noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TBHCXFCD" height="0" width="0"
+      style="display: none; visibility: hidden"></iframe>
+  </noscript>
+  <div :class="{ pageSetting: isHomePage }">
+    <Head>
+      <Meta property="og:title" content="PMatch遊戲道具交易平台" />
+      <Meta name="keywords" content="pmatch,pmatch交易,博奕遊戲,幣商,媒合商,遊戲幣,虛擬幣,遊戲交易,媒合交易,買幣,賣幣,虛寶交易" />
+      <Meta name="description" content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
+      <Meta property="og:description" content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
+    </Head>
+    <BuyLog />
+    <AlertModal />
+    <ConfirmModal />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+      integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+      crossorigin="anonymous" />
+    <LoadingPage />
+    <component v-if="route.path.indexOf('/activity') === -1" :is="isStorePage ? StoreHeader : Header" />
+    <div class="page" :class="route.path.indexOf('/activity') !== -1 ? 'pt-0px' : isStorePage ? 'pt-0px' : 'pt-70px'">
+      <NuxtPage />
     </div>
+    <component v-if="route.path.indexOf('/activity') === -1" :is="isStorePage ? StoreFooter : Footer" />
+  </div>
 </template>
 
 <style>
 body {
-    font-family: Microsoft JhengHei;
-    margin: 0;
-    color: #555553;
+  font-family: Microsoft JhengHei;
+  margin: 0;
+  color: #555553;
 }
-.el-tabs--card > .el-tabs__header .el-tabs__item {
-    background-color: #fff;
-    color: #212529;
-    border-bottom: none;
-    border-radius: 5px;
-    padding: 1.5rem;
+
+.el-tabs--card>.el-tabs__header .el-tabs__item {
+  background-color: #fff;
+  color: #212529;
+  border-bottom: none;
+  border-radius: 5px;
+  padding: 1.5rem;
 }
-.el-tabs--card > .el-tabs__header .el-tabs__item:hover {
-    background-color: #000;
-    border-bottom: none;
-    border-radius: 5px;
-    color: #fff;
-    padding: 1.5rem;
+
+.el-tabs--card>.el-tabs__header .el-tabs__item:hover {
+  background-color: #000;
+  border-bottom: none;
+  border-radius: 5px;
+  color: #fff;
+  padding: 1.5rem;
 }
-.el-tabs--card > .el-tabs__header .el-tabs__item.is-active {
-    background-color: #212529;
-    border-bottom: none;
-    border-radius: 5px;
-    color: #fff;
-    padding: 1.5rem;
+
+.el-tabs--card>.el-tabs__header .el-tabs__item.is-active {
+  background-color: #212529;
+  border-bottom: none;
+  border-radius: 5px;
+  color: #fff;
+  padding: 1.5rem;
 }
-.el-tabs--card > .el-tabs__header {
-    border-bottom: none !important;
-    margin: 0 0 10px 0;
+
+.el-tabs--card>.el-tabs__header {
+  border-bottom: none !important;
+  margin: 0 0 10px 0;
 }
+
 .page {
-    min-height: calc(100vh - 120px - 80px - 280px);
-    z-index: 2;
-    position: relative;
+  min-height: calc(100vh - 120px - 80px - 280px);
+  z-index: 2;
+  position: relative;
 }
+
 .pageSetting {
-    background-image: url("/images/bg.png");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    position: relative;
+  background-image: url("/images/bg.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  position: relative;
 }
 </style>
 
@@ -116,64 +106,63 @@ const isStorePage = computed(() => {
 const router = useRouter();
 
 onMounted(async () => {
-    await setPageLoading(true);
-    try {
-        await jwtStore.initializeTime();
-        if (!configStore.baseUrl) {
-            await configStore.loadConfig();
-        }
-        if (userToken.value != "" && userToken.value != undefined) {
-            const token = userToken.value;
-
-            if (token != "") {
-                fetchSetting(token);
-            }
-        } else {
-            // 生成新的 token
-            const token = await jwtStore.generateToken();
-            if (token != "") {
-                fetchSetting(token);
-            }
-        }
-        await setPageLoading(false);
-    } catch (error) {
-        console.error("頁面初始化失敗:", error);
+  await setPageLoading(true);
+  try {
+    await jwtStore.initializeTime();
+    if (!configStore.baseUrl) {
+      await configStore.loadConfig();
     }
+    if (userToken.value != "" && userToken.value != undefined) {
+      const token = userToken.value;
+
+      if (token != "") {
+        fetchSetting(token);
+      }
+    } else {
+      // 生成新的 token
+      const token = await jwtStore.generateToken();
+      if (token != "") {
+        fetchSetting(token);
+      }
+    }
+    await setPageLoading(false);
+  } catch (error) {
+    console.error("頁面初始化失敗:", error);
+  }
 });
 
 // 取得GetSetting
 async function fetchSetting(token) {
-    if (token === "") {
-        token = await jwtStore.generateToken();
-    }
+  if (token === "") {
+    token = await jwtStore.generateToken();
+  }
 
-    try {
-        const response = await $axios.post(
-            "/api/v1/Pmatch/GetSetting",
-            {},
-            {
-                headers: {
-                    Authorization: token, // 帶上 Token
-                },
-            }
-        );
-        if (response.data.Status.Code === 0) {
-            settingList.value = response.data.Data;
-            try {
-                // 移除外層轉義字符
-                const parsedSettingList = JSON.parse(settingList.value);
-                // 取出 AssetsUrl 的值
-                assetsUrl.value = parsedSettingList.AssetsUrl;
-            } catch (error) {
-                console.error("無法解析 JSON 字符串:", error);
-            }
-        } else {
-            await openAlertModal(" ", `${response.data.Status.Message}`);
-        }
-    } catch (error) {
-        console.error("請求失敗:", error);
-        data.value = "無法取得資料。"; // 畫面顯示錯誤訊息
+  try {
+    const response = await $axios.post(
+      "/api/v1/Pmatch/GetSetting",
+      {},
+      {
+        headers: {
+          Authorization: token, // 帶上 Token
+        },
+      }
+    );
+    if (response.data.Status.Code === 0) {
+      settingList.value = response.data.Data;
+      try {
+        // 移除外層轉義字符
+        const parsedSettingList = JSON.parse(settingList.value);
+        // 取出 AssetsUrl 的值
+        assetsUrl.value = parsedSettingList.AssetsUrl;
+      } catch (error) {
+        console.error("無法解析 JSON 字符串:", error);
+      }
+    } else {
+      await openAlertModal(" ", `${response.data.Status.Message}`);
     }
+  } catch (error) {
+    console.error("請求失敗:", error);
+    data.value = "無法取得資料。"; // 畫面顯示錯誤訊息
+  }
 }
 </script>
-

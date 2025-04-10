@@ -1,6 +1,6 @@
-import { defineStore } from "pinia";
+import { defineStore } from 'pinia';
 
-export const useLoadStore = defineStore("main", () => {
+export const useLoadStore = defineStore('main', () => {
     const pageLoading = ref(true);
     function setPageLoading(show) {
         pageLoading.value = show;
