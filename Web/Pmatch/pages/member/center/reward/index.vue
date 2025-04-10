@@ -1349,6 +1349,9 @@ const CreateAcc = async event => {
         );
       }
       ResetData();
+      innerPage.value = 1;
+      pageNo.value = 1;
+      await GetList(innerPage.value, pageNo.value);
     } else {
       await openAlertModal('', response.data.Status.Message);
     }
