@@ -304,6 +304,197 @@
       </div>
     </div>
   </div>
+              <div v-show="storesItem.IsEnabledBuy" class="flex items-center mx-10">
+                <input type="radio" class="w-20px h-20px m-0 me-3 custom-radio" v-model="buyOrSell" id="buy"
+                  :value="true" />
+                <label for="buy" class="radio-label font-size-18px color-#f72585">委買遊戲幣</label>
+              </div>
+              <div v-show="storesItem.IsEnabledSell" class="flex items-center mx-10">
+                <!-- v-show="storesItem.IsEnabledSell" -->
+                <input type="radio" class="w-20px h-20px m-0 me-3 custom-radio" id="sell" v-model="buyOrSell"
+                  :value="false" />
+                <label for="sell" class="radio-label font-size-18px color-#4361ee">委賣遊戲幣</label>
+              </div>
+            </div>
+            <div class="entryBox mb-5">
+              <div class="entryContent">
+                <input class="entryDetail w-90% py-.5rem font-size-18px" type="text" :placeholder="buyOrSell
+                    ? '委託金額(必填)'
+                    : '委託遊戲幣(必填)'
+                  " v-model="accPatch" />
+              </div>
+            </div>
+            <div class="w-100% flex justify-center mb-5" v-if="storesItem != null"
+              v-show="buyOrSell && storesItem.IsEnabledBuy">
+              <!-- v-if="storesItem != null" -->
+              <!-- v-show="buyOrSell && storesItem.IsEnabledBuy" -->
+              <div class="flex items-center ms-13 me-9">
+                <input type="radio" id="shop" class="w-20px h-20px m-0 me-3 custom-radio" v-model="paymentMethod"
+                  :value="true" />
+                <label for="shop" class="radio-label font-size-18px color-#f72585">超商代收</label>
+              </div>
+              <div class="flex items-center mx-16">
+                <input type="radio" id="atm" class="w-20px h-20px m-0 me-3 custom-radio" v-model="paymentMethod"
+                  :value="false" />
+                <label for="atm" class="radio-label font-size-18px color-#f72585">ATM轉帳</label>
+              </div>
+            </div>
+            <div class="contactBox relative mb-5">
+              <div class="contactContent py-2" @click.stop="contactToggle">
+                <div class="font-size-18px">
+                  {{ selectedContact || "聯絡資訊" }}
+                </div>
+                <div class="absolute top-13px right-20px">
+                  <img class="w-25px" src="/images/arrowDown.png" alt="下拉icon" />
+                </div>
+              </div>
+              <div v-show="contactBox" class="contactPhoneBox absolute top-0 w-100% z-2">
+                <div class="contactPhoneContent">
+                  <div class="py-2">聯絡資訊</div>
+                  <div class="py-2 contactPhone" v-show="memberPhone1Cookie" @click.stop="
+                    selectedPhone(memberPhone1Cookie)
+                    ">
+                    {{ memberPhone1Cookie }}
+                  </div>
+                  <div class="py-2 contactPhone" v-show="memberPhone2Cookie" @click.stop="
+                    selectedPhone(memberPhone2Cookie)
+                    ">
+                    {{ memberPhone2Cookie }}
+                  </div>
+                  <div class="py-2 contactPhone" v-show="memberPhone3Cookie" @click.stop="
+                    selectedPhone(memberPhone3Cookie)
+                    ">
+                    {{ memberPhone3Cookie }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex justify-center">
+          <div class="relative mb-5">
+            <div class="flex items-center font-size-18px">
+              <input type="radio" class="w-20px h-20px m-0 me-3 custom-radio" id="read" v-model="readContract"
+                :value="true" />
+              <ElButton plain @click="readContact">
+                我已詳細閱讀此服務條款(必填)
+              </ElButton>
+              <ElDialog v-model="dialogVisible" :close-on-click-modal="false">
+                <div class="dialogHeader absolute">
+                  服務條款
+                </div>
+                <div class="dialogBody">
+                  <div class="dialogContent">
+                    <div v-if="storesItem" v-html="storesItem.ContractConetnt"></div>
+                  </div>
+                  <div class="flex justify-end mt-5">
+                    <ElButton class="agreeBtn" type="primary" @click="dialogVisible = false">
+                      同意
+                    </ElButton>
+                  </div>
+                </div>
+              </ElDialog>
+            </div>
+          </div>
+        </div>
+        <div class="flex justify-center">
+          <div class="submitBox relative mb-5">
+            <div class="submitBtn font-size-18px px-2rem py-1rem" @click="sendAccList">
+              確認送出
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="w-full bg-#fff relative mt-5rem">
+      <div class="arrowRight absolute">
+        <img src="/images/corner.png" alt="右邊箭頭" />
+      </div>
+      <div class="arrowRight top-0 bottom-0 absolute">
+        <img src="/images/corner.png" alt="右邊箭頭" />
+      </div>
+      <div class="arrowLeft absolute">
+        <img src="/images/corner.png" alt="左邊箭頭" />
+      </div>
+      <div class="mt-5rem max-w-1110px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3 relative z-11">
+        <div class="flex justify-center">
+          <div class="w-80% pt-5rem qaTitle">
+            <div class="mb-5rem relative">
+              <h1 class="buyTitle m-0 text-center font-size-50px">
+                問與答
+              </h1>
+              <div class="flex justify-center">
+                <img class="w-150px" src="/images/faq.png" alt="問與答" />
+              </div>
+            </div>
+            <div>
+              <textarea class="questionEntry w-100% h-5rem p-0 mb-1rem font-size-18px b-none bg-#f8f8f8"
+                placeholder="我的提問..." v-model="question"></textarea>
+            </div>
+            <div class="flex justify-center">
+              <div class="submitBox relative mb-5">
+                <div class="submitBtn font-size-18px px-2rem py-1rem" @click="sendQAList">
+                  確認送出
+                </div>
+              </div>
+            </div>
+            <div v-if="storesItem != null">
+              <div class="qaBox" v-if="storesItem.StoreQAs.length > 0" v-for="(item, index) in paginatedQAs"
+                :key="index">
+                <div class="qaContent">
+                  <div class="flex justify-between p-1rem" @click="answerBoxToggle(index)">
+                    <div class="flex">
+                      <div>
+                        <img class="w-40px" src="/images/iconUser.png" alt="使用者icon" />
+                      </div>
+                      <div class="ms-5">
+                        <h4 class="m-0">
+                          {{ item.Mobile }}
+                        </h4>
+                        <p class="m-0 font-size-12px color-#6a6a6a">
+                          {{ item.CreateTime }}
+                        </p>
+                        <h3 class="m-0 mt-3">
+                          {{ item.Question }}
+                        </h3>
+                      </div>
+                    </div>
+                    <div>
+                      <img :class="answerShow === index
+                          ? 'w-30px'
+                          : 'w-20px'
+                        " :src="answerShow === index
+                                                    ? '/images/arrowDownLine.png'
+                                                    : '/images/arrowRightLine.png'
+                                                  " alt="右箭頭漸層" />
+                    </div>
+                  </div>
+                  <div v-show="answerShow === index &&
+                    item.Answer !== ''
+                    " class="qaAnswer flex p-1rem">
+                    <div>
+                      <img v-show="storesItem.IMGFiles" class="w-40px h-40px rounded-50%"
+                        :src="`${assetsUrl}${storesItem.IMGFiles}`" :alt="storesItem.Name" />
+                      <span v-show="!storesItem.IMGFiles">{{ storesItem.Name }}</span>
+                    </div>
+                    <div class="ms-5">
+                      <h3 class="m-0">
+                        {{ item.Answer }}
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="flex justify-center mt-6rem">
+                <el-pagination layout="prev, pager, next" :current-page="currentPage" :page-size="itemsPerPage"
+                  :total="storesItem.StoreQAs.length" @current-change="changePage" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -378,6 +569,9 @@ const paginatedQAs = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage;
   const end = start + itemsPerPage;
   return storesItem.value.StoreQAs.slice(start, end);
+  const start = (currentPage.value - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
+  return storesItem.value.StoreQAs.slice(start, end);
 });
 
 // 切換頁碼
@@ -441,6 +635,8 @@ async function fetchStoresDetailData(token) {
 const readContact = () => {
   dialogVisible.value = true;
   readContract.value = true;
+  dialogVisible.value = true;
+  readContract.value = true;
 };
 onMounted(async () => {
   await setPageLoading(true);
@@ -474,6 +670,7 @@ onMounted(async () => {
 
 const activeName = ref('first');
 
+const handleClick = (tab, event) => { };
 const handleClick = (tab, event) => { };
 
 // 處理輪播切換的方法
@@ -645,7 +842,12 @@ async function createAccApi(token) {
       }
 
       buyLog.unshift(newItem);
+      buyLog.unshift(newItem);
 
+      // 如果陣列超過 5 筆，移除最後一筆
+      if (buyLog.length > 5) {
+        buyLog.pop();
+      }
       // 如果陣列超過 5 筆，移除最後一筆
       if (buyLog.length > 5) {
         buyLog.pop();
@@ -755,6 +957,12 @@ watch(
     if (newFilteredPlatform) {
       accPlatformName.value = newFilteredPlatform;
     }
+  [filteredPlatform, filteredPlatformArray, gameList],
+  ([newFilteredPlatform, newFilteredPlatformArray]) => {
+    // 更新 accPlatformName
+    if (newFilteredPlatform) {
+      accPlatformName.value = newFilteredPlatform;
+    }
 
     // 如果有路由參數，則將路由參數的值設置為 currentPlatform
     const currentPlatformIndex = newFilteredPlatformArray.findIndex(
@@ -775,7 +983,9 @@ watch(
 <style scoped>
 :deep(.el-icon) {
   z-index: -1;
+  z-index: -1;
 }
+
 
 .storeTitle {
   background: linear-gradient(to bottom, #f72585, #7b2cbf);
@@ -784,7 +994,14 @@ watch(
   -webkit-background-clip: text;
   color: transparent;
   -webkit-text-stroke: 1px rgba(200, 200, 200, 0.1);
+  background: linear-gradient(to bottom, #f72585, #7b2cbf);
+  background: -webkit-linear-gradient(to bottom, #f72585, #7b2cbf);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(200, 200, 200, 0.1);
 }
+
 
 .platformTitle {
   background: linear-gradient(to right, #4361ee, #f72585);
@@ -793,9 +1010,21 @@ watch(
   -webkit-background-clip: text;
   color: transparent;
   -webkit-text-stroke: 1px rgba(200, 200, 200, 0.1);
+  background: linear-gradient(to right, #4361ee, #f72585);
+  background: -webkit-linear-gradient(to right, #4361ee, #f72585);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(200, 200, 200, 0.1);
 }
 
+
 .storeAboutContent {
+  border-top: 2px solid transparent;
+  border-bottom: 2px solid transparent;
+  border-image: linear-gradient(to right, #4361ee 0%, #f72585 100%);
+  border-image-slice: 1;
+  font-size: 20px;
   border-top: 2px solid transparent;
   border-bottom: 2px solid transparent;
   border-image: linear-gradient(to right, #4361ee 0%, #f72585 100%);
@@ -808,19 +1037,31 @@ watch(
   align-items: center;
   border-radius: 10px;
   background-color: rgba(0, 0, 0, 0) !important;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0) !important;
 }
 
 :deep(.el-carousel__arrow) {
   background-color: rgba(0, 0, 0, 0);
+  background-color: rgba(0, 0, 0, 0);
 }
+
 
 :deep(.el-carousel__arrow--left > .el-icon),
 :deep(.el-carousel__arrow--right > .el-icon) {
   font-size: 2.5rem;
   font-weight: 800;
+  font-size: 2.5rem;
+  font-weight: 800;
 }
 
+
 :deep(.el-carousel__button) {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
   width: 10px;
   height: 10px;
   border-radius: 50%;
@@ -828,18 +1069,26 @@ watch(
 
 :deep(.el-carousel__indicators) {
   display: none;
+  display: none;
 }
+
 
 /* 彈窗控制 */
 :deep(.el-button) {
   border: none;
   color: #f72585;
   font-size: 18px;
+  border: none;
+  color: #f72585;
+  font-size: 18px;
 }
+
 
 :deep(.el-dialog__header) {
   position: absolute;
+  position: absolute;
 }
+
 
 :deep(.el-dialog) {
   position: relative;
@@ -850,40 +1099,71 @@ watch(
   --el-dialog-margin-top: 200px;
   --el-dialog-width: 80%;
   max-width: 990px;
+  position: relative;
+  padding: 1px;
+  background: linear-gradient(to right, #4361ee, #f72585);
+  border-radius: 20px;
+  border: none;
+  --el-dialog-margin-top: 200px;
+  --el-dialog-width: 80%;
+  max-width: 990px;
 }
+
 
 :deep(.el-dialog__header) {
   position: absolute;
+  position: absolute;
 }
+
 
 :deep(.el-button:focus-visible) {
   outline: none;
+  outline: none;
 }
+
 
 :deep(.el-pager > .number) {
   color: #f72585;
   margin: 0 5px;
   font-size: 20px;
+  color: #f72585;
+  margin: 0 5px;
+  font-size: 20px;
 }
+
 
 :deep(.el-pagination > .btn-prev > .el-icon) {
   color: #f72585;
   font-size: 20px;
   margin: 0 5px;
-}
-
-:deep(.el-pagination > .btn-next > .el-icon) {
   color: #f72585;
   font-size: 20px;
   margin: 0 5px;
 }
 
+
+:deep(.el-pagination > .btn-next > .el-icon) {
+  color: #f72585;
+  font-size: 20px;
+  margin: 0 5px;
+  color: #f72585;
+  font-size: 20px;
+  margin: 0 5px;
+}
+
+
 :deep(.el-pagination) {
+  --el-pagination-bg-color: rgba(0, 0, 0, 0);
+  --el-pagination-button-disabled-bg-color: rgba(0, 0, 0, 0);
   --el-pagination-bg-color: rgba(0, 0, 0, 0);
   --el-pagination-button-disabled-bg-color: rgba(0, 0, 0, 0);
 }
 
+
 :deep(.el-pager > .is-active) {
+  background: linear-gradient(to right, #4361ee, #f72585);
+  border-radius: 50%;
+  color: #fff;
   background: linear-gradient(to right, #4361ee, #f72585);
   border-radius: 50%;
   color: #fff;
@@ -899,9 +1179,23 @@ watch(
   top: -25px;
   left: 50%;
   transform: translateX(-50%);
+  background: linear-gradient(to right, #4361ee, #f72585);
+  color: #fff;
+  padding: 0.75rem;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 10px;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
+
 .dialogBody {
+  background: #fff;
+  color: #8d8d8d;
+  border-radius: 20px;
+  padding: 3rem 2rem 2rem 2rem;
   background: #fff;
   color: #8d8d8d;
   border-radius: 20px;
@@ -911,23 +1205,38 @@ watch(
 .dialogContent {
   height: 50vh;
   overflow: auto;
+
+.dialogContent {
+  height: 50vh;
+  overflow: auto;
 }
+
 
 .dialogContent::-webkit-scrollbar {
   width: 10px;
+  width: 10px;
 }
+
 
 .dialogContent::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background-color: #666;
+  border-radius: 10px;
+  background-color: #666;
 }
+
 
 .agreeBtn {
   background: linear-gradient(to right, #4361ee, #f72585);
   color: #fff;
   padding: 1.2rem 2rem;
   border-radius: 50px;
+  background: linear-gradient(to right, #4361ee, #f72585);
+  color: #fff;
+  padding: 1.2rem 2rem;
+  border-radius: 50px;
 }
+
 
 .buyTitle {
   background: linear-gradient(to right, #4361ee, #7b2cbf);
@@ -936,7 +1245,14 @@ watch(
   -webkit-background-clip: text;
   color: transparent;
   -webkit-text-stroke: 1px rgba(200, 200, 200, 0.1);
+  background: linear-gradient(to right, #4361ee, #7b2cbf);
+  background: -webkit-linear-gradient(to right, #4361ee, #7b2cbf);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(200, 200, 200, 0.1);
 }
+
 
 .entryBox {
   width: 100%;
@@ -945,24 +1261,42 @@ watch(
   background: linear-gradient(to right, #4361ee, #f72585);
   border-radius: 50px;
   border: none;
+  width: 100%;
+  position: relative;
+  padding: 1px;
+  background: linear-gradient(to right, #4361ee, #f72585);
+  border-radius: 50px;
+  border: none;
 }
+
 
 .entryContent {
   background: #fff;
   color: #f72585;
   border-radius: 50px;
   text-align: center;
+  background: #fff;
+  color: #f72585;
+  border-radius: 50px;
+  text-align: center;
 }
+
 
 .entryDetail {
   border: none;
   color: #8d8d8d;
   border-radius: 50px;
+  border: none;
+  color: #8d8d8d;
+  border-radius: 50px;
 }
+
 
 .entryDetail:focus-visible {
   outline: none;
+  outline: none;
 }
+
 
 .contactBox {
   width: 100%;
@@ -972,7 +1306,15 @@ watch(
   border-radius: 50px;
   border: none;
   cursor: pointer;
+  width: 100%;
+  position: relative;
+  padding: 1px;
+  background: linear-gradient(to right, #4361ee, #f72585);
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
 }
+
 
 .contactContent {
   display: flex;
@@ -983,7 +1325,16 @@ watch(
   border-radius: 50px;
   text-indent: 2rem;
   color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: linear-gradient(to right, #4361ee, #f72585);
+  border-radius: 50px;
+  text-indent: 2rem;
+  color: #fff;
 }
+
 
 .contractBox {
   width: 100%;
@@ -992,9 +1343,20 @@ watch(
   background: linear-gradient(to right, #4361ee, #f72585);
   border-radius: 20px;
   border: none;
+  width: 100%;
+  position: relative;
+  padding: 1px;
+  background: linear-gradient(to right, #4361ee, #f72585);
+  border-radius: 20px;
+  border: none;
 }
 
+
 .contractContent {
+  background: #fff;
+  color: #8d8d8d;
+  border-radius: 20px;
+  padding: 2rem;
   background: #fff;
   color: #8d8d8d;
   border-radius: 20px;
@@ -1005,16 +1367,25 @@ watch(
   padding: 1rem;
   max-height: 600px;
   overflow-y: scroll;
+  padding: 1rem;
+  max-height: 600px;
+  overflow-y: scroll;
 }
+
 
 .contractDetail::-webkit-scrollbar {
   width: 10px;
+  width: 10px;
 }
+
 
 .contractDetail::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background-color: #666;
+  border-radius: 10px;
+  background-color: #666;
 }
+
 
 .matchingTitle {
   top: -1.5rem;
@@ -1022,7 +1393,13 @@ watch(
   transform: translateX(-50%);
   background: linear-gradient(to right, #4361ee, #f72585);
   color: #fff;
+  top: -1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(to right, #4361ee, #f72585);
+  color: #fff;
 }
+
 
 .submitBox {
   position: relative;
@@ -1031,19 +1408,34 @@ watch(
   border-radius: 50px;
   border: none;
   color: #fff;
+  position: relative;
+  padding: 1px;
+  background: linear-gradient(to right, #4361ee, #f72585);
+  border-radius: 50px;
+  border: none;
+  color: #fff;
 }
+
 
 .submitBtn {
   text-align: center;
   cursor: pointer;
+  text-align: center;
+  cursor: pointer;
 }
+
 
 .submitBtn:hover {
   background: #fff;
   color: #8d8d8d;
   border-radius: 50px;
   text-align: center;
+  background: #fff;
+  color: #8d8d8d;
+  border-radius: 50px;
+  text-align: center;
 }
+
 
 .custom-radio {
   appearance: none;
@@ -1059,10 +1451,28 @@ watch(
   position: relative;
   cursor: pointer;
   transition: border-color 0.2s, background-color 0.2s;
+  appearance: none;
+  /* 移除預設樣式 */
+  width: 20px;
+  height: 20px;
+  border: 2px solid #6a6a6a;
+  /* 外圈的灰色邊框 */
+  border-radius: 50%;
+  background-color: #fff;
+  /* 中間的白色底 */
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
 }
+
 
 /* 當選中時 */
 .custom-radio:checked {
+  border-color: #6a6a6a;
+  /* 選中時外圈變為灰色 */
+  background-color: #fff;
+  /* 保持白色底 */
   border-color: #6a6a6a;
   /* 選中時外圈變為灰色 */
   background-color: #fff;
@@ -1083,6 +1493,7 @@ watch(
   transform: translate(-50%, -50%);
 }
 
+
 .contactPhoneBox {
   position: absolute;
   left: 0;
@@ -1091,6 +1502,7 @@ watch(
   border-radius: 20px;
   border: none;
 }
+
 
 .contactPhoneContent {
   position: relative;
@@ -1101,18 +1513,37 @@ watch(
   width: 100%;
   color: #f72585;
   font-size: 18px;
+  position: relative;
+  background: #fafafa;
+  border-radius: 20px;
+  border: none;
+  text-indent: 2rem;
+  width: 100%;
+  color: #f72585;
+  font-size: 18px;
 }
+
 
 .contactPhone {
   border-radius: 25px;
+  border-radius: 25px;
 }
+
 
 .contactPhone:hover {
   background-color: #f72585;
   color: #fff;
+  background-color: #f72585;
+  color: #fff;
 }
 
+
 .el-carousel__item h3 {
+  color: #475669;
+  opacity: 0.75;
+  line-height: 200px;
+  margin: 0;
+  text-align: center;
   color: #475669;
   opacity: 0.75;
   line-height: 200px;
@@ -1122,9 +1553,11 @@ watch(
 
 .el-carousel__item:nth-child(2n) {
   background-color: #99a9bf;
+  background-color: #99a9bf;
 }
 
 .el-carousel__item:nth-child(2n + 1) {
+  background-color: #d3dce6;
   background-color: #d3dce6;
 }
 
@@ -1132,7 +1565,11 @@ watch(
   border-top: 2px solid transparent;
   border-image: linear-gradient(to right, #f72585 0%, #7b2cbf 100%);
   border-image-slice: 1;
+  border-top: 2px solid transparent;
+  border-image: linear-gradient(to right, #f72585 0%, #7b2cbf 100%);
+  border-image-slice: 1;
 }
+
 
 .questionEntry {
   text-indent: 1rem;
@@ -1140,11 +1577,19 @@ watch(
   border-bottom: 1px solid #f72585;
   font-weight: 600;
   height: 120px;
+  text-indent: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid #f72585;
+  font-weight: 600;
+  height: 120px;
 }
+
 
 .questionEntry:focus-visible {
   outline: none;
+  outline: none;
 }
+
 
 .qaBox {
   width: 100%;
@@ -1154,18 +1599,33 @@ watch(
   border-radius: 10px;
   border: none;
   margin: 1.5rem 0;
+  width: 100%;
+  position: relative;
+  padding: 1px;
+  background: linear-gradient(to right, #4361ee, #f72585);
+  border-radius: 10px;
+  border: none;
+  margin: 1.5rem 0;
 }
+
 
 .qaContent {
   background: #fff;
   color: #f72585;
   border-radius: 10px;
   padding: 1rem;
+  background: #fff;
+  color: #f72585;
+  border-radius: 10px;
+  padding: 1rem;
 }
+
 
 .qaAnswer {
   border-top: 1px dashed #ccc;
+  border-top: 1px dashed #ccc;
 }
+
 
 .platformBox {
   background: linear-gradient(to right, #4361ee, #f72585);
@@ -1182,25 +1642,38 @@ watch(
   overflow: hidden;
 }
 
+
 .platformContent {
+  height: 100%;
+  color: #f72585;
   height: 100%;
   color: #f72585;
 }
 
+
 .platformImg {
+  width: 100%;
+  height: 100%;
   width: 100%;
   height: 100%;
 }
 
+
 .arrowLeft {
   top: 200px;
+  top: 200px;
 }
+
 
 .arrowRight {
   transform: rotate(180deg);
   right: 0;
   top: -250px;
+  transform: rotate(180deg);
+  right: 0;
+  top: -250px;
 }
+
 
 .imgContainer {
   border-width: 2px;
@@ -1217,16 +1690,23 @@ watch(
   margin-right: 20px;
 }
 
+
 .imgContainerItem {
+  width: 100%;
+  height: 100%;
   width: 100%;
   height: 100%;
 }
 
+
 .rightItem {
+  transform: translateX(292.407px) scale(0.83) perspective(1000px) rotateY(-40deg) !important;
   transform: translateX(292.407px) scale(0.83) perspective(1000px) rotateY(-40deg) !important;
 }
 
+
 .leftItem {
+  transform: translateX(-22.9075px) scale(0.83) perspective(1000px) rotateY(40deg) !important;
   transform: translateX(-22.9075px) scale(0.83) perspective(1000px) rotateY(40deg) !important;
 }
 
@@ -1244,6 +1724,9 @@ watch(
 }
 
 @media screen and (max-width: 1024px) {
+  .platformBox {
+    max-height: 290px;
+  }
   .platformBox {
     max-height: 290px;
   }

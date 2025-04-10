@@ -206,6 +206,39 @@ banner, bannerIndex
               </ElCarousel>
             </div>
             <!-- <div v-else-if="filteredStores.slice(
+                    <div class="w-100% md-w-200px flex justify-center">
+                      <div class="w-200px flex justify-center items-center">
+                        <NuxtLink :to="`/findmatch/${item.Id}?pn=${selectedGame}`" class="decoration-none">
+                          <div class="orderBox">
+                            <button class="orderBtn">
+                              我要下單
+                            </button>
+                          </div>
+                        </NuxtLink>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </NuxtLink>
+            <!-- 在第一筆資料後插入輪播 -->
+            <div v-if="index === 1 && bannerTopList.length > 0" class="w-100% mb-7rem md-mb-2rem carouselContainer">
+              <ElCarousel class="h-auto" :interval="3000" arrow="always">
+                <ElCarouselItem class="h-auto" v-for="(
+banner, bannerIndex
+                                    ) in bannerTopList" :key="bannerIndex">
+                  <div v-if="banner.Url !== ''">
+                    <a :href="banner.Url" target="_blank">
+                      <img class="w-100% h-auto" :src="`${assetsUrl}${banner.ImgFile}`" :alt="banner.PlatformName" />
+                    </a>
+                  </div>
+                  <div v-if="banner.Url === ''">
+                    <img class="w-100% h-auto" :src="`${assetsUrl}${banner.ImgFile}`" :alt="banner.PlatformName" />
+                  </div>
+                </ElCarouselItem>
+              </ElCarousel>
+            </div>
+            <!-- <div v-else-if="filteredStores.slice(
                             (currentPage - 1) * itemsPerPage,
                             (currentPage - 1) * itemsPerPage + itemsPerPage
                         ).length ==1"
@@ -224,6 +257,14 @@ banner, bannerIndex
                                 </ElCarouselItem>
                             </ElCarousel>
                         </div> -->
+          </div>
+        </div>
+        <div class="">
+          <el-pagination layout="prev, pager, next" :current-page="currentPage" :page-size="itemsPerPage"
+            :total="filteredStores.length" class="w-fit m-y-0 m-x-auto" @current-change="changePage" />
+        </div>
+        <!-- 各媒合商 -->
+        <!-- <div class="flex relative w-100%">
           </div>
         </div>
         <div class="">
@@ -275,6 +316,9 @@ banner, bannerIndex
                         </div>
                     </div>
                 </div> -->
+      </div>
+    </div>
+  </div>
       </div>
     </div>
   </div>
@@ -506,6 +550,9 @@ const paginatedQAs = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage;
   const end = start + itemsPerPage;
   return filteredStores.value.slice(start, end);
+  const start = (currentPage.value - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
+  return filteredStores.value.slice(start, end);
 });
 const changePage = page => {
   currentPage.value = page;
@@ -552,6 +599,10 @@ onMounted(async () => {
       selectedGame.value = platformName;
       handleSearch();
     }
+    if (platformName !== undefined) {
+      selectedGame.value = platformName;
+      handleSearch();
+    }
 
     await setPageLoading(false);
   } catch (error) {
@@ -560,6 +611,7 @@ onMounted(async () => {
 });
 
 const processedGamePlatforms = computed(() => {
+  if (!storesList.value.length) return []; // 如果資料是空的，回傳空陣列
   if (!storesList.value.length) return []; // 如果資料是空的，回傳空陣列
 
   return storesList.value.map(store => {
@@ -638,7 +690,11 @@ const filteredProcessedGamePlatforms = computed(() => {
   background: linear-gradient(to right, #4361ee, #f72585);
   border-radius: 50px;
   text-indent: 1rem;
+  background: linear-gradient(to right, #4361ee, #f72585);
+  border-radius: 50px;
+  text-indent: 1rem;
 }
+
 
 .platformBox {
   position: relative;
@@ -648,7 +704,15 @@ const filteredProcessedGamePlatforms = computed(() => {
   border: none;
 }
 
+
 .platformBoxContent {
+  position: relative;
+  background: #fafafa;
+  border-radius: 25px;
+  border: none;
+  text-indent: 1rem;
+  width: 100%;
+  color: #f72585;
   position: relative;
   background: #fafafa;
   border-radius: 25px;
@@ -658,14 +722,20 @@ const filteredProcessedGamePlatforms = computed(() => {
   color: #f72585;
 }
 
+
 .platformItem {
   border-radius: 25px;
+  border-radius: 25px;
 }
+
 
 .platformItem:hover {
   background-color: #f72585;
   color: #fff;
+  background-color: #f72585;
+  color: #fff;
 }
+
 
 .storeNameBox {
   position: relative;
@@ -675,7 +745,13 @@ const filteredProcessedGamePlatforms = computed(() => {
   border: none;
 }
 
+
 .storeName {
+  position: relative;
+  background: #fff;
+  border-radius: 50px;
+  border: none;
+  text-indent: 1rem;
   position: relative;
   background: #fff;
   border-radius: 50px;
@@ -683,33 +759,51 @@ const filteredProcessedGamePlatforms = computed(() => {
   text-indent: 1rem;
 }
 
+
 .storeEntry:focus-visible {
   outline: none;
+  outline: none;
 }
+
 
 .storeEntry {
   border: none;
   color: #8d8d8d;
+  border: none;
+  color: #8d8d8d;
 }
+
 
 .searchBtn {
   background-color: rgba(0, 0, 0, 0);
+  background-color: rgba(0, 0, 0, 0);
 }
+
 
 .searchBtn:hover .searchIcon {
   opacity: 0.8;
+  opacity: 0.8;
 }
+
 
 :deep(.el-icon) {
   z-index: -1;
+  z-index: -1;
 }
+
 
 :deep(.el-carousel__container) {
   height: 100%;
   padding-top: 28%;
+  height: 100%;
+  padding-top: 28%;
 }
 
+
 .searchCol {
+  border-bottom: 2px solid transparent;
+  border-image: linear-gradient(to right, #4361ee 0%, #f72585 100%);
+  border-image-slice: 1;
   border-bottom: 2px solid transparent;
   border-image: linear-gradient(to right, #4361ee 0%, #f72585 100%);
   border-image-slice: 1;
@@ -724,7 +818,16 @@ const filteredProcessedGamePlatforms = computed(() => {
   font-weight: 900;
   -webkit-text-stroke: 1px rgba(200, 200, 200, 0.1);
   font-size: 44px;
+  background: linear-gradient(to bottom, #f72585, #7b2cbf);
+  background: -webkit-linear-gradient(#f72585, #7b2cbf);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  font-weight: 900;
+  -webkit-text-stroke: 1px rgba(200, 200, 200, 0.1);
+  font-size: 44px;
 }
+
 
 .platformImgBox {
   display: flex;
@@ -742,11 +845,29 @@ const filteredProcessedGamePlatforms = computed(() => {
   overflow: hidden;
   height: 100%;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  box-shadow: 0px 10px 10px 2px #ccc;
+  border-width: 2px;
+  border-style: solid;
+  border-color: transparent;
+  border-radius: 10px;
+  background-image: linear-gradient(white, white),
+    linear-gradient(to right, rgba(67, 97, 238), rgba(247, 37, 133));
+  background-clip: padding-box, border-box;
+  background-origin: padding-box, border-box;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
 }
+
 
 .platformImg {
   width: 100%;
+  width: 100%;
 }
+
 
 .storeBox {
   position: relative;
@@ -761,7 +882,20 @@ const filteredProcessedGamePlatforms = computed(() => {
   background-clip: padding-box, border-box;
   background-origin: padding-box, border-box;
   overflow: hidden;
+  position: relative;
+  border-radius: 15px;
+  border: none;
+  margin-bottom: 20px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: transparent;
+  background-image: linear-gradient(white, white),
+    linear-gradient(to right, rgba(67, 97, 238), rgba(247, 37, 133));
+  background-clip: padding-box, border-box;
+  background-origin: padding-box, border-box;
+  overflow: hidden;
 }
+
 
 .storeContent {
   position: relative;
@@ -777,10 +911,13 @@ const filteredProcessedGamePlatforms = computed(() => {
   box-sizing: border-box;
 }
 
+
 /* 商家資訊 */
 .storeImg {
   border-radius: 10px;
+  border-radius: 10px;
 }
+
 
 .storeImgBox {
   position: relative;
@@ -795,11 +932,16 @@ const filteredProcessedGamePlatforms = computed(() => {
   align-content: center;
 }
 
+
 .storeImgCol {
   height: 210px;
   padding-right: 2rem;
   border-right: 3px #ccc dashed;
+  height: 210px;
+  padding-right: 2rem;
+  border-right: 3px #ccc dashed;
 }
+
 
 .storeDetailCol {
   width: calc(100% - 400px);
@@ -808,7 +950,14 @@ const filteredProcessedGamePlatforms = computed(() => {
   flex-wrap: wrap;
   align-content: space-between;
   overflow: hidden;
+  width: calc(100% - 400px);
+  padding: 0 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-between;
+  overflow: hidden;
 }
+
 
 .orderBox {
   position: relative;
@@ -819,6 +968,7 @@ const filteredProcessedGamePlatforms = computed(() => {
   align-content: center;
   padding: 1px;
 }
+
 
 .orderBtn {
   position: relative;
@@ -838,10 +988,14 @@ const filteredProcessedGamePlatforms = computed(() => {
   cursor: pointer;
 }
 
+
 .orderBtn:hover {
   background: #fff;
   color: #f72585;
+  background: #fff;
+  color: #f72585;
 }
+
 
 /* 側邊欄 */
 .sideBar {
@@ -850,16 +1004,27 @@ const filteredProcessedGamePlatforms = computed(() => {
   top: 0;
   right: 8px;
   margin-top: 14.5rem;
+  width: 23%;
+  position: fixed;
+  top: 0;
+  right: 8px;
+  margin-top: 14.5rem;
 }
+
 
 :deep(.el-overlay) {
   background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.1);
 }
+
 
 :deep(.el-dialog) {
   box-shadow: none;
   border-radius: 10px;
+  box-shadow: none;
+  border-radius: 10px;
 }
+
 
 .aboutContent {
   height: 100px;
@@ -872,44 +1037,86 @@ const filteredProcessedGamePlatforms = computed(() => {
   -webkit-line-clamp: 3;
   /* 限制顯示的行數 */
   line-height: 35px;
+  height: 100px;
+  overflow: hidden;
+  /* 隱藏超出部分 */
+  display: -webkit-box;
+  /* 使用 flexbox 的變體 */
+  -webkit-box-orient: vertical;
+  /* 設置為垂直方向 */
+  -webkit-line-clamp: 3;
+  /* 限制顯示的行數 */
+  line-height: 35px;
 }
+
 
 :deep(.el-pager > .number) {
   color: #f72585;
   margin: 0 5px;
   font-size: 20px;
+  color: #f72585;
+  margin: 0 5px;
+  font-size: 20px;
 }
+
 
 :deep(.el-pagination > .btn-prev > .el-icon) {
   color: #f72585;
   font-size: 20px;
   margin: 0 5px;
-}
-
-:deep(.el-pagination > .btn-next > .el-icon) {
   color: #f72585;
   font-size: 20px;
   margin: 0 5px;
 }
 
+
+:deep(.el-pagination > .btn-next > .el-icon) {
+  color: #f72585;
+  font-size: 20px;
+  margin: 0 5px;
+  color: #f72585;
+  font-size: 20px;
+  margin: 0 5px;
+}
+
+
 :deep(.el-pagination) {
   --el-pagination-bg-color: rgba(0, 0, 0, 0);
   --el-pagination-button-disabled-bg-color: rgba(0, 0, 0, 0);
+  --el-pagination-bg-color: rgba(0, 0, 0, 0);
+  --el-pagination-button-disabled-bg-color: rgba(0, 0, 0, 0);
 }
+
 
 :deep(.el-pager > .is-active) {
   background: linear-gradient(to right, #4361ee, #f72585);
   border-radius: 50%;
   color: #fff;
+  background: linear-gradient(to right, #4361ee, #f72585);
+  border-radius: 50%;
+  color: #fff;
 }
+
 
 :deep(.el-carousel__item) {
   border-radius: 10px;
   display: flex;
   align-content: center;
+  border-radius: 10px;
+  display: flex;
+  align-content: center;
 }
 
+
 @media screen and (max-width: 768px) {
+  .storeBox {
+    max-height: unset;
+    width: 100%;
+    aspect-ratio: unset;
+    border-radius: 13px;
+    margin-bottom: 80px;
+    overflow: visible;
+  }
   .storeBox {
     max-height: unset;
     width: 100%;
@@ -974,6 +1181,9 @@ const filteredProcessedGamePlatforms = computed(() => {
         display: flex;
         justify-content: center;
     } */
+  .mb-300px-important {
+    margin-bottom: 220px !important;
+  }
   .mb-300px-important {
     margin-bottom: 220px !important;
   }

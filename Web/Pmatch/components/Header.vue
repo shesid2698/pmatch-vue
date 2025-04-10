@@ -85,6 +85,7 @@
 </template>
 
 <script setup>
+import GetMemberDetail from '~/composables/getMemberDetail.js';
 const userToken = useCookie('_PmToken');
 const isLoggedIn = computed(() => !!userToken?.value && userToken.value.trim() !== '');
 const userNameCookie = useCookie('_PmUserName');
@@ -95,6 +96,7 @@ const toggleNav = () => {
   navOpen.value = !navOpen.value;
 };
 const headerLink = ref([]);
+const theMember = useState('theMember', () => reactive({}));
 const memberCenterLink = ref([
   {
     title: '會員維護資訊',
@@ -122,6 +124,12 @@ const memberCenterLink = ref([
   }, {
     title: "領獎中心",
     link: '/member/center/reward'
+  }, {
+    title: "會員回饋累積",
+    link: '/member/center/feedback'
+  }, {
+    title: "推薦管理",
+    link: '/member/center/recommend'
   }
 ]);
 const show = ref(false);
@@ -163,8 +171,22 @@ const logout = () => {
   window.location.href = '/';
 };
 // 在組件掛載時添加全局點擊事件監聽器
-onMounted(() => {
+onMounted(async () => {
   document.addEventListener('click', closeDropdownOutside);
+  if (userToken.value !== '' && userToken.value !== null && userToken.value !== undefined) {
+    Object.assign(theMember.value, await GetMemberDetail(MemberIdCookie.value, userToken.value));
+    if (theMember.value.Type == 1) {
+      // 下線經營者 2個
+      memberCenterLink.value = memberCenterLink.value.filter(x => {
+        return x.title !== "會員回饋累積" && x.title !== "推薦管理";
+      })
+    } else if (theMember.value.Type == 3) {
+      // 下線 1個
+      memberCenterLink.value = memberCenterLink.value.filter(x => {
+        return x.title !== "推薦管理";
+      })
+    }
+  }
   if (userNameCookie.value !== '' && userNameCookie.value != undefined) {
     headerLink.value = [
       {

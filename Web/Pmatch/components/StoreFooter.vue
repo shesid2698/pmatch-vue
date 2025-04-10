@@ -57,8 +57,18 @@ const footerLinkLeft = ref([
     title: "會員頁面",
     link: "/",
   },
+  {
+    id: 0,
+    title: "會員頁面",
+    link: "/",
+  },
 ]);
 const footerLinkRight = ref([
+  // {
+  //     id: 0,
+  //     title: "付費方案",
+  //     link: "/store/program",
+  // },
   // {
   //     id: 0,
   //     title: "付費方案",
@@ -71,17 +81,32 @@ const footerLinkRight = ref([
 .footerLink:hover {
   color: #ccc;
   text-decoration: underline;
+  color: #ccc;
+  text-decoration: underline;
 }
+
 
 .footer {
   flex-wrap: wrap;
+  flex-wrap: wrap;
 }
+
 
 .homeBackground {
   background: rgba(0, 0, 0, 0);
+  background: rgba(0, 0, 0, 0);
 }
 
+
 .waveBottom {
+  background-image: url("/images/waveTop.svg");
+  background-repeat: no-repeat;
+  background-position: left top;
+  background-size: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 500px;
   background-image: url("/images/waveTop.svg");
   background-repeat: no-repeat;
   background-position: left top;

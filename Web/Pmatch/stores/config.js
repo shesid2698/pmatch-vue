@@ -10,6 +10,7 @@ export const useConfigStore = defineStore('config', {
         lineClientId: '',
         lineSecret: '',
         lineReturnUrl: '',
+        lineReturnUrl: '',
     }),
     actions: {
         async loadConfig() {
@@ -39,11 +40,13 @@ export const useConfigStore = defineStore('config', {
         },
         initFacebook() {
             return new Promise(resolve => {
+            return new Promise(resolve => {
                 window.fbAsyncInit = function () {
                     FB.init({
                         appId: '1152746759857296',
                         cookie: true,
                         xfbml: true,
+                        version: 'v22.0',
                         version: 'v22.0',
                     });
                     resolve();

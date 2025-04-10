@@ -67,6 +67,7 @@ const account = ref("");
 const encrypt = useEncrypt();
 onMounted(() => {
   account.value = encrypt.decrypt(route.query.account) || "";
+  account.value = encrypt.decrypt(route.query.account) || "";
 });
 </script>
 <style scoped>
@@ -76,9 +77,21 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   width: 100%;
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
+
 #progress::before {
+  content: "";
+  width: 100%;
+  height: 1px;
+  background: #e93470;
+  position: absolute;
+  top: 50%;
   content: "";
   width: 100%;
   height: 1px;
