@@ -201,7 +201,7 @@
             </div>
           </div>
 
-          <div class="mt-15px" v-if="!route.query.IsPromoteCode">
+          <div class="mt-15px" v-if="isShowRecommandInput">
             <div class="mb-5px text-[#484646] font-400 text-15px">
               推薦碼(推薦人)
             </div>
@@ -320,6 +320,8 @@ const districts = ref([]);
 const selectedCity = ref('');
 const selectedRegion = ref('');
 const recommendCode = ref('');
+const decryptIsPromoteCode = ref(false)
+const isShowRecommandInput = ref(true)
 
 //三方登入
 const thirdPartyLogin = useThirdPartyLoginStore();
@@ -476,7 +478,7 @@ const RegisterMember = async password1 => {
       Address: allAddress,
       ContractStores: contractStores.value,
       RefferCode: recommendCode.value,
-      IsPromoteCode: route.query.IsPromoteCode && encrypt.decrypt(route.query.IsPromoteCode) === 'true' ? true : false, // 是否為下線經營者
+      IsPromoteCode: decryptIsPromoteCode.value, // 是否為下線經營者
       ThirdPartyPlatform: thirdPartyPlatform.value,
       PmatchStoreIds: route.query.PmatchStoreIds ? encrypt.decrypt(route.query.PmatchStoreIds) : '' // 商家ID
     },
@@ -585,6 +587,11 @@ onMounted(async () => {
   }
   if (route.query.ContractStores?.length > 0) {
     contractStores.value = encrypt.decrypt(route.query.ContractStores);
+  }
+  if (route.query.IsPromoteCode) {
+    const decryptedValue = encrypt.decrypt(route.query.IsPromoteCode);
+    decryptIsPromoteCode.value = decryptedValue === 'true' ? true : false
+    isShowRecommandInput.value = decryptedValue !== 'true';
   }
 
   const updateDialogWidth = () => {
