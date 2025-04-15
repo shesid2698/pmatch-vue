@@ -14,7 +14,7 @@
               PMatch 遊戲道具交易平台
             </p>
             <p class="color-#fff m-0 text-center">
-              版本號 : v6.2.1
+              版本號 : v6.2.2
             </p>
           </div>
         </div>
@@ -69,11 +69,11 @@ const footerLinkLeft = ref([
     title: "找媒合",
     link: "/gamelist",
   },
-  {
-    id: 4,
-    title: "登入/註冊",
-    link: "/member/login",
-  },
+//  {
+//    id: 4,
+//    title: "登入/註冊",
+//    link: "/member/login",
+//  },
 ]);
 const footerLinkRight = ref([
   {
