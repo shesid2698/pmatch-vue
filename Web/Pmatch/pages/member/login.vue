@@ -207,7 +207,7 @@ async function Login(encryptedPassword) {
       await GetMemberDetail(MemberIdCookie.value, tokenCookie.value);
       window.location.href = '/';
     } else {
-      await openAlertModal(' ', `${response.data.Status.Message}`, 'loginFailed');
+        await openAlertModal(' ', `帳戶密碼錯誤，請確認後重新輸入`, 'loginFailed');
     }
   } catch (error) {
     console.error('請求失敗:', error);
