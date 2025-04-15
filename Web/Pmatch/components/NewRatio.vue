@@ -84,11 +84,6 @@ const matchingList = [
     SendPatch: "134",
     CollectPatch: "150",
   },
-  {
-    GamePlatform: "金豹娛樂城",
-    SendPatch: "130",
-    CollectPatch: "144",
-  },
 ];
 
 const visibleList = ref([]); // 當前顯示的列表
