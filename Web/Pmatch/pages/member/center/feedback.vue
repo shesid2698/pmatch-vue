@@ -18,13 +18,26 @@
         <div class="flex flex-col lg:flex-row mb-10">
           <div class="w-100% lg:w-43% flex flex-col justify-between h-50px lg:h-250px">
             <div class="flex w-100% justify-between">
-              <div class="whitespace-nowrap text-[20px] font-500 text-black line-height-50px">
-                {{
+                <div class="whitespace-nowrap text-[20px] font-500 text-black line-height-50px">
+                    {{
                   memberRewardList.Type === 2
                     ? "我的推薦碼"
                     : "綁定推薦碼"
-                }}
-              </div>
+                    }}
+                    <el-tooltip v-if="memberRewardList.Type === 2" class="box-item" effect="dark" placement="top">
+                        <template #content>
+                            <div class="text-14px">
+                                讓好朋友綁定你的推薦碼，好友消費時，就能共享回饋。
+                                <div style="text-align: right;"><a href="https://www.pmatch.com.tw/helpcenter/1420" target="_blank" style="color: #FFD393;">點擊查看更多</a></div>
+                            </div>
+                        </template>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
+                            <path d="M8.5 7.65002V11.15" stroke="#ACB4C2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M8.5 4.85702L8.5075 4.84924" stroke="#ACB4C2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M8.5 15C12.6421 15 16 11.866 16 8C16 4.134 12.6421 1 8.5 1C4.35786 1 1 4.134 1 8C1 11.866 4.35786 15 8.5 15Z" stroke="#ACB4C2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </el-tooltip>
+                </div>
               <div>
                 <div class="flex h-55px">
                   <div
@@ -35,10 +48,21 @@
                         : memberRewardList.RefferCode
                     }}
                   </div>
-                  <div
-                    class="w-75px lg:w-95px h-100% text-center bg-[#3caadc] content-center text-white font-500 text-[20px] font-500 text-[18px] text-[#757575]"
-                    :class="timeValue > 0 ? 'bg-#3caadc' : 'bg-#959595'">
-                    {{ timeValue > 0 ? "開啟中" : "關閉中" }}
+                  <div class="w-75px lg:w-95px h-100% text-center bg-[#3caadc] content-center text-white font-500 text-[20px] font-500 text-[18px] text-[#757575]"
+                       :class="timeValue > 0 ? 'bg-#3caadc' : 'bg-#959595'">
+                      {{ timeValue > 0 ? "開啟中" : "關閉中" }}
+                      <el-tooltip class="box-item" effect="dark" placement="top">
+                          <template #content>
+                              <div class="text-14px">
+                                  只有在推薦碼開啟的有效期間內交易，才會享有回饋。
+                              </div>
+                          </template>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
+                              <path d="M8.5 7.65002V11.15" stroke="#ACB4C2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                              <path d="M8.5 4.85702L8.5075 4.84924" stroke="#ACB4C2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                              <path d="M8.5 15C12.6421 15 16 11.866 16 8C16 4.134 12.6421 1 8.5 1C4.35786 1 1 4.134 1 8C1 11.866 4.35786 15 8.5 15Z" stroke="#ACB4C2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                          </svg>
+                      </el-tooltip>
                   </div>
                 </div>
                 <div class="text-end m-t-10px flex items-center justify-end" v-show="timeValue > 0">
@@ -51,9 +75,21 @@
             </div>
 
             <div class="mt-30px lg:mt-0 flex h-30px items-center justify-between">
-              <div class="whitespace-nowrap h-100% font-500 text-black text-[20px] content-center">
-                當前回饋%數
-              </div>
+                <div class="whitespace-nowrap h-100% font-500 text-black text-[20px] content-center">
+                    當前回饋%數
+                    <el-tooltip class="box-item" effect="dark" placement="top">
+                        <template #content>
+                            <div class="text-14px">
+                                選擇平台，可查看下線在這個平台交易時，自身可享有的回饋數量。(推薦碼需開啟)
+                            </div>
+                        </template>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
+                            <path d="M8.5 7.65002V11.15" stroke="#ACB4C2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M8.5 4.85702L8.5075 4.84924" stroke="#ACB4C2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M8.5 15C12.6421 15 16 11.866 16 8C16 4.134 12.6421 1 8.5 1C4.35786 1 1 4.134 1 8C1 11.866 4.35786 15 8.5 15Z" stroke="#ACB4C2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </el-tooltip>
+                </div>
               <div class="h-100% flex">
                 <div class="w-100px lg:w-180px relative">
                   <select v-model="selectedPlatform" @change="RewardPlatformChange"

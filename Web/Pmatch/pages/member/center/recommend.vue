@@ -13,10 +13,21 @@
     <div class="lg:p-50px w-100%">
       <div class="flex flex-col lg:flex-row">
         <div class="mr-30px">
-          <div
-            class="w-300px h-55px bg-[#3caadc] border-1 border-solid border-[#3caadc] text-white text-[20px] font-500 text-center content-center">
-            回饋總遊戲幣
-          </div>
+            <div class="w-300px h-55px bg-[#3caadc] border-1 border-solid border-[#3caadc] text-white text-[20px] font-500 text-center content-center">
+                回饋總遊戲幣
+                <el-tooltip class="box-item" effect="dark" placement="top">
+                    <template #content>
+                        <div class="text-14px">
+                            從以前到現在所累積的全部回饋量統計，並非當前擁有可以兌換的數量。
+                        </div>
+                    </template>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
+                        <path d="M8.5 7.65002V11.15" stroke="#ACB4C2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M8.5 4.85702L8.5075 4.84924" stroke="#ACB4C2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M8.5 15C12.6421 15 16 11.866 16 8C16 4.134 12.6421 1 8.5 1C4.35786 1 1 4.134 1 8C1 11.866 4.35786 15 8.5 15Z" stroke="#ACB4C2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </el-tooltip>
+            </div>
           <div class="w-300px border-1 border-solid border-[#ced2db]">
             <el-scrollbar max-height="200px">
               <div class="flex border-b-1px border-b-solid border-[#ced2db] last:border-none" v-for="(
@@ -40,16 +51,18 @@ item, index
 
               <el-tooltip class="box-item" effect="dark" placement="top">
                 <template #content>
-                  <div class="text-14px">
-                    此設定為媒合商所提供回饋的分配比例，總和為100%。<br />
-                    例如媒合商提供回饋比例為1%，<br />
-                    設定為70%-30%，則實際計算分配比例為0.7%-0.3%。
-                  </div>
+                    <div class="text-14px">
+                        此設定為媒合商所提供回饋的分配比例，總和為100%。<br />
+                        例如媒合商提供回饋比例為1%，<br />
+                        設定為70%-30%，則實際計算分配比例為0.7%-0.3%。
+                        <div style="text-align: right;"><a href="https://www.pmatch.com.tw/helpcenter/1419" target="_blank" style="color: #FFD393;">點擊查看更多</a></div>
+                    </div>
                 </template>
-                <div
-                  class="inline-block w-15px h-15px rounded-50% border-2px border-solid border-#acb4c2 text-10px font-1000 text-#acb4c2 text-center content-center">
-                  i
-                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
+                    <path d="M8.5 7.65002V11.15" stroke="#ACB4C2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M8.5 4.85702L8.5075 4.84924" stroke="#ACB4C2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M8.5 15C12.6421 15 16 11.866 16 8C16 4.134 12.6421 1 8.5 1C4.35786 1 1 4.134 1 8C1 11.866 4.35786 15 8.5 15Z" stroke="#ACB4C2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
               </el-tooltip>
             </div>
             <div class="flex-1">
