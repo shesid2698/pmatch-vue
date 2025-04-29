@@ -138,11 +138,22 @@
                       },
                     }" class="w-100% m-1 decoration-none color-#fff">
                       <div class="w-100% flex justify-center">
-                        <img v-show="item.ImgFile" :src="`${assetsUrl}${item.ImgFile}`" :alt="item.PlatformName"
-                          class="w-full" />
-                        <p v-show="!item.ImgFile">
+                        <div 
+                          class="relative aspect-[300/187] overflow-hidden inline-flex justify-center items-center rounded-5px"
+                          :class="imageLoaded[item.PlatformName] ? 'bg-white' : 'bg-transparent'"
+                        >
+                          <img 
+                            :src="`${assetsUrl}${item.ImgFile}`" 
+                            :alt="item.PlatformName"
+                            class="w-full h-auto object-contain"
+                            @error="handleImageError(item.PlatformName)"
+                            @load="handleImageLoad(item.PlatformName)"
+                            v-show="imageLoaded[item.PlatformName]"
+                          />                    
+                        </div>
+                        <p v-show="!imageLoaded[item.PlatformName]" class="text-center color-#fff">
                           {{ item.PlatformName }}
-                        </p>
+                        </p>            
                       </div>
                     </NuxtLink>
                   </div>
@@ -596,6 +607,17 @@ onBeforeUnmount(() => {
   document.removeEventListener('click', handleClickOutside);
   saveScrollPosition();
 });
+
+  // 判斷圖片是否載入(初始化)
+  const imageLoaded = ref({});
+    // 圖片載入成功
+    const handleImageError = (platformName) => {
+      imageLoaded.value[platformName] = false;
+    };
+    // 圖片載入失敗
+    const handleImageLoad = (platformName) => {
+      imageLoaded.value[platformName] = true;
+    };
 </script>
 
 <style scoped>
