@@ -16,35 +16,39 @@
         <!-- PC版導航連結 -->
         <div class="navBox hidden lg-flex items-center" v-for="item of headerLink" :key="item.id"
           :class="`${item.className}Box`">
-          <div :class="`relative login${item.className}`" @click.stop="handleDropdown(item)"
-            :ref="setDropdownRef(item.id)">
-            <span v-show="item.dropdown"
-              class="loginLink decoration-none font-bold w-100% cursor-pointer ps-1.2rem pe-1.2rem" :alt="item.title">
-              {{ item.title }}
-            </span>
-            <button v-if="
+            <div :class="`relative login${item.className}`" @click.stop="handleDropdown(item)"
+                     :ref="setDropdownRef(item.id)">
+                    <span v-show="item.dropdown"
+                          class="loginLink decoration-none font-bold w-100% cursor-pointer ps-1.2rem pe-1.2rem" :alt="item.title">
+                        {{ item.title
+                }}
+                </span>
+                <button v-if="
               item.items &&
               userNameCookie != null &&
               userNameCookie.value !== ''
             " class="logoutBtn ms-1 bg-#fff border-none">
-              <span v-for="subItem in item.items" :key="subItem.id" @click="subItem.action">{{ subItem.title }}</span>
-            </button>
-            <div v-show="dropdownStates[item.id]" class="loginDropdown bg-white mt-1">
-              <NuxtLink to="/member/login" class="loginItem block p-1 ps-2 pe-2 mt-1 mb-1 decoration-none">會員登入
-              </NuxtLink>
-              <NuxtLink to="/register" class="loginItem block p-1 ps-2 pe-2 mt-1 mb-1 decoration-none">註冊會員</NuxtLink>
-              <NuxtLink to="/member/forgetpwd" class="loginItem block p-1 ps-2 pe-2 mt-1 mb-1 decoration-none">忘記密碼
-              </NuxtLink>
-            </div>
-          </div>
-          <div class="flex items-center">
-            <NuxtLink v-show="!item.dropdown" v-if="item.id !== 5" :title="item.title" :to="item.link"
-              :class="` decoration-none ps-1.2rem pe-1.2rem font-bold ${item.className}`" :alt="item.title">
-              {{ item.title }}
-              <img class="ms-2 w-20px" v-if="item.icon !== ''" :src="item.icon" :alt="item.title" />
-            </NuxtLink>
-          </div>
-        </div>
+                    <span v-for="subItem in item.items" :key="subItem.id" @click="subItem.action">{{ subItem.title }}</span>
+                </button>
+                <div v-show="dropdownStates[item.id]" class="loginDropdown bg-white mt-1">
+                    <NuxtLink to="/member/login" class="loginItem block p-1 ps-2 pe-2 mt-1 mb-1 decoration-none">
+                        會員登入
+                    </NuxtLink>
+                    <NuxtLink to="/register" class="loginItem block p-1 ps-2 pe-2 mt-1 mb-1 decoration-none">註冊會員</NuxtLink>
+                    <NuxtLink to="/member/forgetpwd" class="loginItem block p-1 ps-2 pe-2 mt-1 mb-1 decoration-none">
+                        忘記密碼
+                    </NuxtLink>
+                </div>
+</div>
+                <div class="flex items-center">
+                    <NuxtLink v-show="!item.dropdown" v-if="item.id !== 5 && item.link !== ''" :title="item.title" :to="item.link"
+                              :class="` decoration-none ps-1.2rem pe-1.2rem font-bold ${item.className}`" :alt="item.title" 
+                              @click="item.function === 'OpenChat' ? OpenChat() : null">
+                        {{ item.title }}
+                        <img class="ms-2 w-20px" v-if="item.icon !== ''" :src="item.icon" :alt="item.title" />
+                    </NuxtLink>
+                </div>
+</div>
         <NuxtLink v-if="isLoggedIn" @click="logout"
           class="color-#0d6efd flex items-center hover:opacity-70 hover:underline cursor-pointer decoration-none ms-1.5rem font-bold">
           登出</NuxtLink>
@@ -86,11 +90,13 @@
 
 <script setup>
 import GetMemberDetail from '~/composables/getMemberDetail.js';
+const config = useConfigStore();
 const userToken = useCookie('_PmToken');
 const isLoggedIn = computed(() => !!userToken?.value && userToken.value.trim() !== '');
 const userNameCookie = useCookie('_PmUserName');
 const MemberIdCookie = useCookie('_PmMemberId');
 const userType = useCookie('_PmMemberType');
+
 const navOpen = ref(false);
 const toggleNav = () => {
   navOpen.value = !navOpen.value;
@@ -198,10 +204,11 @@ onMounted(async () => {
       },
       {
         id: 1,
-        title: '幫助中心',
-        link: '/helpcenter',
+        title: '聊聊天',
+        link: '#',
         icon: '',
-        className: 'nav1'
+        className: 'nav1',
+        function: 'OpenChat'
       },
       // {
       //     id: 2,
@@ -263,6 +270,34 @@ onMounted(async () => {
     }
   });
 });
+
+    //
+    const OpenChat = async () => {
+        if (userToken.value == '' || userToken.value == null || userToken.value == undefined) {
+            await openAlertModal(' ', `請先登入會員!`);
+            return;
+        }
+        const obj = {
+            RequestBase: {
+                SqlIndex: 0,
+                TeamIDs: ``,
+            },
+            Token: userToken.value,
+            StoreId: 0,
+            StaffId: MemberIdCookie.value,
+            IsPmatch: true, // 指定為一般會員
+        };
+        const str = JSON.stringify(obj);
+        const chatToken = btoa(str).replace(/\+/g, '-').replace(/\//g, '_');
+        console.log('token:',chatToken);
+        if (config.webChatUrl !== '') {
+            window.open(
+                `${config.webChatUrl}?token=${chatToken}`,
+                '_blank',
+                'toolbar=no,location=no,status=no,resizable=no,width=870,height=720'
+            );
+        }
+    };
 
 // 在組件卸載時移除點擊事件監聽器
 onBeforeUnmount(() => {
