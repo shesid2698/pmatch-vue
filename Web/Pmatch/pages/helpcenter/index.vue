@@ -53,7 +53,7 @@
           <div class="mr-30px"><img src="/images/icon-Q&A.png" width="100" alt=""></div>
           <div class="text-[#4361EE] text-24px">{{ newsDetail.Title }}</div>
         </div>
-        <div class="newsContanier text-center" v-html="content">
+        <div class="newsContanier" v-html="content">
         </div>
         <div class="w-100% text-center mt-50px sid">
           <button class="backBtn" @click="GetSearchQuery">回上層</button>
