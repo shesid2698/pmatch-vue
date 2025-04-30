@@ -24,7 +24,7 @@
             PMatch 整合媒合市場的領頭羊
           </h1>
           <h3 class="m-0 font-size-14px md-font-size-22px text-center subSlogan">
-            為你嚴選媒合商、用合約保障你的權益、讓你每一筆的遊戲幣流向都能被看見
+            嚴選合法媒合商、用合約保障交易權益、有效防堵詐騙、媒合交易更安全
           </h3>
         </div>
         <div class="mt-2rem md-mt-0 md-flex block items-center justify-center">
