@@ -88,7 +88,7 @@
         </div>
       </div>
     </div>
-    <div class="w-full relative mt-2rem md-mt-5rem z-12">
+    <div class="w-full relative mt-2rem md-mt-5rem z-1">
       <div class="absolute left-0 top-0">
         <div class="flex justify-start">
           <img class="w-60%" src="/images/bgDot04.png" alt="header左邊點點圖" />
@@ -222,7 +222,7 @@
       <div class="arrowRight top-0 bottom-0 absolute">
         <img src="/images/corner.png" alt="右邊箭頭" />
       </div>
-      <div class="arrowLeft absolute">
+      <div class="arrowLeft absolute z-1">
         <img src="/images/corner.png" alt="左邊箭頭" />
       </div>
       <div class="mt-5rem max-w-1110px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3 relative z-11">
