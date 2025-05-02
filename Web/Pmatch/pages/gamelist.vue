@@ -27,7 +27,7 @@
                 <img class="w-200px" src="/images/gameLogo.png" alt="熱門媒合logo" />
               </div>
               <div class="flex">
-                <div class="gameImg w-100% me-3" :class="`game-logo-${item.PlatformName}`">
+                <div class="gameImg w-100% me-3 md:max-w-255px md:max-h-144px" :class="`game-logo-${item.PlatformName}`">
                   <NuxtLink :to="{
                     path: '/findmatch',
                     query: {
