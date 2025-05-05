@@ -1,12 +1,17 @@
 <template>
-  <div v-if="innerPage === 1" id="page1">
+  <!-- 分頁一 -->
+  <div v-show="innerPage === 1" id="page1">
     <div id="innerPage1">
-      <div class="w-43% h-2.5% absolute top-0 left-2px box-border">
+      <div class="w-90% h-2.5% absolute top-0 left-1px box-border">
         <div class="w-100% h-100% flex items-end">
-          <button class="w-45% the-btn2 h-100% !bg-[#4361ee] text-white !text-1.7vw !font-400"
+          <button class="w-23% the-btn2 h-100% !bg-[#4361ee] text-white !text-1.7vw !font-400"
             :class="innerPage !== 1 ? 'non-active' : ''" @click="() => innerPage = 1">活動內容</button>
-          <button class="flex-1 the-btn2 h-85% !bg-[#43d1ee] text-white !font-300 !text-[1.7vw]"
+          <button class="w-27% flex-1 the-btn2 h-85% !bg-[#43d1ee] text-white !font-300 !text-[1.7vw]"
             :class="innerPage !== 2 ? 'non-active' : ''" @click="() => innerPage = 2">推薦碼說明</button>
+          <button class="w-23% flex-1 the-btn2 h-85% !bg-[#43d1ee] text-white !text-1.7vw !font-300"
+            :class="innerPage !== 3 ? 'non-active' : ''" @click="() => innerPage = 3">綁定流程</button>
+          <button class="w-27% flex-1 the-btn2 h-85% !bg-[#43d1ee] text-white !font-300 !text-[1.7vw]"
+            :class="innerPage !== 4 ? 'non-active' : ''" @click="() => innerPage = 4">媒合商一覽</button>
         </div>
       </div>
       <div class="w-29% h-3.5% absolute top-38.87% left-30.6%">
@@ -52,14 +57,94 @@
       </div>
     </div>
   </div>
-  <div id="page2" v-else>
+  
+  <!-- 分頁二 -->
+  <div v-show="innerPage === 2" id="page2">
     <div id="innerPage2">
-      <div class="w-39% h-2% absolute top-[-0.1%] left-0%">
+      <div class="w-81% h-2% absolute top-[-0.1%] left-0%">
         <div class="w-100% h-100% flex items-end">
-          <button class="w-43% the-btn2 !h-85% !bg-[#43d1ee] text-white !text-[1.7vw] !font-300"
-            :class="innerPage === 2 ? 'non-active' : ''" @click="() => innerPage = 1">活動內容</button>
-          <button class="flex-1 the-btn2 !h-100% !bg-[#4361ee] text-white !text-[1.7vw] !font-400"
-            :class="innerPage === 1 ? 'non-active' : ''" @click="() => innerPage = 2">推薦碼說明</button>
+          <button class="w-23% the-btn2 !h-80% !bg-[#43d1ee] text-white !text-[1.7vw] !font-300"
+            :class="innerPage === 1 ? 'non-active' : ''" @click="() => innerPage = 1">活動內容</button>
+          <button class="w-27% flex-1 the-btn2 !h-94% !bg-[#4361ee] text-white !text-[1.7vw] !font-400"
+            :class="innerPage === 2 ? 'non-active' : ''" @click="() => innerPage = 2">推薦碼說明</button>
+          <button class="w-23% flex-1 the-btn2 !h-80% !bg-[#43d1ee] text-white !text-[1.7vw] !font-300"
+            :class="innerPage === 3 ? 'non-active' : ''" @click="() => innerPage = 3">綁定流程</button>
+          <button class="w-27% flex-1 the-btn2 !h-80% !bg-[#43d1ee] text-white !text-[1.7vw] !font-300"
+            :class="innerPage === 4 ? 'non-active' : ''" @click="() => innerPage = 4">媒合商一覽</button>
+        </div>
+      </div>
+      <button @click="ToRegister" class="w-30% h-2.4% absolute top-68.45% left-26% member-btn">前往會員中心</button>
+      <NuxtLink to="/findmatch?platformName=寶島娛樂城&keyword=" target="_blank">
+        <button class="w-55% h-3% absolute top-94.9% left-13% game-btn2"><img src="/activity/squareIcon.svg" alt=""
+            class="md:mr-10px mr-5px md:w-20px w-10px">委買寶島娛樂城遊戲幣<img src="/activity/squareIcon.svg" alt=""
+            class="md:ml-10px ml-5px md:w-20px w-10px"></button>
+      </NuxtLink>
+      <!-- 武財神 -->
+      <div
+        class="absolute w-20% aspect-ratio-[1/1]  top-28.43% left-15.3% cursor-pointer hover:filter-brightness-[1.1]">
+        <NuxtLink to="/findmatch/206?pn=%E5%AF%B6%E5%B3%B6%E5%A8%9B%E6%A8%82%E5%9F%8E" target="_blank">
+          <img class='w-100%' src="/activity/武財神.png" alt="">
+        </NuxtLink>
+      </div>
+      <div
+        class="absolute w-20% aspect-ratio-[1/1]  top-28.43% left-41.3% cursor-pointer hover:filter-brightness-[1.1]">
+        <NuxtLink to="/findmatch/203?pn=%E5%AF%B6%E5%B3%B6%E5%A8%9B%E6%A8%82%E5%9F%8E" target="_blank">
+          <img class='w-100%' src="/activity/夫人.png" alt="">
+        </NuxtLink>
+      </div>
+    </div>
+  </div>
+
+  <!-- 分頁三 -->
+  <div v-show="innerPage === 3" id="page3">
+    <div id="innerPage2">
+      <div class="w-81% h-2% absolute top-[-0.1%] left-0%">
+        <div class="w-100% h-100% flex items-end">
+          <button class="w-23% the-btn2 !h-80% !bg-[#43d1ee] text-white !text-[1.7vw] !font-300"
+            :class="innerPage === 1 ? 'non-active' : ''" @click="() => innerPage = 1">活動內容</button>
+          <button class="w-27% flex-1 the-btn2 !h-80% !bg-[#43d1ee] text-white !text-[1.7vw] !font-400"
+            :class="innerPage === 2 ? 'non-active' : ''" @click="() => innerPage = 2">推薦碼說明</button>
+          <button class="w-23% flex-1 the-btn2 !h-94% !bg-[#4361ee] text-white !text-[1.7vw] !font-300"
+            :class="innerPage === 3 ? 'non-active' : ''" @click="() => innerPage = 3">綁定流程</button>
+          <button class="w-27% flex-1 the-btn2 !h-80% !bg-[#43d1ee] text-white !text-[1.7vw] !font-300"
+            :class="innerPage === 4 ? 'non-active' : ''" @click="() => innerPage = 4">媒合商一覽</button>
+        </div>
+      </div>
+      <button @click="ToRegister" class="w-30% h-2.4% absolute top-68.45% left-26% member-btn">前往會員中心</button>
+      <NuxtLink to="/findmatch?platformName=寶島娛樂城&keyword=" target="_blank">
+        <button class="w-55% h-3% absolute top-94.9% left-13% game-btn2"><img src="/activity/squareIcon.svg" alt=""
+            class="md:mr-10px mr-5px md:w-20px w-10px">委買寶島娛樂城遊戲幣<img src="/activity/squareIcon.svg" alt=""
+            class="md:ml-10px ml-5px md:w-20px w-10px"></button>
+      </NuxtLink>
+      <!-- 武財神 -->
+      <div
+        class="absolute w-20% aspect-ratio-[1/1]  top-28.43% left-15.3% cursor-pointer hover:filter-brightness-[1.1]">
+        <NuxtLink to="/findmatch/206?pn=%E5%AF%B6%E5%B3%B6%E5%A8%9B%E6%A8%82%E5%9F%8E" target="_blank">
+          <img class='w-100%' src="/activity/武財神.png" alt="">
+        </NuxtLink>
+      </div>
+      <div
+        class="absolute w-20% aspect-ratio-[1/1]  top-28.43% left-41.3% cursor-pointer hover:filter-brightness-[1.1]">
+        <NuxtLink to="/findmatch/203?pn=%E5%AF%B6%E5%B3%B6%E5%A8%9B%E6%A8%82%E5%9F%8E" target="_blank">
+          <img class='w-100%' src="/activity/夫人.png" alt="">
+        </NuxtLink>
+      </div>
+    </div>
+  </div>
+
+  <!-- 分頁四 -->
+  <div v-show="innerPage === 4" id="page4">
+    <div id="innerPage2">
+      <div class="w-81% h-2% absolute top-[-0.1%] left-0%">
+        <div class="w-100% h-100% flex items-end">
+          <button class="w-23% the-btn2 !h-80% !bg-[#43d1ee] text-white !text-[1.7vw] !font-300"
+            :class="innerPage === 1 ? 'non-active' : ''" @click="() => innerPage = 1">活動內容</button>
+          <button class="w-27% flex-1 the-btn2 !h-80% !bg-[#43d1ee] text-white !text-[1.7vw] !font-400"
+            :class="innerPage === 2 ? 'non-active' : ''" @click="() => innerPage = 2">推薦碼說明</button>
+          <button class="w-23% flex-1 the-btn2 !h-80% !bg-[#43d1ee] text-white !text-[1.7vw] !font-300"
+            :class="innerPage === 3 ? 'non-active' : ''" @click="() => innerPage = 3">綁定流程</button>
+          <button class="w-27% flex-1 the-btn2 !h-94% !bg-[#4361ee] text-white !text-[1.7vw] !font-300"
+            :class="innerPage === 4 ? 'non-active' : ''" @click="() => innerPage = 4">媒合商一覽</button>
         </div>
       </div>
       <button @click="ToRegister" class="w-30% h-2.4% absolute top-68.45% left-26% member-btn">前往會員中心</button>
@@ -205,7 +290,7 @@ onMounted(async () => {
   height: 100%;
   margin: 0;
   padding: 0;
-  border-radius: 5px 5px 0 0;
+  border-radius: .3vw .3vw 0 0;
   cursor: pointer;
   background-color: #f6f4e5;
 }
@@ -219,13 +304,13 @@ onMounted(async () => {
 .regist-btn {
   width: 100%;
   height: 100%;
-  border-radius: 100px;
-  border: 3px solid rgba(183, 0, 150, 1);
+  border-radius: 5vw;
+  border: .25vw solid rgba(183, 0, 150, 1);
   color: white;
   font-size: 1.8vw;
   background-color: rgba(247, 37, 133, 1);
-  box-shadow: inset 0px -4px 6px 0px rgba(0, 0, 0, 0.1),
-    inset 0px 4px 6px 0px rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 -2vw 3vw 0 rgba(0, 0, 0, 0.1),
+    inset 0 2vw 3vw 0 rgba(255, 255, 255, 0.1);
   cursor: pointer;
 
   &:hover {
@@ -234,12 +319,12 @@ onMounted(async () => {
 }
 
 .reward-btn {
-  border: 3px solid rgba(183, 0, 150, 1);
+  border: .25vw solid rgba(183, 0, 150, 1);
   color: white;
   font-size: 1.5vw;
   background-color: rgba(247, 37, 133, 1);
-  box-shadow: inset 0px -4px 6px 0px rgba(0, 0, 0, 0.1),
-    inset 0px 4px 6px 0px rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 -2vw 3vw 0 rgba(0, 0, 0, 0.1),
+    inset 0 2vw 3vw 0 rgba(255, 255, 255, 0.1);
   cursor: pointer;
 
   &:hover {
@@ -251,8 +336,8 @@ onMounted(async () => {
   width: 65%;
   height: 100%;
   background-image: linear-gradient(to bottom, #7b2cbf, #2587ff);
-  border: 3px solid #541d84;
-  border-radius: 100px;
+  border: .25vw solid #541d84;
+  border-radius: 5vw;
   color: white;
   font-size: 1.5vw;
   margin: 0;
@@ -297,19 +382,19 @@ onMounted(async () => {
   /* background-color: #f6f4e5; */
   font-size: 1vw;
   text-align: center;
-  border-radius: 5px 5px 0 0;
+  border-radius: .3vw .3vw 0 0;
   cursor: pointer;
 }
 
 .member-btn {
-  border: 3px solid #b70096;
-  border-radius: 100px;
+  border: .25vw solid #b70096;
+  border-radius: 5vw;
   background-color: #f72585;
   color: white;
   font-weight: bolder;
   font-size: 1.5vw;
-  box-shadow: inset 0px -4px 6px 0px rgba(0, 0, 0, 0.1),
-    inset 0px 4px 6px 0px rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 -2vw 3vw 0 rgba(0, 0, 0, 0.1),
+    inset 0 2vw 3vw 0 rgba(255, 255, 255, 0.1);
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -323,21 +408,76 @@ onMounted(async () => {
 
 .game-btn2 {
   color: white;
-  border-radius: 100px;
-  border: 3px solid #413fa6;
+  border-radius: 5vw;
+  border: .25vw solid #413fa6;
   background-image: linear-gradient(to bottom, #7b2cbf, #2587ff);
   font-size: 1.5vw;
   display: flex;
   justify-content: center;
   align-items: center;
   line-height: 100%;
-  box-shadow: inset 0px -4px 6px 0px rgba(0, 0, 0, 0.1),
-    inset 0px 4px 6px 0px rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 -2vw 3vw 0 rgba(0, 0, 0, 0.1),
+    inset 0 2vw 3vw 0 rgba(255, 255, 255, 0.1);
   cursor: pointer;
 
   &:hover {
     filter: brightness(1.1);
   }
+}
+
+#page3 {
+  aspect-ratio: 1920/5078;
+  /* width: 1900px; */
+  width: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative;
+  background-image: url('/activity/Slice_8.png');
+}
+
+#innerPage3 {
+  min-width: 46.5%;
+  /* background: green; */
+  background-image: url('/activity/分頁二.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  position: absolute;
+  aspect-ratio: 1683/6539;
+  top: 11.8%;
+  left: 54.3%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+
+#page4 {
+  aspect-ratio: 1920/5078;
+  /* width: 1900px; */
+  width: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative;
+  background-image: url('/activity/Slice_8.png');
+}
+
+#innerPage4 {
+  min-width: 46.5%;
+  /* background: green; */
+  background-image: url('/activity/分頁二.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  position: absolute;
+  aspect-ratio: 1683/6539;
+  top: 11.8%;
+  left: 54.3%;
+  transform: translateX(-50%);
+  z-index: 1;
 }
 
 @media screen and (max-width: 767px) {
@@ -361,6 +501,32 @@ onMounted(async () => {
   }
 
   #innerPage2 {
+    min-width: unset;
+    width: 83%;
+    top: 12.3%;
+    left: 58.4%;
+  }
+
+  #page3 {
+    width: 100%;
+    background-image: url('/activity/分頁二背景.png');
+    aspect-ratio: 1903/8610;
+  }
+
+  #innerPage3 {
+    min-width: unset;
+    width: 83%;
+    top: 12.3%;
+    left: 58.4%;
+  }
+
+  #page4 {
+    width: 100%;
+    background-image: url('/activity/分頁二背景.png');
+    aspect-ratio: 1903/8610;
+  }
+
+  #innerPage4 {
     min-width: unset;
     width: 83%;
     top: 12.3%;
