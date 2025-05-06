@@ -77,7 +77,7 @@
             </div>
           </div>
           <div v-else>
-            <NuxtLink :title="item.title" :to="item.link"
+            <NuxtLink :title="item.title" :to="item.link" @click="toggleNav"
               class="headerLink color-#555553 decoration-none font-bold w-100%" :alt="item.title">
               {{ item.title }}
             </NuxtLink>
