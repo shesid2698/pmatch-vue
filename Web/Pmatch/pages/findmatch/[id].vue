@@ -736,7 +736,8 @@ const OpenChat = async () => {
     },
     Token: userToken.value,
     StoreId: storesItem.value.Id,
-    StaffId: staffId.value
+    StaffId: staffId.value,
+    IsPmatch: true, // 指定為一般會員
   };
   const str = JSON.stringify(obj);
   const chatToken = btoa(str).replace(/\+/g, '-').replace(/\//g, '_');
