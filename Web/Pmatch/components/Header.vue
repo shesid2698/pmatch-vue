@@ -95,6 +95,7 @@ const userToken = useCookie('_PmToken');
 const isLoggedIn = computed(() => !!userToken?.value && userToken.value.trim() !== '');
 const userNameCookie = useCookie('_PmUserName');
 const MemberIdCookie = useCookie('_PmMemberId');
+const staffId = useCookie('_PmStaffId');
 const userType = useCookie('_PmMemberType');
 
 const navOpen = ref(false);
@@ -284,7 +285,7 @@ onMounted(async () => {
             },
             Token: userToken.value,
             StoreId: 0,
-            StaffId: MemberIdCookie.value,
+            StaffId: staffId.value,
             IsPmatch: true, // 指定為一般會員
         };
         const str = JSON.stringify(obj);
