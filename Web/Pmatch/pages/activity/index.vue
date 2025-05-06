@@ -1,23 +1,26 @@
 <template>
-  <!-- 分頁一 -->
+  <!-- 活動內容 -->
   <div v-show="innerPage === 1" id="page1">
+    <!-- 分頁一 -->
     <div id="innerPage1">
       <div class="w-90% h-2.5% absolute top-0 left-1px box-border">
         <div class="w-100% h-100% flex items-end">
-          <button class="w-23% the-btn2 h-100% !bg-[#4361ee] text-white !text-1.7vw !font-400"
+          <button class="page1 w-19% the-btn active h-91% !text-[1.2vw] !font-500"
             :class="innerPage !== 1 ? 'non-active' : ''" @click="() => innerPage = 1">活動內容</button>
-          <button class="w-27% flex-1 the-btn2 h-85% !bg-[#43d1ee] text-white !font-300 !text-[1.7vw]"
+          <button class="page2 w-27% the-btn h-80% !text-[1.2vw] !font-400"
             :class="innerPage !== 2 ? 'non-active' : ''" @click="() => innerPage = 2">推薦碼說明</button>
-          <button class="w-23% flex-1 the-btn2 h-85% !bg-[#43d1ee] text-white !text-1.7vw !font-300"
+          <button class="page3 w-27% the-btn h-80% !text-[1.2vw] !font-400"
             :class="innerPage !== 3 ? 'non-active' : ''" @click="() => innerPage = 3">綁定流程</button>
-          <button class="w-27% flex-1 the-btn2 h-85% !bg-[#43d1ee] text-white !font-300 !text-[1.7vw]"
+          <button class="page4 w-27% the-btn h-80% !text-[1.2vw] !font-400"
             :class="innerPage !== 4 ? 'non-active' : ''" @click="() => innerPage = 4">媒合商一覽</button>
         </div>
       </div>
+      <!-- 我要註冊 -->
       <div class="w-29% h-3.5% absolute top-38.87% left-30.6%">
         <button class="regist-btn !disabled:filter-none !disabled:cursor-default" @click="ToRegister"
           :disabled="token !== '' && token !== null && token !== undefined">{{ token !== "" && token !== null && token !== undefined ? '已登入' : '我要註冊' }}</button>
       </div>
+      <!-- 推薦碼綁定說明 -->
       <div class="absolute top-[52%]  left-[47%] text-[1.5vw] font-bold ">
         <div v-if="token === '' || token === null || token === undefined"
           class="flex justify-center items-center line-height-100% text-[#FF3F2E]">
@@ -37,133 +40,203 @@
           <div>未綁定</div>
         </div>
       </div>
-      <div class="absolute w-35% h-2.8% bg-white top-59.6% left-[48.5%]">
+      <!-- 各遊戲平台累積回饋數量 -->
+      <div class="absolute w-20% h-2.2% bg-white top-56% left-43%">
         <div class="absolute w-100% h-100% text-center content-center text-1.5vw font-bold text-black">
-          {{ activityData.TotalValue ? activityData.TotalValue.toLocaleString() : '0' }}</div>
+          {{ activityData['寶島娛樂城']?.TotalValue ? activityData['寶島娛樂城'].TotalValue.toLocaleString() : '0' }}</div>
       </div>
-      <div class="absolute w-35% h-2.8% bg-white top-62.7% left-[48.5%]">
-        <div class="absolute w-100% h-100% text-center content-center text-1.5vw font-bold text-black">{{
-          activityData.Reward ? activityData.Reward.toLocaleString() :'0'}}</div>
+      <div class="absolute w-20% h-2.2% bg-white top-56% left-63%">
+        <div class="absolute w-100% h-100% text-center content-center text-1.5vw font-bold text-black">
+          {{ activityData['寶島娛樂城']?.Reward ? activityData['寶島娛樂城'].Reward.toLocaleString() : '0' }}</div>
       </div>
+      <div class="absolute w-20% h-2.2% bg-white top-58% left-43%">
+        <div class="absolute w-100% h-100% text-center content-center text-1.5vw font-bold text-black">
+          {{ activityData['聚寶Online']?.TotalValue ? activityData['聚寶Online'].TotalValue.toLocaleString() : '0' }}</div>
+      </div>
+      <div class="absolute w-20% h-2.2% bg-white top-58% left-63%">
+        <div class="absolute w-100% h-100% text-center content-center text-1.5vw font-bold text-black">
+          {{ activityData['聚寶Online']?.Reward ? activityData['聚寶Online'].Reward.toLocaleString() : '0' }}</div>
+      </div>
+      <div class="absolute w-20% h-2.2% bg-white top-60% left-43%">
+        <div class="absolute w-100% h-100% text-center content-center text-1.5vw font-bold text-black">
+          {{ activityData['錢街Online']?.TotalValue ? activityData['錢街Online'].TotalValue.toLocaleString() : '0' }}</div>
+      </div>
+      <div class="absolute w-20% h-2.2% bg-white top-60% left-63%">
+        <div class="absolute w-100% h-100% text-center content-center text-1.5vw font-bold text-black">
+          {{ activityData['錢街Online']?.Reward ? activityData['錢街Online'].Reward.toLocaleString() : '0' }}</div>
+      </div>
+      <div class="absolute w-20% h-2.2% bg-white top-62% left-43%">
+        <div class="absolute w-100% h-100% text-center content-center text-1.5vw font-bold text-black">
+          {{ activityData['滿貫大亨']?.TotalValue ? activityData['滿貫大亨'].TotalValue.toLocaleString() : '0' }}</div>
+      </div>
+      <div class="absolute w-20% h-2.2% bg-white top-62% left-63%">
+        <div class="absolute w-100% h-100% text-center content-center text-1.5vw font-bold text-black">
+          {{ activityData['滿貫大亨']?.Reward ? activityData['滿貫大亨'].Reward.toLocaleString() : '0' }}</div>
+      </div>
+      <div class="absolute w-20% h-2.2% bg-white top-64% left-43%">
+        <div class="absolute w-100% h-100% text-center content-center text-1.5vw font-bold text-black">
+          {{ activityData['金好運娛樂城']?.TotalValue ? activityData['金好運娛樂城'].TotalValue.toLocaleString() : '0' }}</div>
+      </div>
+      <div class="absolute w-20% h-2.2% bg-white top-64% left-63%">
+        <div class="absolute w-100% h-100% text-center content-center text-1.5vw font-bold text-black">
+          {{ activityData['金好運娛樂城']?.Reward ? activityData['金好運娛樂城'].Reward.toLocaleString() : '0' }}</div>
+      </div>
+      <!-- 查看領獎中心 -->
       <div class="absolute w-37% h-3.5% top-[78.9%] left-[24.7%]">
         <button class="w-100% h-100% rounded-100px reward-btn" @click="ToReward">查看領獎中心</button>
       </div>
+      <!-- 委買遊戲幣拿回饋 -->  
       <div class="absolute w-92% h-4% left-14.8% top-[92.1%] ">
-        <NuxtLink to="/findmatch?platformName=寶島娛樂城&keyword=" target="_blank">
+        <NuxtLink to="/" target="_blank">
           <button class="game-btn"><img src="/activity/squareIcon.svg" alt=""
-              class="md:mr-10px mr-5px md:w-20px w-10px">委買寶島娛樂城遊戲幣<img src="/activity/squareIcon.svg" alt=""
+              class="md:mr-10px mr-5px md:w-20px w-10px">委買遊戲幣拿回饋<img src="/activity/squareIcon.svg" alt=""
               class="md:ml-10px ml-5px md:w-20px w-10px"></button>
         </NuxtLink>
       </div>
     </div>
   </div>
   
-  <!-- 分頁二 -->
+  <!-- 推薦碼運作說明 -->
   <div v-show="innerPage === 2" id="page2">
+    <!-- 分頁二 -->
     <div id="innerPage2">
       <div class="w-81% h-2% absolute top-[-0.1%] left-0%">
         <div class="w-100% h-100% flex items-end">
-          <button class="w-23% the-btn2 !h-80% !bg-[#43d1ee] text-white !text-[1.7vw] !font-300"
+          <button class="page1 w-19% the-btn !h-76% !text-[1.2vw] !font-400"
             :class="innerPage === 1 ? 'non-active' : ''" @click="() => innerPage = 1">活動內容</button>
-          <button class="w-27% flex-1 the-btn2 !h-94% !bg-[#4361ee] text-white !text-[1.7vw] !font-400"
+          <button class="page2 w-27% the-btn active !h-87% !text-[1.2vw] !font-500"
             :class="innerPage === 2 ? 'non-active' : ''" @click="() => innerPage = 2">推薦碼說明</button>
-          <button class="w-23% flex-1 the-btn2 !h-80% !bg-[#43d1ee] text-white !text-[1.7vw] !font-300"
+          <button class="page3 w-27% the-btn !h-76% !text-[1.2vw] !font-400"
             :class="innerPage === 3 ? 'non-active' : ''" @click="() => innerPage = 3">綁定流程</button>
-          <button class="w-27% flex-1 the-btn2 !h-80% !bg-[#43d1ee] text-white !text-[1.7vw] !font-300"
+          <button class="page4 w-27% the-btn !h-76% !text-[1.2vw] !font-400"
             :class="innerPage === 4 ? 'non-active' : ''" @click="() => innerPage = 4">媒合商一覽</button>
         </div>
       </div>
-      <button @click="ToRegister" class="w-30% h-2.4% absolute top-68.45% left-26% member-btn">前往會員中心</button>
-      <NuxtLink to="/findmatch?platformName=寶島娛樂城&keyword=" target="_blank">
-        <button class="w-55% h-3% absolute top-94.9% left-13% game-btn2"><img src="/activity/squareIcon.svg" alt=""
-            class="md:mr-10px mr-5px md:w-20px w-10px">委買寶島娛樂城遊戲幣<img src="/activity/squareIcon.svg" alt=""
-            class="md:ml-10px ml-5px md:w-20px w-10px"></button>
-      </NuxtLink>
-      <!-- 武財神 -->
-      <div
-        class="absolute w-20% aspect-ratio-[1/1]  top-28.43% left-15.3% cursor-pointer hover:filter-brightness-[1.1]">
-        <NuxtLink to="/findmatch/206?pn=%E5%AF%B6%E5%B3%B6%E5%A8%9B%E6%A8%82%E5%9F%8E" target="_blank">
-          <img class='w-100%' src="/activity/武財神.png" alt="">
-        </NuxtLink>
-      </div>
-      <div
-        class="absolute w-20% aspect-ratio-[1/1]  top-28.43% left-41.3% cursor-pointer hover:filter-brightness-[1.1]">
-        <NuxtLink to="/findmatch/203?pn=%E5%AF%B6%E5%B3%B6%E5%A8%9B%E6%A8%82%E5%9F%8E" target="_blank">
-          <img class='w-100%' src="/activity/夫人.png" alt="">
-        </NuxtLink>
-      </div>
+
     </div>
   </div>
 
-  <!-- 分頁三 -->
+  <!-- 推薦碼綁定流程 -->
   <div v-show="innerPage === 3" id="page3">
-    <div id="innerPage2">
+    <!-- 分頁三 -->
+    <div id="innerPage3">
       <div class="w-81% h-2% absolute top-[-0.1%] left-0%">
         <div class="w-100% h-100% flex items-end">
-          <button class="w-23% the-btn2 !h-80% !bg-[#43d1ee] text-white !text-[1.7vw] !font-300"
+          <button class="page1 w-19% the-btn !h-76% !text-[1.2vw] !font-400"
             :class="innerPage === 1 ? 'non-active' : ''" @click="() => innerPage = 1">活動內容</button>
-          <button class="w-27% flex-1 the-btn2 !h-80% !bg-[#43d1ee] text-white !text-[1.7vw] !font-400"
+          <button class="page2 w-27% the-btn !h-76% !text-[1.2vw] !font-400"
             :class="innerPage === 2 ? 'non-active' : ''" @click="() => innerPage = 2">推薦碼說明</button>
-          <button class="w-23% flex-1 the-btn2 !h-94% !bg-[#4361ee] text-white !text-[1.7vw] !font-300"
+          <button class="page3 w-27% the-btn active !h-87% !text-[1.2vw] !font-500"
             :class="innerPage === 3 ? 'non-active' : ''" @click="() => innerPage = 3">綁定流程</button>
-          <button class="w-27% flex-1 the-btn2 !h-80% !bg-[#43d1ee] text-white !text-[1.7vw] !font-300"
+          <button class="page4 w-27% the-btn !h-76% !text-[1.2vw] !font-400"
             :class="innerPage === 4 ? 'non-active' : ''" @click="() => innerPage = 4">媒合商一覽</button>
         </div>
       </div>
+      <button @click="() => innerPage = 4" class="w-30% h-2.4% absolute top-36.45% left-26% member-btn">查看活動媒合清單</button>
       <button @click="ToRegister" class="w-30% h-2.4% absolute top-68.45% left-26% member-btn">前往會員中心</button>
-      <NuxtLink to="/findmatch?platformName=寶島娛樂城&keyword=" target="_blank">
-        <button class="w-55% h-3% absolute top-94.9% left-13% game-btn2"><img src="/activity/squareIcon.svg" alt=""
-            class="md:mr-10px mr-5px md:w-20px w-10px">委買寶島娛樂城遊戲幣<img src="/activity/squareIcon.svg" alt=""
-            class="md:ml-10px ml-5px md:w-20px w-10px"></button>
-      </NuxtLink>
-      <!-- 武財神 -->
-      <div
-        class="absolute w-20% aspect-ratio-[1/1]  top-28.43% left-15.3% cursor-pointer hover:filter-brightness-[1.1]">
-        <NuxtLink to="/findmatch/206?pn=%E5%AF%B6%E5%B3%B6%E5%A8%9B%E6%A8%82%E5%9F%8E" target="_blank">
-          <img class='w-100%' src="/activity/武財神.png" alt="">
-        </NuxtLink>
-      </div>
-      <div
-        class="absolute w-20% aspect-ratio-[1/1]  top-28.43% left-41.3% cursor-pointer hover:filter-brightness-[1.1]">
-        <NuxtLink to="/findmatch/203?pn=%E5%AF%B6%E5%B3%B6%E5%A8%9B%E6%A8%82%E5%9F%8E" target="_blank">
-          <img class='w-100%' src="/activity/夫人.png" alt="">
-        </NuxtLink>
-      </div>
     </div>
   </div>
 
-  <!-- 分頁四 -->
+  <!-- 活動媒合商一覽 -->
   <div v-show="innerPage === 4" id="page4">
-    <div id="innerPage2">
+    <!-- 分頁四 -->
+    <div id="innerPage4">
       <div class="w-81% h-2% absolute top-[-0.1%] left-0%">
         <div class="w-100% h-100% flex items-end">
-          <button class="w-23% the-btn2 !h-80% !bg-[#43d1ee] text-white !text-[1.7vw] !font-300"
+          <button class="page1 w-19% the-btn !h-76% !text-[1.2vw] !font-400"
             :class="innerPage === 1 ? 'non-active' : ''" @click="() => innerPage = 1">活動內容</button>
-          <button class="w-27% flex-1 the-btn2 !h-80% !bg-[#43d1ee] text-white !text-[1.7vw] !font-400"
+          <button class="page2 w-27% the-btn !h-76% !text-[1.2vw] !font-400"
             :class="innerPage === 2 ? 'non-active' : ''" @click="() => innerPage = 2">推薦碼說明</button>
-          <button class="w-23% flex-1 the-btn2 !h-80% !bg-[#43d1ee] text-white !text-[1.7vw] !font-300"
+          <button class="page3 w-27% the-btn !h-76% !text-[1.2vw] !font-400"
             :class="innerPage === 3 ? 'non-active' : ''" @click="() => innerPage = 3">綁定流程</button>
-          <button class="w-27% flex-1 the-btn2 !h-94% !bg-[#4361ee] text-white !text-[1.7vw] !font-300"
+          <button class="page4 w-27% the-btn active !h-87% !text-[1.2vw] !font-500"
             :class="innerPage === 4 ? 'non-active' : ''" @click="() => innerPage = 4">媒合商一覽</button>
         </div>
-      </div>
-      <button @click="ToRegister" class="w-30% h-2.4% absolute top-68.45% left-26% member-btn">前往會員中心</button>
-      <NuxtLink to="/findmatch?platformName=寶島娛樂城&keyword=" target="_blank">
-        <button class="w-55% h-3% absolute top-94.9% left-13% game-btn2"><img src="/activity/squareIcon.svg" alt=""
-            class="md:mr-10px mr-5px md:w-20px w-10px">委買寶島娛樂城遊戲幣<img src="/activity/squareIcon.svg" alt=""
-            class="md:ml-10px ml-5px md:w-20px w-10px"></button>
-      </NuxtLink>
-      <!-- 武財神 -->
+      </div>  
+      <!-- 遊戲平台 -->
       <div
-        class="absolute w-20% aspect-ratio-[1/1]  top-28.43% left-15.3% cursor-pointer hover:filter-brightness-[1.1]">
-        <NuxtLink to="/findmatch/206?pn=%E5%AF%B6%E5%B3%B6%E5%A8%9B%E6%A8%82%E5%9F%8E" target="_blank">
-          <img class='w-100%' src="/activity/武財神.png" alt="">
+        class="absolute w-20% top-8% left-5% cursor-pointer hover:filter-brightness-[1.1]">
+        <NuxtLink to="/findmatch?platformName=寶島娛樂城&keyword=" target="_blank">
+          <img class='w-100%' src="/activity2/寶島娛樂城.png" alt="寶島娛樂城">
         </NuxtLink>
       </div>
       <div
-        class="absolute w-20% aspect-ratio-[1/1]  top-28.43% left-41.3% cursor-pointer hover:filter-brightness-[1.1]">
-        <NuxtLink to="/findmatch/203?pn=%E5%AF%B6%E5%B3%B6%E5%A8%9B%E6%A8%82%E5%9F%8E" target="_blank">
-          <img class='w-100%' src="/activity/夫人.png" alt="">
+        class="absolute w-20% top-13% left-5% cursor-pointer hover:filter-brightness-[1.1]">
+        <NuxtLink to="/findmatch?platformName=聚寶Online&keyword=" target="_blank">
+          <img class='w-100%' src="/activity2/聚寶Online.png" alt="聚寶Online">
+        </NuxtLink>
+      </div>
+      <div
+        class="absolute w-20% top-18% left-5% cursor-pointer hover:filter-brightness-[1.1]">
+        <NuxtLink to="/findmatch?platformName=錢街Online&keyword=" target="_blank">
+          <img class='w-100%' src="/activity2/錢街Online.png" alt="錢街Online">
+        </NuxtLink>
+      </div>
+      <div
+        class="absolute w-20% top-23% left-5% cursor-pointer hover:filter-brightness-[1.1]">
+        <NuxtLink to="/findmatch?platformName=滿貫大亨&keyword=" target="_blank">
+          <img class='w-100%' src="/activity2/滿貫大亨.png" alt="滿貫大亨">
+        </NuxtLink>
+      </div>
+      <div
+        class="absolute w-20% top-28% left-5% cursor-pointer hover:filter-brightness-[1.1]">
+        <NuxtLink to="/findmatch?platformName=金好運娛樂城&keyword=" target="_blank">
+          <img class='w-100%' src="/activity2/金好運娛樂城.png" alt="金好運娛樂城">
+        </NuxtLink>
+      </div>
+      <!-- 媒合商 -->
+      <div
+        class="absolute w-15% top-8% left-50% cursor-pointer hover:filter-brightness-[1.1]">
+        <NuxtLink to="https://www.pmatch.com.tw/findmatch/206" target="_blank">
+          <img class='w-100%' src="/activity2/武財神.png" alt="武財神">
+        </NuxtLink>
+      </div>
+      <div
+        class="absolute w-15% top-13% left-40% cursor-pointer hover:filter-brightness-[1.1]">
+        <NuxtLink to="https://www.pmatch.com.tw/findmatch/208" target="_blank">
+          <img class='w-100%' src="/activity2/金站.png" alt="金站">
+        </NuxtLink>
+      </div>
+      <div
+        class="absolute w-15% top-13% left-60% cursor-pointer hover:filter-brightness-[1.1]">
+        <NuxtLink to="https://www.pmatch.com.tw/findmatch/211" target="_blank">
+          <img class='w-100%' src="/activity2/福娃金庫.png" alt="福娃金庫">
+        </NuxtLink>
+      </div>
+      <div
+        class="absolute w-15% top-18% left-50% cursor-pointer hover:filter-brightness-[1.1]">
+        <NuxtLink to="https://www.pmatch.com.tw/findmatch/200" target="_blank">
+          <img class='w-100%' src="/activity2/錢庫.png" alt="錢庫">
+        </NuxtLink>
+      </div>
+      <div
+        class="absolute w-15% top-23% left-32% cursor-pointer hover:filter-brightness-[1.1]">
+        <NuxtLink to="https://www.pmatch.com.tw/findmatch/213" target="_blank">
+          <img class='w-100%' src="/activity2/添好運央行.png" alt="添好運央行">
+        </NuxtLink>
+      </div>
+      <div
+        class="absolute w-15% top-23% left-50% cursor-pointer hover:filter-brightness-[1.1]">
+        <NuxtLink to="https://www.pmatch.com.tw/findmatch/207" target="_blank">
+          <img class='w-100%' src="/activity2/發大財金庫.png" alt="發大財金庫">
+        </NuxtLink>
+      </div>
+      <div
+        class="absolute w-15%  top-23% left-68% cursor-pointer hover:filter-brightness-[1.1]">
+        <NuxtLink to="https://www.pmatch.com.tw/findmatch/201" target="_blank">
+          <img class='w-100%' src="/activity2/寶可夢銀行.png" alt="寶可夢銀行">
+        </NuxtLink>
+      </div>
+      <div
+        class="absolute w-15%  top-28% left-40% cursor-pointer hover:filter-brightness-[1.1]">
+        <NuxtLink to="https://www.pmatch.com.tw/findmatch/202" target="_blank">
+          <img class='w-100%' src="/activity2/金好盈金流.png" alt="金好盈金流">
+        </NuxtLink>
+      </div>
+      <div
+        class="absolute w-15%  top-28% left-60% cursor-pointer hover:filter-brightness-[1.1]">
+        <NuxtLink to="https://www.pmatch.com.tw/findmatch/204" target="_blank">
+          <img class='w-100%' src="/activity2/米其林金流.png" alt="米其林金流">
         </NuxtLink>
       </div>
     </div>
@@ -222,7 +295,13 @@ const GetMemberActivityData = async () => {
     const response = await $axios.post(
       '/api/v1/Pmatch/GetMemberActivityData',
       {
-        PlatformNames: ['寶島娛樂城']
+        PlatformNames: [
+          '寶島娛樂城',
+          '聚寶Online',
+          '錢街Online',
+          '滿貫大亨',
+          '金好運娛樂城'
+        ]
       },
       {
         headers: {
@@ -258,6 +337,58 @@ onMounted(async () => {
 });
 </script>
 <style scoped>
+.the-btn {
+  border: none;
+  position: relative;
+  /* display: inline-block; */
+  border-radius: .8vw .8vw 0 0;
+  background: linear-gradient(180deg, #FFEABE 0%, #DD9600 100%);
+  padding: .4vw;
+  color: #FFEABC;
+  font-size: 1vw;
+  overflow: hidden;
+  cursor: pointer;
+}
+.the-btn::before {  
+  position: absolute;
+  top: .3vw;
+  left: .3vw;
+  right: .3vw;
+  bottom: 0;
+  border-radius: .5vw .5vw 0 0;
+  background: linear-gradient(180deg, #FF5F5F 0%, #C60000 50%, #600000 100%);
+  /* 文字置中 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.the-btn.active::before {
+  position: absolute;
+  top: .3vw;
+  left: .3vw;
+  right: .3vw;
+  bottom: 0;
+  border-radius: .5vw .5vw 0 0;
+  background: linear-gradient(180deg, #FF8D8B 1.92%, #DD3131 50%, #A70000 100%);
+}
+
+.the-btn.page1::before {
+  content: "活動內容";
+}
+
+.the-btn.page2::before {
+  content: "推薦碼運作說明";
+}
+
+.the-btn.page3::before {
+  content: "推薦碼綁定流程";
+}
+
+.the-btn.page4::before {
+  content: "活動媒合商一覽";
+}
+
 #page1 {
   width: 100%;
   background-image: url('/activity/Slice_7.png');
@@ -281,18 +412,6 @@ onMounted(async () => {
   left: 52%;
   transform: translateX(-50%);
   z-index: 1;
-}
-
-.the-btn {
-  border: none;
-  font-size: 1.2vw;
-  font-weight: 400;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  border-radius: .3vw .3vw 0 0;
-  cursor: pointer;
-  background-color: #f6f4e5;
 }
 
 .non-active {
@@ -375,15 +494,6 @@ onMounted(async () => {
   left: 54.3%;
   transform: translateX(-50%);
   z-index: 1;
-}
-
-.the-btn2 {
-  border: none;
-  /* background-color: #f6f4e5; */
-  font-size: 1vw;
-  text-align: center;
-  border-radius: .3vw .3vw 0 0;
-  cursor: pointer;
 }
 
 .member-btn {
@@ -471,7 +581,6 @@ onMounted(async () => {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-
   position: absolute;
   aspect-ratio: 1683/6539;
   top: 11.8%;
@@ -523,6 +632,7 @@ onMounted(async () => {
   #page4 {
     width: 100%;
     background-image: url('/activity/分頁二背景.png');
+
     aspect-ratio: 1903/8610;
   }
 
