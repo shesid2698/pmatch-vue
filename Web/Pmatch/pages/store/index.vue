@@ -29,7 +29,7 @@
             PMatch是你事業上的全能助手 !
           </h1>
           <h3 class="m-0 font-size-20px md-font-size-26px text-center subSlogan">
-            讓你的廣告被看見，讓對的人找到你，還能輕鬆完成記帳與實名制全方位服務
+            輕鬆完成帳務整合與合法報稅、一站管理會員資料&交易數據、同時讓你的廣告被看見，讓對的人找到你
           </h3>
         </div>
       </div>
