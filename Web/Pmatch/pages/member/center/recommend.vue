@@ -72,8 +72,7 @@ item, index
                 </div>
                 <div v-show="timeValue === 0"
                   class="flex items-center w-80px h-30px relative border-1px border-solid border-#ced2db">
-                  <!-- 寶島送很大 -->
-                  <input disabled type="number" v-model="mainPercent" @input="SettingPercent"
+                  <input type="number" v-model="mainPercent" @input="SettingPercent"
                     @change="settingMemberPercent"
                     class="flex items-center p-0 text-16px text-black left-0 text-end bg-transparent absolute outline-none w-70% border-none top-50% transform-translate-y-[-50%]" />
                   <div class="text-black absolute right-5px top-48% transform-translate-y-[-50%]">
