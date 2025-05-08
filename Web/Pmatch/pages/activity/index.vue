@@ -3,7 +3,7 @@
   <div v-show="innerPage === 1" id="page1">
     <!-- 分頁一 -->
     <div id="innerPage1">
-      <div class="w-95.5% h-2.6% absolute top-[-0.2%] left-1px box-border">
+      <div class="w-95.5% h-2.6% absolute top-[-0.13%] left-1px box-border">
         <div class="w-100% h-100% flex items-end">
           <button class="page1 w-19.6% tab-btn active h-103% !font-500"
             :class="innerPage !== 1 ? 'non-active' : ''" @click="() => innerPage = 1">活動內容</button>
@@ -18,9 +18,8 @@
       <!-- 我要註冊 -->        
         <button class="w-25.5% h-2.68% absolute top-32.41% left-36% main-btn !disabled:filter-none !disabled:cursor-default" @click="ToRegister"
           :disabled="token !== '' && token !== null && token !== undefined">{{ token !== "" && token !== null && token !== undefined ? '已登入' : '我要註冊' }}</button>
-
       <!-- 推薦碼綁定說明 -->
-      <div class="absolute top-[52%]  left-[47%] text-[1.5vw] font-bold ">
+      <div class="absolute top-44.22% left-59% text-[2.8vw] md:top-44.12%  md:text-[1.7vw] font-bold ">
         <div v-if="token === '' || token === null || token === undefined"
           class="flex justify-center items-center line-height-100% text-[#FF3F2E]">
           <div>? 未登入</div>
@@ -40,44 +39,64 @@
         </div>
       </div>
       <!-- 各遊戲平台累積回饋數量 -->
-      <div class="absolute w-20% h-2.2% top-58.1% left-50.15%">
-        <div class="absolute w-100% h-100% text-center content-center text-1.5vw font-bold text-black">
-          {{ activityData['寶島娛樂城']?.TotalValue ? activityData['寶島娛樂城'].TotalValue.toLocaleString() : '0' }}</div>
+      <div class="absolute w-20% h-2.2% top-58.1% left-30%">
+        <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
+          0%</div>
       </div>
-      <div class="absolute w-20% h-2.2% top-58.1% left-70.8%">
-        <div class="absolute w-100% h-100% text-center content-center text-1.5vw font-bold text-black">
+      <div class="absolute w-20% h-2.2% top-58.1% left-50.15%">
+        <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
+          0</div>
+      </div>
+      <div class="absolute w-20% h-2.2% top-58.1% left-70.5%">
+        <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
           {{ activityData['寶島娛樂城']?.Reward ? activityData['寶島娛樂城'].Reward.toLocaleString() : '0' }}</div>
       </div>
-      <div class="absolute w-20% h-2.2% top-60.13%  left-50.15%">
-        <div class="absolute w-100% h-100% text-center content-center text-1.5vw font-bold text-black">
+      <div class="absolute w-20% h-2.2% top-60.13% left-30%">
+        <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
+          0%</div>
+      </div>
+      <div class="absolute w-20% h-2.2% top-60.13% left-50.15%">
+        <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
           {{ activityData['聚寶Online']?.TotalValue ? activityData['聚寶Online'].TotalValue.toLocaleString() : '0' }}</div>
       </div>
-      <div class="absolute w-20% h-2.2% top-60.13% left-70.8%">
-        <div class="absolute w-100% h-100% text-center content-center text-1.5vw font-bold text-black">
+      <div class="absolute w-20% h-2.2% top-60.13% left-70.5%">
+        <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
           {{ activityData['聚寶Online']?.Reward ? activityData['聚寶Online'].Reward.toLocaleString() : '0' }}</div>
       </div>
-      <div class="absolute w-20% h-2.2% top-62.16%  left-50.15%">
-        <div class="absolute w-100% h-100% text-center content-center text-1.5vw font-bold text-black">
+      <div class="absolute w-20% h-2.2% top-62.16% left-30%">
+        <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
+          0%</div>
+      </div>
+      <div class="absolute w-20% h-2.2% top-62.16% left-50.15%">
+        <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
           {{ activityData['錢街Online']?.TotalValue ? activityData['錢街Online'].TotalValue.toLocaleString() : '0' }}</div>
       </div>
-      <div class="absolute w-20% h-2.2% top-62.16% left-70.8%">
-        <div class="absolute w-100% h-100% text-center content-center text-1.5vw font-bold text-black">
+      <div class="absolute w-20% h-2.2% top-62.16% left-70.5%">
+        <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
           {{ activityData['錢街Online']?.Reward ? activityData['錢街Online'].Reward.toLocaleString() : '0' }}</div>
       </div>
-      <div class="absolute w-20% h-2.2% top-64.19%  left-50.15%">
-        <div class="absolute w-100% h-100% text-center content-center text-1.5vw font-bold text-black">
+      <div class="absolute w-20% h-2.2% top-64.19% left-30%">
+        <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
+          0%</div>
+      </div>
+      <div class="absolute w-20% h-2.2% top-64.19% left-50.15%">
+        <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
           {{ activityData['滿貫大亨']?.TotalValue ? activityData['滿貫大亨'].TotalValue.toLocaleString() : '0' }}</div>
       </div>
-      <div class="absolute w-20% h-2.2% top-64.19% left-70.8%">
-        <div class="absolute w-100% h-100% text-center content-center text-1.5vw font-bold text-black">
+      <div class="absolute w-20% h-2.2% top-64.19% left-70.5%">
+        <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
           {{ activityData['滿貫大亨']?.Reward ? activityData['滿貫大亨'].Reward.toLocaleString() : '0' }}</div>
       </div>
-      <div class="absolute w-20% h-2.2% top-66.21%  left-50.15%">
-        <div class="absolute w-100% h-100% text-center content-center text-1.5vw font-bold text-black">
+      <div class="absolute w-20% h-2.2% top-66.21% left-30%">
+        <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
+          0%</div>
+      </div>
+      <div class="absolute w-20% h-2.2% top-66.21% left-50.15%">
+        <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
           {{ activityData['金好運娛樂城']?.TotalValue ? activityData['金好運娛樂城'].TotalValue.toLocaleString() : '0' }}</div>
       </div>
-      <div class="absolute w-20% h-2.2% top-66.21% left-70.8%">
-        <div class="absolute w-100% h-100% text-center content-center text-1.5vw font-bold text-black">
+      <div class="absolute w-20% h-2.2% top-66.21% left-70.5%">
+        <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
           {{ activityData['金好運娛樂城']?.Reward ? activityData['金好運娛樂城'].Reward.toLocaleString() : '0' }}</div>
       </div>
       <!-- 查看領獎中心 -->
@@ -88,13 +107,12 @@
       ">推薦碼綁定說明</button>
       <!-- 委買遊戲幣拿回饋 -->  
       <NuxtLink to="/" target="_blank">
-        <button class="w-45.6% h-3.57% absolute top-90.66% left-26.9% game-btn !disabled:filter-none !disabled:cursor-default"><img src="/activity/squareIcon.svg" alt=""
-            class="md:mr-10px mr-5px md:w-20px w-10px">委買遊戲幣拿回饋<img src="/activity/squareIcon.svg" alt=""
-            class="md:ml-10px ml-5px md:w-20px w-10px"></button>
+        <button class="md:w-45.6% w-46.72% h-3.57% absolute top-90.66% left-26.9% game-btn !disabled:filter-none !disabled:cursor-default"><img src="/activity/squareIcon.svg" alt=""
+            class="md:mr-.4vw mr-.7vw md:w-1.4vw w-2.3vw">委買遊戲幣拿回饋<img src="/activity/squareIcon.svg" alt=""
+            class="md:ml-.4vw ml-.7vw md:w-1.4vw w-2.3vw"></button>
       </NuxtLink>
     </div>
-  </div>
-  
+  </div>  
   <!-- 推薦碼運作說明 -->
   <div v-show="innerPage === 2" id="page2">
     <!-- 分頁二 -->
@@ -111,15 +129,13 @@
             :class="innerPage !== 4 ? 'non-active' : ''" @click="() => innerPage = 4">媒合商一覽</button>
         </div>
       </div>
-
     </div>
   </div>
-
   <!-- 推薦碼綁定流程 -->
   <div v-show="innerPage === 3" id="page3">
     <!-- 分頁三 -->
     <div id="innerPage3">
-      <div class="w-95.5% h-2.5% absolute top-[-0.14%] left-1px">
+      <div class="w-95.5% h-2.5% absolute top-[-0.12%] left-1px">
         <div class="w-100% h-100% flex items-end">
           <button class="page1 w-19.6% tab-btn !h-86% !font-400"
             :class="innerPage !== 1 ? 'non-active' : ''" @click="() => innerPage = 1">活動內容</button>
@@ -139,7 +155,6 @@
       ">前往會員中心</button>
     </div>
   </div>
-
   <!-- 活動媒合商一覽 -->
   <div v-show="innerPage === 4" id="page4">
     <!-- 分頁四 -->
@@ -159,31 +174,31 @@
       <!-- 遊戲平台 -->
       <div
         class="absolute w-25.4% top-29% left-7.3% cursor-pointer hover:filter-brightness-[1.1]">
-        <NuxtLink to="/findmatch?platformName=寶島娛樂城&keyword=" target="_blank">
+        <NuxtLink to="https://www.pmatch.com.tw/findmatch?platformName=寶島娛樂城&keyword=" target="_blank">
           <img class='w-100%' src="/activity/g-寶島娛樂城.png" alt="寶島娛樂城">
         </NuxtLink>
       </div>
       <div
         class="absolute w-25.4% top-42.5% left-7.3% cursor-pointer hover:filter-brightness-[1.1]">
-        <NuxtLink to="/findmatch?platformName=聚寶Online&keyword=" target="_blank">
+        <NuxtLink to="https://www.pmatch.com.tw/findmatch?platformName=聚寶Online&keyword=" target="_blank">
           <img class='w-100%' src="/activity/g-聚寶Online.png" alt="聚寶Online">
         </NuxtLink>
       </div>
       <div
         class="absolute w-25.4% top-56.2% left-7.3% cursor-pointer hover:filter-brightness-[1.1]">
-        <NuxtLink to="/findmatch?platformName=錢街Online&keyword=" target="_blank">
+        <NuxtLink to="https://www.pmatch.com.tw/findmatch?platformName=錢街Online&keyword=" target="_blank">
           <img class='w-100%' src="/activity/g-錢街Online.png" alt="錢街Online">
         </NuxtLink>
       </div>
       <div
         class="absolute w-25.4% top-69.8% left-7.3% cursor-pointer hover:filter-brightness-[1.1]">
-        <NuxtLink to="/findmatch?platformName=滿貫大亨&keyword=" target="_blank">
+        <NuxtLink to="https://www.pmatch.com.tw/findmatch?platformName=滿貫大亨&keyword=" target="_blank">
           <img class='w-100%' src="/activity/g-滿貫大亨.png" alt="滿貫大亨">
         </NuxtLink>
       </div>
       <div
         class="absolute w-25.4% top-83.4% left-7.3% cursor-pointer hover:filter-brightness-[1.1]">
-        <NuxtLink to="/findmatch?platformName=金好運娛樂城&keyword=" target="_blank">
+        <NuxtLink to="https://www.pmatch.com.tw/findmatch?platformName=金好運娛樂城&keyword=" target="_blank">
           <img class='w-100%' src="/activity/g-金好運娛樂城.png" alt="金好運娛樂城">
         </NuxtLink>
       </div>
@@ -254,14 +269,11 @@ const { $axios } = useNuxtApp();
 const memberDetail = reactive({});
 const route = useRoute();
 const router = useRouter();
-
 const ToRegister = () => {
   if (token.value === '' || token.value === null || token.value === undefined) {
     window.open('/member/login', '_blank');
-    // navigateTo('/member/login');
   } else {
     window.open('/member/center', '_blank');
-    // navigateTo('/member/center');
   }
 };
 const ToReward = () => {
@@ -353,7 +365,6 @@ onMounted(async () => {
 .tab-btn {
   border: none;
   position: relative;
-  /* display: inline-block; */
   border-radius: .8vw .8vw 0 0;
   background: linear-gradient(180deg, #FFEABE 0%, #DD9600 100%);
   padding: .4vw;
@@ -375,7 +386,6 @@ onMounted(async () => {
   align-items: center;
   justify-content: center;
 }
-
 .tab-btn.active::before {
   position: absolute;
   top: .45vw;
@@ -385,29 +395,23 @@ onMounted(async () => {
   border-radius: .5vw .5vw 0 0;
   background: linear-gradient(180deg, #FF8D8B 1.92%, #DD3131 50%, #A70000 100%);
 }
-
 .tab-btn.page1::before {
   content: "活動內容";
 }
-
 .tab-btn.page2::before {
   content: "推薦碼運作說明";
 }
-
 .tab-btn.page3::before {
   content: "推薦碼綁定流程";
 }
-
 .tab-btn.page4::before {
   content: "活動媒合商一覽";
 }
-
 .non-active {
   &:hover {
     filter: brightness(1.1);
   }
 }
-
 .main-btn {
   border: .25vw solid #b70096;
   border-radius: 5vw;
@@ -415,19 +419,16 @@ onMounted(async () => {
   color: white;
   font-weight: 500;
   font-size: 1.9vw;
-  box-shadow: inset 0 -2vw 3vw 0 rgba(0, 0, 0, 0.1),
-    inset 0 2vw 3vw 0 rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 -2vw 3vw 0 rgba(0, 0, 0, 0.1),inset 0 2vw 3vw 0 rgba(255, 255, 255, 0.1);
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
   line-height: 100%;
-
   &:hover {
     filter: brightness(1.1);
   }
 }
-
 #page1 {
   background-image: url('/activity/桌面版背景1.png');
   aspect-ratio: 4143/8872;
@@ -437,7 +438,6 @@ onMounted(async () => {
   position: relative;
   width: 100%;
 }
-
 #innerPage1 {
   background-image: url('/activity/分頁1.png');
   aspect-ratio: 1579/5083;
@@ -462,15 +462,15 @@ onMounted(async () => {
     inset 0 2vw 3vw 0 rgba(255, 255, 255, 0.1);
   cursor: pointer;
   display: flex;
-  justify-content: center;
   align-items: center;
-  line-height: 100%;
-
+  justify-content: center;
   &:hover {
     filter: brightness(1.1);
   }
+  &:active {
+    filter: brightness(.9);
+  }
 }
-
 .game-btn {
   background-image: linear-gradient(to bottom, #7b2cbf, #2587ff);
   border: .25vw solid #541d84;
@@ -480,12 +480,15 @@ onMounted(async () => {
   font-size: 1.9vw;
   text-align: center;
   cursor: pointer;
-
   &:hover {
+    background-image: linear-gradient(to bottom, #2587ff, #7b2cbf);
     filter: brightness(1.1);
   }
+  &:active {
+    background-image: linear-gradient(to bottom, #2587ff, #7b2cbf);
+    filter: brightness(.9);
+  }
 }
-
 #page2 {
   background-image: url('/activity/桌面版背景2.png');
   aspect-ratio: 4143/13091;
@@ -495,7 +498,6 @@ onMounted(async () => {
   position: relative;
   width: 100%;
 }
-
 #innerPage2 {
   min-width: 47.9%;
   background-image: url('/activity/分頁2.png'); 
@@ -509,7 +511,6 @@ onMounted(async () => {
   transform: translateX(-50%);
   z-index: 1;
 }
-
 #page3 {
   background-image: url('/activity/桌面版背景3.png');
   aspect-ratio: 4143/9703;
@@ -519,7 +520,6 @@ onMounted(async () => {
   position: relative;
   width: 100%;
 }
-
 #innerPage3 {
   min-width: 47.9%;
   background-image: url('/activity/分頁3.png');
@@ -533,8 +533,6 @@ onMounted(async () => {
   transform: translateX(-50%);
   z-index: 1;
 }
-
-
 #page4 {
   background-image: url('/activity/桌面版背景4.png');
   aspect-ratio: 4143/5270;
@@ -544,7 +542,6 @@ onMounted(async () => {
   position: relative;
   width: 100%;
 }
-
 #innerPage4 {
   background-image: url('/activity/分頁4.png');
   aspect-ratio: 1579/2222;
@@ -558,46 +555,53 @@ onMounted(async () => {
   transform: translateX(-50%);
   z-index: 1;
 }
-
 @media screen and (max-width: 767px) {
   .tab-btn {
   font-size: 2.2vw;
+  white-space: nowrap;
+  }
+  .tab-btn::before {  
+    top: .75vw;
+    left: .75vw;
+    right: .75vw;
+  }
+  .tab-btn.active::before {
+    top: .75vw;
+    left: .75w;
+    right: .75vw;
   }
   .main-btn,.game-btn {
-  font-size: 3.3vw;
+  font-size: 3.2vw;
+  white-space: nowrap;
+  border-width: .45vw;
   }  
   #page1 {
     width: 100%;
     background-image: url('/activity/行動版背景1.png');
     aspect-ratio: 1904/7207;
   }
-
   #innerPage1 {
     min-width: unset;
     width: 83%;
     top: 13.4%;
     left: 50%;
   }
-
   #page2 {
     width: 100%;
     background-image: url('/activity/行動版背景2.png');
     aspect-ratio: 1904/10609;
   }
-
   #innerPage2 {
     min-width: unset;
     width: 83%;
     top: 8.95%;
     left: 50%;
   }
-
   #page3 {
     width: 100%;
     background-image: url('/activity/行動版背景3.png');
     aspect-ratio: 1904/7914;
   }
-
   #innerPage3 {
     min-width: unset;
     background-image: url('/activity/分頁3-m.png');
@@ -605,13 +609,11 @@ onMounted(async () => {
     top: 12.04%;
     left: 50%;
   }
-
   #page4 {
     width: 100%;
     background-image: url('/activity/行動版背景4.png');
     aspect-ratio: 1904/4328;
   }
-
   #innerPage4 {
     min-width: unset;
     width: 83%;
