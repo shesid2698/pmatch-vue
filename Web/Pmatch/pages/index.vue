@@ -205,7 +205,7 @@ character, index2
           <div class="w-100% lg-w-50% me-0 lg-me-1rem">
             <div class="mb-3rem lg-block flex lg-justify-start justify-center">
               <button class="newsAllBtn font-size-15px border-none p-3 bg-#4361ee color-#fff rounded-50px"
-                @click="fetchNewsListData([], '')">
+                @click="fetchNewsListData([1,2], '')">
                 ALL
               </button>
               <button class="newsSystemBtn font-size-15px bg-#fff p-3 ms-3 color-#7B2CBF rounded-50px"
