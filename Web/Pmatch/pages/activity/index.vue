@@ -274,7 +274,7 @@
   </footer>
 </template>
 <script setup>
-const innerPage = ref(4);
+const innerPage = ref(1);
 const activityData = reactive({});
 const token = useCookie('_PmToken');
 const memberId = useCookie('_PmMemberId');
