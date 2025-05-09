@@ -261,6 +261,17 @@
       </div>
     </div>
   </div>
+  <footer class="w-100% bg-#797979 absolute pt-1.8vw pb-3.6vw bottom-0 items-center justify-center md:flex hidden">
+    <div class="text-white space-y-1vw text-[2vw] md:text-[0.88vw] font-bold">
+      <p class="text-[3vw] md:text-[1.5vw]"><span class="relative top-[0.04em] text-[3.6vw] md:text-[1.8vw] select-none">◆ </span>注意事項</p>
+      <p><span class="relative top-[0.1em] text-[2.6vw] md:text-[1.2vw] select-none">◆ </span>本次活動範圍僅包含部分媒合商及寶島娛樂城遊戲平台，詳細內容請參照活動頁面說明。</p>
+      <p><span class="relative top-[0.1em] text-[2.6vw] md:text-[1.2vw] select-none">◆ </span><strong>Pmatch</strong>平台保留更換等值贈品以及變更活動內容或終止活動的權利，以及最終解釋權。</p>
+      <p><span class="relative top-[0.1em] text-[2.6vw] md:text-[1.2vw] select-none">◆ </span>參加活動所獲得獎勵，請於活動結束後直接發送至官網領獎中心。</p>
+      <p><span class="relative top-[0.1em] text-[2.6vw] md:text-[1.2vw] select-none">◆ </span><strong>Pmatch</strong>平台僅提供媒合交易服務，交易相關問題請洽詢交易之媒合商了解詳情。</p>
+      <p><span class="relative top-[0.1em] text-[2.6vw] md:text-[1.2vw] select-none">◆ </span>因應寶島娛樂城設定之最低贈禮門檻，本次活動所獲得之回饋幣，至少須累積達各遊戲<br>
+      <span class="ps-1.01vw">平台最低數量以上方符合領獎資格，低於設定領獎門檻視同放棄領獎資格。</span></p>
+    </div>
+  </footer>
 </template>
 <script setup>
 const innerPage = ref(1);
@@ -439,7 +450,9 @@ onMounted(async () => {
   }
 }
 #page1 {
-  background-image: url('/activity/桌面版背景1.png');
+  background-image: 
+    url('/activity/天降好禮.png'),
+    linear-gradient(180deg, #0003A9 0%, #006FE6 74.95%);
   aspect-ratio: 4143/8872;
   background-size: contain;
   background-repeat: no-repeat;
@@ -496,7 +509,9 @@ onMounted(async () => {
   }
 }
 #page2 {
-  background-image: url('/activity/桌面版背景2.png');
+  background-image: 
+    url('/activity/天降好禮.png'),
+    linear-gradient(180deg, #0003A9 0%, #006FE6 74.95%);
   aspect-ratio: 4143/13091;
   background-size: contain;
   background-repeat: no-repeat;
@@ -518,7 +533,9 @@ onMounted(async () => {
   z-index: 1;
 }
 #page3 {
-  background-image: url('/activity/桌面版背景3.png');
+  background-image: 
+    url('/activity/天降好禮.png'),
+    linear-gradient(180deg, #0003A9 0%, #006FE6 74.95%);
   aspect-ratio: 4143/9703;
   background-size: contain;
   background-repeat: no-repeat;
@@ -540,7 +557,9 @@ onMounted(async () => {
   z-index: 1;
 }
 #page4 {
-  background-image: url('/activity/桌面版背景4.png');
+  background-image: 
+    url('/activity/天降好禮.png'),
+    linear-gradient(180deg, #0003A9 0%, #006FE6 74.95%);
   aspect-ratio: 4143/5270;
   background-size: contain;
   background-repeat: no-repeat;
