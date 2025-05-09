@@ -38,66 +38,68 @@
           <div>未綁定</div>
         </div>
       </div>
-      <!-- 各遊戲平台累積回饋數量 -->
+      <!-- 遮罩 -->
+      <div v-if="token === '' || token === null || token === undefined" class="mask w-60.76% h-10.22% absolute top-58.15% left-29.72% text-[4.1vw] md:text-[2.4vw]"></div>
+      <!-- 各遊戲平台累積回饋數量 -->       
       <div class="absolute w-20% h-2.2% top-58.1% left-30%">
         <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
-          0%</div>
+          {{ activityData['寶島娛樂城']?.RewardPercentage !== undefined ? activityData['寶島娛樂城'].RewardPercentage + '%' : '' }}</div>
       </div>
       <div class="absolute w-20% h-2.2% top-58.1% left-50.15%">
         <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
-          0</div>
+          {{ activityData['寶島娛樂城']?.TotalValue !== undefined ? activityData['寶島娛樂城'].TotalValue.toLocaleString() : '' }}</div>
       </div>
       <div class="absolute w-20% h-2.2% top-58.1% left-70.5%">
         <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
-          {{ activityData['寶島娛樂城']?.Reward ? activityData['寶島娛樂城'].Reward.toLocaleString() : '0' }}</div>
+          {{ activityData['寶島娛樂城']?.Reward !== undefined ? activityData['寶島娛樂城'].Reward.toLocaleString() : '' }}</div>
       </div>
       <div class="absolute w-20% h-2.2% top-60.13% left-30%">
         <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
-          0%</div>
+          {{ activityData['聚寶Online']?.RewardPercentage !== undefined ? activityData['聚寶Online'].RewardPercentage + '%' : '' }}</div>
       </div>
       <div class="absolute w-20% h-2.2% top-60.13% left-50.15%">
         <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
-          {{ activityData['聚寶Online']?.TotalValue ? activityData['聚寶Online'].TotalValue.toLocaleString() : '0' }}</div>
+          {{ activityData['聚寶Online']?.TotalValue !== undefined ? activityData['聚寶Online'].TotalValue.toLocaleString() : '' }}</div>
       </div>
       <div class="absolute w-20% h-2.2% top-60.13% left-70.5%">
         <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
-          {{ activityData['聚寶Online']?.Reward ? activityData['聚寶Online'].Reward.toLocaleString() : '0' }}</div>
+          {{ activityData['聚寶Online']?.Reward !== undefined ? activityData['聚寶Online'].Reward.toLocaleString() : '' }}</div>
       </div>
       <div class="absolute w-20% h-2.2% top-62.16% left-30%">
         <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
-          0%</div>
+          {{ activityData['錢街Online']?.RewardPercentage !== undefined ? activityData['錢街Online'].RewardPercentage + '%' : '' }}</div>
       </div>
       <div class="absolute w-20% h-2.2% top-62.16% left-50.15%">
         <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
-          {{ activityData['錢街Online']?.TotalValue ? activityData['錢街Online'].TotalValue.toLocaleString() : '0' }}</div>
+          {{ activityData['錢街Online']?.TotalValue !== undefined ? activityData['錢街Online'].TotalValue.toLocaleString() : '' }}</div>
       </div>
       <div class="absolute w-20% h-2.2% top-62.16% left-70.5%">
         <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
-          {{ activityData['錢街Online']?.Reward ? activityData['錢街Online'].Reward.toLocaleString() : '0' }}</div>
+          {{ activityData['錢街Online']?.Reward !== undefined ? activityData['錢街Online'].Reward.toLocaleString() : '' }}</div>
       </div>
       <div class="absolute w-20% h-2.2% top-64.19% left-30%">
         <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
-          0%</div>
+          {{ activityData['滿貫大亨']?.RewardPercentage !== undefined ? activityData['滿貫大亨'].RewardPercentage + '%' : '' }}</div>
       </div>
       <div class="absolute w-20% h-2.2% top-64.19% left-50.15%">
         <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
-          {{ activityData['滿貫大亨']?.TotalValue ? activityData['滿貫大亨'].TotalValue.toLocaleString() : '0' }}</div>
+          {{ activityData['滿貫大亨']?.TotalValue !== undefined ? activityData['滿貫大亨'].TotalValue.toLocaleString() : '' }}</div>
       </div>
       <div class="absolute w-20% h-2.2% top-64.19% left-70.5%">
         <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
-          {{ activityData['滿貫大亨']?.Reward ? activityData['滿貫大亨'].Reward.toLocaleString() : '0' }}</div>
+          {{ activityData['滿貫大亨']?.Reward !== undefined ? activityData['滿貫大亨'].Reward.toLocaleString() : '' }}</div>
       </div>
       <div class="absolute w-20% h-2.2% top-66.21% left-30%">
         <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
-          0%</div>
+          {{ activityData['金好運娛樂城']?.RewardPercentage !== undefined ? activityData['金好運娛樂城'].RewardPercentage + '%' : '' }}</div>
       </div>
       <div class="absolute w-20% h-2.2% top-66.21% left-50.15%">
         <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
-          {{ activityData['金好運娛樂城']?.TotalValue ? activityData['金好運娛樂城'].TotalValue.toLocaleString() : '0' }}</div>
+          {{ activityData['金好運娛樂城']?.TotalValue !== undefined ? activityData['金好運娛樂城'].TotalValue.toLocaleString() : '' }}</div>
       </div>
       <div class="absolute w-20% h-2.2% top-66.21% left-70.5%">
         <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
-          {{ activityData['金好運娛樂城']?.Reward ? activityData['金好運娛樂城'].Reward.toLocaleString() : '0' }}</div>
+          {{ activityData['金好運娛樂城']?.Reward !== undefined ? activityData['金好運娛樂城'].Reward.toLocaleString() : '' }}</div>
       </div>
       <!-- 查看領獎中心 -->
       <button class="w-33.3% h-2.68% absolute top-83.69% left-32.9% main-btn !disabled:filter-none !disabled:cursor-default" @click="ToReward">查看領獎中心</button>
@@ -336,7 +338,11 @@ const GetMemberActivityData = async () => {
       }
     );
     if (response.data.Status.Code === 0) {
-      Object.assign(activityData, response.data.Data[0]);
+      // Object.assign(activityData, response.data.Data[0]);
+      response.data.Data.forEach(item => {
+        activityData[item.PlatformName] = item;
+      });
+      console.log('✅ 活動資料抓到：', activityData);
     }
   } catch (error) {
     console.log(`GetMemberDetail error:${error}`);
@@ -413,20 +419,23 @@ onMounted(async () => {
   }
 }
 .main-btn {
+  background-color: #f72585;
   border: .25vw solid #b70096;
   border-radius: 5vw;
-  background-color: #f72585;
   color: white;
   font-weight: 500;
   font-size: 1.9vw;
-  box-shadow: inset 0 -2vw 3vw 0 rgba(0, 0, 0, 0.1),inset 0 2vw 3vw 0 rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 -2vw 3vw 0 rgba(0, 0, 0, 0.1),
+    inset 0 2vw 3vw 0 rgba(255, 255, 255, 0.1);
   cursor: pointer;
   display: flex;
-  justify-content: center;
   align-items: center;
-  line-height: 100%;
+  justify-content: center;
   &:hover {
     filter: brightness(1.1);
+  }
+  &:active {
+    filter: brightness(.9);
   }
 }
 #page1 {
@@ -451,25 +460,22 @@ onMounted(async () => {
   transform: translateX(-50%);
   z-index: 1;
 }
-.main-btn {
-  background-color: #f72585;
-  border: .25vw solid #b70096;
-  border-radius: 5vw;
-  color: white;
-  font-weight: 500;
-  font-size: 1.9vw;
-  box-shadow: inset 0 -2vw 3vw 0 rgba(0, 0, 0, 0.1),
-    inset 0 2vw 3vw 0 rgba(255, 255, 255, 0.1);
-  cursor: pointer;
+.mask::before {  
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 0 0 .4vw 0;
+  font-weight: 550;
+  background: linear-gradient(180deg, #FF8D8B 1.92%, #DD3131 50%, #A70000 100%);
+  opacity: 0.5;
+  color: #fff;
+  content: "請登入後查看";
+  /* 文字置中 */
   display: flex;
   align-items: center;
   justify-content: center;
-  &:hover {
-    filter: brightness(1.1);
-  }
-  &:active {
-    filter: brightness(.9);
-  }
 }
 .game-btn {
   background-image: linear-gradient(to bottom, #7b2cbf, #2587ff);
@@ -585,6 +591,9 @@ onMounted(async () => {
     width: 83%;
     top: 13.4%;
     left: 50%;
+  }
+  .mask::before {  
+    border-radius: 0 0 .6vw 0;
   }
   #page2 {
     width: 100%;
