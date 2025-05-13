@@ -24,7 +24,7 @@
           class="flex justify-center items-center line-height-100% text-[#FF3F2E]">
           <div>? 未登入</div>
         </div>
-        <div v-else-if="memberDetail.RefferCode !== ''"
+        <div v-else-if="memberDetail.Type > 1"
           class="flex justify-center items-center line-height-100% text-[#66D575]">
           <div>
             <Icon name="heroicons:check-20-solid" />
@@ -350,7 +350,6 @@ const GetMemberActivityData = async () => {
       response.data.Data.forEach(item => {
         activityData[item.PlatformName] = item;
       });
-      console.log('✅ 活動資料抓到：', activityData);
     }
   } catch (error) {
     console.log(`GetMemberDetail error:${error}`);
