@@ -145,7 +145,7 @@
                         <h2 class="m-0 mb-3 color-#4361ee text-22px md:text-32px md:text-start text-center">
                           {{ item.Name }}
                         </h2>
-                        <a :title="item.About">
+                        <a>
                             <p class="m-0 text-15px md:text-22px text-gray-5 aboutContent pl-10px md:pl-0">
                                 <!-- 顯示 About 的完整 HTML 格式 -->
                                 <span v-if="item.About.length > 0" v-html="item.About"></span>
