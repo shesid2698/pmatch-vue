@@ -33,9 +33,7 @@
               </h2>
             </div>
             <div class="storeAboutContent py-2rem">
-              <span v-if="storesItem">{{
-                storesItem.About
-              }}</span>
+                <span v-if="storesItem" v-html="storesItem.About"></span>
             </div>
             <div class="pt-2rem">
               <div class="flex justify-between items-center" v-if="storesItem">

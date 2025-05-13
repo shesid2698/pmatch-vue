@@ -146,9 +146,10 @@
                           {{ item.Name }}
                         </h2>
                         <a :title="item.About">
-                          <p class="m-0 text-15px md:text-22px text-gray-5 aboutContent pl-10px md:pl-0">
-                            {{ item.About }}
-                          </p>
+                            <p class="m-0 text-15px md:text-22px text-gray-5 aboutContent pl-10px md:pl-0">
+                                <!-- 顯示 About 的完整 HTML 格式 -->
+                                <span v-if="item.About.length > 0" v-html="item.About"></span>
+                            </p>
                         </a>
                       </div>
                       <div class="w-100%">
@@ -861,18 +862,23 @@ const filteredProcessedGamePlatforms = computed(() => {
   border-radius: 10px;
 }
 
-.aboutContent {
-  height: 100px;
-  overflow: hidden;
-  /* 隱藏超出部分 */
-  display: -webkit-box;
-  /* 使用 flexbox 的變體 */
-  -webkit-box-orient: vertical;
-  /* 設置為垂直方向 */
-  -webkit-line-clamp: 3;
-  /* 限制顯示的行數 */
-  line-height: 35px;
-}
+    .aboutContent {
+        height: 130px;
+        overflow: hidden;
+        line-height: 35px;
+        display: block; /* Remove flexbox-related properties */
+        position: relative;
+    }
+
+        .aboutContent::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 35px; /* Match line-height or adjust for fade effect */
+            background: linear-gradient(transparent, white); /* Optional: fade to background color */
+        }
 
 :deep(.el-pager > .number) {
   color: #f72585;
