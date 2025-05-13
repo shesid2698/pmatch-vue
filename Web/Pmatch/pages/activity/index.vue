@@ -105,14 +105,11 @@
       <button class="w-33.3% h-2.68% absolute top-83.69% left-32.9% main-btn !disabled:filter-none !disabled:cursor-default" @click="ToReward">查看領獎中心</button>
       <!-- 推薦碼綁定說明 -->
       <button @click="() => { innerPage = 2; scrollToTop(); }" 
-        class="w-37.1% h-2.68% absolute top-47.02% left-30.2% main-btn !disabled:filter-none !disabled:cursor-default
-      ">推薦碼綁定說明</button>
+        class="w-37.1% h-2.68% absolute top-47.02% left-30.2% main-btn !disabled:filter-none !disabled:cursor-default">推薦碼綁定說明</button>
       <!-- 委買遊戲幣拿回饋 -->  
-      <NuxtLink to="/" target="_blank">
-        <button class="md:w-45.6% w-46.72% h-3.57% absolute top-90.66% left-26.9% game-btn !disabled:filter-none !disabled:cursor-default"><img src="/activity/squareIcon.svg" alt=""
-            class="md:mr-.4vw mr-.7vw md:w-1.4vw w-2.3vw">委買遊戲幣拿回饋<img src="/activity/squareIcon.svg" alt=""
-            class="md:ml-.4vw ml-.7vw md:w-1.4vw w-2.3vw"></button>
-      </NuxtLink>
+      <button @click="() => { innerPage = 4; scrollToTop(); }" class="md:w-45.6% w-46.72% h-3.57% absolute top-90.66% left-26.9% game-btn !disabled:filter-none !disabled:cursor-default"><img src="/activity/squareIcon.svg" alt=""
+          class="md:mr-.4vw mr-.7vw md:w-1.4vw w-2.3vw">委買遊戲幣拿回饋<img src="/activity/squareIcon.svg" alt=""
+          class="md:ml-.4vw ml-.7vw md:w-1.4vw w-2.3vw"></button>
     </div>
   </div>  
   <!-- 推薦碼運作說明 -->
