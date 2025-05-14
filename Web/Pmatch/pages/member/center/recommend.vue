@@ -188,7 +188,7 @@ async function fetchRewardListData() {
       if (memberRewardList.value != null) {
         mainPercent.value = memberRewardList.value.MRewardValue;
         secondPercent.value = 100 - mainPercent.value;
-        const endTimeString = memberRewardList.value.EndTime;
+        const endTimeString = memberRewardList.value.ActivityEndTime;
         const endTime = new Date(endTimeString).getTime();
         const now = Date.now();
 
