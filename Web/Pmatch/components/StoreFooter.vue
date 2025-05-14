@@ -57,11 +57,6 @@ const footerLinkLeft = ref([
     title: "會員頁面",
     link: "/",
   },
-  {
-    id: 0,
-    title: "會員頁面",
-    link: "/",
-  },
 ]);
 const footerLinkRight = ref([
   // {
