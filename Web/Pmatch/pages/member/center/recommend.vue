@@ -186,17 +186,22 @@ async function fetchRewardListData() {
     if (response.data.Status.Code === 0) {
       memberRewardList.value = response.data.Data;
       if (memberRewardList.value != null) {
-        mainPercent.value = memberRewardList.value.MRewardValue;
-        secondPercent.value = 100 - mainPercent.value;
-        const endTimeString = memberRewardList.value.ActivityEndTime;
-        const endTime = new Date(endTimeString).getTime();
-        const now = Date.now();
+        // 清除時間
+        timeValue.value = 0;
+        // EndTime = null 表示推薦碼已經停用
+        if (memberRewardList.value.EndTime != null) {
+            mainPercent.value = memberRewardList.value.MRewardValue;
+            secondPercent.value = 100 - mainPercent.value;
+            const endTimeString = memberRewardList.value.ActivityEndTime;
+            const endTime = new Date(endTimeString).getTime();
+            const now = Date.now();
 
-        // 計算差值
-        const difference = endTime - now;
+            // 計算差值
+            const difference = endTime - now;
 
-        // 確保不會有負值
-        timeValue.value = Math.max(difference, 0);
+            // 確保不會有負值
+            timeValue.value = Math.max(difference, 0);
+          }
       }
     } else {
       await openAlertModal(" ", `${response.data.Status.Message}`);
