@@ -1336,8 +1336,9 @@ const CreateAcc = async event => {
           TeamIDs: `0`
         },
         Token: memberToken.value,
-        StoreId: 9999,
-        StaffId: staffId.value
+        StoreId: 0,
+        StaffId: staffId.value,
+        IsPmatch: true, // 指定為一般會員
       };
       const str = JSON.stringify(obj);
       const chatToken = btoa(str).replace(/\+/g, '-').replace(/\//g, '_');
