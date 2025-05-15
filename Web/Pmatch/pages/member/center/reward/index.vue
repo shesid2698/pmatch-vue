@@ -1333,7 +1333,7 @@ const CreateAcc = async event => {
       const obj = {
         RequestBase: {
           SqlIndex: 0,
-          TeamIDs: `0`
+          TeamIDs: ``
         },
         Token: memberToken.value,
         StoreId: 0,
