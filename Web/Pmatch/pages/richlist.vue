@@ -14,6 +14,10 @@
         <select mt-5 @change="changePlatform">
           <option value="2">滿貫大亨</option>
           <option value="4">老子有錢</option>
+          <option value="1">錢街Online</option>
+          <option value="5">聚寶Online</option>
+          <option value="6">金爸爸娛樂城</option>
+          <option value="7">寶島娛樂城</option>
         </select>
       </div>
     </div>

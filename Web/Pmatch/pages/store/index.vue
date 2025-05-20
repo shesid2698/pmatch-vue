@@ -96,13 +96,7 @@
                 滿貫大亨
               </div>
               <div class="w-100% patchNumber font-size-1.5rem text-center color-#beffff">
-                {{
-                  dailyPatchList0.length
-                    ? dailyPatchList0[
-                      dailyPatchList0.length - 1
-                    ].Total.toLocaleString()
-                    : "0"
-                }}
+                {{ dailyPatchList0.length ? dailyPatchList0[dailyPatchList0.length - 1].Total.toLocaleString() : "0" }}
               </div>
               <div class="w-100% font-size-1.2rem text-center color-#beffff">
                 <ElButton plain @click="openDialog(0)">
@@ -116,18 +110,68 @@
                 老子有錢
               </div>
               <div class="w-100% patchNumber font-size-1.5rem text-center color-#beffff">
-                {{
-                  dailyPatchList1.length
-                    ? dailyPatchList1[
-                      dailyPatchList1.length - 1
-                    ].Total.toLocaleString()
-                    : "0"
-                }}
+                {{ dailyPatchList1.length ? dailyPatchList1[dailyPatchList1.length - 1].Total.toLocaleString() : "0" }}
               </div>
               <div class="w-100% font-size-1.2rem text-center color-#beffff">
                 <ElButton plain @click="openDialog(1)">
                   <!-- 簡化縮小版折線圖 -->
                   <Line :data="simpleChartData1" :options="simpleChartOptions" class="md-w-150px w-80px" />
+                </ElButton>
+              </div>
+            </div>
+            <div class="flex tableTd">
+              <div class="w-100% platformName font-size-1.5rem text-center color-#beffff">
+                錢街Online
+              </div>
+              <div class="w-100% patchNumber font-size-1.5rem text-center color-#beffff">
+                {{ dailyPatchList2.length ? dailyPatchList2[dailyPatchList2.length - 1].Total.toLocaleString() : '0' }}
+              </div>
+              <div class="w-100% text-center">
+                <ElButton plain @click="openDialog(2)">
+                  <!-- 簡化縮小版折線圖 -->
+                  <Line :data="simpleChartData2" :options="simpleChartOptions" class="md-w-150px w-80px" />
+                </ElButton>
+              </div>
+            </div>
+            <div class="flex tableTd">
+              <div class="w-100% platformName font-size-1.5rem text-center color-#beffff">
+                聚寶Online
+              </div>
+              <div class="w-100% patchNumber font-size-1.5rem text-center color-#beffff">
+                {{ dailyPatchList3.length ? dailyPatchList3[dailyPatchList3.length - 1].Total.toLocaleString() : '0' }}
+              </div>
+              <div class="w-100% text-center">
+                <ElButton plain @click="openDialog(3)">
+                  <!-- 簡化縮小版折線圖 -->
+                  <Line :data="simpleChartData3" :options="simpleChartOptions" class="md-w-150px w-80px" />
+                </ElButton>
+              </div>
+            </div>
+            <div class="flex tableTd">
+              <div class="w-100% platformName font-size-1.5rem text-center color-#beffff">
+                金爸爸娛樂城
+              </div>
+              <div class="w-100% patchNumber font-size-1.5rem text-center color-#beffff">
+                {{ dailyPatchList4.length ? dailyPatchList4[dailyPatchList4.length - 1].Total.toLocaleString() : '0' }}
+              </div>
+              <div class="w-100% text-center">
+                <ElButton plain @click="openDialog(4)">
+                  <!-- 簡化縮小版折線圖 -->
+                  <Line :data="simpleChartData4" :options="simpleChartOptions" class="md-w-150px w-80px" />
+                </ElButton>
+              </div>
+            </div>
+            <div class="flex tableTd">
+              <div class="w-100% platformName font-size-1.5rem text-center color-#beffff">
+                寶島娛樂城
+              </div>
+              <div class="w-100% patchNumber font-size-1.5rem text-center color-#beffff">
+                {{ dailyPatchList5.length ? dailyPatchList5[dailyPatchList5.length - 1].Total.toLocaleString() : '0' }}
+              </div>
+              <div class="w-100% text-center">
+                <ElButton plain @click="openDialog(5)">
+                  <!-- 簡化縮小版折線圖 -->
+                  <Line :data="simpleChartData5" :options="simpleChartOptions" class="md-w-150px w-80px" />
                 </ElButton>
               </div>
             </div>
@@ -497,9 +541,13 @@ const source2 = ref(0);
 const source3 = ref(0);
 const dailyPatchList0 = ref([]);
 const dailyPatchList1 = ref([]);
-const dailyPatchLists = [dailyPatchList0, dailyPatchList1];
+const dailyPatchList2 = ref([]);
+const dailyPatchList3 = ref([]);
+const dailyPatchList4 = ref([]);
+const dailyPatchList5 = ref([]);
+const dailyPatchLists = [dailyPatchList0, dailyPatchList1, dailyPatchList2, dailyPatchList3, dailyPatchList4, dailyPatchList5];
 // 用來控制每個對話框的開關狀態
-const dialogVisible = ref([false, false]);
+const dialogVisible = ref([false, false, false, false, false, false]);
 
 const contactName = ref('');
 const contactPhone = ref('');
@@ -636,6 +684,58 @@ const simpleChartData1 = computed(() => {
   }
   return getSimpleChartData(endDateData);
 });
+// 為簡化版圖表準備數據
+const simpleChartData2 = computed(() => {
+  // 假設這裡使用 endDate 的數據
+  const { EndTime } = calculateWeekRange();
+  let endDateData = dailyPatchList2.value.filter(item => item.Time.split('T')[0] === EndTime);
+  // 如果沒有找到數據，則取最後最多5筆數據
+  if (endDateData.length === 0) {
+    const totalRecords = dailyPatchList2.value.length;
+    const recordsToTake = Math.min(5, totalRecords); // 如果總數據少於5筆，就取全部
+    endDateData = dailyPatchList2.value.slice(-recordsToTake);
+  }
+  return getSimpleChartData(endDateData);
+});
+// 為簡化版圖表準備數據
+const simpleChartData3 = computed(() => {
+  // 假設這裡使用 endDate 的數據
+  const { EndTime } = calculateWeekRange();
+  let endDateData = dailyPatchList3.value.filter(item => item.Time.split('T')[0] === EndTime);
+  // 如果沒有找到數據，則取最後最多5筆數據
+  if (endDateData.length === 0) {
+    const totalRecords = dailyPatchList3.value.length;
+    const recordsToTake = Math.min(5, totalRecords); // 如果總數據少於5筆，就取全部
+    endDateData = dailyPatchList3.value.slice(-recordsToTake);
+  }
+  return getSimpleChartData(endDateData);
+});
+// 為簡化版圖表準備數據
+const simpleChartData4 = computed(() => {
+  // 假設這裡使用 endDate 的數據
+  const { EndTime } = calculateWeekRange();
+  let endDateData = dailyPatchList4.value.filter(item => item.Time.split('T')[0] === EndTime);
+  // 如果沒有找到數據，則取最後最多5筆數據
+  if (endDateData.length === 0) {
+    const totalRecords = dailyPatchList4.value.length;
+    const recordsToTake = Math.min(5, totalRecords); // 如果總數據少於5筆，就取全部
+    endDateData = dailyPatchList4.value.slice(-recordsToTake);
+  }
+  return getSimpleChartData(endDateData);
+});
+// 為簡化版圖表準備數據
+const simpleChartData5 = computed(() => {
+  // 假設這裡使用 endDate 的數據
+  const { EndTime } = calculateWeekRange();
+  let endDateData = dailyPatchList5.value.filter(item => item.Time.split('T')[0] === EndTime);
+  // 如果沒有找到數據，則取最後最多5筆數據
+  if (endDateData.length === 0) {
+    const totalRecords = dailyPatchList5.value.length;
+    const recordsToTake = Math.min(5, totalRecords); // 如果總數據少於5筆，就取全部
+    endDateData = dailyPatchList5.value.slice(-recordsToTake);
+  }
+  return getSimpleChartData(endDateData);
+});
 // 修改 getChartData 函數
 const getChartData = index => {
   // 先確保 dailyPatchLists[index] 存在
@@ -713,9 +813,8 @@ const chartOptions = {
         // 獲取當前圖表的索引
         const chartId = context.chart.canvas.id;
         const index = parseInt(chartId.split('-')[2]); // 從 'my-chart-0' 取得索引
-        return index === 0
-          ? '滿貫大亨 - 近五日富豪榜財產走勢'
-          : '老子有錢 - 近五日富豪榜財產走勢';
+        const platformNames = ['滿貫大亨', '老子有錢', '錢街Online', '聚寶Online', '金爸爸娛樂城', '寶島娛樂城'];
+        return `${platformNames[index]} - 近五日富豪榜財產走勢`;
       },
       font: {
         size: 24 // 設置字體大小為 24px
@@ -878,6 +977,14 @@ async function fetchRichList(token, type) {
         dailyPatchList0.value = response.data.Data;
       } else if (type === 4) {
         dailyPatchList1.value = response.data.Data;
+      } else if (type === 1) {
+        dailyPatchList2.value = response.data.Data;
+      } else if (type === 5) {
+        dailyPatchList3.value = response.data.Data;
+      } else if (type === 6) {
+        dailyPatchList4.value = response.data.Data;
+      } else if (type === 7) {
+        dailyPatchList5.value = response.data.Data;
       }
     } else {
       await openAlertModal(' ', `${response.data.Status.Message}`);
@@ -994,6 +1101,10 @@ onMounted(async () => {
       if (token != '') {
         await fetchRichList(token, 2);
         await fetchRichList(token, 4);
+        await fetchRichList(token, 1); // 錢街
+        await fetchRichList(token, 5); // 聚寶
+        await fetchRichList(token, 6); // 金爸爸
+        await fetchRichList(token, 7); // 寶島
       }
     } else {
       // 生成新的 token
@@ -1001,6 +1112,10 @@ onMounted(async () => {
       if (token != '') {
         await fetchRichList(token, 2);
         await fetchRichList(token, 4);
+        await fetchRichList(token, 1); // 錢街
+        await fetchRichList(token, 5); // 聚寶
+        await fetchRichList(token, 6); // 金爸爸
+        await fetchRichList(token, 7); // 寶島
       }
     }
   } catch (error) {
