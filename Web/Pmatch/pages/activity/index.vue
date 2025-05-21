@@ -373,6 +373,9 @@ onMounted(async () => {
     }
   });
 });
+definePageMeta({
+  middleware: () => navigateTo('/')
+})
 </script>
 <style scoped>
 .tab-btn {
