@@ -192,7 +192,7 @@ character, index2
       </div>
       <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
         <div class="mb-5rem">
-          <h1 class="newsTitle m-0 text-center font-size-50px">
+          <h1 id="news" class="newsTitle m-0 text-center font-size-50px">
             最新消息
           </h1>
           <!-- <button @click="testAlert">點擊開啟alert彈窗</button>
@@ -325,6 +325,7 @@ import { ElCarouselItem } from 'element-plus';
 import { useLoadStore } from '../stores/loading.js';
 import { useModalStore } from '../stores/useModal.js';
 import { useAlertModalStore } from '../stores/useAlertModal.js';
+import { nextTick } from 'vue'
 const store = useLoadStore();
 const modalStore = useModalStore();
 const alertModalStore = useAlertModalStore();
@@ -580,6 +581,19 @@ onMounted(async () => {
       serchPlatformLogCookies.value = JSON.stringify(plaformLog.value);
     } else {
       plaformLog.value = serchPlatformLogCookies.value;
+    }
+  // 滾動到 news 區域 ( 回傳 scrollToNews 時 )
+  const scrollToNews = route.query.scrollToNews;
+    if (scrollToNews === '1') {
+      await nextTick(); // 等待 DOM 渲染完成
+      const el = document.getElementById('news');
+      if (el) {
+        setTimeout(() => {
+          el.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+      // ✅ 移除 query，不讓網址殘留
+      router.replace({ path: route.path, query: {} });
     }
     // 監聽「上一頁」按鈕
     window.addEventListener('popstate', () => {

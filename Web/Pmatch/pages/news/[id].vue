@@ -13,6 +13,9 @@
       <h4>{{ item.Summary }}</h4>
       <div class="detail">
         <div v-html="item.Content"></div>
+        <div class="w-100% text-center mt-50px sid">
+          <button class="backBtn" @click="goBack">回上層</button>
+        </div>
       </div>
     </div>
   </div>
@@ -76,6 +79,15 @@ onMounted(async () => {
     console.error("頁面初始化失敗:", error);
   }
 });
+const router = useRouter();
+const goBack = () => {
+  if (window.history.length <= 1) {
+    // 代表是直接開這頁，沒上一頁可以返回
+    router.push({ path: '/', query: { scrollToNews: '1' } });
+  } else {
+    router.back();
+  }
+};
 </script>
 
 <style scoped>
@@ -83,5 +95,25 @@ onMounted(async () => {
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 1rem;
+}
+.backBtn {
+  width: 175px;
+  aspect-ratio: 175/65;
+  border-width: 2px;
+  border-style: solid;
+  border-color: transparent;
+  border-radius: 50px;
+  font-size: 18px;
+  background-image: linear-gradient(transparent, transparent),
+    linear-gradient(to right, rgba(67, 97, 238), rgba(247, 37, 133));
+  background-clip: padding-box, border-box;
+  background-origin: padding-box, border-box;
+  color: white;
+  cursor: pointer;
+}
+.backBtn:hover {
+  background-image: linear-gradient(white, white),
+    linear-gradient(to right, rgba(67, 97, 238), rgba(247, 37, 133));
+  color: rgba(247, 37, 133);
 }
 </style>
