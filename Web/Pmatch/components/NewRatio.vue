@@ -62,7 +62,7 @@ const matchingList = [
   {
     GamePlatform: "錢街Online",
     SendPatch: "130",
-    CollectPatch: "144",
+    CollectPatch: "140",
   },
   {
     GamePlatform: "金好運娛樂城",
