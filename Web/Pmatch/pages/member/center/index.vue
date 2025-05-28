@@ -272,11 +272,46 @@
 
             <div class="mt-15px" v-show="theUser[0].Type !== 2">
               <div class="mb-5px text-[#484646] font-400 text-15px">
-                推薦碼(推薦人)
+                推薦碼（推薦人）
               </div>
-              <input type="text" v-model="recommendStr" :disabled="usedRecommendStr"
-                class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
+              <div class="flex">
+                <div class="w-68% relative">
+                  <input
+                    type="text"
+                    v-model="theUser[0].RefferCode"
+                    :disabled="theUser[0].Type === 3"
+                    class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] disabled:bg-[#e9ecef] transition duration-200"
+                  />
+                  <div
+                    v-if="theUser[0].Type === 3"
+                    class="absolute w-20px h-20px top-50% transform translate-y-[-50%] right-5px border border-3px border-solid rounded-full border-[#24b75d] text-center content-center text-[#24b75d] text-15px font-bold"
+                  >
+                    <i class="fa-solid fa-check"></i>
+                  </div>
+                </div>
+                <div class="w-2%"></div>
+                <div class="w-30%">
+                  <button
+                    v-if="theUser[0].Type !== 3"
+                    type="button"
+                    class="p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#2696F3] hover:bg-[#228de6] transition duration-200 cursor-pointer"
+                    @click.prevent="checkForm"
+                  >
+                    綁定推薦碼
+                  </button>
+                  <button
+                    v-else
+                    disabled
+                    type="button"
+                    class="p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#58CB6E] hover:bg-[#52bd65] transition duration-200 cursor-not-allowed"
+                  >
+                    已完成綁定
+                  </button>
+                </div>
+              </div>
             </div>
+
+
             <div class="mt-15px">
               <button
                 class="bg-[#e93470] cursor-pointer text-white text-16px h-38px w-100% rounded-[5px] outline-none border-none hover:bg-[#bb2d3b] transition duration-300">
