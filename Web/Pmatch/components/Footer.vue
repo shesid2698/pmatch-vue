@@ -21,7 +21,7 @@
         <div class="flex w-100% mb-5">
           <div class="w-50%">
             <div class="m-2 text-center lg-text-start" v-for="(item, index) in footerLinkLeft" :key="index">
-              <NuxtLink class="footerLink color-#fff decoration-none" :to="item.link">{{ item.title }}</NuxtLink>
+              <NuxtLink class="footerLink color-#fff decoration-none" :to="item.link" @click.prevent="scrollToTop(item.link)">{{ item.title }}</NuxtLink>
             </div>
           </div>
           <div class="w-50%">
@@ -102,6 +102,14 @@ const footerLinkRight = ref([
     link: "/contact",
   },
 ]);
+
+// 同router會滾到最上面
+function scrollToTop(link) {
+  if (link === route.path) {    
+    window.scrollTo({ top: 0 }); // 有需要動畫可加 behavior:'smooth'
+  }
+}
+
 </script>
 
 <style scoped>
@@ -136,6 +144,6 @@ const footerLinkRight = ref([
   left: 0;
   width: 100%;
   height: 500px;
-
+  pointer-events: none;
 }
 </style>
