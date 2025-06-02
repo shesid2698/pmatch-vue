@@ -27,7 +27,7 @@
                 <img class="w-200px" src="/images/gameLogo.png" alt="熱門媒合logo" />
               </div>
               <div class="flex">
-                <div class="gameImg w-100% me-3" :class="`game-logo-${item.PlatformName}`">
+                <div class="gameImg w-100% me-3 md:max-w-255px md:max-h-144px" :class="`game-logo-${item.PlatformName}`">
                   <NuxtLink :to="{
                     path: '/findmatch',
                     query: {
@@ -35,8 +35,10 @@
                         item.PlatformName,
                     },
                   }" class="w-100% m-1">
-                    <div class="w-100% flex">
-                      <img :src="`${assetsUrl}${item.ImgFile}`" :alt="item.PlatformName" class="w-100% rounded-10px" />
+                    <div class="w-100% flex justify-center">
+                      <div class="relative aspect-[300/187] overflow-hidden inline-flex justify-center items-center rounded-5px bg-white">
+                        <img :src="`${assetsUrl}${item.ImgFile}`" :alt="item.PlatformName" class="w-100% rounded-10px" />
+                      </div>
                     </div>
                   </NuxtLink>
                 </div>

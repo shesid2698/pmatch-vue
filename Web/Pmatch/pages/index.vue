@@ -136,10 +136,12 @@
                         platformName:
                           item.PlatformName,
                       },
-                    }" class="w-100% m-1 decoration-none color-#fff">
+                    }" class="w-100% m-1 decoration-none ">
                       <div class="w-100% flex justify-center">
-                        <img v-show="item.ImgFile" :src="`${assetsUrl}${item.ImgFile}`" :alt="item.PlatformName"
-                          class="w-full" />
+                        <div class="relative aspect-[300/187] overflow-hidden inline-flex justify-center items-center rounded-5px bg-white">
+                          <img v-show="item.ImgFile" :src="`${assetsUrl}${item.ImgFile}`" :alt="item.PlatformName"
+                            class="w-full h-auto object-contain" />
+                        </div>
                         <p v-show="!item.ImgFile">
                           {{ item.PlatformName }}
                         </p>
