@@ -206,16 +206,22 @@ character, index2
         <div class="lg-flex">
           <div class="w-100% lg-w-50% me-0 lg-me-1rem">
             <div class="mb-3rem lg-block flex lg-justify-start justify-center">
-              <button class="newsAllBtn font-size-15px border-none p-3 bg-#4361ee color-#fff rounded-50px"
-                @click="fetchNewsListData([1,2], '')">
+              <button class="border-solid border-1px cursor-pointer font-size-15px rounded-50px p-3 leading-[20px]"
+                style="--btn-color: #4361ee"
+                :class="activeNewsType === 'ALL' ? 'newSolidBtn' : 'newHollowBtn'"
+                @click="fetchNewsListData([1,2], '', 'ALL')">
                 ALL
               </button>
-              <button class="newsSystemBtn font-size-15px bg-#fff p-3 ms-3 color-#7B2CBF rounded-50px"
-                @click="fetchNewsListData([1], '')">
+              <button class="border-solid border-1px cursor-pointer font-size-15px rounded-50px p-3 ms-3"
+                style="--btn-color: #7B2CBF"
+                :class="activeNewsType === 'SYSTEM' ? 'newSolidBtn' : 'newHollowBtn'"
+                @click="fetchNewsListData([1], '', 'SYSTEM')">
                 系統公告
               </button>
-              <button class="newsActivityBtn font-size-15px bg-#fff border-none p-3 ms-3 color-#F72585 rounded-50px"
-                @click="fetchNewsListData([2], '')">
+              <button class="border-solid border-1px cursor-pointer font-size-15px rounded-50px p-3 ms-3"
+                style="--btn-color: #F72585"
+                :class="activeNewsType === 'ACTIVITY' ? 'newSolidBtn' : 'newHollowBtn'"
+                @click="fetchNewsListData([2], '', 'ACTIVITY')">
                 活動資訊
               </button>
             </div>
@@ -389,7 +395,9 @@ let keywordToSearch = ref('');
 let contractToSearch = ref(false);
 
 // 取得GetNewsList(最新消息)
-async function fetchNewsListData(num, token) {
+const activeNewsType = ref('ALL');
+async function fetchNewsListData(num, token = '', type = 'ALL') {
+  activeNewsType.value = type;
   if (token === '') {
     token = await jwtStore.generateToken();
   }
@@ -721,37 +729,25 @@ onBeforeUnmount(() => {
   min-height: 300px;
 }
 
-.newsAllBtn {
-  border: 1px solid #4361ee;
-  cursor: pointer;
-  line-height: 20px;
-}
-
-.newsSystemBtn {
-  border: 1px solid #7b2cbf;
-  cursor: pointer;
-}
-
-.newsActivityBtn {
-  border: 1px solid #f72585;
-  cursor: pointer;
-}
-
-.newsAllBtn:hover {
-  border: 1px solid #4361ee;
-  background: #fff;
-  color: #4361ee;
-}
-
-.newsSystemBtn:hover {
-  border: 1px solid #7b2cbf;
-  background: #7b2cbf;
+/* 主色樣式(實心) */
+.newSolidBtn {
   color: #fff;
+  background-color: var(--btn-color);
+  border-color: var(--btn-color);
+}
+.newSolidBtn:hover {
+  background-color: #fff;
+  color: var(--btn-color);
 }
 
-.newsActivityBtn:hover {
-  border: 1px solid #f72585;
-  background: #f72585;
+/* 副色樣式(空心) */
+.newHollowBtn {
+  color: var(--btn-color);
+  background-color: #fff;
+  border-color: var(--btn-color);
+}
+.newHollowBtn:hover {
+  background-color: var(--btn-color);
   color: #fff;
 }
 
