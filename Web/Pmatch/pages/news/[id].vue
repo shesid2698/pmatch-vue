@@ -13,10 +13,10 @@
       <h4>{{ item.Summary }}</h4>
       <div class="detail">
         <div v-html="item.Content"></div>
-        <div class="w-100% text-center mt-50px sid">
-          <button class="backBtn" @click="goBack">回上層</button>
-        </div>
       </div>
+    </div>
+    <div class="w-100% text-center mt-50px sid">
+      <button class="backBtn" @click="goBack">回上層</button>
     </div>
   </div>
 </template>
