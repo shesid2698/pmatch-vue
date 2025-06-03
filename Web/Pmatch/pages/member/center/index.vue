@@ -278,7 +278,7 @@
                 <div class="w-68% relative">
                   <input
                     type="text"
-                    v-model="theUser[0].RefferCode"
+                    v-model="recommendStr"
                     :disabled="theUser[0].Type === 3"
                     class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] disabled:bg-[#e9ecef] transition duration-200"
                   />
@@ -310,7 +310,6 @@
                 </div>
               </div>
             </div>
-
 
             <div class="mt-15px">
               <button
@@ -419,40 +418,66 @@ const getMobileVerify = async (result, mobile) => {
 /**
  * 提交表單
  */
+
+
 const checkForm = async event => {
   if (event) event.preventDefault();
 
-  //做型別轉換
+  // 型別轉換
   theUser[0].CarrierType = parseInt(theUser[0].CarrierType);
   theUser[0].SendReceiptType = parseInt(theUser[0].SendReceiptType);
   if (theUser[0].CarrierType === 1 && theUser[0].Carrier !== '') {
     theUser[0].Carrier = '/' + theUser[0].Carrier;
   }
   if (theUser[0].Carrier === '') theUser[0].CarrierType = 0;
-  var allAddress = '';
-  if (selectedRegion.value !== '' && selectedCity.value !== '' && addressDetail.value !== '')
+
+  // 地址組合
+  let allAddress = '';
+  if (selectedRegion.value !== '' && selectedCity.value !== '' && addressDetail.value !== '') {
     allAddress = selectedCity.value + selectedRegion.value + addressDetail.value;
+  }
   theUser[0].Address = allAddress;
 
+  // 處理推薦碼（改用 BindReferralCode API）
   if (recommendStr.value !== '' && usedRecommendStr.value === false) {
     try {
-      if (
-        (await modalStore.showModal(
-          ' ',
-          '綁定推薦碼後，不可再進行變更，確定要綁定此組推薦碼嗎？'
-        )) === true
-      ) {
-        theUser[0].RefferCode = recommendStr.value;
-      }
-      else {
+      const confirm = await modalStore.showModal(
+        ' ',
+        '綁定推薦碼後，不可再進行變更，<br>確定要綁定此組推薦碼嗎？'
+      );
+      if (!confirm) {
         recommendStr.value = '';
         theUser[0].RefferCode = '';
         return;
       }
-    } catch {
-      return;
+      // 發送綁定推薦碼 API
+      const bindResponse = await $axios.post(
+        '/api/v1/Pmatch/BindReferralCode',
+        {
+          PmatchMemberId: memberId.value,
+          ReferralCode: recommendStr.value
+        },
+        {
+          headers: {
+            Authorization: userToken.value
+          }
+        }
+      );
+
+      if (bindResponse.data.Status.Code !== 0) {
+        return alertModal.alertShowModal(' ', `推薦碼綁定失敗：${bindResponse.data.Status.Message}`);
+      }
+
+      // 綁定成功
+      theUser[0].RefferCode = recommendStr.value;
+      usedRecommendStr.value = true;
+    } catch (err) {
+      console.error('推薦碼綁定錯誤:', err);
+      return alertModal.alertShowModal(' ', '推薦碼綁定過程發生錯誤');
     }
   }
+
+  // 發送更新會員資料 API
   try {
     const response = await $axios.post('/api/v1/Pmatch/UpdatedMemberData', theUser[0], {
       headers: {
@@ -467,9 +492,10 @@ const checkForm = async event => {
       alertModal.alertShowModal(' ', `${response.data.Status.Message}`);
     }
   } catch (error) {
-    console.error('請求失敗:', error);
+    console.error('更新會員資料失敗:', error);
   }
 };
+
 
 /**
  * 日期轉換函數
