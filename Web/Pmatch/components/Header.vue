@@ -205,10 +205,17 @@ onMounted(async () => {
       },
       {
         id: 1,
+        title: '幫助中心',
+        link: '/helpcenter',
+        className: 'nav0',
+        icon: ''
+      },
+      {
+        id: 2,
         title: '聊聊天',
         link: '#',
         icon: '',
-        className: 'nav1',
+        className: 'nav2',
         function: 'OpenChat'
       },
       // {
@@ -228,13 +235,13 @@ onMounted(async () => {
     ];
   } else {
     headerLink.value = [
-      {
-        id: 0,
-        title: '首頁',
-        link: '/',
-        className: 'nav0',
-        icon: ''
-      },
+      // {
+      //   id: 0,
+      //   title: '首頁',
+      //   link: '/',
+      //   className: 'nav0',
+      //   icon: ''
+      // },
       {
         id: 2,
         title: '幫助中心',
