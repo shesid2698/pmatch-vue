@@ -257,7 +257,7 @@
                       <div class="amountContent py-2" @click.stop="AmountToggle">
                         <div class="font-size-18px pl-2">
                           {{
-                            exchangeAmount ||
+                            selectedAmount ||
                             (isSell
                               ? (isExchangeToCoin === true
                                   ? '選擇兌換回饋幣數量'
@@ -413,7 +413,7 @@ const memberRewardList = ref([]);
 const tableData = ref([]);
 let firstLoad = true;
 const showExchangeView = ref(false); // true = 兌換回饋頁面 , false = 會員回饋頁面
-const isSell = ref(null); // true = 委賣, false = 提領
+const isSell = ref(false); // true = 委賣, false = 提領
 const isExchangeToCoin = ref(true); // true = 兌幣, false = 賣幣
 // ✅ 自定義下拉式選單的開關狀態
 const platformBox = ref(false);
@@ -527,7 +527,21 @@ async function fetchRewardListData() {
       }
     );
     if (response.data.Status.Code === 0) {
-      memberRewardList.value = response.data.Data;
+
+      const raw = response.data.Data;
+      // ✅ 確保 PlatformsReward 是陣列
+      raw.PlatformsReward = (raw.PlatformsReward || []).map(item => ({
+        ...item,
+        SqlIndex: item.SqlIndex || null,
+        Teamid: item.Teamid || null,
+        ContractId: item.ContractId || null,
+        ContractConetnt: item.ContractConetnt || '',
+      }));
+
+      memberRewardList.value = raw;
+
+      // memberRewardList.value = response.data.Data;
+
       if (memberRewardList.value != null) {
         // 清除時間
         timeValue.value = 0;
@@ -682,15 +696,40 @@ const platformToggle = () => {
   }
 };
 // ✅ 點選某遊戲平台時執行：更新平台與對應值
-const selectPlatform = (platformName, index) => {
+const selectPlatform = async (platformName, index) => {
   selectedPlatform.value = platformName;
   selectedIndex.value = index;
   platformBox.value = false;
 
   // 自動帶入該平台數量
-  const value = Number(memberRewardList.value.PlatformsReward[index].Value);
+  const item = memberRewardList.value.PlatformsReward[index];
+
+  console.log('🟠 使用者選擇平台：', platformName);
+  console.log('🟠 對應的平台資料 item：', item);
+
+  const value = Number(item?.Value || 0);
+  // const value = Number(item?.Value);
   selectedAmount.value = value;
   displayAmount.value = isNaN(value) ? '' : value.toLocaleString();
+
+  console.log('目前選擇的平台資料:', item);
+
+  // ✅ 僅在兌換模式時，才設定 storesItem
+  if (item && item.SqlIndex && item.Teamid && item.ContractId) {
+    storesItem.value = {
+      SqlIndex: item.SqlIndex,
+      Teamid: item.Teamid,
+      ContractId: item.ContractId,
+      Id: item.StoreId ?? item.ContractId,
+      DB: item.SqlIndex,
+      ContractConetnt: item.ContractConetnt || '',
+    };
+    console.log('✅ storesItem 設定完成:', storesItem.value);
+  } else {
+    storesItem.value = {};
+    console.warn('🔴 storesItem 設定失敗，缺少必要欄位！');
+    console.warn('→ SqlIndex:', item.SqlIndex, 'Teamid:', item.Teamid, 'ContractId:', item.ContractId);
+  }
 };
 // ✅ 可選擇兌換數量選項列表（由程式自動推算）
 const selectedAmounts = ref([]);
@@ -758,9 +797,9 @@ const selectAmount = (val) => {
   selectedAmount.value = Number(val);
   amountBox.value = false;
 
-    if (selectedAmount.value === 0) {
-    openAlertModal(' ', '目前無可用的回饋幣，請稍後再試');
-  }
+  //   if (selectedAmount.value === 0) {
+  //   openAlertModal(' ', '目前無可用的回饋幣，請稍後再試');
+  // }
 };
 // ✅ 兌換回饋|聯絡資訊
 const contactToggle = () => {
@@ -788,7 +827,6 @@ const readContract = async () => {
   }
   console.log('實際條款內容:', storesItem.value.ContractConetnt);
 
-  await fetchContractOnly(platform.PlatformName);
   dialogVisible.value = true;
   isContractRead.value = true;
 };
@@ -810,10 +848,10 @@ const sendAccList = async () => {
 
   // 驗證：平台兌換數量是否合法
   const selectedValue = Number(selectedItem.Value);
-  if (isNaN(selectedValue) || selectedValue <= 0) {
-    await openAlertModal(' ', '該平台無可兌換回饋');
-    return;
-  }
+  // if (isNaN(selectedValue) || selectedValue <= 0) {
+  //   await openAlertModal(' ', '該平台無可兌換回饋');
+  //   return;
+  // }
 
   // 驗證：暱稱、提領/委賣、聯絡方式、條款
   if (!accMemberName.value.trim()) {
@@ -832,17 +870,27 @@ const sendAccList = async () => {
     await openAlertModal(' ', '請勾選「我已詳細閱讀此服務條款」');
     return;
   }
+//   if (!storesItem.value.ContractConetnt) {
+//   await openAlertModal(' ', '此平台尚未提供條款內容，請稍後再試');
+//   return;
+// }
+
 
   // 驗證通過後送出 API
   try {
-    console.log('📝 accMemberName:', accMemberName.value);
-    console.log('📝 selectedPlatform:', selectedPlatform.value);
-    console.log('📝 selectedAmount:', selectedAmount.value);
-    console.log('📝 isSell:', isSell.value);
-    console.log('📝 selectedContact:', selectedContact.value);
-    console.log('📝 isContractRead:', isContractRead.value);
+    console.log('=== 送單資料確認 Start ===');
+    console.log('selectedPlatform:', selectedPlatform.value);
+    console.log('accMemberName:', accMemberName.value);
+    console.log('exchangeAmount:', selectedAmount.value);
+    console.log('isSell:', isSell.value);
+    console.log('isExchangeToCoin:', isExchangeToCoin.value);
+    console.log('selectedContact:', selectedContact.value);
+    console.log('isContractRead:', isContractRead.value);
+    console.log('storesItem:', storesItem.value);
+
     const payload = {
-      SqlIndex: storesItem.value.DB,
+      // SqlIndex: storesItem.value.DB,
+      SqlIndex: storesItem.value.SqlIndex,
       TeamId: storesItem.value.Teamid,
       GamePlatformName: selectedPlatform.value,
       MemberCharacterName: accMemberName.value,
@@ -851,10 +899,12 @@ const sendAccList = async () => {
       PayMode: 1, // 可視需要擴充
       Phone: selectedContact.value,
       PmatchMemberId: MemberIdCookie.value,
-      StoreId: storesItem.value.Id,
+      StoreId: selectedItem.StoreId ?? selectedItem.ContractId ?? null,
       ContractId: storesItem.value.ContractId,
       IsReward: true // ✅ 核心關鍵：回饋兌換一定要加
     };
+
+    console.log('送出 payload:', payload);
 
     const response = await $axios.post('/api/v1/Pmatch/CreateAccounting', payload, {
       headers: { Authorization: tokenCookie.value }
@@ -873,43 +923,8 @@ const sendAccList = async () => {
 };
 // ✅ 撈取商店明細(平台的合約條款內容)
 const storesItem = ref({});
-const fetchContractOnly = async (platformName) => {
-  const selectedItem = memberRewardList.value.PlatformsReward[selectedIndex.value];
-
-  console.log('🟡 使用 SqlIndex:', selectedItem?.SqlIndex);
-
-    if (!selectedItem || !selectedItem.SqlIndex) {
-      console.warn('❌ selectedItem 尚未就緒，無法撈取條款');
-      await openAlertModal(' ', '請先正確選擇遊戲平台');
-      return;
-    }
-
-  try {
-    console.log('🟡 呼叫條款 API，platformName:', platformName);
-    console.log('🟡 memberRewardList fallback SqlIndex:', memberRewardList.value.SqlIndex);
-    console.log('🟢 條款 API 回傳:', response.data);
-    console.log('🟢 條款 storesItem.value:', storesItem.value);
 
 
-    const response = await $axios.post('/api/v1/Pmatch/GetStoreDetail', {
-      SqlIndex: selectedItem?.SqlIndex || memberRewardList.value.SqlIndex,
-      PmatchMemberId: MemberIdCookie.value,
-      GamePlatformName: platformName,
-    }, {
-      headers: {
-        Authorization: tokenCookie.value
-      }
-    });
-
-console.log('GetStoreDetail 回傳:', response.data);
-
-    if (response.data.Status.Code === 0) {
-  storesItem.value = response.data.Data || {};
-}
-  } catch (e) {
-    console.error('取得條款失敗:', e);
-  }
-};
 // ✅ 點擊外部(空白處)時自動關閉選單
 const handleOutsideClick = (e) => {
   if (!e.target.closest('.platformBox')) {
@@ -924,6 +939,9 @@ const handleOutsideClick = (e) => {
 };
 // ✅ 畫面初始化與事件綁定
 onMounted(async () => {
+  //  console.log('✅ memberRewardList 全部內容:', JSON.stringify(memberRewardList.value, null, 2));
+   console.table(memberRewardList.value.PlatformsReward || []);
+
   try {
     await fetchRewardListData();
 
