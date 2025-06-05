@@ -186,10 +186,10 @@
             <el-table-column prop="Remark" label="備註" />
           </el-table>
         </div>
-        <!-- 切換頁面按鈕 -->
-        <div class="w-100% text-center mt-5">
+        <!-- 切換頁面按鈕(僅在 showExchangeView 判斷通過時才顯示按鈕) -->
+        <div class="w-100% text-center mt-5" >
           <button class="exchangeBtn" @click="showExchangeView = true">兌換回饋</button>
-        </div>       
+        </div>   
       </div>
       <!-- 兌換|線上下單畫面 -->
       <div class="lg:pl-20px w-100%" v-else>
@@ -202,8 +202,7 @@
           <div class="md-mt-7rem max-w-1110px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3 relative z-2">            
             <!-- 表單內容 -->
              <div class="w-full relative md-mt-5rem z-1">     
-              <div v-if="displayRadio != null" v-show="(displayRadio.isEnableWithdraw || displayRadio.IsEnabledSell) &&
-                storesItem.ContractId !== 0
+              <div v-if="displayRadio != null" v-show="(displayRadio.isEnableWithdraw || displayRadio.IsEnabledSell)
                 " class=" md-mt-7rem max-w-1110px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3 relative z-2">
                 <div class="w-100% block md-flex justify-center flex-wrap">
                   <div class="md-w-460px">                    
@@ -257,12 +256,7 @@
                       <div class="amountContent py-2" @click.stop="AmountToggle">
                         <div class="font-size-18px pl-2">
                           {{
-                            selectedAmount ||
-                            (isSell
-                              ? (isExchangeToCoin === true
-                                  ? '選擇兌換回饋幣數量'
-                                  : '選擇賣出回饋幣數量')
-                              : '選擇使用回饋數量(遊戲幣)')
+                            selectedAmount || '選擇使用回饋數量(遊戲幣)'
                           }}
                         </div>
                         <div class="absolute top-13px right-20px">
@@ -274,10 +268,9 @@
                           <div class="py-2 pl-2">
                           {{
                             (isSell
-                              ? (isExchangeToCoin === true
-                                  ? '兌換回饋幣數量'
-                                  : '賣出回饋幣數量')
-                              : '使用回饋幣數量')
+                              ? '賣出回饋幣數量'
+                              : '提領回饋幣數量'
+                            )
                           }}</div>
                           <div
                             class="py-2 exchangeAmount pl-2"
@@ -292,29 +285,10 @@
                     </div>
                     <!-- 點委賣出現 -->
                     <div class="w-100% flex justify-center mb-5" v-if="displayRadio != null"
-                      v-show="isSell && displayRadio.IsEnabledSell">              
-                      <div class="flex items-center ms-3 me-3">                        
-                        <input type="radio" id="shop" class="w-20px h-20px m-0 me-3 custom-radio" v-model="isExchangeToCoin"
-                          :value="true" />
-                        <label for="shop" class="radio-label font-size-18px color-#f72585">兌換回饋遊戲幣</label>
-                      </div>                      
-                      <div class="flex items-center mx-3">
-                        <input type="radio" id="atm" class="w-20px h-20px m-0 me-3 custom-radio" v-model="isExchangeToCoin"
-                          :value="false" />
-                        <label for="atm" class="radio-label font-size-18px color-#4361ee">賣出回饋遊戲幣</label>
+                      v-show="isSell && displayRadio.IsEnabledSell">
+                      <div class="text-15px">
+                        * 請參考最新委賣比值，實際兌換的筆直須依媒合商告知為準
                       </div>
-                      <el-tooltip class="box-item" effect="dark" placement="top">
-                        <template #content>
-                          <div class="text-14px">
-                            請參考最新委賣比值，實際兌換的筆直須依媒合商告知為準
-                          </div>
-                        </template>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none" class="pt-1">
-                            <path d="M8.5 7.65002V11.15" stroke="#ACB4C2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M8.5 4.85702L8.5075 4.84924" stroke="#ACB4C2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M8.5 15C12.6421 15 16 11.866 16 8C16 4.134 12.6421 1 8.5 1C4.35786 1 1 4.134 1 8C1 11.866 4.35786 15 8.5 15Z" stroke="#ACB4C2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </el-tooltip>
                     </div>
                     <div class="contactBox relative mb-5">
                       <div class="contactContent py-2 " @click.stop="contactToggle">
@@ -362,7 +336,7 @@
                         </div>
                         <div class="dialogBody">
                           <div class="dialogContent">
-                            <div v-if="displayRadio" v-html="storesItem.ContractConetnt"></div>
+                            <div v-if="displayRadio" v-html="rewardInfo.Contract?.Content"></div>
                           </div>
                           <div class="flex justify-end mt-5">
                             <ElButton class="agreeBtn" type="primary" @click="dialogVisible = false">
@@ -412,9 +386,8 @@ const dateValue = ref('');
 const memberRewardList = ref([]);
 const tableData = ref([]);
 let firstLoad = true;
-const showExchangeView = ref(false); // true = 兌換回饋頁面 , false = 會員回饋頁面
+const showExchangeView = ref(true); // true = 兌換回饋頁面 , false = 會員回饋頁面
 const isSell = ref(false); // true = 委賣, false = 提領
-const isExchangeToCoin = ref(true); // true = 兌幣, false = 賣幣
 // ✅ 自定義下拉式選單的開關狀態
 const platformBox = ref(false);
 const contactBox = ref(false);
@@ -509,6 +482,60 @@ const RewardPlatformChange = () => {
     sellRewardValue.value = '0';
   }
 };
+// 判斷要不要顯示 兌換回饋按鈕
+const canShowExchangeBtn = computed(() => {
+  const r = rewardInfo.value;
+  const hasBuy = r.IsEnableBuyReward === true;
+  const hasSell = r.IsEnableSellReward === true;
+  const hasContract =
+    !!(r.Contract?.Content && r.Contract.Content.trim().replace(/<[^>]*>/g, '').length > 0);
+  return (hasBuy || hasSell) && hasContract;
+});
+
+// ✅ 這支函式會從後端撈「會員是否可兌換回饋」的設定（是否開啟、是否有條款）
+const rewardInfo = ref({}); // 用來存放這支 API 回傳的內容
+
+const fetchRewardInfo = async () => {
+  try {
+    const res = await $axios.post('http://192.168.10.206:3310/api/v1/Pmatch/MemberGetRewardInfo', {
+      MemberId: MemberIdCookie.value
+    }, {
+      headers: {
+        Authorization: tokenCookie.value
+      }
+    });
+
+     console.log('📦 MemberGetRewardInfo 回傳:', res.data);
+
+    if (res.data.Status.Code === 0) {
+      const data = res.data.Data;
+      rewardInfo.value = data;
+
+      // 🟡 邏輯條件判斷
+      const hasBuy = data.IsEnableBuyReward === true;
+      const hasSell = data.IsEnableSellReward === true;
+
+      const hasContract = !!(
+        data.Contract?.Content &&
+        data.Contract.Content.trim().replace(/<[^>]*>/g, '').length > 0
+      );
+
+      // 如果條件不符 => 不顯示兌換畫面
+      if (!(hasBuy || hasSell) || !hasContract) {
+        showExchangeView.value = false;
+      }
+
+    } else {
+      console.warn('MemberGetRewardInfo 取得失敗:', res.data.Status.Message);
+      showExchangeView.value = false;
+    }
+  } catch (err) {
+    console.error('MemberGetRewardInfo 請求失敗:', err);
+    showExchangeView.value = false;
+  }
+};
+
+
 // ✅ 撈取回饋資訊(推薦碼與平台列表資料)
 async function fetchRewardListData() {
   if (!tokenCookie.value && !MemberIdCookie.value) {
@@ -516,9 +543,9 @@ async function fetchRewardListData() {
   }
   try {
     const response = await $axios.post(
-      '/api/v1/Pmatch/GetMemberReward',
+      'http://192.168.10.206:3310/api/v1/Pmatch/GetMemberReward',
       {
-        MemberId: MemberIdCookie.value
+        MemberId: MemberIdCookie.value,
       },
       {
         headers: {
@@ -528,19 +555,10 @@ async function fetchRewardListData() {
     );
     if (response.data.Status.Code === 0) {
 
-      const raw = response.data.Data;
-      // ✅ 確保 PlatformsReward 是陣列
-      raw.PlatformsReward = (raw.PlatformsReward || []).map(item => ({
-        ...item,
-        SqlIndex: item.SqlIndex || null,
-        Teamid: item.Teamid || null,
-        ContractId: item.ContractId || null,
-        ContractConetnt: item.ContractConetnt || '',
-      }));
+      const data = response.data.Data;
+      memberRewardList.value = data;
 
-      memberRewardList.value = raw;
-
-      // memberRewardList.value = response.data.Data;
+      console.log(response.data)
 
       if (memberRewardList.value != null) {
         // 清除時間
@@ -695,6 +713,7 @@ const platformToggle = () => {
     contactBox.value = false;
   }
 };
+
 // ✅ 點選某遊戲平台時執行：更新平台與對應值
 const selectPlatform = async (platformName, index) => {
   selectedPlatform.value = platformName;
@@ -705,31 +724,12 @@ const selectPlatform = async (platformName, index) => {
   const item = memberRewardList.value.PlatformsReward[index];
 
   console.log('🟠 使用者選擇平台：', platformName);
-  console.log('🟠 對應的平台資料 item：', item);
+  console.log('🟠 對應的平台資料：', item);
 
   const value = Number(item?.Value || 0);
   // const value = Number(item?.Value);
   selectedAmount.value = value;
   displayAmount.value = isNaN(value) ? '' : value.toLocaleString();
-
-  console.log('目前選擇的平台資料:', item);
-
-  // ✅ 僅在兌換模式時，才設定 storesItem
-  if (item && item.SqlIndex && item.Teamid && item.ContractId) {
-    storesItem.value = {
-      SqlIndex: item.SqlIndex,
-      Teamid: item.Teamid,
-      ContractId: item.ContractId,
-      Id: item.StoreId ?? item.ContractId,
-      DB: item.SqlIndex,
-      ContractConetnt: item.ContractConetnt || '',
-    };
-    console.log('✅ storesItem 設定完成:', storesItem.value);
-  } else {
-    storesItem.value = {};
-    console.warn('🔴 storesItem 設定失敗，缺少必要欄位！');
-    console.warn('→ SqlIndex:', item.SqlIndex, 'Teamid:', item.Teamid, 'ContractId:', item.ContractId);
-  }
 };
 // ✅ 可選擇兌換數量選項列表（由程式自動推算）
 const selectedAmounts = ref([]);
@@ -747,49 +747,17 @@ const AmountToggle = () => {
   if (amountBox.value) {
     platformBox.value = false;
     contactBox.value = false;
-    // ✅ 計算可選擇的數量
+
     const selectedItem = memberRewardList.value.PlatformsReward[selectedIndex.value];
-    console.log('目前選擇的平台資料:', selectedItem);
-    if (selectedItem && selectedItem.Value !== undefined && selectedItem.Value !== null) {
-      const total = Number(selectedItem.Value);
-      const result = [];
+    console.log('🔍 後端提供的可選擇金額:', selectedItem?.SelectableAmounts);
 
-        const roundTo100 = (num) => Math.floor(num / 100) * 100;
-
-        if (total <= 100) {
-          result.push(total); // 全部
-        } else if (total <= 500) {
-          // 每 100 為單位，最多顯示 5 個，最少 2 個
-          const step = 100;
-          for (let i = step; i <= total; i += step) {
-            result.push(i);
-          }
-          if (result[result.length - 1] !== roundTo100(total)) {
-            result.push(roundTo100(total)); // 加入尾數（補整百）
-          }
-          // 最多 5 個
-          while (result.length > 5) {
-            result.pop();
-          }
-        } else if (total <= 1000) {
-          // 顯示 3 個：100、(中間值)、最大值（都取整百）
-          result.push(100);
-          result.push(roundTo100(total / 2));
-          result.push(roundTo100(total));
-        } else {
-          // 顯示 5 個：100、25%、50%、75%、100%（都取整百）
-          result.push(100);
-          result.push(roundTo100(total * 0.25));
-          result.push(roundTo100(total * 0.5));
-          result.push(roundTo100(total * 0.75));
-          result.push(roundTo100(total));
-        }
-      selectedAmounts.value = result;
+    // ✅ 改為只接後端設定
+    if (Array.isArray(selectedItem?.SelectableAmounts) && selectedItem.SelectableAmounts.length > 0) {
+      selectedAmounts.value = selectedItem.SelectableAmounts;
     } else {
       selectedAmounts.value = [0]; // 保底顯示一個選項
       console.warn('Value 不存在，fallback 顯示為 0');
     }
-
   }
 };
 // ✅ 點選某兌換數量時執行：更新顯示數量
@@ -825,10 +793,8 @@ const readContract = async () => {
     await openAlertModal(' ', '無法取得平台名稱，請重新選擇');
     return;
   }
-  console.log('實際條款內容:', storesItem.value.ContractConetnt);
-
-  dialogVisible.value = true;
-  isContractRead.value = true;
+    dialogVisible.value = true;
+    isContractRead.value = true;
 };
 // ✅ 表單是否啟用提領 / 委賣
 const displayRadio = ref({
@@ -870,46 +836,48 @@ const sendAccList = async () => {
     await openAlertModal(' ', '請勾選「我已詳細閱讀此服務條款」');
     return;
   }
-//   if (!storesItem.value.ContractConetnt) {
+//   if (!rewardInfo.Contract?.Content) {
 //   await openAlertModal(' ', '此平台尚未提供條款內容，請稍後再試');
 //   return;
-// }
+//  }
 
 
   // 驗證通過後送出 API
   try {
-    console.log('=== 送單資料確認 Start ===');
-    console.log('selectedPlatform:', selectedPlatform.value);
-    console.log('accMemberName:', accMemberName.value);
-    console.log('exchangeAmount:', selectedAmount.value);
-    console.log('isSell:', isSell.value);
-    console.log('isExchangeToCoin:', isExchangeToCoin.value);
-    console.log('selectedContact:', selectedContact.value);
-    console.log('isContractRead:', isContractRead.value);
-    console.log('storesItem:', storesItem.value);
-
     const payload = {
-      // SqlIndex: storesItem.value.DB,
-      SqlIndex: storesItem.value.SqlIndex,
-      TeamId: storesItem.value.Teamid,
+      SqlIndex: 3, // 假資料
+      TeamId: 13, // 假資料
       GamePlatformName: selectedPlatform.value,
-      MemberCharacterName: accMemberName.value,
-      TransactionMode: isSell.value ? 20 : 10, // 20=委賣, 10=提領
-      Value: selectedAmount.value,
-      PayMode: 1, // 可視需要擴充
-      Phone: selectedContact.value,
-      PmatchMemberId: MemberIdCookie.value,
-      StoreId: selectedItem.StoreId ?? selectedItem.ContractId ?? null,
-      ContractId: storesItem.value.ContractId,
+      MemberCharacterName: "test1",
+      TransactionMode: isSell.value ? 20 : 10, // 20=委賣, 10=提領, 12=不用收費
+      Value: 1000,
+      PayMode: 1,
+      Phone: "0903030030",
+      PmatchMemberId: 1315,
+      StoreId: 51, // 假資料
+      ContractId: 1018, // 假資料
       IsReward: true // ✅ 核心關鍵：回饋兌換一定要加
     };
+    // const payload = {
+    //   SqlIndex: 3, // 假資料
+    //   TeamId: 13, // 假資料
+    //   ContractId: 1018, // 假資料
+    //   StoreId: 51, // 假資料
+    //   GamePlatformName: selectedPlatform.value,
+    //   MemberCharacterName: accMemberName.value,
+    //   PmatchMemberId: MemberIdCookie.value,
+    //   TransactionMode: isSell.value ? 20 : 10, // 20=委賣, 10=提領, 12=不用收費
+    //   Value: selectedAmount.value,
+    //   PayMode: 1,
+    //   Phone: selectedContact.value,
+    //   PmatchMemberId: MemberIdCookie.value,
+    //   IsReward: true // ✅ 核心關鍵：回饋兌換一定要加
+    // };
 
-    console.log('送出 payload:', payload);
-
-    const response = await $axios.post('/api/v1/Pmatch/CreateAccounting', payload, {
+    console.log('送出', payload);
+    const response = await $axios.post('http://192.168.10.206:3310/api/v1/Pmatch/CreateAccounting', payload, {
       headers: { Authorization: tokenCookie.value }
     });
-
     if (response.data.Status.Code === 0) {
       await openAlertModal(' ', '回饋單據已成功送出！');
       showExchangeView.value = false;
@@ -921,9 +889,6 @@ const sendAccList = async () => {
     await openAlertModal(' ', '送出失敗，請稍後再試');
   }
 };
-// ✅ 撈取商店明細(平台的合約條款內容)
-const storesItem = ref({});
-
 
 // ✅ 點擊外部(空白處)時自動關閉選單
 const handleOutsideClick = (e) => {
@@ -939,16 +904,16 @@ const handleOutsideClick = (e) => {
 };
 // ✅ 畫面初始化與事件綁定
 onMounted(async () => {
-  //  console.log('✅ memberRewardList 全部內容:', JSON.stringify(memberRewardList.value, null, 2));
-   console.table(memberRewardList.value.PlatformsReward || []);
-
   try {
-    await fetchRewardListData();
+    console.log('🪪 tokenCookie:', tokenCookie.value);
 
+    await fetchRewardListData();
     console.log('✅ memberRewardList:', memberRewardList.value);
 
-    await updateTimeRange();
+    await fetchRewardInfo(); // 先判斷是否可以開啟兌換頁面
+    console.log('✅ rewardInfo:', rewardInfo.value);
 
+    await updateTimeRange();
     if (selectedIndex.value != null) {
       console.log('✅ selectedItem:', memberRewardList.value.PlatformsReward[selectedIndex.value]);
     }
