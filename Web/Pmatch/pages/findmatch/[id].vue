@@ -10,12 +10,24 @@
       <Meta name="description" content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
       <Meta property="og:description" content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
     </Head>
-    <div class="absolute right-0 top-0">
-      <div class="flex justify-end">
+    <div class="absolute right-0 top-0 z-1">
+      <div class="flex justify-end select-none pointer-events-none">
         <img class="w-60%" src="/images/bgDot03.png" alt="header右邊點點圖" />
       </div>
+      <div class="absolute arrowRight !top-62 select-none pointer-events-none">
+        <img src="/images/corner.png" alt="右邊箭頭" />
+      </div>
     </div>
-    <div class="w-full relative mt-5rem">
+    <div class="absolute left-0 top-60vh z-1">
+      <div class="flex justify-start select-none pointer-events-none">
+        <img class="w-60%" src="/images/bgDot04.png" alt="header左邊點點圖" />
+      </div>
+      <div class="absolute arrowLeft !top-62 select-none pointer-events-none">
+        <img src="/images/corner.png" alt="左邊箭頭" />
+      </div>
+    </div>
+
+    <div class="w-full relative mt-5rem z-1">
       <div class="mt-9rem max-w-1110px m-auto ps-5 pe-5">
         <div class="lg-flex">
           <div class="w-100% lg-w-50% lg-me-1rem">
@@ -86,12 +98,7 @@
         </div>
       </div>
     </div>
-    <div class="w-full relative mt-2rem md-mt-5rem z-1">
-      <div class="absolute left-0 top-0">
-        <div class="flex justify-start">
-          <img class="w-60%" src="/images/bgDot04.png" alt="header左邊點點圖" />
-        </div>
-      </div>
+    <div class="w-full relative mt-2rem md-mt-5rem z-2">
       <div v-if="storesItem != null" v-show="(storesItem.IsEnabledBuy || storesItem.IsEnabledSell) &&
         storesItem.ContractId !== 0
         " class="mt-2rem md-mt-7rem max-w-1110px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3 relative z-2">
@@ -151,7 +158,7 @@
                 <div class="font-size-18px">
                   {{ selectedContact || "聯絡資訊" }}
                 </div>
-                <div class="absolute top-13px right-20px">
+                <div class="absolute top-13px right-20px select-none pointer-events-none">
                   <img class="w-25px" src="/images/arrowDown.png" alt="下拉icon" />
                 </div>
               </div>
@@ -214,16 +221,10 @@
       </div>
     </div>
     <div class="w-full bg-#fff relative mt-5rem">
-      <div class="arrowRight absolute">
+      <div class="arrowRight bottom-0 z-1 absolute select-none pointer-events-none">
         <img src="/images/corner.png" alt="右邊箭頭" />
       </div>
-      <div class="arrowRight top-0 bottom-0 absolute">
-        <img src="/images/corner.png" alt="右邊箭頭" />
-      </div>
-      <div class="arrowLeft absolute z-1">
-        <img src="/images/corner.png" alt="左邊箭頭" />
-      </div>
-      <div class="mt-5rem max-w-1110px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3 relative z-11">
+      <div class="mt-5rem max-w-1110px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3 relative z-1">
         <div class="flex justify-center">
           <div class="w-80% pt-5rem qaTitle">
             <div class="mb-5rem relative">
