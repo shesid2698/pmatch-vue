@@ -142,10 +142,25 @@ onMounted(async () => {
 </script>
 <style scoped>
 .menu-container {
-  border-right: 1px solid rgba(128, 128, 128, 0.5);
-  border-left: 1px solid rgba(128, 128, 128, 0.5);
+  position: relative;
   margin-right: 0px;
-  height: 100%;
+  width: 150px;
+  min-height: calc(100vh - 194px);
+}
+.menu-container::before,.menu-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+}
+.menu-container::before {
+  left: 0;
+  background: linear-gradient(to bottom, rgba(128, 128, 128, 0.5), rgba(128, 128, 128, 0.5), rgba(128, 128, 128, 0));
+}
+.menu-container::after {
+  right: 0;
+  background: linear-gradient(to bottom, rgba(128, 128, 128, 0.5), rgba(128, 128, 128, 0.5), rgba(128, 128, 128, 0));
 }
 
 .showTitle {
