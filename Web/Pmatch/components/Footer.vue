@@ -14,7 +14,7 @@
               PMatch 遊戲道具交易平台
             </p>
             <p class="color-#fff m-0 text-center">
-              版本號 : v6.2.8
+              版本號 : v6.2.9
             </p>
           </div>
         </div>
