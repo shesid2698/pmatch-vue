@@ -927,9 +927,6 @@ onMounted(async () => {
     await fetchRewardInfo();
     await fetchMemberDetail();
     await updateTimeRange();
-      console.log('手機1:', props.memberDetail?.Mobile1);
-  console.log('手機2:', props.memberDetail?.Mobile2);
-  console.log('手機3:', props.memberDetail?.Mobile3);
   } catch (error) {
     console.error('請求失敗:', error);
   }
