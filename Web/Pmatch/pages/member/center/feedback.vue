@@ -185,7 +185,7 @@
         </div>
         <!-- 切換頁面按鈕(僅在 showExchangeView 判斷通過時才顯示按鈕) -->
         <div v-if="canShowExchangeBtn && !showExchangeView" class="w-100% text-center mt-5" >
-          <button class="exchangeBtn" @click="showExchangeView = true">兌換回饋</button>
+          <button class="exchangeBtn" @click="handleExchange">兌換回饋</button>
         </div>   
       </div>
       <!-- 兌換|線上下單畫面 -->
@@ -807,6 +807,12 @@ const resetForm = () => {
   selectedAmount.value = null;
   selectedContact.value = null;
   selectedIndex.value = null;
+};
+// 前往兌換回饋
+const handleExchange = () => {
+  resetForm();
+  showExchangeView.value = true;
+  selectedPlatform.value = null;
 };
 // 服務條款啟用
 const handleAgree = () => {
