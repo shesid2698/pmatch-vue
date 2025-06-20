@@ -843,7 +843,7 @@ const resetForm = () => {
   accMemberName.value = null;
   isSell.value = null;
   selectedAmount.value = null;
-  selectedContact.value = null;
+  selectedContact.value = memberPhone1.value;
   selectedIndex.value = null;
 };
 // 前往兌換回饋
