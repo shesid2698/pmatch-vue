@@ -314,20 +314,20 @@
                       <div v-show="contactBox" class="contactPhoneBox absolute top-0 w-100% z-2">
                         <div class="contactPhoneContent">
                           <div class="py-2 pl-2">聯絡資訊</div>
-                          <div class="py-2 contactPhone pl-2" v-show="memberPhone1Cookie" @click.stop="
-                            selectedPhone(memberPhone1Cookie)
+                          <div class="py-2 contactPhone pl-2" v-show="memberPhone1" @click.stop="
+                            selectedPhone(memberPhone1)
                             ">
-                            {{ memberPhone1Cookie }}
+                            {{ memberPhone1 }}
                           </div>
-                          <div class="py-2 contactPhone" v-show="memberPhone2Cookie" @click.stop="
-                            selectedPhone(memberPhone2Cookie)
+                          <div class="py-2 contactPhone" v-show="memberPhone2" @click.stop="
+                            selectedPhone(memberPhone2)
                             ">
-                            {{ memberPhone2Cookie }}
+                            {{ memberPhone2 }}
                           </div>
-                          <div class="py-2 contactPhone" v-show="memberPhone3Cookie" @click.stop="
-                            selectedPhone(memberPhone3Cookie)
+                          <div class="py-2 contactPhone" v-show="memberPhone3" @click.stop="
+                            selectedPhone(memberPhone3)
                             ">
-                            {{ memberPhone3Cookie }}
+                            {{ memberPhone3 }}
                           </div>
                         </div>
                       </div>
@@ -407,11 +407,10 @@ const amountBox = ref(false);
 // 條款開關與狀態
 const isContractRead = ref(false); // 是否已閱讀服務條款
 const dialogVisible = ref(false); // 是否打開服務條款
-
 // 使用者聯絡資訊
-const memberPhone1Cookie = useCookie('_PmMemberPhone1');
-const memberPhone2Cookie = useCookie('_PmMemberPhone2');
-const memberPhone3Cookie = useCookie('_PmMemberPhone3');
+const memberPhone1 = ref('');
+const memberPhone2 = ref('');
+const memberPhone3 = ref('');
 // 表單欄位與選項
 const accMemberName = ref('');
 const selectedIndex = ref(null); // 查看切換 平台|委買&賣
@@ -538,6 +537,38 @@ const fetchRewardInfo = async () => {
   } catch (error) {
     console.error('請求失敗:', error);
     showExchangeView.value = false;
+  }
+};
+// 撈取會員資訊
+const fetchMemberDetail = async () => {
+  try {
+    if (tokenCookie.value != '' && tokenCookie.value != undefined) {
+      const response = await $axios.post(
+        '/api/v1/Pmatch/GetMemberDetail',
+        {
+          PmatchMemberId: MemberIdCookie.value
+        },
+        {
+          headers: {
+            Authorization: tokenCookie.value
+          }
+        }
+      );
+
+      if (response.data.Status.Code === 0) {
+        const userData = response.data.Data[0];
+        memberPhone1.value = userData.Mobile1 || '';
+        memberPhone2.value = userData.Mobile2 || '';
+        memberPhone3.value = userData.Mobile3 || '';
+        // 你可以加其他欄位如：Birthday、Type、RefferCode...等
+      } else {
+        await openAlertModal(' ', `${response.data.Status.Message}`);
+      }
+    } else {
+      router.push('/member/login');
+    }
+  } catch (error) {
+    console.error('請求失敗:', error);
   }
 };
 // 撈取回饋資訊(推薦碼與平台列表資料)
@@ -894,7 +925,11 @@ onMounted(async () => {
   try {
     await fetchRewardListData();
     await fetchRewardInfo();
+    await fetchMemberDetail();
     await updateTimeRange();
+      console.log('手機1:', props.memberDetail?.Mobile1);
+  console.log('手機2:', props.memberDetail?.Mobile2);
+  console.log('手機3:', props.memberDetail?.Mobile3);
   } catch (error) {
     console.error('請求失敗:', error);
   }
