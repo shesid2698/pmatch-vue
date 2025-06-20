@@ -554,13 +554,23 @@ const fetchMemberDetail = async () => {
           }
         }
       );
-
       if (response.data.Status.Code === 0) {
         const userData = response.data.Data[0];
         memberPhone1.value = userData.Mobile1 || '';
         memberPhone2.value = userData.Mobile2 || '';
         memberPhone3.value = userData.Mobile3 || '';
         // 你可以加其他欄位如：Birthday、Type、RefferCode...等
+          
+        // 判斷是否已簽署對應合約
+          const contractStores = userData.ContractStores?.split(',') || [];
+
+          // rewardInfo.value.Contract.Id 是目前兌換時需要比對的目標合約 ID
+          const currentContractId = rewardInfo.value?.Contract?.Id;
+
+          isContractRead.value = contractStores.some(item => {
+            const [, contractId] = item.split('^');
+            return Number(contractId) === currentContractId;
+          });
       } else {
         await openAlertModal(' ', `${response.data.Status.Message}`);
       }
