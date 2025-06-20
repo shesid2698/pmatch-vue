@@ -282,7 +282,7 @@
                           <div class="py-2 pl-2">
                           {{
                             (isSell
-                              ? '賣出回饋幣數量'
+                              ? '委賣回饋幣數量'
                               : '提領回饋幣數量'
                             )
                           }}</div>
@@ -364,10 +364,10 @@
                 </div>
                 <!-- 返回按鈕 -->
                 <div class="flex justify-center gap-6">
-                  <button class="backBtn" @click="showExchangeView = false" plain>
+                  <button class="backBtn" @click="handleBack">
                     回上一頁
                   </button>
-                  <button class="submitBtn" @click="sendAccList">
+                  <button class="submitBtn" @click="handleSubmit">
                     確認送出
                   </button>
                 </div>
@@ -401,7 +401,7 @@ const memberRewardList = ref([]);
 const tableData = ref([]);
 let firstLoad = true;
 const showExchangeView = ref(false); // true = 兌換回饋頁面 , false = 會員回饋頁面
-const isSell = ref(false); // true = 委賣, false = 提領
+const isSell = ref(null); // true = 委賣, false = 提領
 // 自定義下拉式選單的開關狀態
 const platformBox = ref(false);
 const contactBox = ref(false);
@@ -513,7 +513,7 @@ const rewardInfo = ref({}); // 用來存放這支 API 回傳的內容
 
 const fetchRewardInfo = async () => {
   try {
-    const res = await $axios.post('http://192.168.10.206:3310/api/v1/Pmatch/MemberGetRewardInfo', {
+    const res = await $axios.post('/api/v1/Pmatch/MemberGetRewardInfo', {
       MemberId: MemberIdCookie.value
     }, {
       headers: {
@@ -556,7 +556,7 @@ async function fetchRewardListData() {
   }
   try {
     const response = await $axios.post(
-      'http://192.168.10.206:3310/api/v1/Pmatch/GetMemberReward',
+      '/api/v1/Pmatch/GetMemberReward',
       {
         MemberId: MemberIdCookie.value,
       },
@@ -668,7 +668,7 @@ const load = async () => {
         if (firstLoad === true) {
           return;
         } else {
-          await openAlertModal(' ', '已經是最後一頁了'); // 無更多數據
+          await openAlertModal(' ', '已經是最後一頁了');
         }
       }
     } catch (error) {
@@ -738,17 +738,6 @@ const selectPlatform = async (platformName, index) => {
   selectedPlatform.value = platformName;
   selectedIndex.value = index;
   platformBox.value = false;
-
-  // 自動帶入該平台數量
-  const item = memberRewardList.value.PlatformsReward[index];
-
-  console.log('🟠 使用者選擇平台：', platformName);
-  console.log('🟠 對應的平台資料：', item);
-
-  const value = Number(item?.Value || 0);
-  // const value = Number(item?.Value);
-  selectedAmount.value = value;
-  displayAmount.value = isNaN(value) ? '' : value.toLocaleString();
 };
 // 可選擇兌換數量選項列表（由程式自動推算）
 const selectedAmounts = ref([]);
@@ -775,8 +764,7 @@ const AmountToggle = () => {
     if (Array.isArray(options) && options.length > 0) {
       selectedAmounts.value = options;
     } else {
-      selectedAmounts.value = [0]; // fallback 顯示
-      console.warn('Options 為空，fallback 顯示為 0');
+      selectedAmounts.value = [];
     }
   }
 };
@@ -815,37 +803,42 @@ const readContract = async () => {
   }
     dialogVisible.value = true;
 };
-// 服務條款啟用
-const handleAgree = () => {
-  dialogVisible.value = false;
-  radioDisabled.value = false; // 解除禁用
-  isContractRead.value = true; // 同時自動選中
-};
 // 表單是否啟用提領 / 委賣
 const displayRadio = ref({
   isEnableWithdraw: true,
   IsEnabledSell: true,
 });
-
+// 服務條款啟用
+const handleAgree = () => {
+  dialogVisible.value = false;
+  radioDisabled.value = false;
+  isContractRead.value = true;
+};
+// 復原服務條款|返回
+const handleBack = () => {
+  showExchangeView.value = false;
+  radioDisabled.value = true;
+  isContractRead.value = false;
+  selectedPlatform.value = null;
+  accMemberName.value = null;
+  isSell.value = null;
+  selectedAmount.value = null;
+  selectedContact.value = null;
+};
+// 復原服務條款|送出
+const handleSubmit = () => {
+  sendAccList(); // 原本送出的函式
+  radioDisabled.value = true;
+  isContractRead.value = false;
+};
 // 表單送出方法（CreateAccounting）
 const sendAccList = async () => {
-  // 取得選擇的平台物件
-  const selectedItem = memberRewardList.value.PlatformsReward[selectedIndex.value];
-
-  // 驗證：平台是否選擇
+  // 取得選擇的平台物件 | 驗證：平台、暱稱、提領/委賣、聯絡方式、條款
+  const selectedItem = memberRewardList.value.PlatformsReward[selectedIndex.value];  
   if (!selectedPlatform.value || !selectedItem) {
     await openAlertModal(' ', '請選擇遊戲平台');
     return;
   }
-
-  // 驗證：平台兌換數量是否合法
-  const selectedValue = Number(selectedItem.Value);
-  // if (isNaN(selectedValue) || selectedValue <= 0) {
-  //   await openAlertModal(' ', '該平台無可兌換回饋');
-  //   return;
-  // }
-
-  // 驗證：暱稱、提領/委賣、聯絡方式、條款
   if (!accMemberName.value.trim()) {
     await openAlertModal(' ', '請輸入遊戲暱稱');
     return;
@@ -862,27 +855,24 @@ const sendAccList = async () => {
     await openAlertModal(' ', '請勾選「我已詳細閱讀此服務條款」');
     return;
   }
-
   // 驗證通過後送出 API
   try {
     const payload = {
-      // SqlIndex: 0, // 假資料
-      // TeamId: 0, // 假資料
-      // ContractId: 1315, // 假資料
-      // StoreId: 51, // 假資料
+      ContractId: rewardInfo.value?.Contract?.Id,
       GamePlatformName: selectedPlatform.value,
       MemberCharacterName: accMemberName.value,
-      PmatchMemberId: MemberIdCookie.value,
       TransactionMode: isSell.value ? 20 : 10, // 20=委賣, 10=提領, 12=不用收費
       Value: selectedAmount.value,
-      PayMode: 1,
       Phone: selectedContact.value,
       PmatchMemberId: MemberIdCookie.value,
-      IsReward: true // 核心關鍵：回饋兌換一定要加
+      IsReward: true
     };
-
-    console.log('送出', payload);
-    const response = await $axios.post('http://192.168.10.206:3310/api/v1/Pmatch/CreateAccounting', payload, {
+      selectedPlatform.value = null;
+      accMemberName.value = null;
+      isSell.value = null;
+      selectedAmount.value = null;
+      selectedContact.value = null;
+    const response = await $axios.post('/api/v1/Pmatch/CreateAccounting', payload, {
       headers: { Authorization: tokenCookie.value }
     });
     if (response.data.Status.Code === 0) {
@@ -896,7 +886,6 @@ const sendAccList = async () => {
     await openAlertModal(' ', '送出失敗，請稍後再試');
   }
 };
-
 // 點擊外部(空白處)時自動關閉選單
 const handleOutsideClick = (e) => {
   if (!e.target.closest('.platformBox')) {
@@ -1048,7 +1037,7 @@ select {
   left: 0;
   padding: 1px;
   background: linear-gradient(to right, rgba(67, 97, 238), rgba(247, 37, 133));
-  border-radius: 20px;
+  border-radius: 21px;
   border: none;
 }
 .platformgGameContent, .exchangeAmountContent {
@@ -1093,7 +1082,7 @@ select {
   left: 0;
   padding: 1px;
   background: linear-gradient(to right, rgba(67, 97, 238), rgba(247, 37, 133));
-  border-radius: 20px;
+  border-radius: 21px;
   border: none;
 }
 .contactPhoneContent {
