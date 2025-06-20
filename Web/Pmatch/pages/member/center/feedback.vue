@@ -1,5 +1,4 @@
 <template>
-
   <Head>
     <title>PMatch遊戲道具交易平台</title>
     <Meta property="og:title" content="PMatch遊戲道具交易平台" />
@@ -7,8 +6,7 @@
     <Meta name="description" content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
     <Meta property="og:description" content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
   </Head>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css?version='0.0.1.10'" />
-  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css?version='0.0.1.10'" />  
   <div>
     <div class="ccontainer pt-60px ps-5 pe-5 w-90% xl:w-70%">
       <div class="lg:w-160px">
@@ -101,7 +99,7 @@
             <div class="grid grid-cols-2 lg:grid-cols-2 gap-x-10 gap-y-2" >
               <div v-for="(item, index) in memberRewardList.PlatformsReward" :key="index" class="col-span-1" >
                 <!-- 判斷是否為選中項目，顯示委買&賣 -->
-                <div v-if="selectedIndex === index" class="flex items-center h-45px bg-white" @click="selectPlatform(item.PlatformName, index)">
+                <div v-if="selectedIndex === index" class="flex cursor-pointer h-45px bg-white" @click="selectPlatform(item.PlatformName, index)">
                   <div class="flex items-center w-50% h-45px border-1 border-solid border-[#ced2db] border-r-none">
                     <div class="w-40% text-start text-[16px] font-500 ps-3 text-black"><span class="flex items-center justify-center bg-[#FFE8A3] w-30px h-30px">買</span></div>
                     <div class="w-60% text-end text-[16px] font-500 pr-2">
@@ -507,10 +505,8 @@ const canShowExchangeBtn = computed(() => {
     !!(r.Contract?.Content && r.Contract.Content.trim().replace(/<[^>]*>/g, '').length > 0);
   return (hasBuy || hasSell) && hasContract;
 });
-
 // 這支函式會從後端撈「會員是否可兌換回饋」的設定（是否開啟、是否有條款）
-const rewardInfo = ref({}); // 用來存放這支 API 回傳的內容
-
+const rewardInfo = ref({});
 const fetchRewardInfo = async () => {
   try {
     const res = await $axios.post('/api/v1/Pmatch/MemberGetRewardInfo', {
@@ -520,7 +516,6 @@ const fetchRewardInfo = async () => {
         Authorization: tokenCookie.value
       }
     });
-
     if (res.data.Status.Code === 0) {
       const data = res.data.Data;
       rewardInfo.value = data;
@@ -539,16 +534,13 @@ const fetchRewardInfo = async () => {
       }
 
     } else {
-      console.warn('MemberGetRewardInfo 取得失敗:', res.data.Status.Message);
       showExchangeView.value = false;
     }
-  } catch (err) {
-    console.error('MemberGetRewardInfo 請求失敗:', err);
+  } catch (error) {
+    console.error('請求失敗:', error);
     showExchangeView.value = false;
   }
 };
-
-
 // 撈取回饋資訊(推薦碼與平台列表資料)
 async function fetchRewardListData() {
   if (!tokenCookie.value && !MemberIdCookie.value) {
@@ -586,7 +578,6 @@ async function fetchRewardListData() {
           if (now > startTime && now < endTime) {
             // 計算差值
             const difference = endTime - now;
-
             // 確保不會有負值
             timeValue.value = Math.max(difference, 0);
           }
@@ -723,21 +714,21 @@ const platformToggle = () => {
     contactBox.value = false;
   }
 };
-
 // 點選某遊戲平台時執行：更新平台與對應值
 const selectPlatform = async (platformName, index) => {
-    if (selectedIndex.value === index) {
-    // ➤ 點擊同一個：收起、清空選擇
-    selectedPlatform.value = null;
+  if (selectedIndex.value === index) {
     selectedIndex.value = null;
     platformBox.value = false;
-    selectedAmount.value = 0;
-    displayAmount.value = '';
     return;
   }
   selectedPlatform.value = platformName;
   selectedIndex.value = index;
-  platformBox.value = false;
+  platformBox.value = false;  
+  // 清掉已填項目(回饋數量、合約條款、提領or委賣)
+  radioDisabled.value = true;
+  isContractRead.value = false;
+  isSell.value = null;
+  selectedAmount.value = null;
 };
 // 可選擇兌換數量選項列表（由程式自動推算）
 const selectedAmounts = ref([]);
@@ -808,6 +799,15 @@ const displayRadio = ref({
   isEnableWithdraw: true,
   IsEnabledSell: true,
 });
+// 重製表單
+const resetForm = () => {
+  selectedPlatform.value = null;
+  accMemberName.value = null;
+  isSell.value = null;
+  selectedAmount.value = null;
+  selectedContact.value = null;
+  selectedIndex.value = null;
+};
 // 服務條款啟用
 const handleAgree = () => {
   dialogVisible.value = false;
@@ -816,18 +816,14 @@ const handleAgree = () => {
 };
 // 復原服務條款|返回
 const handleBack = () => {
-  showExchangeView.value = false;
+  resetForm();
   radioDisabled.value = true;
   isContractRead.value = false;
-  selectedPlatform.value = null;
-  accMemberName.value = null;
-  isSell.value = null;
-  selectedAmount.value = null;
-  selectedContact.value = null;
+  showExchangeView.value = false;
 };
 // 復原服務條款|送出
 const handleSubmit = () => {
-  sendAccList(); // 原本送出的函式
+  sendAccList();
   radioDisabled.value = true;
   isContractRead.value = false;
 };
@@ -867,11 +863,7 @@ const sendAccList = async () => {
       PmatchMemberId: MemberIdCookie.value,
       IsReward: true
     };
-      selectedPlatform.value = null;
-      accMemberName.value = null;
-      isSell.value = null;
-      selectedAmount.value = null;
-      selectedContact.value = null;
+      resetForm();
     const response = await $axios.post('/api/v1/Pmatch/CreateAccounting', payload, {
       headers: { Authorization: tokenCookie.value }
     });
@@ -886,17 +878,19 @@ const sendAccList = async () => {
     await openAlertModal(' ', '送出失敗，請稍後再試');
   }
 };
-// 點擊外部(空白處)時自動關閉選單
+// 點擊外部(空白處)時自動關閉選單 (有打開選單才會跑)
 const handleOutsideClick = (e) => {
-  if (!e.target.closest('.platformBox')) {
-    platformBox.value = false;
-  }
-  if (!e.target.closest('.amountBox')) {
-    amountBox.value = false;
-  }
-  if (!e.target.closest('.contactBox')) {
-    contactBox.value = false;
-  }
+  const target = e.target;
+
+  if (!platformBox.value && !amountBox.value && !contactBox.value) return;
+
+  const isOutsidePlatform = platformBox.value && !target.closest('.platformBox');
+  const isOutsideAmount = amountBox.value && !target.closest('.amountBox');
+  const isOutsideContact = contactBox.value && !target.closest('.contactBox');
+
+  if (isOutsidePlatform) platformBox.value = false;
+  if (isOutsideAmount) amountBox.value = false;
+  if (isOutsideContact) contactBox.value = false;
 };
 onMounted(async () => {
   try {
