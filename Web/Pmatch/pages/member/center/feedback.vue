@@ -338,7 +338,7 @@
                   <div class="relative mb-5">
                     <div class="flex items-center font-size-18px">
                       <input type="radio" class="w-20px h-20px m-0 me-3 custom-radio" id="read" v-model="isContractRead"
-                        :value="true" :disabled="radioDisabled"/>
+                        :value="true"/>
                       <ElButton class="readBtn" plain @click="readContract">
                         我已詳細閱讀此服務條款(必填)
                       </ElButton>
@@ -407,12 +407,11 @@ const amountBox = ref(false);
 // 條款開關與狀態
 const isContractRead = ref(false); // 是否已閱讀服務條款
 const dialogVisible = ref(false); // 是否打開服務條款
-const radioDisabled = ref(true); // 初始禁用服務條款
 
 // 使用者聯絡資訊
-const memberPhone1Cookie = ref('0912345678');
-const memberPhone2Cookie = ref('');
-const memberPhone3Cookie = ref('');
+const memberPhone1Cookie = useCookie('_PmMemberPhone1');
+const memberPhone2Cookie = useCookie('_PmMemberPhone2');
+const memberPhone3Cookie = useCookie('_PmMemberPhone3');
 // 表單欄位與選項
 const accMemberName = ref('');
 const selectedIndex = ref(null); // 查看切換 平台|委買&賣
@@ -725,8 +724,6 @@ const selectPlatform = async (platformName, index) => {
   selectedIndex.value = index;
   platformBox.value = false;  
   // 清掉已填項目(回饋數量、合約條款、提領or委賣)
-  radioDisabled.value = true;
-  isContractRead.value = false;
   isSell.value = null;
   selectedAmount.value = null;
 };
@@ -817,21 +814,16 @@ const handleExchange = () => {
 // 服務條款啟用
 const handleAgree = () => {
   dialogVisible.value = false;
-  radioDisabled.value = false;
   isContractRead.value = true;
 };
 // 復原服務條款|返回
 const handleBack = () => {
   resetForm();
-  radioDisabled.value = true;
-  isContractRead.value = false;
   showExchangeView.value = false;
 };
 // 復原服務條款|送出
 const handleSubmit = () => {
   sendAccList();
-  radioDisabled.value = true;
-  isContractRead.value = false;
 };
 // 表單送出方法（CreateAccounting）
 const sendAccList = async () => {
@@ -1101,6 +1093,34 @@ select {
 .contactPhone:hover {
   background-color: #f72585;
   color: #fff;
+}
+/* 閱讀條款勾選 */
+.custom-radio {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #6a6a6a;
+  border-radius: 50%;
+  background-color: #fff;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+.custom-radio:checked {
+  border-color: #6a6a6a;
+  background-color: #fff;
+}
+.custom-radio:checked::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  background-color: #6a6a6a;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
 }
 /* 閱讀條款按鈕 */
 .readBtn {
