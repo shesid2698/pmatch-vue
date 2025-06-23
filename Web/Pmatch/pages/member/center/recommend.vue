@@ -68,7 +68,7 @@ item, index
             <div class="flex-1">
               <div class="flex justify-between items-center mb-5">
                 <div class="text-black text-20px font-500">
-                  本會員
+                  會員本人
                 </div>
                 <div v-show="timeValue === 0"
                   class="flex items-center w-80px h-30px relative border-1px border-solid border-#ced2db">

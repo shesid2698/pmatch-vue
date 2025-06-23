@@ -2,7 +2,7 @@
   <div v-show="$store.modalStatus" class="modalBox">
     <div class="modalContent">
       <h2>{{ $store.title }}</h2>
-      <p>{{ $store.message }}</p>
+      <p v-html="$store.message"></p>
       <div class="modalBtn">
         <div class="checkBtnBox">
           <button class="checkBtn" @click="$store.closeModal">取消</button>

@@ -444,12 +444,23 @@ const readContact = () => {
 onMounted(async () => {
   await setPageLoading(true);
   try {
+    console.log('🔵 進入 onMounted');
+    console.log('🟡 Token cookie:', userToken.value);
     if (userToken.value != '' && userToken.value != undefined) {
       const token = userToken.value;
       if (token != '') {
+        console.log('🟣 實際使用的 token:', token);
+
         await fetchStoresDetailData(token);
+            console.log('✅ storesItem 資料:', storesItem.value);
+            console.log('📌 storesItem.DB:', storesItem.value?.DB);
+            console.log('📌 storesItem.Teamid:', storesItem.value?.Teamid);
+            console.log('📌 storesItem.ContractId:', storesItem.value?.ContractId);
         await getMemberDetail(token);
+            console.log('✅ memberDetailList:', memberDetailList.value);
+            console.log('📌 會員合約: ', memberDetailList.value?.[0]?.ContractStores);
         await fetchGameList(token);
+            console.log('✅ gameList:', gameList.value);
       }
     } else {
       // 生成新的 token
@@ -458,6 +469,7 @@ onMounted(async () => {
         await fetchStoresDetailData(token);
         await fetchGameList(token);
       }
+      
     }
     const items = document.querySelectorAll('.el-carousel__item');
     if (items.length > 2) {

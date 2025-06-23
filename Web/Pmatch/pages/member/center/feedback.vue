@@ -1,5 +1,4 @@
 <template>
-
   <Head>
     <title>PMatch遊戲道具交易平台</title>
     <Meta property="og:title" content="PMatch遊戲道具交易平台" />
@@ -7,14 +6,14 @@
     <Meta name="description" content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
     <Meta property="og:description" content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
   </Head>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css?version='0.0.1.10'" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css?version='0.0.1.10'" />  
   <div>
     <div class="ccontainer pt-60px ps-5 pe-5 w-90% xl:w-70%">
       <div class="lg:w-160px">
         <MemberCenter></MemberCenter>
       </div>
-      <!-- <div class="flex lg:pl-20px w-100% flex-col lg:flex-row"> -->
-      <div class="lg:pl-20px w-100%">
+      <!-- 主畫面 -->
+      <div class="lg:pl-20px w-100%" v-if="!showExchangeView">
         <div class="flex flex-col lg:flex-row mb-10">
           <div class="w-100% lg:w-43% flex flex-col justify-between h-50px lg:h-250px">
             <div class="flex w-100% justify-between">
@@ -73,79 +72,62 @@
                 </div>
               </div>
             </div>
-
-            <div class="mt-30px lg:mt-0 flex h-30px items-center justify-between">
-                <div class="whitespace-nowrap h-100% font-500 text-black text-[20px] content-center">
-                    當前回饋%數
-                    <el-tooltip class="box-item" effect="dark" placement="top">
-                        <template #content>
-                            <div class="text-14px">
-                                選擇平台，可查看下線在這個平台交易時，自身可享有的回饋數量。(推薦碼需開啟)
-                            </div>
-                        </template>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
-                            <path d="M8.5 7.65002V11.15" stroke="#ACB4C2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M8.5 4.85702L8.5075 4.84924" stroke="#ACB4C2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M8.5 15C12.6421 15 16 11.866 16 8C16 4.134 12.6421 1 8.5 1C4.35786 1 1 4.134 1 8C1 11.866 4.35786 15 8.5 15Z" stroke="#ACB4C2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </el-tooltip>
-                </div>
-              <div class="h-100% flex">
-                <div class="w-100px lg:w-180px relative">
-                  <select v-model="selectedPlatform" @change="RewardPlatformChange"
-                    class="text-[16px] bg-transparent absolute left-0 top-0 z-1 outline-none p-e-25px border-1 border-solid border-[#ced2db] font-500 text-black text-center w-100% h-100%">
-                    <option value="">-選擇平台-</option>
-                    <option v-for="(
-item, index
-                                            ) in memberRewardList.PlatformsReward" :key="index"
-                      :value="item.PlatformName">
-                      {{ item.PlatformName }}
-                    </option>
-                  </select>
-                  <div class="z-0 inline-block absolute right-10px top-50% transform-translate-y-[-50%]">
-                    <svg width="26" height="10" viewBox="0 0 26 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M1 1L13 9L25 1" stroke="#CED2DB" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round" />
-                    </svg>
-                  </div>
-                </div>
-                <div class="ms-5">
-                  <div class="flex">
-                    <span class="me-3">委買</span>
-                    <div
-                      class="bg-[#f5f6f8] font-500 text-black mb-3 text-end content-center w-84px border-solid border-1 border-[#ced2db] text-[16px]">
-                      {{ buyRewardValue }} %
-                    </div>
-                  </div>
-
-                  <div class="flex">
-                    <span class="me-3">委賣</span>
-                    <div
-                      class="bg-[#f5f6f8] font-500 text-black text-end content-center w-84px border-solid border-1 border-[#ced2db] text-[16px]">
-                      {{ sellRewardValue }} %
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
           <div class="hidden min-w-100px lg:block"></div>
           <div class="w-100% lg:w-55% flex flex-wrap mt-150px lg:mt-0">
-            <div v-for="(
-item, index
-                            ) in memberRewardList.PlatformsReward" :key="index"
-              class="max-w-41% lg:max-w-33% p-e-30px mb-30px">
-              <div
-                class="font-500 text-[20px] w-165px h-55px bg-[#ff83ad] border-1 border-solid border-[#ff83ad] text-center content-center text-white">
-                {{ item.PlatformName }}
+            <!-- 回饋%數 -->
+             <div class="mt-30px lg:mt-0 flex h-30px items-center justify-between">
+                <div class="whitespace-nowrap h-100% font-500 text-gray-900 text-[16px] content-center">
+                  點擊選擇平台查當前回饋%數
+                  <el-tooltip class="box-item" effect="dark" placement="top">
+                    <template #content>
+                        <div class="text-14px">
+                            選擇平台，可查看下線在這個平台交易時，自身可享有的回饋數量。(推薦碼需開啟)
+                        </div>
+                    </template>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none" class="translate-y-[1.5px]">
+                        <path d="M8.5 7.65002V11.15" stroke="#ACB4C2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M8.5 4.85702L8.5075 4.84924" stroke="#ACB4C2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M8.5 15C12.6421 15 16 11.866 16 8C16 4.134 12.6421 1 8.5 1C4.35786 1 1 4.134 1 8C1 11.866 4.35786 15 8.5 15Z" stroke="#ACB4C2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </el-tooltip>
+                </div>
+                <div class="h-100% flex"><div class="w-100px lg:w-180px relative"></div>
               </div>
-              <div
-                class="font-500 text-[20px] text-black w-155px h-55px border-1 border-solid border-[#ced2db] bg-white text-end content-center pr-10px">
-                {{ item.Value }}&emsp;幣
+            </div>
+            <!-- 平台 -->
+            <div class="grid grid-cols-2 lg:grid-cols-2 gap-x-10 gap-y-2" >
+              <div v-for="(item, index) in memberRewardList.PlatformsReward" :key="index" class="col-span-1" >
+                <!-- 判斷是否為選中項目，顯示委買&賣 -->
+                <div v-if="selectedIndex === index" class="flex cursor-pointer h-45px bg-white" @click="selectPlatform(item.PlatformName, index)">
+                  <div class="flex items-center w-50% h-45px border-1 border-solid border-[#ced2db] border-r-none">
+                    <div class="w-40% text-start text-[16px] font-500 ps-3 text-black"><span class="flex items-center justify-center bg-[#FFE8A3] w-30px h-30px">買</span></div>
+                    <div class="w-60% text-end text-[16px] font-500 pr-2">
+                      {{ buyRewardValue }} %
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-between w-50% h-45px border-1 border-solid border-[#ced2db]">
+                    <div class="w-40% text-start text-[16px] font-500 ps-3 text-black "><span class="flex items-center justify-center bg-[#E4CCFF] w-30px h-30px">賣</span></div>
+                    <div class="w-60% text-end text-[16px] font-500 pr-2">
+                      {{ sellRewardValue }} %
+                    </div>
+                  </div>
+                </div>   
+                <!-- 顯示原本區塊 -->
+                <div v-else class="flex cursor-pointer" @click="selectPlatform(item.PlatformName, index)">
+                  <div
+                    class="font-500 text-[18px] w-165px h-45px bg-[#ff83ad] border-1 border-solid border-[#ff83ad] text-center flex items-center justify-center text-white">
+                    {{ item.PlatformName }}
+                  </div>
+                  <div
+                    class="font-500 text-[18px] w-135px h-45px text-gray-900 border-1 border-solid border-[#ced2db] bg-white text-end flex items-center justify-end pr-4">
+                    {{ item.Value }}&emsp;幣
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </div>        
         <hr />
         <div id="detail" class="flex items-center mb-10px mt-30px">
           <div class="mr-15px text-black content-center font-500 text-[20px] border-none">
@@ -190,7 +172,7 @@ item, index
           </div>
         </div>
         <div ref="scrollbarContainer" v-infinite-scroll="load" class="infinite-table-container"
-          style="overflow: auto; height: 400px">
+          style="overflow: auto; max-height: 400px">
           <el-table :data="tableData" style="width: 100%" :header-cell-style="{
             color: 'white',
             background: '#3CAADC',
@@ -201,38 +183,251 @@ item, index
             <el-table-column prop="Remark" label="備註" />
           </el-table>
         </div>
+        <!-- 切換頁面按鈕(僅在 showExchangeView 判斷通過時才顯示按鈕) -->
+        <div v-if="canShowExchangeBtn && !showExchangeView" class="w-100% text-center mt-5" >
+          <button class="exchangeBtn" @click="handleExchange">兌換回饋</button>
+        </div>   
       </div>
+      <!-- 兌換|線上下單畫面 -->
+      <div class="lg:pl-20px w-100%" v-else>
+        <div class="w-full relative md-mt-5rem z-1">
+          <div class="md-mt-7rem max-w-1110px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3 relative z-2">            
+            <!-- 表單內容 -->
+             <div class="w-full relative md-mt-5rem z-1">     
+              <div v-if="displayRadio != null" v-show="(displayRadio.isEnableWithdraw || displayRadio.IsEnabledSell)
+                " class=" md-mt-7rem max-w-1110px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3 relative z-2">
+                <div class="w-100% block md-flex justify-center flex-wrap">
+                  <div class="md-w-460px">                    
+                  <!-- 自訂遊戲平台 dropdown -->
+                  <div class="platformBox relative mb-5 ">
+                    <div class="platformContent py-2" @click.stop="platformToggle">
+                      <div class="font-size-18px pl-2">
+                        {{ selectedPlatform || "選擇平台" }}
+                      </div>
+                      <div class="absolute top-13px right-20px">
+                        <img class="w-25px" src="/images/arrowDownLine.png" alt="下拉icon" />
+                      </div>
+                    </div>
+                    <div v-show="platformBox" class="platformgGameBox absolute top-0 w-100% z-2">
+                      <div class="platformgGameContent">
+                        <div class="py-2 pl-2">平台列表</div>
+                        <div
+                          v-for="(platform, index) in memberRewardList.PlatformsReward"
+                          :key="index"
+                          class="py-2 platformgGame pl-2"
+                          @click.stop="selectPlatform(platform.PlatformName, index)"
+                        >
+                          {{ platform.PlatformName }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                    <div class="entryBox w-100% mb-5">
+                      <div class="entryContent w-100%">
+                        <input class="entryDetail w-90% py-.5rem font-size-18px placeholder-[#f72585]" type="text" placeholder="遊戲暱稱(必填)"
+                          v-model="accMemberName" />
+                      </div>
+                    </div>
+                    <div v-if="displayRadio != null">
+                      <!-- v-if="displayRadio != null"
+                                    v-show="displayRadio.isEnableWithdraw" -->
+                      <!-- radio 區塊 -->
+                      <div v-if="rewardInfo != null" class="w-100% flex justify-center mb-5">
+                        <!-- 提領 -->
+                        <div class="flex items-center mx-10" :class="{ 'opacity-50 cursor-not-allowed': rewardInfo.IsEnableBuyReward !== true }">
+                          <input
+                            type="radio"
+                            class="w-20px h-20px m-0 me-3 custom-radio"
+                            v-model="isSell"
+                            id="withdraw"
+                            :value="false"
+                            :disabled="rewardInfo.IsEnableBuyReward !== true"
+                          />
+                          <label for="withdraw" class="radio-label font-size-18px color-#f72585">
+                            提領
+                          </label>
+                        </div>
+                        <!-- 委賣 -->
+                        <div class="flex items-center mx-10" :class="{ 'opacity-50 cursor-not-allowed': rewardInfo.IsEnableSellReward !== true }">
+                          <input
+                            type="radio"
+                            class="w-20px h-20px m-0 me-3 custom-radio"
+                            v-model="isSell"
+                            id="sell"
+                            :value="true"
+                            :disabled="rewardInfo.IsEnableSellReward !== true"
+                          />
+                          <label for="sell" class="radio-label font-size-18px color-#4361ee">
+                            委賣
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- 自訂兌換數量 dropdown -->
+                    <div class="amountBox relative mb-5">
+                      <div class="amountContent py-2" @click.stop="AmountToggle">
+                        <div class="font-size-18px pl-2">
+                          {{
+                            selectedAmount || '選擇使用回饋數量(遊戲幣)'
+                          }}
+                        </div>
+                        <div class="absolute top-13px right-20px">
+                          <img class="w-25px" src="/images/arrowDownLine.png" alt="下拉icon" />
+                        </div>
+                      </div>
+                      <div v-show="amountBox" class="exchangeAmountBox absolute top-0 w-100% z-2">
+                        <div class="exchangeAmountContent">
+                          <div class="py-2 pl-2">
+                          {{
+                            (isSell
+                              ? '委賣回饋幣數量'
+                              : '提領回饋幣數量'
+                            )
+                          }}</div>
+                          <div
+                            class="py-2 exchangeAmount pl-2"
+                            v-for="(amount, index) in selectedAmounts"
+                            :key="index"
+                            @click.stop="selectAmount(amount)"
+                          >
+                            {{ amount.toLocaleString() }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- 點委賣出現 -->
+                    <div class="w-100% flex justify-center mb-5" v-if="displayRadio != null"
+                      v-show="isSell && displayRadio.IsEnabledSell">
+                      <div class="text-15px">
+                        * 請參考最新委賣比值，實際兌換的筆直須依媒合商告知為準
+                      </div>
+                    </div>
+                    <div class="contactBox relative mb-5">
+                      <div class="contactContent py-2 " @click.stop="contactToggle">
+                        <div class="font-size-18px pl-2">
+                          {{ selectedContact || "聯絡資訊" }}
+                        </div>
+                        <div class="absolute top-13px right-20px">
+                          <img class="w-25px" src="/images/arrowDown.png" alt="下拉icon" />
+                        </div>
+                      </div>
+                      <div v-show="contactBox" class="contactPhoneBox absolute top-0 w-100% z-2">
+                        <div class="contactPhoneContent">
+                          <div class="py-2 pl-2">聯絡資訊</div>
+                          <div class="py-2 contactPhone pl-2" v-show="memberPhone1" @click.stop="
+                            selectedPhone(memberPhone1)
+                            ">
+                            {{ memberPhone1 }}
+                          </div>
+                          <div class="py-2 contactPhone" v-show="memberPhone2" @click.stop="
+                            selectedPhone(memberPhone2)
+                            ">
+                            {{ memberPhone2 }}
+                          </div>
+                          <div class="py-2 contactPhone" v-show="memberPhone3" @click.stop="
+                            selectedPhone(memberPhone3)
+                            ">
+                            {{ memberPhone3 }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex justify-center">
+                  <div class="relative mb-5">
+                    <div class="flex items-center font-size-18px">
+                      <input type="radio" class="w-20px h-20px m-0 me-3 custom-radio" id="read" v-model="isContractRead"
+                        :value="true"/>
+                      <ElButton class="readBtn" plain @click="readContract">
+                        我已詳細閱讀此服務條款(必填)
+                      </ElButton>
+                      <ElDialog v-model="dialogVisible" :close-on-click-modal="false">
+                        <div class="dialogHeader absolute">
+                          服務條款
+                        </div>
+                        <div class="dialogBody">
+                          <div class="dialogContent">
+                            <div v-if="displayRadio" v-html="rewardInfo.Contract?.Content"></div>
+                          </div>
+                          <div class="flex justify-end mt-5">
+                            <ElButton class="agreeBtn" type="primary" @click="handleAgree">
+                              同意
+                            </ElButton>
+                          </div>
+                        </div>
+                      </ElDialog>
+                    </div>
+                  </div>
+                </div>
+                <!-- 返回按鈕 -->
+                <div class="flex justify-center gap-6">
+                  <button class="backBtn" @click="handleBack">
+                    回上一頁
+                  </button>
+                  <button class="submitBtn" @click="handleSubmit">
+                    確認送出
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </template>
 <script setup>
+// 引入中文語系與彈窗 modal 狀態管理
 import zhCn from 'element-plus/es/locale/lang/zh-cn';
 import { useAlertModalStore } from '../stores/useAlertModal.js';
+// 初始化彈窗 store 與 modal 方法
 const alertModalStore = useAlertModalStore();
 const openAlertModal = alertModalStore.alertShowModal;
+// 抓取登入用戶 cookie、axios 實例
 const MemberIdCookie = useCookie('_PmMemberId');
 const tokenCookie = useCookie('_PmToken');
 const { $axios } = useNuxtApp();
+// 初始化滾動容器與 jwt store
 const scrollbarContainer = ref(null);
 const jwtStore = useJwtStore();
+// 條件與畫面控制變數
 const dataDate = ref('0');
 const dateValue = ref('');
 const memberRewardList = ref([]);
 const tableData = ref([]);
 let firstLoad = true;
-
-// 當前選中的平台
+const showExchangeView = ref(false); // true = 兌換回饋頁面 , false = 會員回饋頁面
+const isSell = ref(null); // true = 委賣, false = 提領
+// 自定義下拉式選單的開關狀態
+const platformBox = ref(false);
+const contactBox = ref(false);
+const amountBox = ref(false);
+// 條款開關與狀態
+const isContractRead = ref(false); // 是否已閱讀服務條款
+const dialogVisible = ref(false); // 是否打開服務條款
+// 使用者聯絡資訊
+const memberPhone1 = ref('');
+const memberPhone2 = ref('');
+const memberPhone3 = ref('');
+// 表單欄位與選項
+const accMemberName = ref('');
+const selectedIndex = ref(null); // 查看切換 平台|委買&賣
 const selectedPlatform = ref('');
+const selectedAmount = ref('');
+const displayAmount = ref(''); 
+const selectedContact = ref('');
 // 委買與委賣值
 const buyRewardValue = ref('0');
 const sellRewardValue = ref('0');
-// 動態計算的開始和結束時間
+// 自訂時間範圍與狀態
 const startTime = ref('');
 const endTime = ref('');
 const showDateChoose = ref(false);
 const currentPage = ref(1);
 const timeValue = ref(0);
-// 更新時間範圍的方法
+// 當 dataDate 改變時，自動更新時間區間與重新撈資料
 const updateTimeRange = async () => {
   if (dataDate.value === '4') {
     showDateChoose.value = true;
@@ -260,8 +455,7 @@ const updateTimeRange = async () => {
     await fetchOrderListData();
   }
 };
-
-// 轉換日期格式為 yyyy-MM-dd(T)HH:mm:ss
+// 將 JS 日期轉成 yyyy-MM-dd(T)HH:mm:ss 字串
 const formatDate = (date, isIncludeT) => {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0'); // 月份從 0 開始
@@ -280,8 +474,7 @@ const formatDate = (date, isIncludeT) => {
 
   return ret;
 };
-
-//
+// 表格欄位格式化用（不含 T）
 const formatDate2 = (row, column, cellValue) => {
   // Localtime to ISO
   var date = new Date(cellValue);
@@ -289,32 +482,115 @@ const formatDate2 = (row, column, cellValue) => {
 
   return ret;
 };
-
-// 變更委買委賣的值
+// 變更委買委賣的值 (換遊戲平台時觸發)
 const RewardPlatformChange = () => {
-  const platform = memberRewardList.value.PlatformsReward.find(
-    item => item.PlatformName === selectedPlatform.value
-  );
-  if (platform) {
-    buyRewardValue.value = platform.BuyRewardValue;
-    sellRewardValue.value = platform.SellRewardValue;
+  const item = memberRewardList.value.PlatformsReward[selectedIndex.value];
+  if (item) {
+    selectedPlatform.value = item.PlatformName;
+    buyRewardValue.value = item.BuyRewardValue;
+    sellRewardValue.value = item.SellRewardValue;
   } else {
-    // 如果未選擇平台，回退到預設值
     buyRewardValue.value = '0';
     sellRewardValue.value = '0';
   }
 };
-// 取得回饋資訊
+// 判斷要不要顯示 兌換回饋按鈕
+const canShowExchangeBtn = computed(() => {
+  const r = rewardInfo.value;
+  const hasBuy = r.IsEnableBuyReward === true;
+  const hasSell = r.IsEnableSellReward === true;
+  const hasContract =
+    !!(r.Contract?.Content && r.Contract.Content.trim().replace(/<[^>]*>/g, '').length > 0);
+  return (hasBuy || hasSell) && hasContract;
+});
+// 這支函式會從後端撈「會員是否可兌換回饋」的設定（是否開啟、是否有條款）
+const rewardInfo = ref({});
+const fetchRewardInfo = async () => {
+  try {
+    const res = await $axios.post('/api/v1/Pmatch/MemberGetRewardInfo', {
+      MemberId: MemberIdCookie.value
+    }, {
+      headers: {
+        Authorization: tokenCookie.value
+      }
+    });
+    if (res.data.Status.Code === 0) {
+      const data = res.data.Data;
+      rewardInfo.value = data;
+
+      const hasBuy = data.IsEnableBuyReward === true;
+      const hasSell = data.IsEnableSellReward === true;
+
+      const hasContract = !!(
+        data.Contract?.Content &&
+        data.Contract.Content.trim().replace(/<[^>]*>/g, '').length > 0
+      );
+
+      // 如果條件不符 => 不顯示兌換畫面
+      if (!(hasBuy || hasSell) || !hasContract) {
+        showExchangeView.value = false;
+      }
+
+    } else {
+      showExchangeView.value = false;
+    }
+  } catch (error) {
+    console.error('請求失敗:', error);
+    showExchangeView.value = false;
+  }
+};
+// 撈取會員資訊
+const fetchMemberDetail = async () => {
+  try {
+    if (tokenCookie.value != '' && tokenCookie.value != undefined) {
+      const response = await $axios.post(
+        '/api/v1/Pmatch/GetMemberDetail',
+        {
+          PmatchMemberId: MemberIdCookie.value
+        },
+        {
+          headers: {
+            Authorization: tokenCookie.value
+          }
+        }
+      );
+      if (response.data.Status.Code === 0) {
+        const userData = response.data.Data[0];
+        memberPhone1.value = userData.Mobile1 || '';
+        memberPhone2.value = userData.Mobile2 || '';
+        memberPhone3.value = userData.Mobile3 || '';
+        // 你可以加其他欄位如：Birthday、Type、RefferCode...等
+          
+        // 判斷是否已簽署對應合約
+          const contractStores = userData.ContractStores?.split(',') || [];
+
+          // rewardInfo.value.Contract.Id 是目前兌換時需要比對的目標合約 ID
+          const currentContractId = rewardInfo.value?.Contract?.Id;
+
+          isContractRead.value = contractStores.some(item => {
+            const [, contractId] = item.split('^');
+            return Number(contractId) === currentContractId;
+          });
+      } else {
+        await openAlertModal(' ', `${response.data.Status.Message}`);
+      }
+    } else {
+      router.push('/member/login');
+    }
+  } catch (error) {
+    console.error('請求失敗:', error);
+  }
+};
+// 撈取回饋資訊(推薦碼與平台列表資料)
 async function fetchRewardListData() {
   if (!tokenCookie.value && !MemberIdCookie.value) {
     await openAlertModal(' ', '請先登入會員');
   }
-
   try {
     const response = await $axios.post(
       '/api/v1/Pmatch/GetMemberReward',
       {
-        MemberId: MemberIdCookie.value
+        MemberId: MemberIdCookie.value,
       },
       {
         headers: {
@@ -323,7 +599,9 @@ async function fetchRewardListData() {
       }
     );
     if (response.data.Status.Code === 0) {
-      memberRewardList.value = response.data.Data;
+      const data = response.data.Data;
+      memberRewardList.value = data;
+
       if (memberRewardList.value != null) {
         // 清除時間
         timeValue.value = 0;
@@ -340,7 +618,6 @@ async function fetchRewardListData() {
           if (now > startTime && now < endTime) {
             // 計算差值
             const difference = endTime - now;
-
             // 確保不會有負值
             timeValue.value = Math.max(difference, 0);
           }
@@ -353,7 +630,7 @@ async function fetchRewardListData() {
     console.error('請求失敗:', error);
   }
 }
-// 取得回饋明細
+// 撈取會員的回饋明細（分頁）
 async function fetchOrderListData() {
   if (!tokenCookie.value && !MemberIdCookie.value) {
     await openAlertModal(' ', '請先登入會員');
@@ -386,7 +663,7 @@ async function fetchOrderListData() {
     console.error('請求失敗:', error);
   }
 }
-
+// 滾動分頁載入更多資料
 const load = async () => {
   if (tableData.value.length > 0 && currentPage.value) {
     currentPage.value++;
@@ -422,7 +699,7 @@ const load = async () => {
         if (firstLoad === true) {
           return;
         } else {
-          await openAlertModal(' ', '已經是最後一頁了'); // 無更多數據
+          await openAlertModal(' ', '已經是最後一頁了');
         }
       }
     } catch (error) {
@@ -431,7 +708,7 @@ const load = async () => {
     }
   }
 };
-
+// 使用者自訂日期時的處理方法
 const Getdate = async () => {
   if (dataDate.value === '4' && dateValue.value.length === 2) {
     startTime.value = formatDate(dateValue.value[0], true);
@@ -443,6 +720,7 @@ const Getdate = async () => {
   }
   await fetchOrderListData();
 };
+// 將 JS 日期轉成 yyyy-MM-dd HH:mm:ss
 const DateFormatt = date => {
   var t_Date =
     date.getFullYear() +
@@ -458,27 +736,232 @@ const DateFormatt = date => {
     String(date.getSeconds()).padStart(2, '0');
   return t_Date;
 };
+// 儲存推薦碼剩餘時間
 const GetTimes = time => {
   timeValue.value = time;
 };
+// 滾動容器觸底觸發載入更多
 const LoadMoreData = async event => {
   if (event.target.scrollTop + event.target.clientHeight >= event.target.scrollHeight) {
     await load();
   }
 };
+// 兌換回饋|選擇平台
+const platformToggle = () => {
+  platformBox.value = !platformBox.value;
+    if (platformBox.value) {
+    amountBox.value = false;
+    contactBox.value = false;
+  }
+};
+// 點選某遊戲平台時執行：更新平台與對應值
+const selectPlatform = async (platformName, index) => {
+  if (selectedIndex.value === index) {
+    selectedIndex.value = null;
+    platformBox.value = false;
+    return;
+  }
+  selectedPlatform.value = platformName;
+  selectedIndex.value = index;
+  platformBox.value = false;  
+  // 清掉已填項目(回饋數量、合約條款、提領or委賣)
+  isSell.value = null;
+  selectedAmount.value = null;
+};
+// 可選擇兌換數量選項列表（由程式自動推算）
+const selectedAmounts = ref([]);
+// 兌換回饋|兌換數量
+const AmountToggle = () => {
+  if (!selectedPlatform.value) {
+    openAlertModal(' ', '請先選擇遊戲平台');
+    return;
+  }
+  if (isSell.value === null) {
+    openAlertModal(' ', '請選擇提領或委賣');
+    return;
+  }
+  amountBox.value = !amountBox.value;
+  if (amountBox.value) {
+    platformBox.value = false;
+    contactBox.value = false;
+
+    const selectedItem = memberRewardList.value.PlatformsReward[selectedIndex.value];
+    // 根據 isSell 切換抓取 SellOptions 或 BuyOptions
+    const options = isSell.value ? selectedItem?.SellOptions : selectedItem?.BuyOptions;
+
+    // 改為只接後端設定
+    if (Array.isArray(options) && options.length > 0) {
+      selectedAmounts.value = options;
+    } else {
+      selectedAmounts.value = [];
+    }
+  }
+};
+// 點選某兌換數量時執行：更新顯示數量
+const selectAmount = (val) => {
+  selectedAmount.value = Number(val);
+  amountBox.value = false;
+    if (selectedAmount.value === 0) {
+    openAlertModal(' ', '目前無可用的回饋幣，請稍後再試');
+  }
+    return selectedAmount.value;
+};
+// 兌換回饋|聯絡資訊
+const contactToggle = () => {
+  contactBox.value = !contactBox.value;
+    if (contactBox.value) {
+    platformBox.value = false;
+    amountBox.value = false;
+  }
+};
+// 選取聯絡電話
+const selectedPhone = phone => {
+  selectedContact.value = phone;
+  contactBox.value = false;
+};
+// 兌換回饋|服務條款
+const readContract = async () => {
+  if (selectedIndex.value == null) {
+    await openAlertModal(' ', '請先選擇遊戲平台');
+    return;
+  }
+  const platform = memberRewardList.value.PlatformsReward[selectedIndex.value];
+  if (!platform || !platform.PlatformName) {
+    await openAlertModal(' ', '無法取得平台名稱，請重新選擇');
+    return;
+  }
+    dialogVisible.value = true;
+};
+// 表單是否啟用提領 / 委賣
+const displayRadio = ref({
+  isEnableWithdraw: true,
+  IsEnabledSell: true,
+});
+// 重製表單
+const resetForm = () => {
+  selectedPlatform.value = null;
+  accMemberName.value = null;
+  isSell.value = null;
+  selectedAmount.value = null;
+  selectedContact.value = memberPhone1.value;
+  selectedIndex.value = null;
+};
+// 前往兌換回饋
+const handleExchange = () => {
+  resetForm();
+  showExchangeView.value = true;
+  selectedPlatform.value = null;
+};
+// 服務條款啟用
+const handleAgree = () => {
+  dialogVisible.value = false;
+  isContractRead.value = true;
+};
+// 復原服務條款|返回
+const handleBack = () => {
+  resetForm();
+  showExchangeView.value = false;
+};
+// 復原服務條款|送出
+const handleSubmit = () => {
+  sendAccList();
+};
+// 表單送出方法（CreateAccounting）
+const sendAccList = async () => {
+  // 取得選擇的平台物件 | 驗證：平台、暱稱、提領/委賣、聯絡方式、條款
+  const selectedItem = memberRewardList.value.PlatformsReward[selectedIndex.value];  
+  if (!selectedPlatform.value || !selectedItem) {
+    await openAlertModal(' ', '請選擇遊戲平台');
+    return;
+  }
+  if (!accMemberName.value.trim()) {
+    await openAlertModal(' ', '請輸入遊戲暱稱');
+    return;
+  }
+  if (isSell.value === null) {
+    await openAlertModal(' ', '請選擇提領或委賣');
+    return;
+  }
+  if (!selectedContact.value) {
+    await openAlertModal(' ', '請選擇聯絡資訊');
+    return;
+  }
+  if (!isContractRead.value) {
+    await openAlertModal(' ', '請勾選「我已詳細閱讀此服務條款」');
+    return;
+  }
+  // 驗證通過後送出 API
+  try {
+    const payload = {
+      ContractId: rewardInfo.value?.Contract?.Id,
+      GamePlatformName: selectedPlatform.value,
+      MemberCharacterName: accMemberName.value,
+      TransactionMode: isSell.value ? 20 : 10, // 20=委賣, 10=提領, 12=不用收費
+      Value: selectedAmount.value,
+      Phone: selectedContact.value,
+      PmatchMemberId: MemberIdCookie.value,
+      IsReward: true
+    };
+      resetForm();
+    const response = await $axios.post('/api/v1/Pmatch/CreateAccounting', payload, {
+      headers: { Authorization: tokenCookie.value }
+    });
+    if (response.data.Status.Code === 0) {
+      await openAlertModal(' ', '回饋單據已成功送出！');
+      showExchangeView.value = false;
+    } else {
+      await openAlertModal(' ', `錯誤：${response.data.Status.Message}`);
+    }
+  } catch (error) {
+    console.error('送出失敗:', error);
+    await openAlertModal(' ', '送出失敗，請稍後再試');
+  }
+};
+// 點擊外部(空白處)時自動關閉選單 (有打開選單才會跑)
+const handleOutsideClick = (e) => {
+  const target = e.target;
+
+  if (!platformBox.value && !amountBox.value && !contactBox.value) return;
+
+  const isOutsidePlatform = platformBox.value && !target.closest('.platformBox');
+  const isOutsideAmount = amountBox.value && !target.closest('.amountBox');
+  const isOutsideContact = contactBox.value && !target.closest('.contactBox');
+
+  if (isOutsidePlatform) platformBox.value = false;
+  if (isOutsideAmount) amountBox.value = false;
+  if (isOutsideContact) contactBox.value = false;
+};
 onMounted(async () => {
   try {
     await fetchRewardListData();
+    await fetchRewardInfo();
+    await fetchMemberDetail();
     await updateTimeRange();
   } catch (error) {
     console.error('請求失敗:', error);
   }
+  document.addEventListener('click', handleOutsideClick);
 });
-// 監聽 dataDate 的變化
+// 監聽 dataDate 變動 => 更新資料時間範圍
 watch(dataDate, () => {
   updateTimeRange();
 });
+// 監聽平台選擇變化 => 更新回饋資訊
+watch(selectedIndex, () => {
+  RewardPlatformChange();
+});
+// 切換領取|委賣時清空選單value
+watch(isSell, () => {
+  selectedAmount.value = '';
+  selectedAmounts.value = [];
+  amountBox.value = false;
+});
+// 組件卸載時清除事件監聽
+onUnmounted(() => {
+  document.removeEventListener('click', handleOutsideClick);
+});
 </script>
+
 <style scoped>
 .ccontainer {
   height: fit-content;
@@ -518,5 +1001,228 @@ select {
 :deep(.el-range-editor.el-input__wrapper) {
   width: 250px;
   height: 25px;
+}
+/* 兌換回饋 */
+.exchangeBtn, .backBtn, .submitBtn {
+    width: 136px;
+    height: 56px;
+    aspect-ratio: 136/65;
+    border-width: 2px;
+    border-style: solid;
+    border-color: transparent;
+    border-radius: 50px;
+    font-size: 18px;
+    background-image: linear-gradient(transparent, transparent), linear-gradient(to right, rgba(67, 97, 238), rgba(247, 37, 133));
+    background-clip: padding-box, border-box;
+    background-origin: padding-box, border-box;
+    color: white;
+    cursor: pointer;
+}
+.exchangeBtn:hover, .backBtn:hover, .submitBtn:hover {
+    background-image: linear-gradient(white, white), linear-gradient(to right, rgba(67, 97, 238), rgba(247, 37, 133));
+    color: rgba(247, 37, 133);
+}
+/* 輸入框 */
+.entryBox {
+  width: 100%;
+  position: relative;
+  padding: 1px;
+  background: linear-gradient(to right, #4361ee, #f72585);
+  border-radius: 50px;
+  border: none;
+}
+.entryContent {
+  background: #fff;
+  color: #f72585;
+  border-radius: 50px;
+  text-align: center;
+  
+}
+.entryDetail {
+  border: none;
+  color: #4361ee;
+  border-radius: 50px;
+}
+.entryDetail:focus-visible {
+  outline: none;
+}
+/* 下拉式選單|遊戲平台&兌換數量 */
+.platformBox, .amountBox {
+  width: 100%;
+  position: relative;
+  padding: 1px;
+  background: linear-gradient(to right, #4361ee, #f72585);
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+}
+.platformContent, .amountContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: #fff;
+  border-radius: 50px;  
+  text-indent: 1rem;  
+  color: #f72585;
+}
+.platformgGameBox, .exchangeAmountBox {
+  position: absolute;
+  left: 0;
+  padding: 1px;
+  background: linear-gradient(to right, rgba(67, 97, 238), rgba(247, 37, 133));
+  border-radius: 21px;
+  border: none;
+}
+.platformgGameContent, .exchangeAmountContent {
+  position: relative;
+  background: #fff;
+  border-radius: 20px;
+  border: none;
+  text-indent: 1rem;
+  width: 100%;
+  color: #f72585;
+  font-size: 18px;
+}
+.platformgGame, .exchangeAmount {
+  border-radius: 25px;
+}
+.platformgGame:hover, .exchangeAmount:hover {
+  background-color: #f72585;
+  color: #fff;
+}
+/* 下拉式選單|連絡電話 */
+.contactbox {
+  width: 100%;
+  position: relative;
+  padding: 1px;
+  background: linear-gradient(to right, #4361ee, #f72585);
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+}
+.contactContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: linear-gradient(to right, #4361ee, #f72585);
+  border-radius: 50px;
+  text-indent: 1rem;
+  color: #fff;
+}
+.contactPhoneBox {
+  position: absolute;
+  left: 0;
+  padding: 1px;
+  background: linear-gradient(to right, rgba(67, 97, 238), rgba(247, 37, 133));
+  border-radius: 21px;
+  border: none;
+}
+.contactPhoneContent {
+  position: relative;
+  background: #fafafa;
+  border-radius: 20px;
+  border: none;
+  text-indent: 1rem;
+  width: 100%;
+  color: #f72585;
+  font-size: 18px;
+}
+.contactPhone {
+  border-radius: 25px;
+}
+.contactPhone:hover {
+  background-color: #f72585;
+  color: #fff;
+}
+/* 閱讀條款勾選 */
+.custom-radio {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #6a6a6a;
+  border-radius: 50%;
+  background-color: #fff;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+.custom-radio:checked {
+  border-color: #6a6a6a;
+  background-color: #fff;
+}
+.custom-radio:checked::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  background-color: #6a6a6a;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+/* 閱讀條款按鈕 */
+.readBtn {
+  border: none;
+  background: transparent;
+  color: #f72585;
+  font-size: 18px;
+}
+/* 閱讀條款 */
+:deep(.el-dialog__header) {
+  position: absolute;
+}
+:deep(.el-dialog) {
+  position: relative;
+  padding: 1px;
+  background: linear-gradient(to right, #4361ee, #f72585);
+  border-radius: 20px;
+  border: none;
+  --el-dialog-margin-top: 200px;
+  --el-dialog-width: 80%;
+  max-width: 990px;
+}
+:deep(.el-dialog__header) {
+  position: absolute;
+}
+:deep(.el-dialog__close) {
+  display: none;
+}
+.dialogHeader {
+  background: linear-gradient(to right, #4361ee, #f72585);
+  color: #fff;
+  padding: 0.75rem;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 10px;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.dialogBody {
+  background: #fff;
+  color: #8d8d8d;
+  border-radius: 20px;
+  padding: 3rem 2rem 2rem 2rem;
+}
+.dialogContent {
+  height: 50vh;
+  overflow: auto;
+}
+.dialogContent::-webkit-scrollbar {
+  width: 10px;
+}
+.dialogContent::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #666;
+}
+.agreeBtn {
+  background: linear-gradient(to right, #4361ee, #f72585);
+  color: #fff;
+  padding: 1.2rem 2rem;
+  border-radius: 50px;
 }
 </style>
