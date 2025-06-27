@@ -82,7 +82,7 @@
                   <el-tooltip class="box-item" effect="dark" placement="top">
                     <template #content>
                         <div class="text-14px">
-                            選擇平台，可查看下線在這個平台交易時，自身可享有的回饋數量。(推薦碼需開啟)
+                            %數為被推薦人在這個平台交易時，自身可享有的回饋數量。(推薦碼需開啟)
                         </div>
                     </template>
                     <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none" class="translate-y-[1.5px]">
