@@ -295,7 +295,7 @@
                     v-if="theUser[0].Type !== 3"
                     type="button"
                     class="p-y-1.5 p-x-3 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#2696F3] hover:bg-[#228de6] transition duration-200 cursor-pointer"
-                    @click.prevent="checkForm"
+                    @click.prevent="bindReferralCode"
                   >
                     綁定推薦碼
                   </button>
@@ -419,9 +419,13 @@ const getMobileVerify = async (result, mobile) => {
  * 提交表單
  */
 
-
 const checkForm = async event => {
   if (event) event.preventDefault();
+
+  // 打推薦碼
+  if (recommendStr.value !== '' && usedRecommendStr.value === false) {
+    theUser[0].RefferCode = recommendStr.value;
+  }
 
   // 型別轉換
   theUser[0].CarrierType = parseInt(theUser[0].CarrierType);
@@ -437,45 +441,6 @@ const checkForm = async event => {
     allAddress = selectedCity.value + selectedRegion.value + addressDetail.value;
   }
   theUser[0].Address = allAddress;
-
-  // 處理推薦碼（改用 BindReferralCode API）
-  if (recommendStr.value !== '' && usedRecommendStr.value === false) {
-    try {
-      const confirm = await modalStore.showModal(
-        ' ',
-        '綁定推薦碼後，不可再進行變更，<br>確定要綁定此組推薦碼嗎？'
-      );
-      if (!confirm) {
-        recommendStr.value = '';
-        theUser[0].RefferCode = '';
-        return;
-      }
-      // 發送綁定推薦碼 API
-      const bindResponse = await $axios.post(
-        '/api/v1/Pmatch/BindReferralCode',
-        {
-          PmatchMemberId: memberId.value,
-          ReferralCode: recommendStr.value
-        },
-        {
-          headers: {
-            Authorization: userToken.value
-          }
-        }
-      );
-
-      if (bindResponse.data.Status.Code !== 0) {
-        return alertModal.alertShowModal(' ', `推薦碼綁定失敗：${bindResponse.data.Status.Message}`);
-      }
-
-      // 綁定成功
-      theUser[0].RefferCode = recommendStr.value;
-      usedRecommendStr.value = true;
-    } catch (err) {
-      console.error('推薦碼綁定錯誤:', err);
-      return alertModal.alertShowModal(' ', '推薦碼綁定過程發生錯誤');
-    }
-  }
 
   // 發送更新會員資料 API
   try {
@@ -493,6 +458,50 @@ const checkForm = async event => {
     }
   } catch (error) {
     console.error('更新會員資料失敗:', error);
+  }
+};
+
+
+// 處理推薦碼（改用 BindReferralCode API）
+const bindReferralCode = async () => {
+  if (recommendStr.value === '' || usedRecommendStr.value === true) return;
+
+  try {
+    const confirm = await modalStore.showModal(
+      ' ',
+      '綁定推薦碼後，不可再進行變更，<br>確定要綁定此組推薦碼嗎？'
+    );
+    if (!confirm) {
+      recommendStr.value = '';
+      theUser[0].RefferCode = '';
+      return;
+    }
+
+    const bindResponse = await $axios.post(
+      '/api/v1/Pmatch/BindReferralCode',
+      {
+        PmatchMemberId: memberId.value,
+        ReferralCode: recommendStr.value
+      },
+      {
+        headers: {
+          Authorization: userToken.value
+        }
+      }
+    );
+
+    if (bindResponse.data.Status.Code !== 0) {
+      await alertModal.alertShowModal(' ', `推薦碼綁定失敗：${bindResponse.data.Status.Message}`);
+      return;
+    }
+
+    // 成功提示，按下確認後刷新畫面
+    await alertModal.alertShowModal(' ', '推薦碼綁定成功');
+    window.location.reload();
+
+  } catch (err) {
+    console.error('推薦碼綁定錯誤:', err);
+    await alertModal.alertShowModal(' ', '推薦碼綁定過程發生錯誤');
   }
 };
 
