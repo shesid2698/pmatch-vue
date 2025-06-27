@@ -299,7 +299,7 @@
                     <div class="w-100% flex justify-center mb-5" v-if="displayRadio != null"
                       v-show="isSell && displayRadio.IsEnabledSell">
                       <div class="text-15px">
-                        * 請參考最新委賣比值，實際兌換的筆直須依媒合商告知為準
+                        * 請參考最新委賣比值，實際兌換的比值須依媒合商告知為準
                       </div>
                     </div>
                     <div class="contactBox relative mb-5">
