@@ -42,5 +42,8 @@
     "jsonwebtoken": "^9.0.2",
     "unocss": "^66.1.0-beta.7",
     "vue3-google-login": "^2.0.33"
+  },
+  "overrides": {
+    "@jridgewell/sourcemap-codec": "1.4.14"
   }
 }
