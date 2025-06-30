@@ -306,8 +306,19 @@ character, index2
         </div>
         <div class="md-flex" v-for="(item, index) in serviceList" :key="index"
           :class="{ serviceEven: index % 2 === 0 }">
-          <div class="w-100% lg-w-50%">
-            <img class="w-100%" :src="item.img" :alt="item.title" />
+          <div class="flex w-100% lg-w-50% select-none pointer-events-none">
+            <img
+              class="w-100%"
+              :class="item.imagesOffsetClass"
+              :src="item.img"
+              :alt="item.title"
+            />
+            <img
+              class="w-67.5% object-contain "
+              :class="item.animeOffsetClass"
+              :src="item.anime"
+              :alt="item.title"
+            />
           </div>
           <div class="mt-4rem w-100% lg-w-50% lg-mt-1rem flex items-center">
             <div class="lg-ms-5 lg-me-5 ps-5 pe-5 lg-w-auto w-100% pb-20 serviceItemsContent">
@@ -377,17 +388,23 @@ const serviceList = [
   {
     title: '簽約有保障，交易更安全',
     detail: '交易前與媒合商簽訂正式合約，避免交易糾紛，玩家交易權益更有保障',
-    img: '/images/service1.png'
+    img: '/images/會員動畫背景2.png',
+    anime: '/animes/會員1.gif',
+    animeOffsetClass: 'translate-x-[-118.9%] translate-y-[2.3%]'
   },
   {
     title: '精選優質媒合商，詐騙走開',
     detail: '平台上的媒合商均經過PMatch平台嚴格篩選，交易信用有保障，告別詐騙交易',
-    img: '/images/service2.png'
+    img: '/images/會員動畫背景.png',
+    anime: '/animes/會員2.gif',
+    animeOffsetClass: 'translate-x-[-125.1%] translate-y-[2.7%]'
   },
   {
     title: '即時查詢，交易資訊100%透明',
     detail: '平台提供即時交易查詢服務，不論是遊戲幣流向還是交易進度，資訊完整透明',
-    img: '/images/service3.png'
+    img: '/images/會員動畫背景2.png',
+    anime: '/animes/會員3.gif',
+    animeOffsetClass: 'translate-x-[-118.9%] translate-y-[2.6%]'
   }
 ];
 let platformNameToSearch = ref('');
