@@ -159,13 +159,13 @@ function filterCategory(type) {
       showList.value = newsList.value;
       break;
     case 'member':
-      showList.value = newsList.value.filter(n => n.Category === '會員服務');
+      showList.value = newsList.value.filter(n => n.CategoryName === '會員服務');
       break;
     case 'match':
-      showList.value = newsList.value.filter(n => n.Category === '媒合交易');
+      showList.value = newsList.value.filter(n => n.CategoryName === '媒合交易');
       break;
     case 'platform':
-      showList.value = newsList.value.filter(n => n.Category === '平台機制');
+      showList.value = newsList.value.filter(n => n.CategoryName === '平台機制');
       break;
   }
 }
