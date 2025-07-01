@@ -157,15 +157,19 @@ function filterCategory(type) {
   switch (type) {
     case 'all':
       showList.value = newsList.value;
+      newsDetail.value = null;
       break;
     case 'member':
       showList.value = newsList.value.filter(n => n.CategoryName === '會員服務');
+      newsDetail.value = null;
       break;
     case 'match':
       showList.value = newsList.value.filter(n => n.CategoryName === '媒合交易');
+      newsDetail.value = null;
       break;
     case 'platform':
       showList.value = newsList.value.filter(n => n.CategoryName === '平台機制');
+      newsDetail.value = null;
       break;
   }
 }
