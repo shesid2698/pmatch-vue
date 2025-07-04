@@ -76,7 +76,10 @@
         </div>
       </div>
     </div>
-    <div class="pb-7rem">
+    
+
+
+<!-- <div class="pb-7rem">
       <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
         <div class="flex justify-center">
           <div class="w-90%">
@@ -100,7 +103,7 @@
               </div>
               <div class="w-100% font-size-1.2rem text-center color-#beffff">
                 <ElButton plain @click="openDialog(0)">
-                  <!-- 簡化縮小版折線圖 -->
+                  
                   <Line :data="simpleChartData" :options="simpleChartOptions" class="md-w-150px w-80px" />
                 </ElButton>
               </div>
@@ -114,7 +117,7 @@
               </div>
               <div class="w-100% font-size-1.2rem text-center color-#beffff">
                 <ElButton plain @click="openDialog(1)">
-                  <!-- 簡化縮小版折線圖 -->
+                 
                   <Line :data="simpleChartData1" :options="simpleChartOptions" class="md-w-150px w-80px" />
                 </ElButton>
               </div>
@@ -128,7 +131,7 @@
               </div>
               <div class="w-100% text-center">
                 <ElButton plain @click="openDialog(2)">
-                  <!-- 簡化縮小版折線圖 -->
+                  
                   <Line :data="simpleChartData2" :options="simpleChartOptions" class="md-w-150px w-80px" />
                 </ElButton>
               </div>
@@ -142,7 +145,7 @@
               </div>
               <div class="w-100% text-center">
                 <ElButton plain @click="openDialog(3)">
-                  <!-- 簡化縮小版折線圖 -->
+                  
                   <Line :data="simpleChartData3" :options="simpleChartOptions" class="md-w-150px w-80px" />
                 </ElButton>
               </div>
@@ -156,7 +159,7 @@
               </div>
               <div class="w-100% text-center">
                 <ElButton plain @click="openDialog(4)">
-                  <!-- 簡化縮小版折線圖 -->
+                  
                   <Line :data="simpleChartData4" :options="simpleChartOptions" class="md-w-150px w-80px" />
                 </ElButton>
               </div>
@@ -170,7 +173,7 @@
               </div>
               <div class="w-100% text-center">
                 <ElButton plain @click="openDialog(5)">
-                  <!-- 簡化縮小版折線圖 -->
+                  
                   <Line :data="simpleChartData5" :options="simpleChartOptions" class="md-w-150px w-80px" />
                 </ElButton>
               </div>
@@ -178,7 +181,10 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
+
+
+
     <!-- 先不開 -->
     <!-- <div class="pb-7rem">
             <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
