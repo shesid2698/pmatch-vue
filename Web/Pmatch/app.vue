@@ -17,11 +17,11 @@
       integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
       crossorigin="anonymous" />
     <LoadingPage />
-    <component v-if="route.path.indexOf('/activity') === -1" :is="isStorePage ? StoreHeader : Header" />
-    <div class="page" :class="route.path.indexOf('/activity') !== -1 ? 'pt-0px' : isStorePage ? 'pt-0px' : 'pt-70px'">
+    <component v-if="route.path.indexOf('/oldActivity') === -1" :is="isStorePage ? StoreHeader : Header" />
+    <div class="page" :class="route.path.indexOf('/oldActivity') !== -1 ? 'pt-0px' : isStorePage ? 'pt-0px' : 'pt-70px'">
       <NuxtPage />
     </div>
-    <component v-if="route.path.indexOf('/activity') === -1" :is="isStorePage ? StoreFooter : Footer" />
+    <component v-if="route.path.indexOf('/oldActivity') === -1" :is="isStorePage ? StoreFooter : Footer" />
   </div>
 </template>
 
