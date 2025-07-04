@@ -297,7 +297,7 @@ onMounted(async () => {
         };
         const str = JSON.stringify(obj);
         const chatToken = btoa(str).replace(/\+/g, '-').replace(/\//g, '_');
-        console.log('token:',chatToken);
+        // console.log('token:',chatToken);
         if (config.webChatUrl !== '') {
             window.open(
                 `${config.webChatUrl}?token=${chatToken}`,
