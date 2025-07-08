@@ -27,6 +27,35 @@
           <span class="absolute top-50% transform-translate-y-[-45%] right-20px cursor-pointer"
             @click="GetSearchQuery"><img src="/images/searchIcon.png" width="30" alt=""></span>
         </div>
+        <div class="mt-10 ms-5 text-left">
+          <div class="text-7 font-bold mb-3 inline-block bg-gradient-to-r from-[#4361EE] to-[#7b2cbf] bg-clip-text text-transparent leading-none">提問分類</div>
+          <div class="text-5 leading-9">
+            <div class="flex justify-between w-36 cursor-pointer group" @click="filterCategory('all')">
+              <span :class="[ category === 'all' ? 'text-[#7b2cbf]' : 'text-[#4361EE]',
+              'group-hover:bg-gradient-to-r group-hover:from-[#7b2cbf] group-hover:to-[#4361EE] group-hover:bg-clip-text group-hover:text-transparent']
+              ">全部</span>
+              <span class="text-[#7b2cbf] font-bold">{{ totalCount }}</span>
+            </div>
+            <div class="flex justify-between w-36 cursor-pointer group" @click="filterCategory('member')">
+              <span :class="[ category === 'member' ? 'text-[#7b2cbf]' : 'text-[#4361EE]',
+              'group-hover:bg-gradient-to-r group-hover:from-[#7b2cbf] group-hover:to-[#4361EE] group-hover:bg-clip-text group-hover:text-transparent']
+              ">會員服務</span>
+              <span class="text-[#7b2cbf] font-bold">{{ memberCount }}</span>
+            </div>
+            <div class="flex justify-between w-36 cursor-pointer group" @click="filterCategory('match')">
+              <span :class="[ category === 'match' ? 'text-[#7b2cbf]' : 'text-[#4361EE]',
+              'group-hover:bg-gradient-to-r group-hover:from-[#7b2cbf] group-hover:to-[#4361EE] group-hover:bg-clip-text group-hover:text-transparent']
+              ">媒合交易</span>   
+              <span class="text-[#7b2cbf] font-bold">{{ rewardCount }}</span>
+            </div>
+            <div class="flex justify-between w-36 cursor-pointer group" @click="filterCategory('platform')">
+              <span :class="[ category === 'platform' ? 'text-[#7b2cbf]' : 'text-[#4361EE]',
+              'group-hover:bg-gradient-to-r group-hover:from-[#7b2cbf] group-hover:to-[#4361EE] group-hover:bg-clip-text group-hover:text-transparent']
+              ">平台機制</span>
+              <span class="text-[#7b2cbf] font-bold">{{ platformCount }}</span>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="w-100% md:w-70% mr-10px" v-if="!newsDetail">
         <!-- <NuxtLink :to="`/helpcenter/${news.Id}`"
@@ -113,6 +142,38 @@ const GetNewsDetail = id => {
     behavior: 'smooth'
   });
 };
+
+// 分類按鈕
+const category = ref('all');
+
+const totalCount = computed(() => newsList.value.length);
+const memberCount = computed(() => newsList.value.filter(n => n.CategoryName === '會員服務').length);
+const rewardCount = computed(() => newsList.value.filter(n => n.CategoryName === '媒合交易').length);
+const platformCount = computed(() => newsList.value.filter(n => n.CategoryName === '平台機制').length);
+
+function filterCategory(type) {
+  category.value = type;
+
+  switch (type) {
+    case 'all':
+      showList.value = newsList.value;
+      newsDetail.value = null;
+      break;
+    case 'member':
+      showList.value = newsList.value.filter(n => n.CategoryName === '會員服務');
+      newsDetail.value = null;
+      break;
+    case 'match':
+      showList.value = newsList.value.filter(n => n.CategoryName === '媒合交易');
+      newsDetail.value = null;
+      break;
+    case 'platform':
+      showList.value = newsList.value.filter(n => n.CategoryName === '平台機制');
+      newsDetail.value = null;
+      break;
+  }
+}
+
 onMounted(async () => {
   try {
     if (userToken.value != '' && userToken.value != undefined) {
