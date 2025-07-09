@@ -14,142 +14,223 @@
   <div class="dot2 select-none pointer-events-none">
     <img src="/images/bg-dot04.png" width="100%" alt="">
   </div>
-  <div class="dot3 select-none pointer-events-none">
-    <img src="/images/corner.png" width="100%" alt="">
-  </div>
 
-  <div class="max-w-1110px m-auto pt-80px ps-5 pe-5 relative z-2">
-    <ElCarousel class="h-auto" :interval="3000" arrow="always">
-      <ElCarouselItem
-        v-for="(item, index) in bannerList"
-        :key="index"
-        class="h-auto"
-      >
-        <a
-          :href="item.linkUrl ? item.linkUrl : '#'"
-          :class="item.linkUrl ? '' : 'cursor-default'"
-          :target="item.linkUrl ? '_blank' : ''"
-        >
+  <div class="max-w-1000px m-auto mt-5rem ps-5 pe-5 relative z-2">      
+      <div class="bg-white min-h-2xl font-events">
+        <!-- 分類選單 -->
+        <div class="navGradient rounded-lg px-7 py-1.5">
+          <div class="flex justify-start gap-2.5">
+            <template v-for="(type, index) in ['熱門活動', '媒合商活動', '遊戲平台活動資訊']" :key="type">
+              <button
+                @click="activityCategory = type; currentPage = 1"      
+                :class="[
+                  'border-none px-4 py-1 rounded transition-all hover:text-16.5px hover:bg-[#FF8800] hover:text-[#353535] hover:cursor-pointer',
+                  activityCategory === type ? 'bg-[#FFF0C7] text-[#8E856F] text-16.5px' : 'bg-transparent text-[#7E7E7E] text-15px'
+                ]"
+              >
+                {{ type }}
+              </button>
+              <div v-if="index !== 2" class="w-px h-7 bg-white my-0.5"></div>
+            </template>            
+          </div>
+        </div>
+        <!-- 下拉選單 -->
+        <div ref="dropdownRef" class="relative inline-block w-48 my-2">
+          <!-- 主按鈕 -->
           <div
-            class="relative w-full h-[260px] text-white overflow-hidden"
-            :style="{ background: bgColorMap[item.background] || '#000' }"
+            class="flex justify-between items-center border rounded-xl px-4 py-2 text-sm cursor-pointer transition-all border-solid border-[#FFBB00]"
+            :class="[
+              isDropdownOpen ? 'bg-[#505050] text-[#cfcfcf]' : 'bg-white text-black border-[#FFBB00] hover:bg-[#efefef] hover:text-[#666666]',
+              isDropdownOpen ? 'shadow-[0_0_6px_rgba(255,136,0,0.7)]' : '',
+            ]"
+            @click="toggleDropdown"
           >
-            <img
-              class="absolute w-full h-full object-cover opacity-20"
-              :src="item.imageUrl"
-              :alt="item.title"
-            />
-            <div class="relative w-full h-full">
-              <h3 class="absolute text-xl font-bold" :class="styleMap[item.style]?.titleStyle">
-                {{ item.title }}
-              </h3>
-              <p class="absolute text-sm" :class="styleMap[item.style]?.textAStyle">
-                {{ item.textA }}
-              </p>
+            <span>{{ selectedPlatformLabel }}</span>
+            <svg class="w-4 h-4 ml-2 fill-current" viewBox="0 0 20 20">
+              <path d="M5.293 7.293L10 12l4.707-4.707-1.414-1.414L10 9.172 6.707 5.879z" />
+            </svg>
+          </div>
+
+          <!-- 下拉內容 -->
+          <div
+            v-if="isDropdownOpen"
+            class="absolute z-10 mt-2 w-full bg-white border border-[#F6C940] rounded-md shadow-lg text-sm overflow-hidden"
+          >
+            <div
+              v-for="option in platformOptions"
+              :key="option.value"
+              @click="selectPlatform(option)"
+              class="px-4 py-2 cursor-pointer transition-all relative before:content-[''] before:block before:h-px before:absolute before:left-4 before:right-4 before:bottom-0 before:bg-[linear-gradient(to_right,#FFBB00,transparent)] last:before:hidden"
+              :class="[
+                selectedPlatform === option.value
+                  ? 'bg-[radial-gradient(circle,#FFBB00,transparent)] text-[#553CE5]'
+                  : 'hover:bg-[radial-gradient(circle,#FFE9AC,transparent)] hover:text-[#4B4B4B]'
+              ]"
+            >
+              {{ option.label }}
             </div>
           </div>
-        </a>
-      </ElCarouselItem>
-    </ElCarousel>
-  </div>
+        </div>
+
+        <!-- 活動卡片區塊 -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+          <NuxtLink
+            v-for="item in paginatedActivities "
+            :key="item.id"
+            :to="`/activity/${item.id}`" 
+            class="border rounded-md overflow-hidden bg-white transition-all block no-underline shadow-md hover:shadow-lg hover:cursor-pointer"
+          >
+            <div class="relative">
+              <img :src="bannerTypeMap[item.bannerType]?.picture" alt="活動主視覺" class="w-full block" />
+              <div :class="bannerTypeMap[item.bannerType]?.position">
+                <div class="text-white text-xl font-bold">{{ item.title }}</div>
+                <div class="text-white text-sm leading-none">{{ item.subTitle }}</div>
+              </div>
+            </div>
+            <div class="bg-gradient-to-r from-[#f2994a] to-[#f2c94c] text-white py-1"></div>
+            <div class="font-bold px-3 leading-none">
+              <p class="text-gray-400 text-11.5px my-2">活動媒合商：{{ item.storeName }}</p>
+              <p class=" text-gray-700 text-14.5px my-2">活動名稱：{{ item.title }}</p>
+              <p class="text-gray-400 text-13px my-2">活動時間：{{ item.startTime }}~{{ item.endTime }}</p>
+            </div>
+          </NuxtLink>
+        </div>        
+      </div>
+     
+    <!-- 分頁按鈕 -->
+    <div class="flex justify-center mt-[2rem]">
+      <el-pagination layout="prev, pager, next" :current-page="currentPage" :page-size="itemsPerPage"
+        :total="activityList.length" @current-change="changePage" />
+    </div>
+  </div>        
 </template>
 
 <script setup>
-const styleMap = {
-  0: {
-    titleStyle: 'top-[10px] left-[20px]',
-    textAStyle: 'top-[50px] left-[20px]'
-  },
-  1: {
-    titleStyle: 'bottom-[40px] right-[20px]',
-    textAStyle: 'bottom-[10px] right-[20px]'
-  },
-  2: {
-    titleStyle: 'top-1/2 left-[30px] -translate-y-1/2',
-    textAStyle: 'top-[60%] left-[30px]'
+  // 下拉式選單
+  const selectedPlatform = ref('')
+  const isDropdownOpen = ref(false)
+  const dropdownRef = ref(null)
+  const platformOptions = [
+    { label: '全部平台', value: '' },
+    { label: '滿漢大亨', value: '滿漢大亨' },
+    { label: '包你發娛樂城', value: '包你發娛樂城' },
+    { label: '錢街Online', value: '錢街Online' },
+  ]
+  const selectedPlatformLabel = computed(() => {
+    const found = platformOptions.find(opt => opt.value === selectedPlatform.value)
+    return found?.label || '全部平台'
+  })
+  function toggleDropdown() {
+    isDropdownOpen.value = !isDropdownOpen.value
   }
-};
-const bgColorMap = {
-  0: '#FFB703',
-  1: '#219EBC',
-  2: 'linear-gradient(to right, #ff9a9e, #fad0c4)' 
-};
-const bannerList = ref([
-  {
-    type: 'A',
-    title: '夏日轉轉樂',
-    imageUrl: 'https://picsum.photos/id/1011/800/400',
-    textA: '登入就能轉！',
-    bgColor: '#FFB703',
-    linkUrl: '',
-    style: 0,
-    background: 1 
-  },
-  {
-    type: 'B',
-    title: '新會員限時禮',
-    imageUrl: 'https://picsum.photos/id/1015/800/400',
-    textA: '註冊拿紅利',
-    bgColor: '#219EBC',
-    linkUrl: 'https://example.com',
-    style: 1,
-    background: 2
-  },
-  {
-    type: 'C',
-    title: '好友邀請賺獎金',
-    imageUrl: 'https://picsum.photos/id/1025/800/400',
-    textA: '每邀1人賺$100',
-    bgColor: '#8ECAE6',
-    linkUrl: '',
-    style: 2,
-    background: 0
+  function selectPlatform(option) {
+    selectedPlatform.value = option.value
+    isDropdownOpen.value = false
   }
-]);
+  // 活動類型
+  const activityCategory = ref('媒合商活動')
+
+  const paginatedCategory = computed(() => {
+    return activityList.value.filter(item => item.category === activityCategory.value)
+  })
 
 
-  const jwtStore = useJwtStore();
-  const userToken = useCookie('_PmToken');
+  const bannerTypeMap = {
+    0: {
+      picture: '/images/preview-banner.png',
+      position: 'absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%] flex flex-col items-center gap-2'
+    },
+  };
+  const activityList = ref(
+    Array.from({ length: 10 }, (_, i) => ({
+      id: i,
+      category: '媒合商活動',
+      title: '長期打九折',
+      subTitle: '副標題或一些有的沒的',
+      bannerType: 0,
+      background: 0,
+      storeLogo: '/images/preview-headshot.png',
+      storeName: 'B商店',
+      content: 'asdasdqweqwqweasdasdasdasdasdzxczxcxzczsdasd',
+      hyperlink: 'https://pmatch.com.tw',
+      startTime: '2025/06/01',
+      endTime: '2025/08/31'
+    }))
+  );
 
-  // onMounted(async () => {
-  //   try {
-  //     if (userToken.value != '' && userToken.value != undefined) {
-  //       const token = userToken.value;
-  //       if (token != '') {
-  //       }
-  //     } else {
-  //       // 生成新的 token
-  //       const token = await jwtStore.generateToken();
-  //       if (token != '') {
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.error('頁面初始化失敗:', error);
-  //   }
-  // });
+  // 分頁計算
+  const currentPage = ref(1);
+  const itemsPerPage = 9;
+
+  const paginatedActivities = computed(() => {
+    const start = (currentPage.value - 1) * itemsPerPage
+    const end = start + itemsPerPage
+    return paginatedCategory.value.slice(start, end)
+  });
+
+  // 切換頁面
+  function changePage(page) {
+    currentPage.value = page
+  };
+
+  // 點擊外部關閉選單
+  function handleClickOutside(event) {
+    if (dropdownRef.value && !dropdownRef.value.contains(event.target)) {
+      isDropdownOpen.value = false
+    }
+  }
+
+  onMounted(() => {
+    document.addEventListener('click', handleClickOutside)
+  })
+
+  onBeforeUnmount(() => {
+    document.removeEventListener('click', handleClickOutside)
+  })
 </script>
 
 <style scoped>
+  .font-events {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  }
   .dot1 {
     position: absolute;
     width: 25%;
     right: 0;
     top: 0;
   }
-
   .dot2 {
     position: absolute;
     width: 25%;
     left: 0;
     top: 20%;
   }
-
-  .dot3 {
-    position: absolute;
-    width: 25%;
-    right: 0;
-    top: 60%;
-    transform: rotate(180deg);
+  .navGradient {
+    background: linear-gradient(to right, #FFBB00 75%, #FFE9AC 100%);
+    box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.5);
   }
-
+  :deep(.el-pager > .number) {
+    color: #f72585;
+    margin: 0 5px;
+    font-size: 20px;
+  }
+  :deep(.el-pagination > .btn-prev > .el-icon) {
+    color: #f72585;
+    font-size: 20px;
+    margin: 0 5px;
+  }
+  :deep(.el-pagination > .btn-next > .el-icon) {
+    color: #f72585;
+    font-size: 20px;
+    margin: 0 5px;
+  }
+  :deep(.el-pagination) {
+    --el-pagination-bg-color: rgba(0, 0, 0, 0);
+    --el-pagination-button-disabled-bg-color: rgba(0, 0, 0, 0);
+  }
+  :deep(.el-pager > .is-active) {
+    background: linear-gradient(to right, #4361ee, #f72585);
+    border-radius: 50%;
+    color: #fff;
+  }
 </style>

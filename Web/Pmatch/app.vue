@@ -19,8 +19,17 @@
     <div class="page" :class="route.path.indexOf('/events') !== -1 ? 'pt-0px' : isStorePage ? 'pt-0px' : 'pt-70px'">
       <NuxtPage />
     </div>
-    <component v-if="route.path.indexOf('/events') === -1" :is="isStorePage ? StoreHeader : Header" />
-    <component v-if="route.path.indexOf('/events') === -1" :is="isStorePage ? StoreFooter : Footer" />
+    <component
+      v-if="route.path.indexOf('/events') === -1"
+      :is="isStorePage ? StoreHeader : Header"
+      :class="route.path.indexOf('/activity/preview') !== -1 ? 'pointer-events-none' : ''"
+    />
+
+    <component
+      v-if="route.path.indexOf('/events') === -1"
+      :is="isStorePage ? StoreFooter : Footer"
+      :class="route.path.indexOf('/activity/preview') !== -1 ? 'pointer-events-none' : ''"
+    />
     <component v-if="route.path.indexOf('/activity/preview') === -1" :is="BuyLog" />
   </div>
 </template>
