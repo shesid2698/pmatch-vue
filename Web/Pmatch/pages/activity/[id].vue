@@ -110,14 +110,15 @@
     }
   };
   const backgroundMap = {
-    0: 'bg-gradient-to-b from-[#FEFEFE] to-[#e6ecfc]',
-    1: 'bg-gradient-to-b from-[#FFFBF0] to-[#FFF0C7]',
-    2: 'bg-[#FAFAFA]',
-    3: 'bg-gradient-to-b from-[#E3FFFA] to-[#B1FFF1]',
-    4: 'bg-gradient-to-b from-[#FFF0F6] to-[#FFD6E5]',
-    5: 'bg-gradient-to-b from-[#FFEEE6] to-[#FFD2BF]',
-    6: 'bg-gradient-to-b from-[#FDFFEB] to-[#F5FF9F]',
-    7: 'bg-gradient-to-b from-[#FAF0FF] to-[#D8BFE6]'
+    0: 'shadow-[inset_0_-4px_6px_rgba(0,0,0,0.07)] bg-white',
+    1: 'shadow-[inset_0_-4px_6px_rgba(59,91,196,0.08)] bg-gradient-to-b from-[#FEFEFE] to-[#e6ecfc]',
+    2: 'shadow-[inset_0_-4px_6px_rgba(255,197,0,0.15)] bg-gradient-to-b from-[#FFFBF0] to-[#FFF0C7]',
+    3: 'shadow-[inset_0_-4px_6px_rgba(0,0,0,0.06)] bg-[#FAFAFA]',
+    4: 'shadow-[inset_0_-4px_6px_rgba(0,180,150,0.12)] bg-gradient-to-b from-[#E3FFFA] to-[#B1FFF1]',
+    5: 'shadow-[inset_0_-4px_6px_rgba(255,105,135,0.12)] bg-gradient-to-b from-[#FFF0F6] to-[#FFD6E5]',
+    6: 'shadow-[inset_0_-4px_6px_rgba(255,120,80,0.12)] bg-gradient-to-b from-[#FFEEE6] to-[#FFD2BF]',
+    7: 'shadow-[inset_0_-4px_6px_rgba(180,180,0,0.1)] bg-gradient-to-b from-[#FDFFEB] to-[#F5FF9F]',
+    8: 'shadow-[inset_0_-4px_6px_rgba(160,120,200,0.2)] bg-gradient-to-b from-[#FAF0FF] to-[#D8BFE6]'
   };
   const activityList = ref([
     {
@@ -247,7 +248,7 @@
       subTitle: "副標題或一些有的沒的共十五個字",
       customizeUrl: "",
       bannerType: 8,
-      background: 0,
+      background: 8,
       storeLogo: "/activity/preview-headshot.png",
       storeName: "B商店",
       content: "asdasdqweqwqweasdasdasdasdasdzxczxcxzczsdasd",
@@ -262,7 +263,7 @@
       subTitle: "副標題或一些有的沒的共十五個字",
       customizeUrl: "/activity/preview-thumbnail.png",
       bannerType: 9,
-      background: 1,
+      background: 0,
       storeLogo: "/activity/preview-headshot.png",
       storeName: "B商店",
       content: "asdasdqweqwqweasdasdasdasdasdzxczxcxzczsdasd",

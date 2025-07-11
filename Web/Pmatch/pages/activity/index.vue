@@ -20,7 +20,7 @@
         <!-- 分類選單 -->
         <div class="navGradient rounded-lg px-7 py-1.5">
           <div class="flex justify-start gap-2.5">
-            <template v-for="(type, index) in ['熱門活動', '媒合商活動', '遊戲平台活動資訊']" :key="type">
+            <!-- <template v-for="(type, index) in ['熱門活動', '媒合商活動', '遊戲平台活動資訊']" :key="type">
               <button
                 @click="activityCategory = type; currentPage = 1"      
                 :class="[
@@ -32,7 +32,20 @@
                 {{ type }}
               </button>
               <div v-if="index !== 2" class="w-px h-7 bg-white my-0.5"></div>
-            </template>            
+            </template>          -->
+            <template v-for="(type, index) in [4, 5, 6]" :key="type">
+              <button
+                @click="activityCategory = type; currentPage = 1"
+                :class="[
+                  'border-none px-4 py-1 rounded transition-all hover:text-16.5px hover:bg-[#FF8800] hover:text-[#353535] hover:cursor-pointer',
+                  activityCategory === type ? 'bg-[#FFF0C7] text-[#8E856F] text-16.5px' : 'bg-transparent text-[#7E7E7E] text-15px',
+                  btnWidthMap[type]
+                ]"
+              >
+                {{ categoryMap[type] }}  <!-- 顯示中文 -->
+              </button>
+              <div v-if="index !== 2" class="w-px h-7 bg-white my-0.5"></div>
+            </template>
           </div>
         </div>
         <!-- 下拉選單 -->
@@ -77,8 +90,8 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
           <NuxtLink
             v-for="item in paginatedActivities "
-            :key="item.id"
-            :to="`/activity/${item.id}`" 
+            :key="item.Id"
+            :to="`/activity/${item.Id}`" 
             class="relative border rounded-md overflow-hidden bg-white transition-all block no-underline shadow-md hover:shadow-lg hover:cursor-pointer"
           >
             <!-- 遮罩 -->
@@ -89,8 +102,8 @@
             <!-- 主圖|自訂議 -->
             <div class="relative">
               <img
-                v-if="item.bannerType === 9 && item.customizeUrl"
-                :src="item.customizeUrl"
+                v-if="parseImgFile(item.ImgFile).bannerType && parseImgFile(item.ImgFile).imageUrl"
+                :src="parseImgFile(item.ImgFile).imageUrl"
                 alt="自訂主視覺"
                 class="w-full block"
               />
@@ -98,8 +111,8 @@
               <template v-else>
                 <img :src="bannerTypeMap[item.bannerType]?.picture" alt="活動主視覺" class="w-full block" />
                 <div :class="bannerTypeMap[item.bannerType]?.position">
-                  <div class="text-white text-shadow-sm text-lg leading-none font-bold">{{ item.title }}</div>
-                  <div class="text-white text-shadow-sm text-0.6rem leading-none">{{ item.subTitle }}</div>
+                  <div class="text-white text-shadow-sm text-lg leading-none font-bold">{{ item.Title }}</div>
+                  <div class="text-white text-shadow-sm text-0.6rem leading-none">{{ item.Summary }}</div>
                 </div> 
               </template>
             </div>
@@ -107,9 +120,9 @@
             <div class="bg-gradient-to-r from-[#f2994a] to-[#f2c94c] text-white py-1"></div>
             <!-- 說明 -->
             <div class="font-bold px-3 leading-none">
-              <p class="text-gray-400 text-11.5px my-1.5">活動媒合商：{{ item.storeName }}</p>
-              <p class=" text-gray-700 text-14.5px my-1.5">活動名稱：{{ item.title }}</p>
-              <p class="text-gray-400 text-13px my-2">活動時間：{{ item.startTime }}~{{ item.endTime }}</p>
+              <!-- <p class="text-gray-400 text-11.5px my-1.5">活動媒合商：{{ item.storeName }}</p> -->
+              <p class=" text-gray-700 text-14.5px my-1.5">活動名稱：{{ item.Title }}</p>
+              <p class="text-gray-400 text-13px my-2">活動時間：{{ item.StartTime?.split?.('T')?.[0] ?? '未提供' }} ~ {{ item.EndTime?.split?.('T')?.[0] ?? '未提供' }}</p>
             </div>
           </NuxtLink>
         </div>        
@@ -124,12 +137,12 @@
 </template>
 
 <script setup>
-  // 按鈕寬度
-  const btnWidthMap = {
-    '熱門活動': 'sm:min-w-[98px]',
-    '媒合商活動': 'sm:min-w-[115px]',
-    '遊戲平台活動資訊': 'sm:min-w-[162px]',
-  }
+  const jwtStore = useJwtStore()
+  const userToken = useCookie('_PmToken')
+  const { $axios } = useNuxtApp();
+  const assetsUrl = useCookie('_PmAssetsUrl').value;
+
+
   // 下拉式選單
   const selectedPlatform = ref('')
   const isDropdownOpen = ref(false)
@@ -151,203 +164,90 @@
     selectedPlatform.value = option.value
     isDropdownOpen.value = false
   }
-  // 活動類型
-  const activityCategory = ref('媒合商活動')
 
+  // 分類對應
+   const categoryMap = {
+    4: '熱門活動',
+    5: '媒合商活動',
+    6: '遊戲平台活動資訊',
+  }
+  // 按鈕寬度
+  const btnWidthMap = {
+    4: 'sm:min-w-[98px]',
+    5: 'sm:min-w-[115px]',
+    6: 'sm:min-w-[162px]',
+  }
+  // 活動類型
+  const activityCategory = ref(4) // 熱門活動
+
+ 
   const paginatedCategory = computed(() => {
-    return activityList.value.filter(item => item.category === activityCategory.value)
+    return activityList.value.filter(item => item.Category === activityCategory.value)
   })
 
   const bannerTypeMap = {
-    0: {
-      picture: '/activity/banner_0.png',
-      position: 'absolute top-20% right-4% flex flex-col items-end gap-2'
-    },
     1: {
       picture: '/activity/banner_1.png',
-      position: 'absolute bottom-5% left-3% flex flex-col items-start gap-2'
+      position: 'absolute top-20% right-4% flex flex-col items-end gap-2'
     },
     2: {
       picture: '/activity/banner_2.png',
-      position: 'absolute bottom-6% right-2.5% flex flex-col items-end gap-2'
+      position: 'absolute bottom-5% left-3% flex flex-col items-start gap-2'
     },
     3: {
       picture: '/activity/banner_3.png',
-      position: 'absolute bottom-2% right-3% flex flex-col items-end gap-2'
+      position: 'absolute bottom-6% right-2.5% flex flex-col items-end gap-2'
     },
     4: {
       picture: '/activity/banner_4.png',
-      position: 'absolute bottom-6% right-3% flex flex-col items-end gap-2'
+      position: 'absolute bottom-2% right-3% flex flex-col items-end gap-2'
     },
     5: {
       picture: '/activity/banner_5.png',
-      position: 'absolute bottom-5% left-3% flex flex-col items-start gap-2'
+      position: 'absolute bottom-6% right-3% flex flex-col items-end gap-2'
     },
     6: {
       picture: '/activity/banner_6.png',
-      position: 'absolute bottom-3% right-3% flex flex-col items-end gap-2'
+      position: 'absolute bottom-5% left-3% flex flex-col items-start gap-2'
     },
     7: {
       picture: '/activity/banner_7.png',
-      position: 'absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%] flex flex-col items-center gap-2 w-[90%] '
+      position: 'absolute bottom-3% right-3% flex flex-col items-end gap-2'
     },
     8: {
       picture: '/activity/banner_8.png',
+      position: 'absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%] flex flex-col items-center gap-2 w-[90%] '
+    },
+    9: {
+      picture: '/activity/banner_9.png',
       position: 'absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%] flex flex-col items-center gap-2 w-[90%] '
     }
   };
 
     const activityList = ref([
     {
-      id: '0',
-      category: '媒合商活動',
-      title: "不要吵==我是第一張圖",
-      subTitle: "副標題或一些有的沒的共十五個字",
-      customizeUrl: "",
-      bannerType: 0,
-      background: 0,
-      storeLogo: "/activity/preview-headshot.png",
-      storeName: "B商店",
-      content: "asdasdqweqwqweasdasdasdasdasdzxczxcxzczsdasd",
-      hyperlink: "https://www.pmatch.com.tw/",
-      startTime: "2025/06/01",
-      endTime: "2025/08/31",
+      Id: 0,
+      Category: 5,
+      Title: "不要吵==我是第一張圖",
+      Summary: "副標題或一些有的沒的共十五個字",
+      Url: "https://www.pmatch.com.tw/",
+      ImgFile: "preview-headshot",
+      StoreId: 0,
+      StoreName: "B商店",
+      Content: "asdasdqweqwqweasdasdasdasdasdzxczxcxzczsdasd",
+      StartTime: "2025-06-01T00:00:00",
+      EndTime: "2025-08-31T00:00:00",
+      CreateTime: "2025-06-01T00:00:00",
+      ModifyTime: "2025-06-01T00:00:00",
+      CreateUser: "",
+      ModifyUser: "",
+      Hits: 0,
+      IsDeleted: false,
+      IsHot: false,
+      IsTop: false,
+      IsOpenWindow: false,
+      SortingId: 0,
     },
-    {
-      id: '1',
-      category: '媒合商活動',
-      title: "不要吵==我是第二張圖",
-      subTitle: "副標題或一些有的沒的共十五個字",
-      customizeUrl: "",
-      bannerType: 1,
-      background: 1,
-      storeLogo: "/activity/preview-headshot.png",
-      storeName: "B商店",
-      content: "asdasdqweqwqweasdasdasdasdasdzxczxcxzczsdasd",
-      hyperlink: "https://www.pmatch.com.tw/",
-      startTime: "2025/06/01",
-      endTime: "2025/08/31",
-    },
-    {
-      id: '2',
-      category: '媒合商活動',
-      title: "不要吵==我是第三張圖",
-      subTitle: "副標題或一些有的沒的共十五個字",
-      customizeUrl: "",
-      bannerType: 2,
-      background: 2,
-      storeLogo: "/activity/preview-headshot.png",
-      storeName: "B商店",
-      content: "asdasdqweqwqweasdasdasdasdasdzxczxcxzczsdasd",
-      hyperlink: "https://www.pmatch.com.tw/",
-      startTime: "2025/06/01",
-      endTime: "2025/08/31",
-    },
-    {
-      id: '3',
-      category: '媒合商活動',
-      title: "不要吵==我是第四張圖",
-      subTitle: "副標題或一些有的沒的共十五個字",
-      customizeUrl: "",
-      bannerType: 3,
-      background: 3,
-      storeLogo: "/activity/preview-headshot.png",
-      storeName: "B商店",
-      content: "asdasdqweqwqweasdasdasdasdasdzxczxcxzczsdasd",
-      hyperlink: "https://www.pmatch.com.tw/",
-      startTime: "2025/06/01",
-      endTime: "2025/08/31",
-    },
-    {
-      id: '4',
-      category: '媒合商活動',
-      title: "不要吵==我是第五張圖",
-      subTitle: "副標題或一些有的沒的共十五個字",
-      customizeUrl: "",
-      bannerType: 4,
-      background: 4,
-      storeLogo: "/activity/preview-headshot.png",
-      storeName: "B商店",
-      content: "asdasdqweqwqweasdasdasdasdasdzxczxcxzczsdasd",
-      hyperlink: "https://www.pmatch.com.tw/",
-      startTime: "2025/06/01",
-      endTime: "2025/06/31",
-    },
-    {
-      id: '5',
-      category: '媒合商活動',
-      title: "不要吵==我是第六張圖",
-      subTitle: "副標題或一些有的沒的共十五個字",
-      customizeUrl: "",
-      bannerType: 5,
-      background: 5,
-      storeLogo: "/activity/preview-headshot.png",
-      storeName: "B商店",
-      content: "asdasdqweqwqweasdasdasdasdasdzxczxcxzczsdasd",
-      hyperlink: "https://www.pmatch.com.tw/",
-      startTime: "2025/06/01",
-      endTime: "2025/08/31",
-    },
-    {
-      id: '6',
-      category: '媒合商活動',
-      title: "不要吵==我是第七張圖",
-      subTitle: "副標題或一些有的沒的共十五個字",
-      customizeUrl: "",
-      bannerType: 6,
-      background: 6,
-      storeLogo: "/activity/preview-headshot.png",
-      storeName: "B商店",
-      content: "asdasdqweqwqweasdasdasdasdasdzxczxcxzczsdasd",
-      hyperlink: "https://www.pmatch.com.tw/",
-      startTime: "2025/06/01",
-      endTime: "2025/08/31",
-    },
-    {
-      id: '7',
-      category: '媒合商活動',
-      title: "不要吵==我是第八張圖",
-      subTitle: "副標題或一些有的沒的共十五個字",
-      customizeUrl: "",
-      bannerType: 7,
-      background: 7,
-      storeLogo: "/activity/preview-headshot.png",
-      storeName: "B商店",
-      content: "asdasdqweqwqweasdasdasdasdasdzxczxcxzczsdasd",
-      hyperlink: "https://www.pmatch.com.tw/",
-      startTime: "2025/06/01",
-      endTime: "2025/08/31",
-    },
-    {
-      id: '8',
-      category: '媒合商活動',
-      title: "不要吵==我是第九張圖",
-      subTitle: "副標題或一些有的沒的共十五個字",
-      customizeUrl: "",
-      bannerType: 8,
-      background: 0,
-      storeLogo: "/activity/preview-headshot.png",
-      storeName: "B商店",
-      content: "asdasdqweqwqweasdasdasdasdasdzxczxcxzczsdasd",
-      hyperlink: "https://www.pmatch.com.tw/",
-      startTime: "2025/06/01",
-      endTime: "2025/08/31",
-    },
-    {
-      id: '9',
-      category: '媒合商活動',
-      title: "不要吵==我是自訂議圖",
-      subTitle: "副標題或一些有的沒的共十五個字",
-      customizeUrl: "/activity/preview-thumbnail.png",
-      bannerType: 9,
-      background: 1,
-      storeLogo: "/activity/preview-headshot.png",
-      storeName: "B商店",
-      content: "asdasdqweqwqweasdasdasdasdasdzxczxcxzczsdasd",
-      hyperlink: "https://www.pmatch.com.tw/",
-      startTime: "2025/06/01",
-      endTime: "2025/08/31",
-    }
   ]);
   
 
@@ -363,7 +263,7 @@
 
 
     return paginatedCategory.value.slice(start, end).map(item => {
-    const endDate = new Date(item.endTime.replaceAll('/', '-'));
+    const endDate = new Date(item.EndTime.replaceAll('/', '-'));
       return {
         ...item,
         isEnded: endDate < now
@@ -382,9 +282,146 @@
       isDropdownOpen.value = false
     }
   }
+  let token = userToken.value
 
+  // 取得GetPlatformAndCharacterList(遊戲平台資訊)
+  async function fetchGameList() {
+
+    if (token === '') {
+      token = await jwtStore.generateToken();
+    }
+
+    try {
+      const response = await $axios.post(
+        '/api/v1/Pmatch/GetPlatformAndCharacterList',
+        {},
+        {
+          headers: {
+            Authorization: token // 帶上 Token
+          }
+        }
+      );
+
+      const data = response.data?.Data ?? []
+      console.log('API 回傳筆數：', data.length)
+      console.table(data)
+
+    } catch (error) {
+      console.error('請求失敗:', error);
+      data.value = '無法取得資料。'; // 畫面顯示錯誤訊息
+    }
+  }
+
+
+
+  async function fetchAdvertisementList() {
+    try {
+      
+      // 若 cookie 裡沒有 token，則向 jwtStore 要求生成並補上
+      if (!token || token === '') {
+        token = await jwtStore.generateToken()
+      }
+
+      console.log('最終使用的 token：', token)
+
+      const response = await $axios.post(
+        // 'http://localhost:2310/api/v1/Pmatch/GetAdvertisementList',
+        'http://192.168.10.206:3310/api/v1/Pmatch/GetAdvertisementList',
+        {
+            "Category": [4, 5, 6] // 4: 熱門活動； 5：媒合商活動； 6：遊戲平台活動資訊；
+        },
+        {
+          headers: {
+            Authorization: token,
+            // 'Content-Type': 'application/json',
+            // 'Authorization': `Bearer ${token}`
+          }
+        }
+      )
+      const data = response.data?.Data ?? []
+      console.log('API 回傳筆數：', data.length)
+      console.table(data)
+
+
+      activityList.value = data.map(item => {
+        const { imageUrl, bannerType, background } = parseImgFile(item.ImgFile)
+
+
+        // ✅ 單獨顯示有 imageUrl 的圖片資訊
+        if (imageUrl) {
+          console.log('🖼️ 自訂圖片網址：', imageUrl)
+          console.log('對應活動標題：', item.Title)
+          console.log('原始 ImgFile：', item.ImgFile)
+        }
+
+        return {
+          ...item,
+          category: categoryMap[item.Category],
+          imageUrl,
+          bannerType,
+          background
+        }
+      })
+
+
+      console.table(data.map(i => ({
+        原始分類: i.Category,
+        轉換後: categoryMap[i.Category],
+      })))
+    } catch (error) {
+      console.error('請求失敗：', error);
+      data.value = '無法取得資料。';
+    }
+  }
+
+  // 解析 ImgFile
+  function parseImgFile(imgFile) {
+    const preset = {
+      imageUrl: '',
+      bannerType: 5,
+      background: 0
+    }
+
+    if (!imgFile || typeof imgFile !== 'string') return preset
+
+    // case 1: 主題編號_背景編號
+    const defaultImage = imgFile.match(/^pmatch(\d)_(\d)$/)
+    if (defaultImage) {
+      const x = parseInt(defaultImage[1], 10)
+      const y = parseInt(defaultImage[2], 10)
+      return {
+        imageUrl: '',
+        bannerType: x >= 1 && x <= 9 ? x : preset.bannerType,
+        background: y >= 0 && y <= 8 ? y : preset.background
+      }
+    }
+    // case 2: 圖片路徑_背景編號 (從最後的底線判斷)
+    const customImage = imgFile.lastIndexOf('_')
+    if (customImage  > -1) {
+      const url = imgFile.slice(0, customImage )
+      const bg = parseInt(imgFile.slice(customImage  + 1), 10)
+
+      if (!isNaN(bg)) {
+        return {
+          imageUrl: `${assetsUrl}${url}`,
+          bannerType: 0,
+          background: bg >= 0 && bg <= 8 ? bg : preset.background
+        }
+      }
+    }
+    return preset
+  }
+
+watchEffect(() => {
+  console.log('目前分類：', activityCategory.value)
+  console.log('篩選筆數：', paginatedCategory.value.length)
+  console.log('🧾 當前活動列表：', activityList.value.map(a => a.category))
+
+})
   onMounted(() => {
-    document.addEventListener('click', handleClickOutside)
+    fetchAdvertisementList()
+    fetchGameList()
+    document.addEventListener('click', handleClickOutside)    
   })
 
   onBeforeUnmount(() => {
