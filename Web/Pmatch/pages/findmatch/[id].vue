@@ -456,6 +456,7 @@ onMounted(async () => {
             console.log('📌 storesItem.DB:', storesItem.value?.DB);
             console.log('📌 storesItem.Teamid:', storesItem.value?.Teamid);
             console.log('📌 storesItem.ContractId:', storesItem.value?.ContractId);
+            console.log('🖼️ 完整圖片網址:', `${assetsUrl.value}${storesItem.value.IMGFiles}`);
         await getMemberDetail(token);
             console.log('✅ memberDetailList:', memberDetailList.value);
             console.log('📌 會員合約: ', memberDetailList.value?.[0]?.ContractStores);

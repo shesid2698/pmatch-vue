@@ -10,23 +10,23 @@
 
   <div class="mt-5rem max-w-1000px m-auto page font-events mb-[-6rem]">
       <!-- 成功獲取資料時 -->
-      <div v-for="(item, index) in activityList" :key="index">
+      <div v-if="activityItem">
 
         <!-- 活動主視覺|自訂議圖片 -->
         <img
-          v-if="item.bannerType === 9 && item.customizeUrl"
-          :src="item.customizeUrl"
+          v-if="activityItem.imageUrl"
+          :src="activityItem.imageUrl"
           alt="活動主視覺"
-          class="w-full block"
+          class="w-full block aspect-[25/7]"
         />
         <!-- 活動主視覺|預設圖片 -->
         <template v-else>
           <div class="relative">
-            <img :src="bannerTypeMap[item.bannerType]?.picture" alt="活動主視覺" class="w-full block" />
-            <div :class="bannerTypeMap[item.bannerType]?.position">
-              <div class="text-white text-shadow-md text-md">活動時間：{{ item.startTime }}~{{ item.endTime }}</div>
-              <div class="text-white text-shadow-md text-6xl mb-1 font-bold">{{ item.title }}</div>
-              <div class="text-white text-shadow-md text-4xl">{{ item.subTitle }}</div>
+            <img :src="bannerTypeMap[activityItem.bannerType]?.picture" alt="活動主視覺" class="w-full block" />
+            <div :class="bannerTypeMap[activityItem.bannerType]?.position">
+              <div class="text-white text-shadow-md text-md">活動時間：{{ activityItem.StartTime?.split?.('T')?.[0] ?? '未填寫' }} ~ {{ activityItem.EndTime?.split?.('T')?.[0] ?? '未填寫' }}</div>
+              <div class="text-white text-shadow-md text-6xl mb-1 font-bold">{{ activityItem.Title }}</div>
+              <div class="text-white text-shadow-md text-4xl">{{ activityItem.Summary }}</div>
             </div>
           </div>
         </template>
@@ -34,28 +34,28 @@
         <!-- 商店區塊 -->
         <div class="bg-gradient-to-r from-[#f2994a] to-[#f2c94c] text-white py-3 px-4">
           <NuxtLink
-            :href="item.hyperlink ? item.hyperlink : '#'"
+            :href="activityItem.Url ? activityItem.Url : '#'"
             class="inline-flex items-center gap-4 no-underline text-inherit hover:text-inherit focus:outline-none"
-            :class="item.hyperlink ? '' : 'cursor-default '"
-            :target="item.hyperlink ? '_blank' : ''"
+            :class="activityItem.Url ? '' : 'cursor-default '"
+            :target="activityItem.Url ? '_blank' : ''"
           >
-            <img :src="item.storeLogo" alt="商店圖示" class="w-16 h-16" />
+            <img v-if="activityItem.storeImage" :src="activityItem.storeImage" alt="商店圖示" class="w-16 h-16" />
             <div class="">
-              <div class="text-5xl mb-1">{{ item.storeName }}</div>
-              <div class="text-md">活動時間：{{ item.startTime }}~{{ item.endTime }}</div>
+              <div class="text-5xl mb-1">{{ activityItem.storeName }}</div>
+              <div class="text-md">活動時間：{{ activityItem.StartTime?.split?.('T')?.[0] ?? '未填寫' }} ~ {{ activityItem.EndTime?.split?.('T')?.[0] ?? '未填寫' }}</div>
             </div>
           </NuxtLink>
         </div>
 
         <!-- 活動內容 -->
-        <div class="p-4 min-h-xl" :class="backgroundMap[item.background]">
+        <div class="p-4 min-h-xl" :class="backgroundMap[activityItem.background]">
           <div class="text-[#3B5BC4] text-3xl px-2 mb-2">活動內容</div>
           <div class="text-[#3B5BC4] text-xl break-words leading-relaxed px-4">
-            {{ item.content }}
+            {{ activityItem.Content }}
           </div>
         </div>
         <div class="w-100% text-center mt-50px pointer-events-none">
-            <button class="backBtn" @click="goToActivity">回上層</button>
+            <button class="backBtn">回上層</button>
         </div>
       </div>
   </div>
@@ -65,84 +65,124 @@
   import { useRoute } from 'vue-router';
   const route = useRoute();
 
+  const activityList = ref([]);
+
+ // 解析圖片 url 字串
+  function parseImgFile(imgFile) {
+    const preset = {
+      imageUrl: '',
+      bannerType: 5,
+      background: 0
+    }
+    if (!imgFile || typeof imgFile !== 'string') return preset
+
+    // case 1: 主題編號_背景編號
+    const defaultImage = imgFile.match(/^pmatch(\d)_(\d)$/)
+    if (defaultImage) {
+      const x = parseInt(defaultImage[1], 10)
+      const y = parseInt(defaultImage[2], 10)
+      return {
+        imageUrl: '',
+        bannerType: x >= 1 && x <= 9 ? x : preset.bannerType,
+        background: y >= 0 && y <= 8 ? y : preset.background
+      }
+    }
+    // case 2: 圖片路徑_背景編號 (從最後的底線判斷)
+    const customImage = imgFile.lastIndexOf('_')
+    if (customImage  > -1) {
+      const url = imgFile.slice(0, customImage )
+      const bg = parseInt(imgFile.slice(customImage  + 1), 10)
+
+      if (!isNaN(bg)) {
+        return {
+          imageUrl: `${assetsUrl}${url}`,
+          bannerType: 0,
+          background: bg >= 0 && bg <= 8 ? bg : preset.background
+        }
+      }
+    }
+    return preset
+  }
+  
+  // 將 query string 還原成活動資料物件 
+  const query = route.query;
+
+  const activityItem = {
+    Title: decodeURIComponent(query.Title || '尚未設定活動名稱'),
+    Summary: decodeURIComponent(query.Summary || '尚未設定活動摘要'),
+    Category: decodeURIComponent(query.Category || '媒合商活動'),
+    Content: decodeURIComponent(query.Content || ''),
+    ImgFile: decodeURIComponent(query.ImgFile || ''), // 用來做 parseImgFile
+    storeImage: decodeURIComponent(query.StoreImage || '/images/iconUser.png'),
+    storeName: decodeURIComponent(query.StoreName || '尚未選擇商店'),
+    Url: decodeURIComponent(query.Url || ''),
+    StartTime: decodeURIComponent(query.StartTime || ''),
+    EndTime: decodeURIComponent(query.EndTime || '')
+  }
+
+  const { imageUrl, bannerType, background } = parseImgFile(activityItem.ImgFile)
+
+
+  activityItem.imageUrl = imageUrl
+  activityItem.bannerType = bannerType
+  activityItem.background = background
+
+  activityList.value = [
+    {
+      ...activityItem,
+    }
+  ]
+
+  // 主題樣式
   const bannerTypeMap = {
-    0: {
-      picture: '/activity/banner_0.png',
-      position: 'absolute top-5.2% right-4% flex flex-col items-end gap-2'
-    },
     1: {
       picture: '/activity/banner_1.png',
-      position: 'absolute bottom-9.25% left-3% flex flex-col items-start gap-2'
+      position: 'absolute top-5.5% right-4% flex flex-col items-end gap-2'
     },
     2: {
       picture: '/activity/banner_2.png',
-      position: 'absolute bottom-9.5% right-2.5% flex flex-col items-end gap-2'
+      position: 'absolute bottom-10% left-3% flex flex-col items-start gap-2'
     },
     3: {
       picture: '/activity/banner_3.png',
-      position: 'absolute bottom-4.2% right-3% flex flex-col items-end gap-2'
+      position: 'absolute bottom-9% right-2.5% flex flex-col items-end gap-2'
     },
     4: {
       picture: '/activity/banner_4.png',
-      position: 'absolute bottom-8.5% right-3% flex flex-col items-end gap-2'
+      position: 'absolute bottom-4% right-3% flex flex-col items-end gap-2'
     },
     5: {
       picture: '/activity/banner_5.png',
-      position: 'absolute bottom-7% left-3% flex flex-col items-start gap-2'
+      position: 'absolute bottom-8% right-3% flex flex-col items-end gap-2'
     },
     6: {
       picture: '/activity/banner_6.png',
-      position: 'absolute bottom-4.5% right-3% flex flex-col items-end gap-2'
+      position: 'absolute bottom-7% left-3% flex flex-col items-start gap-2'
     },
     7: {
       picture: '/activity/banner_7.png',
-      position: 'absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%] flex flex-col items-center gap-2 w-[90%] '
+      position: 'absolute bottom-4.5% right-3% flex flex-col items-end gap-2'
     },
     8: {
       picture: '/activity/banner_8.png',
       position: 'absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%] flex flex-col items-center gap-2 w-[90%] '
+    },
+    9: {
+      picture: '/activity/banner_9.png',
+      position: 'absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%] flex flex-col items-center gap-2 w-[90%] '
     }
   };
   const backgroundMap = {
-    0: 'bg-gradient-to-b from-[#FEFEFE] to-[#e6ecfc]',
-    1: 'bg-gradient-to-b from-[#FFFBF0] to-[#FFF0C7]',
-    2: 'bg-[#FAFAFA]',
-    3: 'bg-gradient-to-b from-[#E3FFFA] to-[#B1FFF1]',
-    4: 'bg-gradient-to-b from-[#FFF0F6] to-[#FFD6E5]',
-    5: 'bg-gradient-to-b from-[#FFEEE6] to-[#FFD2BF]',
-    6: 'bg-gradient-to-b from-[#FDFFEB] to-[#F5FF9F]',
-    7: 'bg-gradient-to-b from-[#FAF0FF] to-[#D8BFE6]'
+    0: 'shadow-[inset_0_-4px_6px_rgba(0,0,0,0.07)] bg-white',
+    1: 'shadow-[inset_0_-4px_6px_rgba(59,91,196,0.08)] bg-gradient-to-b from-[#FEFEFE] to-[#e6ecfc]',
+    2: 'shadow-[inset_0_-4px_6px_rgba(255,197,0,0.15)] bg-gradient-to-b from-[#FFFBF0] to-[#FFF0C7]',
+    3: 'shadow-[inset_0_-4px_6px_rgba(0,0,0,0.06)] bg-[#FAFAFA]',
+    4: 'shadow-[inset_0_-4px_6px_rgba(0,180,150,0.12)] bg-gradient-to-b from-[#E3FFFA] to-[#B1FFF1]',
+    5: 'shadow-[inset_0_-4px_6px_rgba(255,105,135,0.12)] bg-gradient-to-b from-[#FFF0F6] to-[#FFD6E5]',
+    6: 'shadow-[inset_0_-4px_6px_rgba(255,120,80,0.12)] bg-gradient-to-b from-[#FFEEE6] to-[#FFD2BF]',
+    7: 'shadow-[inset_0_-4px_6px_rgba(180,180,0,0.1)] bg-gradient-to-b from-[#FDFFEB] to-[#F5FF9F]',
+    8: 'shadow-[inset_0_-4px_6px_rgba(160,120,200,0.2)] bg-gradient-to-b from-[#FAF0FF] to-[#D8BFE6]'
   };
-
-  const activityList = ref([]);
-
-  // 將 query string 還原成活動資料物件 
-  const query = route.query;
-
-  // 修正非法值
-  function safeNumber(input, min, max, fallback) {
-    const num = Number(input);
-    if (Number.isNaN(num) || num < min || num > max) return fallback;
-    return num;
-  }
-
-  const activityItem = {
-    title: decodeURIComponent(query.title || '尚未設定活動名稱'),
-    subTitle: decodeURIComponent(query.subTitle || '尚未設定活動摘要'),
-    category: decodeURIComponent(query.category || '媒合商活動'),
-    content: decodeURIComponent(query.content || ''),
-    customizeUrl: decodeURIComponent(query.customizeUrl || ''),
-    bannerType: safeNumber(query.bannerType, 0, 9, 4),
-    background: safeNumber(query.background, 0, 7, 1),
-    storeLogo: decodeURIComponent(query.storeLogo || '/images/iconUser.png'),
-    storeName: decodeURIComponent(query.storeName || '尚未選擇商店'),
-    hyperlink: decodeURIComponent(query.hyperlink || ''),
-    startTime: decodeURIComponent(query.startTime || ''),
-    endTime: decodeURIComponent(query.endTime || '')
-  };
-
-  activityList.value = [activityItem];
-
 </script>
 
 <style scoped>

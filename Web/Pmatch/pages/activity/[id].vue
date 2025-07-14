@@ -18,40 +18,46 @@
   <div class="mt-5rem max-w-1000px m-auto page font-events">
       <!-- 成功獲取資料時 -->
       <div v-if="activityItem">
-
         <!-- 活動主視覺|自訂議圖片 -->
         <img
-          v-if="activityItem.bannerType === 9 && activityItem.customizeUrl"
-          :src="activityItem.customizeUrl"
-          alt="活動主視覺"
-          class="w-full block"
+          v-if="activityItem.imageUrl"
+          :src="activityItem.imageUrl"
+          alt="自訂主視覺"
+          class="w-full block  aspect-[25/7]"
         />
         <!-- 活動主視覺|預設圖片 -->
         <template v-else>
           <div class="relative">
             <img :src="bannerTypeMap[activityItem.bannerType]?.picture" alt="活動主視覺" class="w-full block" />
             <div :class="bannerTypeMap[activityItem.bannerType]?.position">
-              <div class="text-white text-shadow-md text-md">活動時間：{{ activityItem.startTime }}~{{ activityItem.endTime }}</div>
-              <div class="text-white text-shadow-md text-6xl mb-1 font-bold">{{ activityItem.title }}</div>
-              <div class="text-white text-shadow-md text-4xl">{{ activityItem.subTitle }}</div>
+              <div class="text-white text-shadow-md text-md">活動時間：{{ activityItem.StartTime?.split?.('T')?.[0] ?? '未填寫' }} ~ {{ activityItem.EndTime?.split?.('T')?.[0] ?? '未填寫' }}</div>
+              <div class="text-white text-shadow-md text-6xl mb-1 font-bold">{{ activityItem.Title }}</div>
+              <div class="text-white text-shadow-md text-4xl">{{ activityItem.Summary }}</div>
             </div>
           </div>
         </template>
 
         <!-- 商店區塊 -->
         <div class="flex items-center gap-4 bg-gradient-to-r from-[#f2994a] to-[#f2c94c] text-white py-3 px-4">
-          <img :src="activityItem.storeLogo" alt="商店圖示" class="w-16 h-16" />
-          <div>
-            <div class="text-5xl mb-1">{{ activityItem.storeName }}</div>
-            <div class="text-md">活動時間：{{ activityItem.startTime }}~{{ activityItem.endTime }}</div>
-          </div>
+          <NuxtLink
+            :href="activityItem.Url ? activityItem.Url : '#'"
+            class="inline-flex items-center gap-4 no-underline text-inherit hover:text-inherit focus:outline-none"
+            :class="activityItem.Url ? '' : 'cursor-default '"
+            :target="activityItem.Url ? '_blank' : ''"
+          >
+            <img v-if="activityItem.storeImage" :src="activityItem.storeImage" alt="商店圖示" class="w-16 h-16" />
+            <div>
+              <div class="text-5xl mb-1">{{ activityItem.storeName }}</div>
+              <div class="text-md">活動時間：{{ activityItem.StartTime?.split?.('T')?.[0] ?? '未填寫' }}~{{ activityItem.EndTime?.split?.('T')?.[0] ?? '未填寫' }}</div>
+            </div>
+          </NuxtLink>
         </div>
 
         <!-- 活動內容 -->
         <div class="p-4 min-h-xl" :class="backgroundMap[activityItem.background]">
           <div class="text-[#3B5BC4] text-3xl px-2 mb-2">活動內容</div>
           <div class="text-[#3B5BC4] text-xl break-words leading-relaxed px-4">
-            {{ activityItem.content }}
+            {{ activityItem.Content }}
           </div>
         </div>
 
@@ -69,43 +75,205 @@
 <script setup>
   import { useRoute } from 'vue-router';  
   const route = useRoute();
-  const currentId = route.params.id;
 
+  const { $axios } = useNuxtApp();
+  const userToken = useCookie('_PmToken')
+  const assetsUrl = useCookie('_PmAssetsUrl').value || ''
+  const jwtStore = useJwtStore()  
+
+
+  // 取得遊戲平台資訊
+  const platformList = ref([])
+  let token = userToken.value
+
+  async function fetchGameList() {
+    if (token === '') {
+      token = await jwtStore.generateToken();
+    }
+    try {
+      const response = await $axios.post(
+        '/api/v1/Pmatch/GetPlatformAndCharacterList',
+        {},
+        {
+          headers: {
+            Authorization: token
+          }
+        }
+      );
+      const data = response.data?.Data ?? []
+
+      platformList.value = data
+
+    } catch (error) {
+      console.error('請求失敗:', error);
+      data.value = '無法取得資料。';
+    }
+  }
+
+  // 取得媒合商圖片
+  const storeDetailMap = ref({})
+  async function fetchStoreDetail(storeId) {
+    try {
+      const token = userToken.value || await jwtStore.generateToken()
+      const res = await $axios.post(
+        '/api/v1/Pmatch/GetStoreDetail',
+        {
+          IsFront: true,
+          StoreId: storeId,
+        },
+        {
+          headers: {
+            Authorization: token
+          }
+        }
+      )
+
+      const detail = res.data?.Data
+      if (detail && detail.Id) {
+        storeDetailMap.value[detail.Id] = detail
+      }
+    } catch (error) {
+      console.error('GetStoreDetail 請求失敗：', error)
+    }
+  }
+
+
+  // 配對平台ID
+  function getCharacterById(id) {
+    for (const platform of platformList.value) {
+      const match = platform.Characters.find(c => c.Id === id)
+      if (match) return match.Name
+    }
+    return '' // 找不到商店回傳空字串
+  }
+
+  // 取得活動資料
+  const activityList = ref([]);
+
+  async function fetchAdvertisementList() {
+    try {      
+      if (!token || token === '') {
+        token = await jwtStore.generateToken()
+      }
+
+      const response = await $axios.post(
+        // 'api/v1/Pmatch/GetAdvertisementList',
+        'http://192.168.10.206:3310/api/v1/Pmatch/GetAdvertisementList',
+        {
+            "Category": [4, 5, 6] // 4: 熱門活動； 5：媒合商活動； 6：遊戲平台活動資訊；
+        },
+        {
+          headers: {
+            Authorization: token,
+          }
+        }
+      )
+      const data = response.data?.Data ?? []
+
+      const uniqueStoreIds = [...new Set(data.map(i => i.StoreId))]
+
+      await Promise.all(uniqueStoreIds.filter(id => !!id).map(id => fetchStoreDetail(id)))  // 排除 null、undefined、0
+
+      activityList.value = data.map(item => {
+        const { imageUrl, bannerType, background } = parseImgFile(item.ImgFile)
+
+        const storeDetail = storeDetailMap.value[item.StoreId] || {}
+        const storeImage = storeDetail.IMGFiles && `${assetsUrl}${storeDetail.IMGFiles}`
+
+        return {
+          ...item,
+          imageUrl,
+          bannerType,
+          background,
+          storeImage,
+          storeName: getCharacterById(item.StoreId)
+        }
+      })
+    } catch (error) {
+      console.error('請求失敗：', error);
+      data.value = '無法取得資料。';
+    }
+  }
+
+  // 根據 id 找到對應的活動
+  const currentId = route.params.id;
+  const activityItem = computed(() =>
+    activityList.value.find((item) => String(item.Id) === String(currentId))
+  )
+
+  // 解析圖片 url 字串
+  function parseImgFile(imgFile) {
+    const preset = {
+      imageUrl: '',
+      bannerType: 5,
+      background: 0
+    }
+    if (!imgFile || typeof imgFile !== 'string') return preset
+
+    // case 1: 主題編號_背景編號
+    const defaultImage = imgFile.match(/^pmatch(\d)_(\d)$/)
+    if (defaultImage) {
+      const x = parseInt(defaultImage[1], 10)
+      const y = parseInt(defaultImage[2], 10)
+      return {
+        imageUrl: '',
+        bannerType: x >= 1 && x <= 9 ? x : preset.bannerType,
+        background: y >= 0 && y <= 8 ? y : preset.background
+      }
+    }
+    // case 2: 圖片路徑_背景編號 (從最後的底線判斷)
+    const customImage = imgFile.lastIndexOf('_')
+    if (customImage  > -1) {
+      const url = imgFile.slice(0, customImage )
+      const bg = parseInt(imgFile.slice(customImage  + 1), 10)
+
+      if (!isNaN(bg)) {
+        return {
+          imageUrl: `${assetsUrl}${url}`,
+          bannerType: 0,
+          background: bg >= 0 && bg <= 8 ? bg : preset.background
+        }
+      }
+    }
+    return preset
+  }
+
+  // 主題樣式
   const bannerTypeMap = {
-    0: {
-      picture: '/activity/banner_0.png',
-      position: 'absolute top-5.2% right-4% flex flex-col items-end gap-2'
-    },
     1: {
       picture: '/activity/banner_1.png',
-      position: 'absolute bottom-9.25% left-3% flex flex-col items-start gap-2'
+      position: 'absolute top-5.5% right-4% flex flex-col items-end gap-2'
     },
     2: {
       picture: '/activity/banner_2.png',
-      position: 'absolute bottom-9.5% right-2.5% flex flex-col items-end gap-2'
+      position: 'absolute bottom-10% left-3% flex flex-col items-start gap-2'
     },
     3: {
       picture: '/activity/banner_3.png',
-      position: 'absolute bottom-4.2% right-3% flex flex-col items-end gap-2'
+      position: 'absolute bottom-9% right-2.5% flex flex-col items-end gap-2'
     },
     4: {
       picture: '/activity/banner_4.png',
-      position: 'absolute bottom-8.5% right-3% flex flex-col items-end gap-2'
+      position: 'absolute bottom-4% right-3% flex flex-col items-end gap-2'
     },
     5: {
       picture: '/activity/banner_5.png',
-      position: 'absolute bottom-7% left-3% flex flex-col items-start gap-2'
+      position: 'absolute bottom-8% right-3% flex flex-col items-end gap-2'
     },
     6: {
       picture: '/activity/banner_6.png',
-      position: 'absolute bottom-4.5% right-3% flex flex-col items-end gap-2'
+      position: 'absolute bottom-7% left-3% flex flex-col items-start gap-2'
     },
     7: {
       picture: '/activity/banner_7.png',
-      position: 'absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%] flex flex-col items-center gap-2 w-[90%] '
+      position: 'absolute bottom-4.5% right-3% flex flex-col items-end gap-2'
     },
     8: {
       picture: '/activity/banner_8.png',
+      position: 'absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%] flex flex-col items-center gap-2 w-[90%] '
+    },
+    9: {
+      picture: '/activity/banner_9.png',
       position: 'absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%] flex flex-col items-center gap-2 w-[90%] '
     }
   };
@@ -120,169 +288,16 @@
     7: 'shadow-[inset_0_-4px_6px_rgba(180,180,0,0.1)] bg-gradient-to-b from-[#FDFFEB] to-[#F5FF9F]',
     8: 'shadow-[inset_0_-4px_6px_rgba(160,120,200,0.2)] bg-gradient-to-b from-[#FAF0FF] to-[#D8BFE6]'
   };
-  const activityList = ref([
-    {
-      id: '0',
-      category: '媒合商活動',
-      title: "不要吵==我是第一張圖",
-      subTitle: "副標題或一些有的沒的共十五個字",
-      customizeUrl: "",
-      bannerType: 0,
-      background: 0,
-      storeLogo: "/activity/preview-headshot.png",
-      storeName: "B商店",
-      content: "asdasdqweqwqweasdasdasdasdasdzxczxcxzczsdasd",
-      hyperlink: "https://www.pmatch.com.tw/",
-      startTime: "2025/06/01",
-      endTime: "2025/08/31",
-    },
-    {
-      id: '1',
-      category: '媒合商活動',
-      title: "不要吵==我是第二張圖",
-      subTitle: "副標題或一些有的沒的共十五個字",
-      customizeUrl: "",
-      bannerType: 1,
-      background: 1,
-      storeLogo: "/activity/preview-headshot.png",
-      storeName: "B商店",
-      content: "asdasdqweqwqweasdasdasdasdasdzxczxcxzczsdasd",
-      hyperlink: "https://www.pmatch.com.tw/",
-      startTime: "2025/06/01",
-      endTime: "2025/08/31",
-    },
-    {
-      id: '2',
-      category: '媒合商活動',
-      title: "不要吵==我是第三張圖",
-      subTitle: "副標題或一些有的沒的共十五個字",
-      customizeUrl: "",
-      bannerType: 2,
-      background: 2,
-      storeLogo: "/activity/preview-headshot.png",
-      storeName: "B商店",
-      content: "asdasdqweqwqweasdasdasdasdasdzxczxcxzczsdasd",
-      hyperlink: "https://www.pmatch.com.tw/",
-      startTime: "2025/06/01",
-      endTime: "2025/08/31",
-    },
-    {
-      id: '3',
-      category: '媒合商活動',
-      title: "不要吵==我是第四張圖",
-      subTitle: "副標題或一些有的沒的共十五個字",
-      customizeUrl: "",
-      bannerType: 3,
-      background: 3,
-      storeLogo: "/activity/preview-headshot.png",
-      storeName: "B商店",
-      content: "asdasdqweqwqweasdasdasdasdasdzxczxcxzczsdasd",
-      hyperlink: "https://www.pmatch.com.tw/",
-      startTime: "2025/06/01",
-      endTime: "2025/08/31",
-    },
-    {
-      id: '4',
-      category: '媒合商活動',
-      title: "不要吵==我是第五張圖",
-      subTitle: "副標題或一些有的沒的共十五個字",
-      customizeUrl: "",
-      bannerType: 4,
-      background: 4,
-      storeLogo: "/activity/preview-headshot.png",
-      storeName: "B商店",
-      content: "asdasdqweqwqweasdasdasdasdasdzxczxcxzczsdasd",
-      hyperlink: "https://www.pmatch.com.tw/",
-      startTime: "2025/06/01",
-      endTime: "2025/06/31",
-    },
-    {
-      id: '5',
-      category: '媒合商活動',
-      title: "不要吵==我是第六張圖",
-      subTitle: "副標題或一些有的沒的共十五個字",
-      customizeUrl: "",
-      bannerType: 5,
-      background: 5,
-      storeLogo: "/activity/preview-headshot.png",
-      storeName: "B商店",
-      content: "asdasdqweqwqweasdasdasdasdasdzxczxcxzczsdasd",
-      hyperlink: "https://www.pmatch.com.tw/",
-      startTime: "2025/06/01",
-      endTime: "2025/08/31",
-    },
-    {
-      id: '6',
-      category: '媒合商活動',
-      title: "不要吵==我是第七張圖",
-      subTitle: "副標題或一些有的沒的共十五個字",
-      customizeUrl: "",
-      bannerType: 6,
-      background: 6,
-      storeLogo: "/activity/preview-headshot.png",
-      storeName: "B商店",
-      content: "asdasdqweqwqweasdasdasdasdasdzxczxcxzczsdasd",
-      hyperlink: "https://www.pmatch.com.tw/",
-      startTime: "2025/06/01",
-      endTime: "2025/08/31",
-    },
-    {
-      id: '7',
-      category: '媒合商活動',
-      title: "不要吵==我是第八張圖",
-      subTitle: "副標題或一些有的沒的共十五個字",
-      customizeUrl: "",
-      bannerType: 7,
-      background: 7,
-      storeLogo: "/activity/preview-headshot.png",
-      storeName: "B商店",
-      content: "asdasdqweqwqweasdasdasdasdasdzxczxcxzczsdasd",
-      hyperlink: "https://www.pmatch.com.tw/",
-      startTime: "2025/06/01",
-      endTime: "2025/08/31",
-    },
-    {
-      id: '8',
-      category: '媒合商活動',
-      title: "不要吵==我是第九張圖",
-      subTitle: "副標題或一些有的沒的共十五個字",
-      customizeUrl: "",
-      bannerType: 8,
-      background: 8,
-      storeLogo: "/activity/preview-headshot.png",
-      storeName: "B商店",
-      content: "asdasdqweqwqweasdasdasdasdasdzxczxcxzczsdasd",
-      hyperlink: "https://www.pmatch.com.tw/",
-      startTime: "2025/06/01",
-      endTime: "2025/08/31",
-    },
-    {
-      id: '9',
-      category: '媒合商活動',
-      title: "不要吵==我是自訂議圖",
-      subTitle: "副標題或一些有的沒的共十五個字",
-      customizeUrl: "/activity/preview-thumbnail.png",
-      bannerType: 9,
-      background: 0,
-      storeLogo: "/activity/preview-headshot.png",
-      storeName: "B商店",
-      content: "asdasdqweqwqweasdasdasdasdasdzxczxcxzczsdasd",
-      hyperlink: "https://www.pmatch.com.tw/",
-      startTime: "2025/06/01",
-      endTime: "2025/08/31",
-    }
-  ]);
 
-
-  // 根據 id 找到對應的活動
-  const activityItem = computed(() =>
-    activityList.value.find((item) => item.id === currentId)
-  );
-
-  // 跳轉到 /activity
+  // 跳轉回列表頁
   const goToActivity = () => {
       window.location.href = '/activity';
   };
+
+  onMounted(async () => {
+    await fetchGameList()
+    await fetchAdvertisementList()
+  })
 </script>
 
 <style scoped>

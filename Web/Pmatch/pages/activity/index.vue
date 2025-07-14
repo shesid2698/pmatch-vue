@@ -20,36 +20,24 @@
         <!-- 分類選單 -->
         <div class="navGradient rounded-lg px-7 py-1.5">
           <div class="flex justify-start gap-2.5">
-            <!-- <template v-for="(type, index) in ['熱門活動', '媒合商活動', '遊戲平台活動資訊']" :key="type">
-              <button
-                @click="activityCategory = type; currentPage = 1"      
-                :class="[
-                  'border-none px-4 py-1 rounded transition-all hover:text-16.5px hover:bg-[#FF8800] hover:text-[#353535] hover:cursor-pointer',
-                  activityCategory === type ? 'bg-[#FFF0C7] text-[#8E856F] text-16.5px' : 'bg-transparent text-[#7E7E7E] text-15px',
-                  btnWidthMap[type]
-                ]"
-              >
-                {{ type }}
-              </button>
-              <div v-if="index !== 2" class="w-px h-7 bg-white my-0.5"></div>
-            </template>          -->
+            <!-- 分類選單按鈕 -->
             <template v-for="(type, index) in [4, 5, 6]" :key="type">
               <button
-                @click="activityCategory = type; currentPage = 1"
+                @click="activityCategory = type; currentPage = 1; selectedPlatform = ''"
                 :class="[
                   'border-none px-4 py-1 rounded transition-all hover:text-16.5px hover:bg-[#FF8800] hover:text-[#353535] hover:cursor-pointer',
                   activityCategory === type ? 'bg-[#FFF0C7] text-[#8E856F] text-16.5px' : 'bg-transparent text-[#7E7E7E] text-15px',
                   btnWidthMap[type]
                 ]"
               >
-                {{ categoryMap[type] }}  <!-- 顯示中文 -->
+                {{ categoryMap[type] }}
               </button>
               <div v-if="index !== 2" class="w-px h-7 bg-white my-0.5"></div>
             </template>
           </div>
         </div>
-        <!-- 下拉選單 -->
-        <div ref="dropdownRef" class="relative inline-block w-48 my-2">
+        <!-- 下拉選單(媒合商活動) -->
+        <div   v-if="activityCategory === 5" ref="dropdownRef" class="relative inline-block w-48 my-2">
           <!-- 主按鈕 -->
           <div
             class="flex justify-between items-center border rounded-xl px-4 py-2 text-sm cursor-pointer transition-all border-solid border-[#FFBB00]"
@@ -85,6 +73,10 @@
             </div>
           </div>
         </div>
+        
+        <template v-else>
+          <div class="w-48 h-[38px] my-2"></div>
+        </template>
 
         <!-- 活動卡片區塊 -->
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
@@ -102,10 +94,10 @@
             <!-- 主圖|自訂議 -->
             <div class="relative">
               <img
-                v-if="parseImgFile(item.ImgFile).bannerType && parseImgFile(item.ImgFile).imageUrl"
-                :src="parseImgFile(item.ImgFile).imageUrl"
+                v-if="item.imageUrl"
+                :src="item.imageUrl"
                 alt="自訂主視覺"
-                class="w-full block"
+                class="w-full block aspect-[25/7]"
               />
               <!-- 主圖|預設 -->
               <template v-else>
@@ -120,9 +112,9 @@
             <div class="bg-gradient-to-r from-[#f2994a] to-[#f2c94c] text-white py-1"></div>
             <!-- 說明 -->
             <div class="font-bold px-3 leading-none">
-              <!-- <p class="text-gray-400 text-11.5px my-1.5">活動媒合商：{{ item.storeName }}</p> -->
+              <p class="text-gray-400 text-11.5px my-1.5" v-if="item.Category === 5" >活動媒合商：{{ item.StoreName }}</p>
               <p class=" text-gray-700 text-14.5px my-1.5">活動名稱：{{ item.Title }}</p>
-              <p class="text-gray-400 text-13px my-2">活動時間：{{ item.StartTime?.split?.('T')?.[0] ?? '未提供' }} ~ {{ item.EndTime?.split?.('T')?.[0] ?? '未提供' }}</p>
+              <p class="text-gray-400 text-13px my-2">活動時間：{{ item.StartTime?.split?.('T')?.[0] ?? '未填寫' }} ~ {{ item.EndTime?.split?.('T')?.[0] ?? '未填寫' }}</p>
             </div>
           </NuxtLink>
         </div>        
@@ -131,40 +123,73 @@
     <!-- 分頁按鈕 -->
     <div class="flex justify-center mt-[2rem]">
       <el-pagination layout="prev, pager, next" :current-page="currentPage" :page-size="itemsPerPage"
-        :total="activityList.length" @current-change="changePage" />
+        :total="filteredActivities.length" @current-change="changePage"/>
     </div>
   </div>        
 </template>
 
 <script setup>
-  const jwtStore = useJwtStore()
-  const userToken = useCookie('_PmToken')
   const { $axios } = useNuxtApp();
-  const assetsUrl = useCookie('_PmAssetsUrl').value;
+  const userToken = useCookie('_PmToken')
+  const jwtStore = useJwtStore()
 
+  // 活動類型
+  const activityCategory = ref(4) // 熱門活動
+  const paginatedCategory = computed(() => {
+    return activityList.value.filter(item => item.Category === activityCategory.value)
+  })
 
   // 下拉式選單
-  const selectedPlatform = ref('')
   const isDropdownOpen = ref(false)
   const dropdownRef = ref(null)
-  const platformOptions = [
-    { label: '全部平台', value: '' },
-    { label: '滿漢大亨', value: '滿漢大亨' },
-    { label: '包你發娛樂城', value: '包你發娛樂城' },
-    { label: '錢街Online', value: '錢街Online' },
-  ]
+  
+  const platformList = ref([])
+  const platformOptions = computed(() => {
+    return [
+      { label: '全部平台', value: '' },
+      ...platformList.value.map(p => ({
+        label: p.PlatformName,
+        value: p.PlatformId
+      }))
+    ]
+  })
+  
+  const selectedPlatform = ref('')
   const selectedPlatformLabel = computed(() => {
-    const found = platformOptions.find(opt => opt.value === selectedPlatform.value)
+    const found = platformOptions.value.find(opt => opt.value === selectedPlatform.value)
     return found?.label || '全部平台'
   })
+
+  // 根據媒合商 ID 篩選平台
+  const filteredActivities = computed(() => {
+    return paginatedCategory.value.filter(item => {
+      if (!selectedPlatform.value) return true
+
+      // 只有「媒合商活動」(Category 5)，才會篩選平台
+      if (activityCategory.value === 5) {
+        const selected = platformList.value.find(p => p.PlatformId === selectedPlatform.value)
+        const characterIds = selected?.Characters.map(c => c.Id) || []
+        return characterIds.includes(item.StoreId)
+      }
+
+      return true
+    })
+  })
+
   function toggleDropdown() {
     isDropdownOpen.value = !isDropdownOpen.value
   }
   function selectPlatform(option) {
     selectedPlatform.value = option.value
+    currentPage.value = 1
     isDropdownOpen.value = false
   }
-
+  // 點擊外部關閉選單
+  function handleClickOutside(event) {
+    if (dropdownRef.value && !dropdownRef.value.contains(event.target)) {
+      isDropdownOpen.value = false
+    }
+  } 
   // 分類對應
    const categoryMap = {
     4: '熱門活動',
@@ -177,14 +202,146 @@
     5: 'sm:min-w-[115px]',
     6: 'sm:min-w-[162px]',
   }
-  // 活動類型
-  const activityCategory = ref(4) // 熱門活動
 
- 
-  const paginatedCategory = computed(() => {
-    return activityList.value.filter(item => item.Category === activityCategory.value)
+   // 分頁計算
+  const currentPage = ref(1);
+  const itemsPerPage = 9;
+
+  const paginatedActivities = computed(() => {
+    const start = (currentPage.value - 1) * itemsPerPage
+    const end = start + itemsPerPage
+
+    const now = new Date()
+    return filteredActivities.value.slice(start, end).map(item => {
+      const endDate = new Date(item.EndTime.replaceAll('/', '-'))
+      return {
+        ...item,
+        isEnded: endDate < now
+      }
+    })
   })
 
+  // 切換頁面
+  function changePage(page) {
+    currentPage.value = page
+  };
+
+  // 取得遊戲平台資訊
+  let token = userToken.value
+
+  async function fetchGameList() {
+    if (token === '') {
+      token = await jwtStore.generateToken();
+    }
+    try {
+      const response = await $axios.post(
+        '/api/v1/Pmatch/GetPlatformAndCharacterList',
+        {},
+        {
+          headers: {
+            Authorization: token // 帶上 Token
+          }
+        }
+      );
+      const data = response.data?.Data ?? []
+
+      platformList.value = data
+
+    } catch (error) {
+      console.error('請求失敗:', error);
+      data.value = '無法取得資料。';
+    }
+  }
+
+  // 配對平台ID
+  function getCharacterById(id) {
+    for (const platform of platformList.value) {
+      const match = platform.Characters.find(c => c.Id === id)
+      if (match) return match.Name
+    }
+    return '' // 找不到商店回傳空字串
+  }
+
+  // 取得活動資料
+  const activityList = ref([]);
+
+  async function fetchAdvertisementList() {
+    try {      
+      if (!token || token === '') {
+        token = await jwtStore.generateToken()
+      }
+      const response = await $axios.post(
+        // '/api/v1/Pmatch/GetAdvertisementList',
+        'http://192.168.10.206:3310/api/v1/Pmatch/GetAdvertisementList',
+        {
+            "Category": [4, 5, 6] // 4: 熱門活動； 5：媒合商活動； 6：遊戲平台活動資訊；
+        },
+        {
+          headers: {
+            Authorization: token,
+          }
+        }
+      )
+      const data = response.data?.Data ?? []
+
+      activityList.value = data.map(item => {
+        const { imageUrl, bannerType, background } = parseImgFile(item.ImgFile)
+
+        return {
+          ...item,
+          category: categoryMap[item.Category],
+          imageUrl,
+          bannerType,
+          background,
+          StoreName: getCharacterById(item.StoreId)
+        }
+      })
+      
+    } catch (error) {
+      console.error('請求失敗：', error);
+      data.value = '無法取得資料。';
+    }
+  }
+
+  // 解析圖片 url 字串
+  function parseImgFile(imgFile) {
+    const preset = {
+      imageUrl: '',
+      bannerType: 5,
+      background: 0
+    }
+    if (!imgFile || typeof imgFile !== 'string') return preset
+    const assetsUrl = useCookie('_PmAssetsUrl').value || ''
+
+    // case 1: 主題編號_背景編號
+    const defaultImage = imgFile.match(/^pmatch(\d)_(\d)$/)
+    if (defaultImage) {
+      const x = parseInt(defaultImage[1], 10)
+      const y = parseInt(defaultImage[2], 10)
+      return {
+        imageUrl: '',
+        bannerType: x >= 1 && x <= 9 ? x : preset.bannerType,
+        background: y >= 0 && y <= 8 ? y : preset.background
+      }
+    }
+    // case 2: 圖片路徑_背景編號 (從最後的底線判斷)
+    const customImage = imgFile.lastIndexOf('_')
+    if (customImage  > -1) {
+      const url = imgFile.slice(0, customImage )
+      const bg = parseInt(imgFile.slice(customImage  + 1), 10)
+
+      if (!isNaN(bg)) {
+        return {
+          imageUrl: `${assetsUrl}${url}`,
+          bannerType: 0,
+          background: bg >= 0 && bg <= 8 ? bg : preset.background
+        }
+      }
+    }
+    return preset
+  }
+
+  // 主題樣式
   const bannerTypeMap = {
     1: {
       picture: '/activity/banner_1.png',
@@ -224,206 +381,11 @@
     }
   };
 
-    const activityList = ref([
-    {
-      Id: 0,
-      Category: 5,
-      Title: "不要吵==我是第一張圖",
-      Summary: "副標題或一些有的沒的共十五個字",
-      Url: "https://www.pmatch.com.tw/",
-      ImgFile: "preview-headshot",
-      StoreId: 0,
-      StoreName: "B商店",
-      Content: "asdasdqweqwqweasdasdasdasdasdzxczxcxzczsdasd",
-      StartTime: "2025-06-01T00:00:00",
-      EndTime: "2025-08-31T00:00:00",
-      CreateTime: "2025-06-01T00:00:00",
-      ModifyTime: "2025-06-01T00:00:00",
-      CreateUser: "",
-      ModifyUser: "",
-      Hits: 0,
-      IsDeleted: false,
-      IsHot: false,
-      IsTop: false,
-      IsOpenWindow: false,
-      SortingId: 0,
-    },
-  ]);
-  
-
-  // 分頁計算
-  const currentPage = ref(1);
-  const itemsPerPage = 9;
-
-  const paginatedActivities = computed(() => {
-    const start = (currentPage.value - 1) * itemsPerPage
-    const end = start + itemsPerPage
-
-    const now = new Date();
-
-
-    return paginatedCategory.value.slice(start, end).map(item => {
-    const endDate = new Date(item.EndTime.replaceAll('/', '-'));
-      return {
-        ...item,
-        isEnded: endDate < now
-      };
-    });
-  });
-
-  // 切換頁面
-  function changePage(page) {
-    currentPage.value = page
-  };
-
-  // 點擊外部關閉選單
-  function handleClickOutside(event) {
-    if (dropdownRef.value && !dropdownRef.value.contains(event.target)) {
-      isDropdownOpen.value = false
-    }
-  }
-  let token = userToken.value
-
-  // 取得GetPlatformAndCharacterList(遊戲平台資訊)
-  async function fetchGameList() {
-
-    if (token === '') {
-      token = await jwtStore.generateToken();
-    }
-
-    try {
-      const response = await $axios.post(
-        '/api/v1/Pmatch/GetPlatformAndCharacterList',
-        {},
-        {
-          headers: {
-            Authorization: token // 帶上 Token
-          }
-        }
-      );
-
-      const data = response.data?.Data ?? []
-      console.log('API 回傳筆數：', data.length)
-      console.table(data)
-
-    } catch (error) {
-      console.error('請求失敗:', error);
-      data.value = '無法取得資料。'; // 畫面顯示錯誤訊息
-    }
-  }
-
-
-
-  async function fetchAdvertisementList() {
-    try {
-      
-      // 若 cookie 裡沒有 token，則向 jwtStore 要求生成並補上
-      if (!token || token === '') {
-        token = await jwtStore.generateToken()
-      }
-
-      console.log('最終使用的 token：', token)
-
-      const response = await $axios.post(
-        // 'http://localhost:2310/api/v1/Pmatch/GetAdvertisementList',
-        'http://192.168.10.206:3310/api/v1/Pmatch/GetAdvertisementList',
-        {
-            "Category": [4, 5, 6] // 4: 熱門活動； 5：媒合商活動； 6：遊戲平台活動資訊；
-        },
-        {
-          headers: {
-            Authorization: token,
-            // 'Content-Type': 'application/json',
-            // 'Authorization': `Bearer ${token}`
-          }
-        }
-      )
-      const data = response.data?.Data ?? []
-      console.log('API 回傳筆數：', data.length)
-      console.table(data)
-
-
-      activityList.value = data.map(item => {
-        const { imageUrl, bannerType, background } = parseImgFile(item.ImgFile)
-
-
-        // ✅ 單獨顯示有 imageUrl 的圖片資訊
-        if (imageUrl) {
-          console.log('🖼️ 自訂圖片網址：', imageUrl)
-          console.log('對應活動標題：', item.Title)
-          console.log('原始 ImgFile：', item.ImgFile)
-        }
-
-        return {
-          ...item,
-          category: categoryMap[item.Category],
-          imageUrl,
-          bannerType,
-          background
-        }
-      })
-
-
-      console.table(data.map(i => ({
-        原始分類: i.Category,
-        轉換後: categoryMap[i.Category],
-      })))
-    } catch (error) {
-      console.error('請求失敗：', error);
-      data.value = '無法取得資料。';
-    }
-  }
-
-  // 解析 ImgFile
-  function parseImgFile(imgFile) {
-    const preset = {
-      imageUrl: '',
-      bannerType: 5,
-      background: 0
-    }
-
-    if (!imgFile || typeof imgFile !== 'string') return preset
-
-    // case 1: 主題編號_背景編號
-    const defaultImage = imgFile.match(/^pmatch(\d)_(\d)$/)
-    if (defaultImage) {
-      const x = parseInt(defaultImage[1], 10)
-      const y = parseInt(defaultImage[2], 10)
-      return {
-        imageUrl: '',
-        bannerType: x >= 1 && x <= 9 ? x : preset.bannerType,
-        background: y >= 0 && y <= 8 ? y : preset.background
-      }
-    }
-    // case 2: 圖片路徑_背景編號 (從最後的底線判斷)
-    const customImage = imgFile.lastIndexOf('_')
-    if (customImage  > -1) {
-      const url = imgFile.slice(0, customImage )
-      const bg = parseInt(imgFile.slice(customImage  + 1), 10)
-
-      if (!isNaN(bg)) {
-        return {
-          imageUrl: `${assetsUrl}${url}`,
-          bannerType: 0,
-          background: bg >= 0 && bg <= 8 ? bg : preset.background
-        }
-      }
-    }
-    return preset
-  }
-
-watchEffect(() => {
-  console.log('目前分類：', activityCategory.value)
-  console.log('篩選筆數：', paginatedCategory.value.length)
-  console.log('🧾 當前活動列表：', activityList.value.map(a => a.category))
-
-})
-  onMounted(() => {
-    fetchAdvertisementList()
-    fetchGameList()
+  onMounted(async () => {
+    await fetchGameList()
+    await fetchAdvertisementList()
     document.addEventListener('click', handleClickOutside)    
   })
-
   onBeforeUnmount(() => {
     document.removeEventListener('click', handleClickOutside)
   })
