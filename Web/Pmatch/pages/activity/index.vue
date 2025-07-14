@@ -92,12 +92,12 @@
               已結束
             </div>
             <!-- 主圖|自訂議 -->
-            <div class="relative">
+            <div class="relative aspect-[25/7] overflow-hidden">
               <img
                 v-if="item.imageUrl"
                 :src="item.imageUrl"
                 alt="自訂主視覺"
-                class="w-full block aspect-[25/7]"
+                class="w-full h-full object-cover object-center"
               />
               <!-- 主圖|預設 -->
               <template v-else>

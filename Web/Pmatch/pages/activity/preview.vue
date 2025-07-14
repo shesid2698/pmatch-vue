@@ -11,25 +11,26 @@
   <div class="mt-5rem max-w-1000px m-auto page font-events mb-[-6rem]">
       <!-- 成功獲取資料時 -->
       <div v-if="activityItem">
-
-        <!-- 活動主視覺|自訂議圖片 -->
-        <img
-          v-if="activityItem.imageUrl"
-          :src="activityItem.imageUrl"
-          alt="活動主視覺"
-          class="w-full block aspect-[25/7]"
-        />
-        <!-- 活動主視覺|預設圖片 -->
-        <template v-else>
-          <div class="relative">
-            <img :src="bannerTypeMap[activityItem.bannerType]?.picture" alt="活動主視覺" class="w-full block" />
-            <div :class="bannerTypeMap[activityItem.bannerType]?.position">
-              <div class="text-white text-shadow-md text-md">活動時間：{{ activityItem.StartTime?.split?.('T')?.[0] ?? '未填寫' }} ~ {{ activityItem.EndTime?.split?.('T')?.[0] ?? '未填寫' }}</div>
-              <div class="text-white text-shadow-md text-6xl mb-1 font-bold">{{ activityItem.Title }}</div>
-              <div class="text-white text-shadow-md text-4xl">{{ activityItem.Summary }}</div>
+        <div class="relative aspect-[25/7] overflow-hidden">
+          <!-- 自訂圖片 -->
+          <img
+            v-if="activityItem.imageUrl"
+            :src="activityItem.imageUrl"
+            alt="自訂主視覺"
+            class="w-full h-full object-cover object-center"
+          /> 
+          <!-- 預設圖片 -->
+          <template v-else>
+            <div class="relative">
+              <img :src="bannerTypeMap[activityItem.bannerType]?.picture" alt="活動主視覺" class="w-full block" />
+              <div :class="bannerTypeMap[activityItem.bannerType]?.position">
+                <div class="text-white text-shadow-md text-md">活動時間：{{ activityItem.StartTime?.split?.('T')?.[0] ?? '未填寫' }} ~ {{ activityItem.EndTime?.split?.('T')?.[0] ?? '未填寫' }}</div>
+                <div class="text-white text-shadow-md text-6xl mb-1 font-bold">{{ activityItem.Title }}</div>
+                <div class="text-white text-shadow-md text-4xl">{{ activityItem.Summary }}</div>
+              </div>
             </div>
-          </div>
-        </template>
+          </template>
+        </div>
 
         <!-- 商店區塊 -->
         <div class="bg-gradient-to-r from-[#f2994a] to-[#f2c94c] text-white py-3 px-4">
@@ -50,9 +51,7 @@
         <!-- 活動內容 -->
         <div class="p-4 min-h-xl" :class="backgroundMap[activityItem.background]">
           <div class="text-[#3B5BC4] text-3xl px-2 mb-2">活動內容</div>
-          <div class="text-[#3B5BC4] text-xl break-words leading-relaxed px-4">
-            {{ activityItem.Content }}
-          </div>
+          <div class="text-[#3B5BC4] text-xl break-words leading-relaxed px-4" v-html="activityItem.Content"></div>
         </div>
         <div class="w-100% text-center mt-50px pointer-events-none">
             <button class="backBtn">回上層</button>
@@ -96,7 +95,7 @@
 
       if (!isNaN(bg)) {
         return {
-          imageUrl: `${url}`,
+          imageUrl: `${assetsUrl}${url}`,
           bannerType: 0,
           background: bg >= 0 && bg <= 8 ? bg : preset.background
         }
@@ -113,7 +112,7 @@
     Summary: decodeURIComponent(query.Summary || ''),
     Content: decodeURIComponent(query.Content || ''),
     ImgFile: decodeURIComponent(query.ImgFile || ''),
-    storeImage: decodeURIComponent(query.StoreImage || ''),
+    storeImage: `${assetsUrl}${decodeURIComponent(query.StoreImage || '')}`,
     storeName: decodeURIComponent(query.StoreName || ''),
     Url: decodeURIComponent(query.Url || ''),
     StartTime: decodeURIComponent(query.StartTime || ''),
