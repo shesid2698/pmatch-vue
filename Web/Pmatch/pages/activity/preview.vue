@@ -65,13 +65,14 @@
   import { useRoute } from 'vue-router';
   const route = useRoute();
 
+  const assetsUrl = useCookie('_PmAssetsUrl').value || ''
   const activityList = ref([]);
 
  // 解析圖片 url 字串
   function parseImgFile(imgFile) {
     const preset = {
       imageUrl: '',
-      bannerType: 5,
+      bannerType: 0,
       background: 0
     }
     if (!imgFile || typeof imgFile !== 'string') return preset
@@ -95,7 +96,7 @@
 
       if (!isNaN(bg)) {
         return {
-          imageUrl: `${assetsUrl}${url}`,
+          imageUrl: `${url}`,
           bannerType: 0,
           background: bg >= 0 && bg <= 8 ? bg : preset.background
         }
@@ -103,18 +104,17 @@
     }
     return preset
   }
-  
+
   // 將 query string 還原成活動資料物件 
   const query = route.query;
 
   const activityItem = {
-    Title: decodeURIComponent(query.Title || '尚未設定活動名稱'),
-    Summary: decodeURIComponent(query.Summary || '尚未設定活動摘要'),
-    Category: decodeURIComponent(query.Category || '媒合商活動'),
+    Title: decodeURIComponent(query.Title || ''),
+    Summary: decodeURIComponent(query.Summary || ''),
     Content: decodeURIComponent(query.Content || ''),
-    ImgFile: decodeURIComponent(query.ImgFile || ''), // 用來做 parseImgFile
-    storeImage: decodeURIComponent(query.StoreImage || '/images/iconUser.png'),
-    storeName: decodeURIComponent(query.StoreName || '尚未選擇商店'),
+    ImgFile: decodeURIComponent(query.ImgFile || ''),
+    storeImage: decodeURIComponent(query.StoreImage || ''),
+    storeName: decodeURIComponent(query.StoreName || ''),
     Url: decodeURIComponent(query.Url || ''),
     StartTime: decodeURIComponent(query.StartTime || ''),
     EndTime: decodeURIComponent(query.EndTime || '')

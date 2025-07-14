@@ -205,7 +205,7 @@
   function parseImgFile(imgFile) {
     const preset = {
       imageUrl: '',
-      bannerType: 5,
+      bannerType: 0,
       background: 0
     }
     if (!imgFile || typeof imgFile !== 'string') return preset
