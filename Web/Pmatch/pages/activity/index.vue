@@ -86,6 +86,13 @@
             :to="`/activity/${item.Id}`" 
             class="relative border rounded-md overflow-hidden bg-white transition-all block no-underline shadow-md hover:shadow-lg hover:cursor-pointer"
           >
+            <!-- 置頂標籤 -->
+            <img
+              v-if="item.IsTop"
+              src="/activity/is_top.png"
+              alt="置頂"
+              class="absolute top-3 left-[-4px] w-10 z-10"
+            />
             <!-- 遮罩 -->
             <div v-if="item.isEnded"
                 class="absolute inset-0 bg-black/50 flex items-center justify-center text-white text-xl z-2">
@@ -297,6 +304,18 @@
         }
       })
       
+      // 先將 isTop 為 true 的放前面，並各自按 CreateTime 新 → 舊排序
+      const topItems = allItems
+        .filter(item => item.IsTop)
+        .sort((a, b) => new Date(b.CreateTime) - new Date(a.CreateTime))
+
+      const normalItems = allItems
+        .filter(item => !item.IsTop)
+        .sort((a, b) => new Date(b.CreateTime) - new Date(a.CreateTime))
+
+      // 合併為最後列表
+      activityList.value = [...topItems, ...normalItems]
+
     } catch (error) {
       console.error('請求失敗：', error);
       data.value = '無法取得資料。';
