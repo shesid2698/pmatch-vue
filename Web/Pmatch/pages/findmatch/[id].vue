@@ -526,8 +526,7 @@ const storeActivities = computed(() =>
       }
 
       const response = await $axios.post(
-        // 'api/v1/Pmatch/GetAdvertisementList',
-        'http://192.168.10.206:3310/api/v1/Pmatch/GetAdvertisementList',
+        '/api/v1/Pmatch/GetAdvertisementList',
         {
             "Category": [5] // 5：媒合商活動；
         },
