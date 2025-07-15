@@ -76,7 +76,7 @@
             </div>
           </div>
           <div class="w-100% lg-w-50% flex items-center justify-center lg-mt-0 mt-2rem lg-ms-1rem">
-            <ElCarousel type="card" class="w-100%" arrow="always" :autoplay="false" @change="handleChange">
+            <ElCarousel v-show="renderPlatform" type="card" class="w-100%" arrow="always" :autoplay="false" ref="platformCarousel" @change="platformChange">
               <ElCarouselItem v-for="(item, index) in filteredPlatformArray" :key="index">
                 <div class="flex items-center justify-center w-100%">
                   <div class="platformBox">
@@ -97,7 +97,36 @@
           </div>
         </div>
       </div>
-    </div>
+
+      <template v-if="storeActivities.length > 0">
+        <div class="my-3rem max-w-1000px mx-auto font-events">
+          <ElCarousel v-show="renderActivity" indicator-position="outside" :arrow="storeActivities.length <= 1 ? 'never' : 'always'" :autoplay="false" ref="activityCarousel" @change="activityChange">
+            <ElCarouselItem v-for="activity in storeActivities":key="activity.Id" class="w-full overflow-hidden">
+              <NuxtLink :to="`/activity/${activity.Id}`" class="w-full block no-underline text-inherit hover:text-inherit focus:outline-none aspect-[25/7] overflow-hidden">
+                <!-- 自訂圖片 -->
+                <img v-if="activity.imageUrl" :src="activity.imageUrl" alt="自訂主視覺" class="w-full h-full object-cover object-center"/>
+                <!-- 預設圖片 -->
+                <template v-else>
+                  <div class="relative">
+                    <img :src="bannerTypeMap[activity.bannerType]?.picture" alt="活動主視覺" class="w-full block"/>
+                    <div :class="bannerTypeMap[activity.bannerType]?.position">
+                      <div class="text-white text-shadow-md text-md">
+                        活動時間：{{ activity.StartTime?.split?.('T')?.[0] ?? '未填寫' }} ~ {{ activity.EndTime?.split?.('T')?.[0] ?? '未填寫' }}
+                      </div>
+                      <div class="text-white text-shadow-md text-6xl mb-1 font-bold">{{ activity.Title }}</div>
+                      <div class="text-white text-shadow-md text-4xl">{{ activity.Summary }}</div>
+                    </div>
+                  </div>
+                </template>
+              </NuxtLink>
+            </ElCarouselItem>
+          </ElCarousel>
+        </div>
+      </template>
+
+    </div>   
+
+
     <div class="w-full relative mt-2rem md-mt-5rem z-2">
       <div v-if="storesItem != null" v-show="(storesItem.IsEnabledBuy || storesItem.IsEnabledSell) &&
         storesItem.ContractId !== 0
@@ -361,9 +390,12 @@ let accPayMode = ref('1');
 let accPhone = ref('');
 
 // 設定目前顯示的項目索引
-const currentIndex = ref(0);
+const renderPlatform = ref(false);
+const renderActivity = ref(false);
+const platformIndex = ref(0); // 給平台輪播用
+const activityIndex = ref(0); // 給活動輪播用
 // 計算目前的值
-const currentPlatform = computed(() => filteredPlatformArray.value[currentIndex.value]);
+const currentPlatform = computed(() => filteredPlatformArray.value[platformIndex.value]);
 //const currentPlatform = routeParamPlatformName;
 
 // 分頁tab用
@@ -441,27 +473,161 @@ const readContact = () => {
   dialogVisible.value = true;
   readContract.value = true;
 };
+
+const storeActivities = computed(() =>
+  activityList.value.filter(item => String(item.StoreId) === String(route.params.id))
+);
+
+  // 解析圖片 url 字串
+  function parseImgFile(imgFile) {
+    const preset = {
+      imageUrl: '',
+      bannerType: 0,
+      background: 0
+    }
+    if (!imgFile || typeof imgFile !== 'string') return preset
+
+    // case 1: 主題編號_背景編號
+    const defaultImage = imgFile.match(/^pmatch(\d)_(\d)$/)
+    if (defaultImage) {
+      const x = parseInt(defaultImage[1], 10)
+      const y = parseInt(defaultImage[2], 10)
+      return {
+        imageUrl: '',
+        bannerType: x >= 1 && x <= 9 ? x : preset.bannerType,
+        background: y >= 0 && y <= 8 ? y : preset.background
+      }
+    }
+    // case 2: 圖片路徑_背景編號 (從最後的底線判斷)
+    const customImage = imgFile.lastIndexOf('_')
+    if (customImage  > -1) {
+      const url = imgFile.slice(0, customImage )
+      const bg = parseInt(imgFile.slice(customImage  + 1), 10)
+
+      if (!isNaN(bg)) {
+        return {
+          imageUrl: `${assetsUrl.value}${url}`,
+          bannerType: 0,
+          background: bg >= 0 && bg <= 8 ? bg : preset.background
+        }
+      }
+    }
+    return preset
+  }
+
+  // 取得活動資料
+  const activityList = ref([]);
+
+  async function fetchAdvertisementList() {
+    let token = userToken.value;
+    try {      
+      if (!token || token === '') {
+        token = await jwtStore.generateToken()
+      }
+
+      const response = await $axios.post(
+        // 'api/v1/Pmatch/GetAdvertisementList',
+        'http://192.168.10.206:3310/api/v1/Pmatch/GetAdvertisementList',
+        {
+            "Category": [5] // 5：媒合商活動；
+        },
+        {
+          headers: {
+            Authorization: token,
+          }
+        }
+      )
+      const data = response.data?.Data ?? []
+
+      activityList.value = data.map(item => {
+        const { imageUrl, bannerType, background } = parseImgFile(item.ImgFile)
+        return {
+          ...item,
+          imageUrl,
+          bannerType,
+          background
+        }
+      })
+    } catch (error) {
+      console.error('請求失敗：', error);
+      data.value = '無法取得資料。';
+    }
+  }
+    // 主題樣式
+  const bannerTypeMap = {
+    1: {
+      picture: '/activity/banner_1.png',
+      position: 'absolute top-5.5% right-4% flex flex-col items-end gap-2'
+    },
+    2: {
+      picture: '/activity/banner_2.png',
+      position: 'absolute bottom-10% left-3% flex flex-col items-start gap-2'
+    },
+    3: {
+      picture: '/activity/banner_3.png',
+      position: 'absolute bottom-9% right-2.5% flex flex-col items-end gap-2'
+    },
+    4: {
+      picture: '/activity/banner_4.png',
+      position: 'absolute bottom-4% right-3% flex flex-col items-end gap-2'
+    },
+    5: {
+      picture: '/activity/banner_5.png',
+      position: 'absolute bottom-8% right-3% flex flex-col items-end gap-2'
+    },
+    6: {
+      picture: '/activity/banner_6.png',
+      position: 'absolute bottom-7% left-3% flex flex-col items-start gap-2'
+    },
+    7: {
+      picture: '/activity/banner_7.png',
+      position: 'absolute bottom-4.5% right-3% flex flex-col items-end gap-2'
+    },
+    8: {
+      picture: '/activity/banner_8.png',
+      position: 'absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%] flex flex-col items-center gap-2 w-[90%] '
+    },
+    9: {
+      picture: '/activity/banner_9.png',
+      position: 'absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%] flex flex-col items-center gap-2 w-[90%] '
+    }
+  };
+  const backgroundMap = {
+    0: 'shadow-[inset_0_-4px_6px_rgba(0,0,0,0.07)] bg-white',
+    1: 'shadow-[inset_0_-4px_6px_rgba(59,91,196,0.08)] bg-gradient-to-b from-[#FEFEFE] to-[#e6ecfc]',
+    2: 'shadow-[inset_0_-4px_6px_rgba(255,197,0,0.15)] bg-gradient-to-b from-[#FFFBF0] to-[#FFF0C7]',
+    3: 'shadow-[inset_0_-4px_6px_rgba(0,0,0,0.06)] bg-[#FAFAFA]',
+    4: 'shadow-[inset_0_-4px_6px_rgba(0,180,150,0.12)] bg-gradient-to-b from-[#E3FFFA] to-[#B1FFF1]',
+    5: 'shadow-[inset_0_-4px_6px_rgba(255,105,135,0.12)] bg-gradient-to-b from-[#FFF0F6] to-[#FFD6E5]',
+    6: 'shadow-[inset_0_-4px_6px_rgba(255,120,80,0.12)] bg-gradient-to-b from-[#FFEEE6] to-[#FFD2BF]',
+    7: 'shadow-[inset_0_-4px_6px_rgba(180,180,0,0.1)] bg-gradient-to-b from-[#FDFFEB] to-[#F5FF9F]',
+    8: 'shadow-[inset_0_-4px_6px_rgba(160,120,200,0.2)] bg-gradient-to-b from-[#FAF0FF] to-[#D8BFE6]'
+  };  
+
 onMounted(async () => {
   await setPageLoading(true);
+  renderPlatform.value = true;
+  renderActivity.value = true;
   try {
-    console.log('🔵 進入 onMounted');
-    console.log('🟡 Token cookie:', userToken.value);
+    // console.log('🔵 進入 onMounted');
+    // console.log('🟡 Token cookie:', userToken.value);
     if (userToken.value != '' && userToken.value != undefined) {
       const token = userToken.value;
       if (token != '') {
-        console.log('🟣 實際使用的 token:', token);
-
+        // console.log('🟣 實際使用的 token:', token);
         await fetchStoresDetailData(token);
-            console.log('✅ storesItem 資料:', storesItem.value);
-            console.log('📌 storesItem.DB:', storesItem.value?.DB);
-            console.log('📌 storesItem.Teamid:', storesItem.value?.Teamid);
-            console.log('📌 storesItem.ContractId:', storesItem.value?.ContractId);
-            console.log('🖼️ 完整圖片網址:', `${assetsUrl.value}${storesItem.value.IMGFiles}`);
+            // console.log('✅ storesItem 資料:', storesItem.value);
+            // console.log('📌 storesItem.DB:', storesItem.value?.DB);
+            // console.log('📌 storesItem.Teamid:', storesItem.value?.Teamid);
+            // console.log('📌 storesItem.ContractId:', storesItem.value?.ContractId);
+            // console.log('🖼️ 完整圖片網址:', `${assetsUrl.value}${storesItem.value.IMGFiles}`);
         await getMemberDetail(token);
-            console.log('✅ memberDetailList:', memberDetailList.value);
-            console.log('📌 會員合約: ', memberDetailList.value?.[0]?.ContractStores);
+            // console.log('✅ memberDetailList:', memberDetailList.value);
+            // console.log('📌 會員合約: ', memberDetailList.value?.[0]?.ContractStores);
         await fetchGameList(token);
-            console.log('✅ gameList:', gameList.value);
+            // console.log('✅ gameList:', gameList.value);
+        await fetchAdvertisementList(token);
+            // console.table(activityList.value);
       }
     } else {
       // 生成新的 token
@@ -470,9 +636,12 @@ onMounted(async () => {
         await fetchStoresDetailData(token);
         await fetchGameList(token);
       }
-      
     }
-    const items = document.querySelectorAll('.el-carousel__item');
+    const root = platformCarousel.value?.$el;
+    if (!root) return;
+
+    const items = root.querySelectorAll('.el-carousel__item');
+
     if (items.length > 2) {
       items[items.length - 1].classList.add('leftItem');
       items[1].classList.add('rightItem');
@@ -488,38 +657,50 @@ const activeName = ref('first');
 
 const handleClick = (tab, event) => { };
 
+// 兩組輪播不互相干擾
+const platformCarousel = ref(null); 
+const activityCarousel = ref(null);
+
 // 處理輪播切換的方法
-const handleChange = index => {
-  currentIndex.value = index;
+const platformChange = (index) => {
+  platformIndex.value = index;
+
   setTimeout(() => {
-    const items = document.querySelectorAll('.el-carousel__item');
-    var els = document.querySelector(
-      '.el-carousel__item.is-active.is-in-stage.el-carousel__item--card'
-    );
-    if (items.length > 2) {
-      var leftItem = null;
-      var rightItem = null;
-      const activeIndex = Array.from(items).indexOf(els);
-      if (items.length - 1 - activeIndex >= items.length - 2) {
-        if (items.length - 1 - activeIndex !== items.length - 1) {
-          leftItem = els.previousElementSibling;
-          rightItem = els.nextElementSibling;
-        } else {
-          leftItem = items[items.length - 1];
-          rightItem = els.nextElementSibling;
-        }
-      } else if (items.length - 1 - activeIndex === 0) {
-        leftItem = items[activeIndex - 1] || items[items.length - 1];
-        rightItem = items[0];
-      } else {
+    const root = platformCarousel.value?.$el;
+    if (!root) return;
+
+    const items = root.querySelectorAll('.el-carousel__item');
+    const els = root.querySelector('.el-carousel__item.is-active.is-in-stage.el-carousel__item--card');
+    if (!els || items.length <= 2) return;
+
+    let  leftItem = null;
+    let  rightItem = null;
+    const activeIndex = Array.from(items).indexOf(els);
+
+    if (items.length - 1 - activeIndex >= items.length - 2) {
+      if (items.length - 1 - activeIndex !== items.length - 1) {
         leftItem = els.previousElementSibling;
         rightItem = els.nextElementSibling;
+      } else {
+        leftItem = items[items.length - 1];
+        rightItem = els.nextElementSibling;
       }
-      rightItem.classList.add('rightItem');
-      leftItem.classList.add('leftItem');
+    } else if (items.length - 1 - activeIndex === 0) {
+      leftItem = items[activeIndex - 1] || items[items.length - 1];
+      rightItem = items[0];
+    } else {
+      leftItem = els.previousElementSibling;
+      rightItem = els.nextElementSibling;
     }
+    rightItem.classList.add('rightItem');
+    leftItem.classList.add('leftItem');    
   }, 20);
 };
+
+const activityChange = (index) => {
+  activityIndex.value = index;
+};
+
 // 篩選後的載台字串
 const filteredPlatform = computed(() => {
   if (!storesItem.value || !storesItem.value.StoreProducts) {
@@ -773,12 +954,12 @@ watch(
     const currentPlatformIndex = newFilteredPlatformArray.findIndex(
       platform => platform === routeParamPlatformName
     );
-    // 更新 currentIndex
+    // 更新 platformIndex
     if (newFilteredPlatformArray.length > 0 && !currentPlatform.value) {
-      currentIndex.value = 0;
+      platformIndex.value = 0;
     } else if (currentPlatformIndex !== -1) {
-      // 如果有找到，則將索引設置為 currentIndex
-      currentIndex.value = currentPlatformIndex;
+      // 如果有找到，則將索引設置為 platformIndex
+      platformIndex.value = currentPlatformIndex;
     }
   },
   { immediate: true } // 立刻執行一次，將初始值設置進去
@@ -824,7 +1005,14 @@ watch(
 }
 
 :deep(.el-carousel__arrow) {
-  background-color: rgba(0, 0, 0, 0);
+  background-color: rgba(0, 0, 0, 0);  
+  opacity: 0.6;
+  filter: drop-shadow(0 0 3px rgba(144, 144, 144, 0.4));
+}
+
+:deep(.el-carousel__arrow:hover) {
+  opacity: 1;
+  filter: drop-shadow(0 0 6px rgba(144, 144, 144, 0.7));
 }
 
 :deep(.el-carousel__arrow--left > .el-icon),
