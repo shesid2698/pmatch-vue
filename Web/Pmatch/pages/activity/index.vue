@@ -37,10 +37,10 @@
           </div>
         </div>
         <!-- 下拉選單(媒合商活動) -->
-        <div   v-if="activityCategory === 5" ref="dropdownRef" class="relative inline-block w-48 my-2">
+        <div v-if="activityCategory === 5" ref="dropdownRef" class="relative inline-block w-32 my-2">
           <!-- 主按鈕 -->
           <div
-            class="flex justify-between items-center border rounded-xl px-4 py-2 text-sm cursor-pointer transition-all border-solid border-[#FFBB00]"
+            class="flex justify-between items-center border rounded-xl px-3 py-1.25 text-sm cursor-pointer transition-all border-solid border-[#FFBB00]"
             :class="[
               isDropdownOpen ? 'bg-[#505050] text-[#cfcfcf]' : 'bg-white text-black border-[#FFBB00] hover:bg-[#efefef] hover:text-[#666666]',
               isDropdownOpen ? 'shadow-[0_0_6px_rgba(255,136,0,0.7)]' : '',
@@ -48,21 +48,24 @@
             @click="toggleDropdown"
           >
             <span>{{ selectedPlatformLabel }}</span>
-            <svg class="w-4 h-4 ml-2 fill-current" viewBox="0 0 20 20">
-              <path d="M5.293 7.293L10 12l4.707-4.707-1.414-1.414L10 9.172 6.707 5.879z" />
+            <svg v-if="!isDropdownOpen" class="h-3 ml-2 fill-[#FFBB00]" viewBox="0 0 14 12">
+              <path d="M8.73205 11C7.96225 12.3333 6.03775 12.3333 5.26795 11L0.937819 3.5C0.168019 2.16666 1.13027 0.500001 2.66987 0.500001L11.3301 0.500001C12.8697 0.500002 13.832 2.16667 13.0622 3.5L8.73205 11Z" />
+            </svg>
+            <svg v-else class="h-3 ml-2 fill-[#FFBB00]" viewBox="0 0 14 12">
+              <path d="M8.73205 0.999997C7.96225 -0.333336 6.03775 -0.333333 5.26795 1L0.937819 8.5C0.168018 9.83334 1.13027 11.5 2.66987 11.5L11.3301 11.5C12.8697 11.5 13.832 9.83333 13.0622 8.5L8.73205 0.999997Z" />
             </svg>
           </div>
 
           <!-- 下拉內容 -->
           <div
             v-if="isDropdownOpen"
-            class="absolute z-10 mt-2 w-full bg-white border border-[#F6C940] rounded-md shadow-lg text-sm overflow-hidden"
+            class="absolute z-10 w-full bg-white border border-[#F6C940] rounded-md shadow-lg text-sm overflow-hidden"
           >
             <div
               v-for="option in platformOptions"
               :key="option.value"
               @click="selectPlatform(option)"
-              class="px-4 py-2 cursor-pointer transition-all relative before:content-[''] before:block before:h-px before:absolute before:left-4 before:right-4 before:bottom-0 before:bg-[linear-gradient(to_right,#FFBB00,transparent)] last:before:hidden"
+              class="px-3 py-1.25 cursor-pointer transition-all relative before:content-[''] before:block before:h-px before:absolute before:left-2.5 before:right-2.5 before:bottom-0 before:bg-[linear-gradient(to_right,#FFBB00,transparent)] last:before:hidden"
               :class="[
                 selectedPlatform === option.value
                   ? 'bg-[radial-gradient(circle,#FFBB00,transparent)] text-[#553CE5]'
@@ -75,13 +78,13 @@
         </div>
         
         <template v-else>
-          <div class="w-48 h-[38px] my-2"></div>
+          <div class="w-32 h-[32px] my-2"></div>
         </template>
 
         <!-- 活動卡片區塊 -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-9">
           <NuxtLink
-            v-for="item in paginatedActivities "
+            v-for="item in paginatedActivities"
             :key="item.Id"
             :to="`/activity/${item.Id}`" 
             class="relative border rounded-md overflow-hidden bg-white transition-all block no-underline shadow-md hover:shadow-lg hover:cursor-pointer"
@@ -89,9 +92,9 @@
             <!-- 置頂標籤 -->
             <img
               v-if="item.IsTop"
-              src="/activity/is_top.png"
+              src="/activity/is_top.svg"
               alt="置頂"
-              class="absolute top-3 left-[-4px] w-10 z-10"
+              class="absolute top-10px left-[-4px] w-10 z2"
             />
             <!-- 遮罩 -->
             <div v-if="item.isEnded"
@@ -215,17 +218,37 @@
   const itemsPerPage = 9;
 
   const paginatedActivities = computed(() => {
+    const now = new Date()
+
+    // 篩掉已結束的非熱門活動
+    const visibleItems = filteredActivities.value
+      .map(item => {
+        const startDate = new Date(item.StartTime.replaceAll('/', '-'))
+        const endDate = new Date(item.EndTime.replaceAll('/', '-'))
+
+        
+        const notStarted = startDate > now
+        const isEnded = endDate < now
+
+        return {
+          ...item,
+          isEnded,
+          notStarted,
+          _endDate: endDate
+        }
+      })
+      .filter(item => {
+        // 所有活動若尚未開始都不顯示
+        if (item.notStarted) return false
+        // 非熱門活動，且已結束也不顯示
+        if (item.Category !== 4 && item.isEnded) return false
+
+        return true
+    })
+ 
     const start = (currentPage.value - 1) * itemsPerPage
     const end = start + itemsPerPage
-
-    const now = new Date()
-    return filteredActivities.value.slice(start, end).map(item => {
-      const endDate = new Date(item.EndTime.replaceAll('/', '-'))
-      return {
-        ...item,
-        isEnded: endDate < now
-      }
-    })
+    return visibleItems.slice(start, end)
   })
 
   // 切換頁面
@@ -309,7 +332,7 @@
         .filter(item => item.IsTop)
         .sort((a, b) => new Date(b.CreateTime) - new Date(a.CreateTime))
 
-      const normalItems = allItems
+      const normalItems = allItemsF
         .filter(item => !item.IsTop)
         .sort((a, b) => new Date(b.CreateTime) - new Date(a.CreateTime))
 
