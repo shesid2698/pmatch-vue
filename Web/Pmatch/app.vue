@@ -10,18 +10,27 @@
       <Meta name="description" content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
       <Meta property="og:description" content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
     </Head>
-    <BuyLog />
     <AlertModal />
     <ConfirmModal />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
       integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
       crossorigin="anonymous" />
     <LoadingPage />
-    <component v-if="route.path.indexOf('/activity') === -1" :is="isStorePage ? StoreHeader : Header" />
-    <div class="page" :class="route.path.indexOf('/activity') !== -1 ? 'pt-0px' : isStorePage ? 'pt-0px' : 'pt-70px'">
+    <div class="page" :class="route.path.indexOf('/events') !== -1 ? 'pt-0px' : isStorePage ? 'pt-0px' : 'pt-70px'">
       <NuxtPage />
     </div>
-    <component v-if="route.path.indexOf('/activity') === -1" :is="isStorePage ? StoreFooter : Footer" />
+    <component
+      v-if="route.path.indexOf('/events') === -1"
+      :is="isStorePage ? StoreHeader : Header"
+      :class="route.path.indexOf('/activity/preview') !== -1 ? 'pointer-events-none' : ''"
+    />
+
+    <component
+      v-if="route.path.indexOf('/events') === -1"
+      :is="isStorePage ? StoreFooter : Footer"
+      :class="route.path.indexOf('/activity/preview') !== -1 ? 'pointer-events-none' : ''"
+    />
+    <component v-if="route.path.indexOf('/activity/preview') === -1" :is="BuyLog" />
   </div>
 </template>
 
@@ -81,6 +90,7 @@ import Header from "~/components/Header.vue";
 import StoreHeader from "~/components/StoreHeader.vue";
 import Footer from "~/components/Footer.vue";
 import StoreFooter from "~/components/StoreFooter.vue";
+import BuyLog from "~/components/BuyLog.vue";
 // loading page
 import { useLoadStore } from "./stores/loading.js";
 import { useModalStore } from "./stores/useModal.js";

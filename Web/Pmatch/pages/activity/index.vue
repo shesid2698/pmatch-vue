@@ -1,651 +1,479 @@
 <template>
-  <!-- 活動內容 -->
-  <div v-show="innerPage === 1" id="page1">
-    <!-- 分頁一 -->
-    <div id="innerPage1">
-      <div class="w-95.5% h-2.6% absolute top-[-0.092%] left-1px box-border">
-        <div class="w-100% h-100% flex items-end">
-          <button class="page1 w-19.6% tab-btn active h-108% !font-500"
-            :class="innerPage !== 1 ? 'non-active' : ''" @click="() => innerPage = 1">活動內容</button>
-          <button class="page2 w-26.3% tab-btn h-95% !font-400"
-            :class="innerPage !== 2 ? 'non-active' : ''" @click="() => innerPage = 2">推薦碼說明</button>
-          <button class="page3 w-26.3% tab-btn h-95% !font-400"
-            :class="innerPage !== 3 ? 'non-active' : ''" @click="() => innerPage = 3">綁定流程</button>
-          <button class="page4 w-26.3% tab-btn h-95% !font-400"
-            :class="innerPage !== 4 ? 'non-active' : ''" @click="() => innerPage = 4">媒合商一覽</button>
-        </div>
-      </div>
-      <!-- 我要註冊 -->        
-        <button class="w-25.5% h-2.68% absolute top-32.41% left-36% main-btn !disabled:filter-none !disabled:cursor-default" @click="ToRegister"
-          :disabled="token !== '' && token !== null && token !== undefined">{{ token !== "" && token !== null && token !== undefined ? '已登入' : '我要註冊' }}</button>
-      <!-- 推薦碼綁定說明 -->
-      <div class="absolute top-44.22% left-59% text-[2.8vw] md:top-44.12%  md:text-[1.7vw] font-bold ">
-        <div v-if="token === '' || token === null || token === undefined"
-          class="flex justify-center items-center line-height-100% text-[#FF3F2E]">
-          <div>? 未登入</div>
-        </div>
-        <div v-else-if="memberDetail.Type > 1"
-          class="flex justify-center items-center line-height-100% text-[#66D575]">
-          <div>
-            <Icon name="heroicons:check-20-solid" />
-          </div>
-          <div>已綁定</div>
-        </div>
-        <div v-else class="flex justify-center items-center line-height-100% text-[#5451E0]">
-          <div>
-            <Icon name="heroicons:x-mark-20-solid" />
-          </div>
-          <div>未綁定</div>
-        </div>
-      </div>
-      <!-- 遮罩 -->
-      <div v-if="token === '' || token === null || token === undefined" class="mask w-60.76% h-10.22% absolute top-58.15% left-29.72% text-[4.1vw] md:text-[2.4vw]"></div>
-      <!-- 各遊戲平台累積回饋數量 -->       
-      <div class="absolute w-20% h-2.2% top-58.1% left-30%">
-        <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
-          {{ activityData['寶島娛樂城']?.RewardPercentage !== undefined ? activityData['寶島娛樂城'].RewardPercentage + '%' : '' }}</div>
-      </div>
-      <div class="absolute w-20% h-2.2% top-58.1% left-50.15%">
-        <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
-          {{ activityData['寶島娛樂城']?.TotalValue !== undefined ? activityData['寶島娛樂城'].TotalValue.toLocaleString() : '' }}</div>
-      </div>
-      <div class="absolute w-20% h-2.2% top-58.1% left-70.5%">
-        <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
-          {{ activityData['寶島娛樂城']?.Reward !== undefined ? activityData['寶島娛樂城'].Reward.toLocaleString() : '' }}</div>
-      </div>
-      <div class="absolute w-20% h-2.2% top-60.13% left-30%">
-        <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
-          {{ activityData['聚寶Online']?.RewardPercentage !== undefined ? activityData['聚寶Online'].RewardPercentage + '%' : '' }}</div>
-      </div>
-      <div class="absolute w-20% h-2.2% top-60.13% left-50.15%">
-        <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
-          {{ activityData['聚寶Online']?.TotalValue !== undefined ? activityData['聚寶Online'].TotalValue.toLocaleString() : '' }}</div>
-      </div>
-      <div class="absolute w-20% h-2.2% top-60.13% left-70.5%">
-        <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
-          {{ activityData['聚寶Online']?.Reward !== undefined ? activityData['聚寶Online'].Reward.toLocaleString() : '' }}</div>
-      </div>
-      <div class="absolute w-20% h-2.2% top-62.16% left-30%">
-        <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
-          {{ activityData['錢街Online']?.RewardPercentage !== undefined ? activityData['錢街Online'].RewardPercentage + '%' : '' }}</div>
-      </div>
-      <div class="absolute w-20% h-2.2% top-62.16% left-50.15%">
-        <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
-          {{ activityData['錢街Online']?.TotalValue !== undefined ? activityData['錢街Online'].TotalValue.toLocaleString() : '' }}</div>
-      </div>
-      <div class="absolute w-20% h-2.2% top-62.16% left-70.5%">
-        <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
-          {{ activityData['錢街Online']?.Reward !== undefined ? activityData['錢街Online'].Reward.toLocaleString() : '' }}</div>
-      </div>
-      <div class="absolute w-20% h-2.2% top-64.19% left-30%">
-        <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
-          {{ activityData['滿貫大亨']?.RewardPercentage !== undefined ? activityData['滿貫大亨'].RewardPercentage + '%' : '' }}</div>
-      </div>
-      <div class="absolute w-20% h-2.2% top-64.19% left-50.15%">
-        <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
-          {{ activityData['滿貫大亨']?.TotalValue !== undefined ? activityData['滿貫大亨'].TotalValue.toLocaleString() : '' }}</div>
-      </div>
-      <div class="absolute w-20% h-2.2% top-64.19% left-70.5%">
-        <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
-          {{ activityData['滿貫大亨']?.Reward !== undefined ? activityData['滿貫大亨'].Reward.toLocaleString() : '' }}</div>
-      </div>
-      <div class="absolute w-20% h-2.2% top-66.21% left-30%">
-        <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
-          {{ activityData['金好運娛樂城']?.RewardPercentage !== undefined ? activityData['金好運娛樂城'].RewardPercentage + '%' : '' }}</div>
-      </div>
-      <div class="absolute w-20% h-2.2% top-66.21% left-50.15%">
-        <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
-          {{ activityData['金好運娛樂城']?.TotalValue !== undefined ? activityData['金好運娛樂城'].TotalValue.toLocaleString() : '' }}</div>
-      </div>
-      <div class="absolute w-20% h-2.2% top-66.21% left-70.5%">
-        <div class="absolute w-100% h-100% text-center content-center md:text-1.5vw text-3vw font-bold text-black">
-          {{ activityData['金好運娛樂城']?.Reward !== undefined ? activityData['金好運娛樂城'].Reward.toLocaleString() : '' }}</div>
-      </div>
-      <!-- 查看領獎中心 -->
-      <button class="w-33.3% h-2.68% absolute top-83.69% left-32.9% main-btn !disabled:filter-none !disabled:cursor-default" @click="ToReward">查看領獎中心</button>
-      <!-- 推薦碼綁定說明 -->
-      <button @click="() => { innerPage = 2; scrollToTop(); }" 
-        class="w-37.1% h-2.68% absolute top-47.02% left-30.2% main-btn !disabled:filter-none !disabled:cursor-default">推薦碼綁定說明</button>
-      <!-- 委買遊戲幣拿回饋 -->  
-      <button @click="() => { innerPage = 4; scrollToTop(); }" class="md:w-45.6% w-46.72% h-3.57% absolute top-90.66% left-26.9% game-btn !disabled:filter-none !disabled:cursor-default"><img src="/activity/squareIcon.svg" alt=""
-          class="md:mr-.4vw mr-.7vw md:w-1.4vw w-2.3vw">委買遊戲幣拿回饋<img src="/activity/squareIcon.svg" alt=""
-          class="md:ml-.4vw ml-.7vw md:w-1.4vw w-2.3vw"></button>
-    </div>
-  </div>  
-  <!-- 推薦碼運作說明 -->
-  <div v-show="innerPage === 2" id="page2">
-    <!-- 分頁二 -->
-    <div id="innerPage2">
-      <div class="w-95.5% h-1.7% absolute top-[-0.037%] left-1px box-border">
-        <div class="w-100% h-100% flex items-end">
-          <button class="page1 w-19.6% tab-btn h-86% !font-400"
-            :class="innerPage !== 1 ? 'non-active' : ''" @click="() => innerPage = 1">活動內容</button>
-          <button class="page2 w-26.3% tab-btn active h-98% !font-500"
-            :class="innerPage !== 2 ? 'non-active' : ''" @click="() => innerPage = 2">推薦碼說明</button>
-          <button class="page3 w-26.3% tab-btn h-86% !font-400"
-            :class="innerPage !== 3 ? 'non-active' : ''" @click="() => innerPage = 3">綁定流程</button>
-          <button class="page4 w-26.3% tab-btn h-86% !font-400"
-            :class="innerPage !== 4 ? 'non-active' : ''" @click="() => innerPage = 4">媒合商一覽</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- 推薦碼綁定流程 -->
-  <div v-show="innerPage === 3" id="page3">
-    <!-- 分頁三 -->
-    <div id="innerPage3">
-      <div class="w-95.5% h-2.5% absolute top-[-0.085%] left-1px">
-        <div class="w-100% h-100% flex items-end">
-          <button class="page1 w-19.6% tab-btn !h-86% !font-400"
-            :class="innerPage !== 1 ? 'non-active' : ''" @click="() => innerPage = 1">活動內容</button>
-          <button class="page2 w-26.3% tab-btn !h-86% !font-400"
-            :class="innerPage !== 2 ? 'non-active' : ''" @click="() => innerPage = 2">推薦碼說明</button>
-          <button class="page3 w-26.3% tab-btn active !h-99% !font-500"
-            :class="innerPage !== 3 ? 'non-active' : ''" @click="() => innerPage = 3">綁定流程</button>
-          <button class="page4 w-26.3% tab-btn !h-86% !font-400"
-            :class="innerPage !== 4 ? 'non-active' : ''" @click="() => innerPage = 4">媒合商一覽</button>
-        </div>
-      </div>
-      <button @click="() => { innerPage = 4; scrollToTop(); }" 
-        class="w-41.6% h-2.42% absolute top-43.26% left-30.2% main-btn !disabled:filter-none !disabled:cursor-default
-      ">查看活動媒合清單</button>
-      <button @click="ToRegister" 
-      class="w-30.7% h-2.42% absolute top-69.24% left-35.8% main-btn !disabled:filter-none !disabled:cursor-default
-      ">前往會員中心</button>
-    </div>
-  </div>
-  <!-- 活動媒合商一覽 -->
-  <div v-show="innerPage === 4" id="page4">
-    <!-- 分頁四 -->
-    <div id="innerPage4">
-      <div class="w-95.5% h-6.8% absolute top-[-0.415%] left-1px">
-        <div class="w-100% h-100% flex items-end">
-          <button class="page1 w-19.6% tab-btn !h-83% !font-400"
-            :class="innerPage !== 1 ? 'non-active' : ''" @click="() => innerPage = 1">活動內容</button>
-          <button class="page2 w-26.3% tab-btn !h-83% !font-400"
-            :class="innerPage !== 2 ? 'non-active' : ''" @click="() => innerPage = 2">推薦碼說明</button>
-          <button class="page3 w-26.3% tab-btn !h-83% !font-400"
-            :class="innerPage !== 3 ? 'non-active' : ''" @click="() => innerPage = 3">綁定流程</button>
-          <button class="page4 w-26.3% tab-btn active !h-95% !font-500"
-            :class="innerPage !== 4 ? 'non-active' : ''" @click="() => innerPage = 4">媒合商一覽</button>
-        </div>
-      </div>  
-      <!-- 遊戲平台 -->
-      <div
-        class="absolute w-25.4% top-29% left-7.3% cursor-pointer hover:filter-brightness-[1.1]">
-        <NuxtLink to="https://www.pmatch.com.tw/findmatch?platformName=寶島娛樂城&keyword=" target="_blank">
-          <img class='w-100%' src="/activity/g-寶島娛樂城.png" alt="寶島娛樂城">
-        </NuxtLink>
-      </div>
-      <div
-        class="absolute w-25.4% top-42.5% left-7.3% cursor-pointer hover:filter-brightness-[1.1]">
-        <NuxtLink to="https://www.pmatch.com.tw/findmatch?platformName=聚寶Online&keyword=" target="_blank">
-          <img class='w-100%' src="/activity/g-聚寶Online.png" alt="聚寶Online">
-        </NuxtLink>
-      </div>
-      <div
-        class="absolute w-25.4% top-56.2% left-7.3% cursor-pointer hover:filter-brightness-[1.1]">
-        <NuxtLink to="https://www.pmatch.com.tw/findmatch?platformName=錢街Online&keyword=" target="_blank">
-          <img class='w-100%' src="/activity/g-錢街Online.png" alt="錢街Online">
-        </NuxtLink>
-      </div>
-      <div
-        class="absolute w-25.4% top-69.8% left-7.3% cursor-pointer hover:filter-brightness-[1.1]">
-        <NuxtLink to="https://www.pmatch.com.tw/findmatch?platformName=滿貫大亨&keyword=" target="_blank">
-          <img class='w-100%' src="/activity/g-滿貫大亨.png" alt="滿貫大亨">
-        </NuxtLink>
-      </div>
-      <div
-        class="absolute w-25.4% top-83.4% left-7.3% cursor-pointer hover:filter-brightness-[1.1]">
-        <NuxtLink to="https://www.pmatch.com.tw/findmatch?platformName=金好運娛樂城&keyword=" target="_blank">
-          <img class='w-100%' src="/activity/g-金好運娛樂城.png" alt="金好運娛樂城">
-        </NuxtLink>
-      </div>
-      <!-- 媒合商 -->
-      <div
-        class="absolute w-16.4% top-28.5% left-55.3% cursor-pointer hover:filter-brightness-[1.1]">
-        <NuxtLink to="https://www.pmatch.com.tw/findmatch/206" target="_blank">
-          <img class='w-100%' src="/activity/t-武財神.png" alt="武財神">
-        </NuxtLink>
-      </div>
-      <div
-        class="absolute w-16.5% top-41.7% left-44.1% cursor-pointer hover:filter-brightness-[1.1]">
-        <NuxtLink to="https://www.pmatch.com.tw/findmatch/208" target="_blank">
-          <img class='w-100%' src="/activity/t-金站.png" alt="金站">
-        </NuxtLink>
-      </div>
-      <div
-        class="absolute w-16.5% top-41.7% left-66.4% cursor-pointer hover:filter-brightness-[1.1]">
-        <NuxtLink to="https://www.pmatch.com.tw/findmatch/211" target="_blank">
-          <img class='w-100%' src="/activity/t-福娃金庫.png" alt="福娃金庫">
-        </NuxtLink>
-      </div>
-      <div
-        class="absolute w-16.5% top-55.5% left-55.3% cursor-pointer hover:filter-brightness-[1.1]">
-        <NuxtLink to="https://www.pmatch.com.tw/findmatch/200" target="_blank">
-          <img class='w-100%' src="/activity/t-錢庫.png" alt="錢庫">
-        </NuxtLink>
-      </div>
-      <div
-        class="absolute w-16.5% top-68.9% left-36.3% cursor-pointer hover:filter-brightness-[1.1]">
-        <NuxtLink to="https://www.pmatch.com.tw/findmatch/213" target="_blank">
-          <img class='w-100%' src="/activity/t-添好運央行.png" alt="添好運央行">
-        </NuxtLink>
-      </div>
-      <div
-        class="absolute w-16.5% top-68.9% left-55.3% cursor-pointer hover:filter-brightness-[1.1]">
-        <NuxtLink to="https://www.pmatch.com.tw/findmatch/207" target="_blank">
-          <img class='w-100%' src="/activity/t-發大財金庫.png" alt="發大財金庫">
-        </NuxtLink>
-      </div>
-      <div
-        class="absolute w-16.5%  top-68.9% left-74.3% cursor-pointer hover:filter-brightness-[1.1]">
-        <NuxtLink to="https://www.pmatch.com.tw/findmatch/201" target="_blank">
-          <img class='w-100%' src="/activity/t-寶可夢銀行.png" alt="寶可夢銀行">
-        </NuxtLink>
-      </div>
-      <div
-        class="absolute w-16.5%  top-82.6% left-44.1% cursor-pointer hover:filter-brightness-[1.1]">
-        <NuxtLink to="https://www.pmatch.com.tw/findmatch/202" target="_blank">
-          <img class='w-100%' src="/activity/t-金好盈金流.png" alt="金好盈金流">
-        </NuxtLink>
-      </div>
-      <div
-        class="absolute w-16.5%  top-82.6% left-66.4% cursor-pointer hover:filter-brightness-[1.1]">
-        <NuxtLink to="https://www.pmatch.com.tw/findmatch/204" target="_blank">
-          <img class='w-100%' src="/activity/t-米其林金流.png" alt="米其林金流">
-        </NuxtLink>
-      </div>
-    </div>
-  </div>
-  <footer class="w-100% bg-#797979 absolute pt-1.8vw pb-3.6vw bottom-0 items-center justify-center md:flex hidden">
-    <div class="text-white space-y-1vw text-[2vw] md:text-[0.88vw] font-bold">
-      <p class="text-[3vw] md:text-[1.5vw]"><span class="relative top-[0.04em] text-[3.6vw] md:text-[1.8vw] select-none">◆ </span>注意事項</p>
-      <p><span class="relative top-[0.1em] text-[2.6vw] md:text-[1.2vw] select-none">◆ </span>本次活動範圍僅包含部分媒合商及遊戲平台，詳細內容請參照活動頁面說明。</p>
-      <p><span class="relative top-[0.1em] text-[2.6vw] md:text-[1.2vw] select-none">◆ </span><strong>PMatch</strong>平台保留更換等值贈品以及變更活動內容或終止活動的權利，以及最終解釋權。</p>
-      <p><span class="relative top-[0.1em] text-[2.6vw] md:text-[1.2vw] select-none">◆ </span>參加活動所獲得獎勵，請於活動結束後直接發送至官網領獎中心。</p>
-      <p><span class="relative top-[0.1em] text-[2.6vw] md:text-[1.2vw] select-none">◆ </span><strong>PMatch</strong>平台僅提供媒合交易服務，交易相關問題請洽詢交易之媒合商了解詳情。</p>
-      <p><span class="relative top-[0.1em] text-[2.6vw] md:text-[1.2vw] select-none">◆ </span>因應各遊戲平台設定之最低贈禮門檻，本次活動所獲得之回饋幣，至少須累積達各遊戲<br>
-      <span class="ps-1.01vw">平台最低數量以上方符合領獎資格，低於設定領獎門檻視同放棄領獎資格。</span></p>
-    </div>
-  </footer>
-</template>
-<script setup>
-const innerPage = ref(1);
-const activityData = reactive({});
-const token = useCookie('_PmToken');
-const memberId = useCookie('_PmMemberId');
-const { $axios } = useNuxtApp();
-const memberDetail = reactive({});
-const route = useRoute();
-const router = useRouter();
-const ToRegister = () => {
-  if (token.value === '' || token.value === null || token.value === undefined) {
-    window.open('/member/login', '_blank');
-  } else {
-    window.open('/member/center', '_blank');
-  }
-};
-const ToReward = () => {
-  if (token.value === '' || token.value === null || token.value === undefined) {
-    // navigateTo('/member/login');
-    window.open('/member/login', '_blank');
-  } else {
-    // navigateTo('/member/center/reward');
-    window.open('/member/center/reward', '_blank');
-  }
-};
-const scrollToTop = () => {
-  const isMobile = window.innerWidth <= 767;
-  const topValue = isMobile 
-    ? window.innerHeight * 0.1  // 手機版捲到視窗高度的 10%
-    : window.innerHeight * 0.4;  // 桌面版捲到視窗高度的 40%
 
-  window.scrollTo({
-    top: topValue,
-    behavior: 'smooth'
-  });
-};
-const GetMemberDetail = async () => {
-  try {
-    const response = await $axios.post(
-      '/api/v1/Pmatch/GetMemberDetail',
-      {
-        PmatchMemberId: memberId.value
-      },
-      {
-        headers: {
-          Authorization: token.value
+  <Head>
+    <title>PMatch遊戲道具交易平台</title>
+    <Meta property="og:title" content="PMatch遊戲道具交易平台" />
+    <Meta name="keywords" content="pmatch,pmatch交易,博奕遊戲,幣商,媒合商,遊戲幣,虛擬幣,遊戲交易,媒合交易,買幣,賣幣,虛寶交易" />
+    <Meta name="description" content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
+    <Meta property="og:description" content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
+  </Head>
+
+  <div class="dot1 select-none pointer-events-none">
+    <img src="/images/bg-dot03.png" width="100%" alt="">
+  </div>
+  <div class="dot2 select-none pointer-events-none">
+    <img src="/images/bg-dot04.png" width="100%" alt="">
+  </div>
+
+  <div class="max-w-1000px m-auto mt-5rem ps-5 pe-5 relative z-2">      
+      <div class="bg-white min-h-2xl font-events">
+        <!-- 分類選單 -->
+        <div class="navGradient rounded-lg px-7 py-1.5">
+          <div class="flex justify-start gap-2.5">
+            <!-- 分類選單按鈕 -->
+            <template v-for="(type, index) in [4, 5, 6]" :key="type">
+              <button
+                @click="activityCategory = type; currentPage = 1; selectedPlatform = ''"
+                :class="[
+                  'border-none px-4 py-1 rounded transition-all hover:text-16.5px hover:bg-[#FF8800] hover:text-[#353535] hover:cursor-pointer',
+                  activityCategory === type ? 'bg-[#FFF0C7] text-[#8E856F] text-16.5px' : 'bg-transparent text-[#7E7E7E] text-15px',
+                  btnWidthMap[type]
+                ]"
+              >
+                {{ categoryMap[type] }}
+              </button>
+              <div v-if="index !== 2" class="w-px h-7 bg-white my-0.5"></div>
+            </template>
+          </div>
+        </div>
+        <!-- 下拉選單(媒合商活動) -->
+        <div v-if="activityCategory === 5" ref="dropdownRef" class="relative inline-block w-32 my-2">
+          <!-- 主按鈕 -->
+          <div
+            class="flex justify-between items-center border rounded-xl px-3 py-1.25 text-sm cursor-pointer transition-all border-solid border-[#FFBB00]"
+            :class="[
+              isDropdownOpen ? 'bg-[#505050] text-[#cfcfcf]' : 'bg-white text-black border-[#FFBB00] hover:bg-[#efefef] hover:text-[#666666]',
+              isDropdownOpen ? 'shadow-[0_0_6px_rgba(255,136,0,0.7)]' : '',
+            ]"
+            @click="toggleDropdown"
+          >
+            <span>{{ selectedPlatformLabel }}</span>
+            <svg v-if="!isDropdownOpen" class="h-3 ml-2 fill-[#FFBB00]" viewBox="0 0 14 12">
+              <path d="M8.73205 11C7.96225 12.3333 6.03775 12.3333 5.26795 11L0.937819 3.5C0.168019 2.16666 1.13027 0.500001 2.66987 0.500001L11.3301 0.500001C12.8697 0.500002 13.832 2.16667 13.0622 3.5L8.73205 11Z" />
+            </svg>
+            <svg v-else class="h-3 ml-2 fill-[#FFBB00]" viewBox="0 0 14 12">
+              <path d="M8.73205 0.999997C7.96225 -0.333336 6.03775 -0.333333 5.26795 1L0.937819 8.5C0.168018 9.83334 1.13027 11.5 2.66987 11.5L11.3301 11.5C12.8697 11.5 13.832 9.83333 13.0622 8.5L8.73205 0.999997Z" />
+            </svg>
+          </div>
+
+          <!-- 下拉內容 -->
+          <div
+            v-if="isDropdownOpen"
+            class="absolute z-10 w-full bg-white border border-[#F6C940] rounded-md shadow-lg text-sm overflow-hidden"
+          >
+            <div
+              v-for="option in platformOptions"
+              :key="option.value"
+              @click="selectPlatform(option)"
+              class="px-3 py-1.25 cursor-pointer transition-all relative before:content-[''] before:block before:h-px before:absolute before:left-2.5 before:right-2.5 before:bottom-0 before:bg-[linear-gradient(to_right,#FFBB00,transparent)] last:before:hidden"
+              :class="[
+                selectedPlatform === option.value
+                  ? 'bg-[radial-gradient(circle,#FFBB00,transparent)] text-[#553CE5]'
+                  : 'hover:bg-[radial-gradient(circle,#FFE9AC,transparent)] hover:text-[#4B4B4B]'
+              ]"
+            >
+              {{ option.label }}
+            </div>
+          </div>
+        </div>
+        
+        <template v-else>
+          <div class="w-32 h-[32px] my-2"></div>
+        </template>
+
+        <!-- 活動卡片區塊 -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-9">
+          <NuxtLink
+            v-for="item in paginatedActivities"
+            :key="item.Id"
+            :to="`/activity/${item.Id}`" 
+            class="relative border rounded-md overflow-hidden bg-white transition-all block no-underline shadow-md hover:shadow-lg hover:cursor-pointer"
+          >
+            <!-- 置頂標籤 -->
+            <img
+              v-if="item.IsTop"
+              src="/activity/is_top.svg"
+              alt="置頂"
+              class="absolute top-10px left-[-4px] w-10 z2"
+            />
+            <!-- 遮罩 -->
+            <div v-if="item.isEnded"
+                class="absolute inset-0 bg-black/50 flex items-center justify-center text-white text-xl z-2">
+              已結束
+            </div>
+            <!-- 主圖|自訂議 -->
+            <div class="relative aspect-[25/7] overflow-hidden">
+              <img
+                v-if="item.imageUrl"
+                :src="item.imageUrl"
+                alt="自訂主視覺"
+                class="w-full h-full object-cover object-center"
+              />
+              <!-- 主圖|預設 -->
+              <template v-else>
+                <img :src="bannerTypeMap[item.bannerType]?.picture" alt="活動主視覺" class="w-full block" />
+                <div :class="bannerTypeMap[item.bannerType]?.position">
+                  <div class="text-white text-shadow-sm text-lg leading-none font-bold">{{ item.Title }}</div>
+                  <div class="text-white text-shadow-sm text-0.6rem leading-none">{{ item.Summary }}</div>
+                </div> 
+              </template>
+            </div>
+            <!-- 中線 -->
+            <div class="bg-gradient-to-r from-[#f2994a] to-[#f2c94c] text-white py-1"></div>
+            <!-- 說明 -->
+            <div class="font-bold px-3 leading-none">
+              <p class="text-gray-400 text-11.5px my-1.5" v-if="item.Category === 5" >活動媒合商：{{ item.StoreName }}</p>
+              <p class=" text-gray-700 text-14.5px my-1.5">活動名稱：{{ item.Title }}</p>
+              <p class="text-gray-400 text-13px my-2">活動時間：{{ item.StartTime?.split?.('T')?.[0] ?? '未填寫' }} ~ {{ item.EndTime?.split?.('T')?.[0] ?? '未填寫' }}</p>
+            </div>
+          </NuxtLink>
+        </div>        
+      </div>
+     
+    <!-- 分頁按鈕 -->
+    <div class="flex justify-center mt-[2rem]">
+      <el-pagination layout="prev, pager, next" :current-page="currentPage" :page-size="itemsPerPage"
+        :total="filteredActivities.length" @current-change="changePage"/>
+    </div>
+  </div>        
+</template>
+
+<script setup>
+  const { $axios } = useNuxtApp();
+  const userToken = useCookie('_PmToken')
+  const jwtStore = useJwtStore()
+
+  // 活動類型
+  const activityCategory = ref(4) // 熱門活動
+  const paginatedCategory = computed(() => {
+    return activityList.value.filter(item => item.Category === activityCategory.value)
+  })
+
+  // 下拉式選單
+  const isDropdownOpen = ref(false)
+  const dropdownRef = ref(null)
+  
+  const platformList = ref([])
+  const platformOptions = computed(() => {
+    return [
+      { label: '全部平台', value: '' },
+      ...platformList.value.map(p => ({
+        label: p.PlatformName,
+        value: p.PlatformId
+      }))
+    ]
+  })
+  
+  const selectedPlatform = ref('')
+  const selectedPlatformLabel = computed(() => {
+    const found = platformOptions.value.find(opt => opt.value === selectedPlatform.value)
+    return found?.label || '全部平台'
+  })
+
+  // 根據媒合商 ID 篩選平台
+  const filteredActivities = computed(() => {
+    return paginatedCategory.value.filter(item => {
+      if (!selectedPlatform.value) return true
+
+      // 只有「媒合商活動」(Category 5)，才會篩選平台
+      if (activityCategory.value === 5) {
+        const selected = platformList.value.find(p => p.PlatformId === selectedPlatform.value)
+        const characterIds = selected?.Characters.map(c => c.Id) || []
+        return characterIds.includes(item.StoreId)
+      }
+
+      return true
+    })
+  })
+
+  function toggleDropdown() {
+    isDropdownOpen.value = !isDropdownOpen.value
+  }
+  function selectPlatform(option) {
+    selectedPlatform.value = option.value
+    currentPage.value = 1
+    isDropdownOpen.value = false
+  }
+  // 點擊外部關閉選單
+  function handleClickOutside(event) {
+    if (dropdownRef.value && !dropdownRef.value.contains(event.target)) {
+      isDropdownOpen.value = false
+    }
+  } 
+  // 分類對應
+   const categoryMap = {
+    4: '熱門活動',
+    5: '媒合商活動',
+    6: '遊戲平台活動資訊',
+  }
+  // 按鈕寬度
+  const btnWidthMap = {
+    4: 'sm:min-w-[98px]',
+    5: 'sm:min-w-[115px]',
+    6: 'sm:min-w-[162px]',
+  }
+
+   // 分頁計算
+  const currentPage = ref(1);
+  const itemsPerPage = 9;
+
+  const paginatedActivities = computed(() => {
+    const now = new Date()
+
+    // 篩掉已結束的非熱門活動
+    const visibleItems = filteredActivities.value
+      .map(item => {
+        const startDate = new Date(item.StartTime.replaceAll('/', '-'))
+        const endDate = new Date(item.EndTime.replaceAll('/', '-'))
+
+        
+        const notStarted = startDate > now
+        const isEnded = endDate < now
+
+        return {
+          ...item,
+          isEnded,
+          notStarted,
+          _endDate: endDate
+        }
+      })
+      .filter(item => {
+        // 所有活動若尚未開始都不顯示
+        if (item.notStarted) return false
+        // 非熱門活動，且已結束也不顯示
+        if (item.Category !== 4 && item.isEnded) return false
+
+        return true
+    })
+ 
+    const start = (currentPage.value - 1) * itemsPerPage
+    const end = start + itemsPerPage
+    return visibleItems.slice(start, end)
+  })
+
+  // 切換頁面
+  function changePage(page) {
+    currentPage.value = page
+  };
+
+  // 取得遊戲平台資訊
+  let token = userToken.value
+
+  async function fetchGameList() {
+    if (token === '') {
+      token = await jwtStore.generateToken();
+    }
+    try {
+      const response = await $axios.post(
+        '/api/v1/Pmatch/GetPlatformAndCharacterList',
+        {},
+        {
+          headers: {
+            Authorization: token // 帶上 Token
+          }
+        }
+      );
+      const data = response.data?.Data ?? []
+
+      platformList.value = data
+
+    } catch (error) {
+      console.error('請求失敗:', error);
+      data.value = '無法取得資料。';
+    }
+  }
+
+  // 配對平台ID
+  function getCharacterById(id) {
+    for (const platform of platformList.value) {
+      const match = platform.Characters.find(c => c.Id === id)
+      if (match) return match.Name
+    }
+    return '' // 找不到商店回傳空字串
+  }
+
+  // 取得活動資料
+  const activityList = ref([]);
+
+  async function fetchAdvertisementList() {
+    try {      
+      if (!token || token === '') {
+        token = await jwtStore.generateToken()
+      }
+      const response = await $axios.post(
+        '/api/v1/Pmatch/GetAdvertisementList',
+        {
+            "Category": [4, 5, 6] // 4: 熱門活動； 5：媒合商活動； 6：遊戲平台活動資訊；
+        },
+        {
+          headers: {
+            Authorization: token,
+          }
+        }
+      )
+      const data = response.data?.Data ?? []
+
+      activityList.value = data.map(item => {
+        const { imageUrl, bannerType, background } = parseImgFile(item.ImgFile)
+
+        return {
+          ...item,
+          category: categoryMap[item.Category],
+          imageUrl,
+          bannerType,
+          background,
+          StoreName: getCharacterById(item.StoreId)
+        }
+      })
+      
+      // 先將 isTop 為 true 的放前面，並各自按 CreateTime 新 → 舊排序
+      const topItems = allItems
+        .filter(item => item.IsTop)
+        .sort((a, b) => new Date(b.CreateTime) - new Date(a.CreateTime))
+
+      const normalItems = allItemsF
+        .filter(item => !item.IsTop)
+        .sort((a, b) => new Date(b.CreateTime) - new Date(a.CreateTime))
+
+      // 合併為最後列表
+      activityList.value = [...topItems, ...normalItems]
+
+    } catch (error) {
+      console.error('請求失敗：', error);
+      data.value = '無法取得資料。';
+    }
+  }
+
+  // 解析圖片 url 字串
+  function parseImgFile(imgFile) {
+    const preset = {
+      imageUrl: '',
+      bannerType: 0,
+      background: 0
+    }
+    if (!imgFile || typeof imgFile !== 'string') return preset
+    const assetsUrl = useCookie('_PmAssetsUrl').value || ''
+
+    // case 1: 主題編號_背景編號
+    const defaultImage = imgFile.match(/^pmatch(\d)_(\d)$/)
+    if (defaultImage) {
+      const x = parseInt(defaultImage[1], 10)
+      const y = parseInt(defaultImage[2], 10)
+      return {
+        imageUrl: '',
+        bannerType: x >= 1 && x <= 9 ? x : preset.bannerType,
+        background: y >= 0 && y <= 8 ? y : preset.background
+      }
+    }
+    // case 2: 圖片路徑_背景編號 (從最後的底線判斷)
+    const customImage = imgFile.lastIndexOf('_')
+    if (customImage  > -1) {
+      const url = imgFile.slice(0, customImage )
+      const bg = parseInt(imgFile.slice(customImage  + 1), 10)
+
+      if (!isNaN(bg)) {
+        return {
+          imageUrl: `${assetsUrl}${url}`,
+          bannerType: 0,
+          background: bg >= 0 && bg <= 8 ? bg : preset.background
         }
       }
-    );
-    if (response.data.Status.Code === 0) {
-      Object.assign(memberDetail, response.data.Data[0]);
     }
-  } catch (error) {
-    console.log(`GetMemberDetail error:${error}`);
+    return preset
   }
-};
-const GetMemberActivityData = async () => {
-  try {
-    const response = await $axios.post(
-      '/api/v1/Pmatch/GetMemberActivityData',
-      {
-        PlatformNames: [
-          '寶島娛樂城',
-          '聚寶Online',
-          '錢街Online',
-          '滿貫大亨',
-          '金好運娛樂城'
-        ]
-      },
-      {
-        headers: {
-          Authorization: token.value
-        }
-      }
-    );
-    if (response.data.Status.Code === 0) {
-      // Object.assign(activityData, response.data.Data[0]);
-      response.data.Data.forEach(item => {
-        activityData[item.PlatformName] = item;
-      });
+
+  // 主題樣式
+  const bannerTypeMap = {
+    1: {
+      picture: '/activity/banner_1.png',
+      position: 'absolute top-20% right-4% flex flex-col items-end gap-2'
+    },
+    2: {
+      picture: '/activity/banner_2.png',
+      position: 'absolute bottom-5% left-3% flex flex-col items-start gap-2'
+    },
+    3: {
+      picture: '/activity/banner_3.png',
+      position: 'absolute bottom-6% right-2.5% flex flex-col items-end gap-2'
+    },
+    4: {
+      picture: '/activity/banner_4.png',
+      position: 'absolute bottom-2% right-3% flex flex-col items-end gap-2'
+    },
+    5: {
+      picture: '/activity/banner_5.png',
+      position: 'absolute bottom-6% right-3% flex flex-col items-end gap-2'
+    },
+    6: {
+      picture: '/activity/banner_6.png',
+      position: 'absolute bottom-5% left-3% flex flex-col items-start gap-2'
+    },
+    7: {
+      picture: '/activity/banner_7.png',
+      position: 'absolute bottom-3% right-3% flex flex-col items-end gap-2'
+    },
+    8: {
+      picture: '/activity/banner_8.png',
+      position: 'absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%] flex flex-col items-center gap-2 w-[90%] '
+    },
+    9: {
+      picture: '/activity/banner_9.png',
+      position: 'absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%] flex flex-col items-center gap-2 w-[90%] '
     }
-  } catch (error) {
-    console.log(`GetMemberDetail error:${error}`);
-  }
-};
-onMounted(async () => {
-  if (
-    memberId.value !== '' &&
-    memberId.value !== null &&
-    memberId.value !== undefined &&
-    token.value !== '' &&
-    token.value !== null &&
-    token.value !== undefined
-  ) {
-    await GetMemberActivityData();
-    await GetMemberDetail();
-  }
-  router.replace({
-    query: {
-      openExternalBrowser: 1
-    }
-  });
-});
-definePageMeta({
-  middleware: () => navigateTo('/')
-})
+  };
+
+  onMounted(async () => {
+    await fetchGameList()
+    await fetchAdvertisementList()
+    document.addEventListener('click', handleClickOutside)    
+  })
+  onBeforeUnmount(() => {
+    document.removeEventListener('click', handleClickOutside)
+  })
 </script>
+
 <style scoped>
-.tab-btn {
-  border: none;
-  position: relative;
-  border-radius: .8vw .8vw 0 0;
-  background: linear-gradient(180deg, #FFEABE 0%, #DD9600 100%);
-  padding: .4vw;
-  color: #FFEABC;
-  font-size: 1.47vw;
-  overflow: hidden;
-  cursor: pointer;
-}
-.tab-btn::before {  
-  position: absolute;
-  top: .45vw;
-  left: .45vw;
-  right: .45vw;
-  bottom: 0;
-  border-radius: .5vw .5vw 0 0;
-  background: linear-gradient(180deg, #FF5F5F 0%, #C60000 50%, #600000 100%);
-  /* 文字置中 */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.tab-btn.active::before {
-  position: absolute;
-  top: .45vw;
-  left: .45w;
-  right: .45vw;
-  bottom: 0;
-  border-radius: .5vw .5vw 0 0;
-  background: linear-gradient(180deg, #FF8D8B 1.92%, #DD3131 50%, #A70000 100%);
-}
-.tab-btn.page1::before {
-  content: "活動內容";
-}
-.tab-btn.page2::before {
-  content: "推薦碼運作說明";
-}
-.tab-btn.page3::before {
-  content: "推薦碼綁定流程";
-}
-.tab-btn.page4::before {
-  content: "活動媒合商一覽";
-}
-.non-active {
-  &:hover {
-    filter: brightness(1.1);
+  .font-events {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   }
-}
-.main-btn {
-  background-color: #f72585;
-  border: .25vw solid #b70096;
-  border-radius: 5vw;
-  color: white;
-  font-weight: 500;
-  font-size: 1.9vw;
-  box-shadow: inset 0 -2vw 3vw 0 rgba(0, 0, 0, 0.1),
-    inset 0 2vw 3vw 0 rgba(255, 255, 255, 0.1);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  &:hover {
-    filter: brightness(1.1);
+  .dot1 {
+    position: absolute;
+    width: 25%;
+    right: 0;
+    top: 0;
   }
-  &:active {
-    filter: brightness(.9);
+  .dot2 {
+    position: absolute;
+    width: 25%;
+    left: 0;
+    top: 20%;
   }
-}
-#page1 {
-  background-image: 
-    url('/activity/天降好禮.png'),
-    linear-gradient(180deg, #0003A9 0%, #006FE6 74.95%);
-  aspect-ratio: 4143/8872;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: top;
-  position: relative;
-  width: 100%;
-}
-#innerPage1 {
-  background-image: url('/activity/分頁1.png');
-  aspect-ratio: 1579/5083;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  position: absolute;
-  min-width: 47.9%;
-  top: 14.703%;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1;
-}
-.mask::before {  
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: 0 0 .4vw 0;
-  font-weight: 550;
-  background: linear-gradient(180deg, #FF8D8B 1.92%, #DD3131 50%, #A70000 100%);
-  opacity: 0.5;
-  color: #fff;
-  content: "請登入後查看";
-  /* 文字置中 */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.game-btn {
-  background-image: linear-gradient(to bottom, #7b2cbf, #2587ff);
-  border: .25vw solid #541d84;
-  border-radius: 5vw;
-  color: white;
-  font-weight: 500;
-  font-size: 1.9vw;
-  text-align: center;
-  cursor: pointer;
-  &:hover {
-    background-image: linear-gradient(to bottom, #2587ff, #7b2cbf);
-    filter: brightness(1.1);
+  .navGradient {
+    background: linear-gradient(to right, #FFBB00 75%, #FFE9AC 100%);
+    box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.5);
   }
-  &:active {
-    background-image: linear-gradient(to bottom, #2587ff, #7b2cbf);
-    filter: brightness(.9);
+  :deep(.el-pager > .number) {
+    color: #f72585;
+    margin: 0 5px;
+    font-size: 20px;
   }
-}
-#page2 {
-  background-image: 
-    url('/activity/天降好禮.png'),
-    linear-gradient(180deg, #0003A9 0%, #006FE6 74.95%);
-  aspect-ratio: 4143/13091;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: top;
-  position: relative;
-  width: 100%;
-}
-#innerPage2 {
-  min-width: 47.9%;
-  background-image: url('/activity/分頁2.png'); 
-  aspect-ratio: 1579/8459;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;    
-  position: absolute;
-  top: 9.827%;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1;
-}
-#page3 {
-  background-image: 
-    url('/activity/天降好禮.png'),
-    linear-gradient(180deg, #0003A9 0%, #006FE6 74.95%);
-  aspect-ratio: 4143/9768;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: top;
-  position: relative;
-  width: 100%;
-}
-#innerPage3 {
-  min-width: 47.9%;
-  background-image: url('/activity/分頁3.png');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  position: absolute;
-  aspect-ratio: 1579/5805;
-  top: 13.191%;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1;
-}
-#page4 {
-  background-image: 
-    url('/activity/天降好禮.png'),
-    linear-gradient(180deg, #0003A9 0%, #006FE6 74.95%);
-  aspect-ratio: 4143/5270;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: top;
-  position: relative;
-  width: 100%;
-}
-#innerPage4 {
-  background-image: url('/activity/分頁4.png');
-  aspect-ratio: 1579/2222;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: centrer;
-  position: absolute;
-  min-width: 47.9%;
-  top: 24.41%;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1;
-}
-@media screen and (max-width: 767px) {
-  .tab-btn {
-  font-size: 2.2vw;
-  white-space: nowrap;
+  :deep(.el-pagination > .btn-prev > .el-icon) {
+    color: #f72585;
+    font-size: 20px;
+    margin: 0 5px;
   }
-  .tab-btn::before {  
-    top: .75vw;
-    left: .75vw;
-    right: .75vw;
+  :deep(.el-pagination > .btn-next > .el-icon) {
+    color: #f72585;
+    font-size: 20px;
+    margin: 0 5px;
   }
-  .tab-btn.active::before {
-    top: .75vw;
-    left: .75w;
-    right: .75vw;
+  :deep(.el-pagination) {
+    --el-pagination-bg-color: rgba(0, 0, 0, 0);
+    --el-pagination-button-disabled-bg-color: rgba(0, 0, 0, 0);
   }
-  .main-btn,.game-btn {
-  font-size: 3.2vw;
-  white-space: nowrap;
-  border-width: .45vw;
-  }  
-  #page1 {
-    width: 100%;
-    background-image: url('/activity/行動版背景1.png');
-    aspect-ratio: 1904/7207;
+  :deep(.el-pager > .is-active) {
+    background: linear-gradient(to right, #4361ee, #f72585);
+    border-radius: 50%;
+    color: #fff;
   }
-  #innerPage1 {
-    min-width: unset;
-    width: 83%;
-    top: 13.4%;
-    left: 50%;
-  }
-  .mask::before {  
-    border-radius: 0 0 .6vw 0;
-  }
-  #page2 {
-    width: 100%;
-    background-image: url('/activity/行動版背景2.png');
-    aspect-ratio: 1904/10609;
-  }
-  #innerPage2 {
-    min-width: unset;
-    width: 83%;
-    top: 8.95%;
-    left: 50%;
-  }
-  #page3 {
-    width: 100%;
-    background-image: url('/activity/行動版背景3.png');
-    aspect-ratio: 1904/7914;
-  }
-  #innerPage3 {
-    min-width: unset;
-    background-image: url('/activity/分頁3-m.png');
-    width: 83%;
-    top: 12.04%;
-    left: 50%;
-  }
-  #page4 {
-    width: 100%;
-    background-image: url('/activity/行動版背景4.png');
-    aspect-ratio: 1904/4328;
-  }
-  #innerPage4 {
-    min-width: unset;
-    width: 83%;
-    top: 21.95%;
-    left: 50%;
-  }
-}
 </style>
