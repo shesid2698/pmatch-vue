@@ -212,6 +212,13 @@ onMounted(async () => {
       },
       {
         id: 2,
+        title: '活動專區',
+        link: '/activity',
+        className: 'nav0',
+        icon: ''
+      },
+      {
+        id: 3,
         title: '聊聊天',
         link: '#',
         icon: '',
@@ -226,7 +233,7 @@ onMounted(async () => {
       //     className: 'nav2'
       // },
       {
-        id: 3,
+        id: 4,
         title: `Hi , ${userNameCookie.value}`,
         link: '#',
         icon: '',
@@ -243,9 +250,16 @@ onMounted(async () => {
       //   icon: ''
       // },
       {
-        id: 2,
+        id: 1,
         title: '幫助中心',
         link: '/helpcenter',
+        className: 'nav0',
+        icon: ''
+      },
+      {
+        id: 2,
+        title: '活動專區',
+        link: '/activity',
         className: 'nav2',
         icon: ''
       },

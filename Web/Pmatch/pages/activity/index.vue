@@ -313,7 +313,7 @@
       )
       const data = response.data?.Data ?? []
 
-      activityList.value = data.map(item => {
+      const newData = data.map(item => {
         const { imageUrl, bannerType, background } = parseImgFile(item.ImgFile)
 
         return {
@@ -327,11 +327,11 @@
       })
       
       // 先將 isTop 為 true 的放前面，並各自按 CreateTime 新 → 舊排序
-      const topItems = allItems
+      const topItems = newData
         .filter(item => item.IsTop)
         .sort((a, b) => new Date(b.CreateTime) - new Date(a.CreateTime))
 
-      const normalItems = allItemsF
+      const normalItems = newData
         .filter(item => !item.IsTop)
         .sort((a, b) => new Date(b.CreateTime) - new Date(a.CreateTime))
 
