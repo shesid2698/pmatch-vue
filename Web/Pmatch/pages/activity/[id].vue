@@ -301,16 +301,21 @@
     8: 'shadow-[inset_0_-4px_6px_rgba(160,120,200,0.2)] bg-gradient-to-b from-[#FAF0FF] to-[#D8BFE6]'
   };
 
+  // 跳回媒合商活動
+  const activityCategory = useState('activityCategory', () => 4)
+
   // 跳轉回列表頁
   const goToActivity = () => {
-      window.location.href = '/activity';
+    activityCategory.value = 5
+    const router = useRouter()
+    router.push('/activity')
   };
 
   onMounted(async () => {
     await fetchGameList()
     await nextTick()
     await fetchAdvertisementList()
-  })
+  });
 </script>
 
 <style scoped>

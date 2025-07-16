@@ -144,7 +144,7 @@
   const jwtStore = useJwtStore()
 
   // 活動類型
-  const activityCategory = ref(4) // 熱門活動
+  const activityCategory = useState('activityCategory', () => 4)  // 熱門活動
   const paginatedCategory = computed(() => {
     return activityList.value.filter(item => item.Category === activityCategory.value)
   })
