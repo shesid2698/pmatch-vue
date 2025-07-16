@@ -55,10 +55,8 @@
         <!-- 商店區塊 -->
         <div class="flex items-center gap-4 bg-gradient-to-r from-[#E4AF47] to-[#E68600] text-white py-3.25 px-4">
           <NuxtLink
-            :href="activityItem.Url ? activityItem.Url : '#'"
+            :to="`/findmatch/${activityItem.StoreId}`"
             class="inline-flex items-center gap-4 no-underline text-inherit hover:text-inherit focus:outline-none"
-            :class="activityItem.Url ? '' : 'cursor-default '"
-            :target="activityItem.Url ? '_blank' : ''"
           >
             <img v-if="activityItem.storeImage" :src="activityItem.storeImage" alt="商店圖示" class="w-23.75 h-23.75" />
             <div>
