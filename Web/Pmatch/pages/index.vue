@@ -325,7 +325,7 @@ character, index2
               <h2 class="serviceItemsTitle font-size-30px m-0 mb-5">
                 {{ item.title }}
               </h2>
-              <h4 class="m-0 font-size-15px">
+              <h4 class="m-0 font-size-20px">
                 {{ item.detail }}
               </h4>
             </div>
