@@ -74,19 +74,28 @@
       bannerType: 0,
       background: 0
     }
-    if (!imgFile || typeof imgFile !== 'string') return preset
+      console.log('[parseImgFile] 傳入 imgFile:', imgFile)
+
+    if (!imgFile || typeof imgFile !== 'string') {
+      console.log('[parseImgFile] ❌ 無效 imgFile，回傳預設', preset)
+      return preset
+    }
+    // if (!imgFile || typeof imgFile !== 'string') return preset
 
     // case 1: 主題編號_背景編號
     const defaultImage = imgFile.match(/^pmatch(\d)_(\d)$/)
     if (defaultImage) {
       const x = parseInt(defaultImage[1], 10)
       const y = parseInt(defaultImage[2], 10)
-      return {
+      const result = {
         imageUrl: '',
         bannerType: x >= 1 && x <= 9 ? x : preset.bannerType,
         background: y >= 0 && y <= 8 ? y : preset.background
       }
+      console.log('[parseImgFile] 🎯 default pattern 命中:', result)
+      return result
     }
+
     // case 2: 圖片路徑_背景編號 (從最後的底線判斷)
     const customImage = imgFile.lastIndexOf('_')
     if (customImage  > -1) {
@@ -94,18 +103,23 @@
       const bg = parseInt(imgFile.slice(customImage  + 1), 10)
 
       if (!isNaN(bg)) {
-        return {
+        const result = {
           imageUrl: `${assetsUrl}${url}`,
           bannerType: 0,
           background: bg >= 0 && bg <= 8 ? bg : preset.background
         }
+      console.log('[parseImgFile] 🖼️ 自訂圖片命中:', result)
+      return result
       }
     }
+    
+    console.log('[parseImgFile] ❓ 無符合規則，回傳預設:', preset)
     return preset
   }
 
   // 將 query string 還原成活動資料物件 
   const query = route.query;
+    console.log('[route.query]', route.query)
 
   const activityItem = {
     Title: decodeURIComponent(query.Title || ''),
@@ -125,6 +139,8 @@
   activityItem.imageUrl = imageUrl
   activityItem.bannerType = bannerType
   activityItem.background = background
+    console.log('[activityItem]', activityItem)
+
 
   activityList.value = [
     {
@@ -182,6 +198,12 @@
     7: 'shadow-[inset_0_-4px_6px_rgba(180,180,0,0.1)] bg-gradient-to-b from-[#FDFFEB] to-[#F5FF9F]',
     8: 'shadow-[inset_0_-4px_6px_rgba(160,120,200,0.2)] bg-gradient-to-b from-[#FAF0FF] to-[#D8BFE6]'
   };
+
+  watchEffect(() => {
+    console.log('[watchEffect] imageUrl 是否有值：', activityItem.imageUrl)
+    console.log('[watchEffect] bannerType:', activityItem.bannerType)
+    console.log('[watchEffect] bannerTypeMap 對應:', bannerTypeMap[activityItem.bannerType])
+  });
 </script>
 
 <style scoped>
