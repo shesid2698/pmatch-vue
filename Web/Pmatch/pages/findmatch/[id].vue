@@ -474,9 +474,17 @@ const readContact = () => {
   readContract.value = true;
 };
 
+const now = new Date();
+
 const storeActivities = computed(() =>
-  activityList.value.filter(item => String(item.StoreId) === String(route.params.id))
-);
+  activityList.value.filter(item => {
+    const isSameStore = String(item.StoreId) === String(route.params.id);
+    const start = new Date(item.StartTime);
+    const end = new Date(item.EndTime);
+    const isOngoing = start <= now && now <= end;
+    return isSameStore && isOngoing;
+  })
+)
 
   // 解析圖片 url 字串
   function parseImgFile(imgFile) {
@@ -591,17 +599,6 @@ const storeActivities = computed(() =>
       position: 'absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%] flex flex-col items-center gap-2 w-[90%] '
     }
   };
-  const backgroundMap = {
-    0: 'shadow-[inset_0_-4px_6px_rgba(0,0,0,0.07)] bg-white',
-    1: 'shadow-[inset_0_-4px_6px_rgba(59,91,196,0.08)] bg-gradient-to-b from-[#FEFEFE] to-[#e6ecfc]',
-    2: 'shadow-[inset_0_-4px_6px_rgba(255,197,0,0.15)] bg-gradient-to-b from-[#FFFBF0] to-[#FFF0C7]',
-    3: 'shadow-[inset_0_-4px_6px_rgba(0,0,0,0.06)] bg-[#FAFAFA]',
-    4: 'shadow-[inset_0_-4px_6px_rgba(0,180,150,0.12)] bg-gradient-to-b from-[#E3FFFA] to-[#B1FFF1]',
-    5: 'shadow-[inset_0_-4px_6px_rgba(255,105,135,0.12)] bg-gradient-to-b from-[#FFF0F6] to-[#FFD6E5]',
-    6: 'shadow-[inset_0_-4px_6px_rgba(255,120,80,0.12)] bg-gradient-to-b from-[#FFEEE6] to-[#FFD2BF]',
-    7: 'shadow-[inset_0_-4px_6px_rgba(180,180,0,0.1)] bg-gradient-to-b from-[#FDFFEB] to-[#F5FF9F]',
-    8: 'shadow-[inset_0_-4px_6px_rgba(160,120,200,0.2)] bg-gradient-to-b from-[#FAF0FF] to-[#D8BFE6]'
-  };  
 
 onMounted(async () => {
   await setPageLoading(true);
@@ -634,6 +631,7 @@ onMounted(async () => {
       if (token != '') {
         await fetchStoresDetailData(token);
         await fetchGameList(token);
+        await fetchAdvertisementList(token);
       }
     }
     const root = platformCarousel.value?.$el;

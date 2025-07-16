@@ -260,8 +260,8 @@
   let token = userToken.value
 
   async function fetchGameList() {
-    if (token === '') {
-      token = await jwtStore.generateToken();
+    if (!token || token === '') {
+      token = await jwtStore.generateToken()
     }
     try {
       const response = await $axios.post(
@@ -423,13 +423,15 @@
   };
 
   onMounted(async () => {
-    await fetchGameList()
-    await fetchAdvertisementList()
+    await fetchGameList(token)
+    await nextTick()
+    await fetchAdvertisementList(token)
     document.addEventListener('click', handleClickOutside)    
-  })
+
+  });
   onBeforeUnmount(() => {
     document.removeEventListener('click', handleClickOutside)
-  })
+  });
 </script>
 
 <style scoped>
