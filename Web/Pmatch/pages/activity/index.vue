@@ -86,7 +86,8 @@
           <NuxtLink
             v-for="item in paginatedActivities"
             :key="item.Id"
-            :to="`/activity/${item.Id}`" 
+            :to="activityCategory === 5 ? `/activity/${item.Id}` : item.Url"
+            :target="activityCategory !== 5 && item.IsOpenWindow ? '_blank' : '_self'"
             class="relative border rounded-md overflow-hidden bg-white transition-all block no-underline shadow-md hover:shadow-lg hover:cursor-pointer"
           >
             <!-- 置頂標籤 -->

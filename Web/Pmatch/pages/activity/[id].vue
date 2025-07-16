@@ -170,7 +170,7 @@
       const response = await $axios.post(
         '/api/v1/Pmatch/GetAdvertisementList',
         {
-            "Category": [4, 5, 6] // 4: 熱門活動； 5：媒合商活動； 6：遊戲平台活動資訊；
+            "Category": [5] // 5：媒合商活動；
         },
         {
           headers: {
