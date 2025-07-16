@@ -53,17 +53,17 @@
 
 
         <!-- 商店區塊 -->
-        <div class="flex items-center gap-4 bg-gradient-to-r from-[#f2994a] to-[#f2c94c] text-white py-3 px-4">
+        <div class="flex items-center gap-4 bg-gradient-to-r from-[#E4AF47] to-[#E68600] text-white py-3.25 px-4">
           <NuxtLink
             :href="activityItem.Url ? activityItem.Url : '#'"
             class="inline-flex items-center gap-4 no-underline text-inherit hover:text-inherit focus:outline-none"
             :class="activityItem.Url ? '' : 'cursor-default '"
             :target="activityItem.Url ? '_blank' : ''"
           >
-            <img v-if="activityItem.storeImage" :src="activityItem.storeImage" alt="商店圖示" class="w-16 h-16" />
+            <img v-if="activityItem.storeImage" :src="activityItem.storeImage" alt="商店圖示" class="w-23.75 h-23.75" />
             <div>
-              <div class="text-5xl mb-1">{{ activityItem.storeName }}</div>
-              <div class="text-md">活動時間：{{ activityItem.StartTime?.split?.('T')?.[0] ?? '未填寫' }}~{{ activityItem.EndTime?.split?.('T')?.[0] ?? '未填寫' }}</div>
+              <div class="text-6xl mb-1.5">{{ activityItem.storeName }}</div>
+              <div class="text-2xl">活動時間：{{ activityItem.StartTime?.split?.('T')?.[0] ?? '未填寫' }}~{{ activityItem.EndTime?.split?.('T')?.[0] ?? '未填寫' }}</div>
             </div>
           </NuxtLink>
         </div>

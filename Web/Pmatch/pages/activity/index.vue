@@ -37,7 +37,7 @@
           </div>
         </div>
         <!-- 下拉選單(媒合商活動) -->
-        <div v-if="activityCategory === 5" ref="dropdownRef" class="relative inline-block w-32 my-2">
+        <div v-if="activityCategory === 5" ref="dropdownRef" class="relative inline-block w-36 my-2">
           <!-- 主按鈕 -->
           <div
             class="flex justify-between items-center border rounded-xl px-3 py-1.25 text-sm cursor-pointer transition-all border-solid border-[#FFBB00]"
@@ -78,7 +78,7 @@
         </div>
         
         <template v-else>
-          <div class="w-32 h-[32px] my-2"></div>
+          <div class="w-36 h-[32px] my-2"></div>
         </template>
 
         <!-- 活動卡片區塊 -->
