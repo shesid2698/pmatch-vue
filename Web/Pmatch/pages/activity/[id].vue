@@ -303,7 +303,6 @@
 
   onMounted(async () => {
     await fetchGameList()
-    await nextTick()
     await fetchAdvertisementList()
   });
 </script>
