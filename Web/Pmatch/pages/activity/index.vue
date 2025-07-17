@@ -92,7 +92,7 @@
         >
           <!-- 置頂標籤 -->
           <img
-            v-if="item.IsTop"
+            v-if="item.IsTop && !item.isEnded"
             src="/activity/is_top.svg"
             alt="置頂"
             class="absolute md:top-9px md:w-8 lg:top-12px lg:w-10 top-12px w-10 left-[-4px] z2"
@@ -167,20 +167,13 @@
       }
     })
   }
-  // 下拉選單顯示的平台（根據可顯示的商店判斷）
-  const filteredActivities = computed(() => {
-    return visibleItems(paginatedCategory.value).filter(item => {
-      if (item.notStarted) return false
-      if (item.Category !== 4 && item.isEnded) return false
-      return true
-    })
-  })
-
-  // 列表顯示的活動（根據下拉式選單顯示媒合商活動）
+  // 當前畫面顯示列表
   const visibleActivities= computed(() => {
-    return visibleItems(paginatedCategory.value).filter(item => {
+    const items = visibleItems(paginatedCategory.value).filter(item => {
       if (item.notStarted) return false
+      // 只顯示進行中的活動 (熱門活動除外)
       if (item.Category !== 4 && item.isEnded) return false
+      // 媒合商活動 根據下拉式選單顯示媒合商活動）
       if (activityCategory.value === 5 && selectedPlatform.value) {
         const selected = platformList.value.find(p => p.PlatformId === selectedPlatform.value)
         if (!selected) return false
@@ -189,12 +182,19 @@
       }
       return true
     })
+    // 熱門活動 排序「進行中 > 已結束」
+    return items.slice().sort((a, b) => {
+      if (a.Category === 4 && b.Category === 4) {
+        if (a.isEnded !== b.isEnded) return a.isEnded ? 1 : -1
+      }
+      return 0
+    })
   })
 
   // 下拉式選單
   const isDropdownOpen = ref(false)
-  const dropdownRef = ref(null)
-  
+  const dropdownRef = ref(null)  
+
   const platformList = ref([])
   const platformOptions = computed(() => {
     // 只在媒合商活動時套用篩選
@@ -203,8 +203,8 @@
     }
     // 收集目前活動中出現過的 StoreId
     const usedPlatformIds = new Set(
-      filteredActivities.value
-        .filter(item => item.Category === 5)
+      visibleItems(paginatedCategory.value)
+        .filter(item => !item.notStarted && !item.isEnded && item.Category === 5)
         .map(item => item.StoreId)
     )
     // 從 platformList 中找出有包含 StoreId 的 Platform
@@ -338,14 +338,14 @@
         }
       })
       
-      // 先將 isTop 為 true 的放前面，並各自按 CreateTime 新 → 舊排序
+      // 先將 isTop 為 true 的放前面，並各自按 StartTime 新 → 舊排序
       const topItems = newData
         .filter(item => item.IsTop)
-        .sort((a, b) => new Date(b.CreateTime) - new Date(a.CreateTime))
+        .sort((a, b) => new Date(b.StartTime) - new Date(a.StartTime))
 
       const normalItems = newData
         .filter(item => !item.IsTop)
-        .sort((a, b) => new Date(b.CreateTime) - new Date(a.CreateTime))
+        .sort((a, b) => new Date(b.StartTime) - new Date(a.StartTime))
 
       // 合併為最後列表
       activityList.value = [...topItems, ...normalItems]
