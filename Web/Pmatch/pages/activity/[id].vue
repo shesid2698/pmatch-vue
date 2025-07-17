@@ -35,17 +35,9 @@
                 class="w-full block"
               />
               <div :class="bannerTypeMap[activityItem.bannerType]?.position">
-                <div class="text-white text-shadow-md text-md">
-                  活動時間：{{ activityItem.StartTime?.split?.('T')?.[0] ?? '未填寫' }}
-                  ~
-                  {{ activityItem.EndTime?.split?.('T')?.[0] ?? '未填寫' }}
-                </div>
-                <div class="text-white text-shadow-md text-6xl mb-1 font-bold">
-                  {{ activityItem.Title }}
-                </div>
-                <div class="text-white text-shadow-md text-4xl">
-                  {{ activityItem.Summary }}
-                </div>
+                <div class="text-white text-shadow-md text-[16px] leading-none">活動時間：{{ activityItem.StartTime?.split?.('T')?.[0] ?? '未填寫' }} ~ {{ activityItem.EndTime?.split?.('T')?.[0] ?? '未填寫' }}</div>
+                <div class="text-white text-shadow-md text-[64px] leading-none mb-0.5 font-bold">{{ activityItem.Title }}</div>
+                <div class="text-white text-shadow-md text-[36px] leading-none">{{ activityItem.Summary }}</div>
               </div>
             </div>
           </template>
@@ -252,7 +244,7 @@
   const bannerTypeMap = {
     1: {
       picture: '/activity/banner_1.png',
-      position: 'absolute top-5.5% right-4% flex flex-col items-end gap-2'
+      position: 'absolute top-8.5% right-4% flex flex-col items-end gap-2'
     },
     2: {
       picture: '/activity/banner_2.png',
@@ -260,23 +252,23 @@
     },
     3: {
       picture: '/activity/banner_3.png',
-      position: 'absolute bottom-9% right-2.5% flex flex-col items-end gap-2'
+      position: 'absolute bottom-10.75% right-2.5% flex flex-col items-end gap-2'
     },
     4: {
       picture: '/activity/banner_4.png',
-      position: 'absolute bottom-4% right-3% flex flex-col items-end gap-2'
+      position: 'absolute bottom-5.25% right-2% flex flex-col items-end gap-2'
     },
     5: {
       picture: '/activity/banner_5.png',
-      position: 'absolute bottom-8% right-3% flex flex-col items-end gap-2'
+      position: 'absolute bottom-9.5% right-2% flex flex-col items-end gap-2'
     },
     6: {
       picture: '/activity/banner_6.png',
-      position: 'absolute bottom-7% left-3% flex flex-col items-start gap-2'
+      position: 'absolute bottom-8.5% left-3% flex flex-col items-start gap-2'
     },
     7: {
       picture: '/activity/banner_7.png',
-      position: 'absolute bottom-4.5% right-3% flex flex-col items-end gap-2'
+      position: 'absolute bottom-5.5% right-2.25% flex flex-col items-end gap-2'
     },
     8: {
       picture: '/activity/banner_8.png',
