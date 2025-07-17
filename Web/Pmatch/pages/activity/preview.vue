@@ -8,7 +8,7 @@
     <Meta property="og:description" content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
   </Head>
 
-  <div class="mt-5rem max-w-1000px m-auto page font-events mb-[-6rem]">
+  <div class="mt-2.5rem max-w-1000px m-auto page font-events mb-[-6rem]">
       <!-- 成功獲取資料時 -->
       <div v-if="activityItem">
         <div class="relative aspect-[25/7] overflow-hidden">
@@ -33,17 +33,17 @@
         </div>
 
         <!-- 商店區塊 -->
-        <div class="bg-gradient-to-r from-[#f2994a] to-[#f2c94c] text-white py-3 px-4">
+        <div class="bg-gradient-to-r from-[#E4AF47] to-[#E68600] text-white py-4 px-4">
           <NuxtLink
             :href="activityItem.Url ? activityItem.Url : '#'"
             class="inline-flex items-center gap-4 no-underline text-inherit hover:text-inherit focus:outline-none"
             :class="activityItem.Url ? '' : 'cursor-default '"
             :target="activityItem.Url ? '_blank' : ''"
           >
-            <img v-if="activityItem.storeImage" :src="activityItem.storeImage" alt="商店圖示" class="w-16 h-16" />
+            <img v-if="activityItem.storeImage" :src="activityItem.storeImage" alt="商店圖示" class="w-[95px] h-[95px]" />
             <div class="">
-              <div class="text-5xl mb-1">{{ activityItem.storeName }}</div>
-              <div class="text-md">活動時間：{{ activityItem.StartTime?.split?.('T')?.[0] ?? '未填寫' }} ~ {{ activityItem.EndTime?.split?.('T')?.[0] ?? '未填寫' }}</div>
+              <div class="text-[64px] leading-none mb-2">{{ activityItem.storeName }}</div>
+              <div class="text-[24px] leading-none">活動時間：{{ activityItem.StartTime?.split?.('T')?.[0] ?? '未填寫' }} ~ {{ activityItem.EndTime?.split?.('T')?.[0] ?? '未填寫' }}</div>
             </div>
           </NuxtLink>
         </div>

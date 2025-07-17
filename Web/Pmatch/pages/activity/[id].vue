@@ -15,7 +15,7 @@
     <img src="/images/bg-dot04.png" width="100%" alt="">
   </div>
 
-  <div class="mt-5rem max-w-1000px m-auto page font-events">
+  <div class="mt-2.5rem max-w-1000px m-auto page font-events">
       <!-- 成功獲取資料時 -->
       <template v-if="activityItem">
         <div class="relative aspect-[25/7] overflow-hidden">
@@ -53,15 +53,15 @@
 
 
         <!-- 商店區塊 -->
-        <div class="flex items-center gap-4 bg-gradient-to-r from-[#E4AF47] to-[#E68600] text-white py-3.25 px-4">
+        <div class="bg-gradient-to-r from-[#E4AF47] to-[#E68600] text-white py-4 px-4">
           <NuxtLink
             :to="`/findmatch/${activityItem.StoreId}`"
             class="inline-flex items-center gap-4 no-underline text-inherit hover:text-inherit focus:outline-none"
           >
-            <img v-if="activityItem.storeImage" :src="activityItem.storeImage" alt="商店圖示" class="w-23.75 h-23.75" />
+            <img v-if="activityItem.storeImage" :src="activityItem.storeImage" alt="商店圖示" class="w-[95px] h-[95px]" />
             <div>
-              <div class="text-6xl mb-1.5">{{ activityItem.storeName }}</div>
-              <div class="text-2xl">活動時間：{{ activityItem.StartTime?.split?.('T')?.[0] ?? '未填寫' }}~{{ activityItem.EndTime?.split?.('T')?.[0] ?? '未填寫' }}</div>
+              <div class="text-[64px] leading-none mb-2">{{ activityItem.storeName }}</div>
+              <div class="text-[24px] leading-none">活動時間：{{ activityItem.StartTime?.split?.('T')?.[0] ?? '未填寫' }} ~ {{ activityItem.EndTime?.split?.('T')?.[0] ?? '未填寫' }}</div>
             </div>
           </NuxtLink>
         </div>
