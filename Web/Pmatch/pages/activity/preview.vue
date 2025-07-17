@@ -24,26 +24,26 @@
             <div class="relative">
               <img :src="bannerTypeMap[activityItem.bannerType]?.picture" alt="活動主視覺" class="w-full block" />
               <div :class="bannerTypeMap[activityItem.bannerType]?.position">
-                <div class="text-white text-shadow-md text-[16px] leading-none">活動時間：{{ activityItem.StartTime?.split?.('T')?.[0] ?? '未填寫' }} ~ {{ activityItem.EndTime?.split?.('T')?.[0] ?? '未填寫' }}</div>
-                <div class="text-white text-shadow-md text-[64px] leading-none mb-0.5 font-bold">{{ activityItem.Title }}</div>
-                <div class="text-white text-shadow-md text-[36px] leading-none">{{ activityItem.Summary }}</div>
+                <div class="text-white text-shadow-md md:text-[16px] text-[12px] leading-none">活動時間：{{ activityItem.StartTime?.split?.('T')?.[0] ?? '未填寫' }} ~ {{ activityItem.EndTime?.split?.('T')?.[0] ?? '未填寫' }}</div>
+                <div class="text-white text-shadow-md md:text-[64px] text-[48px] leading-none mb-0.5 font-bold">{{ activityItem.Title }}</div>
+                <div class="text-white text-shadow-md md:text-[36px] text-[27px] leading-none">{{ activityItem.Summary }}</div>
               </div>
             </div>
           </template>
         </div>
 
         <!-- 商店區塊 -->
-        <div class="bg-gradient-to-r from-[#E4AF47] to-[#E68600] text-white py-4 px-4">
+        <div class="bg-gradient-to-r from-[#E4AF47] to-[#E68600] text-white py-3 px-4 md:py-4 ">
           <NuxtLink
             :href="activityItem.Url ? activityItem.Url : '#'"
             class="inline-flex items-center gap-4 no-underline text-inherit hover:text-inherit focus:outline-none"
             :class="activityItem.Url ? '' : 'cursor-default '"
             :target="activityItem.Url ? '_blank' : ''"
           >
-            <img v-if="activityItem.storeImage" :src="activityItem.storeImage" alt="商店圖示" class="w-[95px] h-[95px]" />
+            <img v-if="activityItem.storeImage" :src="activityItem.storeImage" alt="商店圖示" class="md:w-[95px] md:h-[95px] w-[78px] h-[78px]" />
             <div class="">
-              <div class="text-[64px] leading-none mb-2">{{ activityItem.storeName }}</div>
-              <div class="text-[24px] leading-none">活動時間：{{ activityItem.StartTime?.split?.('T')?.[0] ?? '未填寫' }} ~ {{ activityItem.EndTime?.split?.('T')?.[0] ?? '未填寫' }}</div>
+              <div class="md:text-[64px] text-[48px] leading-none mb-2">{{ activityItem.storeName }}</div>
+              <div class="md:text-[24px] text-[18px] leading-none">活動時間：{{ activityItem.StartTime?.split?.('T')?.[0] ?? '未填寫' }} ~ {{ activityItem.EndTime?.split?.('T')?.[0] ?? '未填寫' }}</div>
             </div>
           </NuxtLink>
         </div>

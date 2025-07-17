@@ -15,7 +15,7 @@
     <img src="/images/bg-dot04.png" width="100%" alt="">
   </div>
 
-  <div class="max-w-1000px m-auto mt-5rem ps-5 pe-5 relative z-2">      
+  <div class="max-w-1100px m-auto mt-5rem ps-5 pe-5 relative z-2">      
       <div class="bg-white min-h-2xl font-events">
         <!-- 分類選單 -->
         <div class="navGradient rounded-lg px-7 py-1.5">
@@ -95,7 +95,7 @@
               v-if="item.IsTop"
               src="/activity/is_top.svg"
               alt="置頂"
-              class="absolute top-10px left-[-4px] w-10 z2"
+              class="absolute md:top-9px md:w-8 lg:top-12px lg:w-10 top-12px w-10 left-[-4px] z2"
             />
             <!-- 遮罩 -->
             <div v-if="item.isEnded"
@@ -114,18 +114,18 @@
               <template v-else>
                 <img :src="bannerTypeMap[item.bannerType]?.picture" alt="活動主視覺" class="w-full block" />
                 <div :class="bannerTypeMap[item.bannerType]?.position">
-                  <div class="text-white text-shadow-sm text-lg leading-none font-bold">{{ item.Title }}</div>
-                  <div class="text-white text-shadow-sm text-0.6rem leading-none">{{ item.Summary }}</div>
+                  <div class="text-white text-shadow-sm text-24px lg:text-24px md:text-16px leading-none mb-[-3px] font-bold">{{ item.Title }}</div>
+                  <div class="text-white text-shadow-sm text-13.5px lg:text-13.5px md:text-9px leading-none">{{ item.Summary }}</div>
                 </div> 
               </template>
             </div>
             <!-- 中線 -->
-            <div class="bg-gradient-to-r from-[#f2994a] to-[#f2c94c] text-white py-1"></div>
+            <div class="bg-gradient-to-r from-[#f2994a] to-[#f2c94c] text-white py-1.25"></div>
             <!-- 說明 -->
-            <div class="font-bold px-3 leading-none">
-              <p class="text-gray-400 text-11.5px my-1.5" v-if="item.Category === 5" >活動媒合商：{{ item.StoreName }}</p>
-              <p class=" text-gray-700 text-14.5px my-1.5">活動名稱：{{ item.Title }}</p>
-              <p class="text-gray-400 text-13px my-2">活動時間：{{ item.StartTime?.split?.('T')?.[0] ?? '未填寫' }} ~ {{ item.EndTime?.split?.('T')?.[0] ?? '未填寫' }}</p>
+            <div class="font-bold px-3 leading-none h-[65px] flex flex-col items-start justify-center">
+              <p class="text-gray-400 md:text-10px lg:text-11.5px text-11.5px my-1" v-if="item.Category === 5" >活動媒合商：{{ item.StoreName }}</p>
+              <p class=" text-gray-700 md:text-13px lg:text-16px text-16px" :class="[activityCategory !== 5 ? 'my-1' : 'my-0.5']">活動名稱：{{ item.Title }}</p>
+              <p class="text-gray-400 md:text-11px lg:text-13px text-13px" :class="[activityCategory !== 5 ? 'my-1.25' : 'my-1']">活動時間：{{ item.StartTime?.split?.('T')?.[0] ?? '未填寫' }} ~ {{ item.EndTime?.split?.('T')?.[0] ?? '未填寫' }}</p>
             </div>
           </NuxtLink>
         </div>        
@@ -134,7 +134,7 @@
     <!-- 分頁按鈕 -->
     <div class="flex justify-center mt-[2rem]">
       <el-pagination layout="prev, pager, next" :current-page="currentPage" :page-size="itemsPerPage"
-        :total="filteredActivities.length" @current-change="changePage"/>
+        :total="visibleItems.length" @current-change="changePage"/>
     </div>
   </div>        
 </template>
@@ -187,6 +187,32 @@
     })
   })
 
+  // 可見的項目 (隱藏時間未到或是過期的活動)
+  const visibleItems = computed(() => {
+  const now = new Date()
+
+    return filteredActivities.value
+      .map(item => {
+        const startDate = new Date(item.StartTime.replaceAll('/', '-'))
+        const endDate = new Date(item.EndTime.replaceAll('/', '-'))
+
+        const notStarted = startDate > now
+        const isEnded = endDate < now
+
+        return {
+          ...item,
+          isEnded,
+          notStarted,
+          _endDate: endDate
+        }
+      })
+      .filter(item => {
+        if (item.notStarted) return false
+        if (item.Category !== 4 && item.isEnded) return false
+        return true
+      })
+  })
+
   function toggleDropdown() {
     isDropdownOpen.value = !isDropdownOpen.value
   }
@@ -219,37 +245,9 @@
   const itemsPerPage = 9;
 
   const paginatedActivities = computed(() => {
-    const now = new Date()
-
-    // 篩掉已結束的非熱門活動
-    const visibleItems = filteredActivities.value
-      .map(item => {
-        const startDate = new Date(item.StartTime.replaceAll('/', '-'))
-        const endDate = new Date(item.EndTime.replaceAll('/', '-'))
-
-        
-        const notStarted = startDate > now
-        const isEnded = endDate < now
-
-        return {
-          ...item,
-          isEnded,
-          notStarted,
-          _endDate: endDate
-        }
-      })
-      .filter(item => {
-        // 所有活動若尚未開始都不顯示
-        if (item.notStarted) return false
-        // 非熱門活動，且已結束也不顯示
-        if (item.Category !== 4 && item.isEnded) return false
-
-        return true
-    })
- 
     const start = (currentPage.value - 1) * itemsPerPage
     const end = start + itemsPerPage
-    return visibleItems.slice(start, end)
+    return visibleItems.value.slice(start, end)
   })
 
   // 切換頁面
@@ -387,31 +385,31 @@
   const bannerTypeMap = {
     1: {
       picture: '/activity/banner_1.png',
-      position: 'absolute top-20% right-4% flex flex-col items-end gap-2'
+      position: 'absolute top-17.5% right-4% flex flex-col items-end gap-2'
     },
     2: {
       picture: '/activity/banner_2.png',
-      position: 'absolute bottom-5% left-3% flex flex-col items-start gap-2'
+      position: 'absolute top-50% left-3.5% flex flex-col items-start gap-2'
     },
     3: {
       picture: '/activity/banner_3.png',
-      position: 'absolute bottom-6% right-2.5% flex flex-col items-end gap-2'
+      position: 'absolute top-50% right-3.5% flex flex-col items-end gap-2'
     },
     4: {
       picture: '/activity/banner_4.png',
-      position: 'absolute bottom-2% right-3% flex flex-col items-end gap-2'
+      position: 'absolute top-53% right-3% flex flex-col items-end gap-2'
     },
     5: {
       picture: '/activity/banner_5.png',
-      position: 'absolute bottom-6% right-3% flex flex-col items-end gap-2'
+      position: 'absolute top-50% right-3% flex flex-col items-end gap-2'
     },
     6: {
       picture: '/activity/banner_6.png',
-      position: 'absolute bottom-5% left-3% flex flex-col items-start gap-2'
+      position: 'absolute top-50% left-3% flex flex-col items-start gap-2'
     },
     7: {
       picture: '/activity/banner_7.png',
-      position: 'absolute bottom-3% right-3% flex flex-col items-end gap-2'
+      position: 'absolute top-53% right-3% flex flex-col items-end gap-2'
     },
     8: {
       picture: '/activity/banner_8.png',
