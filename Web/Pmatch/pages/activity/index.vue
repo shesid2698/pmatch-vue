@@ -15,24 +15,24 @@
     <img src="/images/bg-dot04.png" width="100%" alt="">
   </div>
 
-  <div class="max-w-1100px m-auto mt-5rem ps-5 pe-5 relative z-2">      
-      <div class="bg-white min-h-2xl font-events">
+  <div class="max-w-1113px m-auto mt-5rem ps-5 pe-5 relative z-2">      
+      <div class="bg-white min-h-[688px] font-events">
         <!-- 分類選單 -->
-        <div class="navGradient rounded-lg px-7 py-1.5">
+        <div class="navGradient rounded-lg sm:px-7 px-6.5 py-1.5 sm:h-[43px] h-[31px] flex items-center">
           <div class="flex justify-start gap-2.5">
             <!-- 分類選單按鈕 -->
             <template v-for="(type, index) in [4, 5, 6]" :key="type">
               <button
                 @click="activityCategory = type; currentPage = 1; selectedPlatform = ''"
                 :class="[
-                  'border-none px-4 py-1 rounded transition-all hover:text-16.5px hover:bg-[#FF8800] hover:text-[#353535] hover:cursor-pointer',
-                  activityCategory === type ? 'bg-[#FFF0C7] text-[#8E856F] text-16.5px' : 'bg-transparent text-[#7E7E7E] text-15px',
+                  'border-none px-4 py-0.75 rounded transition-all sm:hover:text-24px hover:text-18px hover:bg-[#FF8800] hover:text-[#353535] hover:cursor-pointer',
+                  activityCategory === type ? 'bg-[#FFF0C7] text-[#8E856F] sm:text-24px text-18px' : 'bg-transparent text-[#7E7E7E] sm:text-20px text-15px',
                   btnWidthMap[type]
                 ]"
               >
                 {{ categoryMap[type] }}
               </button>
-              <div v-if="index !== 2" class="w-px h-7 bg-white my-0.5"></div>
+              <div v-if="index !== 2" class="w-px sm:h-9 h-7 bg-white my-0.5"></div>
             </template>
           </div>
         </div>
@@ -82,7 +82,7 @@
         </template>
 
         <!-- 活動卡片區塊 -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-9">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-10 gap-y-9 px-0.5">
           <NuxtLink
             v-for="item in paginatedActivities"
             :key="item.Id"
@@ -235,9 +235,9 @@
   }
   // 按鈕寬度
   const btnWidthMap = {
-    4: 'sm:min-w-[98px]',
-    5: 'sm:min-w-[115px]',
-    6: 'sm:min-w-[162px]',
+    4: 'sm:min-w-[130px] min-w-[104px]',
+    5: 'sm:min-w-[155px] min-w-[122px]',
+    6: 'sm:min-w-[225px] min-w-[176px]',
   }
 
    // 分頁計算
