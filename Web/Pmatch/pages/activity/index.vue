@@ -99,7 +99,7 @@
           />
           <!-- 遮罩 -->
           <div v-if="item.isEnded"
-              class="absolute inset-0 bg-black/50 flex items-center justify-center text-white text-xl z-2">
+              class="absolute inset-0 bg-black/50 flex items-center justify-center text-white text-[24px] z-2">
             已結束
           </div>
           <!-- 主圖|自訂議 -->
