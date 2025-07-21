@@ -28,11 +28,11 @@
           </h3>
         </div>
 
-        <div class="w-full max-w-[1100px] bg-[#F2E3FF] rounded-[20px] p-4">
-          <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="w-full max-w-[1078px] bg-[#F2E3FF] rounded-[10px] px-4 pt-3.5 pb-2 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]">
+          <div class="flex flex-col md:flex-row items-center justify-between gap-3">
 
             <!-- 遊戲選擇 -->
-            <div class="relative bg-white flex items-center px-4 w-[346px] h-[58px] cursor-pointer text-20px font-bold color-[#8D8D8D]"
+            <div class="relative bg-white flex items-center px-4 w-[330px] h-[58px] cursor-pointer text-20px font-bold color-[#8D8D8D]"
                 @click.stop="togglePlatformBox">{{ selectedGame || "遊戲選擇" }}
               <div class="absolute right-6 top-1/2 -translate-y-1/2">
                 <svg width="24" height="16" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -54,7 +54,7 @@
             </div>
 
             <!-- 搜尋框 -->
-            <div class="flex items-center h-[58px] overflow-hidden gap-2.5">
+            <div class="flex items-center h-[58px] overflow-hidden gap-1.6">
               <!-- 輸入框 -->
               <input type="text" v-model="keywordToSearch"
                     placeholder="請輸入關鍵字..."
@@ -87,7 +87,7 @@
                         class="bg-transparent border-none text-[16px] leading-none text-[#8A4CBF]">
                   <span>{{ item }}</span>
                 </button>
-                <span class="mx-2" v-if="index !== plaformLog.length - 1">/</span>
+                <span class="mx-1.8 translate-y-[-2px]" v-if="index !== plaformLog.length - 1">/</span>
               </template>
             </div>
           </div>

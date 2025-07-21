@@ -17,7 +17,7 @@
     </div>
     <div
       v-show="buyLogOpen"
-      class="absolute w-[300px] h-100vh top-full left-0  bg-white text-[#8D8D8D] text-20px cursor-pointer  shadow-[4px_4px_4px_0_rgba(0,0,0,0.25)] "
+      class="absolute w-[300px] h-100vh top-full left-0  bg-white text-[#8D8D8D] text-20px cursor-pointer  shadow-[4px_4px_4px_0_rgba(0,0,0,0.25)]"
     >
       <div class="w-full text-end">
         <NuxtLink

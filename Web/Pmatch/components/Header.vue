@@ -42,8 +42,7 @@
 </div>
                 <div class="flex items-center">
                     <NuxtLink v-show="!item.dropdown" v-if="item.id !== 5 && item.link !== ''" :title="item.title" :to="item.link"
-                              :class="` decoration-none ps-1.2rem pe-1.2rem font-bold ${item.className}`" :alt="item.title" 
-                              @click="item.function === 'OpenChat' ? OpenChat() : null">
+                              :class="` decoration-none ps-1.2rem pe-1.2rem font-bold ${item.className}`" :alt="item.title" >
                         {{ item.title }}
                         <img class="ms-2 w-20px" v-if="item.icon !== ''" :src="item.icon" :alt="item.title" />
                     </NuxtLink>
@@ -90,12 +89,10 @@
 
 <script setup>
 import GetMemberDetail from '~/composables/getMemberDetail.js';
-const config = useConfigStore();
 const userToken = useCookie('_PmToken');
 const isLoggedIn = computed(() => !!userToken?.value && userToken.value.trim() !== '');
 const userNameCookie = useCookie('_PmUserName');
 const MemberIdCookie = useCookie('_PmMemberId');
-const staffId = useCookie('_PmStaffId');
 const userType = useCookie('_PmMemberType');
 
 const navOpen = ref(false);
@@ -214,19 +211,11 @@ onMounted(async () => {
         id: 2,
         title: '活動專區',
         link: '/activity',
-        className: 'nav0',
+        className: 'nav2',
         icon: ''
       },
-      {
-        id: 3,
-        title: '聊聊天',
-        link: '#',
-        icon: '',
-        className: 'nav2',
-        function: 'OpenChat'
-      },
       // {
-      //     id: 2,
+      //     id: 3,
       //     title: '找媒合',
       //     link: '/findmatch',
       //     icon: '',
@@ -292,34 +281,6 @@ onMounted(async () => {
     }
   });
 });
-
-    //
-    const OpenChat = async () => {
-        if (userToken.value == '' || userToken.value == null || userToken.value == undefined) {
-            await openAlertModal(' ', `請先登入會員!`);
-            return;
-        }
-        const obj = {
-            RequestBase: {
-                SqlIndex: 0,
-                TeamIDs: ``,
-            },
-            Token: userToken.value,
-            StoreId: 0,
-            StaffId: staffId.value,
-            IsPmatch: true, // 指定為一般會員
-        };
-        const str = JSON.stringify(obj);
-        const chatToken = btoa(str).replace(/\+/g, '-').replace(/\//g, '_');
-        // console.log('token:',chatToken);
-        if (config.webChatUrl !== '') {
-            window.open(
-                `${config.webChatUrl}?token=${chatToken}`,
-                '_blank',
-                'toolbar=no,location=no,status=no,resizable=no,width=870,height=720'
-            );
-        }
-    };
 
 // 在組件卸載時移除點擊事件監聽器
 onBeforeUnmount(() => {
