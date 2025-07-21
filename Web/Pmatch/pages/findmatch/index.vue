@@ -551,6 +551,7 @@ onMounted(async () => {
 
     if (platformName !== undefined) {
       selectedGame.value = platformName;
+      selectedKeyword.value = keyword;
       handleSearch();
     }
 
