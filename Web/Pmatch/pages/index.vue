@@ -41,7 +41,7 @@
               </div>
               <!-- 下拉選單 -->
               <div class="absolute top-full left-0 w-full z-50" v-show="showPlatformBox">
-                <div class="platformBox bg-white shadow-md overflow-y-auto max-h-[580px] text-[#8A4CBF]">
+                <div class="platformBox bg-white shadow-md overflow-y-auto max-h-[580px] text-[#A566DB]">
                   <!-- 選項 -->
                   <div
                     v-for="(item, index) in gameList" :key="index"
@@ -58,10 +58,10 @@
               <!-- 輸入框 -->
               <input type="text" v-model="keywordToSearch"
                     placeholder="請輸入關鍵字..."
-                    class="flex-1 px-4 h-full font-size-1.2rem w-[594px] border-none outline-none text-20px font-bold placeholder:color-[#8D8D8D]" />
+                    class="flex-1 px-4 h-full font-size-1.2rem w-[594px] border-none outline-none text-20px font-500 text-[#8D8D8D] placeholder:text-[#8D8D8D]" />
               <!-- 按鈕 -->
               <button @click="searchToFindMatch"
-                class="w-[119px] h-full flex items-center justify-center bg-[#8A4CBF] text-white border-none text-20px">搜尋
+                class="w-[119px] h-full flex items-center justify-center bg-[#8A4CBF] hover:bg-[#840FE9] active:bg-[#31005A] text-white border-none text-20px">搜尋
                 <img class="w-[17px] ps-0.75 pt-0.75" src="/images/searchIcon-white.svg" alt="搜尋" />  
               </button>
             </div>
