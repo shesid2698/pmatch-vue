@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed flex justify-end top-[27%] lg:top-252px bg-[#FFBBDA] w-[374px] h-[84px] text-white text-24px rounded-r-50 z-99 transition-all duration-300 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] before:content-[''] before:h-[80px] before:absolute before:inset-0 before:bg-gradient-to-r before:from-[#E70763] before:to-[#C90E5B] before:rounded-r-50 before:-z-1 before:translate-y-1"
+    class="fixed flex z-999 justify-end top-[27%] lg:top-252px bg-[#FFBBDA] w-[374px] h-[84px] text-white text-24px rounded-r-50 transition-all duration-300 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] before:content-[''] before:h-[80px] before:absolute before:inset-0 before:bg-gradient-to-r before:from-[#E70763] before:to-[#C90E5B] before:rounded-r-50 before:-z-1 before:translate-y-1"
     :class="[ buyLogOpen ? 'left-0' : 'left-[-281.5px]' ]"
     @click="toggleBuyLog"
     v-show="userToken && memberId"
