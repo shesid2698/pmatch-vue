@@ -35,8 +35,11 @@
             <div class="relative bg-white flex items-center px-4 w-[330px] h-[58px] cursor-pointer text-20px font-bold color-[#8D8D8D]"
                 @click.stop="togglePlatformBox">{{ selectedGame || "遊戲選擇" }}
               <div class="absolute right-6 top-1/2 -translate-y-1/2">
-                <svg width="24" height="16" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M3.5006 0.677802C2.77036 -0.150943 1.50655 -0.230794 0.677802 0.499449C-0.150943 1.22969 -0.230794 2.4935 0.499449 3.32225L10.4161 14.5766C10.8211 15.0362 11.3903 15.2655 11.9583 15.254C12.5264 15.2655 13.0955 15.0362 13.5006 14.5766L23.4172 3.32225C24.1475 2.4935 24.0676 1.22969 23.2389 0.499449C22.4101 -0.230794 21.1463 -0.150943 20.4161 0.677802L11.9583 10.2764L3.5006 0.677802Z" fill="#882BB8"/>
+                <svg v-if="!showPlatformBox" width="24" height="16" viewBox="0 0 24 16" fill="#8A4CBF" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M3.5006 0.677802C2.77036 -0.150943 1.50655 -0.230794 0.677802 0.499449C-0.150943 1.22969 -0.230794 2.4935 0.499449 3.32225L10.4161 14.5766C10.8211 15.0362 11.3903 15.2655 11.9583 15.254C12.5264 15.2655 13.0955 15.0362 13.5006 14.5766L23.4172 3.32225C24.1475 2.4935 24.0676 1.22969 23.2389 0.499449C22.4101 -0.230794 21.1463 -0.150943 20.4161 0.677802L11.9583 10.2764L3.5006 0.677802Z"/>
+                </svg>
+                <svg v-else width="24" height="16" viewBox="0 0 24 16" fill="#8A4CBF" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20.4153 14.5744C21.1454 15.4029 22.4088 15.483 23.2375 14.7531C24.0663 14.0229 24.1465 12.7586 23.4163 11.9299L13.4993 0.675982C13.1028 0.226037 12.5494 -0.00114441 11.9934 0.000201225C11.9814 -0.000260353 11.9693 0.000445366 11.9573 0.000201225C11.9449 0.000452995 11.9325 -0.00028038 11.9202 0.000201225C11.3646 -0.000810623 10.8115 0.226363 10.4153 0.675982L0.498283 11.9299C-0.231898 12.7586 -0.151729 14.0229 0.676994 14.7531C1.50568 15.4831 2.76907 15.4029 3.49926 14.5744L11.9573 4.97676L20.4153 14.5744Z"/>
                 </svg>
               </div>
               <!-- 下拉選單 -->
@@ -62,7 +65,7 @@
               <!-- 按鈕 -->
               <button @click="searchToFindMatch"
                 class="w-[119px] h-full flex items-center justify-center bg-[#8A4CBF] hover:bg-[#840FE9] active:bg-[#31005A] text-white border-none text-20px">搜尋
-                <img class="w-[17px] ps-0.75 pt-0.75" src="/images/searchIcon-white.svg" alt="搜尋" />  
+                <img class="w-[17px] ps-0.75 pt-0.75 select-none pointer-events-none" src="/images/searchIcon-white.svg" alt="搜尋" />  
               </button>
             </div>
           </div>

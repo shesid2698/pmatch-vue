@@ -12,7 +12,7 @@
       </div>
       <!-- 圓形圖示塊 -->
       <div class="flex items-center me-1.5rem" :class="[ buyLogOpen ? 'me-1.5rem' : 'me-1.1rem' ]">
-        <img class="w-39px" src="/images/buyLogIcon.svg" alt="購買紀錄icon" />
+        <img class="w-39px select-none pointer-events-none" src="/images/buyLogIcon.svg" alt="購買紀錄icon" />
       </div>
     </div>
     <div
