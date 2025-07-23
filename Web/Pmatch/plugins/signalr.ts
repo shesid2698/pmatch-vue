@@ -17,7 +17,7 @@ const initSignalR = async ({ url, token, groupParam }: { url: string; token: str
         console.log("[ReceiveConnectionId]", id);
       });
 
-      connection.on("ReceiveChatMessage", (data) => {
+      connection.on("ReceiveChatMessage", (staffId, data) => {
         if (onMessage) onMessage(data);
       });
       
