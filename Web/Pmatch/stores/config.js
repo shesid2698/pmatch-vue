@@ -10,6 +10,10 @@ export const useConfigStore = defineStore('config', {
         lineClientId: '',
         lineSecret: '',
         lineReturnUrl: '',
+        baseConfig: {
+            signalRUrl: '',
+            token: '',
+        },
     }),
     actions: {
         async loadConfig() {
@@ -24,6 +28,10 @@ export const useConfigStore = defineStore('config', {
                 this.lineClientId = config.lineClientId || '';
                 this.lineSecret = config.lineSecret || '';
                 this.lineReturnUrl = config.lineReturnUrl || '';
+                this.baseConfig = {
+                    signalRUrl: config.signalRUrl || '',
+                    token: '',
+                };
             } catch (error) {
                 console.error('Failed to load config.json:', error);
                 // 設定預設值以避免錯誤
@@ -35,6 +43,10 @@ export const useConfigStore = defineStore('config', {
                 this.lineClientId = '';
                 this.lineSecret = '';
                 this.lineReturnUrl = '';
+                this.baseConfig = {
+                    signalRUrl: '',
+                    token: '',
+                };
             }
         },
         initFacebook() {
@@ -48,7 +60,6 @@ export const useConfigStore = defineStore('config', {
                     });
                     resolve();
                 };
-
                 const script = document.createElement('script');
                 script.src = 'https://connect.facebook.net/zh_TW/sdk.js';
                 script.async = true;

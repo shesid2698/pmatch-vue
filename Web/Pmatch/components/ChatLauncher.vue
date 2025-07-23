@@ -55,29 +55,67 @@
       </linearGradient>
       </defs>
     </svg>
+    <div
+      v-if="isFlashing.size > 0"
+      class="absolute top-[3%] right-[3%] w-[17.5px] h-[17.5px] rounded-full border-none flashing">
+    </div>
   </button>
 </template>
 
 <script setup lang="ts">
 import { useCookie } from '#app'
-import { useConfigStore } from '~/stores/config'
-// import { ref, onMounted, onBeforeUnmount } from "vue";
 import { useAlertModalStore } from "../stores/useAlertModal.js";
+import { useConfigStore } from '@/stores/config';
+
+const { $initSignalR, $setSignalROnMessage } = useNuxtApp();
 const alertModalStore = useAlertModalStore();
 const openAlertModal = alertModalStore.alertShowModal;
 
 const config = useConfigStore()
+const configStore = useConfigStore();
 const userToken = useCookie('_PmToken')
 const staffId = useCookie('_PmStaffId')
 const isHover = ref(false);
 
+const isFlashing = ref<Set<number>>(new Set()); // 聊天室閃爍
 
+onMounted(async () => {
+  const token = userToken.value;
+  const signalRUrl = configStore.baseConfig.signalRUrl;
+if (token && signalRUrl) {
+    $setSignalROnMessage((data) => {
+      try {        
+        const actionType = data?.actionType;
+        const payload = data?.payload ?? null;
+        const chatRoomId = payload?.ChatRoomId ?? payload?.chatRoomId;
+
+        if (!payload || !chatRoomId) return;
+          const isFromMe = typeof payload.StaffName === 'string' && payload.StaffName.trim() === '';
+          const isReadNotice = actionType === 353;
+          // 收到他人訊息 開始閃爍
+          if (!isReadNotice && !payload.staffName && !isFromMe) {
+            if (!isFlashing.value.has(chatRoomId)) {
+              isFlashing.value.add(chatRoomId);
+            }
+          }
+          // 收到已讀訊息 停止閃爍
+          if (isReadNotice && isFlashing.value.has(chatRoomId)) {
+            isFlashing.value.delete(chatRoomId);
+          }
+        } catch (error) {
+          console.error("[SignalR] 錯誤訊息：", error);
+        }
+      });
+      await $initSignalR({ url: signalRUrl, token, groupParam: `_pmatch_${staffId.value}` });
+    }
+});
+
+// 打開聊天室
 const OpenChat = async () => {
   if (!userToken.value || userToken.value.trim() === '') {
     await openAlertModal(' ', '請先登入會員!')
     return
   }
-
   const obj = {
     RequestBase: {
       SqlIndex: 0,
@@ -88,7 +126,6 @@ const OpenChat = async () => {
     StaffId: staffId.value,
     IsPmatch: true,
   }
-
   const str = JSON.stringify(obj)
   const chatToken = btoa(str).replace(/\+/g, '-').replace(/\//g, '_')
 
@@ -105,5 +142,19 @@ const OpenChat = async () => {
 <style scoped>
 .chat-launcher {
   transition: all 0.2s;
+}
+.flashing {
+  animation: flashing-color 4s infinite;
+}
+
+@keyframes flashing-color {
+  0%, 100% {
+    background-color: #FF4A4D;
+    box-shadow: 0 0 6px 3px #C90E5B;
+  }
+  50% {
+    background-color: #FFDADB;
+    box-shadow: 0 0 6px 3px #FFE3EE;
+  }
 }
 </style>
