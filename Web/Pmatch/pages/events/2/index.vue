@@ -373,9 +373,10 @@ onMounted(async () => {
     }
   });
 });
-definePageMeta({
-  middleware: () => navigateTo('/')
-})
+// 跳轉回首頁
+// definePageMeta({
+//   middleware: () => navigateTo('/')
+// })
 </script>
 <style scoped>
 .tab-btn {
