@@ -46,7 +46,7 @@
               <span :class="[ category === 'match' ? 'text-[#7b2cbf]' : 'text-[#4361EE]',
               'group-hover:bg-gradient-to-r group-hover:from-[#7b2cbf] group-hover:to-[#4361EE] group-hover:bg-clip-text group-hover:text-transparent']
               ">媒合交易</span>   
-              <span class="text-[#7b2cbf] font-bold">{{ rewardCount }}</span>
+              <span class="text-[#7b2cbf] font-bold">{{ matchCount }}</span>
             </div>
             <div class="flex justify-between w-36 cursor-pointer group" @click="filterCategory('platform')">
               <span :class="[ category === 'platform' ? 'text-[#7b2cbf]' : 'text-[#4361EE]',
@@ -148,7 +148,7 @@ const category = ref('all');
 
 const totalCount = computed(() => newsList.value.length);
 const memberCount = computed(() => newsList.value.filter(n => n.CategoryName === '會員服務').length);
-const rewardCount = computed(() => newsList.value.filter(n => n.CategoryName === '媒合交易').length);
+const matchCount = computed(() => newsList.value.filter(n => n.CategoryName === '媒合交易').length);
 const platformCount = computed(() => newsList.value.filter(n => n.CategoryName === '平台機制').length);
 
 function filterCategory(type) {
@@ -156,7 +156,9 @@ function filterCategory(type) {
 
   switch (type) {
     case 'all':
-      showList.value = newsList.value;
+      showList.value = newsList.value.filter(n =>
+        ['會員服務', '媒合交易', '平台機制'].includes(n.CategoryName)
+      );
       newsDetail.value = null;
       break;
     case 'member':

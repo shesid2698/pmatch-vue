@@ -145,13 +145,20 @@ onMounted(() => {
   headerLink.value = [
     {
       id: 0,
+      title: "幫助中心",
+      link: "/store/helpcenter",
+      className: "nav0",
+      icon: "",
+    },
+    {
+      id: 1,
       title: "返回會員頁面",
       link: "/",
       className: "nav0",
       icon: "",
     },
     // {
-    //     id: 1,
+    //     id: 2,
     //     title: "付費方案",
     //     link: "/store/program",
     //     className: "nav1",
