@@ -27,79 +27,73 @@
             嚴選合法媒合商、用合約保障交易權益、有效防堵詐騙、媒合交易更安全
           </h3>
         </div>
-        <div class="mt-2rem md-mt-0 md-flex block items-center justify-center">
-          <div class="block md-flex items-center w-100%">
-            <div class="relative m-0 md-m-4 pt-4 pb-4 w-100% md-w-50% font-size-1.2rem gameSelect color-#fff"
-              @click.stop="togglePlatformBox">
-              <span class="fw-600">{{
-                selectedGame || "遊戲選擇 ..."
-              }}</span>
-              <div class="absolute top-17px right-20px">
-                <img class="w-25px" src="/images/arrowDown.png" alt="選擇遊戲下拉箭頭" />
+
+        <div class="w-full max-w-[1078px] bg-[#F2E3FF] rounded-[10px] px-4 pt-3.5 pb-2 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]">
+          <div class="flex flex-col md:flex-row items-center justify-between gap-3">
+
+            <!-- 遊戲選擇 -->
+            <div class="relative bg-white flex items-center px-4 w-[330px] h-[58px] cursor-pointer text-20px font-bold color-[#8D8D8D]"
+                @click.stop="togglePlatformBox">{{ selectedGame || "遊戲選擇" }}
+              <div class="absolute right-6 top-1/2 -translate-y-1/2">
+                <svg v-if="!showPlatformBox" width="24" height="16" viewBox="0 0 24 16" fill="#8A4CBF" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M3.5006 0.677802C2.77036 -0.150943 1.50655 -0.230794 0.677802 0.499449C-0.150943 1.22969 -0.230794 2.4935 0.499449 3.32225L10.4161 14.5766C10.8211 15.0362 11.3903 15.2655 11.9583 15.254C12.5264 15.2655 13.0955 15.0362 13.5006 14.5766L23.4172 3.32225C24.1475 2.4935 24.0676 1.22969 23.2389 0.499449C22.4101 -0.230794 21.1463 -0.150943 20.4161 0.677802L11.9583 10.2764L3.5006 0.677802Z"/>
+                </svg>
+                <svg v-else width="24" height="16" viewBox="0 0 24 16" fill="#8A4CBF" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20.4153 14.5744C21.1454 15.4029 22.4088 15.483 23.2375 14.7531C24.0663 14.0229 24.1465 12.7586 23.4163 11.9299L13.4993 0.675982C13.1028 0.226037 12.5494 -0.00114441 11.9934 0.000201225C11.9814 -0.000260353 11.9693 0.000445366 11.9573 0.000201225C11.9449 0.000452995 11.9325 -0.00028038 11.9202 0.000201225C11.3646 -0.000810623 10.8115 0.226363 10.4153 0.675982L0.498283 11.9299C-0.231898 12.7586 -0.151729 14.0229 0.676994 14.7531C1.50568 15.4831 2.76907 15.4029 3.49926 14.5744L11.9573 4.97676L20.4153 14.5744Z"/>
+                </svg>
               </div>
-              <div class="absolute top-0 w-100% z-99">
-                <div class="platformBox" v-show="showPlatformBox">
-                  <div class="platformBoxContent">
-                    <div class="relative pt-2 pb-2 w-100% fw-600">
-                      遊戲選擇 ...
-                    </div>
-                    <div class="platformItem pt-2 pb-2 w-100% fw-600" v-for="(item, index) in gameList" :key="index"
-                      @click.stop="selectGame(item)">
-                      {{ item.PlatformName }}
-                    </div>
+              <!-- 下拉選單 -->
+              <div class="absolute top-full left-0 w-full z-50" v-show="showPlatformBox">
+                <div class="platformBox bg-white shadow-md overflow-y-auto max-h-[580px] text-[#A566DB]">
+                  <!-- 選項 -->
+                  <div
+                    v-for="(item, index) in gameList" :key="index"
+                    class="flex items-center px-4 text-[20px] h-[58px] font-bold hover:bg-[#8A4CBF] hover:text-white border-none cursor-pointer"
+                    @click.stop="selectGame(item)">
+                    {{ item.PlatformName }}
                   </div>
                 </div>
               </div>
             </div>
-            <div class="mt-1rem m-0 md-m-4 flex w-100% md-w-50%">
-              <div class="flex items-center w-100%">
-                <div class="flex w-100%">
-                  <div class="w-100% storeNameBox">
-                    <div class="storeName pt-4px pb-4px">
-                      <input
-                        class="storeEntry max-w-702px md-max-w-517px pt-12px pb-12px w-80% md-w-80% font-size-1.2rem fw-600"
-                        type="text" placeholder="輸入關鍵字..." v-model="keywordToSearch" />
-                    </div>
-                  </div>
-                  <div class="relative">
-                    <button class="h-38px border-none searchBtn absolute top-10px right-10px"
-                      @click="searchToFindMatch">
-                      <img class="w-25px" src="/images/searchIcon.png" alt="搜尋按鈕" />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- <div class="w-100% md-ms-3 flex items-center">
-                        <input
-                            type="checkbox"
-                            class="w-20px h-20px"
-                            v-model="contractToSearch"
-                        />
-                        <span>查看已簽約媒合商</span>
-                    </div>
-                    <div>
-                        <button class="ms-3 w-100px" @click="searchToFindMatch">
-                            搜尋
-                        </button>
-                    </div> -->
-          </div>
-        </div>
-        <div class="mt-4 md-mt-0 md-ms-2rem fw-600 color-#F72585 flex items-center">
-          <div class="flex items-center">
-            <img class="w-25px" src="/images/gameSearchIcon.png" alt="遊戲搜尋icon" />
-          </div>
-          <div class="ms-3 flex flex-wrap">
-            <div v-if="!plaformLog.value" v-for="(item, index) in plaformLog" :key="index"
-              :class="`rapid-entrance-${item}`">
-              <button @click="searchLog(item)" class="searchLogBtn">
-                <span>{{ item }}</span>
-                <span class="m-2" v-if="index !== plaformLog.length - 1">/</span>
+
+            <!-- 搜尋框 -->
+            <div class="flex items-center h-[58px] overflow-hidden gap-1.6">
+              <!-- 輸入框 -->
+              <input type="text" v-model="keywordToSearch"
+                    placeholder="請輸入關鍵字..."
+                    class="flex-1 px-4 h-full font-size-1.2rem w-[594px] border-none outline-none text-20px font-500 text-[#8D8D8D] placeholder:text-[#8D8D8D]" />
+              <!-- 按鈕 -->
+              <button @click="searchToFindMatch"
+                class="w-[119px] h-full flex items-center justify-center bg-[#8A4CBF] hover:bg-[#840FE9] active:bg-[#31005A] text-white border-none text-20px">搜尋
+                <img class="w-[17px] ps-0.75 pt-0.75 select-none pointer-events-none" src="/images/searchIcon-white.svg" alt="搜尋" />  
               </button>
             </div>
           </div>
 
-          <span class=""> </span>
+          <!-- 平台捷徑 -->
+          <div class="mt-4 ms-1rem fw-bold text-[#8A4CBF] flex items-center">
+            <div class="flex items-center">
+              <svg width="26" height="26" viewBox="0 0 26 26" fill="#8A4CBF" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6.81138 0.106445C3.1551 0.106445 0.175777 3.08705 0.175777 6.74333V8.43134L0.173218 10.0042H0.175777V19.2902C0.175777 22.9465 3.1551 25.9271 6.81138 25.9271H12.9863C13.1412 25.9271 13.2947 25.8967 13.4379 25.8374C13.5811 25.7781 13.7112 25.6912 13.8208 25.5816C13.9303 25.472 14.0173 25.3419 14.0765 25.1987C14.1358 25.0556 14.1663 24.9021 14.1662 24.7471C14.166 24.4344 14.0416 24.1345 13.8203 23.9135C13.599 23.6924 13.299 23.5683 12.9863 23.5685H6.81138C4.42111 23.5685 2.53439 21.6805 2.53439 19.2902V10.0067L23.5661 10.0362V13.2842C23.5663 13.597 23.6907 13.8969 23.912 14.1179C24.1333 14.3389 24.4333 14.463 24.7461 14.4629C25.0586 14.4627 25.3583 14.3384 25.5793 14.1174C25.8003 13.8964 25.9245 13.5968 25.9247 13.2842V6.74333C25.9247 3.08705 22.9454 0.106445 19.2891 0.106445H6.81138ZM6.81138 2.46634H19.2891C21.6794 2.46634 23.5661 4.35306 23.5661 6.74333V7.67756L2.53439 7.64813V6.74333C2.53439 4.35306 4.42111 2.46634 6.81138 2.46634Z"/>
+                <path d="M17.9735 11.8381C14.634 11.8381 11.901 14.571 11.901 17.9106C11.901 21.2501 14.634 23.9831 17.9735 23.9831C21.3131 23.9831 24.046 21.2501 24.046 17.9106C24.046 14.571 21.3131 11.8381 17.9735 11.8381ZM17.9735 14.1967C20.0382 14.1967 21.6861 15.8459 21.6861 17.9106C21.6861 19.9753 20.0382 21.6232 17.9735 21.6232C15.9088 21.6232 14.2596 19.9753 14.2596 17.9106C14.2596 15.8459 15.9088 14.1967 17.9735 14.1967Z"/>
+                <path d="M5.60703 6.80634C6.27454 6.80634 6.81568 6.26521 6.81568 5.59769C6.81568 4.93017 6.27454 4.38904 5.60703 4.38904C4.93951 4.38904 4.39838 4.93017 4.39838 5.59769C4.39838 6.26521 4.93951 6.80634 5.60703 6.80634Z"/>
+                <path d="M8.85434 6.80634C9.52186 6.80634 10.063 6.26521 10.063 5.59769C10.063 4.93017 9.52186 4.38904 8.85434 4.38904C8.18682 4.38904 7.64569 4.93017 7.64569 5.59769C7.64569 6.26521 8.18682 6.80634 8.85434 6.80634Z"/>
+                <path d="M12.1016 6.80634C12.7691 6.80634 13.3102 6.26521 13.3102 5.59769C13.3102 4.93017 12.7691 4.38904 12.1016 4.38904C11.4341 4.38904 10.8929 4.93017 10.8929 5.59769C10.8929 6.26521 11.4341 6.80634 12.1016 6.80634Z"/>
+                <path d="M21.4558 20.3101C21.3009 20.3111 21.1477 20.3426 21.005 20.4027C20.8622 20.4629 20.7327 20.5506 20.6239 20.6608C20.515 20.7711 20.4289 20.9018 20.3706 21.0454C20.3122 21.1889 20.2827 21.3426 20.2838 21.4976C20.2849 21.6526 20.3165 21.8058 20.3768 21.9486C20.4371 22.0914 20.525 22.2208 20.6354 22.3296L23.918 25.5674C24.1407 25.787 24.4415 25.9091 24.7542 25.9069C25.0669 25.9048 25.3659 25.7785 25.5856 25.5559C25.6945 25.4456 25.7806 25.315 25.8389 25.1714C25.8973 25.0278 25.9268 24.8741 25.9257 24.7191C25.9246 24.5641 25.893 24.4109 25.8327 24.2681C25.7723 24.1254 25.6845 23.9959 25.5741 23.8871L22.2914 20.6493C22.0688 20.43 21.7682 20.308 21.4558 20.3101Z"/>
+              </svg>
+            </div>
+
+            <!-- 平台文字列表 -->
+            <div class="ms-3 flex flex-wrap items-center">
+              <template v-for="(item, index) in plaformLog" :key="index">
+                <button @click="searchLog(item)"
+                        class="bg-transparent border-none text-[16px] leading-none text-[#8A4CBF]">
+                  <span>{{ item }}</span>
+                </button>
+                <span class="mx-1.8 translate-y-[-2px]" v-if="index !== plaformLog.length - 1">/</span>
+              </template>
+            </div>
+          </div>
         </div>
         <div class="pt-2rem">
           <div class="bannerBox h-auto">
@@ -213,7 +207,7 @@ character, index2
                 ALL
               </button>
               <button class="border-solid border-1px cursor-pointer font-size-15px rounded-50px p-3 ms-3"
-                style="--btn-color: #7B2CBF"
+                style="--btn-color: #8A4CBF"
                 :class="activeNewsType === 'SYSTEM' ? 'newSolidBtn' : 'newHollowBtn'"
                 @click="fetchNewsListData([1], '', 'SYSTEM')">
                 系統公告
@@ -660,39 +654,6 @@ onBeforeUnmount(() => {
   outline: none;
 }
 
-.storeNameBox {
-  position: relative;
-  padding: 1px;
-  background: linear-gradient(to right, rgba(67, 97, 238), rgba(247, 37, 133));
-  border-radius: 50px;
-  border: none;
-}
-
-.storeName {
-  position: relative;
-  background: #fff;
-  border-radius: 50px;
-  border: none;
-  text-indent: 1rem;
-}
-
-.storeEntry:focus-visible {
-  outline: none;
-}
-
-.storeEntry {
-  border: none;
-  color: #8d8d8d;
-}
-
-.searchBtn {
-  background-color: rgba(0, 0, 0, 0);
-}
-
-.searchBtn:hover .searchIcon {
-  opacity: 0.8;
-}
-
 :deep(.el-icon) {
   z-index: -1;
 }
@@ -875,38 +836,9 @@ onBeforeUnmount(() => {
   font-weight: 600;
 }
 
-.gameSelect {
-  background: linear-gradient(to right, #4361ee, #f72585);
-  border-radius: 50px;
-  text-indent: 1rem;
-}
 
-.platformBox {
-  position: relative;
-  padding: 1px;
-  background: linear-gradient(to right, rgba(67, 97, 238), rgba(247, 37, 133));
-  border-radius: 25px;
-  border: none;
-}
 
-.platformBoxContent {
-  position: relative;
-  background: #fafafa;
-  border-radius: 25px;
-  border: none;
-  text-indent: 1rem;
-  width: 100%;
-  color: #f72585;
-}
 
-.platformItem {
-  border-radius: 25px;
-}
-
-.platformItem:hover {
-  background-color: #f72585;
-  color: #fff;
-}
 
 .gameBox {
   background: linear-gradient(to bottom, #fff, #f6a2ff);
@@ -998,18 +930,6 @@ onBeforeUnmount(() => {
 .moreGameBtn:hover {
   background: #fff;
   color: #f72585;
-}
-
-.searchLogBtn {
-  font-family: Microsoft JhengHei;
-  background: rgba(0, 0, 0, 0);
-  color: #f72585;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  margin: 0.2rem;
-  font-size: 16px;
-  font-weight: 600;
 }
 
 @media screen and (max-width: 1024px) {

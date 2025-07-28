@@ -31,6 +31,7 @@
       :class="route.path.indexOf('/activity/preview') !== -1 ? 'pointer-events-none' : ''"
     />
     <component v-if="route.path.indexOf('/activity/preview') === -1" :is="BuyLog" />
+    <component v-if="route.path.indexOf('/activity/preview') === -1" :is="ChatLauncher" />
   </div>
 </template>
 
@@ -91,6 +92,7 @@ import StoreHeader from "~/components/StoreHeader.vue";
 import Footer from "~/components/Footer.vue";
 import StoreFooter from "~/components/StoreFooter.vue";
 import BuyLog from "~/components/BuyLog.vue";
+import ChatLauncher from "~/components/ChatLauncher.vue";
 // loading page
 import { useLoadStore } from "./stores/loading.js";
 import { useModalStore } from "./stores/useModal.js";
