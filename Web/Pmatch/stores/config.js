@@ -17,8 +17,10 @@ export const useConfigStore = defineStore('config', {
     }),
     actions: {
         async loadConfig() {
+            if (typeof window === 'undefined') return; // 只在瀏覽器端執行
+
             try {
-                const response = await useFetch('/config.json');
+                const response = await fetch('/config.json');
                 const config = await response.json();
                 this.baseUrl = config.baseUrl || '';
                 this.envUrl = config.envUrl || '';
