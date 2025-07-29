@@ -18,7 +18,7 @@ export const useConfigStore = defineStore('config', {
     actions: {
         async loadConfig() {
             try {
-                const response = await fetch('/config.json');
+                const response = await useFetch('/config.json');
                 const config = await response.json();
                 this.baseUrl = config.baseUrl || '';
                 this.envUrl = config.envUrl || '';

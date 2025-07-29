@@ -945,7 +945,7 @@ function getEmptySimpleChartData() {
         tension: 0.4,
         fill: false,
         type: 'line',
-        pointRadius: 0, // 隱藏數據點
+        // pointRadius: 0, // 隱藏數據點
         pointRadius: 3, // 外圈大小
         pointBackgroundColor: '#36A2EB', // 點的背景色（白色）
         pointBorderColor: '#fff', // 點的邊框色（藍色）
