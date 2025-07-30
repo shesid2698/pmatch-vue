@@ -223,6 +223,7 @@ onMounted(async () => {
 
 .bindBtn {
   border: none;
+  min-width: 85.33px;
   padding: 0.5rem 1rem;
   border-radius: 5px;
   box-shadow: 1px 2px 3px 1px #ccc;
