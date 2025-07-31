@@ -107,8 +107,8 @@
       <button @click="() => { innerPage = 2; scrollToTop(); }" 
         class="w-37.1% h-2.68% absolute top-47.02% left-30.2% main-btn !disabled:filter-none !disabled:cursor-default">推薦碼綁定說明</button>
       <!-- 委買遊戲幣拿回饋 -->  
-      <button @click="() => { innerPage = 4; scrollToTop(); }" class="md:w-45.6% w-46.72% h-3.57% absolute top-90.66% left-26.9% game-btn !disabled:filter-none !disabled:cursor-default"><img src="/eventimgs/2/squareIcon.svg" alt=""
-          class="md:mr-.4vw mr-.7vw md:w-1.4vw w-2.3vw">委買遊戲幣拿回饋<img src="/eventimgs/2/squareIcon.svg" alt=""
+      <button @click="() => { innerPage = 4; scrollToTop(); }" class="md:w-45.6% w-46.72% h-3.57% absolute top-90.66% left-26.9% game-btn !disabled:filter-none !disabled:cursor-default"><img src="/images/activity/2/squareIcon.svg" alt=""
+          class="md:mr-.4vw mr-.7vw md:w-1.4vw w-2.3vw">委買遊戲幣拿回饋<img src="/images/activity/2/squareIcon.svg" alt=""
           class="md:ml-.4vw ml-.7vw md:w-1.4vw w-2.3vw"></button>
     </div>
   </div>  
@@ -174,86 +174,86 @@
       <div
         class="absolute w-25.4% top-29% left-7.3% cursor-pointer hover:filter-brightness-[1.1]">
         <NuxtLink to="https://www.pmatch.com.tw/findmatch?platformName=寶島娛樂城&keyword=" target="_blank">
-          <img class='w-100%' src="/eventimgs/2/g-寶島娛樂城.png" alt="寶島娛樂城">
+          <img class='w-100%' src="/images/activity/2/g-寶島娛樂城.png" alt="寶島娛樂城">
         </NuxtLink>
       </div>
       <div
         class="absolute w-25.4% top-42.5% left-7.3% cursor-pointer hover:filter-brightness-[1.1]">
         <NuxtLink to="https://www.pmatch.com.tw/findmatch?platformName=聚寶Online&keyword=" target="_blank">
-          <img class='w-100%' src="/eventimgs/2/g-聚寶Online.png" alt="聚寶Online">
+          <img class='w-100%' src="/images/activity/2/g-聚寶Online.png" alt="聚寶Online">
         </NuxtLink>
       </div>
       <div
         class="absolute w-25.4% top-56.2% left-7.3% cursor-pointer hover:filter-brightness-[1.1]">
         <NuxtLink to="https://www.pmatch.com.tw/findmatch?platformName=錢街Online&keyword=" target="_blank">
-          <img class='w-100%' src="/eventimgs/2/g-錢街Online.png" alt="錢街Online">
+          <img class='w-100%' src="/images/activity/2/g-錢街Online.png" alt="錢街Online">
         </NuxtLink>
       </div>
       <div
         class="absolute w-25.4% top-69.8% left-7.3% cursor-pointer hover:filter-brightness-[1.1]">
         <NuxtLink to="https://www.pmatch.com.tw/findmatch?platformName=滿貫大亨&keyword=" target="_blank">
-          <img class='w-100%' src="/eventimgs/2/g-滿貫大亨.png" alt="滿貫大亨">
+          <img class='w-100%' src="/images/activity/2/g-滿貫大亨.png" alt="滿貫大亨">
         </NuxtLink>
       </div>
       <div
         class="absolute w-25.4% top-83.4% left-7.3% cursor-pointer hover:filter-brightness-[1.1]">
         <NuxtLink to="https://www.pmatch.com.tw/findmatch?platformName=金好運娛樂城&keyword=" target="_blank">
-          <img class='w-100%' src="/eventimgs/2/g-金好運娛樂城.png" alt="金好運娛樂城">
+          <img class='w-100%' src="/images/activity/2/g-金好運娛樂城.png" alt="金好運娛樂城">
         </NuxtLink>
       </div>
       <!-- 媒合商 -->
       <div
         class="absolute w-16.4% top-28.5% left-55.3% cursor-pointer hover:filter-brightness-[1.1]">
         <NuxtLink to="https://www.pmatch.com.tw/findmatch/206" target="_blank">
-          <img class='w-100%' src="/eventimgs/2/t-武財神.png" alt="武財神">
+          <img class='w-100%' src="/images/activity/2/t-武財神.png" alt="武財神">
         </NuxtLink>
       </div>
       <div
         class="absolute w-16.5% top-41.7% left-44.1% cursor-pointer hover:filter-brightness-[1.1]">
         <NuxtLink to="https://www.pmatch.com.tw/findmatch/208" target="_blank">
-          <img class='w-100%' src="/eventimgs/2/t-金站.png" alt="金站">
+          <img class='w-100%' src="/images/activity/2/t-金站.png" alt="金站">
         </NuxtLink>
       </div>
       <div
         class="absolute w-16.5% top-41.7% left-66.4% cursor-pointer hover:filter-brightness-[1.1]">
         <NuxtLink to="https://www.pmatch.com.tw/findmatch/211" target="_blank">
-          <img class='w-100%' src="/eventimgs/2/t-福娃金庫.png" alt="福娃金庫">
+          <img class='w-100%' src="/images/activity/2/t-福娃金庫.png" alt="福娃金庫">
         </NuxtLink>
       </div>
       <div
         class="absolute w-16.5% top-55.5% left-55.3% cursor-pointer hover:filter-brightness-[1.1]">
         <NuxtLink to="https://www.pmatch.com.tw/findmatch/200" target="_blank">
-          <img class='w-100%' src="/eventimgs/2/t-錢庫.png" alt="錢庫">
+          <img class='w-100%' src="/images/activity/2/t-錢庫.png" alt="錢庫">
         </NuxtLink>
       </div>
       <div
         class="absolute w-16.5% top-68.9% left-36.3% cursor-pointer hover:filter-brightness-[1.1]">
         <NuxtLink to="https://www.pmatch.com.tw/findmatch/213" target="_blank">
-          <img class='w-100%' src="/eventimgs/2/t-添好運央行.png" alt="添好運央行">
+          <img class='w-100%' src="/images/activity/2/t-添好運央行.png" alt="添好運央行">
         </NuxtLink>
       </div>
       <div
         class="absolute w-16.5% top-68.9% left-55.3% cursor-pointer hover:filter-brightness-[1.1]">
         <NuxtLink to="https://www.pmatch.com.tw/findmatch/207" target="_blank">
-          <img class='w-100%' src="/eventimgs/2/t-發大財金庫.png" alt="發大財金庫">
+          <img class='w-100%' src="/images/activity/2/t-發大財金庫.png" alt="發大財金庫">
         </NuxtLink>
       </div>
       <div
         class="absolute w-16.5%  top-68.9% left-74.3% cursor-pointer hover:filter-brightness-[1.1]">
         <NuxtLink to="https://www.pmatch.com.tw/findmatch/201" target="_blank">
-          <img class='w-100%' src="/eventimgs/2/t-寶可夢銀行.png" alt="寶可夢銀行">
+          <img class='w-100%' src="/images/activity/2/t-寶可夢銀行.png" alt="寶可夢銀行">
         </NuxtLink>
       </div>
       <div
         class="absolute w-16.5%  top-82.6% left-44.1% cursor-pointer hover:filter-brightness-[1.1]">
         <NuxtLink to="https://www.pmatch.com.tw/findmatch/202" target="_blank">
-          <img class='w-100%' src="/eventimgs/2/t-金好盈金流.png" alt="金好盈金流">
+          <img class='w-100%' src="/images/activity/2/t-金好盈金流.png" alt="金好盈金流">
         </NuxtLink>
       </div>
       <div
         class="absolute w-16.5%  top-82.6% left-66.4% cursor-pointer hover:filter-brightness-[1.1]">
         <NuxtLink to="https://www.pmatch.com.tw/findmatch/204" target="_blank">
-          <img class='w-100%' src="/eventimgs/2/t-米其林金流.png" alt="米其林金流">
+          <img class='w-100%' src="/images/activity/2/t-米其林金流.png" alt="米其林金流">
         </NuxtLink>
       </div>
     </div>
@@ -451,7 +451,7 @@ onMounted(async () => {
 }
 #page1 {
   background-image: 
-    url('/eventimgs/2/天降好禮.png'),
+    url('/images/activity/2/banner.png'),
     linear-gradient(180deg, #0003A9 0%, #006FE6 74.95%);
   aspect-ratio: 4143/8872;
   background-size: contain;
@@ -461,7 +461,7 @@ onMounted(async () => {
   width: 100%;
 }
 #innerPage1 {
-  background-image: url('/eventimgs/2/分頁1.png');
+  background-image: url('/images/activity/2/page-1.png');
   aspect-ratio: 1579/5083;
   background-size: contain;
   background-repeat: no-repeat;
@@ -510,7 +510,7 @@ onMounted(async () => {
 }
 #page2 {
   background-image: 
-    url('/eventimgs/2/天降好禮.png'),
+    url('/images/activity/2/banner.png'),
     linear-gradient(180deg, #0003A9 0%, #006FE6 74.95%);
   aspect-ratio: 4143/13091;
   background-size: contain;
@@ -521,7 +521,7 @@ onMounted(async () => {
 }
 #innerPage2 {
   min-width: 47.9%;
-  background-image: url('/eventimgs/2/分頁2.png'); 
+  background-image: url('/images/activity/2/page-2.png'); 
   aspect-ratio: 1579/8459;
   background-size: cover;
   background-repeat: no-repeat;
@@ -534,7 +534,7 @@ onMounted(async () => {
 }
 #page3 {
   background-image: 
-    url('/eventimgs/2/天降好禮.png'),
+    url('/images/activity/2/banner.png'),
     linear-gradient(180deg, #0003A9 0%, #006FE6 74.95%);
   aspect-ratio: 4143/9768;
   background-size: contain;
@@ -545,7 +545,7 @@ onMounted(async () => {
 }
 #innerPage3 {
   min-width: 47.9%;
-  background-image: url('/eventimgs/2/分頁3.png');
+  background-image: url('/images/activity/2/page-3.png');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -558,7 +558,7 @@ onMounted(async () => {
 }
 #page4 {
   background-image: 
-    url('/eventimgs/2/天降好禮.png'),
+    url('/images/activity/2/banner.png'),
     linear-gradient(180deg, #0003A9 0%, #006FE6 74.95%);
   aspect-ratio: 4143/5270;
   background-size: contain;
@@ -568,7 +568,7 @@ onMounted(async () => {
   width: 100%;
 }
 #innerPage4 {
-  background-image: url('/eventimgs/2/分頁4.png');
+  background-image: url('/images/activity/2/page-4.png');
   aspect-ratio: 1579/2222;
   background-size: cover;
   background-repeat: no-repeat;
@@ -602,7 +602,7 @@ onMounted(async () => {
   }  
   #page1 {
     width: 100%;
-    background-image: url('/eventimgs/2/行動版背景1.png');
+    background-image: url('/images/activity/2/m-bg-1.png');
     aspect-ratio: 1904/7207;
   }
   #innerPage1 {
@@ -616,7 +616,7 @@ onMounted(async () => {
   }
   #page2 {
     width: 100%;
-    background-image: url('/eventimgs/2/行動版背景2.png');
+    background-image: url('/images/activity/2/m-bg-2.png');
     aspect-ratio: 1904/10609;
   }
   #innerPage2 {
@@ -627,19 +627,19 @@ onMounted(async () => {
   }
   #page3 {
     width: 100%;
-    background-image: url('/eventimgs/2/行動版背景3.png');
+    background-image: url('/images/activity/2/m-bg-3.png');
     aspect-ratio: 1904/7914;
   }
   #innerPage3 {
     min-width: unset;
-    background-image: url('/eventimgs/2/分頁3-m.png');
+    background-image: url('/images/activity/2/m-page-3.png');
     width: 83%;
     top: 12.04%;
     left: 50%;
   }
   #page4 {
     width: 100%;
-    background-image: url('/eventimgs/2/行動版背景4.png');
+    background-image: url('/images/activity/2/m-bg-4.png');
     aspect-ratio: 1904/4328;
   }
   #innerPage4 {

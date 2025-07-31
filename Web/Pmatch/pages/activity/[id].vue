@@ -10,10 +10,10 @@
   </Head>
   
   <div class="dot1 select-none pointer-events-none">
-    <img src="/images/bg-dot03.png" width="100%" alt="">
+    <img src="//images/bg-dot03.png" width="100%" alt="">
   </div>
   <div class="dot2 select-none pointer-events-none">
-    <img src="/images/bg-dot04.png" width="100%" alt="">
+    <img src="//images/bg-dot04.png" width="100%" alt="">
   </div>
 
   <div class="mt-2.5rem max-w-1000px m-auto page font-events">
@@ -244,39 +244,39 @@
   // 主題樣式
   const bannerTypeMap = {
     1: {
-      picture: '/activity/banner_1.png',
+      picture: '/images/activity/banner-1.png',
       position: 'absolute top-8.5% right-4% flex flex-col items-end gap-2'
     },
     2: {
-      picture: '/activity/banner_2.png',
+      picture: '/images/activity/banner-2.png',
       position: 'absolute bottom-10% left-3% flex flex-col items-start gap-2'
     },
     3: {
-      picture: '/activity/banner_3.png',
+      picture: '/images/activity/banner-3.png',
       position: 'absolute bottom-10.75% right-2.5% flex flex-col items-end gap-2'
     },
     4: {
-      picture: '/activity/banner_4.png',
+      picture: '/images/activity/banner-4.png',
       position: 'absolute bottom-5.25% right-2% flex flex-col items-end gap-2'
     },
     5: {
-      picture: '/activity/banner_5.png',
+      picture: '/images/activity/banner-5.png',
       position: 'absolute bottom-9.5% right-2% flex flex-col items-end gap-2'
     },
     6: {
-      picture: '/activity/banner_6.png',
+      picture: '/images/activity/banner-6.png',
       position: 'absolute bottom-8.5% left-3% flex flex-col items-start gap-2'
     },
     7: {
-      picture: '/activity/banner_7.png',
+      picture: '/images/activity/banner-7.png',
       position: 'absolute bottom-5.5% right-2.25% flex flex-col items-end gap-2'
     },
     8: {
-      picture: '/activity/banner_8.png',
+      picture: '/images/activity/banner-8.png',
       position: 'absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%] flex flex-col items-center gap-2 w-[90%] '
     },
     9: {
-      picture: '/activity/banner_9.png',
+      picture: '/images/activity/banner-9.png',
       position: 'absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%] flex flex-col items-center gap-2 w-[90%] '
     }
   };

@@ -50,9 +50,9 @@
             <div class="absolute w-92% h-4% left-14.8% top-[92.1%] ">
                 <NuxtLink to="/findmatch?platformName=寶島娛樂城&keyword="
                           target="_blank">
-                    <button class="game-btn"><img src="/eventimgs/1/squareIcon.svg"
+                    <button class="game-btn"><img src="/images/activity/1/squareIcon.svg"
                              alt=""
-                             class="md:mr-10px mr-5px md:w-20px w-10px">委買寶島娛樂城遊戲幣<img src="/eventimgs/1/squareIcon.svg"
+                             class="md:mr-10px mr-5px md:w-20px w-10px">委買寶島娛樂城遊戲幣<img src="/images/activity/1/squareIcon.svg"
                              alt=""
                              class="md:ml-10px ml-5px md:w-20px w-10px"></button>
                 </NuxtLink>
@@ -76,9 +76,9 @@
                     class="w-30% h-2.4% absolute top-68.45% left-26% member-btn">前往會員中心</button>
             <NuxtLink to="/findmatch?platformName=寶島娛樂城&keyword="
                       target="_blank">
-                <button class="w-55% h-3% absolute top-94.9% left-13% game-btn2"><img src="/eventimgs/1/squareIcon.svg"
+                <button class="w-55% h-3% absolute top-94.9% left-13% game-btn2"><img src="/images/activity/1/squareIcon.svg"
                          alt=""
-                         class="md:mr-10px mr-5px md:w-20px w-10px">委買寶島娛樂城遊戲幣<img src="/eventimgs/1/squareIcon.svg"
+                         class="md:mr-10px mr-5px md:w-20px w-10px">委買寶島娛樂城遊戲幣<img src="/images/activity/1/squareIcon.svg"
                          alt=""
                          class="md:ml-10px ml-5px md:w-20px w-10px"></button>
             </NuxtLink>
@@ -87,7 +87,7 @@
                 <NuxtLink to="/findmatch/206?pn=%E5%AF%B6%E5%B3%B6%E5%A8%9B%E6%A8%82%E5%9F%8E"
                           target="_blank">
                     <img class='w-100%'
-                         src="/eventimgs/1/武財神.png"
+                         src="/images/activity/1/武財神.png"
                          alt="">
                 </NuxtLink>
             </div>
@@ -95,7 +95,7 @@
                 <NuxtLink to="/findmatch/203?pn=%E5%AF%B6%E5%B3%B6%E5%A8%9B%E6%A8%82%E5%9F%8E"
                           target="_blank">
                     <img class='w-100%'
-                         src="/eventimgs/1/夫人.png"
+                         src="/images/activity/1/夫人.png"
                          alt="">
                 </NuxtLink>
             </div>
@@ -193,7 +193,7 @@ onMounted(async () => {
 <style scoped>
 #page1 {
     width: 100%;
-    background-image: url('/eventimgs/1/Slice_7.png');
+    background-image: url('/images/activity/1/bg-1.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -202,7 +202,7 @@ onMounted(async () => {
 }
 #innerPage1 {
     min-width: 42%;
-    background-image: url('/eventimgs/1/分頁一.png');
+    background-image: url('/images/activity/1/page-1.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -283,12 +283,12 @@ onMounted(async () => {
     background-repeat: no-repeat;
     background-position: center;
     position: relative;
-    background-image: url('/eventimgs/1/Slice_8.png');
+    background-image: url('/images/activity/1/bg-2.png');
 }
 #innerPage2 {
     min-width: 46.5%;
     /* background: green; */
-    background-image: url('/eventimgs/1/分頁二.png');
+    background-image: url('/images/activity/1/page-2.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -346,7 +346,7 @@ onMounted(async () => {
 @media screen and (max-width: 767px) {
     #page1 {
         width: 100%;
-        background-image: url('/eventimgs/1/分頁一背景.png');
+        background-image: url('/images/activity/1/m-bg-1.png');
         aspect-ratio: 1903/7070;
     }
     #innerPage1 {
@@ -357,7 +357,7 @@ onMounted(async () => {
     }
     #page2 {
         width: 100%;
-        background-image: url('/eventimgs/1/分頁二背景.png');
+        background-image: url('/images/activity/1/m-bg-2.png');
         aspect-ratio: 1903/8610;
     }
     #innerPage2 {
