@@ -8,8 +8,10 @@
     <Meta property="og:description" content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
     <link rel="stylesheet" href="/css/contents.css">
   </Head>
-
-  <div class="mt-2.5rem max-w-1000px m-auto page font-events mb-[-6rem]">
+  <div v-if="isLoading">
+    <LoadingPage />
+  </div>
+  <div v-else  class="mt-2.5rem max-w-1000px m-auto page font-events mb-[-6rem]">
       <!-- 成功獲取資料時 -->
       <div v-if="activityItem">
         <div class="relative aspect-[25/7] overflow-hidden">
@@ -63,10 +65,81 @@
 
 <script setup>
   import { useRoute } from 'vue-router';
-  const route = useRoute();
+  import LoadingPage from '~/components/LoadingPage.vue';
 
+  const route = useRoute();
+  const { $axios } = useNuxtApp();
+  const userToken = useCookie('_PmToken')
   const assetsUrl = useCookie('_PmAssetsUrl').value || ''
-  const activityList = ref([]);
+  const jwtStore = useJwtStore()  
+
+  const activityItem = ref(null); // 初始化活動頁
+  const isLoading = ref(true);
+    
+  async function RedisGetString() {
+    const key = route.query.key;
+    let token = userToken.value;
+    
+    if (!key) {
+      console.warn('您無權限瀏覽此頁');
+      await navigateTo('/activity');
+      return;
+    }
+
+    if (!token || token === '' || token === '') {
+      token = await jwtStore.generateToken()
+    }
+
+    // 2. 呼叫 API 取得資料
+    try {
+      const response = await $axios.post(
+        'http://192.168.10.206:3310/api/v1/Tool/RedisGetString',
+        {        
+          Key: key 
+        },
+        {
+          headers: {
+            Authorization: token
+          }
+        }
+      );
+      const dataString = response.data?.Data?.Value;
+      if (!dataString) {
+        throw new Error('API 未回傳有效的活動資料');
+      }
+
+      // 3. 解析 API 回傳的字串成物件
+      const searchParams = new URLSearchParams(dataString);
+      const parsedData = Object.fromEntries(searchParams.entries());
+
+      const Item = {
+        Title: decodeURIComponent(parsedData.Title || ''),
+        Summary: decodeURIComponent(parsedData.Summary || ''),
+        Content: decodeURIComponent(parsedData.Content || ''),
+        ImgFile: parsedData.ImgFile || '',
+        StoreImage: parsedData.StoreImage || '',
+        storeImage: `${assetsUrl}${parsedData.StoreImage || ''}`,
+        storeName: parsedData.StoreName || '',
+        Url: parsedData.Url || '',
+        StartTime: parsedData.StartTime || '',
+        EndTime: parsedData.EndTime || ''
+      }
+
+      // 4. 處理圖片路徑與樣式
+      const { imageUrl, bannerType, background } = parseImgFile(Item.ImgFile);
+      Item.imageUrl = imageUrl;
+      Item.bannerType = bannerType;
+      Item.background = background;
+
+      // 5. 設定資料，觸發畫面渲染
+      activityItem.value = Item;
+
+    } catch (err) {
+      console.error('載入預覽資料時發生錯誤:', err);
+    } finally {
+      isLoading.value = false;
+    }
+  }
 
  // 解析圖片 url 字串
   function parseImgFile(imgFile) {
@@ -156,39 +229,10 @@
     8: 'shadow-[inset_0_-4px_6px_rgba(160,120,200,0.2)] bg-gradient-to-b from-[#FAF0FF] to-[#D8BFE6]'
   };
 
-  // 初始化活動頁
-  const activityItem = ref(null)
-
-  onMounted(() => {
-    // 將 query string 還原成活動資料物件 
-    const query = route.query;
-
-    const Item = {
-      Title: decodeURIComponent(query.Title || ''),
-      Summary: decodeURIComponent(query.Summary || ''),
-      Content: decodeURIComponent(query.Content || ''),
-      ImgFile: decodeURIComponent(query.ImgFile || ''),
-      storeImage: `${assetsUrl}${decodeURIComponent(query.StoreImage || '')}`,
-      storeName: decodeURIComponent(query.StoreName || ''),
-      Url: decodeURIComponent(query.Url || ''),
-      StartTime: decodeURIComponent(query.StartTime || ''),
-      EndTime: decodeURIComponent(query.EndTime || '')
-    }
-
-    const { imageUrl, bannerType, background } = parseImgFile(Item.ImgFile)
-    Item.imageUrl = imageUrl
-    Item.bannerType = bannerType
-    Item.background = background
-
-    activityItem.value = Item
-})
-
-watch(activityItem, (value) => {
-  if (value) {
-    activityList.value = [{ ...value }]
-  }
+onMounted(async () => {
+  await RedisGetString();
+  console.log('活動資料', activityItem.value)
 });
-
 </script>
 
 <style scoped>

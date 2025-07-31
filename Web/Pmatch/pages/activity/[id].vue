@@ -88,7 +88,7 @@
 
   // 取得遊戲平台資訊
   const platformList = ref([])
-  let token = userToken.value
+  const token = userToken.value
 
   async function fetchGameList() {
     if (!token || token === '') {
