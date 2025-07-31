@@ -1,9 +1,10 @@
 <template>
   <div
+    v-show="userToken && memberId"
     class="fixed flex z-999 justify-end top-[27%] lg:top-252px bg-[#FFBBDA] w-[374px] h-[84px] text-white text-24px rounded-r-50 transition-all duration-300 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] before:content-[''] before:h-[80px] before:absolute before:inset-0 before:bg-gradient-to-r before:from-[#E70763] before:to-[#C90E5B] before:rounded-r-50 before:-z-1 before:translate-y-1"
     :class="[ buyLogOpen ? 'left-0' : 'left-[-281.5px]' ]"
+    title="查看購買紀錄"
     @click="toggleBuyLog"
-    v-show="userToken && memberId"
   >
     <div class="flex items-center">
       <!-- 標題文字 -->
@@ -61,47 +62,3 @@ onMounted(async () => {
   }
 });
 </script>
-
-<style scoped>
-/* .buyLogBox {
-  position: fixed;
-  left: -110px;
-  top: 20%;
-  background: linear-gradient(to right, #f72585, #7b2cbf);
-  color: #fff;
-  padding: 1rem 2rem;
-  font-size: 18px;
-  border-radius: 0 50px 50px 0;
-  font-weight: 600;
-  z-index: 99;
-  transition: all 0.3s;
-} */
-
-/* .buyLogBox:hover {
-  left: -2px;
-} */
-
-/* .buyLogDetailBox {
-  padding: 0 1px 1px 1px;
-  border: none;
-  background: linear-gradient(to right, #4361ee, #f72585);
-  color: #fff;
-  font-size: 18px;
-  font-weight: 600;
-  cursor: pointer;
-  border-radius: 0 0 10px 0;
-} */
-
-/* .buyLogDetail {
-  width: 100%;
-  background: #fff;
-  color: #f72585;
-  text-align: center;
-  border-radius: 0 0 10px 0;
-} */
-
-/* .buyItem {
-    border-bottom: 1px solid #f72585;
-    border-radius: 0 0 0 10px;
-} */
-</style>

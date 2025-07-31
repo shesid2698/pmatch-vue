@@ -1,9 +1,10 @@
 <!-- components/ChatLauncher.vue -->
 <template>
   <button
+    v-show="userToken && memberId"
     class="fixed absolute bottom-[5%] right-[4%] z-50 w-[120px] h-[120px] chat-launcher  bg-[#F7EEFF] border-none  text-white rounded-full p-3 backdrop-blur-[4px] bg-[#F7EEFF] shadow-[0_0_6px_5px_#FFFFFF] hover:shadow-[0_0_10px_10px_#FFFFFF] hover:cursor-pointer active:bg-[#E0CFEF] "
-    @click="OpenChat" 
     title="開啟聊天室"
+    @click="OpenChat" 
     @mouseenter="isHover = true"
     @mouseleave="isHover = false"
   >
@@ -74,6 +75,7 @@ const openAlertModal = alertModalStore.alertShowModal;
 const config = useConfigStore()
 const configStore = useConfigStore();
 const userToken = useCookie('_PmToken')
+const memberId = useCookie("_PmMemberId");
 const staffId = useCookie('_PmStaffId')
 const isHover = ref(false);
 
