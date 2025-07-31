@@ -527,7 +527,7 @@ const storeActivities = computed(() =>
   const activityList = ref([]);
 
   async function fetchAdvertisementList() {
-    let token = userToken.value;
+    const token = userToken.value;
     try {      
       if (!token || token === '') {
         token = await jwtStore.generateToken()

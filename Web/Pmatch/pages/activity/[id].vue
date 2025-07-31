@@ -6,6 +6,7 @@
     <Meta name="keywords" content="pmatch,pmatch交易,博奕遊戲,幣商,媒合商,遊戲幣,虛擬幣,遊戲交易,媒合交易,買幣,賣幣,虛寶交易" />
     <Meta name="description" content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
     <Meta property="og:description" content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
+    <link rel="stylesheet" href="/css/contents.css">
   </Head>
   
   <div class="dot1 select-none pointer-events-none">
@@ -61,7 +62,7 @@
         <!-- 活動內容 -->
         <div class="p-4 min-h-xl" :class="backgroundMap[activityItem.background]">
           <div class="text-[#3B5BC4] text-3xl px-2 mb-2">活動內容</div>
-          <div class="text-[#3B5BC4] text-xl reak-words leading-relaxed px-4" v-html="activityItem.Content"></div>
+          <div class="text-[#3B5BC4] text-xl reak-words leading-relaxed px-4 ck-content" v-html="activityItem.Content"></div>
         </div>
 
           <div class="text-start content-center flex items-center cursor-pointer">
@@ -87,7 +88,7 @@
 
   // 取得遊戲平台資訊
   const platformList = ref([])
-  let token = userToken.value
+  const token = userToken.value
 
   async function fetchGameList() {
     if (!token || token === '') {

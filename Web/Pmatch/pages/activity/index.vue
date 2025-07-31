@@ -269,7 +269,7 @@
   };
 
   // 取得遊戲平台資訊
-  let token = userToken.value
+  const token = userToken.value
 
   async function fetchGameList() {
     if (!token || token === '') {
