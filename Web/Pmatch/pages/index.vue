@@ -64,7 +64,7 @@
                     class="flex-1 px-4 h-full font-size-1.2rem w-[594px] border-none outline-none text-20px font-500 text-[#8D8D8D] placeholder:text-[#8D8D8D]" />
               <!-- 按鈕 -->
               <button @click="searchToFindMatch"
-                class="w-[119px] h-full flex items-center justify-center bg-[#8A4CBF] hover:bg-[#840FE9] active:bg-[#31005A] text-white border-none text-20px">搜尋
+                class="w-[119px] h-full flex items-center justify-center cursor-pointer bg-[#8A4CBF] hover:bg-[#840FE9] active:bg-[#31005A] text-white border-none text-20px">搜尋
                 <img class="w-[17px] ps-0.75 pt-0.75 select-none pointer-events-none" src="/images/searchIcon-white.svg" alt="搜尋" />  
               </button>
             </div>
@@ -87,7 +87,7 @@
             <div class="ms-3 flex flex-wrap items-center">
               <template v-for="(item, index) in plaformLog" :key="index">
                 <button @click="searchLog(item)"
-                        class="bg-transparent border-none text-[16px] leading-none text-[#8A4CBF]">
+                        class="bg-transparent border-none text-[16px] leading-none cursor-pointer text-[#8A4CBF] hover:text-[#8900FF] active:text-[#6000B3]">
                   <span>{{ item }}</span>
                 </button>
                 <span class="mx-1.8 translate-y-[-2px]" v-if="index !== plaformLog.length - 1">/</span>
