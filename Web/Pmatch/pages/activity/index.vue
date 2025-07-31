@@ -9,10 +9,10 @@
   </Head>
 
   <div class="dot1 select-none pointer-events-none">
-    <img src="//images/bg-dot03.png" width="100%" alt="">
+    <img src="/images/bg-dot03.png" width="100%" alt="">
   </div>
   <div class="dot2 select-none pointer-events-none">
-    <img src="//images/bg-dot04.png" width="100%" alt="">
+    <img src="/images/bg-dot04.png" width="100%" alt="">
   </div>
 
   <div class="max-w-1113px m-auto mt-5rem ps-5 pe-5 relative z-2">      
