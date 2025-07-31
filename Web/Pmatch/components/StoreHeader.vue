@@ -152,6 +152,24 @@ const logout = () => {
   MemberIdCookie.maxAge = -1;
   window.location.href = "/";
 };
+// Navbar 透明度小精靈
+const handleScroll = () => {
+  const header = document.querySelector(".headerBox");
+  const headerMenu = document.querySelector(".headerBoxMenu");
+  const headerMenuLink = document.querySelectorAll(".headerLink");
+  const headerMenuNav0 = document.querySelector(".nav0");
+  const headerMenuNav1 = document.querySelector(".nav1");
+
+  const isScrolled = window.scrollY > 0;
+
+  header?.classList.toggle("scrolled", isScrolled);
+  headerMenu?.classList.toggle("scrolledMenu", isScrolled);
+  headerMenuLink.forEach((link) =>
+    link.classList.toggle("scrolledMenuLink", isScrolled)
+  );
+  headerMenuNav0?.classList.toggle("scrolledMenuNav0", isScrolled);
+  headerMenuNav1?.classList.toggle("scrolledMenuNav1", isScrolled);
+};
 // 在組件掛載時添加全局點擊事件監聽器
 onMounted(() => {
   document.addEventListener("click", closeDropdownOutside);
@@ -178,30 +196,8 @@ onMounted(() => {
       icon: "/images/icon-people-white.png",
     },
   ];
-  window.addEventListener("scroll", () => {
-    const header = document.querySelector(".headerBox");
-    const headerMenu = document.querySelector(".headerBoxMenu");
-    const headerMenuLink = document.querySelectorAll(".headerLink");
-    const headerMenuNav0 = document.querySelector(".nav0");
-    const headerMenuNav1 = document.querySelector(".nav1");
-    if (window.scrollY > 0) {
-      header.classList.add("scrolled");
-      headerMenu.classList.add("scrolledMenu");
-      headerMenuLink.forEach((link) => {
-        link.classList.add("scrolledMenuLink");
-      });
-      headerMenuNav0.classList.add("scrolledMenuNav0");
-      headerMenuNav1.classList.add("scrolledMenuNav1");
-    } else {
-      header.classList.remove("scrolled");
-      headerMenu.classList.remove("scrolledMenu");
-      headerMenuLink.forEach((link) => {
-        link.classList.remove("scrolledMenuLink");
-      });
-      headerMenuNav0.classList.remove("scrolledMenuNav0");
-      headerMenuNav1.classList.remove("scrolledMenuNav1");
-    }
-  });
+  window.addEventListener("scroll", handleScroll);
+  handleScroll();
 });
 
 // 在組件卸載時移除點擊事件監聽器

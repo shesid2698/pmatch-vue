@@ -172,6 +172,15 @@
     MemberIdCookie.maxAge = -1;
     window.location.href = '/';
   };
+  // Navbar 透明度小精靈
+  const handleScroll = () => {
+    const header = document.querySelector('.headerBox');
+    if (window.scrollY > 0) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  };
   // 在組件掛載時添加全局點擊事件監聽器
   onMounted(async () => {
     document.addEventListener('click', closeDropdownOutside);
@@ -261,15 +270,8 @@
         }
       ];
     }
-    window.addEventListener('scroll', () => {
-      const header = document.querySelector('.headerBox');
-
-      if (window.scrollY > 0) {
-        header.classList.add('scrolled');
-      } else {
-        header.classList.remove('scrolled');
-      }
-    });
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
   });
 
   // 在組件卸載時移除點擊事件監聽器
