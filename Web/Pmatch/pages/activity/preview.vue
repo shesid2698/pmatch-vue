@@ -93,7 +93,7 @@
     // 2. 呼叫 API 取得資料
     try {
       const response = await $axios.post(
-        'http://192.168.10.206:3310/api/v1/Tool/RedisGetString',
+        '/api/v1/Tool/RedisGetString',
         {        
           Key: key 
         },
