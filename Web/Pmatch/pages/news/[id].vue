@@ -22,98 +22,90 @@
 </template>
 
 <script setup>
-// 引入的東西
-import { defineAsyncComponent } from "vue";
+  import { useAlertModalStore } from "../stores/useAlertModal.js";
+  const alertModalStore = useAlertModalStore();
+  const openAlertModal = alertModalStore.alertShowModal;
 
-import { useAlertModalStore } from "../stores/useAlertModal.js";
-const alertModalStore = useAlertModalStore();
-const openAlertModal = alertModalStore.alertShowModal;
+  // 用路由的名字 help1、help2
+  const route = useRoute();
+  const routeParamId = route.params.id;
+  const newsItem = ref(null);
+  const { $axios } = useNuxtApp();
+  const jwtStore = useJwtStore();
+  const userToken = useCookie("_PmToken");
 
-// 用路由的名字 help1、help2
-const route = useRoute();
-const routeParamId = route.params.id;
-const newsItem = ref(null);
-const { $axios } = useNuxtApp();
-const jwtStore = useJwtStore();
-const userToken = useCookie("_PmToken");
-
-// 取得GetNewsDetail
-async function fetchNewsDetailData(token) {
-  try {
-    const response = await $axios.post(
-      "/api/v1/Pmatch/GetNewsDetail",
-      {
-        MessageId: routeParamId,
-      },
-      {
-        headers: {
-          Authorization: token, // 帶上 Token
+  // 取得GetNewsDetail
+  async function fetchNewsDetailData(token) {
+    try {
+      const response = await $axios.post(
+        "/api/v1/Pmatch/GetNewsDetail",
+        {
+          MessageId: routeParamId,
         },
+        {
+          headers: {
+            Authorization: token, // 帶上 Token
+          },
+        }
+      );
+      if (response.data.Status.Code === 0) {
+        newsItem.value = response.data.Data;
+      } else {
+        await openAlertModal(" ", `${response.data.Status.Message}`);
       }
-    );
-    if (response.data.Status.Code === 0) {
-      newsItem.value = response.data.Data;
-    } else {
-      await openAlertModal(" ", `${response.data.Status.Message}`);
+    } catch (error) {
+      console.error("請求失敗:", error);
+      data.value = "無法取得資料。"; // 畫面顯示錯誤訊息
     }
-  } catch (error) {
-    console.error("請求失敗:", error);
-    data.value = "無法取得資料。"; // 畫面顯示錯誤訊息
   }
-}
-onMounted(async () => {
-  try {
-    if (userToken.value != "" && userToken.value != undefined) {
-      const token = userToken.value;
-      if (token != "") {
-        fetchNewsDetailData(token);
+  onMounted(async () => {
+    try {
+      if (userToken.value != "" && userToken.value != undefined) {
+        const token = userToken.value;
+        if (token != "") {
+          fetchNewsDetailData(token);
+        }
+      } else {
+        // 生成新的 token
+        const token = await jwtStore.generateToken();
+        if (token != "") {
+          fetchNewsDetailData(token);
+        }
       }
-    } else {
-      // 生成新的 token
-      const token = await jwtStore.generateToken();
-      if (token != "") {
-        fetchNewsDetailData(token);
-      }
+    } catch (error) {
+      console.error("頁面初始化失敗:", error);
     }
-  } catch (error) {
-    console.error("頁面初始化失敗:", error);
-  }
-});
-const router = useRouter();
-const goBack = () => {
-  if (window.history.length <= 1) {
-    // 代表是直接開這頁，沒上一頁可以返回
+  });
+  const router = useRouter();
+  const goBack = () => {
     router.push({ path: '/', query: { scrollToNews: '1' } });
-  } else {
-    router.back();
-  }
-};
+  };
 </script>
 
 <style scoped>
-.detail {
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 1rem;
-}
-.backBtn {
-  width: 175px;
-  aspect-ratio: 175/65;
-  border-width: 2px;
-  border-style: solid;
-  border-color: transparent;
-  border-radius: 50px;
-  font-size: 18px;
-  background-image: linear-gradient(transparent, transparent),
-    linear-gradient(to right, rgba(67, 97, 238), rgba(247, 37, 133));
-  background-clip: padding-box, border-box;
-  background-origin: padding-box, border-box;
-  color: white;
-  cursor: pointer;
-}
-.backBtn:hover {
-  background-image: linear-gradient(white, white),
-    linear-gradient(to right, rgba(67, 97, 238), rgba(247, 37, 133));
-  color: rgba(247, 37, 133);
-}
+  .detail {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 1rem;
+  }
+  .backBtn {
+    width: 175px;
+    aspect-ratio: 175/65;
+    border-width: 2px;
+    border-style: solid;
+    border-color: transparent;
+    border-radius: 50px;
+    font-size: 18px;
+    background-image: linear-gradient(transparent, transparent),
+      linear-gradient(to right, rgba(67, 97, 238), rgba(247, 37, 133));
+    background-clip: padding-box, border-box;
+    background-origin: padding-box, border-box;
+    color: white;
+    cursor: pointer;
+  }
+  .backBtn:hover {
+    background-image: linear-gradient(white, white),
+      linear-gradient(to right, rgba(67, 97, 238), rgba(247, 37, 133));
+    color: rgba(247, 37, 133);
+  }
 </style>

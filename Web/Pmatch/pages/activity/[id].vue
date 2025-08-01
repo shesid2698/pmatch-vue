@@ -77,13 +77,11 @@
 </template>
 
 <script setup>
-  import { useRoute } from 'vue-router';  
-  const route = useRoute();
-
   const { $axios } = useNuxtApp();
   const userToken = useCookie('_PmToken')
   const assetsUrl = useCookie('_PmAssetsUrl').value || ''
   const jwtStore = useJwtStore()  
+  const route = useRoute();
 
 
   // 取得遊戲平台資訊

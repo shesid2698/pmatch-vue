@@ -77,124 +77,121 @@
       </div>
     </div>
     
-
-
-<!-- <div class="pb-7rem">
-      <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
-        <div class="flex justify-center">
-          <div class="w-90%">
-            <div class="flex tableTh">
-              <div class="w-100% font-size-1.2rem text-center color-#beffff">
-                遊戲平台
-              </div>
-              <div class="w-100% font-size-1.2rem text-center color-#beffff">
-                富豪榜財產
-              </div>
-              <div class="w-100% font-size-1.2rem text-center color-#beffff">
-                遊戲幣走向
-              </div>
-            </div>
-            <div class="flex tableTd">
-              <div class="w-100% platformName font-size-1.5rem text-center color-#beffff">
-                滿貫大亨
-              </div>
-              <div class="w-100% patchNumber font-size-1.5rem text-center color-#beffff">
-                {{ dailyPatchList0.length ? dailyPatchList0[dailyPatchList0.length - 1].Total.toLocaleString() : "0" }}
-              </div>
-              <div class="w-100% font-size-1.2rem text-center color-#beffff">
-                <ElButton plain @click="openDialog(0)">
-                  
-                  <Line :data="simpleChartData" :options="simpleChartOptions" class="md-w-150px w-80px" />
-                </ElButton>
-              </div>
-            </div>
-            <div class="flex tableTd">
-              <div class="w-100% platformName font-size-1.5rem text-center color-#beffff">
-                老子有錢
-              </div>
-              <div class="w-100% patchNumber font-size-1.5rem text-center color-#beffff">
-                {{ dailyPatchList1.length ? dailyPatchList1[dailyPatchList1.length - 1].Total.toLocaleString() : "0" }}
-              </div>
-              <div class="w-100% font-size-1.2rem text-center color-#beffff">
-                <ElButton plain @click="openDialog(1)">
-                 
-                  <Line :data="simpleChartData1" :options="simpleChartOptions" class="md-w-150px w-80px" />
-                </ElButton>
-              </div>
-            </div>
-            <div class="flex tableTd">
-              <div class="w-100% platformName font-size-1.5rem text-center color-#beffff">
-                錢街Online
-              </div>
-              <div class="w-100% patchNumber font-size-1.5rem text-center color-#beffff">
-                {{ dailyPatchList2.length ? dailyPatchList2[dailyPatchList2.length - 1].Total.toLocaleString() : '0' }}
-              </div>
-              <div class="w-100% text-center">
-                <ElButton plain @click="openDialog(2)">
-                  
-                  <Line :data="simpleChartData2" :options="simpleChartOptions" class="md-w-150px w-80px" />
-                </ElButton>
-              </div>
-            </div>
-            <div class="flex tableTd">
-              <div class="w-100% platformName font-size-1.5rem text-center color-#beffff">
-                聚寶Online
-              </div>
-              <div class="w-100% patchNumber font-size-1.5rem text-center color-#beffff">
-                {{ dailyPatchList3.length ? dailyPatchList3[dailyPatchList3.length - 1].Total.toLocaleString() : '0' }}
-              </div>
-              <div class="w-100% text-center">
-                <ElButton plain @click="openDialog(3)">
-                  
-                  <Line :data="simpleChartData3" :options="simpleChartOptions" class="md-w-150px w-80px" />
-                </ElButton>
-              </div>
-            </div>
-            <div class="flex tableTd">
-              <div class="w-100% platformName font-size-1.5rem text-center color-#beffff">
-                金爸爸娛樂城
-              </div>
-              <div class="w-100% patchNumber font-size-1.5rem text-center color-#beffff">
-                {{ dailyPatchList4.length ? dailyPatchList4[dailyPatchList4.length - 1].Total.toLocaleString() : '0' }}
-              </div>
-              <div class="w-100% text-center">
-                <ElButton plain @click="openDialog(4)">
-                  
-                  <Line :data="simpleChartData4" :options="simpleChartOptions" class="md-w-150px w-80px" />
-                </ElButton>
-              </div>
-            </div>
-            <div class="flex tableTd">
-              <div class="w-100% platformName font-size-1.5rem text-center color-#beffff">
-                寶島娛樂城
-              </div>
-              <div class="w-100% patchNumber font-size-1.5rem text-center color-#beffff">
-                {{ dailyPatchList5.length ? dailyPatchList5[dailyPatchList5.length - 1].Total.toLocaleString() : '0' }}
-              </div>
-              <div class="w-100% text-center">
-                <ElButton plain @click="openDialog(5)">
-                  
-                  <Line :data="simpleChartData5" :options="simpleChartOptions" class="md-w-150px w-80px" />
-                </ElButton>
+    <!-- 富豪榜 -->
+    <!-- <div class="pb-7rem">
+          <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
+            <div class="flex justify-center">
+              <div class="w-90%">
+                <div class="flex tableTh">
+                  <div class="w-100% font-size-1.2rem text-center color-#beffff">
+                    遊戲平台
+                  </div>
+                  <div class="w-100% font-size-1.2rem text-center color-#beffff">
+                    富豪榜財產
+                  </div>
+                  <div class="w-100% font-size-1.2rem text-center color-#beffff">
+                    遊戲幣走向
+                  </div>
+                </div>
+                <div class="flex tableTd">
+                  <div class="w-100% platformName font-size-1.5rem text-center color-#beffff">
+                    滿貫大亨
+                  </div>
+                  <div class="w-100% patchNumber font-size-1.5rem text-center color-#beffff">
+                    {{ dailyPatchList0.length ? dailyPatchList0[dailyPatchList0.length - 1].Total.toLocaleString() : "0" }}
+                  </div>
+                  <div class="w-100% font-size-1.2rem text-center color-#beffff">
+                    <ElButton plain @click="openDialog(0)">
+                      
+                      <Line :data="simpleChartData" :options="simpleChartOptions" class="md-w-150px w-80px" />
+                    </ElButton>
+                  </div>
+                </div>
+                <div class="flex tableTd">
+                  <div class="w-100% platformName font-size-1.5rem text-center color-#beffff">
+                    老子有錢
+                  </div>
+                  <div class="w-100% patchNumber font-size-1.5rem text-center color-#beffff">
+                    {{ dailyPatchList1.length ? dailyPatchList1[dailyPatchList1.length - 1].Total.toLocaleString() : "0" }}
+                  </div>
+                  <div class="w-100% font-size-1.2rem text-center color-#beffff">
+                    <ElButton plain @click="openDialog(1)">
+                    
+                      <Line :data="simpleChartData1" :options="simpleChartOptions" class="md-w-150px w-80px" />
+                    </ElButton>
+                  </div>
+                </div>
+                <div class="flex tableTd">
+                  <div class="w-100% platformName font-size-1.5rem text-center color-#beffff">
+                    錢街Online
+                  </div>
+                  <div class="w-100% patchNumber font-size-1.5rem text-center color-#beffff">
+                    {{ dailyPatchList2.length ? dailyPatchList2[dailyPatchList2.length - 1].Total.toLocaleString() : '0' }}
+                  </div>
+                  <div class="w-100% text-center">
+                    <ElButton plain @click="openDialog(2)">
+                      
+                      <Line :data="simpleChartData2" :options="simpleChartOptions" class="md-w-150px w-80px" />
+                    </ElButton>
+                  </div>
+                </div>
+                <div class="flex tableTd">
+                  <div class="w-100% platformName font-size-1.5rem text-center color-#beffff">
+                    聚寶Online
+                  </div>
+                  <div class="w-100% patchNumber font-size-1.5rem text-center color-#beffff">
+                    {{ dailyPatchList3.length ? dailyPatchList3[dailyPatchList3.length - 1].Total.toLocaleString() : '0' }}
+                  </div>
+                  <div class="w-100% text-center">
+                    <ElButton plain @click="openDialog(3)">
+                      
+                      <Line :data="simpleChartData3" :options="simpleChartOptions" class="md-w-150px w-80px" />
+                    </ElButton>
+                  </div>
+                </div>
+                <div class="flex tableTd">
+                  <div class="w-100% platformName font-size-1.5rem text-center color-#beffff">
+                    金爸爸娛樂城
+                  </div>
+                  <div class="w-100% patchNumber font-size-1.5rem text-center color-#beffff">
+                    {{ dailyPatchList4.length ? dailyPatchList4[dailyPatchList4.length - 1].Total.toLocaleString() : '0' }}
+                  </div>
+                  <div class="w-100% text-center">
+                    <ElButton plain @click="openDialog(4)">
+                      
+                      <Line :data="simpleChartData4" :options="simpleChartOptions" class="md-w-150px w-80px" />
+                    </ElButton>
+                  </div>
+                </div>
+                <div class="flex tableTd">
+                  <div class="w-100% platformName font-size-1.5rem text-center color-#beffff">
+                    寶島娛樂城
+                  </div>
+                  <div class="w-100% patchNumber font-size-1.5rem text-center color-#beffff">
+                    {{ dailyPatchList5.length ? dailyPatchList5[dailyPatchList5.length - 1].Total.toLocaleString() : '0' }}
+                  </div>
+                  <div class="w-100% text-center">
+                    <ElButton plain @click="openDialog(5)">
+                      
+                      <Line :data="simpleChartData5" :options="simpleChartOptions" class="md-w-150px w-80px" />
+                    </ElButton>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </div> -->
+        </div> -->
 
-
-
-    <!-- 先不開 -->
+    <!-- 先不開(遊戲榜) -->
     <!-- <div class="pb-7rem">
             <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
                 <div class="md-flex">
                     <div class="w-100% md-w-50% md-mb-0 mb-3rem">
                         <div class="flex items-center justify-center mb-8">
-                            <div class="titleLeftBorder"></div>
-                            <span class="hotTitle">熱門</span>
-                            <span class="gameTitle">遊戲</span>
-                            <div class="titleRightBorder"></div>
+                            <div class="border-gradient-l"></div>
+                            <span class="text-gradient-t font-bold text-[32px] md:text-[40px]">熱門</span>
+                            <span class="text-gradient-b font-bold text-[32px] md:text-[40px]">遊戲</span>
+                            <div class="border-gradient-r"></div>
                         </div>
                         <div>
                             <div class="topTableBorder">
@@ -256,10 +253,10 @@
                     </div>
                     <div class="w-100% md-w-50%">
                         <div class="flex items-center justify-center mb-8">
-                            <div class="titleLeftBorder"></div>
-                            <span class="hotTitle">新進</span>
-                            <span class="gameTitle">遊戲</span>
-                            <div class="titleRightBorder"></div>
+                            <div class="border-gradient-l"></div>
+                            <span class="text-gradient-t font-bold text-[32px] md:text-[40px]">新進</span>
+                            <span class="text-gradient-b font-bold text-[32px] md:text-[40px]">遊戲</span>
+                            <div class="border-gradient-r"></div>
                         </div>
                         <div>
                             <div class="topTableBorder">
@@ -312,6 +309,75 @@
                 </div>
             </div>
         </div> -->
+
+    <!-- 最新消息 -->
+     <div ref="newsRef" class="max-w-1110px m-auto ps-5 pe-5 relative z-2 pb-25rem">
+        <div class="flex items-center justify-center mb-3rem">
+          <div class="border-gradient-l"></div>
+          <span class="text-gradient-t font-bold text-[32px] md:text-[40px]">最新</span>
+          <span class="text-gradient-b font-bold text-[32px] md:text-[40px]">消息</span>
+          <div class="border-gradient-r"></div>
+        </div>
+        <div class="flex justify-center">
+          <div class="w-100%">
+
+            <div class="flex lg-justify-start justify-center">
+              <div class="relative inline-block w-[60px] h-[48px]">
+                <button class="hollow-btn-all cursor-pointer w-full h-full rounded-full" @click="fetchNewsListData([5, 6], '', 'ALL')"></button>
+                <div class="absolute pointer-events-none inset-0 flex items-center justify-center mx-auto font-bold before:content-[''] before:absolute before:inset-0 before:rounded-full before:z-0" 
+                    :class="activeNewsType === 'ALL' ? 'before:bg-[linear-gradient(to_bottom,_#FFFFFF,_#6DF0FE)]' : 'before:bg-[#6DF0FE33]'">
+                  <span :class="activeNewsType === 'ALL' ? 'text-[#31129B]' : 'group-hover:hidden bg-gradient-to-b from-[#fff] to-[#6DF0FE] bg-clip-text text-transparent'" class=" z-1">ALL</span>
+                </div>
+              </div>
+              <div class="relative inline-block ms-2.5 w-[90px] h-[48px]">
+                <button class="hollow-btn-system cursor-pointer w-full h-full rounded-full" @click="fetchNewsListData([5], '', 'SYSTEM')"></button>
+                <div class="absolute pointer-events-none inset-0 flex items-center justify-center mx-auto font-bold before:content-[''] before:absolute before:inset-0 before:rounded-full before:z-0" 
+                    :class="activeNewsType === 'SYSTEM' ? 'before:bg-[linear-gradient(to_bottom,_#FFFFFF,_#FE6FDA)]' : 'before:bg-[#FE6FDA33]'">
+                  <span :class="activeNewsType === 'SYSTEM' ? 'text-[#31129B]' : 'group-hover:hidden bg-gradient-to-b from-[#fff] to-[#FE6FDA] bg-clip-text text-transparent'" class=" z-1">系統公告</span>
+                </div>
+              </div>
+              <div class="relative inline-block ms-2.5 w-[90px] h-[48px]">
+                <button class="hollow-btn-policy cursor-pointer w-full h-full rounded-full" @click="fetchNewsListData([6], '', 'POLICY')"></button>
+                <div class="absolute pointer-events-none inset-0 flex items-center justify-center mx-auto font-bold before:content-[''] before:absolute before:inset-0 before:rounded-full before:z-0" 
+                    :class="activeNewsType === 'POLICY' ? 'before:bg-[linear-gradient(to_bottom,_#FFFFFF,_#B698FF)]' : 'before:bg-[#B698FF33]'">
+                  <span :class="activeNewsType === 'POLICY' ? 'text-[#31129B]' : 'group-hover:hidden bg-gradient-to-b from-[#fff] to-[#B698FF] bg-clip-text text-transparent'" class=" z-1">政策公告</span>
+                </div>
+              </div>
+            </div>
+
+            <div v-if="newsList.length > 0" class="w-[95%] mx-auto">
+              <NuxtLink :to="`/store/news?id=${item.Id}`" v-for="(item, index) in newsList .filter((item) => item.Category !== 3) .reverse() .slice(0, 6)":key="index" class="newsLink color-#555553 decoration-none">
+                <div class="w-full mt-1.8rem">
+                  <div class="w-80 font-size-.8rem">
+                    <div class="flex items-center">
+                      <div :class="{ 'bg-[linear-gradient(to_bottom,_#FFFFFF,_#FE6FDA)]': item.Category === 5, 'bg-[linear-gradient(to_bottom,_#FFFFFF,_#B698FF)]': item.Category === 6 }"
+                        class="flex items-center justify-center w-70px text-[#31129B]  p-1 font-size-12px rounded-50px">
+                        {{ item.Category === 5 ? "系統公告" : item.Category === 6 ? "政策公告" : "" }}
+                      </div>
+                      <div class="flex font-size-12px items-center p-2">
+                        <span class="bg-gradient-to-b from-[#fff] to-[#6DF0FE] bg-clip-text text-transparent">
+                          {{ item.StartTime.slice(0, 10) }}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="w-full pt-3 pb-4 relative before:content-[''] before:absolute before:h-[1px] before:w-[105%] before:bottom-0 before:left-1/2 before:-translate-x-1/2 before:bg-[linear-gradient(to_right,_#ffffff00,_#6FF1FE,_#ffffff00)]">
+                    <div>
+                      <h2 class="my-0 ms-2.5 font-size-30px bg-gradient-to-b from-[#fff] to-[#6DF0FE] bg-clip-text text-transparent hover:bg-gradient-to-t">
+                        {{ item.Title }}
+                      </h2>
+                      <h4 class="m-0 font-size-12px">
+                        {{ item.Summary }}
+                      </h4>
+                    </div>
+                  </div>
+                </div>
+              </NuxtLink>
+            </div>
+          </div>
+        </div>
+      </div>
+
     <div class="pb-7rem">
       <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
         <div>
@@ -333,10 +399,10 @@
     <div class="pb-7rem">
       <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
         <div class="flex items-center justify-center mb-3rem">
-          <div class="titleLeftBorder"></div>
-          <span class="hotTitle">我們</span>
-          <span class="gameTitle">的優勢</span>
-          <div class="titleRightBorder"></div>
+          <div class="border-gradient-l"></div>
+          <span class="text-gradient-t font-bold text-[32px] md:text-[40px]">我們</span>
+          <span class="text-gradient-b font-bold text-[32px] md:text-[40px]">的優勢</span>
+          <div class="border-gradient-r"></div>
         </div>
         <div v-for="(item, index) in advantagesList" :key="index" class="md-flex adBox"
           :class="{ advantagesEven: index % 2 !== 0 }">
@@ -372,13 +438,15 @@
         </div>
       </div>
     </div>
+
+    <!-- 方案費用 -->
     <!-- <div class="pb-7rem">
             <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
                 <div class="flex items-center justify-center mb-3rem">
-                    <div class="titleLeftBorder"></div>
-                    <span class="hotTitle">方案</span>
-                    <span class="gameTitle">費用</span>
-                    <div class="titleRightBorder"></div>
+                    <div class="border-gradient-l"></div>
+                    <span class="text-gradient-t font-bold text-[32px] md:text-[40px]">方案</span>
+                    <span class="text-gradient-b font-bold text-[32px] md:text-[40px]">費用</span>
+                    <div class="border-gradient-r"></div>
                 </div>
                 <div class="flex md-flex-nowrap flex-wrap justify-center">
                     <div
@@ -437,13 +505,14 @@
                 </div>
             </div>
         </div> -->
+    
     <div class="pb-25rem">
       <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
         <div class="flex items-center justify-center mb-3rem">
-          <div class="titleLeftBorder"></div>
-          <span class="hotTitle">聯絡</span>
-          <span class="gameTitle">我們</span>
-          <div class="titleRightBorder"></div>
+          <div class="border-gradient-l"></div>
+          <span class="text-gradient-t font-bold text-[32px] md:text-[40px]">聯絡</span>
+          <span class="text-gradient-b font-bold text-[32px] md:text-[40px]">我們</span>
+          <div class="border-gradient-r"></div>
         </div>
         <div class="flex justify-center">
           <div class="contactBox py-2rem px-1rem md-px-3rem">
@@ -462,7 +531,6 @@
                 </p>
               </div>
             </div>
-
             <div class="mb-1rem">
               <input class="contactEntry" placeholder="Email" type="text" v-model="contactMail" />
             </div>
@@ -471,9 +539,7 @@
                 <span>{{ selectedPurpose || "主旨 ..." }}</span>
                 <div class="purposeBox" v-show="showPurposeBox">
                   <div class="purposeBoxContent">
-                    <div class="relative w-100% purposeOption" v-for="(
-option, index
-                                            ) in purposeOptions" :key="option" @click.stop="selectPurpose(option)">
+                    <div class="relative w-100% purposeOption" v-for="(option, index) in purposeOptions" :key="option" @click.stop="selectPurpose(option)">
                       {{ option }}
                       <div v-show="index === 0" class="absolute top-15px right-15px">
                         <img class="w-15px" src="/images/icon-arrow-down-03.png" alt="下拉選單箭頭" />
@@ -553,6 +619,12 @@ const setPageLoading = store.setPageLoading;
 const userToken = useCookie('_PmToken');
 let captcha = null;
 
+const route = useRoute();
+const router = useRouter();
+const newsRef = ref(null);
+const newsList = ref([]); // 儲存 API 獲取的最新消息
+const activeNewsType = ref('ALL'); // 追蹤當前點選的消息分類頁籤
+
 const source1 = ref(0);
 const source2 = ref(0);
 const source3 = ref(0);
@@ -579,6 +651,36 @@ const isPhoneError = ref(false);
 // 開啟指定的對話框
 function openDialog(index) {
   dialogVisible.value[index] = true;
+}
+
+// 取得GetNewsList(最新消息)
+async function fetchNewsListData(num, token = '', type = 'ALL') {
+  activeNewsType.value = type;
+  if (token === '') {
+    token = await jwtStore.generateToken();
+  }
+
+  try {
+    const response = await $axios.post(
+      '/api/v1/Pmatch/GetNewsList',
+      {
+        Categorys: num
+      },
+      {
+        headers: {
+          Authorization: token // 帶上 Token
+        }
+      }
+    );
+    if (response.data.Status.Code === 0) {
+      newsList.value = response.data.Data;
+    } else {
+      await openAlertModal(' ', `${response.data.Status.Message}`);
+    }
+  } catch (error) {
+    console.error('請求失敗:', error);
+    data.value = '無法取得資料。'; // 畫面顯示錯誤訊息
+  }
 }
 
 const matchValue1 = useTransition(source1, {
@@ -1132,6 +1234,8 @@ onMounted(async () => {
       const token = userToken.value;
 
       if (token != '') {
+        await fetchNewsListData([5, 6], token); // 最新消息
+
         await fetchRichList(token, 2);
         await fetchRichList(token, 4);
         await fetchRichList(token, 1); // 錢街
@@ -1143,6 +1247,8 @@ onMounted(async () => {
       // 生成新的 token
       const token = await jwtStore.generateToken();
       if (token != '') {
+        await fetchNewsListData([5, 6], token); // 最新消息
+
         await fetchRichList(token, 2);
         await fetchRichList(token, 4);
         await fetchRichList(token, 1); // 錢街
@@ -1155,6 +1261,18 @@ onMounted(async () => {
     console.error('頁面初始化失敗:', error);
   } finally {
     await setPageLoading(false);
+
+    // 滾動到 news 區域 ( 回傳 scrollToNews 時 )
+    const scrollToNews = route.query.scrollToNews;
+    if (scrollToNews === '1') {
+      await nextTick();
+      if (newsRef.value) {
+        setTimeout(() => {
+          newsRef.value.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+      router.replace({ path: route.path, query: {} });
+    }
   }
 });
 </script>
@@ -1233,6 +1351,7 @@ onMounted(async () => {
   border-radius: 25px;
   padding: 2px;
   background: linear-gradient(to bottom, #fff, #7b2cbf);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -1277,29 +1396,25 @@ onMounted(async () => {
   font-weight: 700;
 }
 
-.hotTitle {
+.text-gradient-t {
   background: linear-gradient(to bottom, #fff, #43edff);
   background: -webkit-linear-gradient(#fff, #43edff);
   background-clip: text;
   -webkit-background-clip: text;
-  color: transparent;
-  font-weight: 900;
-  font-size: 40px;
   -webkit-text-stroke: 1px rgba(200, 200, 200, 0.1);
+  color: transparent;
 }
 
-.gameTitle {
+.text-gradient-b {
   background: linear-gradient(to bottom, #43edff, #fff);
   background: -webkit-linear-gradient(#43edff, #fff);
   background-clip: text;
   -webkit-background-clip: text;
-  color: transparent;
-  font-weight: 900;
-  font-size: 40px;
   -webkit-text-stroke: 1px rgba(200, 200, 200, 0.1);
+  color: transparent;
 }
 
-.titleLeftBorder {
+.border-gradient-l {
   width: 40px;
   border: 2px solid;
   border-right: none;
@@ -1308,7 +1423,7 @@ onMounted(async () => {
   margin-right: 1rem;
 }
 
-.titleRightBorder {
+.border-gradient-r {
   width: 40px;
   border: 2px solid;
   border-left: none;
@@ -1348,6 +1463,7 @@ onMounted(async () => {
   border-radius: 10px;
   padding: 2px;
   background: linear-gradient(to right, #43edff, #fff);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -1384,6 +1500,53 @@ onMounted(async () => {
   --el-button-hover-border-color: rgba(0, 0, 0, 0);
   --el-button-bg-color: rgba(0, 0, 0, 0);
   --el-button-border-color: rgba(0, 0, 0, 0);
+}
+
+/* 最新消息 */
+.hollow-btn-all {
+  border-width: 2px;
+  border-radius: 9999px;
+  position: relative;
+  border-style: solid;
+  border-color: transparent; 
+  background:
+  linear-gradient(rgba(255, 255, 255, 0.01), #6DF0FE , rgba(255, 255, 255, 0.01)),
+  linear-gradient(to right, rgba(255, 255, 255, 0.01), #6DF0FE , rgba(255, 255, 255, 0.01));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  mask-image: linear-gradient(white, white), linear-gradient(white, white);
+  mask-clip: padding-box, border-box;
+  mask-composite: exclude, add;
+}
+.hollow-btn-system {
+  border-width: 2px;
+  border-radius: 9999px;
+  position: relative;
+  border-style: solid;
+  border-color: transparent; 
+  background:
+  linear-gradient(rgba(255, 255, 255, 0.01), #FE6FDA , rgba(255, 255, 255, 0.01)),
+  linear-gradient(to right, rgba(255, 255, 255, 0.01), #FE6FDA , rgba(255, 255, 255, 0.01));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  mask-image: linear-gradient(white, white), linear-gradient(white, white);
+  mask-clip: padding-box, border-box;
+  mask-composite: exclude, add;
+}
+.hollow-btn-policy {
+  border-width: 2px;
+  border-radius: 9999px;
+  position: relative;
+  border-style: solid;
+  border-color: transparent;
+  background:
+  linear-gradient(rgba(255, 255, 255, 0.01), #B698FF , rgba(255, 255, 255, 0.01)),
+  linear-gradient(to right, rgba(255, 255, 255, 0.01), #B698FF , rgba(255, 255, 255, 0.01));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  mask-image: linear-gradient(white, white), linear-gradient(white, white);
+  mask-clip: padding-box, border-box;
+  mask-composite: exclude, add;
 }
 
 .adBox {
@@ -1451,6 +1614,7 @@ onMounted(async () => {
   border-radius: 10px;
   padding: 2px;
   background: linear-gradient(to right, #43edff, #fff);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -1545,6 +1709,7 @@ onMounted(async () => {
   border-radius: 10px;
   padding: 2px;
   background: linear-gradient(to right, #43edff, #fff);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -1669,19 +1834,11 @@ onMounted(async () => {
     width: 100%;
   }
 
-  .hotTitle {
-    font-size: 32px;
-  }
-
-  .gameTitle {
-    font-size: 32px;
-  }
-
-  .titleLeftBorder {
+  .border-gradient-l {
     width: 20px;
   }
 
-  .titleRightBorder {
+  .border-gradient-r {
     width: 20px;
   }
 }

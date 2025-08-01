@@ -188,7 +188,7 @@ character, index2
       </div>
       <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
         <div class="mb-5rem">
-          <h1 id="news" class="newsTitle m-0 text-center font-size-50px">
+          <h1 ref="newsRef" class="newsTitle m-0 text-center font-size-50px">
             最新消息
           </h1>
           <!-- <button @click="testAlert">點擊開啟alert彈窗</button>
@@ -202,19 +202,19 @@ character, index2
             <div class="mb-3rem lg-block flex lg-justify-start justify-center">
               <button class="border-solid border-1px cursor-pointer font-size-15px rounded-50px p-3 leading-[20px]"
                 style="--btn-color: #4361ee"
-                :class="activeNewsType === 'ALL' ? 'newSolidBtn' : 'newHollowBtn'"
+                :class="activeNewsType === 'ALL' ? 'solid-btn' : 'hollow-btn'"
                 @click="fetchNewsListData([1,2], '', 'ALL')">
                 ALL
               </button>
               <button class="border-solid border-1px cursor-pointer font-size-15px rounded-50px p-3 ms-3"
                 style="--btn-color: #8A4CBF"
-                :class="activeNewsType === 'SYSTEM' ? 'newSolidBtn' : 'newHollowBtn'"
+                :class="activeNewsType === 'SYSTEM' ? 'solid-btn' : 'hollow-btn'"
                 @click="fetchNewsListData([1], '', 'SYSTEM')">
                 系統公告
               </button>
               <button class="border-solid border-1px cursor-pointer font-size-15px rounded-50px p-3 ms-3"
                 style="--btn-color: #F72585"
-                :class="activeNewsType === 'ACTIVITY' ? 'newSolidBtn' : 'newHollowBtn'"
+                :class="activeNewsType === 'ACTIVITY' ? 'solid-btn' : 'hollow-btn'"
                 @click="fetchNewsListData([2], '', 'ACTIVITY')">
                 活動資訊
               </button>
@@ -227,43 +227,17 @@ character, index2
                 <div class="w-full mt-1.8rem">
                   <div class="w-80 font-size-.8rem">
                     <div class="flex items-center">
-                      <div :class="{
-                        'bg-#7b2cbf':
-                          item.Category === 1,
-                        'bg-#f72585':
-                          item.Category === 2,
-                      }" class="color-#fff p-1 font-size-12px rounded-50px">
-                        {{
-                          item.Category === 1
-                            ? "網站公告"
-                            : item.Category === 2
-                              ? "活動資訊"
-                              : ""
-                        }}
+                      <div :class="{'bg-#7b2cbf': item.Category === 1, 'bg-#f72585': item.Category === 2,}" class="color-#fff p-1 font-size-12px rounded-50px">
+                        {{item.Category === 1 ? "網站公告" : item.Category === 2 ? "活動資訊" : ""}}
                       </div>
                       <div class="flex font-size-12px items-center p-2">
-                        <span :class="{
-                          'color-#4361EE':
-                            item.Category === 1,
-                          'color-#f72585':
-                            item.Category === 2,
-                        }">{{
-                                                      item.StartTime.slice(
-                                                        0,
-                                                        10
-                                                      )
-                                                    }}</span>
+                        <span :class="{'color-#4361EE': item.Category === 1, 'color-#f72585': item.Category === 2,}">{{item.StartTime.slice(0, 10)}}</span>
                       </div>
                     </div>
                   </div>
                   <div class="w-full pt-3 pb-3 newsItemLink">
                     <div>
-                      <h2 class="m-0 font-size-30px" :class="{
-                        newsItem1:
-                          item.Category === 1,
-                        newsItem2:
-                          item.Category === 2,
-                      }">
+                      <h2 class="m-0 font-size-30px" :class="{newsItem1: item.Category === 1, newsItem2: item.Category === 2,}">
                         {{ item.Title }}
                       </h2>
                       <h3 class="m-0 font-size-12px">
@@ -348,6 +322,7 @@ const setPageLoading = store.setPageLoading;
 const route = useRoute();
 const router = useRouter();
 
+const newsRef = ref(null);
 const newsList = ref([]);
 const gameList = ref([]);
 const bannerList = ref([]);
@@ -570,7 +545,7 @@ watch(
 );
 
 onMounted(async () => {
-  await setPageLoading(true);
+  setPageLoading(true);
   try {
     if (userToken.value != '' && userToken.value != undefined) {
       const token = userToken.value;
@@ -603,19 +578,6 @@ onMounted(async () => {
     } else {
       plaformLog.value = serchPlatformLogCookies.value;
     }
-  // 滾動到 news 區域 ( 回傳 scrollToNews 時 )
-  const scrollToNews = route.query.scrollToNews;
-    if (scrollToNews === '1') {
-      await nextTick(); // 等待 DOM 渲染完成
-      const el = document.getElementById('news');
-      if (el) {
-        setTimeout(() => {
-          el.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
-      }
-      // ✅ 移除 query，不讓網址殘留
-      router.replace({ path: route.path, query: {} });
-    }
     // 監聽「上一頁」按鈕
     window.addEventListener('popstate', () => {
       isBackNavigation = true; // 標記為「上一頁」返回
@@ -624,7 +586,19 @@ onMounted(async () => {
   } catch (error) {
     console.error('頁面初始化失敗:', error);
   } finally {
-    await setPageLoading(false);
+    setPageLoading(false);
+
+    // 滾動到 news 區域 ( 回傳 scrollToNews 時 )
+    const scrollToNews = route.query.scrollToNews;
+    if (scrollToNews === '1') {
+      await nextTick();
+      if (newsRef.value) {
+        setTimeout(() => {
+          newsRef.value.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+      router.replace({ path: route.path, query: {} });
+    }
   }
 });
 onBeforeUnmount(() => {
@@ -708,23 +682,23 @@ onBeforeUnmount(() => {
 }
 
 /* 主色樣式(實心) */
-.newSolidBtn {
+.solid-btn {
   color: #fff;
   background-color: var(--btn-color);
   border-color: var(--btn-color);
 }
-.newSolidBtn:hover {
+.solid-btn:hover {
   background-color: #fff;
   color: var(--btn-color);
 }
 
 /* 副色樣式(空心) */
-.newHollowBtn {
+.hollow-btn {
   color: var(--btn-color);
   background-color: #fff;
   border-color: var(--btn-color);
 }
-.newHollowBtn:hover {
+.hollow-btn:hover {
   background-color: var(--btn-color);
   color: #fff;
 }

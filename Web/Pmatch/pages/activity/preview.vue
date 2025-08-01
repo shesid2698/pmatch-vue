@@ -64,14 +64,13 @@
 </template>
 
 <script setup>
-  import { useRoute } from 'vue-router';
   import LoadingPage from '~/components/LoadingPage.vue';
-
-  const route = useRoute();
+  
   const { $axios } = useNuxtApp();
   const userToken = useCookie('_PmToken')
   const assetsUrl = useCookie('_PmAssetsUrl').value || ''
-  const jwtStore = useJwtStore()  
+  const jwtStore = useJwtStore()
+  const route = useRoute();
 
   const activityItem = ref(null); // 初始化活動頁
   const isLoading = ref(true);
