@@ -1132,23 +1132,23 @@ onMounted(async () => {
       const token = userToken.value;
 
       if (token != '') {
-        await fetchRichList(token, 2);
-        await fetchRichList(token, 4);
-        await fetchRichList(token, 1); // 錢街
-        await fetchRichList(token, 5); // 聚寶
-        await fetchRichList(token, 6); // 金爸爸
-        await fetchRichList(token, 7); // 寶島
+        // await fetchRichList(token, 2);
+        // await fetchRichList(token, 4);
+        // await fetchRichList(token, 1); // 錢街
+        // await fetchRichList(token, 5); // 聚寶
+        // await fetchRichList(token, 6); // 金爸爸
+        // await fetchRichList(token, 7); // 寶島
       }
     } else {
       // 生成新的 token
       const token = await jwtStore.generateToken();
       if (token != '') {
-        await fetchRichList(token, 2);
-        await fetchRichList(token, 4);
-        await fetchRichList(token, 1); // 錢街
-        await fetchRichList(token, 5); // 聚寶
-        await fetchRichList(token, 6); // 金爸爸
-        await fetchRichList(token, 7); // 寶島
+        // await fetchRichList(token, 2);
+        // await fetchRichList(token, 4);
+        // await fetchRichList(token, 1); // 錢街
+        // await fetchRichList(token, 5); // 聚寶
+        // await fetchRichList(token, 6); // 金爸爸
+        // await fetchRichList(token, 7); // 寶島
       }
     }
   } catch (error) {
