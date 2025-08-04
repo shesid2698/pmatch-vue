@@ -30,8 +30,8 @@
       :is="isStorePage ? StoreFooter : Footer"
       :class="route.path.indexOf('/activity/preview') !== -1 ? 'pointer-events-none' : ''"
     />
-    <component v-if="route.path.indexOf('/activity/preview') === -1 && route.path.indexOf('/events') === -1" :is="BuyLog" />
-    <component v-if="route.path.indexOf('/activity/preview') === -1 && route.path.indexOf('/events') === -1" :is="ChatLauncher" />
+    <component v-if="route.path.indexOf('/activity/preview') === -1 && route.path.indexOf('/events') === -1 && route.path.indexOf('/store') === -1" :is="BuyLog" />
+    <component v-if="route.path.indexOf('/activity/preview') === -1 && route.path.indexOf('/events') === -1 && route.path.indexOf('/store') === -1" :is="ChatLauncher" />
   </div>
 </template>
 
