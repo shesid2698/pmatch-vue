@@ -165,11 +165,14 @@
     const customImage = imgFile.lastIndexOf('_')
     if (customImage  > -1) {
       const url = imgFile.slice(0, customImage )
+      // 判斷是預覽圖片還是正式圖片
+      const isPreview = url.includes('preview__')
+
       const bg = parseInt(imgFile.slice(customImage  + 1), 10)
 
       if (!isNaN(bg)) {
         return {
-          imageUrl: `${assetsUrl}${url}`,
+          imageUrl: isPreview ? `${url}` : `${assetsUrl}${url}`,
           bannerType: 0,
           background: bg >= 0 && bg <= 8 ? bg : preset.background
         }
@@ -231,7 +234,6 @@
 
 onMounted(async () => {
   await RedisGetString();
-  console.log('活動資料', activityItem.value)
 });
 </script>
 
