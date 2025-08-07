@@ -297,25 +297,25 @@ const advantagesList = [
     title: '記帳、媒合、實名驗證一步到位',
     detail: '一站式財務處理系統，幫助媒合商簡化記錄和計算的流程，利用我們的系統來自動組建媒合的狀況，讓媒合結果一目了然',
     img: '/images/advantages3.png',
-    icon: '/images/adIcon-03.png'
+    icon: '/images/adIcon-3.png'
   },
   {
     title: '專業的實名制認證',
     detail: '我們與各大銀行以及電信商合作，能夠用客戶提供的資料來驗證此人的電話或者銀行帳戶是否正確，大大降低媒合商的交易風險',
     img: '/images/advantages2.png',
-    icon: '/images/adIcon-02.png'
+    icon: '/images/adIcon-2.png'
   },
   {
     title: '整合您的客戶資料',
     detail: '還在煩惱客戶的資料太多太雜嗎?我們提供了專業的整合服務，將您的客戶資料整理到一起，讓您在查詢後夠快速地了解客戶的狀況，節省你交易的時間。',
     img: '/images/advantages1.png',
-    icon: '/images/adIcon-01.png'
+    icon: '/images/adIcon-1.png'
   },
   {
     title: '交易的守護者',
     detail: '提供時時監控的服務，當此客戶的身分有疑慮時，將立即提出警告，保障交易您的安全，防範欺詐風險，讓交易更安心。',
     img: '/images/advantages4.png',
-    icon: '/images/adIcon-04.png'
+    icon: '/images/adIcon-4.png'
   }
 ];
 const programList = [

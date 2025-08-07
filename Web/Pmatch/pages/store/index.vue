@@ -359,7 +359,7 @@
           <div class="adContentBox w-100% lg-w-50% flex items-center">
             <div class="lg-ms-5 lg-me-5">
               <div class="mb-2rem md-block flex justify-center select-none pointer-events-none">
-                <img class="w-70px" :src="item.icon" :alt="item.detail" />
+                <img :class="item.iconClass" :src="item.icon" :alt="item.detail" />
               </div>
               <div class="mb-1rem md-mb-1.5rem md-block flex justify-center">
                 <span class="adTitle">{{ item.title }}</span>
@@ -599,42 +599,47 @@ const advantagesList = [
   {
     title: '輕鬆搞定申報問題',
     detail: '整合式帳務管理模組，簡化交易數據記帳流程同時管理交易資料，透過PMatch獨家自動組建媒合帳務系統，輕鬆完成稅務計算，無須影響原本交易流程',
-    img: '/images/媒合商動畫背景.png',
-    anime: '/animes/媒合商1.gif',
+    img: '/images/adBackground.png',
+    anime: '/images/animes/advantages-1.gif',
     animeOffsetClass: 'translate-x-[-115.4%] translate-y-[1.4%]',
-    icon: '/images/adIcon-03.png'
+    icon: '/images/adIcon-1.png',
+    iconClass: 'w-[68px] px-[1px] py-[3px]'
   },
   {
     title: '專業的實名驗證系統',
     detail: 'PMatch與各大銀行以及電信商合作，提供安全驗證功能，可依客戶提供的帳戶資料及電話，快速知道是否為高風險警示帳戶與身份資料是否吻合，保障交易安全，加強風險控管機制',
-    img: '/images/媒合商動畫背景.png',
-    anime: '/animes/媒合商2.gif',
+    img: '/images/adBackground.png',
+    anime: '/images/animes/advantages-2.gif',
     animeOffsetClass: 'translate-x-[-115.4%] translate-y-[1.4%]',
-    icon: '/images/adIcon-02.png'
+    icon: '/images/adIcon-2.png',
+    iconClass: 'w-[66px] px-[2px]'
   },
   {
     title: '客戶資料整合管理',
     detail: '獨特專業的客戶管理模組，輕鬆查詢過往交易狀況及繳費所在地，節省交易時間，經營客戶關係更有效率，推廣活動更便利；系統嚴格監控即時通報，輕鬆掌握高風險客戶',
-    img: '/images/媒合商動畫背景.png',
-    anime: '/animes/媒合商3.gif',
+    img: '/images/adBackground.png',
+    anime: '/images/animes/advantages-3.gif',
     animeOffsetClass: 'translate-x-[-115.4%] translate-y-[1.4%]',
-    icon: '/images/adIcon-01.png'
+    icon: '/images/adIcon-3.png',
+    iconClass: 'w-[68px] px-[1px] py-[9px]'
   },
   {
     title: '媒合交易數據後台',
     detail: '每一筆委買委賣交易均完整記錄，PMatch同時提供數據分析後台及趨勢圖表，經營成效一目了然，為業績拓展提供強力支援，您的客戶在PMatch網站上可自行查詢每一筆交易記錄',
-    img: '/images/媒合商動畫背景.png',
-    anime: '/animes/媒合商4.gif',
+    img: '/images/adBackground.png',
+    anime: '/images/animes/advantages-4.gif',
     animeOffsetClass: 'translate-x-[-115.4%] translate-y-[1.4%]',
-    icon: '/images/adIcon-04.png'
+    icon: '/images/adIcon-4.png',
+    iconClass: 'w-[70px] py-[5px]'
   },
   {
     title: '助您擴大品牌聲量與提升顧客黏著度',
     detail: '商店曝光與品牌宣傳，幫助擴大目標客戶觸及範圍，提高流量及互動度。客戶可主動搜尋商店並下單，與PMatch帳務系統直接連動，簡化訂單流程。支援網站即時聊天室功能，促進商家與客戶之間的即時溝通與互動',
-    img: '/images/媒合商動畫背景.png',
-    anime: '/animes/媒合商5.gif',
+    img: '/images/adBackground.png',
+    anime: '/images/animes/advantages-5.gif',
     animeOffsetClass: 'translate-x-[-115.4%] translate-y-[1.4%]',
-    icon: '/images/adIcon-04.png'
+    icon: '/images/adIcon-5.png',
+    iconClass: 'w-[60px] px-[5px]'
   }
 ];
 const programList = [
