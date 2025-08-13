@@ -311,7 +311,7 @@
         </div> -->
 
     <!-- 最新消息 -->
-     <div ref="newsRef" class="max-w-1110px m-auto ps-5 pe-5 relative z-2 pb-25rem">
+     <div ref="newsRef" class="max-w-1110px m-auto ps-5 pe-5 relative z-2 pb-7rem">
         <div class="flex items-center justify-center mb-3rem">
           <div class="border-gradient-l"></div>
           <span class="text-gradient-t font-bold text-[32px] md:text-[40px]">最新</span>
@@ -361,14 +361,19 @@
                       </div>
                     </div>
                   </div>
-                  <div class="w-full pt-3 pb-4 relative before:content-[''] before:absolute before:h-[1px] before:w-[105%] before:bottom-0 before:left-1/2 before:-translate-x-1/2 before:bg-[linear-gradient(to_right,_#ffffff00,_#6FF1FE,_#ffffff00)]">
-                    <div>
-                      <h2 class="my-0 ms-2.5 font-size-30px bg-gradient-to-b from-[#fff] to-[#6DF0FE] bg-clip-text text-transparent hover:bg-gradient-to-t">
+                  <div class="w-full pt-3 pb-4 relative before:content-[''] before:absolute before:h-[1px] before:w-[105%] before:bottom-0 before:left-1/2 before:-translate-x-1/2 before:bg-[linear-gradient(to_right,_#ffffff00,_#6FF1FE,_#ffffff00)] flex items-end justify-between">
+                    <div class="ms-2.5">
+                      <h2 class="my-0  font-size-30px bg-gradient-to-b from-[#fff] to-[#6DF0FE] bg-clip-text text-transparent hover:bg-gradient-to-t">
                         {{ item.Title }}
                       </h2>
-                      <h4 class="m-0 font-size-12px">
+                      <h4 class="my-0 font-size-15px bg-gradient-to-b from-[#fff] to-[#6DF0FE] bg-clip-text text-transparent">
                         {{ item.Summary }}
                       </h4>
+                    </div>
+                    <div class="me-2.5">
+                      <p class="my-0 font-size-15px bg-gradient-to-b from-[#fff] to-[#6DF0FE] bg-clip-text text-transparent">
+                        詳細資訊...
+                      </p>
                     </div>
                   </div>
                 </div>
