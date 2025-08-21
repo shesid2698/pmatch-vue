@@ -181,13 +181,13 @@ onMounted(() => {
       className: "nav0",
       icon: "",
     },
-    {
-      id: 1,
-      title: "返回會員頁面",
-      link: "/",
-      className: "nav0",
-      icon: "",
-    },
+    // {
+    //   id: 1,
+    //   title: "返回會員頁面",
+    //   link: "/",
+    //   className: "nav0",
+    //   icon: "",
+    // },
     // {
     //     id: 2,
     //     title: "付費方案",
