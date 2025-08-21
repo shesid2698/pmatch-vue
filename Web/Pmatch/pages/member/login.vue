@@ -39,7 +39,7 @@
 
         <div class="mt-3rem">
           <div class="mb-5px">登入帳號</div>
-          <input v-model="accountId" type="text" required autofocus
+          <input v-model="accountId" type="text" required autofocus placeholder="請輸入電話或電子郵件"
             class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
         </div>
 
