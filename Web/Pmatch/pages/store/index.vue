@@ -345,7 +345,7 @@
               </div>
             </div>
 
-            <div v-if="newsList.length > 0" class="w-[95%] mx-auto">
+            <div v-if="newsList.length > 0">
               <NuxtLink :to="`/store/news?id=${item.Id}`" v-for="(item, index) in newsList .filter((item) => item.Category !== 3) .reverse() .slice(0, 6)":key="index" class="newsLink color-#555553 decoration-none">
                 <div class="w-full mt-1.8rem">
                   <div class="w-80 font-size-.8rem">

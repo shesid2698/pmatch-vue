@@ -40,7 +40,7 @@
             </div>
           </div>
         </div>
-        <div v-if="newsList.length > 0" class="w-[95%] mx-auto">
+        <div v-if="newsList.length > 0">
           <div
             v-for="(item) in newsList .filter((item) => item.Category !== 3) .reverse() .slice(0, 6)"
             :key="item.Id"
