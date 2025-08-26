@@ -8,7 +8,10 @@
   </Head>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css?version='0.0.1.10'" />  
   <div>
-    <div class="ccontainer pt-60px ps-5 pe-5 w-90% xl:w-70%">
+    <div v-if="isLoading">
+      <LoadingPage />
+    </div>
+    <div v-else class="ccontainer pt-60px ps-5 pe-5 w-90% xl:w-70%">
       <div class="lg:w-160px">
         <MemberCenter></MemberCenter>
       </div>
@@ -382,6 +385,7 @@
 // 引入中文語系與彈窗 modal 狀態管理
 import zhCn from 'element-plus/es/locale/lang/zh-cn';
 import { useAlertModalStore } from '../stores/useAlertModal.js';
+import LoadingPage from '@/components/LoadingPage.vue'; 
 // 初始化彈窗 store 與 modal 方法
 const alertModalStore = useAlertModalStore();
 const openAlertModal = alertModalStore.alertShowModal;
@@ -392,6 +396,7 @@ const { $axios } = useNuxtApp();
 // 初始化滾動容器與 jwt store
 const scrollbarContainer = ref(null);
 const jwtStore = useJwtStore();
+const isLoading = ref(true); // 追蹤載入狀態，預設為 true
 // 條件與畫面控制變數
 const dataDate = ref('0');
 const dateValue = ref('');
@@ -939,6 +944,8 @@ onMounted(async () => {
     await updateTimeRange();
   } catch (error) {
     console.error('請求失敗:', error);
+  } finally {    
+     isLoading.value = false; // 所有 API 請求完成後，更新載入狀態
   }
   document.addEventListener('click', handleOutsideClick);
 });
