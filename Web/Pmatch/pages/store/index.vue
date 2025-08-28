@@ -320,31 +320,53 @@
         </div>
         <div class="flex justify-center">
           <div class="w-100%">
-
-            <div class="flex lg-justify-start justify-center">
-              <div class="relative inline-block w-[60px] h-[48px]">
-                <button class="hollow-btn-all cursor-pointer w-full h-full rounded-full" @click="fetchNewsListData([5, 6], '', 'ALL')"></button>
-                <div class="absolute pointer-events-none inset-0 flex items-center justify-center mx-auto font-bold before:content-[''] before:absolute before:inset-0 before:rounded-full before:z-0" 
-                    :class="activeNewsType === 'ALL' ? 'before:bg-[linear-gradient(to_bottom,_#FFFFFF,_#6DF0FE)]' : 'before:bg-[#6DF0FE33]'">
-                  <span :class="activeNewsType === 'ALL' ? 'text-[#31129B]' : 'group-hover:hidden bg-gradient-to-b from-[#fff] to-[#6DF0FE] bg-clip-text text-transparent'" class=" z-1">ALL</span>
+            <div class="flex lg:justify-start justify-center">
+              <!-- ALL -->
+              <div class="relative inline-block w-[60px] h-[48px] group">
+                <button class="hollow-btn-all cursor-pointer w-full h-full rounded-full" @click="fetchNewsListData([5, 6], '', 'ALL')" :aria-pressed="activeNewsType === 'ALL'"></button>
+                <div
+                  class="absolute pointer-events-none inset-0 flex items-center justify-center mx-auto font-bold before:content-[''] before:absolute before:inset-0 before:rounded-full before:z-0"
+                  :class="[activeNewsType === 'ALL'
+                      ? 'before:bg-[linear-gradient(to_bottom,_#FFFFFF,_#6DF0FE)] group-hover:before:bg-[linear-gradient(to_bottom,_transparent,_#6DF0FE33,_transparent)]'
+                      : 'before:bg-[linear-gradient(to_bottom,_transparent,_#6DF0FE33,_transparent)] group-hover:before:bg-[linear-gradient(to_bottom,_#FFFFFF,_#6DF0FE)]']">
+                  <span
+                    class="z-1 transition-colors" :class="[activeNewsType === 'ALL'
+                        ? 'text-[#31129B] group-hover:bg-gradient-to-b group-hover:from-[#fff] group-hover:to-[#6DF0FE] group-hover:bg-clip-text group-hover:text-transparent'
+                        : 'bg-gradient-to-b from-[#fff] to-[#6DF0FE] bg-clip-text text-transparent group-hover:text-[#31129B]']">ALL
+                  </span>
                 </div>
               </div>
-              <div class="relative inline-block ms-2.5 w-[90px] h-[48px]">
-                <button class="hollow-btn-system cursor-pointer w-full h-full rounded-full" @click="fetchNewsListData([5], '', 'SYSTEM')"></button>
-                <div class="absolute pointer-events-none inset-0 flex items-center justify-center mx-auto font-bold before:content-[''] before:absolute before:inset-0 before:rounded-full before:z-0" 
-                    :class="activeNewsType === 'SYSTEM' ? 'before:bg-[linear-gradient(to_bottom,_#FFFFFF,_#FE6FDA)]' : 'before:bg-[#FE6FDA33]'">
-                  <span :class="activeNewsType === 'SYSTEM' ? 'text-[#31129B]' : 'group-hover:hidden bg-gradient-to-b from-[#fff] to-[#FE6FDA] bg-clip-text text-transparent'" class=" z-1">系統公告</span>
+              <!-- SYSTEM -->
+              <div class="relative inline-block ms-2.5 w-[90px] h-[48px] group">
+                <button class="hollow-btn-system cursor-pointer w-full h-full rounded-full" @click="fetchNewsListData([5], '', 'SYSTEM')" :aria-pressed="activeNewsType === 'SYSTEM'"></button>
+                <div
+                  class="absolute pointer-events-none inset-0 flex items-center justify-center mx-auto font-bold before:content-[''] before:absolute before:inset-0 before:rounded-full before:z-0"
+                  :class="[ activeNewsType === 'SYSTEM'
+                      ? 'before:bg-[linear-gradient(to_bottom,_#FFFFFF,_#FE6FDA)] group-hover:before:bg-[linear-gradient(to_bottom,_transparent,_#FE6FDA33,_transparent)]'
+                      : 'before:bg-[linear-gradient(to_bottom,_transparent,_#FE6FDA33,_transparent)] group-hover:before:bg-[linear-gradient(to_bottom,_#FFFFFF,_#FE6FDA)]']">
+                  <span
+                    class="z-1 transition-colors" :class="[ activeNewsType === 'SYSTEM'
+                        ? 'text-[#31129B] group-hover:bg-gradient-to-b group-hover:from-[#fff] group-hover:to-[#FE6FDA] group-hover:bg-clip-text group-hover:text-transparent'
+                        : 'bg-gradient-to-b from-[#fff] to-[#FE6FDA] bg-clip-text text-transparent group-hover:text-[#31129B]']">系統公告
+                  </span>
                 </div>
               </div>
-              <div class="relative inline-block ms-2.5 w-[90px] h-[48px]">
-                <button class="hollow-btn-policy cursor-pointer w-full h-full rounded-full" @click="fetchNewsListData([6], '', 'POLICY')"></button>
-                <div class="absolute pointer-events-none inset-0 flex items-center justify-center mx-auto font-bold before:content-[''] before:absolute before:inset-0 before:rounded-full before:z-0" 
-                    :class="activeNewsType === 'POLICY' ? 'before:bg-[linear-gradient(to_bottom,_#FFFFFF,_#B698FF)]' : 'before:bg-[#B698FF33]'">
-                  <span :class="activeNewsType === 'POLICY' ? 'text-[#31129B]' : 'group-hover:hidden bg-gradient-to-b from-[#fff] to-[#B698FF] bg-clip-text text-transparent'" class=" z-1">政策公告</span>
+              <!-- POLICY -->
+              <div class="relative inline-block ms-2.5 w-[90px] h-[48px] group">
+                <button class="hollow-btn-policy cursor-pointer w-full h-full rounded-full" @click="fetchNewsListData([6], '', 'POLICY')" :aria-pressed="activeNewsType === 'POLICY'"></button>
+                <div
+                  class="absolute pointer-events-none inset-0 flex items-center justify-center mx-auto font-bold before:content-[''] before:absolute before:inset-0 before:rounded-full before:z-0"
+                  :class="[ activeNewsType === 'POLICY'
+                      ? 'before:bg-[linear-gradient(to_bottom,_#FFFFFF,_#B698FF)] group-hover:before:bg-[linear-gradient(to_bottom,_transparent,_#B698FF33,_transparent)]'
+                      : 'before:bg-[linear-gradient(to_bottom,_transparent,_#B698FF33,_transparent)] group-hover:before:bg-[linear-gradient(to_bottom,_#FFFFFF,_#B698FF)]']">
+                  <span
+                    class="z-1 transition-colors" :class="[activeNewsType === 'POLICY'
+                        ? 'text-[#31129B] group-hover:bg-gradient-to-b group-hover:from-[#fff] group-hover:to-[#B698FF] group-hover:bg-clip-text group-hover:text-transparent'
+                        : 'bg-gradient-to-b from-[#fff] to-[#B698FF] bg-clip-text text-transparent group-hover:text-[#31129B]']">政策公告
+                  </span>
                 </div>
               </div>
             </div>
-
             <div v-if="newsList.length > 0">
               <NuxtLink :to="`/store/news?id=${item.Id}`" v-for="(item, index) in newsList .filter((item) => item.Category !== 3) .reverse() .slice(0, 6)":key="index" class="newsLink color-#555553 decoration-none">
                 <div class="w-full mt-1.8rem">
