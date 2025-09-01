@@ -43,8 +43,8 @@
         <!-- 進度條 -->
         <form action="#" @submit="SubmitForm">
           <div class="mt-15px">
-            <div class="mb-5px text-[#484646] font-400 text-15px">
-              電話號碼
+            <div class="mb-5px text-[#484646] font-400 text-15px">電話號碼
+              <el-tooltip effect="dark" placement="right"><template #content>該欄位必填</template><span class="text-[#e93470]">*</span></el-tooltip>
             </div>
             <div class="flex">
               <div class="w-68% relative">
@@ -71,7 +71,9 @@
             </div>
           </div>
           <div class="mt-15px">
-            <div class="mb-5px">密碼</div>
+            <div class="mb-5px">密碼
+              <el-tooltip effect="dark" placement="right"><template #content>該欄位必填</template><span class="text-[#e93470]">*</span></el-tooltip>
+            </div>
             <div class="relative">
               <input type="password" required autocomplete="off" ref="i_password"
                 class="password box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200"
@@ -91,7 +93,9 @@
           </div>
 
           <div class="mt-15px">
-            <div class="mb-5px">再次確認密碼</div>
+            <div class="mb-5px">再次確認密碼
+              <el-tooltip effect="dark" placement="right"><template #content>該欄位必填</template><span class="text-[#e93470]">*</span></el-tooltip>
+            </div>
             <div class="relative">
               <input type="password" required autocomplete="off" ref="i_password2"
                 class="password box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200"
@@ -112,8 +116,8 @@
           </div>
 
           <div class="mt-15px">
-            <div class="mb-5px text-[#484646] font-400 text-15px">
-              姓名
+            <div class="mb-5px text-[#484646] font-400 text-15px">姓名
+              <el-tooltip effect="dark" placement="right"><template #content>該欄位必填</template><span class="text-[#e93470]">*</span></el-tooltip>
             </div>
             <div>
               <input type="text" required v-model="theName"
