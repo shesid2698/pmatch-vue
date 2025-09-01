@@ -23,7 +23,7 @@
       <div class="w-370px">
         <div class="flex flex-items-center">
           <div class="w-25px h-20px bg-#1a6db4 mr-8px mt-3px"></div>
-          <div class="text-20px">會員服務條款</div>
+          <div class="text-20px">會員基本資料</div>
         </div>
         <!-- 進度條 -->
         <div class="mt-20px h-42px flex justify-between relative" id="progress">
