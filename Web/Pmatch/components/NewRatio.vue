@@ -71,7 +71,7 @@ const matchingList = [
   },
   {
     GamePlatform: "滿貫大亨",
-    SendPatch: "1.4",
+    SendPatch: "1.35",
     CollectPatch: "1.5",
   },
   {
@@ -88,6 +88,11 @@ const matchingList = [
     GamePlatform: "辣財神娛樂城",
     SendPatch: "130",
     CollectPatch: "144",
+  },
+  {
+    GamePlatform: "金好爺娛樂城",
+    SendPatch: "130",
+    CollectPatch: "140",
   },
 ];
 
