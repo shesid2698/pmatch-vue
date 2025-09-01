@@ -41,7 +41,7 @@ const token = ref("");
 const matchingList = [
   {
     GamePlatform: "包你發娛樂城",
-    SendPatch: "134",
+    SendPatch: "130",
     CollectPatch: "144",
   },
   {
