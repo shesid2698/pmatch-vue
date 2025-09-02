@@ -35,12 +35,12 @@
                 </div>
 
                 <div
-                  class="tips absolute text-14px w-200px h-auto bg-dark left-25% bottom-130% text-white p-10px rounded-1">
+                  class="tips absolute text-14px w-200px h-auto bg-dark left-50% translate-x-[-50%] bottom-130% text-white p-10px rounded-1">
                   密碼長度必須為8~20位,
                   其中必須包含至少一位數字、一位英文，若需有特殊符號僅限於
                   ! @ # $ % & *
                 </div>
-                <div class="tips absolute clip-path-custom w-15px h-15px bg-dark left-52% bottom-110%"></div>
+                <div class="tips absolute clip-path-custom w-15px h-15px bg-dark left-50% translate-x-[-50%] bottom-110% translate-y-[-3.5px]"></div>
               </div>
             </div>
             <div v-if="!hasToken" class="w-100% mt-15px">
