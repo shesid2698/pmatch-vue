@@ -133,8 +133,10 @@
                 <span class="absolute top-50% transform transform translate-y--1/2 left-10px text-black">/</span>
                 <input type="text" v-model="theUser[0].Carrier" @change="
                   theUser[0].Carrier =
-                  theUser[0].Carrier.toUpperCase()
-                  " pattern="(?=.*[0-9])(?=.*[A-Z])[0-9A-Z.+\-]{7}"
+                  theUser[0].Carrier.toUpperCase()" 
+                  @blur="verifyAlert"
+                  maxlength="7"
+                  pattern="[0-9A-Z\+\-\.]{7}"
                   class="box-border p-y-1.5 p-x-3 pl-17px text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
               </div>
 
@@ -144,8 +146,10 @@
               ">
                 <input type="text" v-model="theUser[0].Carrier" @change="
                   theUser[0].Carrier =
-                  theUser[0].Carrier.toUpperCase()
-                  " pattern="[A-Z]{2}[0-9]{14}"
+                  theUser[0].Carrier.toUpperCase()" 
+                  @blur="verifyAlert"
+                  maxlength="16"
+                  pattern="TP[0-9]{14}"
                   class="box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
               </div>
               <div v-else-if="
@@ -381,6 +385,53 @@ const getEmailVerify = async (result, resEmail) => {
     await checkForm(null);
   }
 };
+/**電子載具驗證*/
+const barcodeVerify = async () => {
+  if (!theUser[0].Carrier || theUser[0].Carrier.trim() === '') {
+    return true; 
+  }
+  const carrierType = String(theUser[0].CarrierType);
+  const carrierValue = theUser[0].Carrier.toUpperCase();
+  // 1. 手機條碼載具驗證
+  if (carrierType === '1') {
+    const fullCarrier = '/' + carrierValue;
+    const mobileRegex = /^\/[0-9A-Z\+\-\.]{7}$/;
+    if (!mobileRegex.test(fullCarrier)) {
+      await alertModal.alertShowModal(' ', '手機條碼格式錯誤，應為7碼，<br>可包含數字、大寫英文及符號 "+ - ."');
+      return false;
+    }
+  }
+  // 2. 自然人憑證條碼載具驗證
+  if (carrierType === '2') {
+    const certRegex = /^TP[0-9]{14}$/;
+    if (!certRegex.test(carrierValue)) {
+      await alertModal.alertShowModal(' ', '自然人憑證格式錯誤，<br>應為 "TP" 開頭後接14位數字');
+      return false;
+    }
+  }
+  return true;
+};
+const verifyAlert = async () => {
+  await barcodeVerify();
+};
+const textTruncate = (maxLen) => {
+  if (theUser[0].Carrier && theUser[0].Carrier.length > maxLen) {
+    theUser[0].Carrier = theUser[0].Carrier.slice(0, maxLen);
+  }
+}
+watch(() => theUser[0]?.CarrierType, (newType) => {
+  if (!theUser[0]?.Carrier) {
+    return;
+  }
+  const type = String(newType);
+  if (type === '1') {
+    textTruncate(7);
+  }
+  else if (type === '2') {
+    textTruncate(16);
+  }
+});
+
 const openMobileDialog = (event, index) => {
   event.preventDefault();
   mobileTableVisible.value = true;
@@ -421,6 +472,12 @@ const getMobileVerify = async (result, mobile) => {
 
 const checkForm = async event => {
   if (event) event.preventDefault();
+
+  // 載具驗證
+  const isValidCorrect = await barcodeVerify();
+  if (!isValidCorrect) {
+    return; // 如果驗證失敗，就中斷提交
+  }
 
   // 打推薦碼
   if (recommendStr.value !== '' && usedRecommendStr.value === false) {
