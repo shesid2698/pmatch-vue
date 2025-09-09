@@ -311,7 +311,7 @@
         </div> -->
 
     <!-- 最新消息 -->
-     <div ref="newsRef" class="max-w-1110px m-auto ps-5 pe-5 relative z-2 pb-7rem">
+     <div ref="newsRef" class="max-w-1110px h-[920px] m-auto ps-5 pe-5 relative z-2 pb-7rem">
         <div class="flex items-center justify-center mb-3rem">
           <div class="border-gradient-l"></div>
           <span class="text-gradient-t font-bold text-[32px] md:text-[40px]">最新</span>
