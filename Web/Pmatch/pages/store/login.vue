@@ -62,6 +62,16 @@
               </div>
             </div>
           </form>
+          <div class="flex justify-end items-center mt-20px">
+            <NuxtLink to="/store/register" class="flex-inline no-underline text-18px text-white fill-white hover:text-[#00F3FF] hover:fill-[#00F3FF] active:text-[#004DC1] active:fill-[#004DC1]">
+              <svg width="20" height="23" viewBox="0 0 20 26" xmlns="http://www.w3.org/2000/svg">
+                <rect x="12.0545" y="3.84515" width="5.67273" height="16.0727" transform="rotate(32.4113 12.0545 3.84515)"/>
+                <path d="M13.263 1.94182C13.855 1.00932 15.0909 0.733317 16.0234 1.32536L17.4356 2.22193C18.3681 2.81397 18.6441 4.04986 18.052 4.98236L17.097 6.48661L12.3079 3.44607L13.263 1.94182Z"/>
+                <path d="M2.79361 23.7234L8.06345 20.7697L3.22478 17.6977L2.79361 23.7234Z"/>
+              </svg>
+              申請試用 >
+            </NuxtLink>
+          </div>          
         </div>
 
         <!-- <div class="mt-15px text-center">
@@ -301,7 +311,7 @@ onMounted(async () => {
   border-radius: 10px;
   padding: 2px;
   background: linear-gradient(to right, #43edff, #fff);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box,
+  mask: linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;

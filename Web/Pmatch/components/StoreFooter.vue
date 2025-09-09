@@ -54,9 +54,20 @@ const isHomePage = computed(() => route.path === "/");
 const footerLinkLeft = ref([
   {
     id: 0,
-    title: "會員頁面",
-    link: "/",
+    title: "首頁",
+    link: "/store",
   },
+  {
+    id: 1,
+    title: "幫助中心",
+    link: "/store/helpcenter",
+  },
+  // {
+  //   id: 2,
+  //   title: "",
+  //   link: "/store/register",
+  // },
+
 ]);
 const footerLinkRight = ref([
   // {

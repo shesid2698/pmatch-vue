@@ -174,20 +174,20 @@ const handleScroll = () => {
 onMounted(() => {
   document.addEventListener("click", closeDropdownOutside);
   headerLink.value = [
-    {
-      id: 0,
-      title: "幫助中心",
-      link: "/store/helpcenter",
-      className: "nav0",
-      icon: "",
-    },
     // {
-    //   id: 1,
-    //   title: "返回會員頁面",
-    //   link: "/",
+    //   id: 0,
+    //   title: "",
+    //   link: "/store/register",
     //   className: "nav0",
     //   icon: "",
     // },
+    {
+      id: 1,
+      title: "幫助中心",
+      link: "/store/helpcenter",
+      className: "nav1",
+      icon: "",
+    },
     // {
     //     id: 2,
     //     title: "付費方案",
@@ -275,7 +275,7 @@ onBeforeUnmount(() => {
 }
 
 .nav1 {
-  margin-right: 1.2rem;
+  margin-right: 0.6rem;
 }
 
 .nav0,
