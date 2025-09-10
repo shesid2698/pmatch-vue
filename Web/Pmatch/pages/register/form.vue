@@ -7,12 +7,12 @@
     <Meta name="description" content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
     <Meta property="og:description" content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
   </Head>
-  <el-dialog v-model="mobileTableVisible" :width="dialogWidth">
+  <el-dialog v-model="mobileTableVisible" :width="dialogWidth" append-to-body>
     <keep-alive>
       <MobileVerify from="new" index="1" :phone="dialogMobile" @isVerify="getMobileVerify"></MobileVerify>
     </keep-alive>
   </el-dialog>
-  <el-dialog v-model="emailTableVisible" :width="dialogWidth">
+  <el-dialog v-model="emailTableVisible" :width="dialogWidth" append-to-body>
     <keep-alive>
       <EmailVerify from="new" index="1" :pEmail="email" @isVerify="getEmailVerify"></EmailVerify>
     </keep-alive>
