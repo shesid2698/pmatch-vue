@@ -43,13 +43,12 @@
                   </NuxtLink>
                 </div>
                 <div class="w-100% ms-3 gameContent">
-                  <div v-for="(
-character, index2
-                                            ) in item.Characters.slice(0, 3)" :key="index2"
+                  <div v-for="(store, index2) in filteredStores(item)" :key="index2"
                     :class="`w-100% gameItemBox${index2}`">
-                    <NuxtLink class="decoration-none" :to="`/findmatch/${character.Id}`">
-                      <div class="gameItem pt-3 pb-3 w-100%" :class="`gameItem-${item.PlatformName}-${character.Name}`">
-                        {{ character.Name }}
+                    <NuxtLink class="decoration-none" :to="`/findmatch/${store.Id}?pn=${item.PlatformName}`">
+                      <div class="gameItem pt-3 pb-3 w-100%"
+                        :class="`gameItem-${item.PlatformName}-${store.Name}`">
+                        {{ store.Name }}
                       </div>
                     </NuxtLink>
                   </div>
@@ -115,6 +114,7 @@ const store = useLoadStore();
 const setPageLoading = store.setPageLoading;
 
 const gameList = ref([]);
+const storesList = ref([]); 
 const allGameList = ref([]);
 const gameGroup = ref([]);
 const { $axios } = useNuxtApp();
@@ -177,6 +177,31 @@ const companies = ref([
 /**
  * 遊戲列表
  */
+// 取得GetStoreList
+async function fetchStoresListData(token) {
+  try {
+    const response = await $axios.post(
+      '/api/v1/Pmatch/GetStoreList',
+      {
+        IsFront: true
+      },
+      {
+        headers: {
+          Authorization: token // 帶上 Token
+        }
+      }
+    );
+    if (response.data.Status.Code === 0) {
+      storesList.value = response.data.Data;
+    } else {
+      await openAlertModal(' ', `${response.data.Status.Message}`);
+    }
+  } catch (error) {
+    console.error('請求失敗:', error);
+    data.value = '無法取得資料。';
+  }
+}
+// 取得GetPlatformAndCharacterList(遊戲平台資訊)
 async function fetchGameList(token) {
   if (token === '') {
     token = await jwtStore.generateToken();
@@ -260,6 +285,7 @@ onMounted(async () => {
       const token = userToken.value;
       if (token != '') {
         await fetchGameList(token);
+        await fetchStoresListData(token);
         await fetchADDownList(token);
       }
     } else {
@@ -267,6 +293,7 @@ onMounted(async () => {
       const token = await jwtStore.generateToken();
       if (token != '') {
         await fetchGameList(token);
+        await fetchStoresListData(token);
         await fetchADDownList(token);
       }
     }
@@ -276,6 +303,24 @@ onMounted(async () => {
     await setPageLoading(false);
   }
 });
+
+const filteredStores = (game) => {
+  if (!storesList.value || storesList.value.length === 0) {
+    return []; // 如果媒合商資料還沒載入好，回傳空陣列
+  }
+  
+  const filtered = storesList.value.filter(store => 
+    store.GamePlatforms.some(platform => platform.GamePlatform === game.PlatformName)
+  );
+
+  const sorted = filtered.sort((a, b) => {
+    const hotSort = b.IsHot - a.IsHot
+    if (hotSort !== 0) return hotSort;
+    return b.SortingId - a.SortingId; 
+  });
+
+  return sorted.slice(0, 3);
+};
 </script>
 
 <style scoped>

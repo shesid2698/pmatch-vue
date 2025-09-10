@@ -192,9 +192,7 @@
             <!-- 在第一筆資料後插入輪播 -->
             <div v-if="index === 1 && bannerTopList.length > 0" class="w-100% mb-7rem md-mb-2rem carouselContainer">
               <ElCarousel class="h-auto" :interval="3000" arrow="always">
-                <ElCarouselItem class="h-auto" v-for="(
-banner, bannerIndex
-                                    ) in bannerTopList" :key="bannerIndex">
+                <ElCarouselItem class="h-auto" v-for="(banner, bannerIndex) in bannerTopList" :key="bannerIndex">
                   <div v-if="banner.Url !== ''">
                     <a :href="banner.Url" target="_blank">
                       <img class="w-100% h-auto" :src="`${assetsUrl}${banner.ImgFile}`" :alt="banner.PlatformName" />
@@ -602,7 +600,7 @@ const handleSearch = async () => {
 
 // 篩選邏輯
 const filteredStores = computed(() => {
-  return storesList.value.filter(store => {
+  const filtered = storesList.value.filter(store => {
     const matchesSearchQuery = activeSearchQuery.value
       ? store.Name.toLowerCase().includes(activeSearchQuery.value.toLowerCase())
       : true;
@@ -623,6 +621,11 @@ const filteredStores = computed(() => {
 
     return matchesSearchQuery && matchesSelectedPlatform && matchesContractedStore;
   });
+  return filtered.sort((a, b) => {
+    const hotSort = b.IsHot - a.IsHot
+    if (hotSort !== 0) return hotSort;
+    return b.SortingId - a.SortingId; 
+  })
 });
 
 const filteredProcessedGamePlatforms = computed(() => {
