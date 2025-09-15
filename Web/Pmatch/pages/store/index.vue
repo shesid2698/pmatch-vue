@@ -430,7 +430,7 @@
                   </div>
                   <ul class="mt-6 space-y-[30px] ps-[16px]">
                     <li v-for="detail in plans[0].details" :key="detail" class="flex items-start">
-                      <img :src="plans[0].icon" class="w-[30px] me-3 mt-0.5" alt="check" />
+                      <img :src="plans[0].icon" class="w-[30px] me-3 mt-0.5 select-none pointer-events-none" alt="check" />
                       <span class="text-[22px]" v-html="detail"></span>
                     </li>
                   </ul>
@@ -445,7 +445,7 @@
                   <div class="flex justify-end pt-[20px] -me-[36px] gap-[20px] text-[#383838]">
                     <div class="w-[182px] h-[53px] leading-[53px] flex items-center justify-center text-[18px] rounded-full bg-gradient-to-r from-[#FFFFFF] to-[#73FBFD] gradient-border !before:bg-gradient-to-r !before:from-[#73FBFD] !before:to-white !before:rounded-[99px]">
                       年繳省更多
-                      <img src="/images/confetti.svg" class="w-[30px] mt-0.5" alt="check" />
+                      <img src="/images/confetti.svg" class="w-[30px] mt-0.5 select-none pointer-events-none" alt="check" />
                     </div>
                     <div class="relative flex items-center w-[103px] h-[26px] rounded-[5px] bg-gradient-to-r transition-all duration-400 button-shadow"
                         :class="isYearly ? 'from-[#FFFFFF] to-[#73FBFD]' : 'from-[#73FBFD] to-[#FFFFFF]'">
@@ -462,7 +462,7 @@
                     <div v-for="plan in plans.slice(1)" :key="plan.title" class="w-full md:w-1/2">
                       <template v-if="plan.wrapperClass">
                         <div :class="plan.wrapperClass">
-                          <div class="relative pt-[30px] px-[28px] rounded-lg h-[960px]" :class="plan.className">
+                          <div class="relative pt-[30px] px-[28px] rounded-lg h-[960px]" :class="plan.contentClass">
                             <div v-if="plan.badge" class="absolute -top-4 left-1/2 -translate-x-1/2 w-[150px] h-[25px] leading-[25px] text-[14px] text-center text-white bg-[#AB6CEB] rounded-full shadow-lg">
                               {{ plan.badge }}
                             </div>
@@ -477,7 +477,7 @@
                             </div>
                             <ul class="mt-6 space-y-[30px] ps-[16px]">
                               <li v-for="detail in plan.details" :key="detail" class="flex items-start">
-                                <img :src="plan.icon" class="w-[30px] me-3 mt-0.5" alt="check" />
+                                <img :src="plan.icon" class="w-[30px] me-3 mt-0.5 select-none pointer-events-none" alt="check" />
                                 <span class="text-[22px] " v-html="detail"></span>
                               </li>
                             </ul>
@@ -486,7 +486,7 @@
                         </div>
                       </template>
                       <template v-else>
-                        <div class="relative pt-[30px] px-[28px] rounded-lg h-[960px]" :class="plan.className">
+                        <div class="relative pt-[30px] px-[28px] rounded-lg h-[960px]" :class="plan.contentClass">
                             <div v-if="plan.badge" class="absolute -top-4 left-1/2 -translate-x-1/2 w-[150px] h-[25px] leading-[25px] text-[14px] text-center text-white bg-[#AB6CEB] rounded-full shadow-lg">
                               {{ plan.badge }}
                             </div>
@@ -501,7 +501,7 @@
                             </div>
                             <ul class="mt-6 space-y-[30px] ps-[16px]">
                               <li v-for="detail in plan.details" :key="detail" class="flex items-start">
-                                <img :src="plan.icon" class="w-[30px] me-3 mt-0.5" alt="check" />
+                                <img :src="plan.icon" class="w-[30px] me-3 mt-0.5 select-none pointer-events-none" alt="check" />
                                 <span class="text-[22px] " v-html="detail"></span>
                               </li>
                             </ul>
@@ -589,8 +589,8 @@
     </div>
 
    
-    
-    <div class="pb-25rem">
+    <!-- 聯絡我們 -->
+    <div ref="formRef" class="pb-25rem">
       <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
         <div class="flex items-center justify-center mb-3rem">
           <div class="border-gradient-l"></div>
@@ -601,7 +601,7 @@
         <div class="flex justify-center">
           <div class="contactBox py-2rem px-1rem md-px-3rem">
             <div class="mb-1rem">
-              <input class="contactEntry" placeholder="姓名" type="text" v-model="contactName" />
+              <input class="contactEntry" placeholder="公司名稱/姓名" type="text" v-model="contactName" />
             </div>
             <div class="relative mb-1rem">
               <input class="contactEntry" placeholder="手機號碼" :class="{ 'error-input': isPhoneError }" type="text"
@@ -619,7 +619,7 @@
               <input class="contactEntry" placeholder="Email" type="text" v-model="contactMail" />
             </div>
             <div class="mb-1rem">
-              <div class="contactEntry purposeSelect relative" @click.stop="togglePurposeBox">
+              <div class="contactEntry purposeSelect relative" :class="{ 'pointer-events-none opacity-70 bg-gray-200': isLocked }" @click.stop="togglePurposeBox">
                 <span>{{ selectedPurpose || "主旨 ..." }}</span>
                 <div class="purposeBox" v-show="showPurposeBox">
                   <div class="purposeBoxContent">
@@ -706,6 +706,7 @@ let captcha = null;
 const route = useRoute();
 const router = useRouter();
 const newsRef = ref(null);
+const formRef = ref(null); 
 const newsList = ref([]); // 儲存 API 獲取的最新消息
 const activeNewsType = ref('ALL'); // 追蹤當前點選的消息分類頁籤
 
@@ -728,6 +729,7 @@ const contactMail = ref('');
 const contactContent = ref('');
 const contactCap = ref('');
 const showPurposeBox = ref(false);
+const isLocked = ref(false); 
 const selectedPurpose = ref('');
 const purposeOptions = ref(['主旨 ...', '商務洽談', '合作邀請', '網站使用問題', '其他']);
 const isCapError = ref(false);
@@ -843,7 +845,7 @@ const plans = ref([
     ],
     note: '※試用版僅提供操作體驗，帳單、客戶等資料每日會自動清除，不保留紀錄',
     icon: '/images/check-mark-green.svg'
-    // className and buttonClass are not needed here as it's directly styled
+    // classNames are not needed here as it's directly styled
   },
   {
     title: '基礎版',
@@ -863,9 +865,9 @@ const plans = ref([
     ],
     note: '※需另外加收100元費用',
     icon: '/images/check-mark-yellow.svg',
-    className: 'bg-gradient-to-b from-[#FFFFFF] to-[#FEE4CC] text-gray-800',
-    textClass: 'bg-gradient-to-r from-[#FFC911] to-[#FFB871] bg-clip-text text-transparent',
-    buttonClass: 'text-white bg-gradient-to-r from-[#FFC90E] to-[#FFB774] hover:opacity-90'
+    contentClass: 'bg-gradient-to-b from-[#FFFFFF] to-[#FEE4CC] text-gray-800',
+    buttonClass: 'text-white bg-gradient-to-r from-[#FFC90E] to-[#FFB774] hover:opacity-90',
+    textClass: 'bg-gradient-to-r from-[#FFC911] to-[#FFB871] bg-clip-text text-transparent'
   },
   {
     title: '專業版',
@@ -884,10 +886,10 @@ const plans = ref([
     ],
     note: null,
     icon: '/images/check-mark-orange.svg',
-    className: 'bg-gradient-to-b from-[#FFFFFF] to-[#FED9BA] text-gray-800',
-    textClass: 'bg-gradient-to-r from-[#EC6A3B] to-[#FFB070] bg-clip-text text-transparent',
+    wrapperClass: 'rounded-[10px] p-[3px] bg-gradient-to-b from-[#AB6CEB] to-[#613D85]',
+    contentClass: 'bg-gradient-to-b from-[#FFFFFF] to-[#FED9BA] text-gray-800',
     buttonClass: 'text-white bg-gradient-to-r from-[#EB6739] to-[#FFB171] hover:opacity-90',
-    wrapperClass: 'rounded-[10px] p-[3px] bg-gradient-to-b from-[#AB6CEB] to-[#613D85]'
+    textClass: 'bg-gradient-to-r from-[#EC6A3B] to-[#FFB070] bg-clip-text text-transparent'
   }
 ]);
 // 為完整版圖表準備數據
@@ -1231,6 +1233,7 @@ async function fetchRichList(token, type) {
 }
 // 切換下拉選單的顯示/隱藏
 const togglePurposeBox = () => {
+  if (isLocked.value) return; 
   showPurposeBox.value = !showPurposeBox.value;
   // 選單開啟時添加全域點擊監聽
   if (showPurposeBox.value) {
@@ -1246,6 +1249,7 @@ const handleClickOutside = event => {
   }
 };
 const selectPurpose = item => {
+  if (isLocked.value) return;
   selectedPurpose.value = item;
   showPurposeBox.value = false;
 };
@@ -1361,19 +1365,47 @@ onMounted(async () => {
   } catch (error) {
     console.error('頁面初始化失敗:', error);
   } finally {
-    await setPageLoading(false);
+  await setPageLoading(false);
 
-    // 滾動到 news 區域 ( 回傳 scrollToNews 時 )
-    const scrollToNews = route.query.scrollToNews;
-    if (scrollToNews === '1') {
-      await nextTick();
-      if (newsRef.value) {
-        setTimeout(() => {
-          newsRef.value.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
-      }
-      router.replace({ path: route.path, query: {} });
+  // --- 整合所有 URL Query 參數的處理邏輯 ---
+
+  // 1. 一次性讀取所有可能用到的參數
+  const { scrollToNews, purpose, scrollToForm } = route.query;
+  let queryParamsWereHandled = false; // 旗標，記錄是否處理過任何參數
+
+  // 2. 處理 purpose 參數
+  if (purpose && purposeOptions.value.includes(purpose)) {
+    selectedPurpose.value = purpose;
+    isLocked.value = true;
+    queryParamsWereHandled = true;
+  }
+
+  // 3. 處理滾動到 news 區域
+  if (scrollToNews === '1') {
+    await nextTick();
+    if (newsRef.value) {
+      setTimeout(() => {
+        newsRef.value.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
     }
+    queryParamsWereHandled = true;
+  }
+  
+  // 4. 處理滾動到 form 區域
+  if (scrollToForm === '1') {
+    await nextTick();
+    if (formRef.value) {
+      setTimeout(() => {
+        formRef.value.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    }
+    queryParamsWereHandled = true;
+  }
+
+  // 5. 如果有任何參數被處理過，最後統一清除 URL
+  if (queryParamsWereHandled) {
+    router.replace({ path: route.path });
+  }
   }
 });
 </script>

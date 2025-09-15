@@ -6,118 +6,151 @@
     <Meta name="description" content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
     <Meta property="og:description" content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
   </Head>
-
-  <div class="storeBac text-white">
-    <div class="min-h-screen pb-15rem">
-      <div class="max-w-1372px m-auto pt-10rem  px-5 relative z-2">
-
-        <h1 class="text-3xl text-center font-bold mb-4">選擇方案</h1> 
-        <div class="flex flex-wrap lg:flex-nowrap justify-center gap-6">
-          <div class="w-full lg:w-1/3">
-            <div class="h-[1280px] px-15 rounded-[25px] bg-gradient-to-b from-[#C3E2EB77] to-[#C3E2EB22] gradient-border">
-              <div class="h-[140px]"></div>
-              <div class="relative pt-[30px] px-[28px] rounded-lg bg-gradient-to-b from-[#FFFFFF] to-[#EFFFF2] text-gray-800 h-[960px] w-[calc(100%-56px)] lg:w-[calc(100%-56px)] md:w-[calc(50%-56px)] md:mx-auto">
-                <div class="text-center">
-                  <h2 class="text-[40px] font-normal m-0 bg-gradient-to-r from-[#4BAAA7] to-[#82DE94] bg-clip-text text-transparent">{{ plans[0].title }}</h2>
-                  <div class="h-[100px] my-4 flex justify-center items-center translate-x-[-12px]">
-                    <span class="text-[24px] translate-[24px,-36px]">NT$</span>
-                    <span class="text-[96px] font-medium mx-1 my-0 w-[100px] italic bg-gradient-to-r from-[#82DE94] to-[#4BAAA7] bg-clip-text text-transparent">0</span>
-                  </div>
-                  <button class="w-[200px] h-[60px] leading-[60px] rounded-full text-[28px] text-white border-none bg-gradient-to-r from-[#48A7A8] to-[#84E093] hover:opacity-90 cursor-pointer ">{{ plans[0].cta }}</button>
+    <div class="storeBac text-white">
+    <div class="min-h-screen pt-10rem pb-15rem">
+      <div class="max-w-1372px min-w-360px m-auto px-5 relative z-2">        
+        <div class="rounded-[25px] overflow-hidden">
+          <!-- 方案與費用 -->
+          <div class="h-[76px] flex justify-center items-center bg-gradient-to-r from-[#FFFFFF] to-[#73FBFD] text-[#1f2937] text-[27px] lg:text-[30px] text-center mb-[3px]">方案與費用</div>
+          <div class="grid grid-cols-21 text-center text-[20px] lg:text-[26px] gap-[2px]">
+            <!-- 方案 -->
+            <div class="h-[110px] col-span-5 bg-white/40"></div>
+            <div class="col-span-8 bg-white/40 flex flex-col items-center justify-center gap-[5px]">
+              <span class="text-[28px] lg:text-[32px] text-[#CEFDFE]">基礎版</span>
+              <span>1個老闆帳號 + 2個值機帳號</span>
+            </div>
+            <div class="col-span-8 bg-white/40 flex flex-col items-center justify-center gap-[5px]">
+              <span class="text-[28px] lg:text-[32px] text-[#CEFDFE]">專業版</span>
+              <span>1個老闆帳號 + 5個值機帳號</span>
+            </div>
+            <!-- 費用 -->
+            <div class="row-span-2 bg-white/40 col-span-3 flex items-center justify-start text-[#CEFDFE]"><span class="xl:translate-x-[20px] lg:translate-x-[10px] translate-x-[0]">基礎費用</span></div>          
+            <div class="h-[110px] col-span-2 bg-white/40 flex items-center justify-center">月繳</div>
+            <div class="col-span-4 bg-white/40 flex items-center justify-center p-2">15,000元</div>
+            <div class="col-span-4 bg-white/40 flex flex-col items-center justify-center p-2 relative">
+              <span class="absolute top-[17%] lg:left-[8.5%] text-[#FFE09C] text-[14px] lg:text-[17px]"><Asterisk/>協會會員價</span>
+              <span>14,250元</span>
+            </div>
+            <div class="col-span-4 bg-white/40 flex items-center justify-center p-2">25,000元</div>
+            <div class="col-span-4 bg-white/40 flex flex-col items-center justify-center relative">
+              <span class="absolute top-[17%] lg:left-[8.5%] text-[#FFE09C] text-[14px] lg:text-[17px]"><Asterisk/>協會會員價</span>
+              <span>23,750元</span>
+            </div>          
+            <div class="h-[110px] col-span-2 bg-white/40 flex flex-col items-center justify-center relative">
+              <span>年繳</span>
+              <span class="absolute top-[65%] text-[#FFE09C] text-[14px] lg:text-[17px]">(享95折)</span>
+            </div>
+            <div class="col-span-4 bg-white/40 flex items-center justify-center p-2">172,100元</div>
+            <div class="col-span-4 bg-white/40 flex flex-col items-center justify-center relative">
+              <span class="absolute top-[18%] lg:left-[9%] text-[#FFE09C] text-[14px] lg:text-[17px]"><Asterisk/>協會會員價</span>
+              <span>163,000元</span>
+            </div>
+            <div class="col-span-4 bg-white/40 flex items-center justify-center p-2">285,000元</div>
+            <div class="col-span-4 bg-white/40 flex flex-col items-center justify-center relative">
+              <span class="absolute top-[18%] lg:left-[9%] text-[#FFE09C] text-[14px] lg:text-[17px]"><Asterisk/>協會會員價</span>
+              <span>270,000元</span>
+            </div>
+            <!-- 發票 -->
+            <div class="h-[76px] col-span-5 bg-white/40 flex items-center justify-start text-[#CEFDFE]"><span class="xl:translate-x-[20px] lg:translate-x-[10px] translate-x-[0]">電子發票開立系統</span></div>
+            <div class="col-span-8 bg-white/40 flex items-center justify-center">加收100元</div>
+            <div class="col-span-8 bg-white/40 flex items-center justify-center">無需加價</div>
+          </div>
+          <!-- 進階服務收費 -->
+          <div class="h-[76px] flex justify-center items-center bg-gradient-to-r from-[#FFFFFF] to-[#73FBFD] text-[#1f2937] text-[27px] lg:text-[30px] text-center my-[3px]">進階服務收費</div>
+            <div class="grid grid-cols-21 text-center text-[20px] lg:text-[26px] gap-[2px]">
+              <template v-for="(service, index) in advancedServices" :key="service.name">
+                <div class="col-span-5 bg-white/40 flex items-center justify-start text-left text-[#CEFDFE] text-[18px] lg:text-[23px]" :class="[service.desc ? 'h-[110px]' : 'h-[76px]']">
+                  <span class="xl:translate-x-[20px] lg:translate-x-[10px] translate-x-[0]">{{ service.name }}</span>
+                </div>              
+                <div class="bg-white/40 flex flex-col items-center justify-center" :class="[service.desc ? 'gap-[5px]' : '', service.pro ? 'col-span-8':'col-span-16']">
+                  {{ service.basic }}
+                  <span class="text-[#FFE09C] text-[14px] lg:text-[17px]">{{ service.desc }}</span>
                 </div>
-                <ul class="mt-6 space-y-[30px] ps-[16px]">
-                  <li v-for="detail in plans[0].details" :key="detail" class="flex items-start">
-                    <img :src="plans[0].icon" class="w-[30px] me-3 mt-0.5" alt="check" />
-                    <span class="text-[22px]" v-html="detail"></span>
-                  </li>
-                </ul>
-                <p v-if="plans[0].note" class="text-[18px] text-[#D31E00] mt-[20px]">{{ plans[0].note }}</p>
-              </div>
+                <div :class="[service.pro ? 'flex items-center justify-center col-span-8 bg-white/40':'hidden']">
+                  {{ service.pro }}
+                </div>          
+             </template>
             </div>
           </div>
-
-          <div class="w-full lg:w-2/3">
-            <div class="md:h-[1280px] h-[2360px] px-15 rounded-[25px] bg-gradient-to-b from-[#C3E2EB77] to-[#C3E2EB22] gradient-border gradient-box">
-              <div class="h-[140px]">
-                <div class="flex justify-end pt-[20px] -me-[36px] gap-[20px] text-[#383838]">
-                  <div class="w-[182px] h-[53px] leading-[53px] flex items-center justify-center text-[18px] rounded-full bg-gradient-to-r from-[#FFFFFF] to-[#73FBFD] gradient-border !before:bg-gradient-to-r !before:from-[#73FBFD] !before:to-white !before:rounded-[99px]">
-                    年繳省更多
-                    <img src="/images/confetti.svg" class="w-[30px] mt-0.5" alt="check" />
-                  </div>
-                  <div class="relative flex items-center w-[103px] h-[26px] rounded-[5px] bg-gradient-to-r transition-all duration-400 button-shadow"
-                      :class="isYearly ? 'from-[#FFFFFF] to-[#73FBFD]' : 'from-[#73FBFD] to-[#FFFFFF]'">
-                    <div class="absolute h-full w-1/2 top-0 transition-all duration-400 rounded-[5px] bg-gradient-to-r button-shadow"
-                      :class="isYearly ? 'left-0 from-[#73FBFD] to-[#00CDCF]' : 'left-1/2 from-[#00CDCF] to-[#73FBFD]'">
-                    </div>
-                    <button @click="isYearly = true" class="relative z-1 w-[50%] text-[14px] border-none bg-transparent text-start ps-10px text-[#383838] cursor-pointer ">年繳</button>
-                    <button @click="isYearly = false" class="relative z-1 w-[50%] text-[14px] border-none bg-transparent text-end pe-10px text-[#383838] cursor-pointer ">月繳</button>
-                  </div>
+        <!-- 功能一覽 -->
+        <div class="rounded-[25px] overflow-hidden mt-12">
+          <div class="h-[76px] flex justify-center items-center bg-gradient-to-r from-[#FFFFFF] to-[#73FBFD] text-[#1f2937] text-[27px] lg:text-[30px] text-center mb-[3px]">功能一覽</div>
+          <div class="grid grid-cols-21 text-center text-[20px] lg:text-[26px] gap-[2px] text-[#CEFDFE]">
+            <div class="h-[76px] col-span-6 bg-white/40"></div>
+            <div class="col-span-5 bg-white/40 flex items-center justify-center">試用版</div>
+            <div class="col-span-5 bg-white/40 flex items-center justify-center">基礎版</div>
+            <div class="col-span-5 bg-white/40 flex items-center justify-center">專業版</div>
+          </div>
+          <div class="text-[20px] lg:text-[23px]">
+            <div v-for="(section, index) in featureSections" :key="section.name">              
+              <div @click="toggleSection(section)" class="grid grid-cols-21 cursor-pointer mt-[2px] transition duration-300" :class="[section.isExpanded ? 'gap-[2px]' : 'my-[2px]']">
+                <!-- 功能 -->
+                <div class="col-span-6 flex items-center bg-white/40 text-left text-[#CEFDFE] h-[76px] text-[20px] font-normal lg:text-[26px] lg:font-bold">
+                  <span class="md:translate-x-[20px] sm:translate-x-[10px] translate-x-[0]">{{ section.name }}</span>
                 </div>
-               
-              </div>
-               <div class="flex flex-col md:flex-row gap-20">
-                  <div v-for="plan in plans.slice(1)" :key="plan.title" class="w-full md:w-1/2">
-                    <template v-if="plan.wrapperClass">
-                      <div :class="plan.wrapperClass">
-                        <div class="relative pt-[30px] px-[28px] rounded-lg h-[960px]" :class="plan.className">
-                          <div v-if="plan.badge" class="absolute -top-4 left-1/2 -translate-x-1/2 w-[150px] h-[25px] leading-[25px] text-[14px] text-center text-white bg-[#AB6CEB] rounded-full shadow-lg">
-                            {{ plan.badge }}
-                          </div>
-                          <div class="text-center">
-                            <h2 class="text-[40px] font-normal m-0" :class="plan.textClass">{{ plan.title }}</h2>
-                            <div class="h-[100px] my-4 flex justify-center items-center translate-x-[-12px]">
-                              <span class="text-[24px] translate-[24px,-36px]">NT$</span>
-                              <span class="text-[36px] mx-1" :class="plan.textClass">{{ isYearly ? plan.price.yearly : plan.price.monthly }}</span>
-                              <span class="text-[36px]"> / {{ isYearly ? '年' : '月' }}</span>
-                            </div>
-                            <button class="w-[200px] h-[60px] leading-[60px] rounded-full text-[28px] text-white border-none cursor-pointer" :class="plan.buttonClass">{{ plan.cta }}</button>
-                          </div>
-                          <ul class="mt-6 space-y-[30px] ps-[16px]">
-                            <li v-for="detail in plan.details" :key="detail" class="flex items-start">
-                              <img :src="plan.icon" class="w-[30px] me-3 mt-0.5" alt="check" />
-                              <span class="text-[22px] " v-html="detail"></span>
-                            </li>
-                          </ul>
-                          <p v-if="plan.note" class="text-[18px] text-[#D31E00] mt-[20px] text-center">{{ plan.note }}</p>
-                        </div>
-                      </div>
-                    </template>
-                    <template v-else>
-                      <div class="relative pt-[30px] px-[28px] rounded-lg h-[960px]" :class="plan.className">
-                          <div v-if="plan.badge" class="absolute -top-4 left-1/2 -translate-x-1/2 w-[150px] h-[25px] leading-[25px] text-[14px] text-center text-white bg-[#AB6CEB] rounded-full shadow-lg">
-                            {{ plan.badge }}
-                          </div>
-                          <div class="text-center">
-                            <h2 class="text-[40px] font-normal m-0" :class="plan.textClass">{{ plan.title }}</h2>
-                            <div class="h-[100px] my-4 flex justify-center items-center translate-x-[-12px]">
-                              <span class="text-[24px] translate-[24px,-36px]">NT$</span>
-                              <span class="text-[36px] mx-1" :class="plan.textClass">{{ isYearly ? plan.price.yearly : plan.price.monthly }}</span>
-                              <span class="text-[36px]"> / {{ isYearly ? '年' : '月' }}</span>
-                            </div>
-                            <button class="w-[200px] h-[60px] leading-[60px] rounded-full text-[28px] text-white border-none cursor-pointer " :class="plan.buttonClass">{{ plan.cta }}</button>
-                          </div>
-                          <ul class="mt-6 space-y-[30px] ps-[16px]">
-                            <li v-for="detail in plan.details" :key="detail" class="flex items-start">
-                              <img :src="plan.icon" class="w-[30px] me-3 mt-0.5" alt="check" />
-                              <span class="text-[22px] " v-html="detail"></span>
-                            </li>
-                          </ul>
-                          <p v-if="plan.note" class="text-[18px] text-[#D31E00] mt-[20px] text-center">{{ plan.note }}</p>
-                        </div>
-                    </template>
-                  </div>
-               </div>
-              <div class="my-[36px] text-center">
-                <NuxtLink href="#" class="w-[367px] h-[75px] inline-flex justify-center items-center rounded-full border-solid border-0px bg-gradient-to-r from-[#7C2CBE] to-[#F12588] no-underline text-white text-[26px] hover:border-3px hover:w-[361px] hover:h-[69px] hover:from-white hover:to-white hover:text-[#EE2589] active:border-0px active:w-[367px] active:h-[75px] active:from-[#F12588] active:to-[#F12588] active:text-white">
-                  更多進階服務與功能
-                  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 ms-2 mt-0.8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                <div class="col-span-5 flex items-center justify-center bg-white/40">
+                  <img v-if="section.mainFeatures.trial" src="/images/check-mark-green.svg" alt="check" class="transition duration-300 select-none pointer-events-none" :class="[section.isExpanded ? 'opacity-0 rotate-180' : '']">
+                </div>
+                <div class="col-span-5 flex items-center justify-center bg-white/40">
+                  <img v-if="section.mainFeatures.basic" src="/images/check-mark-yellow.svg" alt="check" class="transition duration-300 select-none pointer-events-none" :class="[section.isExpanded ? 'opacity-0 rotate-180' : '']">
+                </div>
+                <div class="col-span-5 flex items-center justify-center bg-white/40 relative">
+                  <img v-if="section.mainFeatures.pro" src="/images/check-mark-orange.svg" alt="check" class="transition duration-300 select-none pointer-events-none" :class="[section.isExpanded ? 'opacity-0 rotate-180' : '']">
+                  <svg class="absolute transition-transform duration-300 right-20px" :class="{ 'rotate-180': section.isExpanded }" width="20" viewBox="0 0 23 15" fill="white" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9.97784 14.214C10.7764 15.1509 12.2236 15.1509 13.0222 14.214L22.1132 3.54731C23.2198 2.24885 22.2971 0.25 20.591 0.25H2.409C0.702933 0.25 -0.219813 2.24885 0.886834 3.54731L9.97784 14.214Z"/>
                   </svg>
-                </NuxtLink>
-              </div>
+                </div>
+              </div>              
+              <transition name="fade">
+                <div v-if="section.isExpanded" class="text-white">
+                  <div v-for="feature in section.features" :key="feature.name" class="grid grid-cols-21 gap-[2px]">
+                    <div class="col-span-6 min-h-[20px] pt-2 pb-4 ps-0 sm:ps-2 md:ps-6 lg:ps-10 bg-white/40 text-left">{{ feature.name }}</div>
+                    <div class="col-span-5 pt-2 pb-4 flex items-center justify-center bg-white/40 relative">
+                      <img v-if="feature.trial" src="/images/check-mark-green.svg" alt="check" class="select-none pointer-events-none">
+                      <p v-if="section.name === '數據分析' && feature.name === '玩家交易行為數據'" 
+                        class="absolute top-[50px] text-[#FFE09C] text-[14px] lg:text-[17px] mx-auto max-w-[99%] xl:max-w-[75%]">
+                        <Asterisk/>試用版僅提供操作體驗，<br>紀錄資料每日會自動清除，<br>因此不會有數據
+                      </p>
+                    </div>
+                    <div class="col-span-5 pt-2 pb-4  flex items-center justify-center bg-white/40 relative">
+                      <img v-if="feature.basic" src="/images/check-mark-yellow.svg" alt="check" class="select-none pointer-events-none">
+                      <p v-if="section.name === '電子發票開立' && feature.name === '自動上傳財政部'"
+                        class="absolute top-[45px] text-[#FFE09C] text-[14px] lg:text-[17px] mx-auto max-w-[99%] xl:max-w-[75%]">
+                        <Asterisk/>基礎版加收100元費用
+                      </p>
+                    </div>
+                    <div class="col-span-5 pt-2 pb-4  flex items-center justify-center bg-white/40">
+                      <img v-if="feature.pro" src="/images/check-mark-orange.svg" alt="check" class="select-none pointer-events-none">
+                    </div>
+                  </div>
+                </div>
+              </transition>
             </div>
           </div>
-
+          <div class="grid grid-cols-21 gap-[2px]">
+            <div class="col-span-6 p-4 bg-white/40"></div>
+            <div class="col-span-5 p-4 bg-white/40 text-center">
+              <NuxtLink to="/store/register" class="flex-inline no-underline">
+                <div class="lg:w-[200px] w-[120px] h-[60px] leading-[60px] rounded-full text-[20px] lg:text-[28px] text-white border-none bg-gradient-to-r from-[#48A7A8] to-[#84E093] hover:opacity-90 cursor-pointer">
+                  申請試用
+                </div>
+              </NuxtLink>
+            </div>
+            <div class="col-span-5 p-4 bg-white/40 text-center">
+              <NuxtLink :to="{ path: '/store', query: { scrollToForm: '1', purpose: '商務洽談' } }" class="flex-inline no-underline">
+                <div class="lg:w-[200px] w-[120px] h-[60px] leading-[60px] rounded-full text-[20px] lg:text-[28px] text-white border-none bg-gradient-to-r from-[#FFC90E] to-[#FFB774] hover:opacity-90 cursor-pointer">
+                  開始使用
+                </div>
+              </NuxtLink>
+            </div>      
+            <div class="col-span-5 p-4 bg-white/40 text-center">
+              <NuxtLink :to="{ path: '/store', query: { scrollToForm: '1', purpose: '商務洽談' } }" class="flex-inline no-underline">
+                <div class="lg:w-[200px] w-[120px] h-[60px] leading-[60px] rounded-full text-[20px] lg:text-[28px] text-white border-none bg-gradient-to-r from-[#EB6739] to-[#FFB171] hover:opacity-90 cursor-pointer">
+                  立即加入
+                </div>
+              </NuxtLink>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -125,70 +158,123 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-
-const isYearly = ref(false);
-const plans = ref([
-  {
-    title: '試用版',
-    price: { monthly: '0', yearly: '0' },
-    cta: '申請試用',
-    details: [
-      '開單記帳',
-      '建立客戶資料',
-      '交接班功能',
-      '交易數據統計分析',
-      '金流核對'
-    ],
-    note: '※試用版僅提供操作體驗，帳單、客戶等資料每日會自動清除，不保留紀錄',
-    icon: '/images/check-mark-green.svg'
-    // className and buttonClass are not needed here as it's directly styled
-  },
-  {
-    title: '基礎版',
-    price: { monthly: '15,000', yearly: '172,100' },
-    cta: '開始使用',
-    details: [
-      '1個老闆帳號',
-      '2個值機帳號',
-      '開單不限筆數',
-      '建立管理客戶資料',
-      '交接班功能',
-      '交易數據統計分析',
-      '自動計算媒合服務費',
-      '建立PMatch網站商店',
-      '交易紀錄查詢',
-      '<span class="text-[#D31E00]">電子發票開立系統</span>'
-    ],
-    note: '※需另外加收100元費用',
-    icon: '/images/check-mark-yellow.svg',
-    className: 'bg-gradient-to-b from-[#FFFFFF] to-[#FEE4CC] text-gray-800',
-    textClass: 'bg-gradient-to-r from-[#FFC911] to-[#FFB871] bg-clip-text text-transparent',
-    buttonClass: 'text-white bg-gradient-to-r from-[#FFC90E] to-[#FFB774] hover:opacity-90'
-  },
-  {
-    title: '專業版',
-    badge: '最受歡迎',
-    price: { monthly: '25,000', yearly: '285,000' },
-    cta: '立即加入',
-    details: [
-      '<strong>包含所有基礎版功能</strong>',
-      '1個老闆帳號',
-      '5個值機帳號',
-      '媒合結果查詢',
-      'PMatch網站張貼廣告',
-      '客戶消費特性分析',
-      '金流核對',
-      '電子發票開立系統'
-    ],
-    note: null,
-    icon: '/images/check-mark-orange.svg',
-    className: 'bg-gradient-to-b from-[#FFFFFF] to-[#FED9BA] text-gray-800',
-    textClass: 'bg-gradient-to-r from-[#EC6A3B] to-[#FFB070] bg-clip-text text-transparent',
-    buttonClass: 'text-white bg-gradient-to-r from-[#EB6739] to-[#FFB171] hover:opacity-90',
-    wrapperClass: 'rounded-[10px] p-[3px] bg-gradient-to-b from-[#AB6CEB] to-[#613D85]'
-  }
+const Asterisk = (attrs) =>
+  h('svg', { xmlns: 'http://www.w3.org/2000/svg', viewBox: '0 0 24 24', width: 12, height: 12, ...attrs }, [
+    h('g', { fill: 'currentColor', stroke: 'currentColor', 'stroke-width': 2.6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, [
+      h('line', { x1: 5.5, y1: 5.5, x2: 18.5, y2: 18.5 }),
+      h('line', { x1: 18.5, y1: 5.5, x2: 5.5, y2: 18.5 }),
+      h('circle', { cx: 12, cy: 3.5, r: 0.8 }),
+      h('circle', { cx: 20.5, cy: 12, r: 0.8 }),
+      h('circle', { cx: 12, cy: 20.5, r: 0.8 }),
+      h('circle', { cx: 3.5, cy: 12, r: 0.8 }),
+    ])
+  ])
+const  advancedServices = ref([
+  { name: 'PMatch官網商店接單', basic: '交易額0.5% / 筆', pro: '交易額0.35% / 筆' },
+  { name: '手機、銀行帳戶驗證', basic: '30元 / 筆' },
+  { name: '團隊版新增組別', desc: '加一個組別和4個值機帳號', basic: '每加一組 3000元/月'},
+  { name: '串接代收自動帶入繳費代碼', desc: '目前提供串接第三方金流：藍新金流及速買配', basic: '每加一個代收平台 500元/月'},
+  { name: 'Telegram串接開通設定費', basic: '3000元/單次'},
 ]);
+
+// --- Data for "功能一覽" Table ---
+const featureSections = ref([
+  {
+    name: '開單記帳',
+    isExpanded: false,
+    mainFeatures: { trial: true, basic: true, pro: true },
+    features: [
+      { name: '委買單', trial: true, basic: true, pro: true },
+      { name: '委賣單', trial: true, basic: true, pro: true },
+      { name: '比值自動換算', trial: true, basic: true, pro: true },
+      { name: '快速開單', trial: true, basic: true, pro: true },
+      { name: '建立常用媒合', trial: true, basic: true, pro: true },
+      { name: '即時財產變動', trial: true, basic: true, pro: true },
+    ]
+  },
+  {
+    name: '客戶資料',
+    isExpanded: false,
+    mainFeatures: { trial: true, basic: true, pro: true },
+    features: [
+      { name: '客戶聯繫方式', trial: true, basic: true, pro: true },
+      { name: '客戶銀行帳戶資料', trial: true, basic: true, pro: true },
+      { name: '客戶身分資料', trial: true, basic: true, pro: true },
+      { name: '群組管理', trial: true, basic: true, pro: true },
+      { name: '客戶消費分析', trial: true, basic: true, pro: true },
+      { name: '客戶繳費分析', trial: true, basic: true, pro: true },
+    ]
+  },
+  {
+    name: '交接班功能',
+    isExpanded: false,
+    mainFeatures: { trial: true, basic: true, pro: true },
+    features: [
+        { name: '值機人員交接班', trial: true, basic: true, pro: true },
+        { name: '交接紀錄查詢', trial: true, basic: true, pro: true },
+        { name: '各班財產明細留存', trial: true, basic: true, pro: true },
+    ]
+  },
+   {
+    name: '金流核對',
+    isExpanded: false,
+    mainFeatures: { trial: true, basic: true, pro: true },
+    features: [
+        { name: '匯出管理系統帳務', trial: true, basic: true, pro: true },
+        { name: '匯入銀行資料自動比對', trial: true, basic: true, pro: true },
+        { name: '儲存核對結果', trial: true, basic: true, pro: true },
+    ]
+  },
+  {
+    name: '媒合服務費計算',
+    isExpanded: false,
+    mainFeatures: { trial: false, basic: true, pro: true },
+    features: [
+        { name: '每日系統自動結算', trial: false, basic: true, pro: true },
+        { name: '支援外部匯入帳務', trial: false, basic: true, pro: true },
+    ]
+  },
+  {
+    name: '電子發票開立',
+    isExpanded: false,
+    mainFeatures: { trial: false, basic: true, pro: true },
+    features: [
+        { name: '自動開立電子發票', trial: false, basic: true, pro: true },
+        { name: '自動上傳財政部', trial: false, basic: true, pro: true },
+        { name: '', trial: false, basic: false, pro: false },
+    ]
+  },
+  {
+    name: '數據分析',
+    isExpanded: false,
+    mainFeatures: { trial: false, basic: true, pro: true },
+    features: [
+        { name: '即時營運數據', trial: true, basic: true, pro: true },
+        { name: '玩家交易行為數據', trial: false, basic: true, pro: true},
+        { name: '轉換率/留存率', trial: false, basic: true, pro: true},
+        { name: '繳費區域分析', trial: false, basic: true, pro: true},
+        { name: '營收數據統計', trial: false, basic: true, pro: true },
+        { name: '遊戲平台水位分析', trial: true, basic: true, pro: true },
+        { name: '變更歷程', trial: true, basic: true, pro: true },
+    ]
+  },
+  {
+    name: 'PMatch網站功能',
+    isExpanded: false,
+    mainFeatures: { trial: false, basic: true, pro: true },
+    features: [
+        { name: '建立媒合商店', trial: false, basic: true, pro: true },
+        { name: '玩家線上商店下單', trial: false, basic: true, pro: true },
+        { name: '活動專區刊登廣告', trial: false, basic: true, pro: true },
+        { name: '玩家查詢交易紀錄', trial: false, basic: true, pro: true },
+        { name: '玩家查詢媒合結果', trial: false, basic: true, pro: true },
+    ]
+  },
+]);
+
+function toggleSection(section) {
+  section.isExpanded = !section.isExpanded;
+}
 </script>
 
 <style scoped>
@@ -199,23 +285,15 @@ const plans = ref([
   background-repeat: no-repeat;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
-.gradient-border {
-  position: relative;
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.33s ease, transform 0.33s ease;
+  transform-origin: top;
 }
-.gradient-border::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  padding: 2px;
-  border-radius: 25px;
-  background: linear-gradient(to right, white, #73FBFD);
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-}
-.button-shadow {
-  box-shadow: inset 0 2px 0 #fff8;
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: scaleY(0.9);
 }
 </style>
