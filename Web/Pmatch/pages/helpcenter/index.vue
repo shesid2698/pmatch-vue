@@ -71,7 +71,7 @@
                 </NuxtLink> -->
 
         <div class="text-start content-center flex items-center newsContanier cursor-pointer"
-          @click="GetNewsDetail(news.Id)" v-for="news in showList" v-if="newsList != null && newsList.length > 0">
+          @click="GetNewsDetail(news.Id)" v-for="news in sorting" v-if="newsList != null && newsList.length > 0">
           <div class="mr-30px"><img src="/images/icon-Q&A.png" width="100" alt=""></div>
           <div class="text-[#4361EE] text-24px">{{ news.Title }}</div>
         </div>
@@ -135,13 +135,18 @@ async function fetchNewsListData(token) {
   }
 }
 const GetNewsDetail = id => {
-  newsDetail.value = showList.value.find(x => x.Id == id);
+  newsDetail.value = sorting.value.find(x => x.Id == id);
   content.value = newsDetail.value.Content;
   window.scrollTo({
     top: 0,
     behavior: 'smooth'
   });
-};
+}
+const sorting = computed(() => {
+  return (showList.value).slice().sort(
+    (a, b) => (b.SortingId ) - (a.SortingId)
+  );
+});
 
 // 分類按鈕
 const category = ref('all');
