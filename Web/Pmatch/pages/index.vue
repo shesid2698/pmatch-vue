@@ -143,14 +143,12 @@
                     </NuxtLink>
                   </div>
                   <div class="w-100% ms-3 gameContent">
-                    <div v-for="(
-character, index2
-                                            ) in item.Characters.slice(0, 3)" :key="index2"
+                    <div v-for="(store, index2) in filteredStores(item)" :key="index2"
                       :class="`w-100% gameItemBox${index2}`">
-                      <NuxtLink class="decoration-none" :to="`/findmatch/${character.Id}?pn=${item.PlatformName}`">
+                      <NuxtLink class="decoration-none" :to="`/findmatch/${store.Id}?pn=${item.PlatformName}`">
                         <div class="gameItem pt-3 pb-3 w-100%"
-                          :class="`gameItem-${item.PlatformName}-${character.Name}`">
-                          {{ character.Name }}
+                          :class="`gameItem-${item.PlatformName}-${store.Name}`">
+                          {{ store.Name }}
                         </div>
                       </NuxtLink>
                     </div>
@@ -328,6 +326,7 @@ const router = useRouter();
 const newsRef = ref(null);
 const newsList = ref([]);
 const gameList = ref([]);
+const storesList = ref([]); 
 const bannerList = ref([]);
 const { $axios } = useNuxtApp();
 const jwtStore = useJwtStore();
@@ -408,6 +407,30 @@ async function fetchNewsListData(num, token = '', type = 'ALL') {
     );
     if (response.data.Status.Code === 0) {
       newsList.value = response.data.Data;
+    } else {
+      await openAlertModal(' ', `${response.data.Status.Message}`);
+    }
+  } catch (error) {
+    console.error('請求失敗:', error);
+    data.value = '無法取得資料。'; // 畫面顯示錯誤訊息
+  }
+}
+// 取得GetStoreList
+async function fetchStoresListData(token) {
+  try {
+    const response = await $axios.post(
+      '/api/v1/Pmatch/GetStoreList',
+      {
+        IsFront: true
+      },
+      {
+        headers: {
+          Authorization: token // 帶上 Token
+        }
+      }
+    );
+    if (response.data.Status.Code === 0) {
+      storesList.value = response.data.Data;
     } else {
       await openAlertModal(' ', `${response.data.Status.Message}`);
     }
@@ -559,6 +582,7 @@ onMounted(async () => {
       if (token != '') {
         await fetchNewsListData([1, 2], token);
         await fetchGameList(token);
+        await fetchStoresListData(token);
         await fetchADList(token);
       }
     } else {
@@ -567,6 +591,7 @@ onMounted(async () => {
       if (token != '') {
         await fetchNewsListData([1, 2], token);
         await fetchGameList(token);
+        await fetchStoresListData(token);
         await fetchADList(token);
       }
     }
@@ -611,6 +636,25 @@ onBeforeUnmount(() => {
   document.removeEventListener('click', handleClickOutside);
   saveScrollPosition();
 });
+
+const filteredStores = (game) => {
+  if (!storesList.value || storesList.value.length === 0) {
+    return [];
+  }
+  
+  const filtered = storesList.value.filter(store => 
+    store.GamePlatforms.some(platform => platform.GamePlatform === game.PlatformName)
+  );
+
+  const sorted = filtered.sort((a, b) => {
+    const hotSort = b.IsHot - a.IsHot
+    if (hotSort !== 0) return hotSort;
+    return b.SortingId - a.SortingId; 
+  });
+    
+
+  return sorted.slice(0, 3);
+};
 </script>
 
 <style scoped>
