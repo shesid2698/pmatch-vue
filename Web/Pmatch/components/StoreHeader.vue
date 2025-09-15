@@ -176,24 +176,24 @@ onMounted(() => {
   headerLink.value = [
     {
       id: 0,
-      title: "幫助中心",
-      link: "/store/helpcenter",
+      title: "方案與定價",
+      link: "/store/program",
       className: "nav0",
       icon: "",
     },
+    {
+      id: 1,
+      title: "幫助中心",
+      link: "/store/helpcenter",
+      className: "nav1",
+      icon: "",
+    },
     // {
-    //   id: 1,
+    //   id: 2,
     //   title: "返回會員頁面",
     //   link: "/",
     //   className: "nav0",
     //   icon: "",
-    // },
-    // {
-    //     id: 2,
-    //     title: "付費方案",
-    //     link: "/store/program",
-    //     className: "nav1",
-    //     icon: "",
     // },
     {
       id: 3,
@@ -275,7 +275,7 @@ onBeforeUnmount(() => {
 }
 
 .nav1 {
-  margin-right: 1.2rem;
+  margin-right: 0.6rem;
 }
 
 .nav0,
