@@ -1262,6 +1262,9 @@ const selectPurpose = item => {
   if (isLocked.value) return;
   selectedPurpose.value = item;
   showPurposeBox.value = false;
+  if (item !== '商務洽談') {
+    contactPlatform.value = '';
+  }
 };
 // 檢查電話
 const validatePhone = () => {
