@@ -426,7 +426,11 @@
                       <span class="text-[24px] translate-[24px,-36px]">NT$</span>
                       <span class="text-[96px] font-medium mx-1 my-0 w-[100px] italic bg-gradient-to-r from-[#82DE94] to-[#4BAAA7] bg-clip-text text-transparent">0</span>
                     </div>
-                    <button class="w-[200px] h-[60px] leading-[60px] rounded-full text-[28px] text-white border-none bg-gradient-to-r from-[#48A7A8] to-[#84E093] hover:opacity-90 cursor-pointer ">{{ plans[0].cta }}</button>
+                    <NuxtLink to="/store/register" class="flex-inline no-underline">
+                      <div class="w-[200px] h-[60px] leading-[60px] rounded-full text-[28px] text-white border-none bg-gradient-to-r from-[#48A7A8] to-[#84E093] hover:opacity-90 cursor-pointer ">
+                        {{ plans[0].cta }}                      
+                      </div>
+                    </NuxtLink>
                   </div>
                   <ul class="mt-6 space-y-[30px] ps-[16px]">
                     <li v-for="detail in plans[0].details" :key="detail" class="flex items-start">
@@ -473,7 +477,7 @@
                                 <span class="text-[36px] mx-1" :class="plan.textClass">{{ isYearly ? plan.price.yearly : plan.price.monthly }}</span>
                                 <span class="text-[36px]"> / {{ isYearly ? '年' : '月' }}</span>
                               </div>
-                              <button class="w-[200px] h-[60px] leading-[60px] rounded-full text-[28px] text-white border-none cursor-pointer" :class="plan.buttonClass">{{ plan.cta }}</button>
+                              <button @click="selectAndScrollToForm" class="w-[200px] h-[60px] leading-[60px] rounded-full text-[28px] text-white border-none cursor-pointer" :class="plan.buttonClass">{{ plan.cta }}</button>
                             </div>
                             <ul class="mt-6 space-y-[30px] ps-[16px]">
                               <li v-for="detail in plan.details" :key="detail" class="flex items-start">
@@ -497,7 +501,7 @@
                                 <span class="text-[36px] mx-1" :class="plan.textClass">{{ isYearly ? plan.price.yearly : plan.price.monthly }}</span>
                                 <span class="text-[36px]"> / {{ isYearly ? '年' : '月' }}</span>
                               </div>
-                              <button class="w-[200px] h-[60px] leading-[60px] rounded-full text-[28px] text-white border-none cursor-pointer " :class="plan.buttonClass">{{ plan.cta }}</button>
+                              <button @click="selectAndScrollToForm" class="w-[200px] h-[60px] leading-[60px] rounded-full text-[28px] text-white border-none cursor-pointer " :class="plan.buttonClass">{{ plan.cta }}</button>
                             </div>
                             <ul class="mt-6 space-y-[30px] ps-[16px]">
                               <li v-for="detail in plan.details" :key="detail" class="flex items-start">
@@ -621,7 +625,7 @@
             <div class="mb-1rem">
               <div class="contactEntry purposeSelect relative" :class="{ 'pointer-events-none opacity-70 bg-gray-200': isLocked }" @click.stop="togglePurposeBox">
                 <span>{{ selectedPurpose || "主旨 ..." }}</span>
-                <div class="purposeBox" v-show="showPurposeBox">
+                <div class="purposeBox" v-show="showPurposeBox">                  
                   <div class="purposeBoxContent">
                     <div class="relative w-100% purposeOption" v-for="(option, index) in purposeOptions" :key="option" @click.stop="selectPurpose(option)">
                       {{ option }}
@@ -636,9 +640,14 @@
                 </div>
               </div>
             </div>
+            <transition name="fade">
+              <div class="mb-1rem" v-if="selectedPurpose === '商務洽談'">
+                <input class="contactEntry" placeholder="遊戲平台/經營角色" maxlength="20" type="text" v-model="contactPlatform" />
+              </div>
+            </transition>
             <div class="mb-1rem">
               <textarea class="contactEntryArea" placeholder="留言 (請輸入100字以內的訊息)" cols="30" rows="10" maxlength="100"
-                v-model="contactContent"></textarea>
+                v-model="contactComment"></textarea>
             </div>
             <div class="flex items-center justify-between">
               <div class="w-60% me-1rem relative">
@@ -725,8 +734,9 @@ const dialogVisible = ref([false, false, false, false, false, false]);
 
 const contactName = ref('');
 const contactPhone = ref('');
+const contactPlatform = ref('');
 const contactMail = ref('');
-const contactContent = ref('');
+const contactComment = ref('');
 const contactCap = ref('');
 const showPurposeBox = ref(false);
 const isLocked = ref(false); 
@@ -1273,7 +1283,7 @@ const validateCaptcha = () => {
 // 送出信件
 async function sendForm() {
   if (!contactName.value) {
-    await openAlertModal(' ', '請輸入姓名', 'ContactUsNullOfName');
+    await openAlertModal(' ', '請輸入公司名稱或姓名', 'ContactUsNullOfName');
     return;
   }
   if (!validatePhone() && !validateCaptcha()) {
@@ -1292,8 +1302,12 @@ async function sendForm() {
     await openAlertModal(' ', '請先選擇主旨內容', 'ContactUsNullOfTitle');
     return;
   }
-  if (!contactContent.value) {
-    await openAlertModal(' ', '請輸入留言內容', 'ContactUsNullOfContent');
+  if (selectedPurpose.value === '商務洽談' && !contactPlatform.value) {
+    await openAlertModal(' ', '請輸入遊戲平台或經營角色', 'ContactUsNullOfPlatform');
+    return;
+  }
+  if (!contactComment.value) {
+    await openAlertModal(' ', '請輸入留言內容', 'ContactUsNullOfComment');
     return;
   }
   if (!validateCaptcha()) {
@@ -1305,6 +1319,15 @@ async function sendForm() {
 // 聯絡我們
 async function sendMail() {
   const token = await jwtStore.generateToken();
+  // platform 跟 content 共用 contactComment ，先用 trim() 清理資料 並組合出最終要送出的內容
+  const platform = (contactPlatform.value || '').trim();
+  const comment = (contactComment.value || '').trim();
+  let finalContent = '';
+  if (platform && comment) {
+    finalContent = `Platform: ${platform}\nComment:\n${comment}`;
+  } else {
+    finalContent = comment;
+  }
   try {
     const response = await $axios.post(
       '/api/v1/Pmatch/SendEmail',
@@ -1313,7 +1336,7 @@ async function sendMail() {
         MobileNumber: contactPhone.value,
         Email: contactMail.value,
         Subject: selectedPurpose.value,
-        Content: contactContent.value
+        Content: finalContent
       },
       {
         headers: {
@@ -1329,6 +1352,18 @@ async function sendMail() {
     }
   } catch (error) {
     console.error('請求失敗:', error);
+  }
+}
+function selectAndScrollToForm() {
+  // 1. 設定下拉選單的值
+  selectedPurpose.value = '商務洽談';
+
+  // 2. 將狀態設為鎖定
+  isLocked.value = true;
+
+  // 3. 滾動到表單位置
+  if (formRef.value) {
+    formRef.value.scrollIntoView({ behavior: 'smooth' });
   }
 }
 onMounted(async () => {
@@ -1915,5 +1950,17 @@ onMounted(async () => {
   .border-gradient-r {
     width: 20px;
   }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.33s ease, transform 0.33s ease;
+  transform-origin: top;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: scaleY(0.9);
 }
 </style>

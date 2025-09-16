@@ -104,22 +104,22 @@
               <transition name="fade">
                 <div v-if="section.isExpanded" class="text-white">
                   <div v-for="feature in section.features" :key="feature.name" class="grid grid-cols-21 gap-[2px]">
-                    <div class="col-span-6 min-h-[20px] pt-2 pb-4 ps-0 sm:ps-2 md:ps-6 lg:ps-10 bg-white/40 text-left">{{ feature.name }}</div>
-                    <div class="col-span-5 pt-2 pb-4 flex items-center justify-center bg-white/40 relative">
+                    <div class="col-span-6 min-h-[20px] pt-1 pb-4 ps-0 sm:ps-2 md:ps-6 lg:ps-10 bg-white/40 text-left">{{ feature.name }}</div>
+                    <div class="col-span-5 pt-1 pb-4 flex items-center justify-center bg-white/40 relative">
                       <img v-if="feature.trial" src="/images/check-mark-green.svg" alt="check" class="select-none pointer-events-none">
                       <p v-if="section.name === '數據分析' && feature.name === '玩家交易行為數據'" 
                         class="absolute top-[50px] text-[#FFE09C] text-[14px] lg:text-[17px] mx-auto max-w-[99%] xl:max-w-[75%]">
                         <Asterisk/>試用版僅提供操作體驗，<br>紀錄資料每日會自動清除，<br>因此不會有數據
                       </p>
                     </div>
-                    <div class="col-span-5 pt-2 pb-4  flex items-center justify-center bg-white/40 relative">
+                    <div class="col-span-5 pt-1 pb-4  flex items-center justify-center bg-white/40 relative">
                       <img v-if="feature.basic" src="/images/check-mark-yellow.svg" alt="check" class="select-none pointer-events-none">
                       <p v-if="section.name === '電子發票開立' && feature.name === '自動上傳財政部'"
                         class="absolute top-[45px] text-[#FFE09C] text-[14px] lg:text-[17px] mx-auto max-w-[99%] xl:max-w-[75%]">
                         <Asterisk/>基礎版加收100元費用
                       </p>
                     </div>
-                    <div class="col-span-5 pt-2 pb-4  flex items-center justify-center bg-white/40">
+                    <div class="col-span-5 pt-1 pb-4  flex items-center justify-center bg-white/40">
                       <img v-if="feature.pro" src="/images/check-mark-orange.svg" alt="check" class="select-none pointer-events-none">
                     </div>
                   </div>
@@ -127,7 +127,7 @@
               </transition>
             </div>
           </div>
-          <div class="grid grid-cols-21 gap-[2px]">
+          <div class="grid grid-cols-21 gap-[2px] mt-[2px]">
             <div class="col-span-6 p-4 bg-white/40"></div>
             <div class="col-span-5 p-4 bg-white/40 text-center">
               <NuxtLink to="/store/register" class="flex-inline no-underline">
@@ -201,8 +201,8 @@ const featureSections = ref([
       { name: '客戶銀行帳戶資料', trial: true, basic: true, pro: true },
       { name: '客戶身分資料', trial: true, basic: true, pro: true },
       { name: '群組管理', trial: true, basic: true, pro: true },
-      { name: '客戶消費分析', trial: true, basic: true, pro: true },
-      { name: '客戶繳費分析', trial: true, basic: true, pro: true },
+      { name: '客戶消費分析', trial: true, basic: false, pro: true },
+      { name: '客戶繳費分析', trial: true, basic: false, pro: true },
     ]
   },
   {
@@ -218,11 +218,11 @@ const featureSections = ref([
    {
     name: '金流核對',
     isExpanded: false,
-    mainFeatures: { trial: true, basic: true, pro: true },
+    mainFeatures: { trial: true, basic: false, pro: true },
     features: [
-        { name: '匯出管理系統帳務', trial: true, basic: true, pro: true },
-        { name: '匯入銀行資料自動比對', trial: true, basic: true, pro: true },
-        { name: '儲存核對結果', trial: true, basic: true, pro: true },
+        { name: '匯出管理系統帳務', trial: true, basic: false, pro: true },
+        { name: '匯入銀行資料自動比對', trial: true, basic: false, pro: true },
+        { name: '儲存核對結果', trial: true, basic: false, pro: true },
     ]
   },
   {
@@ -247,7 +247,7 @@ const featureSections = ref([
   {
     name: '數據分析',
     isExpanded: false,
-    mainFeatures: { trial: false, basic: true, pro: true },
+    mainFeatures: { trial: true, basic: true, pro: true },
     features: [
         { name: '即時營運數據', trial: true, basic: true, pro: true },
         { name: '玩家交易行為數據', trial: false, basic: true, pro: true},
