@@ -128,9 +128,7 @@
 
 
     <div class="w-full relative mt-2rem md-mt-5rem z-2">
-      <div v-if="storesItem != null" v-show="(storesItem.IsEnabledBuy || storesItem.IsEnabledSell) &&
-        storesItem.ContractId !== 0
-        " class="mt-2rem md-mt-7rem max-w-1110px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3 relative z-2">
+      <div v-if="storesItem != null" class="mt-2rem md-mt-7rem max-w-1110px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3 relative z-2" :class="{ 'mask': isTransactionDisabled }" >
         <div class="w-100% block md-flex justify-center flex-wrap">
           <div class="md-w-460px">
             <div class="mb-5">
@@ -300,10 +298,7 @@
                       <img :class="answerShow === index
                           ? 'w-30px'
                           : 'w-20px'
-                        " :src="answerShow === index
-                                                    ? '/images/arrowDownLine.png'
-                                                    : '/images/arrowRightLine.png'
-                                                  " alt="右箭頭漸層" />
+                        " :src="answerShow === index ? '/images/arrowDownLine.png' : '/images/arrowRightLine.png' " alt="右箭頭漸層" />
                     </div>
                   </div>
                   <div v-show="answerShow === index &&
@@ -437,6 +432,15 @@ const handleClickOutside = event => {
     contactBox.value = false;
   }
 };
+
+// 未開放的交易區塊禁用 (加上遮罩)
+const isTransactionDisabled = computed(() => {
+  if (!storesItem.value) {
+    return true;
+  }
+  return !(storesItem.value.IsEnabledBuy || storesItem.value.IsEnabledSell) || storesItem.value.ContractId === 0;
+});
+
 // 問答開關
 const answerBoxToggle = index => {
   answerShow.value = answerShow.value === index ? null : index;
@@ -1441,9 +1445,46 @@ watch(
   cursor: pointer;
 }
 
+.mask {
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+}
+.mask::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:linear-gradient(to bottom, #3C3C3C02,#A2A2A222);
+  backdrop-filter: blur(2px);
+  width: 80%; 
+  height: 100%;
+  margin: auto;
+  border-radius: 10px; 
+  z-index: 10;
+  pointer-events: none;
+}
+.mask::after {
+  content: '';
+  position: absolute;
+  width: 520px; 
+  height: 520px;
+  z-index: 10;
+  background-image: url('/images/吉祥物舉牌.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  left: 50%;
+  bottom: -40%; 
+  transform: translateX(-52%);
+  cursor: not-allowed;
+}
+
 @media screen and (max-width: 1024px) {
   .platformBox {
     max-height: 290px;
+  }
+  .mask::before, mask::after {
+    width: 100%;
   }
 }
 </style>
