@@ -279,4 +279,13 @@
     mask-clip: padding-box, border-box;
     mask-composite: exclude, add;
   }
+
+  @media screen and (max-width: 768px) {
+    .border-gradient-l {
+      width: 20px;
+    }
+    .border-gradient-r {
+      width: 20px;
+    }
+  }
 </style>
