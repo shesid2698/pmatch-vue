@@ -335,6 +335,7 @@ const assetsUrl = useCookie('_PmAssetsUrl');
 const serchPlatformLogCookies = useCookie('_PmSearchLog');
 const plaformLog = ref([]);
 const showPlatformBox = ref(false);
+const activeNewsType = ref('ALL');
 const selectedGame = ref('');
 let isBackNavigation = false;
 
@@ -385,8 +386,6 @@ let platformNameToSearch = ref('');
 let keywordToSearch = ref('');
 let contractToSearch = ref(false);
 
-// 取得GetNewsList(最新消息)
-const activeNewsType = ref('ALL');
 async function fetchNewsListData(num, token = '', type = 'ALL') {
   activeNewsType.value = type;
   if (token === '') {
@@ -406,7 +405,14 @@ async function fetchNewsListData(num, token = '', type = 'ALL') {
       }
     );
     if (response.data.Status.Code === 0) {
-      newsList.value = response.data.Data;
+      const sortedData = response.data.Data.sort((a, b) => {
+        const topSort = a.IsTop - b.IsTop;
+        if (topSort !== 0) {
+        return topSort;
+        }
+        return new Date(b.StartTime) - new Date(a.StartTime);
+      });
+      newsList.value = sortedData;
     } else {
       await openAlertModal(' ', `${response.data.Status.Message}`);
     }

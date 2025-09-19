@@ -699,8 +699,15 @@ async function fetchNewsListData(num, token = '', type = 'ALL') {
         }
       }
     );
-    if (response.data.Status.Code === 0) {
-      newsList.value = response.data.Data;
+     if (response.data.Status.Code === 0) {
+      const sortedData = response.data.Data.sort((a, b) => {
+        const topSort = a.IsTop - b.IsTop;
+        if (topSort !== 0) {
+        return topSort;
+        }
+        return new Date(b.StartTime) - new Date(a.StartTime);
+      });
+      newsList.value = sortedData;
     } else {
       await openAlertModal(' ', `${response.data.Status.Message}`);
     }
