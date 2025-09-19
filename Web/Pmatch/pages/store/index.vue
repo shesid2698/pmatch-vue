@@ -705,7 +705,7 @@ async function fetchNewsListData(num, token = '', type = 'ALL') {
         if (topSort !== 0) {
         return topSort;
         }
-        return new Date(b.StartTime) - new Date(a.StartTime);
+        return new Date(a.StartTime) - new Date(b.StartTime);
       });
       newsList.value = sortedData;
     } else {
