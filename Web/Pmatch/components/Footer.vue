@@ -60,6 +60,11 @@ const footerLinkLeft = ref([
     link: "/",
   },
   {
+    id: 1,
+    title: "活動專區",
+    link: "/activity",
+  },
+  {
     id: 2,
     title: "幫助中心",
     link: "/helpcenter",
