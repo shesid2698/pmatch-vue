@@ -405,6 +405,132 @@
         </div>
       </div>
 
+     <!-- 方案費用 -->
+    <div class="pb-7rem">
+        <div class="max-w-1372px m-auto ps-5 pe-5 relative z-2">
+            <div class="flex items-center justify-center mb-3rem">
+                <div class="border-gradient-l"></div>
+                <span class="text-gradient-t font-bold text-[32px] md:text-[40px]">方案</span>
+                <span class="text-gradient-b font-bold text-[32px] md:text-[40px]">費用</span>
+                <div class="border-gradient-r"></div>
+            </div>
+
+          <div class="lg:pt-[40px] flex flex-wrap lg:flex-nowrap justify-center gap-6">
+            <div class="w-full lg:w-1/3">
+              <div class="h-[1280px] px-15 rounded-[25px] bg-gradient-to-b from-[#C3E2EB77] to-[#C3E2EB22] gradient-border">
+                <div class="h-[140px]"></div>
+                <div class="relative pt-[30px] px-[28px] rounded-lg bg-gradient-to-b from-[#FFFFFF] to-[#EFFFF2] text-gray-800 h-[960px] w-[calc(100%-56px)] lg:w-[calc(100%-56px)] md:w-[calc(50%-56px)] md:mx-auto">
+                  <div class="text-center">
+                    <h2 class="text-[40px] font-normal m-0 bg-gradient-to-r from-[#4BAAA7] to-[#82DE94] bg-clip-text text-transparent">{{ plans[0].title }}</h2>
+                    <div class="h-[100px] my-4 flex justify-center items-center translate-x-[-12px]">
+                      <span class="text-[24px] translate-[24px,-36px]">NT$</span>
+                      <span class="text-[96px] font-medium mx-1 my-0 w-[100px] italic bg-gradient-to-r from-[#82DE94] to-[#4BAAA7] bg-clip-text text-transparent">0</span>
+                    </div>
+                    <NuxtLink to="/store/register" class="flex-inline no-underline">
+                      <div class="w-[200px] h-[60px] leading-[60px] rounded-full text-[28px] text-white border-none bg-gradient-to-r from-[#48A7A8] to-[#84E093] hover:opacity-90 cursor-pointer ">
+                        {{ plans[0].cta }}                      
+                      </div>
+                    </NuxtLink>
+                  </div>
+                  <ul class="mt-6 space-y-[30px] ps-[16px]">
+                    <li v-for="detail in plans[0].details" :key="detail" class="flex items-start">
+                      <img :src="plans[0].icon" class="w-[30px] me-3 mt-0.5 select-none pointer-events-none" alt="check" />
+                      <span class="text-[22px]" v-html="detail"></span>
+                    </li>
+                  </ul>
+                  <p v-if="plans[0].note" class="text-[18px] text-[#D31E00] mt-[20px]">{{ plans[0].note }}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="w-full lg:w-2/3">
+              <div class="md:h-[1280px] h-[2360px] px-15 rounded-[25px] bg-gradient-to-b from-[#C3E2EB77] to-[#C3E2EB22] gradient-border gradient-box">
+                <div class="h-[140px]">
+                  <div class="flex justify-end pt-[20px] -me-[36px] gap-[20px] text-[#383838]">
+                    <div class="w-[182px] h-[53px] leading-[53px] flex items-center justify-center text-[18px] rounded-full bg-gradient-to-r from-[#FFFFFF] to-[#73FBFD] gradient-border !before:bg-gradient-to-r !before:from-[#73FBFD] !before:to-white !before:rounded-[99px]">
+                      年繳省更多
+                      <img src="/images/confetti.svg" class="w-[30px] mt-0.5 select-none pointer-events-none" alt="check" />
+                    </div>
+                    <div class="relative flex items-center w-[103px] h-[26px] rounded-[5px] bg-gradient-to-r transition-all duration-400 button-shadow"
+                        :class="isYearly ? 'from-[#FFFFFF] to-[#73FBFD]' : 'from-[#73FBFD] to-[#FFFFFF]'">
+                      <div class="absolute h-full w-1/2 top-0 transition-all duration-400 rounded-[5px] bg-gradient-to-r button-shadow"
+                        :class="isYearly ? 'left-0 from-[#73FBFD] to-[#00CDCF]' : 'left-1/2 from-[#00CDCF] to-[#73FBFD]'">
+                      </div>
+                      <button @click="isYearly = true" class="relative z-1 w-[50%] text-[14px] border-none bg-transparent text-start ps-10px text-[#383838] cursor-pointer ">年繳</button>
+                      <button @click="isYearly = false" class="relative z-1 w-[50%] text-[14px] border-none bg-transparent text-end pe-10px text-[#383838] cursor-pointer ">月繳</button>
+                    </div>
+                  </div>
+                
+                </div>
+                <div class="flex flex-col md:flex-row gap-20">
+                    <div v-for="plan in plans.slice(1)" :key="plan.title" class="w-full md:w-1/2">
+                      <template v-if="plan.wrapperClass">
+                        <div :class="plan.wrapperClass">
+                          <div class="relative pt-[30px] px-[28px] rounded-lg h-[960px]" :class="plan.contentClass">
+                            <div v-if="plan.badge" class="absolute -top-4 left-1/2 -translate-x-1/2 w-[150px] h-[25px] leading-[25px] text-[14px] text-center text-white bg-[#AB6CEB] rounded-full shadow-lg">
+                              {{ plan.badge }}
+                            </div>
+                            <div class="text-center">
+                              <h2 class="text-[40px] font-normal m-0" :class="plan.textClass">{{ plan.title }}</h2>
+                              <div class="h-[100px] my-4 flex justify-center items-center translate-x-[-12px]">
+                                <span class="text-[24px] translate-[24px,-36px]">NT$</span>
+                                <span class="text-[36px] mx-1" :class="plan.textClass">{{ isYearly ? plan.price.yearly : plan.price.monthly }}</span>
+                                <span class="text-[36px]"> / {{ isYearly ? '年' : '月' }}</span>
+                              </div>
+                              <button @click="selectAndScrollToForm" class="w-[200px] h-[60px] leading-[60px] rounded-full text-[28px] text-white border-none cursor-pointer" :class="plan.buttonClass">{{ plan.cta }}</button>
+                            </div>
+                            <ul class="mt-6 space-y-[30px] ps-[16px]">
+                              <li v-for="detail in plan.details" :key="detail" class="flex items-start">
+                                <img :src="plan.icon" class="w-[30px] me-3 mt-0.5 select-none pointer-events-none" alt="check" />
+                                <span class="text-[22px] " v-html="detail"></span>
+                              </li>
+                            </ul>
+                            <p v-if="plan.note" class="text-[18px] text-[#D31E00] mt-[20px] text-center">{{ plan.note }}</p>
+                          </div>
+                        </div>
+                      </template>
+                      <template v-else>
+                        <div class="relative pt-[30px] px-[28px] rounded-lg h-[960px]" :class="plan.contentClass">
+                            <div v-if="plan.badge" class="absolute -top-4 left-1/2 -translate-x-1/2 w-[150px] h-[25px] leading-[25px] text-[14px] text-center text-white bg-[#AB6CEB] rounded-full shadow-lg">
+                              {{ plan.badge }}
+                            </div>
+                            <div class="text-center">
+                              <h2 class="text-[40px] font-normal m-0" :class="plan.textClass">{{ plan.title }}</h2>
+                              <div class="h-[100px] my-4 flex justify-center items-center translate-x-[-12px]">
+                                <span class="text-[24px] translate-[24px,-36px]">NT$</span>
+                                <span class="text-[36px] mx-1" :class="plan.textClass">{{ isYearly ? plan.price.yearly : plan.price.monthly }}</span>
+                                <span class="text-[36px]"> / {{ isYearly ? '年' : '月' }}</span>
+                              </div>
+                              <button @click="selectAndScrollToForm" class="w-[200px] h-[60px] leading-[60px] rounded-full text-[28px] text-white border-none cursor-pointer " :class="plan.buttonClass">{{ plan.cta }}</button>
+                            </div>
+                            <ul class="mt-6 space-y-[30px] ps-[16px]">
+                              <li v-for="detail in plan.details" :key="detail" class="flex items-start">
+                                <img :src="plan.icon" class="w-[30px] me-3 mt-0.5 select-none pointer-events-none" alt="check" />
+                                <span class="text-[22px] " v-html="detail"></span>
+                              </li>
+                            </ul>
+                            <p v-if="plan.note" class="text-[18px] text-[#D31E00] mt-[20px] text-center">{{ plan.note }}</p>
+                          </div>
+                      </template>
+                    </div>
+                </div>
+                <div class="my-[36px] text-center">
+                  <NuxtLink href="/store/program" class="w-[367px] h-[75px] inline-flex justify-center items-center rounded-full border-solid border-0px bg-gradient-to-r from-[#7C2CBE] to-[#F12588] no-underline text-white text-[26px] hover:border-3px hover:w-[361px] hover:h-[69px] hover:from-white hover:to-white hover:text-[#EE2589] active:border-0px active:w-[367px] active:h-[75px] active:from-[#F12588] active:to-[#F12588] active:text-white">
+                    更多進階服務與功能
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 ms-2 mt-0.8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </NuxtLink>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+    </div>  
+
+    
+    <!-- 我們的優勢 -->
     <div class="pb-7rem">
       <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
         <div>
@@ -466,74 +592,9 @@
       </div>
     </div>
 
-    <!-- 方案費用 -->
-    <!-- <div class="pb-7rem">
-            <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
-                <div class="flex items-center justify-center mb-3rem">
-                    <div class="border-gradient-l"></div>
-                    <span class="text-gradient-t font-bold text-[32px] md:text-[40px]">方案</span>
-                    <span class="text-gradient-b font-bold text-[32px] md:text-[40px]">費用</span>
-                    <div class="border-gradient-r"></div>
-                </div>
-                <div class="flex md-flex-nowrap flex-wrap justify-center">
-                    <div
-                        v-for="(item, index) in programList"
-                        :key="index"
-                        :class="`${item.className}`"
-                        class="p-1rem md-p-2rem md-m-1rem my-1rem"
-                    >
-                        <div>
-                            <div class="flex justify-center pb-1rem">
-                                <span class="programTitle">
-                                    {{ item.title }}
-                                </span>
-                            </div>
-                            <div
-                                class="flex justify-center pb-2rem mb-2rem programPriceBox"
-                            >
-                                <div>
-                                    <span>NT</span>
-                                    <span class="programPrice">{{
-                                        item.price
-                                    }}</span>
-                                    <span> / 月</span>
-                                </div>
-                            </div>
-                            <div class="flex justify-center">
-                                <div>
-                                    <div
-                                        class="flex mb-1rem lg-px-1.5rem"
-                                        v-for="it in item.detail"
-                                    >
-                                        <div class="me-1.5rem">
-                                            <img
-                                                class="w-20px"
-                                                src="/images/icon-check-01.png"
-                                                alt=""
-                                            />
-                                        </div>
-                                        <div>
-                                            <span>{{ it }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="flex justify-center pt-3 pb-3 mt-10">
-                    <div class="moreBtnBox">
-                        <NuxtLink
-                            class="moreBtn color-#fff font-size-22px decoration-none"
-                            to="/store/program"
-                            >了解更多</NuxtLink
-                        >
-                    </div>
-                </div>
-            </div>
-        </div> -->
-    
-    <div class="pb-25rem">
+   
+    <!-- 聯絡我們 -->
+    <div ref="formRef" class="pb-25rem">
       <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
         <div class="flex items-center justify-center mb-3rem">
           <div class="border-gradient-l"></div>
@@ -544,7 +605,7 @@
         <div class="flex justify-center">
           <div class="contactBox py-2rem px-1rem md-px-3rem">
             <div class="mb-1rem">
-              <input class="contactEntry" placeholder="姓名" type="text" v-model="contactName" />
+              <input class="contactEntry" placeholder="公司名稱/姓名" type="text" v-model="contactName" />
             </div>
             <div class="relative mb-1rem">
               <input class="contactEntry" placeholder="手機號碼" :class="{ 'error-input': isPhoneError }" type="text"
@@ -562,9 +623,9 @@
               <input class="contactEntry" placeholder="Email" type="text" v-model="contactMail" />
             </div>
             <div class="mb-1rem">
-              <div class="contactEntry purposeSelect relative" @click.stop="togglePurposeBox">
+              <div class="contactEntry purposeSelect relative" :class="{ 'pointer-events-none opacity-70 bg-gray-200': isLocked }" @click.stop="togglePurposeBox">
                 <span>{{ selectedPurpose || "主旨 ..." }}</span>
-                <div class="purposeBox" v-show="showPurposeBox">
+                <div class="purposeBox" v-show="showPurposeBox">                  
                   <div class="purposeBoxContent">
                     <div class="relative w-100% purposeOption" v-for="(option, index) in purposeOptions" :key="option" @click.stop="selectPurpose(option)">
                       {{ option }}
@@ -579,9 +640,14 @@
                 </div>
               </div>
             </div>
+            <transition name="fade">
+              <div class="mb-1rem" v-if="selectedPurpose === '商務洽談'">
+                <input class="contactEntry" placeholder="遊戲平台/經營角色" maxlength="20" type="text" v-model="contactPlatform" />
+              </div>
+            </transition>
             <div class="mb-1rem">
               <textarea class="contactEntryArea" placeholder="留言 (請輸入100字以內的訊息)" cols="30" rows="10" maxlength="100"
-                v-model="contactContent"></textarea>
+                v-model="contactComment"></textarea>
             </div>
             <div class="flex items-center justify-between">
               <div class="w-60% me-1rem relative">
@@ -649,6 +715,7 @@ let captcha = null;
 const route = useRoute();
 const router = useRouter();
 const newsRef = ref(null);
+const formRef = ref(null); 
 const newsList = ref([]); // 儲存 API 獲取的最新消息
 const activeNewsType = ref('ALL'); // 追蹤當前點選的消息分類頁籤
 
@@ -667,10 +734,12 @@ const dialogVisible = ref([false, false, false, false, false, false]);
 
 const contactName = ref('');
 const contactPhone = ref('');
+const contactPlatform = ref('');
 const contactMail = ref('');
-const contactContent = ref('');
+const contactComment = ref('');
 const contactCap = ref('');
 const showPurposeBox = ref(false);
+const isLocked = ref(false); 
 const selectedPurpose = ref('');
 const purposeOptions = ref(['主旨 ...', '商務洽談', '合作邀請', '網站使用問題', '其他']);
 const isCapError = ref(false);
@@ -778,56 +847,68 @@ const advantagesList = [
     iconClass: 'w-[60px] px-[5px]'
   }
 ];
-const programList = [
+const isYearly = ref(false);
+const plans = ref([
   {
-    title: '入門版',
-    price: '1,299',
-    detail: [
-      '無成交手續費',
-      '可開通3個銷售管道',
-      '推薦分潤行銷',
-      '會員分級',
-      '訊息管理中心',
-      '3管理員帳號',
-      '5應用擴充'
+    title: '試用版',
+    price: { monthly: '0', yearly: '0' },
+    cta: '申請試用',
+    details: [
+      '開單記帳',
+      '建立客戶資料',
+      '交接班功能',
+      '交易數據統計分析',
+      '金流核對'
     ],
-    className: 'programStart'
+    note: '※試用版僅提供操作體驗，帳單、客戶等資料每日會自動清除，不保留紀錄',
+    icon: '/images/check-mark-green.svg'
+    // classNames are not needed here as it's directly styled
+  },
+  {
+    title: '基礎版',
+    price: { monthly: '15,000', yearly: '172,100' },
+    cta: '開始使用',
+    details: [
+      '1個老闆帳號',
+      '2個值機帳號',
+      '開單不限筆數',
+      '建立管理客戶資料',
+      '交接班功能',
+      '交易數據統計分析',
+      '自動計算媒合服務費',
+      '建立PMatch網站商店',
+      '交易紀錄查詢',
+      '<span class="text-[#D31E00]">電子發票開立系統</span>'
+    ],
+    note: '※需另外加收100元費用',
+    icon: '/images/check-mark-yellow.svg',
+    contentClass: 'bg-gradient-to-b from-[#FFFFFF] to-[#FEE4CC] text-gray-800',
+    buttonClass: 'text-white bg-gradient-to-r from-[#FFC90E] to-[#FFB774] hover:opacity-90',
+    textClass: 'bg-gradient-to-r from-[#FFC911] to-[#FFB871] bg-clip-text text-transparent'
   },
   {
     title: '專業版',
-    price: '2,899',
-    detail: [
-      '無成交手續費',
-      '可開通10個銷售管道',
-      '推薦分潤行銷',
-      '會員分級',
-      '訊息管理中心',
-      '進階促銷優惠工具',
-      '群發行銷訊息',
-      '行銷預測功能',
-      '10管理員帳號',
-      '25應用擴充'
+    badge: '最受歡迎',
+    price: { monthly: '25,000', yearly: '285,000' },
+    cta: '立即加入',
+    details: [
+      '<strong>包含所有基礎版功能</strong>',
+      '1個老闆帳號',
+      '5個值機帳號',
+      '媒合結果查詢',
+      'PMatch網站張貼廣告',
+      '客戶消費特性分析',
+      '金流核對',
+      '電子發票開立系統'
     ],
-    className: 'programPro'
-  },
-  {
-    title: '企業版',
-    price: '6,999',
-    detail: [
-      '無成交手續費',
-      '可開通30個銷售管道',
-      '推薦分潤行銷',
-      '會員分級',
-      '訊息管理中心',
-      '進階促銷優惠工具',
-      '群發行銷訊息',
-      '行銷預測功能',
-      '20管理員帳號',
-      '35應用擴充'
-    ],
-    className: 'programEnterprise'
+    note: null,
+    icon: '/images/check-mark-orange.svg',
+    wrapperClass: 'rounded-[10px] p-[3px] bg-gradient-to-b from-[#AB6CEB] to-[#613D85]',
+    contentClass: 'bg-gradient-to-b from-[#FFFFFF] to-[#FED9BA] text-gray-800',
+    buttonClass: 'text-white bg-gradient-to-r from-[#EB6739] to-[#FFB171] hover:opacity-90',
+    textClass: 'bg-gradient-to-r from-[#EC6A3B] to-[#FFB070] bg-clip-text text-transparent'
   }
-];
+]);
 // 為完整版圖表準備數據
 const chartDataComputed = computed(() => {
   return dialogVisible.value.map((_, index) => getChartData(index));
@@ -1169,6 +1250,7 @@ async function fetchRichList(token, type) {
 }
 // 切換下拉選單的顯示/隱藏
 const togglePurposeBox = () => {
+  if (isLocked.value) return; 
   showPurposeBox.value = !showPurposeBox.value;
   // 選單開啟時添加全域點擊監聽
   if (showPurposeBox.value) {
@@ -1184,8 +1266,12 @@ const handleClickOutside = event => {
   }
 };
 const selectPurpose = item => {
+  if (isLocked.value) return;
   selectedPurpose.value = item;
   showPurposeBox.value = false;
+  if (item !== '商務洽談') {
+    contactPlatform.value = '';
+  }
 };
 // 檢查電話
 const validatePhone = () => {
@@ -1207,7 +1293,7 @@ const validateCaptcha = () => {
 // 送出信件
 async function sendForm() {
   if (!contactName.value) {
-    await openAlertModal(' ', '請輸入姓名', 'ContactUsNullOfName');
+    await openAlertModal(' ', '請輸入公司名稱或姓名', 'ContactUsNullOfName');
     return;
   }
   if (!validatePhone() && !validateCaptcha()) {
@@ -1226,8 +1312,12 @@ async function sendForm() {
     await openAlertModal(' ', '請先選擇主旨內容', 'ContactUsNullOfTitle');
     return;
   }
-  if (!contactContent.value) {
-    await openAlertModal(' ', '請輸入留言內容', 'ContactUsNullOfContent');
+  if (selectedPurpose.value === '商務洽談' && !contactPlatform.value) {
+    await openAlertModal(' ', '請輸入遊戲平台或經營角色', 'ContactUsNullOfPlatform');
+    return;
+  }
+  if (!contactComment.value) {
+    await openAlertModal(' ', '請輸入留言內容', 'ContactUsNullOfComment');
     return;
   }
   if (!validateCaptcha()) {
@@ -1239,6 +1329,15 @@ async function sendForm() {
 // 聯絡我們
 async function sendMail() {
   const token = await jwtStore.generateToken();
+  // platform 跟 content 共用 contactComment ，先用 trim() 清理資料 並組合出最終要送出的內容
+  const platform = (contactPlatform.value || '').trim();
+  const comment = (contactComment.value || '').trim();
+  let finalContent = '';
+  if (platform && comment) {
+    finalContent = `Platform: ${platform}\nComment:\n${comment}`;
+  } else {
+    finalContent = comment;
+  }
   try {
     const response = await $axios.post(
       '/api/v1/Pmatch/SendEmail',
@@ -1247,7 +1346,7 @@ async function sendMail() {
         MobileNumber: contactPhone.value,
         Email: contactMail.value,
         Subject: selectedPurpose.value,
-        Content: contactContent.value
+        Content: finalContent
       },
       {
         headers: {
@@ -1263,6 +1362,18 @@ async function sendMail() {
     }
   } catch (error) {
     console.error('請求失敗:', error);
+  }
+}
+function selectAndScrollToForm() {
+  // 1. 設定下拉選單的值
+  selectedPurpose.value = '商務洽談';
+
+  // 2. 將狀態設為鎖定
+  isLocked.value = true;
+
+  // 3. 滾動到表單位置
+  if (formRef.value) {
+    formRef.value.scrollIntoView({ behavior: 'smooth' });
   }
 }
 onMounted(async () => {
@@ -1299,19 +1410,47 @@ onMounted(async () => {
   } catch (error) {
     console.error('頁面初始化失敗:', error);
   } finally {
-    await setPageLoading(false);
+  await setPageLoading(false);
 
-    // 滾動到 news 區域 ( 回傳 scrollToNews 時 )
-    const scrollToNews = route.query.scrollToNews;
-    if (scrollToNews === '1') {
-      await nextTick();
-      if (newsRef.value) {
-        setTimeout(() => {
-          newsRef.value.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
-      }
-      router.replace({ path: route.path, query: {} });
+  // --- 整合所有 URL Query 參數的處理邏輯 ---
+
+  // 1. 一次性讀取所有可能用到的參數
+  const { scrollToNews, purpose, scrollToForm } = route.query;
+  let queryParamsWereHandled = false; // 旗標，記錄是否處理過任何參數
+
+  // 2. 處理 purpose 參數
+  if (purpose && purposeOptions.value.includes(purpose)) {
+    selectedPurpose.value = purpose;
+    isLocked.value = true;
+    queryParamsWereHandled = true;
+  }
+
+  // 3. 處理滾動到 news 區域
+  if (scrollToNews === '1') {
+    await nextTick();
+    if (newsRef.value) {
+      setTimeout(() => {
+        newsRef.value.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
     }
+    queryParamsWereHandled = true;
+  }
+  
+  // 4. 處理滾動到 form 區域
+  if (scrollToForm === '1') {
+    await nextTick();
+    if (formRef.value) {
+      setTimeout(() => {
+        formRef.value.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    }
+    queryParamsWereHandled = true;
+  }
+
+  // 5. 如果有任何參數被處理過，最後統一清除 URL
+  if (queryParamsWereHandled) {
+    router.replace({ path: route.path });
+  }
   }
 });
 </script>
@@ -1632,79 +1771,25 @@ onMounted(async () => {
   flex-direction: row-reverse;
 }
 
-.programStart,
-.programEnterprise {
+/* 方案&定價 */
+.gradient-border {
   position: relative;
-  color: #fff;
-  width: calc(100% / 3);
-  background: linear-gradient(to bottom,
-      rgba(123, 44, 191, 0.1) 50%,
-      rgba(255, 255, 255, 0.1) 100%);
 }
-
-.programStart::before,
-.programEnterprise::before {
+.gradient-border::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: 10px;
+  inset: 0;
   padding: 2px;
-  background: linear-gradient(to right, #43edff, #fff);
+  border-radius: 25px;
+  background: linear-gradient(to right, white, #73FBFD);
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   pointer-events: none;
 }
-
-.programPro {
-  color: #fff;
-  width: calc(100% / 3);
-  background: linear-gradient(to right, #4361ee, #f72585);
-  border-radius: 10px;
-  position: relative;
-}
-
-.programPro::before {
-  content: '';
-  position: absolute;
-  top: -20px;
-  left: -3px;
-  right: -3px;
-  bottom: -20px;
-  border-radius: 10px;
-  background: linear-gradient(to right, #4361ee, #f72585);
-  z-index: -1;
-}
-
-.programTitle {
-  background: linear-gradient(to bottom, #fff, #fff);
-  background: -webkit-linear-gradient(#fff, #fff);
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  font-weight: 900;
-  font-size: 26px;
-  -webkit-text-stroke: 1px rgba(200, 200, 200, 0.1);
-}
-
-.programPriceBox {
-  border-bottom: 1px solid #fff;
-}
-
-.programPrice {
-  background: linear-gradient(to bottom, #fff, #7b2cbf 175%);
-  background: -webkit-linear-gradient(#fff, #7b2cbf 175%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  font-weight: 900;
-  font-size: 36px;
-  padding: 0 1rem;
-  -webkit-text-stroke: 1px rgba(200, 200, 200, 0.1);
+.button-shadow {
+  box-shadow: inset 0 2px 0 #fff8;
 }
 
 .moreBtnBox {
@@ -1857,12 +1942,7 @@ onMounted(async () => {
 }
 
 @media screen and (max-width: 1024px) {
-  .programPro {
-    width: 85%;
-  }
-
-  .programStart,
-  .programEnterprise {
+  .programContent {
     width: 85%;
   }
 }
@@ -1880,5 +1960,17 @@ onMounted(async () => {
   .border-gradient-r {
     width: 20px;
   }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.33s ease, transform 0.33s ease;
+  transform-origin: top;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: scaleY(0.9);
 }
 </style>

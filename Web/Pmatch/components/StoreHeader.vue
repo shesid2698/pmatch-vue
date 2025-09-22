@@ -183,18 +183,18 @@ onMounted(() => {
     // },
     {
       id: 1,
+      title: "方案與定價",
+      link: "/store/program",
+      className: "nav0",
+      icon: "",
+    },
+    {
+      id: 2,
       title: "幫助中心",
       link: "/store/helpcenter",
       className: "nav1",
       icon: "",
     },
-    // {
-    //     id: 2,
-    //     title: "付費方案",
-    //     link: "/store/program",
-    //     className: "nav1",
-    //     icon: "",
-    // },
     {
       id: 3,
       title: "媒合商登入",
