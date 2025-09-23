@@ -605,25 +605,13 @@ onMounted(async () => {
   renderPlatform.value = true;
   renderActivity.value = true;
   try {
-    // console.log('🔵 進入 onMounted');
-    // console.log('🟡 Token cookie:', userToken.value);
     if (userToken.value != '' && userToken.value != undefined) {
       const token = userToken.value;
       if (token != '') {
-        // console.log('🟣 實際使用的 token:', token);
         await fetchStoresDetailData(token);
-            // console.log('✅ storesItem 資料:', storesItem.value);
-            // console.log('📌 storesItem.DB:', storesItem.value?.DB);
-            // console.log('📌 storesItem.Teamid:', storesItem.value?.Teamid);
-            // console.log('📌 storesItem.ContractId:', storesItem.value?.ContractId);
-            // console.log('🖼️ 完整圖片網址:', `${assetsUrl.value}${storesItem.value.IMGFiles}`);
         await getMemberDetail(token);
-            // console.log('✅ memberDetailList:', memberDetailList.value);
-            // console.log('📌 會員合約: ', memberDetailList.value?.[0]?.ContractStores);
         await fetchGameList(token);
-            // console.log('✅ gameList:', gameList.value);
         await fetchAdvertisementList(token);
-            // console.table(activityList.value);
       }
     } else {
       // 生成新的 token
@@ -650,48 +638,36 @@ onMounted(async () => {
   }
 });
 
-const activeName = ref('first');
-
-const handleClick = (tab, event) => { };
 
 // 兩組輪播不互相干擾
 const platformCarousel = ref(null); 
 const activityCarousel = ref(null);
 
 // 處理輪播切換的方法
-const platformChange = (index) => {
+const platformChange = async (index) => {
   platformIndex.value = index;
 
-  setTimeout(() => {
-    const root = platformCarousel.value?.$el;
-    if (!root) return;
+  await nextTick();  // 等 Element
 
-    const items = root.querySelectorAll('.el-carousel__item');
-    const els = root.querySelector('.el-carousel__item.is-active.is-in-stage.el-carousel__item--card');
-    if (!els || items.length <= 2) return;
+  const root = platformCarousel.value?.$el;
+  if (!root) return;
 
-    let  leftItem = null;
-    let  rightItem = null;
-    const activeIndex = Array.from(items).indexOf(els);
+  // 清除自訂 class
+  root.querySelectorAll('.el-carousel__item').forEach(item => {
+    item.classList.remove('leftItem', 'rightItem');
+  });
 
-    if (items.length - 1 - activeIndex >= items.length - 2) {
-      if (items.length - 1 - activeIndex !== items.length - 1) {
-        leftItem = els.previousElementSibling;
-        rightItem = els.nextElementSibling;
-      } else {
-        leftItem = items[items.length - 1];
-        rightItem = els.nextElementSibling;
-      }
-    } else if (items.length - 1 - activeIndex === 0) {
-      leftItem = items[activeIndex - 1] || items[items.length - 1];
-      rightItem = items[0];
-    } else {
-      leftItem = els.previousElementSibling;
-      rightItem = els.nextElementSibling;
-    }
-    rightItem.classList.add('rightItem');
-    leftItem.classList.add('leftItem');    
-  }, 20);
+  const items = Array.from(root.querySelectorAll('.el-carousel__item'));
+  if (items.length <= 2) return;
+
+  const activeItem = root.querySelector('.el-carousel__item.is-active');
+  if (!activeItem) return;
+
+  const leftItem = activeItem.previousElementSibling || items[items.length - 1];
+  const rightItem = activeItem.nextElementSibling || items[0];
+
+  leftItem.classList.add('leftItem');
+  rightItem.classList.add('rightItem');
 };
 
 const activityChange = (index) => {
@@ -1421,11 +1397,11 @@ watch(
 }
 
 .rightItem {
-  transform: translateX(292.407px) scale(0.83) perspective(1000px) rotateY(-40deg) !important;
+  transform: translateX(110%) scale(0.83) perspective(1000px) rotateY(-40deg) !important;
 }
 
 .leftItem {
-  transform: translateX(-22.9075px) scale(0.83) perspective(1000px) rotateY(40deg) !important;
+  transform: translateX(-10%) scale(0.83) perspective(1000px) rotateY(40deg) !important;
 }
 
 .chat-btn {
