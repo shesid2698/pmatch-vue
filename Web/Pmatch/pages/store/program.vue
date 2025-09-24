@@ -9,8 +9,8 @@
     <div class="storeBac text-white">
     <div class="min-h-screen pt-10rem pb-15rem">
       <div class="max-w-1440px min-w-360px m-auto px-5 relative z-2">        
+        <!-- 方案與費用 -->
         <div class="rounded-[25px] overflow-hidden">
-          <!-- 方案與費用 -->
           <div class="h-[76px] flex justify-center items-center bg-#73FBFD/60 text-white text-[24px] lg:text-[36px] text-center mb-[3px]">方案與費用</div>
           <div class="grid grid-cols-21 text-center text-[18px] lg:text-[28px] gap-[2px]">
             <!-- 方案 -->
@@ -69,7 +69,7 @@
 
         <!-- 進階服務收費 -->
         <div class="rounded-[25px] overflow-hidden mt-12">
-          <div class="h-[76px] flex justify-center items-center bg-#73FBFD/60 text-white text-[24px] lg:text-[36px] text-center my-[3px]">進階服務收費</div>
+          <div class="h-[76px] flex justify-center items-center bg-#73FBFD/60 text-white text-[24px] lg:text-[36px] text-center mb-[3px]">進階服務收費</div>
             <div class="grid grid-cols-21 text-center text-[18px] lg:text-[28px] gap-[2px]">
               <div class="h-[76px] col-span-5 bg-white/20 flex items-center justify-start text-left text-[#CEFDFE] text-[15px] lg:text-[24px]">
                 <span class="xl:translate-x-[20px] lg:translate-x-[10px] translate-x-[0]">PMatch官網商店接單</span>
