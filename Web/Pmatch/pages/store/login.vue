@@ -51,9 +51,7 @@
               <div class="flex">
                 <div class="w-100%">
                   <div class="loginBtnBox">
-                    <button type="submit" v-if="iData !== null" :disabled="iData.length === 0 ||
-                      hasToken == false
-                      "
+                    <button type="submit" :disabled="hasToken == false"
                       class="loginBtn disabled:opacity-70 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#e93470] hover:bg-[#bb2d3b] transition duration-200 cursor-pointer">
                       登入
                     </button>
@@ -144,8 +142,8 @@ async function login(event, encryptedPassword) {
       {
         Account: accountId.value,
         Password: md5(password.value), // 使用加密後的密碼
-        MacAddress: iData.value.m,
-        SerialNumber: iData.value.s,
+        // MacAddress: iData.value.m,
+        // SerialNumber: iData.value.s,
       },
       {
         headers: {},
@@ -202,21 +200,21 @@ const getSerialNumber = async () => {
 };
 onMounted(async () => {
   await setPageLoading(true);
-  const res = await getSerialNumber(); // 等待回應
-  console.log(res);
+  //const res = await getSerialNumber(); // 等待回應
+  //console.log(res);
 
   // 取得turnstileKey
   turnstilesitekey = configStore.turnstilesitekey;
   //console.log('configStore.turnstilesitekey1', turnstilesitekey);
 
   // 驗證 status.code
-  if (res && res.status && res.status.code === 0) {
-    iData.value = res.data;
-  } else if (res && res.status && res.status.code !== 0) {
-    await openAlertModal(" ", "安裝工具過程中請記得輸入序號");
-  } else {
-    await openAlertModal(" ", "請依文件調整瀏覽器設定值,安裝工具再行登入");
-  }
+  // if (res && res.status && res.status.code === 0) {
+  //   iData.value = res.data;
+  // } else if (res && res.status && res.status.code !== 0) {
+  //   await openAlertModal(" ", "安裝工具過程中請記得輸入序號");
+  // } else {
+  //   await openAlertModal(" ", "請依文件調整瀏覽器設定值,安裝工具再行登入");
+  // }
   if (accountInput.value) {
     accountInput.value.focus();
   }
