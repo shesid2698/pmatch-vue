@@ -78,7 +78,7 @@
     </div>
     
     <!-- 富豪榜 -->
-    <!-- <div class="pb-7rem">
+    <div class="pb-7rem">
           <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
             <div class="flex justify-center">
               <div class="w-90%">
@@ -180,7 +180,7 @@
               </div>
             </div>
           </div>
-        </div> -->
+        </div>
 
     <!-- 先不開(遊戲榜) -->
     <!-- <div class="pb-7rem">
@@ -1386,12 +1386,12 @@ onMounted(async () => {
       if (token != '') {
         await fetchNewsListData([5, 6], token); // 最新消息
 
-        //await fetchRichList(token, 2);
-        //await fetchRichList(token, 4);
-        //await fetchRichList(token, 1); // 錢街
-        //await fetchRichList(token, 5); // 聚寶
-        //await fetchRichList(token, 6); // 金爸爸
-        //await fetchRichList(token, 7); // 寶島
+        await fetchRichList(token, 2);
+        await fetchRichList(token, 4);
+        await fetchRichList(token, 1); // 錢街
+        await fetchRichList(token, 5); // 聚寶
+        await fetchRichList(token, 6); // 金爸爸
+        await fetchRichList(token, 7); // 寶島
       }
     } else {
       // 生成新的 token
@@ -1399,12 +1399,12 @@ onMounted(async () => {
       if (token != '') {
         await fetchNewsListData([5, 6], token); // 最新消息
 
-        //await fetchRichList(token, 2);
-        //await fetchRichList(token, 4);
-        //await fetchRichList(token, 1); // 錢街
-        //await fetchRichList(token, 5); // 聚寶
-        //await fetchRichList(token, 6); // 金爸爸
-        //await fetchRichList(token, 7); // 寶島
+        await fetchRichList(token, 2);
+        await fetchRichList(token, 4);
+        await fetchRichList(token, 1); // 錢街
+        await fetchRichList(token, 5); // 聚寶
+        await fetchRichList(token, 6); // 金爸爸
+        await fetchRichList(token, 7); // 寶島
       }
     }
   } catch (error) {
