@@ -467,7 +467,7 @@
                       <template v-if="plan.wrapperClass">
                         <div :class="plan.wrapperClass">
                           <div class="relative pt-[30px] px-[28px] rounded-lg h-[960px]" :class="plan.contentClass">
-                            <div v-if="plan.badge" class="absolute -top-4 left-1/2 -translate-x-1/2 w-[150px] h-[25px] leading-[25px] text-[14px] text-center text-white bg-[#AB6CEB] rounded-full shadow-lg">
+                            <div v-if="plan.badge" class="absolute -top-[18px] left-1/2 -translate-x-1/2 w-[150px] h-[36px] leading-[36px] text-[20px] text-center text-white bg-[#AB6CEB] rounded-full shadow-lg">
                               {{ plan.badge }}
                             </div>
                             <div class="text-center">
@@ -490,10 +490,7 @@
                         </div>
                       </template>
                       <template v-else>
-                        <div class="relative pt-[30px] px-[28px] rounded-lg h-[960px]" :class="plan.contentClass">
-                            <div v-if="plan.badge" class="absolute -top-4 left-1/2 -translate-x-1/2 w-[150px] h-[25px] leading-[25px] text-[14px] text-center text-white bg-[#AB6CEB] rounded-full shadow-lg">
-                              {{ plan.badge }}
-                            </div>
+                        <div class="relative pt-[30px] px-[28px] rounded-lg h-[960px]" :class="plan.contentClass">   
                             <div class="text-center">
                               <h2 class="text-[40px] font-normal m-0" :class="plan.textClass">{{ plan.title }}</h2>
                               <div class="h-[100px] my-4 flex justify-center items-center translate-x-[-12px]">
