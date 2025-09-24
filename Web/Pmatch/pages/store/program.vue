@@ -265,9 +265,9 @@ const featureSections = ref([
     features: [
         { name: '建立媒合商店', trial: false, basic: true, pro: true },
         { name: '玩家線上商店下單', trial: false, basic: true, pro: true },
-        { name: '活動專區刊登廣告', trial: false, basic: true, pro: true },
+        { name: '活動專區刊登廣告', trial: false, basic: false, pro: true },
         { name: '玩家查詢交易紀錄', trial: false, basic: true, pro: true },
-        { name: '玩家查詢媒合結果', trial: false, basic: true, pro: true },
+        { name: '玩家查詢媒合結果', trial: false, basic: false, pro: true },
     ]
   },
 ]);
