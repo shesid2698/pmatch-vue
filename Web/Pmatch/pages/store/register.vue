@@ -116,7 +116,7 @@ const { md5 } = crypto();
 const accountInput = ref(null);
 const honeypot = ref('');
 const loginToken = useCookie("tstToken");
-const hasToken = ref(loginToken.value !== undefined);
+const hasToken = ref("");
 
 let turnstilesitekey = '1x00000000000000000000AA'; // 預設測試用KEY
 let accountId = ref("");
@@ -168,7 +168,6 @@ async function register(event) {
 }
 
 onMounted(async () => {
-  loginToken.value = null;
   await setPageLoading(true);
   // 取得turnstileKey
   turnstilesitekey = configStore.turnstilesitekey;

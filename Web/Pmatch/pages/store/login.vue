@@ -112,7 +112,7 @@ const { md5 } = crypto();
 const accountInput = ref(null);
 
 const loginToken = useCookie("tstToken");
-const hasToken = ref(loginToken.value !== undefined);
+const hasToken = ref("");
 let turnstilesitekey = '1x00000000000000000000AA'; // 預設測試用KEY
 let accountId = ref("");
 const turnInputType = () => {
@@ -199,7 +199,6 @@ const getSerialNumber = async () => {
   }
 };
 onMounted(async () => {
-  loginToken.value = null;
   await setPageLoading(true);
   //const res = await getSerialNumber(); // 等待回應
   //console.log(res);
