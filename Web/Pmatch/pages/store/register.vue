@@ -134,7 +134,7 @@ const turnInputType = () => {
   }
 };
 const onVerify = (tokenValue) => {
-  token.value = tokenValue;
+  userToken.value = tokenValue;
   setTimeout(() => {
     hasToken.value = true;
   }, 1500);
@@ -170,6 +170,7 @@ async function register(event) {
 }
 
 onMounted(async () => {
+  userToken.value = null; 
   await setPageLoading(true);
 
   // 取得turnstileKey
