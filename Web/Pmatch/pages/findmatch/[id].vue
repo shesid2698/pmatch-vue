@@ -129,7 +129,7 @@
 
     <div class="w-full relative mt-2rem md-mt-5rem z-2">
       <div v-if="storesItem != null" class="mt-2rem md-mt-7rem max-w-1110px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3 relative z-2" :class="{ 'mask': isTransactionDisabled }" >
-        <div class="w-100% block md-flex justify-center flex-wrap">
+        <div class="w-100% block md-flex justify-center flex-wrap ">
           <div class="md-w-460px">
             <div class="mb-5">
               <span class="platformTitle font-size-30px fw-600">
@@ -1449,13 +1449,13 @@ watch(
   position: relative;
   overflow: hidden;
   user-select: none;
+  padding: 50px 0;
 }
 .mask::before {
   content: '';
   position: absolute;
   inset: 0;
-  background-image:linear-gradient(to bottom, #3C3C3C02,#A2A2A222);
-  backdrop-filter: blur(2px);
+  background-image:linear-gradient(to bottom, #3C3C3C88,#A2A2A288);
   width: 80%; 
   height: 100%;
   margin: auto;
@@ -1466,16 +1466,15 @@ watch(
 .mask::after {
   content: '';
   position: absolute;
-  width: 520px; 
-  height: 520px;
+  width: 420px; 
+  height: 420px;
   z-index: 10;
   background-image: url('/images/吉祥物舉牌.svg');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  left: 50%;
-  bottom: -40%; 
-  transform: translateX(-52%);
+  right: 100px;
+  bottom: -20%; 
   cursor: not-allowed;
 }
 
@@ -1483,8 +1482,11 @@ watch(
   .platformBox {
     max-height: 290px;
   }
-  .mask::before, mask::after {
+  .mask::before {
     width: 100%;
+  }
+  .mask::after {
+    right: 0;
   }
 }
 </style>
