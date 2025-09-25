@@ -115,10 +115,8 @@ const i_password = ref(null);
 const { md5 } = crypto();
 const accountInput = ref(null);
 const honeypot = ref('');
-
-const userToken = useCookie("_PmToken");
-const hasToken = ref(userToken.value !== undefined);
-
+const loginToken = useCookie("tstToken");
+const hasToken = ref(loginToken.value !== undefined);
 
 let turnstilesitekey = '1x00000000000000000000AA'; // 預設測試用KEY
 let accountId = ref("");
@@ -134,7 +132,7 @@ const turnInputType = () => {
   }
 };
 const onVerify = (tokenValue) => {
-  userToken.value = tokenValue;
+  loginToken.value = tokenValue;
   setTimeout(() => {
     hasToken.value = true;
   }, 1500);
@@ -170,9 +168,8 @@ async function register(event) {
 }
 
 onMounted(async () => {
-  userToken.value = null; 
+  loginToken.value = null;
   await setPageLoading(true);
-
   // 取得turnstileKey
   turnstilesitekey = configStore.turnstilesitekey;
   // console.log('configStore.turnstilesitekey1', turnstilesitekey);

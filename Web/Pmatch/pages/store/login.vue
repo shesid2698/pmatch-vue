@@ -199,7 +199,7 @@ const getSerialNumber = async () => {
   }
 };
 onMounted(async () => {
-  loginToken.value = null; 
+  loginToken.value = null;
   await setPageLoading(true);
   //const res = await getSerialNumber(); // 等待回應
   //console.log(res);
