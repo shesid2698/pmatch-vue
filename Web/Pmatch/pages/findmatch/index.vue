@@ -170,6 +170,11 @@
                             " :to="item.TwitterId">
                             <img class="w-30px h-30px" src="/images/iconX.png" alt="推特icon" />
                           </NuxtLink>
+                          <NuxtLink class="flex items-center ms-1 me-1" v-show="item.PhoneNumber !==
+                          ''
+                          " :href="`tel:${item.PhoneNumber}`">
+                          <img class="w-30px h-30px" src="/public/images/iconPhone.png" alt="phoneIcon" />
+                        </NuxtLink>                        
                         </div>
                       </div>
                     </div>
