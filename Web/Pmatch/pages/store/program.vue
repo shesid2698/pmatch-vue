@@ -27,36 +27,36 @@
             <div class="row-span-2 bg-white/20 col-span-3 flex items-center justify-start text-[#CEFDFE]"><span class="xl:translate-x-[20px] lg:translate-x-[10px] translate-x-[0]">基礎費用</span></div>          
             <div class="h-[110px] col-span-2 bg-white/20 flex items-center justify-center">月繳</div>
             <div class="col-span-4 bg-white/20 flex items-center justify-center p-2">
-              <span class="flex-inline items-end text-[15px] lg:text-[24px]"><span class="text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">15,000</span>元</span>
+              <span class="flex-inline items-end text-[15px] lg:text-[24px]"><span class="text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">36,000</span>元</span>
             </div>
             <div class="col-span-4 bg-white/20 flex items-center justify-center p-2 relative">
               <span class="absolute top-[10%] lg:left-[5%] text-[#FFE09C] text-[13px] lg:text-[20px] font-light"><Asterisk/>協會會員價</span>    
-              <span class="flex-inline items-end text-[15px] lg:text-[24px]"><span class="text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">14,250</span>元</span>
+              <span class="flex-inline items-end text-[15px] lg:text-[24px]"><span class="text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">34,105</span>元</span>
             </div>
             <div class="col-span-4 bg-white/20 flex items-center justify-center p-2">
-              <span class="flex-inline items-end text-[15px] lg:text-[24px]"><span class="text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">25,000</span>元</span>
+              <span class="flex-inline items-end text-[15px] lg:text-[24px]"><span class="text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">50,000</span>元</span>
             </div>
             <div class="col-span-4 bg-white/20 flex items-center justify-center relative">
               <span class="absolute top-[10%] lg:left-[5%] text-[#FFE09C] text-[13px] lg:text-[20px] font-light"><Asterisk/>協會會員價</span>
-              <span class="flex-inline items-end text-[15px] lg:text-[24px]"><span class="text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">23,750</span>元</span>              
+              <span class="flex-inline items-end text-[15px] lg:text-[24px]"><span class="text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">47,500</span>元</span>              
             </div>          
             <div class="h-[110px] col-span-2 bg-white/20 flex flex-col items-center justify-center relative">
               <span>年繳</span>
               <span class="absolute top-[65%] text-[#FFE09C] text-[13px] lg:text-[20px]">(享95折)</span>
             </div>
             <div class="col-span-4 bg-white/20 flex items-center justify-center p-2">
-              <span class="flex-inline items-end text-[15px] lg:text-[24px]"><span class="text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">172,100</span>元</span>
+              <span class="flex-inline items-end text-[15px] lg:text-[24px]"><span class="text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">410,360</span>元</span>
             </div>
             <div class="col-span-4 bg-white/20 flex items-center justify-center relative">
               <span class="absolute top-[10%] lg:left-[5%] text-[#FFE09C] text-[13px] lg:text-[20px] font-light"><Asterisk/>協會會員價</span>
-              <span class="flex-inline items-end text-[15px] lg:text-[24px]"><span class="text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">163,000</span>元</span>
+              <span class="flex-inline items-end text-[15px] lg:text-[24px]"><span class="text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">388,720</span>元</span>
             </div>
             <div class="col-span-4 bg-white/20 flex items-center justify-center p-2">
-              <span class="flex-inline items-end text-[15px] lg:text-[24px]"><span class="text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">285,000</span>元</span>
+              <span class="flex-inline items-end text-[15px] lg:text-[24px]"><span class="text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">570,000</span>元</span>
             </div>
             <div class="col-span-4 bg-white/20 flex items-center justify-center relative">
               <span class="absolute top-[10%] lg:left-[5%] text-[#FFE09C] text-[13px] lg:text-[20px] font-light"><Asterisk/>協會會員價</span>
-              <span class="flex-inline items-end text-[15px] lg:text-[24px]"><span class="text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">270,000</span>元</span>
+              <span class="flex-inline items-end text-[15px] lg:text-[24px]"><span class="text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">540,000</span>元</span>
             </div>
             <!-- 發票 -->
             <div class="h-[76px] col-span-5 bg-white/20 flex items-center justify-start text-[#CEFDFE]"><span class="xl:translate-x-[20px] lg:translate-x-[10px] translate-x-[0]">電子發票開立系統</span></div>

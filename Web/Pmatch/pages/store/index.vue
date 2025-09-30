@@ -863,7 +863,7 @@ const plans = ref([
   },
   {
     title: '基礎版',
-    price: { monthly: '15,000', yearly: '172,100' },
+    price: { monthly: '36,000', yearly: '410,360' },
     cta: '開始使用',
     details: [
       '1個老闆帳號',
@@ -886,7 +886,7 @@ const plans = ref([
   {
     title: '專業版',
     badge: '最受歡迎',
-    price: { monthly: '25,000', yearly: '285,000' },
+    price: { monthly: '50,000', yearly: '570,000' },
     cta: '立即加入',
     details: [
       '<strong>包含所有基礎版功能</strong>',
