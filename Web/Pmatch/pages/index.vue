@@ -60,7 +60,7 @@
             <div class="flex items-center h-[58px] overflow-hidden gap-1.6">
               <!-- 輸入框 -->
               <input type="text" v-model="keywordToSearch"
-                    placeholder="請輸入關鍵字..."
+                    placeholder="輸入媒合商名稱"
                     class="flex-1 px-4 h-full font-size-1.2rem w-[594px] border-none outline-none text-20px font-500 text-[#8D8D8D] placeholder:text-[#8D8D8D]" />
               <!-- 按鈕 -->
               <button @click="searchToFindMatch"
