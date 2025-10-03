@@ -876,7 +876,7 @@ const plans = ref([
       '交易紀錄查詢',
       '<span class="text-[#D31E00]">電子發票開立系統</span>'
     ],
-    note: '加收100元費用',
+    note: '每月加收100元費用',
     icon: '/images/check-mark-yellow.svg',
     contentClass: 'bg-gradient-to-b from-[#FFFFFF] to-[#FEE4CC] text-gray-800',
     buttonClass: 'text-white bg-gradient-to-r from-[#FFC90E] to-[#FFB774] hover:opacity-90',
