@@ -935,6 +935,12 @@ watch(
     } else if (currentPlatformIndex !== -1) {
       // 如果有找到，則將索引設置為 platformIndex
       platformIndex.value = currentPlatformIndex;
+      // 設置輪播至當前項目
+      nextTick(() => {
+        if (platformCarousel.value) {
+          platformCarousel.value.setActiveItem(currentPlatformIndex);
+        }
+      });
     }
   },
   { immediate: true } // 立刻執行一次，將初始值設置進去
