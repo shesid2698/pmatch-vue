@@ -138,7 +138,7 @@
             </div>
             <div class="entryBox w-100% mb-5">
               <div class="entryContent w-100%">
-                <input class="entryDetail w-90% py-.5rem font-size-18px" type="text" placeholder="遊戲暱稱(必填)"
+                <input class="entryDetail w-90% py-.5rem font-size-18px" type="text" placeholder="遊戲暱稱(必填)" :disabled="isTransactionDisabled"
                   v-model="accMemberName" />
               </div>
             </div>
@@ -159,10 +159,8 @@
             </div>
             <div class="entryBox mb-5">
               <div class="entryContent">
-                <input class="entryDetail w-90% py-.5rem font-size-18px" type="text" :placeholder="buyOrSell
-                    ? '委託金額(必填)'
-                    : '委託遊戲幣(必填)'
-                  " v-model="accPatch" />
+                <input class="entryDetail w-90% py-.5rem font-size-18px" type="text" :placeholder="buyOrSell ? '委託金額(必填)' : '委託遊戲幣(必填)'" :disabled="isTransactionDisabled"
+                v-model="accPatch" />
               </div>
             </div>
             <div class="w-100% flex justify-center mb-5" v-if="storesItem != null"
@@ -215,9 +213,9 @@
         <div class="flex justify-center">
           <div class="relative mb-5">
             <div class="flex items-center font-size-18px">
-              <input type="radio" class="w-20px h-20px m-0 me-3 custom-radio" id="read" v-model="readContract"
+              <input type="radio" class="w-20px h-20px m-0 me-3 custom-radio" id="read" v-model="readContract" :disabled="isTransactionDisabled"
                 :value="true" />
-              <ElButton plain @click="readContact">
+              <ElButton plain @click="readContact" :disabled="isTransactionDisabled">
                 我已詳細閱讀此服務條款(必填)
               </ElButton>
               <ElDialog v-model="dialogVisible" :close-on-click-modal="false">
@@ -1425,6 +1423,7 @@ watch(
   position: relative;
   overflow: hidden;
   user-select: none;
+  pointer-events: none;
   padding: 50px 0;
 }
 .mask::before {
@@ -1437,7 +1436,6 @@ watch(
   margin: auto;
   border-radius: 10px; 
   z-index: 10;
-  pointer-events: none;
 }
 .mask::after {
   content: '';
@@ -1451,7 +1449,6 @@ watch(
   background-position: center;
   right: 100px;
   bottom: -20%; 
-  cursor: not-allowed;
 }
 
 @media screen and (max-width: 1024px) {
