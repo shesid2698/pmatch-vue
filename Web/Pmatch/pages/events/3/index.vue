@@ -9,8 +9,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
   </Head>
-  <div class="flex flex-col items-center w-full bg-[#C1514A]">
-    <header class="w-full h-[880px] bg-[url('/images/activity/3/event-banner.png')] bg-cover bg-center flex items-end justify-center text-white text-2rem"></header>
+  <div class="flex flex-col items-center w-full bg-[#741B15]">
+    <header class="-mb-[22.5vw] w-full aspect-[1920/1200]  bg-[url('/images/activity/3/event-banner.png')] bg-cover bg-center flex items-end justify-center text-white text-2rem"></header>
 
     <main class="mb-[80px] w-[90%] max-w-[1320px] bg-[#D9D9D9]/80 rounded-[10px] p-5 relative z-2 border-[5px] border-solid [border-image:linear-gradient(to_bottom,#7E0000,#E40000,#7E0000)_1]">
       <!-- 活動分頁 -->
@@ -50,9 +50,10 @@
             </div>
           </div>
           <div class="my-[80px] max-w-[979px]  mx-auto">
-            <div class="w-full aspect-[979/613] bg-[url('/images/activity/3/tab1-register.png')] bg-cover bg-no-repeat bg-center relative [container-type:inline-size] [container-name:register-card]">  
-              <div class="absolute w-[55.6%] bottom-[6%] left-[4.7%] ">
-                <button @click="toggleDropdown" class="w-full aspect-[544/79] bg-[#741B15] rounded-full text-[#FFD900] text-[4cqi] leading-[4cqi] flex items-center justify-between px-[3cqi] border-[0.8cqi] border-solid border-[#F0C63E] [box-shadow:0px_8px_5.5px_rgba(0,0,0,0.25),inset_0px_15px_15px_rgba(0,0,0,0.2)]">
+            <div class="w-full aspect-[979/613] bg-[url('/images/activity/3/tab1-register.png')] bg-cover bg-no-repeat bg-center relative [container-type:inline-size] [container-name:register-card]">
+              <!-- 下拉式選單 -->
+              <div class="absolute w-[55.8%] bottom-[6.25%] left-[4.5%] ">
+                <button @click="toggleDropdown" :class="{'rounded-full': !isDropdownOpen, 'rounded-t-[4cqi] border-b-0': isDropdownOpen}" class="w-full aspect-[544/79] bg-[#741B15] text-[#FFD900] text-[4cqi] leading-[4cqi] flex items-center justify-between px-[3cqi] border-[0.8cqi] border-solid border-[#F0C63E] [box-shadow:0px_8px_5.5px_rgba(0,0,0,0.25),inset_0px_15px_15px_rgba(0,0,0,0.2)]">
                   <span>{{ dropdownTriggerText }}</span>
                   <span class="transform transition-transform" :class="{ 'rotate-180': isDropdownOpen }">
                     <svg width="4cqi" height="2.5cqi" viewBox="0 0 30 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -60,20 +61,39 @@
                     </svg>
                   </span>
                 </button>
-                <ul v-if="isDropdownOpen" class="w-full absolute top-full left-0 px-0 mx-0 mt-2 bg-[#741B15] border-[0.8cqi] border-solid border-[#FFD700] rounded-[40px] z-10 [box-shadow:0px_8px_5.5px_rgba(0,0,0,0.25),inset_0px_15px_15px_rgba(0,0,0,0.2)] overflow-hidden ">
+                <ul v-if="isDropdownOpen" class="w-full absolute top-full left-0 px-0 mx-0 -mt-[0.4cqi] bg-[#741B15] border-[0.8cqi] border-solid border-[#F0C63E] rounded-b-[4cqi] z-10 overflow-hidden box-border border-t-0 [box-shadow:0px_8px_5.5px_rgba(0,0,0,0.25)]">
                   <li 
                     v-for="platform in platforms" 
                     :key="platform"
                     @click="selectPlatform(platform)"
-                    class="py-[2.5cqi] ps-[4cqi] mx-0 list-none cursor-pointer text-[#FFD900]  text-start text-[4cqi] leading-[4cqi] hover:bg-[#A8281F]"
+                    class="py-[2.25cqi] ps-[4cqi] mx-0 list-none cursor-pointer text-[#FFD900]  text-start text-[4cqi] leading-[4cqi] hover:bg-[#A8281F]"
                   >
                     {{ platform }}
                   </li>
                 </ul>
               </div>
+              <div class="absolute w-[31.5%] bottom-[6.25%] right-[5.4%]">
+                <button @click="claimReward" :disabled="!canClaim"
+                  class="w-full aspect-[309/79] rounded-full text-[#FFD900] text-[4cqi] leading-[4cqi]
+                    border-[0.8cqi] border-solid border-[#F0C63E] 
+                    cursor-pointer transition-all duration-200 ease-in-out
+
+                    bg-[#741B15]
+                    [box-shadow:0px_8px_5.5px_rgba(0,0,0,0.25),inset_0px_2cqi_2cqi_rgba(238,171,147,0.6)]
+
+                    hover:bg-[#BC4A43]
+                    active:bg-[#741B15]
+                    active:[box-shadow:none]
+
+                  "
+                >
+                  {{ rewardClaimed ? '已領取' : '領取註冊禮' }}
+                </button>
+              </div>
             </div>
           </div>
-          
+                            <!-- disabled:bg-gray-500 disabled:border-gray-400 disabled:opacity-70 disabled:cursor-not-allowed -->
+
           <div class="my-[60px]">       
             <TitleBlock class="font-Noto" title="領取流程" />
             <div class="my-[60px]">
