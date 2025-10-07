@@ -438,7 +438,7 @@
                       <span class="text-[22px]" v-html="detail"></span>
                     </li>
                   </ul>
-                  <p v-if="plans[0].note" class="text-[18px] text-[#D31E00] mt-[20px]">{{ plans[0].note }}</p>
+                  <p v-if="plans[0].note" class="text-[18px] text-[#D31E00] mt-[20px]"><Asterisk class="translate-x-[1px]" /> {{ plans[0].note }}</p>
                 </div>
               </div>
             </div>
@@ -485,7 +485,6 @@
                                 <span class="text-[22px] " v-html="detail"></span>
                               </li>
                             </ul>
-                            <p v-if="plan.note" class="text-[18px] text-[#D31E00] mt-[20px] text-center">{{ plan.note }}</p>
                           </div>
                         </div>
                       </template>
@@ -506,7 +505,7 @@
                                 <span class="text-[22px] " v-html="detail"></span>
                               </li>
                             </ul>
-                            <p v-if="plan.note" class="text-[18px] text-[#D31E00] mt-[20px] text-center">{{ plan.note }}</p>
+                            <p v-if="plan.note" class="text-[18px] text-[#D31E00] mt-[20px] text-center xl:-translate-x-[5%] translate-x-[0]"><Asterisk class="translate-x-[1px]" /> {{ plan.note }}</p>
                           </div>
                       </template>
                     </div>
@@ -857,13 +856,13 @@ const plans = ref([
       '交易數據統計分析',
       '金流核對'
     ],
-    note: '※試用版僅提供操作體驗，帳單、客戶等資料每日會自動清除，不保留紀錄',
+    note: '試用版僅提供操作體驗，帳單、客戶等資料每日會自動清除，不保留紀錄',
     icon: '/images/check-mark-green.svg'
     // classNames are not needed here as it's directly styled
   },
   {
     title: '基礎版',
-    price: { monthly: '36,000', yearly: '410,360' },
+    price: { monthly: '36,100', yearly: '411,500' },
     cta: '開始使用',
     details: [
       '1個老闆帳號',
@@ -877,7 +876,7 @@ const plans = ref([
       '交易紀錄查詢',
       '<span class="text-[#D31E00]">電子發票開立系統</span>'
     ],
-    note: '※需另外加收100元費用',
+    note: '每月加收100元費用',
     icon: '/images/check-mark-yellow.svg',
     contentClass: 'bg-gradient-to-b from-[#FFFFFF] to-[#FEE4CC] text-gray-800',
     buttonClass: 'text-white bg-gradient-to-r from-[#FFC90E] to-[#FFB774] hover:opacity-90',
@@ -1027,6 +1026,20 @@ const getChartData = index => {
     ]
   };
 };
+
+// UI Components
+const Asterisk = (attrs) =>
+  h('svg', { xmlns: 'http://www.w3.org/2000/svg', viewBox: '0 0 24 24', width: 14, height: 14, ...attrs }, [
+    h('g', { fill: 'currentColor', stroke: 'currentColor', 'stroke-width': 2.6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, [
+      h('line', { x1: 5.5, y1: 5.5, x2: 18.5, y2: 18.5 }),
+      h('line', { x1: 18.5, y1: 5.5, x2: 5.5, y2: 18.5 }),
+      h('circle', { cx: 12, cy: 3.5, r: 0.8 }),
+      h('circle', { cx: 20.5, cy: 12, r: 0.8 }),
+      h('circle', { cx: 12, cy: 20.5, r: 0.8 }),
+      h('circle', { cx: 3.5, cy: 12, r: 0.8 }),
+    ])
+  ])
+
 // 輔助函數：格式化日期
 function formatDate(timeString) {
   const date = new Date(timeString);

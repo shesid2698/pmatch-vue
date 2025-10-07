@@ -24,14 +24,17 @@
               <span>1個老闆帳號 + 5個值機帳號</span>
             </div>
             <!-- 費用 -->
-            <div class="row-span-2 bg-white/20 col-span-3 flex items-center justify-start text-[#CEFDFE]"><span class="xl:translate-x-[20px] lg:translate-x-[10px] translate-x-[0]">基礎費用</span></div>          
+            <div class="row-span-2 bg-white/20 col-span-3 flex items-center justify-start text-[#CEFDFE] relative">
+              <span class="xl:translate-x-[20px] lg:translate-x-[10px] translate-x-[0]">基礎費用</span>
+              <span class="xl:translate-x-[39px] lg:translate-x-[29px] sm:translate-x-[12px] translate-x-[0px] absolute top-[59%] text-[#FFE09C] text-[13px] lg:text-[20px]">(含稅價)</span>
+            </div>          
             <div class="h-[110px] col-span-2 bg-white/20 flex items-center justify-center">月繳</div>
             <div class="col-span-4 bg-white/20 flex items-center justify-center p-2">
-              <span class="flex-inline items-end text-[15px] lg:text-[24px]"><span class="text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">36,000</span>元</span>
+              <span class="flex-inline items-end text-[15px] lg:text-[24px]"><span class="text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">36,100</span>元</span>
             </div>
             <div class="col-span-4 bg-white/20 flex items-center justify-center p-2 relative">
               <span class="absolute top-[10%] lg:left-[5%] text-[#FFE09C] text-[13px] lg:text-[20px] font-light"><Asterisk/>協會會員價</span>    
-              <span class="flex-inline items-end text-[15px] lg:text-[24px]"><span class="text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">34,105</span>元</span>
+              <span class="flex-inline items-end text-[15px] lg:text-[24px]"><span class="text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">34,295</span>元</span>
             </div>
             <div class="col-span-4 bg-white/20 flex items-center justify-center p-2">
               <span class="flex-inline items-end text-[15px] lg:text-[24px]"><span class="text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">50,000</span>元</span>
@@ -45,11 +48,11 @@
               <span class="absolute top-[65%] text-[#FFE09C] text-[13px] lg:text-[20px]">(享95折)</span>
             </div>
             <div class="col-span-4 bg-white/20 flex items-center justify-center p-2">
-              <span class="flex-inline items-end text-[15px] lg:text-[24px]"><span class="text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">410,360</span>元</span>
+              <span class="flex-inline items-end text-[15px] lg:text-[24px]"><span class="text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">411,500</span>元</span>
             </div>
             <div class="col-span-4 bg-white/20 flex items-center justify-center relative">
               <span class="absolute top-[10%] lg:left-[5%] text-[#FFE09C] text-[13px] lg:text-[20px] font-light"><Asterisk/>協會會員價</span>
-              <span class="flex-inline items-end text-[15px] lg:text-[24px]"><span class="text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">388,720</span>元</span>
+              <span class="flex-inline items-end text-[15px] lg:text-[24px]"><span class="text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">390,900</span>元</span>
             </div>
             <div class="col-span-4 bg-white/20 flex items-center justify-center p-2">
               <span class="flex-inline items-end text-[15px] lg:text-[24px]"><span class="text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">570,000</span>元</span>
@@ -61,7 +64,7 @@
             <!-- 發票 -->
             <div class="h-[76px] col-span-5 bg-white/20 flex items-center justify-start text-[#CEFDFE]"><span class="xl:translate-x-[20px] lg:translate-x-[10px] translate-x-[0]">電子發票開立系統</span></div>
             <div class="col-span-8 bg-white/20 flex items-center justify-center">
-              <span class="flex-inline items-end text-[15px] lg:text-[24px]">加收<span class="text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">100</span>元</span>
+              <span class="flex-inline items-end text-[15px] lg:text-[24px]">每月加收<span class="text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">100</span>元</span>
             </div>
             <div class="col-span-8 bg-white/20 flex items-center justify-center">無需加價</div>
           </div>
@@ -90,7 +93,7 @@
                 <span class="xl:translate-x-[20px] lg:translate-x-[10px] translate-x-[0]">團隊版新增組別</span>
               </div>
               <div class="col-span-16 bg-white/20 flex flex-col items-center justify-center gap-[5px]">
-                <span class="flex-inline items-end text-[15px] lg:text-[24px]">每加一組 <span class="text-[24px] lg:text-[36px] text-[#FFB171] ps-2 JhengHei">3000</span>元 / 月</span>
+                <span class="flex-inline items-end text-[15px] lg:text-[24px]">每加一組 <span class="text-[24px] lg:text-[36px] text-[#FFB171] ps-2 JhengHei">3,000</span>元 / 月</span>
                 <span class="text-[#FFE09C] text-[13px] lg:text-[20px]">加一個組別和4個值機帳號</span>
               </div>
               <div class="h-[110px] col-span-5 bg-white/20 flex items-center justify-start text-left text-[#CEFDFE] text-[15px] lg:text-[24px]">
@@ -104,7 +107,7 @@
                 <span class="xl:translate-x-[20px] lg:translate-x-[10px] translate-x-[0]">Telegram串接開通設定費</span>
               </div>
               <div class="col-span-16 bg-white/20 flex items-center justify-center">
-                <span class="flex-inline items-end text-[15px] lg:text-[24px]"><span class="text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">3000</span>元 / 單次</span>
+                <span class="flex-inline items-end text-[15px] lg:text-[24px]"><span class="text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">3,000</span>元 / 單次</span>
               </div>
           </div>
         </div>
@@ -195,25 +198,6 @@
 </template>
 
 <script setup>
-const Asterisk = (attrs) =>
-  h('svg', { xmlns: 'http://www.w3.org/2000/svg', viewBox: '0 0 24 24', width: 12, height: 12, ...attrs }, [
-    h('g', { fill: 'currentColor', stroke: 'currentColor', 'stroke-width': 2.6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, [
-      h('line', { x1: 5.5, y1: 5.5, x2: 18.5, y2: 18.5 }),
-      h('line', { x1: 18.5, y1: 5.5, x2: 5.5, y2: 18.5 }),
-      h('circle', { cx: 12, cy: 3.5, r: 0.8 }),
-      h('circle', { cx: 20.5, cy: 12, r: 0.8 }),
-      h('circle', { cx: 12, cy: 20.5, r: 0.8 }),
-      h('circle', { cx: 3.5, cy: 12, r: 0.8 }),
-    ])
-  ])
-const  advancedServices = ref([
-  { name: 'PMatch官網商店接單', basic: '交易額0.5% / 筆', pro: '交易額0.35% / 筆' },
-  { name: '手機、銀行帳戶驗證', basic: '30元 / 筆' },
-  { name: '團隊版新增組別', desc: '加一個組別和4個值機帳號', basic: '每加一組 3000元/月'},
-  { name: '串接代收自動帶入繳費代碼', desc: '目前提供串接第三方金流：藍新金流及速買配', basic: '每加一個代收平台 500元/月'},
-  { name: 'Telegram串接開通設定費', basic: '3000元/單次'},
-]);
-
 // --- Data for "功能一覽" Table ---
 const featureSections = ref([
   {
@@ -308,6 +292,19 @@ const featureSections = ref([
     ]
   },
 ]);
+
+// UI Components
+const Asterisk = (attrs) =>
+  h('svg', { xmlns: 'http://www.w3.org/2000/svg', viewBox: '0 0 24 24', width: 14, height: 14, ...attrs }, [
+    h('g', { fill: 'currentColor', stroke: 'currentColor', 'stroke-width': 2.6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, [
+      h('line', { x1: 5.5, y1: 5.5, x2: 18.5, y2: 18.5 }),
+      h('line', { x1: 18.5, y1: 5.5, x2: 5.5, y2: 18.5 }),
+      h('circle', { cx: 12, cy: 3.5, r: 0.8 }),
+      h('circle', { cx: 20.5, cy: 12, r: 0.8 }),
+      h('circle', { cx: 12, cy: 20.5, r: 0.8 }),
+      h('circle', { cx: 3.5, cy: 12, r: 0.8 }),
+    ])
+  ])
 
 function toggleSection(section) {
   section.isExpanded = !section.isExpanded;
