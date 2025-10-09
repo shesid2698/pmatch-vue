@@ -587,7 +587,7 @@
       );
       if (response.data.Status.Code === 0) {
         // 領取成功後更新前端狀態
-        await alertModal.alertShowModal('領取成功！', '您的獎勵稍後將發送至領獎中心。');
+        await alertModal.alertShowModal('領取成功！', '註冊禮會在活動結束後<br>統一發送到領獎中心');
         claimedReward.value = true; // 更新為「已領取」
         claimedPlatform.value = selectedPlatform.value;
       } else {
