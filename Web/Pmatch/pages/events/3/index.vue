@@ -61,10 +61,10 @@
             <div :class="registerBackground" class="aspect-[979/613] bg-cover bg-no-repeat bg-center relative [container-type:inline-size] [container-name:register-card]">
               <!-- 是否登入 -->
               <div v-if="!isLoggedIn">
-                <NuxtLink class="absolute top-[27.25%] right-[30.05%] leading-0 text-[6.5cqi] cursor-pointer no-underline flex-inline justify-center items-center border-[0.1cqi] border-solid border-[#FFF4B5] rounded-[0.8cqi] aspect-[181/106] w-[18%] bg-gradient-to-b from-[#E24444] to-[#751313] [box-shadow:0px_0.8cqi_0.8cqi_#480909] hover:from-[#D91124] hover:to-[#D91124] active:from-[#741B15] active:to-[#741B15]" to="/member/login">
+                <NuxtLink class="absolute top-[27.25%] right-[30.05%] leading-0 text-[6.5cqi] cursor-pointer no-underline flex-inline justify-center items-center border-[0.1cqi] border-solid border-[#FFF4B5] rounded-[0.8cqi] aspect-[181/106] w-[18%] bg-gradient-to-b from-[#E24444] to-[#751313] [box-shadow:0px_0.8cqi_0.8cqi_#480909] hover:from-[#D91124] hover:to-[#D91124] active:from-[#741B15] active:to-[#741B15]" href="/member/login" target="_blank">
                   <SignUp class="font-Noto -translate-y-[0.25cqi]" content="登入" />
                 </NuxtLink>
-                <NuxtLink class="absolute top-[27.25%] right-[9.75%]  leading-0 text-[6.5cqi] cursor-pointer no-underline flex-inline justify-center items-center border-[0.1cqi] border-solid border-[#FFF4B5] rounded-[0.8cqi] aspect-[181/106] w-[18%] bg-gradient-to-b from-[#E24444] to-[#751313] [box-shadow:0px_0.8cqi_0.8cqi_#480909] hover:from-[#D91124] hover:to-[#D91124] active:from-[#741B15] active:to-[#741B15]" to="/register">
+                <NuxtLink class="absolute top-[27.25%] right-[9.75%]  leading-0 text-[6.5cqi] cursor-pointer no-underline flex-inline justify-center items-center border-[0.1cqi] border-solid border-[#FFF4B5] rounded-[0.8cqi] aspect-[181/106] w-[18%] bg-gradient-to-b from-[#E24444] to-[#751313] [box-shadow:0px_0.8cqi_0.8cqi_#480909] hover:from-[#D91124] hover:to-[#D91124] active:from-[#741B15] active:to-[#741B15]" href="/register" target="_blank">
                   <SignUp class="font-Noto -translate-y-[0.25cqi]" content="註冊" />
                 </NuxtLink>
               </div>
@@ -352,7 +352,7 @@
       ]
     },
     {
-      platform: { name: '金好運娛樂城', logo: '/images/activity/3/tab2-platform2.png', url:'https://www.pmatch.com.tw/findmatch?platformName=%E5%8C%85%E4%BD%A0%E7%99%BC%E5%A8%9B%E6%A8%82%E5%9F%8E' },      
+      platform: { name: '金好運娛樂城', logo: '/images/activity/3/tab2-platform2.png', url:'https://www.pmatch.com.tw/findmatch?platformName=%E9%87%91%E5%A5%BD%E9%81%8B%E5%A8%9B%E6%A8%82%E5%9F%8E' },      
       content: { text: '單筆委買交易不限金額均享有98折優惠', span: 6 }, // span 代表占用欄數 
       merchants: [
         { name: '金好盈金流', logo: '/images/activity/3/tab2-merchants2.png', url:'https://www.pmatch.com.tw/findmatch/202?pn=%E9%87%91%E5%A5%BD%E9%81%8B%E5%A8%9B%E6%A8%82%E5%9F%8E' },
