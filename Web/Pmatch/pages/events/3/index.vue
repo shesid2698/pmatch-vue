@@ -124,7 +124,6 @@
                   </li>
                 </ul>
               </div>
-              
               <div v-if="isLoggedIn && !isEventEnded && isEligible && claimedReward" class="absolute w-[55.8%] bottom-[6.25%] left-[4.5%]">
                 <button disabled class="w-full aspect-[544/79] bg-[#741B15] text-[#FFD900] text-[3.8cqi] leading-[4cqi] flex items-center justify-between ps-[2.9cqi] pe-[2.1cqi] border-[0.8cqi] border-solid border-[#F0C63E]  [box-shadow:0px_0.8cqi_0.5cqi_rgba(0,0,0,0.5),inset_0px_2cqi_2cqi_rgba(0,0,0,0.2)] rounded-full">
                   <span>{{ claimedPlatform }}</span>
@@ -141,7 +140,6 @@
                   領取註冊禮
                 </button>
               </div>
-
               <div v-if="isLoggedIn && !isEventEnded && isEligible && claimedReward" class="absolute w-[31.5%] bottom-[6.25%] right-[5.4%]">
                 <button disabled class="w-full aspect-[309/79] rounded-full text-[#FFD900] text-[4cqi] leading-[4cqi] border-[0.8cqi] border-solid border-[#F0C63E] cursor-pointer [box-shadow:0px_0.8cqi_0.5cqi_rgba(0,0,0,0.5),inset_0px_2cqi_2cqi_rgba(0,0,0,0.2)] bg-[#741B15] disabled:pointer-events-none">
                   您已領取
@@ -149,7 +147,6 @@
               </div>
             </div>
           </div>
-<!-- v-if="isLoggedIn && !isEventEnded && isEligible && !claimedReward" -->
 
           <div class="md:my-[60px] my-[30px]">       
             <TitleBlock class="font-Noto" title="領取流程" />
@@ -196,7 +193,6 @@
                   >
                     {{ row.content.text }}
                   </div>
-                  <!-- 改這裡 -->
                   <div class="flex flex-col md:flex-row items-center justify-around pt-3px md:pt-0  min-h[80px] md:min-h[164px]" :class="index % 2 === 0 ? 'bg-[#EEAB93]' : 'bg-[#F7CFC1]'">
                     <div v-for="merchant in row.merchants" :key="merchant.name">
                       <NuxtLink :to="merchant.url" target="_blank" class="cursor-pointer">
@@ -398,8 +394,8 @@
   ]);
 
   // 活動日期
-  const eventStartTime = new Date('2025-10-20 12:00:00');
-  const eventEndTime = new Date('2025-11-02 23:59:59');
+  const eventStartTime = ref(null);
+  const eventEndTime = ref(null);
 
   // State
   const innerPage = ref(1);
@@ -417,18 +413,20 @@
 
   // 計算活動時間
   const isEventEnded = computed(() => {
+    if (!eventStartTime.value || !eventEndTime.value) {
+      return true; 
+    }
     const now = new Date();
-    return now < eventStartTime || now > eventEndTime;
+    return now < eventStartTime.value || now > eventEndTime.value;
   });
   
   // 計算註冊日期(領取資格)
   const isEligible = computed(() => {
-    if (!registrationDate.value) {
-        return false;
+    if (!registrationDate.value || !eventStartTime.value || !eventEndTime.value) {
+      return false;
     }
     const regDate = new Date(registrationDate.value);
-    const isDateValid = regDate >= eventStartTime && regDate <= eventEndTime;
-    return isDateValid;
+    return regDate >= eventStartTime.value && regDate <= eventEndTime.value;
   });
 
   const dropdownOption = computed(() => {
@@ -463,12 +461,12 @@
           const response = await $axios.post(
               '/api/v1/Pmatch/GetMemberDetail',
               {
-                  PmatchMemberId: memberId.value
+                PmatchMemberId: memberId.value
               },
               {
-                  headers: {
-                      Authorization: token.value 
-                  }
+                headers: {
+                  Authorization: token.value 
+                }
               }
           );
           if (response.data.Status.Code === 0) {
@@ -477,13 +475,13 @@
               if (userData && userData.CreateTime) {
                   registrationDate.value = userData.CreateTime.split('T')[0];
               } else {
-                  console.warn('GetMemberDetail API 未取得 CreateTime');
+                console.warn('GetMemberDetail API 未取得 CreateTime');
               }
           } else {
-              console.error('GetMemberDetail API 回應錯誤:', response.data.Status.Message);
+            console.error('GetMemberDetail API 回應錯誤:', response.data.Status.Message);
           }
       } catch (error) {
-          console.error('呼叫 GetMemberDetail API 時發生錯誤:', error);
+        console.error('呼叫 GetMemberDetail API 時發生錯誤:', error);
       }
   }
 
@@ -502,8 +500,16 @@
         }
       );
       if (response.data.Status.Code === 0 && response.data.Data) {
+        const activityData = response.data.Data;
+        
         // 儲存活動 ID 
         activityId.value = response.data.Data.Id; 
+
+        // 儲存活動時間
+        if (activityData.StartTime && activityData.EndTime) {
+          eventStartTime.value = new Date(activityData.StartTime);
+          eventEndTime.value = new Date(activityData.EndTime);
+        }
       } else {
         console.error('GetActivityInfo API 回應錯誤:', response.data.Status.Message);
       }
