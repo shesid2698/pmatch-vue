@@ -31,8 +31,8 @@
             </span>
           </button>
           <NuxtLink @click="changeTabAndScroll(tab.id)" class="group md:hidden cursor-pointer">
-            <img :src="tab.mobile" alt="" class="w-full h-auto group-hover:hidden">
-            <img :src="tab.mobileHover" alt="" class="w-full h-auto hidden group-hover:block">
+            <img :src="tab.mobile" alt="分頁按鈕" class="w-full h-auto group-hover:hidden">
+            <img :src="tab.mobileHover" alt="分頁按鈕" class="w-full h-auto hidden group-hover:block">
           </NuxtLink>
           <TabDecorator :class="{ 'opacity-100': innerPage === tab.id }" class="md:w-full w-[110%] absolute top-full left-1/2 -translate-x-1/2 -translate-y-1 md:translate-y-1 opacity-0 group-hover:opacity-100 group-hover:fill-[#C1514A] transform rotate-180" />
         </div>
@@ -45,7 +45,7 @@
         </div>
         <div class="md:my-[60px] my-[30px]">
           <TitleBlock class="font-Noto" title="活動日期" />
-          <p class="font-Inter text-[#741B15] font-semibold text-[24px] md:text-[32px] lg:text-[40px] my-[10px]">2025<br class="md:hidden"><span class="desktop">/</span>10/20 12:00 ~ 11/02 23:59</p>
+          <p class="font-Inter text-[#741B15] font-semibold text-[24px] md:text-[32px] lg:text-[40px] my-[10px]">2025<br class="md:hidden"><span class="desktop">/</span><span class="text-[23px] md:text-[32px] lg:text-[40px]">10/20 12:00 ~ 11/02 23:59</span></p>
         </div>
         <div v-show="innerPage === 1">
           <div class="md:my-[60px] my-[30px]">
@@ -151,18 +151,15 @@
           <div class="md:my-[60px] my-[30px]">       
             <TitleBlock class="font-Noto" title="領取流程" />
             <div class="md:my-[60px] my-[30px] over object-cover">
-              <img class="max-w-full max-w-full" src="/images/activity/3/tab1-step1.png" alt="">
-              <p class="font-Inter text-[#741B15] text-[20px] md:text-[28px] lg:text-[32px] my-[10px]">官網領獎中心</p>
+              <img class="max-w-full max-w-full" src="/images/activity/3/tab1-step1.png" alt="官網領獎中心">
             </div>          
             <Arrow class="max-h-[89px] h-auto" />
             <div class="md:my-[60px] my-[30px]">
-              <img class="max-w-full max-w-full" src="/images/activity/3/tab1-step2.png" alt="">
-              <p class="font-Inter text-[#741B15] text-[20px] md:text-[28px] lg:text-[32px] my-[10px]">點選對應獎項</p>
+              <img class="max-w-full max-w-full" src="/images/activity/3/tab1-step2.png" alt="點選對應獎項">
             </div>
             <Arrow class="max-h-[89px] h-auto" />
             <div class="md:my-[60px] my-[30px]">
-              <img class="max-w-full max-w-full" src="/images/activity/3/tab1-step3.png" alt="">
-              <p class="font-Inter text-[#741B15] text-[20px] md:text-[28px] lg:text-[32px] my-[10px]">領取獎項</p>
+              <img class="max-w-full max-w-full" src="/images/activity/3/tab1-step3.png" alt="領取獎項">
             </div>
           </div>
         </div>
@@ -208,18 +205,18 @@
             <div class="md:my-[60px] my-[30px]">
               <p class="font-Inter text-[#741B15] font-semibold text-[22px] md:text-[30px] lg:text-[36px] my-[15px] md:my-[30px]">如何透過PMatch下單</p>
               <div class="flex items-center justify-center gap-[10px] mb-[0px] xl:mb-[120px] overflow-hidden">
-                <img class="max-w-full xl:hidden" src="/images/activity/3/tab2-step1.png" alt="">
-                <img class="max-w-full hidden xl:inline" src="/images/activity/3/tab2-step1and2.png" alt="">
+                <img class="max-w-full xl:hidden" src="/images/activity/3/tab2-step1.png" alt="如何透過PMatch下單-步驟2">
+                <img class="max-w-full hidden xl:inline" src="/images/activity/3/tab2-step1and2.png" alt="如何透過PMatch下單">
               </div>
             </div>
               <Arrow class="max-h-[89px] h-auto xl:hidden"/>
             <div class="md:my-[60px] my-[30px] xl:hidden">          
-              <img class="max-w-full" src="/images/activity/3/tab2-step2.png" alt="">
+              <img class="max-w-full" src="/images/activity/3/tab2-step2.png" alt="如何透過PMatch下單-步驟2">
             </div>
               <Arrow class="max-h-[89px] h-auto xl:hidden"/>
             <div class="md:my-[60px] my-[30px]">
               <p class="font-Inter text-[#741B15] font-semibold text-[22px] md:text-[30px] lg:text-[36px] my-[15px] md:my-[30px]">如何快速聯絡媒合商 </p>
-              <img class="max-w-full" src="/images/activity/3/tab2-step3.png" alt="">
+              <img class="max-w-full" src="/images/activity/3/tab2-step3.png" alt="如何快速聯絡媒合商">
             </div>
           </div>
         </div>
@@ -236,7 +233,7 @@
               <p class="my-[8px]">2.完成交易後，至粉絲團活動PO下方回覆以下指定內容，即可獲得抽獎資格</p>
               <p class="my-[8px] ps-3">「媒合交易好方便，快上PMatch最優惠」 並附上委託媒合紀錄完成交易截圖</p>
               <div class="flex flex-col items-center justify-center ">
-                <img class="max-w-full -m-[20px] select-none" src="/images/activity/3/tab3-award.png" alt="">
+                <img class="max-w-full -m-[20px] select-none" src="/images/activity/3/tab3-award.png" alt="Apple iPad Wi-Fi機型128G (市價$11,900)">
                 <p class="text-[#A21010] text-[14px] md:text-[20px] md:leading-0 text-center">Apple iPad Wi-Fi機型128G (市價$11,900)<span class="desktop">，</span><br class="md:hidden">共兩台</p>
               </div>
             </div>
@@ -260,39 +257,35 @@
           </div>
           <div class="md:my-[60px] my-[30px]">
             <div class="md:my-[60px] my-[30px]">
-              <img class="max-w-full" src="/images/activity/3/tab3-post1.png" alt="">
+              <img class="max-w-full" src="/images/activity/3/tab3-post1.png" alt="粉絲團活動貼文">
             </div>
             <TitleBlock class="font-Noto" title="貼文截圖" />
             <div class="md:my-[60px] my-[30px]">
-              <img class="max-w-full" src="/images/activity/3/tab3-post2.png" alt="">
+              <img class="max-w-full" src="/images/activity/3/tab3-post2.png" alt="前往會員中心">
             </div>
             <Arrow class="max-h-[89px] h-auto" />
             <div class="md:my-[60px] my-[30px]">
-              <img class="max-w-full" src="/images/activity/3/tab3-post3.png" alt="">
+              <img class="max-w-full" src="/images/activity/3/tab3-post3.png" alt="前往委託媒合紀錄">
             </div>
             <Arrow class="max-h-[89px] h-auto" />
             <div class="md:my-[60px] my-[30px]">
-              <img class="max-w-full" src="/images/activity/3/tab3-post4.png" alt="">
+              <img class="max-w-full" src="/images/activity/3/tab3-post4.png" alt="截圖委託媒合紀錄">
             </div>
             <TitleBlock class="font-Noto" title="獎項領取" />
             <div class="md:my-[60px] my-[30px]">
-              <img class="max-w-full" src="/images/activity/3/tab3-step1.png" alt="">
-              <p class="font-Inter text-[#741B15] text-[20px] md:text-[28px] lg:text-[32px] my-[10px]">官網領獎中心</p>
+              <img class="max-w-full" src="/images/activity/3/tab3-step1.png" alt="官網領獎中心">
             </div>
             <Arrow class="max-h-[89px] h-auto" />
             <div class="md:my-[60px] my-[30px]">
-              <img class="max-w-full" src="/images/activity/3/tab3-step2.png" alt="">
-              <p class="font-Inter text-[#741B15] text-[20px] md:text-[28px] lg:text-[32px] my-[10px]">點選對應獎項</p>
+              <img class="max-w-full" src="/images/activity/3/tab3-step2.png" alt="點選對應獎項">
             </div>
             <Arrow class="max-h-[89px] h-auto" />
             <div class="md:my-[60px] my-[30px]">
-              <img class="max-w-full" src="/images/activity/3/tab3-step3.png" alt="">
-              <p class="font-Inter text-[#741B15] text-[20px] md:text-[28px] lg:text-[32px] my-[10px]">領取獎項</p>
+              <img class="max-w-full" src="/images/activity/3/tab3-step3.png" alt="領取獎項">
             </div>
             <Arrow class="max-h-[89px] h-auto" />
             <div class="md:my-[60px] my-[30px]">
-              <img class="max-w-full" src="/images/activity/3/tab3-step4.png" alt="">
-              <p class="font-Inter text-[#741B15] text-[20px] md:text-[28px] lg:text-[32px] my-[10px]">實體贈品領取流程</p>
+              <img class="max-w-full" src="/images/activity/3/tab3-step4.png" alt="實體贈品領取流程">
             </div>
           </div>
         </div>
