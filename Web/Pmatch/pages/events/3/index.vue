@@ -302,8 +302,8 @@
         <p><span class="relative top-[0.15em] text-[3vw] md:text-[2.2vw] xl:text-[1.5vw] leading-[1.2vw] select-none">◆ </span>本次活動範圍僅包含活動頁面包含之媒合商及遊戲平台，詳細內容請參照上方活動各分頁說明。</p>
         <p><span class="relative top-[0.15em] text-[3vw] md:text-[2.2vw] xl:text-[1.5vw] leading-[1.2vw] select-none">◆ </span><strong>PMatch</strong>平台保留更換等值贈品以及變更活動內容或終止活動的權利，以及最終活動解釋權。</p>
         <p><span class="relative top-[0.15em] text-[3vw] md:text-[2.2vw] xl:text-[1.5vw] leading-[1.2vw] select-none">◆ </span>註冊會員獲得的獎項，活動結束後系統直接發送，玩家至官網領獎中心領取</p>
-        <p><span class="relative top-[0.15em] text-[3vw] md:text-[2.2vw] xl:text-[1.5vw] leading-[1.2vw] select-none">◆ </span>臉書粉絲團PO文抽獎獲獎玩家，活動結束後由小編主動透過臉書聯繫，確認相關資訊後透過官網<br>
-          <span class="ps-1.25vw">平台最低數量以上方符合領獎資格，低於設定領獎門檻視同放棄領獎資格。</span></p>
+        <p><span class="relative top-[0.15em] text-[3vw] md:text-[2.2vw] xl:text-[1.5vw] leading-[1.2vw] select-none">◆ </span>臉書粉絲團PO文抽獎獲獎玩家，活動結束後由小編主動透過臉書聯繫，確認相關資訊後透過官網</p>
+        <p class="leading-[0] -translate-y-[0.5vw]"><span class="relative top-[0.15em] text-[3vw] md:text-[2.2vw] xl:text-[1.5vw] select-none opacity-0">◆ </span>平台最低數量以上方符合領獎資格，低於設定領獎門檻視同放棄領獎資格。</p>
         <p><span class="relative top-[0.15em] text-[3vw] md:text-[2.2vw] xl:text-[1.5vw] leading-[1.2vw] select-none">◆ </span>本次活動獎項設有30天領取時間限制，獎項發送後請盡快至領獎中心領取，逾期視同放棄領獎資格</p>
         <p><span class="relative top-[0.15em] text-[3vw] md:text-[2.2vw] xl:text-[1.5vw] leading-[1.2vw] select-none">◆ </span><strong>PMatch</strong>平台僅提供媒合交易服務，交易相關問題請洽詢交易之媒合商了解詳情。</p>
       </div>
