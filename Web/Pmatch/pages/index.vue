@@ -28,11 +28,11 @@
           </h3>
         </div>
 
-        <div class="w-full max-w-[1078px] bg-[#F2E3FF] rounded-[10px] px-4 pt-3.5 pb-2 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]">
+        <div class="w-full bg-[#F2E3FF] rounded-[10px] px-4 pt-3.5 pb-2 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] box-border">
           <div class="flex flex-col md:flex-row items-center justify-between gap-3">
 
             <!-- 遊戲選擇 -->
-            <div class="relative bg-white flex items-center px-4 w-[330px] h-[58px] cursor-pointer text-20px font-bold color-[#8D8D8D]"
+            <div class="relative bg-white flex items-center px-4 w-[90%] md:w-[470px] h-[58px] cursor-pointer text-20px font-bold color-[#8D8D8D]"
                 @click.stop="togglePlatformBox">{{ selectedGame || "遊戲選擇" }}
               <div class="absolute right-6 top-1/2 -translate-y-1/2">
                 <svg v-if="!showPlatformBox" width="24" height="16" viewBox="0 0 24 16" fill="#8A4CBF" xmlns="http://www.w3.org/2000/svg">
@@ -57,14 +57,14 @@
             </div>
 
             <!-- 搜尋框 -->
-            <div class="flex items-center h-[58px] overflow-hidden gap-1.6">
+            <div class="flex items-center h-[58px] overflow-hidden gap-1.6 w-[100%]">
               <!-- 輸入框 -->
               <input type="text" v-model="keywordToSearch"
                     placeholder="輸入媒合商名稱"
-                    class="flex-1 px-4 h-full font-size-1.2rem w-[594px] border-none outline-none text-20px font-500 text-[#8D8D8D] placeholder:text-[#8D8D8D]" />
+                    class="flex-1 px-4 h-full font-size-1.2rem w-[50%] md:w-[594px] border-none outline-none text-20px font-500 text-[#8D8D8D] placeholder:text-[#8D8D8D]" />
               <!-- 按鈕 -->
               <button @click="searchToFindMatch"
-                class="w-[119px] h-full flex items-center justify-center cursor-pointer bg-[#8A4CBF] hover:bg-[#840FE9] active:bg-[#31005A] text-white border-none text-20px">搜尋
+                class="w-fit md:w-[119px] h-full flex items-center justify-center cursor-pointer bg-[#8A4CBF] hover:bg-[#840FE9] active:bg-[#31005A] text-white border-none text-20px">搜尋
                 <img class="w-[17px] ps-0.75 pt-0.75 select-none pointer-events-none" src="/images/searchIcon-white.svg" alt="搜尋" />  
               </button>
             </div>
