@@ -315,6 +315,8 @@
   const { $axios } = useNuxtApp();
   const token = useCookie('_PmToken');
   const memberId = useCookie('_PmMemberId');
+  const router = useRouter();
+  const route = useRoute();
   const modal = useModalStore();
   const alertModal = useAlertModalStore();
 
@@ -723,14 +725,22 @@
   );
 
   onMounted(async () => {
-      checkLoginStatus();
-      document.body.classList.add('on-events3-page');
-      // 登入才呼叫 API
-      if (isLoggedIn.value) {
-        await fetchMemberDetail();
-        await fetchActivityInfo();
-        await fetchActivityData();
-      }
+    if (!route.query.openExternalBrowser) {
+      await router.replace({
+        query: {
+          ...route.query,
+          openExternalBrowser: 1,
+        },
+      });
+    }
+    checkLoginStatus();
+    document.body.classList.add('on-events3-page');
+    // 登入才呼叫 API
+    if (isLoggedIn.value) {
+      await fetchMemberDetail();
+      await fetchActivityInfo();
+      await fetchActivityData();
+    }
   });
   onUnmounted(() => {
     document.body.classList.remove('on-events3-page');
