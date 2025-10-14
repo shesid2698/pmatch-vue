@@ -149,7 +149,7 @@
                     </ElButton>
                   </div>
                 </div>
-                <div class="flex tableTd">
+                <!-- <div class="flex tableTd">
                   <div class="w-100% platformName font-size-1.5rem text-center color-#beffff">
                     金爸爸娛樂城
                   </div>
@@ -162,7 +162,7 @@
                       <Line :data="simpleChartData4" :options="simpleChartOptions" class="md-w-150px w-80px" />
                     </ElButton>
                   </div>
-                </div>
+                </div> -->
                 <div class="flex tableTd">
                   <div class="w-100% platformName font-size-1.5rem text-center color-#beffff">
                     寶島娛樂城
@@ -1400,7 +1400,7 @@ onMounted(async () => {
         await fetchRichList(token, 4);
         await fetchRichList(token, 1); // 錢街
         await fetchRichList(token, 5); // 聚寶
-        await fetchRichList(token, 6); // 金爸爸
+        // await fetchRichList(token, 6); // 金爸爸
         await fetchRichList(token, 7); // 寶島
       }
     } else {
@@ -1413,7 +1413,7 @@ onMounted(async () => {
         await fetchRichList(token, 4);
         await fetchRichList(token, 1); // 錢街
         await fetchRichList(token, 5); // 聚寶
-        await fetchRichList(token, 6); // 金爸爸
+        // await fetchRichList(token, 6); // 金爸爸
         await fetchRichList(token, 7); // 寶島
       }
     }
