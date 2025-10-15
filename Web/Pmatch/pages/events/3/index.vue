@@ -61,10 +61,10 @@
             <div :class="registerBackground" class="aspect-[979/613] bg-cover bg-no-repeat bg-center relative [container-type:inline-size] [container-name:register-card]">
               <!-- 是否登入 -->
               <div v-if="!isLoggedIn">
-                <NuxtLink class="absolute top-[27.25%] right-[30.05%] leading-0 text-[6.5cqi] cursor-pointer no-underline flex-inline justify-center items-center border-[0.1cqi] border-solid border-[#FFF4B5] rounded-[0.8cqi] aspect-[181/106] w-[18%] bg-gradient-to-b from-[#E24444] to-[#751313] [box-shadow:0px_0.8cqi_0.8cqi_#480909] hover:from-[#D91124] hover:to-[#D91124] active:from-[#741B15] active:to-[#741B15]" href="/member/login" target="_blank">
+                <NuxtLink class="absolute top-[27.25%] right-[30.75%] leading-0 text-[6.5cqi] cursor-pointer no-underline flex-inline justify-center items-center border-[0.1cqi] border-solid border-[#FFF4B5] rounded-[0.8cqi] aspect-[181/106] w-[18%] bg-gradient-to-b from-[#E24444] to-[#751313] [box-shadow:0px_0.8cqi_0.8cqi_#480909] hover:from-[#D91124] hover:to-[#D91124] active:from-[#741B15] active:to-[#741B15]" href="/member/login" target="_blank">
                   <SignUp class="font-Noto -translate-y-[0.25cqi]" content="登入" />
                 </NuxtLink>
-                <NuxtLink class="absolute top-[27.25%] right-[9.75%]  leading-0 text-[6.5cqi] cursor-pointer no-underline flex-inline justify-center items-center border-[0.1cqi] border-solid border-[#FFF4B5] rounded-[0.8cqi] aspect-[181/106] w-[18%] bg-gradient-to-b from-[#E24444] to-[#751313] [box-shadow:0px_0.8cqi_0.8cqi_#480909] hover:from-[#D91124] hover:to-[#D91124] active:from-[#741B15] active:to-[#741B15]" href="/register" target="_blank">
+                <NuxtLink class="absolute top-[27.25%] right-[9.25%]  leading-0 text-[6.5cqi] cursor-pointer no-underline flex-inline justify-center items-center border-[0.1cqi] border-solid border-[#FFF4B5] rounded-[0.8cqi] aspect-[181/106] w-[18%] bg-gradient-to-b from-[#E24444] to-[#751313] [box-shadow:0px_0.8cqi_0.8cqi_#480909] hover:from-[#D91124] hover:to-[#D91124] active:from-[#741B15] active:to-[#741B15]" href="/register" target="_blank">
                   <SignUp class="font-Noto -translate-y-[0.25cqi]" content="註冊" />
                 </NuxtLink>
               </div>
