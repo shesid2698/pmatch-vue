@@ -1,9 +1,13 @@
 <template>
-  <noscript>
-    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TBHCXFCD" height="0" width="0"
-      style="display: none; visibility: hidden"></iframe>
-  </noscript>
+  <ClientOnly>
+    <noscript>
+      <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TBHCXFCD" height="0" width="0"
+        style="display: none; visibility: hidden"></iframe>
+    </noscript>
+  </ClientOnly>
+
   <div :class="{ pageSetting: isHomePage }">
+
     <Head>
       <Meta property="og:title" content="PMatch遊戲道具交易平台" />
       <Meta name="keywords" content="pmatch,pmatch交易,博奕遊戲,幣商,媒合商,遊戲幣,虛擬幣,遊戲交易,媒合交易,買幣,賣幣,虛寶交易" />
@@ -19,19 +23,17 @@
     <div class="page" :class="route.path.indexOf('/events') !== -1 ? 'pt-0px' : isStorePage ? 'pt-0px' : 'pt-70px'">
       <NuxtPage />
     </div>
-    <component
-      v-if="route.path.indexOf('/events') === -1"
-      :is="isStorePage ? StoreHeader : Header"
-      :class="route.path.indexOf('/activity/preview') !== -1 ? 'pointer-events-none' : ''"
-    />
+    <component v-if="route.path.indexOf('/events') === -1" :is="isStorePage ? StoreHeader : Header"
+      :class="route.path.indexOf('/activity/preview') !== -1 ? 'pointer-events-none' : ''" />
 
+    <component v-if="route.path.indexOf('/events') === -1" :is="isStorePage ? StoreFooter : Footer"
+      :class="route.path.indexOf('/activity/preview') !== -1 ? 'pointer-events-none' : ''" />
     <component
-      v-if="route.path.indexOf('/events') === -1"
-      :is="isStorePage ? StoreFooter : Footer"
-      :class="route.path.indexOf('/activity/preview') !== -1 ? 'pointer-events-none' : ''"
-    />
-    <component v-if="route.path.indexOf('/activity/preview') === -1 && route.path.indexOf('/events') === -1 && route.path.indexOf('/store') === -1" :is="BuyLog" />
-    <component v-if="route.path.indexOf('/activity/preview') === -1 && route.path.indexOf('/events') === -1 && route.path.indexOf('/store') === -1" :is="ChatLauncher" />
+      v-if="route.path.indexOf('/activity/preview') === -1 && route.path.indexOf('/events') === -1 && route.path.indexOf('/store') === -1"
+      :is="BuyLog" />
+    <component
+      v-if="route.path.indexOf('/activity/preview') === -1 && route.path.indexOf('/events') === -1 && route.path.indexOf('/store') === -1"
+      :is="ChatLauncher" />
   </div>
 </template>
 

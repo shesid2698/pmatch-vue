@@ -74,10 +74,10 @@
                   </div>
                   <div v-else>
                     <img class="right-img"
-                      :src="item.ReviewStatus === 3 ? '/images/實體獎項-r.svg' : '/images/獎項-disabled-r.svg'" alt="" />
+                      :src="item.ReviewStatus === 3 ? '/images/實體獎項-r.svg' : '/images/real-disabled-r.svg'" alt="" />
                   </div>
                 </div>
-                <img v-else class="right-img" src="/images/獎項-disabled-r.svg" alt="">
+                <img v-else class="right-img" src="/images/real-disabled-r.svg" alt="">
               </div>
             </div>
           </div>
