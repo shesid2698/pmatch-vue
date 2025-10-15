@@ -8,11 +8,11 @@
   </Head>
     <div class="storeBac text-white">
     <div class="min-h-screen pt-10rem pb-15rem">
-      <div class="max-w-1440px min-w-360px m-auto px-5 relative z-2">        
+      <div class="max-w-1440px m-auto min-w-360px h-fit mb-15vh md:mb-0 px-5 relative z-2 box-border">        
         <!-- 方案與費用 -->
         <div class="rounded-[25px] overflow-hidden">
           <div class="h-[76px] flex justify-center items-center bg-#73FBFD/60 text-white text-[24px] lg:text-[36px] text-center mb-[3px]">方案與費用</div>
-          <div class="grid grid-cols-21 text-center text-[18px] lg:text-[28px] gap-[2px]">
+          <div class="grid grid-cols-21 text-center text-[14px] md:text-[18px] lg:text-[28px] gap-[2px]">
             <!-- 方案 -->
             <div class="h-[110px] col-span-5 bg-white/20"></div>
             <div class="col-span-8 bg-white/20 flex flex-col items-center justify-center gap-[5px]">
@@ -30,41 +30,41 @@
             </div>          
             <div class="h-[110px] col-span-2 bg-white/20 flex items-center justify-center">月繳</div>
             <div class="col-span-4 bg-white/20 flex items-center justify-center p-2">
-              <span class="flex-inline items-end text-[15px] lg:text-[24px]"><span class="text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">36,100</span>元</span>
+              <span class="flex-inline md:flex-row flex-col md:items-end items-center text-[15px] lg:text-[24px]"><span class="text-[18px] md:text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">36,100</span>元</span>
             </div>
             <div class="col-span-4 bg-white/20 flex items-center justify-center p-2 relative">
-              <span class="absolute top-[10%] lg:left-[5%] text-[#FFE09C] text-[13px] lg:text-[20px] font-light"><Asterisk/>協會會員價</span>    
-              <span class="flex-inline items-end text-[15px] lg:text-[24px]"><span class="text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">34,295</span>元</span>
+              <span class="absolute top-[10%] lg:left-[5%] text-[#FFE09C] text-[10px] md:text-[13px] lg:text-[20px] font-light"><Asterisk/>協會會員價</span>    
+              <span class="flex-inline md:flex-row flex-col md:items-end items-center text-[15px] lg:text-[24px]"><span class="text-[18px] md:text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">34,295</span>元</span>
             </div>
             <div class="col-span-4 bg-white/20 flex items-center justify-center p-2">
-              <span class="flex-inline items-end text-[15px] lg:text-[24px]"><span class="text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">50,000</span>元</span>
+              <span class="flex-inline md:flex-row flex-col md:items-end items-center text-[15px] lg:text-[24px]"><span class="text-[18px] md:text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">50,000</span>元</span>
             </div>
             <div class="col-span-4 bg-white/20 flex items-center justify-center relative">
-              <span class="absolute top-[10%] lg:left-[5%] text-[#FFE09C] text-[13px] lg:text-[20px] font-light"><Asterisk/>協會會員價</span>
-              <span class="flex-inline items-end text-[15px] lg:text-[24px]"><span class="text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">47,500</span>元</span>              
+              <span class="absolute top-[10%] lg:left-[5%] text-[#FFE09C] text-10px md:text-[13px] lg:text-[20px] font-light"><Asterisk/>協會會員價</span>
+              <span class="flex-inline md:flex-row flex-col md:items-end items-center text-[15px] lg:text-[24px]"><span class="text-[18px] md:text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">47,500</span>元</span>              
             </div>          
             <div class="h-[110px] col-span-2 bg-white/20 flex flex-col items-center justify-center relative">
               <span>年繳</span>
               <span class="absolute top-[65%] text-[#FFE09C] text-[13px] lg:text-[20px]">(享95折)</span>
             </div>
             <div class="col-span-4 bg-white/20 flex items-center justify-center p-2">
-              <span class="flex-inline items-end text-[15px] lg:text-[24px]"><span class="text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">411,500</span>元</span>
+              <span class="flex-inline md:flex-row flex-col md:items-end items-center text-[15px] lg:text-[24px]"><span class=" text-[18px] md:text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">411,500</span>元</span>
             </div>
             <div class="col-span-4 bg-white/20 flex items-center justify-center relative">
-              <span class="absolute top-[10%] lg:left-[5%] text-[#FFE09C] text-[13px] lg:text-[20px] font-light"><Asterisk/>協會會員價</span>
-              <span class="flex-inline items-end text-[15px] lg:text-[24px]"><span class="text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">390,900</span>元</span>
+              <span class="absolute top-[10%] lg:left-[5%] text-[#FFE09C] text-[10px] md:text-[13px] lg:text-[20px] font-light"><Asterisk/>協會會員價</span>
+              <span class="flex-inline md:flex-row flex-col md:items-end items-center text-[15px] lg:text-[24px]"><span class="text-[18px] md:text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">390,900</span>元</span>
             </div>
             <div class="col-span-4 bg-white/20 flex items-center justify-center p-2">
-              <span class="flex-inline items-end text-[15px] lg:text-[24px]"><span class="text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">570,000</span>元</span>
+              <span class="flex-inline md:flex-row flex-col md:items-end items-center text-[15px] lg:text-[24px]"><span class="text-[18px] md:text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">570,000</span>元</span>
             </div>
             <div class="col-span-4 bg-white/20 flex items-center justify-center relative">
-              <span class="absolute top-[10%] lg:left-[5%] text-[#FFE09C] text-[13px] lg:text-[20px] font-light"><Asterisk/>協會會員價</span>
-              <span class="flex-inline items-end text-[15px] lg:text-[24px]"><span class="text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">540,000</span>元</span>
+              <span class="absolute top-[10%] lg:left-[5%] text-[#FFE09C] text-[10px] md:text-[13px] lg:text-[20px] font-light"><Asterisk/>協會會員價</span>
+              <span class="flex-inline md:flex-row flex-col md:items-end items-center text-[15px] lg:text-[24px]"><span class="text-[18px] md:text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">540,000</span>元</span>
             </div>
             <!-- 發票 -->
             <div class="h-[76px] col-span-5 bg-white/20 flex items-center justify-start text-[#CEFDFE]"><span class="xl:translate-x-[20px] lg:translate-x-[10px] translate-x-[0]">電子發票開立系統</span></div>
             <div class="col-span-8 bg-white/20 flex items-center justify-center">
-              <span class="flex-inline items-end text-[15px] lg:text-[24px]">每月加收<span class="text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">100</span>元</span>
+              <span class="flex-inline items-end text-[15px] lg:text-[24px]">每月加收<span class="text-[18px] md:text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">100</span>元</span>
             </div>
             <div class="col-span-8 bg-white/20 flex items-center justify-center">無需加價</div>
           </div>
@@ -78,36 +78,36 @@
                 <span class="xl:translate-x-[20px] lg:translate-x-[10px] translate-x-[0]">PMatch官網商店接單</span>
               </div>
               <div class="col-span-8 bg-white/20 flex items-center justify-center">
-                <span class="flex-inline items-end text-[15px] lg:text-[24px]">交易額<span class="text-[24px] lg:text-[36px] text-[#FFB171] px-1 JhengHei">0.5%</span>/ 筆</span>              
+                <span class="flex-inline items-end text-[15px] lg:text-[24px]">交易額<span class="text-[18px] md:text-[24px] lg:text-[36px] text-[#FFB171] px-1 JhengHei">0.5%</span>/ 筆</span>              
               </div>
               <div class="col-span-8 bg-white/20 flex items-center justify-center">
-                <span class="flex-inline items-end text-[15px] lg:text-[24px]">交易額<span class="text-[24px] lg:text-[36px] text-[#FFB171] px-1 JhengHei">0.35%</span>/ 筆</span>    
+                <span class="flex-inline items-end text-[15px] lg:text-[24px]">交易額<span class="text-[18px] md:text-[24px] lg:text-[36px] text-[#FFB171] px-1 JhengHei">0.35%</span>/ 筆</span>    
               </div>
               <div class="h-[76px] col-span-5 bg-white/20 flex items-center justify-start text-left text-[#CEFDFE] text-[15px] lg:text-[24px]">
                 <span class="xl:translate-x-[20px] lg:translate-x-[10px] translate-x-[0]">手機、銀行帳戶驗證</span>
               </div>
               <div class="col-span-16 bg-white/20 flex items-center justify-center">
-                <span class="flex-inline items-end text-[15px] lg:text-[24px]"><span class="text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">30</span>元 / 筆</span>
+                <span class="flex-inline items-end text-[15px] lg:text-[24px]"><span class="text-[18px] md:text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">30</span>元 / 筆</span>
               </div>
               <div class="h-[110px] col-span-5 bg-white/20 flex items-center justify-start text-left text-[#CEFDFE] text-[15px] lg:text-[24px]">
                 <span class="xl:translate-x-[20px] lg:translate-x-[10px] translate-x-[0]">團隊版新增組別</span>
               </div>
               <div class="col-span-16 bg-white/20 flex flex-col items-center justify-center gap-[5px]">
-                <span class="flex-inline items-end text-[15px] lg:text-[24px]">每加一組 <span class="text-[24px] lg:text-[36px] text-[#FFB171] ps-2 JhengHei">3,000</span>元 / 月</span>
+                <span class="flex-inline items-end text-[15px] lg:text-[24px]">每加一組 <span class="text-[18px] md:text-[24px] lg:text-[36px] text-[#FFB171] ps-2 JhengHei">3,000</span>元 / 月</span>
                 <span class="text-[#FFE09C] text-[13px] lg:text-[20px]">加一個組別和4個值機帳號</span>
               </div>
               <div class="h-[110px] col-span-5 bg-white/20 flex items-center justify-start text-left text-[#CEFDFE] text-[15px] lg:text-[24px]">
                 <span class="xl:translate-x-[20px] lg:translate-x-[10px] translate-x-[0]">串接代收自動帶入繳費代碼</span>
               </div>
               <div class="col-span-16 bg-white/20 flex flex-col items-center justify-center gap-[5px]">
-                <span class="flex-inline items-end text-[15px] lg:text-[24px]">每加一個代收平台  <span class="text-[24px] lg:text-[36px] text-[#FFB171] ps-2 JhengHei">500</span>元 / 月</span>
+                <span class="flex-inline items-end text-[15px] lg:text-[24px]">每加一個代收平台  <span class="text-[18px] md:text-[24px] lg:text-[36px] text-[#FFB171] ps-2 JhengHei">500</span>元 / 月</span>
                 <span class="text-[#FFE09C] text-[13px] lg:text-[20px]">目前提供串接第三方金流：藍新金流及速買配</span>
               </div>
               <div class="h-[76px] col-span-5 bg-white/20 flex items-center justify-start text-left text-[#CEFDFE] text-[15px] lg:text-[24px]">
                 <span class="xl:translate-x-[20px] lg:translate-x-[10px] translate-x-[0]">Telegram串接開通設定費</span>
               </div>
               <div class="col-span-16 bg-white/20 flex items-center justify-center">
-                <span class="flex-inline items-end text-[15px] lg:text-[24px]"><span class="text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">3,000</span>元 / 單次</span>
+                <span class="flex-inline items-end text-[15px] lg:text-[24px]"><span class="text-[18px] md:text-[24px] lg:text-[36px] text-[#FFB171] JhengHei">3,000</span>元 / 單次</span>
               </div>
           </div>
         </div>
@@ -169,23 +169,23 @@
           </div>
           <div class="grid grid-cols-21 gap-[2px] mt-[2px]">
             <div class="col-span-6 p-4 bg-white/20"></div>
-            <div class="col-span-5 p-4 bg-white/20 text-center">
+            <div class="col-span-5 md:p-4 p-0 bg-white/20 flex justify-center items-center">
               <NuxtLink to="/store/register" class="flex-inline no-underline">
-                <div class="lg:w-[200px] w-[120px] h-[60px] leading-[60px] rounded-full text-[20px] lg:text-[28px] text-white border-none bg-gradient-to-r from-[#48A7A8] to-[#84E093] hover:opacity-90 cursor-pointer">
+                <div class="lg:w-[200px] md:w-[120px] w-[80px] md:h-[60px] h-[40px] leading-[60px] rounded-full text-[16px] md:text-[20px] lg:text-[28px] text-white border-none bg-gradient-to-r from-[#48A7A8] to-[#84E093] hover:opacity-90 cursor-pointer flex justify-center items-center">
                   申請試用
                 </div>
               </NuxtLink>
             </div>
-            <div class="col-span-5 p-4 bg-white/20 text-center">
+            <div class="col-span-5 p-4 bg-white/20 flex justify-center items-center">
               <NuxtLink :to="{ path: '/store', query: { scrollToForm: '1', purpose: '商務洽談' } }" class="flex-inline no-underline">
-                <div class="lg:w-[200px] w-[120px] h-[60px] leading-[60px] rounded-full text-[20px] lg:text-[28px] text-white border-none bg-gradient-to-r from-[#FFC90E] to-[#FFB774] hover:opacity-90 cursor-pointer">
+                <div class="lg:w-[200px] md:w-[120px] w-[80px] md:h-[60px] h-[40px] leading-[60px] rounded-full text-[16px] md:text-[20px] lg:text-[28px] text-white border-none bg-gradient-to-r from-[#FFC90E] to-[#FFB774] hover:opacity-90 cursor-pointer flex justify-center items-center">
                   開始使用
                 </div>
               </NuxtLink>
             </div>      
-            <div class="col-span-5 p-4 bg-white/20 text-center">
+            <div class="col-span-5 p-4 bg-white/20 flex justify-center items-center">
               <NuxtLink :to="{ path: '/store', query: { scrollToForm: '1', purpose: '商務洽談' } }" class="flex-inline no-underline">
-                <div class="lg:w-[200px] w-[120px] h-[60px] leading-[60px] rounded-full text-[20px] lg:text-[28px] text-white border-none bg-gradient-to-r from-[#EB6739] to-[#FFB171] hover:opacity-90 cursor-pointer">
+                <div class="lg:w-[200px] md:w-[120px] w-[80px] md:h-[60px] h-[40px] leading-[60px] rounded-full text-[16px] md:text-[20px] lg:text-[28px] text-white border-none bg-gradient-to-r from-[#EB6739] to-[#FFB171] hover:opacity-90 cursor-pointer flex justify-center items-center">
                   立即加入
                 </div>
               </NuxtLink>
