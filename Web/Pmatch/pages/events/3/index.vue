@@ -51,10 +51,10 @@
           <div class="md:my-[60px] my-[30px]">
             <TitleBlock class="font-Noto" title="活動內容" />
             <div class="font-Inter text-[#741B15] text-[20px] md:text-[28px] lg:text-[32px] text-start mx-[5%] md:mx-[10%] my-[12px] md:my-[20px] ">
-              <p class="my-[8px]">＊ 活動期間註冊PMatch新會員，可取得指定遊戲平台遊戲幣 (價值$400)</p>
-              <p class="my-[8px]">＊ 玩家完成註冊後，需於活動結束前至活動頁面選擇領取的遊戲平台，活動結束前未完成兌換的玩家，視同放棄領獎資格</p>
-              <p class="my-[8px]">＊ 註冊活動獎項由指定媒合商提供，玩家僅能選擇活動頁面中指定平台的遊戲幣</p>
-              <p class="my-[8px]">＊ 獎項預計前發送至領獎中心，獎項領取期限為30天，請玩家於領獎期限內完成領獎，獎項逾期後無法領取且不再補發</p>
+              <p class="my-[8px]">1. 活動期間註冊PMatch新會員，可取得指定遊戲平台遊戲幣 (價值$400)</p>
+              <p class="my-[8px]">2. 玩家完成註冊後，需於活動結束前至活動頁面選擇領取的遊戲平台，活動結束前未完成兌換的玩家，視同放棄領獎資格</p>
+              <p class="my-[8px]">3. 註冊活動獎項由指定媒合商提供，玩家僅能選擇活動頁面中指定平台的遊戲幣</p>
+              <p class="my-[8px]">4. 獎項預計前發送至領獎中心，獎項領取期限為30天，請玩家於領獎期限內完成領獎，獎項逾期後無法領取且不再補發</p>
             </div>
           </div>
           <div class="md:my-[80px] my-[40px] max-w-[979px] mx-auto">
@@ -167,8 +167,8 @@
           <div class="md:my-[60px] my-[30px]">
             <TitleBlock class="font-Noto" title="活動內容" />
             <div class="font-Inter text-[#741B15] text-[20px] md:text-[28px] lg:text-[32px] text-start mx-[5%] md:mx-[10%] my-[12px] md:my-[20px] ">
-              <p class="my-[8px]">＊ 活動期間指定平台委買不限金額98折，指定平台最高享8折優惠</p>
-              <p class="my-[8px]">＊ 委買優惠活動僅限列表中指定之遊戲平台及媒合商</p>    
+              <p class="my-[8px]">1. 活動期間指定平台委買不限金額98折，指定平台最高享8折優惠</p>
+              <p class="my-[8px]">2. 委買優惠活動僅限列表中指定之遊戲平台及媒合商</p>    
             </div>            
           </div>
           <div class="md:my-[60px] my-[30px]" ref="merchantsTable">
@@ -229,9 +229,9 @@
           <div class="md:my-[60px] my-[30px]">
             <TitleBlock class="font-Noto" title="活動內容" />
             <div class="font-Inter text-[#741B15] text-[20px] md:text-[28px] lg:text-[32px] text-start mx-[5%] md:mx-[10%] my-[12px] md:my-[20px] ">
-              <p class="my-[8px]">1.活動期間內透過PMatch官網媒合交易下單且完成交易</p>
-              <p class="my-[8px]">2.完成交易後，至粉絲團活動PO下方回覆以下指定內容，即可獲得抽獎資格</p>
-              <p class="my-[8px] ps-3">「媒合交易好方便，快上PMatch最優惠」 並附上委託媒合紀錄完成交易截圖</p>
+              <p class="my-[8px]">1. 活動期間內透過PMatch官網媒合交易下單且完成交易</p>
+              <p class="my-[8px]">2. 完成交易後，至粉絲團活動PO下方回覆以下指定內容，即可獲得抽獎資格</p>
+              <p class="my-[8px]"><span class="opacity-0">3. </span>「媒合交易好方便，快上PMatch最優惠」並附上委託媒合紀錄完成交易截圖</p>
               <div class="flex flex-col items-center justify-center ">
                 <img class="max-w-full -m-[20px] select-none" src="/images/activity/3/tab3-award.png" alt="Apple iPad Wi-Fi機型128G (市價$11,900)">
                 <p class="text-[#A21010] text-[14px] md:text-[20px] md:leading-0 text-center">Apple iPad Wi-Fi機型128G (市價$11,900)<span class="desktop">，</span><br class="md:hidden">共兩台</p>
