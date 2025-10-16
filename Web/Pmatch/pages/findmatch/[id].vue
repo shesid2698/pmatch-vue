@@ -1,15 +1,5 @@
 <template>
   <div>
-
-    <Head>
-      <title>{{ metaTitle }}</title>
-      <Meta property="og:title" :content="metaTitle" />
-      <Meta property="title" :content="metaTitle" />
-      <Meta name="keywords"
-        content="星城online,包你發娛樂城,聚寶Online,老子有錢Online,寶島娛樂城,錢街Online,金好運娛樂城,滿貫大亨,豪神娛樂城,辣財神,金爸爸,HUGA野蠻世界娛樂城,明星3缺1,大福娛樂城" />
-      <Meta name="description" content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
-      <Meta property="og:description" content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
-    </Head>
     <div class="absolute right-0 top-0 z-1">
       <div class="flex justify-end select-none pointer-events-none">
         <img class="w-60%" src="/images/bgDot03.png" alt="header右邊點點圖" />
@@ -45,7 +35,7 @@
               </h2>
             </div>
             <div class="storeAboutContent py-2rem">
-                <span v-if="storesItem" v-html="storesItem.About"></span>
+              <span v-if="storesItem" v-html="storesItem.About"></span>
             </div>
             <div class="pt-2rem">
               <div class="flex justify-between items-center" v-if="storesItem">
@@ -76,7 +66,8 @@
             </div>
           </div>
           <div class="w-100% lg-w-50% flex items-center justify-center lg-mt-0 mt-2rem lg-ms-1rem">
-            <ElCarousel v-show="renderPlatform" type="card" class="w-100%" arrow="always" :autoplay="false" ref="platformCarousel" @change="platformChange">
+            <ElCarousel v-show="renderPlatform" type="card" class="w-100%" arrow="always" :autoplay="false"
+              ref="platformCarousel" @change="platformChange">
               <ElCarouselItem v-for="(item, index) in filteredPlatformArray" :key="index">
                 <div class="flex items-center justify-center w-100%">
                   <div class="platformBox">
@@ -100,18 +91,23 @@
 
       <template v-if="storeActivities.length > 0">
         <div class="my-3rem max-w-1000px mx-auto font-events">
-          <ElCarousel v-show="renderActivity" indicator-position="outside" :arrow="storeActivities.length <= 1 ? 'never' : 'always'" :autoplay="false" ref="activityCarousel" @change="activityChange">
-            <ElCarouselItem v-for="activity in storeActivities":key="activity.Id" class="w-full overflow-hidden">
-              <NuxtLink :to="`/activity/${activity.Id}`" class="w-full block no-underline text-inherit hover:text-inherit focus:outline-none aspect-[25/7] overflow-hidden">
+          <ElCarousel v-show="renderActivity" indicator-position="outside"
+            :arrow="storeActivities.length <= 1 ? 'never' : 'always'" :autoplay="false" ref="activityCarousel"
+            @change="activityChange">
+            <ElCarouselItem v-for="activity in storeActivities" :key="activity.Id" class="w-full overflow-hidden">
+              <NuxtLink :to="`/activity/${activity.Id}`"
+                class="w-full block no-underline text-inherit hover:text-inherit focus:outline-none aspect-[25/7] overflow-hidden">
                 <!-- 自訂圖片 -->
-                <img v-if="activity.imageUrl" :src="activity.imageUrl" alt="自訂主視覺" class="w-full h-full object-cover object-center"/>
+                <img v-if="activity.imageUrl" :src="activity.imageUrl" alt="自訂主視覺"
+                  class="w-full h-full object-cover object-center" />
                 <!-- 預設圖片 -->
                 <template v-else>
                   <div class="relative">
-                    <img :src="bannerTypeMap[activity.bannerType]?.picture" alt="活動主視覺" class="w-full block"/>
+                    <img :src="bannerTypeMap[activity.bannerType]?.picture" alt="活動主視覺" class="w-full block" />
                     <div :class="bannerTypeMap[activity.bannerType]?.position">
                       <div class="text-white text-shadow-md text-md">
-                        活動時間：{{ activity.StartTime?.split?.('T')?.[0] ?? '未填寫' }} ~ {{ activity.EndTime?.split?.('T')?.[0] ?? '未填寫' }}
+                        活動時間：{{ activity.StartTime?.split?.('T')?.[0] ?? '未填寫' }} ~ {{
+                          activity.EndTime?.split?.('T')?.[0] ?? '未填寫' }}
                       </div>
                       <div class="text-white text-shadow-md text-6xl mb-1 font-bold">{{ activity.Title }}</div>
                       <div class="text-white text-shadow-md text-4xl">{{ activity.Summary }}</div>
@@ -124,11 +120,13 @@
         </div>
       </template>
 
-    </div>   
+    </div>
 
 
     <div class="w-full relative mt-2rem md-mt-5rem z-2">
-      <div v-if="storesItem != null" class="mt-2rem md-mt-7rem max-w-1110px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3 relative z-2" :class="{ 'mask': isTransactionDisabled }" >
+      <div v-if="storesItem != null"
+        class="mt-2rem md-mt-7rem max-w-1110px m-auto lg-ps-0 ps-3 lg-pe-0 pe-3 relative z-2"
+        :class="{ 'mask': isTransactionDisabled }">
         <div class="w-100% block md-flex justify-center flex-wrap ">
           <div class="md-w-460px">
             <div class="mb-5">
@@ -138,8 +136,8 @@
             </div>
             <div class="entryBox w-100% mb-5">
               <div class="entryContent w-100%">
-                <input class="entryDetail w-90% py-.5rem font-size-18px" type="text" placeholder="遊戲暱稱(必填)" :disabled="isTransactionDisabled"
-                  v-model="accMemberName" />
+                <input class="entryDetail w-90% py-.5rem font-size-18px" type="text" placeholder="遊戲暱稱(必填)"
+                  :disabled="isTransactionDisabled" v-model="accMemberName" />
               </div>
             </div>
             <div v-if="storesItem != null" class="w-100% flex justify-center mb-5">
@@ -159,8 +157,9 @@
             </div>
             <div class="entryBox mb-5">
               <div class="entryContent">
-                <input class="entryDetail w-90% py-.5rem font-size-18px" type="text" :placeholder="buyOrSell ? '委託金額(必填)' : '委託遊戲幣(必填)'" :disabled="isTransactionDisabled"
-                v-model="accPatch" />
+                <input class="entryDetail w-90% py-.5rem font-size-18px" type="text"
+                  :placeholder="buyOrSell ? '委託金額(必填)' : '委託遊戲幣(必填)'" :disabled="isTransactionDisabled"
+                  v-model="accPatch" />
               </div>
             </div>
             <div class="w-100% flex justify-center mb-5" v-if="storesItem != null"
@@ -213,8 +212,8 @@
         <div class="flex justify-center">
           <div class="relative mb-5">
             <div class="flex items-center font-size-18px">
-              <input type="radio" class="w-20px h-20px m-0 me-3 custom-radio" id="read" v-model="readContract" :disabled="isTransactionDisabled"
-                :value="true" />
+              <input type="radio" class="w-20px h-20px m-0 me-3 custom-radio" id="read" v-model="readContract"
+                :disabled="isTransactionDisabled" :value="true" />
               <ElButton plain @click="readContact" :disabled="isTransactionDisabled">
                 我已詳細閱讀此服務條款(必填)
               </ElButton>
@@ -294,9 +293,10 @@
                     </div>
                     <div>
                       <img :class="answerShow === index
-                          ? 'w-30px'
-                          : 'w-20px'
-                        " :src="answerShow === index ? '/images/arrowDownLine.png' : '/images/arrowRightLine.png' " alt="右箭頭漸層" />
+                        ? 'w-30px'
+                        : 'w-20px'
+                        " :src="answerShow === index ? '/images/arrowDownLine.png' : '/images/arrowRightLine.png'"
+                        alt="右箭頭漸層" />
                     </div>
                   </div>
                   <div v-show="answerShow === index &&
@@ -328,6 +328,17 @@
 </template>
 
 <script setup>
+useHead({
+  title: metaTitle.value,
+})
+
+useSeoMeta({
+  title: metaTitle.value,
+  ogTitle: metaTitle.value,
+  description: 'Pmatch遊戲道具交易平台 - 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全',
+  ogDescription: 'Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全',
+  keywords: '星城online,包你發娛樂城,聚寶Online,老子有錢Online,寶島娛樂城,錢街Online,金好運娛樂城,滿貫大亨,豪神娛樂城,辣財神,金爸爸,HUGA野蠻世界娛樂城,明星3缺1,大福娛樂城'
+})
 import { ArrowRight } from '@element-plus/icons-vue';
 import { ElButton } from 'element-plus';
 import { ElDialog } from 'element-plus';
@@ -488,119 +499,119 @@ const storeActivities = computed(() =>
   })
 )
 
-  // 解析圖片 url 字串
-  function parseImgFile(imgFile) {
-    const preset = {
+// 解析圖片 url 字串
+function parseImgFile(imgFile) {
+  const preset = {
+    imageUrl: '',
+    bannerType: 0,
+    background: 0
+  }
+  if (!imgFile || typeof imgFile !== 'string') return preset
+
+  // case 1: 主題編號_背景編號
+  const defaultImage = imgFile.match(/^pmatch(\d)_(\d)$/)
+  if (defaultImage) {
+    const x = parseInt(defaultImage[1], 10)
+    const y = parseInt(defaultImage[2], 10)
+    return {
       imageUrl: '',
-      bannerType: 0,
-      background: 0
+      bannerType: x >= 1 && x <= 9 ? x : preset.bannerType,
+      background: y >= 0 && y <= 8 ? y : preset.background
     }
-    if (!imgFile || typeof imgFile !== 'string') return preset
+  }
+  // case 2: 圖片路徑_背景編號 (從最後的底線判斷)
+  const customImage = imgFile.lastIndexOf('_')
+  if (customImage > -1) {
+    const url = imgFile.slice(0, customImage)
+    const bg = parseInt(imgFile.slice(customImage + 1), 10)
 
-    // case 1: 主題編號_背景編號
-    const defaultImage = imgFile.match(/^pmatch(\d)_(\d)$/)
-    if (defaultImage) {
-      const x = parseInt(defaultImage[1], 10)
-      const y = parseInt(defaultImage[2], 10)
+    if (!isNaN(bg)) {
       return {
-        imageUrl: '',
-        bannerType: x >= 1 && x <= 9 ? x : preset.bannerType,
-        background: y >= 0 && y <= 8 ? y : preset.background
+        imageUrl: `${assetsUrl.value}${url}`,
+        bannerType: 0,
+        background: bg >= 0 && bg <= 8 ? bg : preset.background
       }
-    }
-    // case 2: 圖片路徑_背景編號 (從最後的底線判斷)
-    const customImage = imgFile.lastIndexOf('_')
-    if (customImage  > -1) {
-      const url = imgFile.slice(0, customImage )
-      const bg = parseInt(imgFile.slice(customImage  + 1), 10)
-
-      if (!isNaN(bg)) {
-        return {
-          imageUrl: `${assetsUrl.value}${url}`,
-          bannerType: 0,
-          background: bg >= 0 && bg <= 8 ? bg : preset.background
-        }
-      }
-    }
-    return preset
-  }
-
-  // 取得活動資料
-  const activityList = ref([]);
-
-  async function fetchAdvertisementList() {
-    const token = userToken.value;
-    try {      
-      if (!token || token === '') {
-        token = await jwtStore.generateToken()
-      }
-
-      const response = await $axios.post(
-        '/api/v1/Pmatch/GetAdvertisementList',
-        {
-            "Category": [5] // 5：媒合商活動；
-        },
-        {
-          headers: {
-            Authorization: token,
-          }
-        }
-      )
-      const data = response.data?.Data ?? []
-
-      activityList.value = data.map(item => {
-        const { imageUrl, bannerType, background } = parseImgFile(item.ImgFile)
-        return {
-          ...item,
-          imageUrl,
-          bannerType,
-          background
-        }
-      })
-    } catch (error) {
-      console.error('請求失敗：', error);
-      data.value = '無法取得資料。';
     }
   }
-    // 主題樣式
-  const bannerTypeMap = {
-    1: {
-      picture: '/images/activity/banner-1.png',
-      position: 'absolute top-5.5% right-4% flex flex-col items-end gap-2'
-    },
-    2: {
-      picture: '/images/activity/banner-2.png',
-      position: 'absolute bottom-10% left-3% flex flex-col items-start gap-2'
-    },
-    3: {
-      picture: '/images/activity/banner-3.png',
-      position: 'absolute bottom-9% right-2.5% flex flex-col items-end gap-2'
-    },
-    4: {
-      picture: '/images/activity/banner-4.png',
-      position: 'absolute bottom-4% right-3% flex flex-col items-end gap-2'
-    },
-    5: {
-      picture: '/images/activity/banner-5.png',
-      position: 'absolute bottom-8% right-3% flex flex-col items-end gap-2'
-    },
-    6: {
-      picture: '/images/activity/banner-6.png',
-      position: 'absolute bottom-7% left-3% flex flex-col items-start gap-2'
-    },
-    7: {
-      picture: '/images/activity/banner-7.png',
-      position: 'absolute bottom-4.5% right-3% flex flex-col items-end gap-2'
-    },
-    8: {
-      picture: '/images/activity/banner-8.png',
-      position: 'absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%] flex flex-col items-center gap-2 w-[90%] '
-    },
-    9: {
-      picture: '/images/activity/banner-9.png',
-      position: 'absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%] flex flex-col items-center gap-2 w-[90%] '
+  return preset
+}
+
+// 取得活動資料
+const activityList = ref([]);
+
+async function fetchAdvertisementList() {
+  const token = userToken.value;
+  try {
+    if (!token || token === '') {
+      token = await jwtStore.generateToken()
     }
-  };
+
+    const response = await $axios.post(
+      '/api/v1/Pmatch/GetAdvertisementList',
+      {
+        "Category": [5] // 5：媒合商活動；
+      },
+      {
+        headers: {
+          Authorization: token,
+        }
+      }
+    )
+    const data = response.data?.Data ?? []
+
+    activityList.value = data.map(item => {
+      const { imageUrl, bannerType, background } = parseImgFile(item.ImgFile)
+      return {
+        ...item,
+        imageUrl,
+        bannerType,
+        background
+      }
+    })
+  } catch (error) {
+    console.error('請求失敗：', error);
+    data.value = '無法取得資料。';
+  }
+}
+// 主題樣式
+const bannerTypeMap = {
+  1: {
+    picture: '/images/activity/banner-1.png',
+    position: 'absolute top-5.5% right-4% flex flex-col items-end gap-2'
+  },
+  2: {
+    picture: '/images/activity/banner-2.png',
+    position: 'absolute bottom-10% left-3% flex flex-col items-start gap-2'
+  },
+  3: {
+    picture: '/images/activity/banner-3.png',
+    position: 'absolute bottom-9% right-2.5% flex flex-col items-end gap-2'
+  },
+  4: {
+    picture: '/images/activity/banner-4.png',
+    position: 'absolute bottom-4% right-3% flex flex-col items-end gap-2'
+  },
+  5: {
+    picture: '/images/activity/banner-5.png',
+    position: 'absolute bottom-8% right-3% flex flex-col items-end gap-2'
+  },
+  6: {
+    picture: '/images/activity/banner-6.png',
+    position: 'absolute bottom-7% left-3% flex flex-col items-start gap-2'
+  },
+  7: {
+    picture: '/images/activity/banner-7.png',
+    position: 'absolute bottom-4.5% right-3% flex flex-col items-end gap-2'
+  },
+  8: {
+    picture: '/images/activity/banner-8.png',
+    position: 'absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%] flex flex-col items-center gap-2 w-[90%] '
+  },
+  9: {
+    picture: '/images/activity/banner-9.png',
+    position: 'absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%] flex flex-col items-center gap-2 w-[90%] '
+  }
+};
 
 onMounted(async () => {
   await setPageLoading(true);
@@ -642,7 +653,7 @@ onMounted(async () => {
 
 
 // 兩組輪播不互相干擾
-const platformCarousel = ref(null); 
+const platformCarousel = ref(null);
 const activityCarousel = ref(null);
 
 // 處理輪播切換的方法
@@ -986,7 +997,7 @@ watch(
 }
 
 :deep(.el-carousel__arrow) {
-  background-color: rgba(0, 0, 0, 0);  
+  background-color: rgba(0, 0, 0, 0);
   opacity: 0.6;
   filter: drop-shadow(0 0 3px rgba(144, 144, 144, 0.4));
 }
@@ -1432,21 +1443,23 @@ watch(
   pointer-events: none;
   padding: 50px 0;
 }
+
 .mask::before {
   content: '';
   position: absolute;
   inset: 0;
-  background-image:linear-gradient(to bottom, #3C3C3C88,#A2A2A288);
-  width: 80%; 
+  background-image: linear-gradient(to bottom, #3C3C3C88, #A2A2A288);
+  width: 80%;
   height: 100%;
   margin: auto;
-  border-radius: 10px; 
+  border-radius: 10px;
   z-index: 10;
 }
+
 .mask::after {
   content: '';
   position: absolute;
-  width: 420px; 
+  width: 420px;
   height: 420px;
   z-index: 10;
   background-image: url('/images/吉祥物舉牌.svg');
@@ -1454,16 +1467,18 @@ watch(
   background-repeat: no-repeat;
   background-position: center;
   right: 100px;
-  bottom: -20%; 
+  bottom: -20%;
 }
 
 @media screen and (max-width: 1024px) {
   .platformBox {
     max-height: 290px;
   }
+
   .mask::before {
     width: 100%;
   }
+
   .mask::after {
     right: 0;
   }

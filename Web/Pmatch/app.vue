@@ -7,13 +7,6 @@
   </ClientOnly>
 
   <div :class="{ pageSetting: isHomePage }">
-
-    <Head>
-      <Meta property="og:title" content="PMatch遊戲道具交易平台" />
-      <Meta name="keywords" content="pmatch,pmatch交易,博奕遊戲,幣商,媒合商,遊戲幣,虛擬幣,遊戲交易,媒合交易,買幣,賣幣,虛寶交易" />
-      <Meta name="description" content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
-      <Meta property="og:description" content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
-    </Head>
     <AlertModal />
     <ConfirmModal />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
@@ -179,4 +172,10 @@ async function fetchSetting(token) {
     data.value = "無法取得資料。"; // 畫面顯示錯誤訊息
   }
 }
+useSeoMeta({
+  keywords: 'pmatch,pmatch交易,博奕遊戲,幣商,媒合商,遊戲幣,虛擬幣,遊戲交易,媒合交易,買幣,賣幣,虛寶交易',
+  ogTitle: 'PMatch遊戲道具交易平台',
+  description: 'Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全',
+  ogDescription: 'Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全'
+})
 </script>
