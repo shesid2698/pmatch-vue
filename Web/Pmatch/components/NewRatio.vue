@@ -94,6 +94,11 @@ const matchingList = [
     SendPatch: "130",
     CollectPatch: "140",
   },
+  {
+    GamePlatform: "來好運娛樂城",
+    SendPatch: "1.2",
+    CollectPatch: "1.22",
+  },
 ];
 
 const visibleList = ref([]); // 當前顯示的列表
