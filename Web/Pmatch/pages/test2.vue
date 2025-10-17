@@ -26,6 +26,7 @@ const moveIndicator = async (i) => {
 }
 
 onMounted(() => {
+  console.log("onMounted");
   const target = buttons.value[index.value]
   if (!target || !indicator.value) return
 
@@ -44,7 +45,7 @@ onMounted(() => {
       <div
         ref="indicator"
         class="absolute h-[100%] bg-gray-400 rounded-[5px] top-0 left-0"
-        style="width: 0;"
+        style="width: 48px;transform: translate(8px, 0px);"
       ></div>
 
       <div

@@ -328,17 +328,6 @@
 </template>
 
 <script setup>
-useHead({
-  title: metaTitle.value,
-})
-
-useSeoMeta({
-  title: metaTitle.value,
-  ogTitle: metaTitle.value,
-  description: 'Pmatch遊戲道具交易平台 - 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全',
-  ogDescription: 'Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全',
-  keywords: '星城online,包你發娛樂城,聚寶Online,老子有錢Online,寶島娛樂城,錢街Online,金好運娛樂城,滿貫大亨,豪神娛樂城,辣財神,金爸爸,HUGA野蠻世界娛樂城,明星3缺1,大福娛樂城'
-})
 import { ArrowRight } from '@element-plus/icons-vue';
 import { ElButton } from 'element-plus';
 import { ElDialog } from 'element-plus';
@@ -956,6 +945,17 @@ watch(
   },
   { immediate: true } // 立刻執行一次，將初始值設置進去
 );
+useHead({
+  title: metaTitle.value,
+})
+
+useSeoMeta({
+  title: metaTitle.value,
+  ogTitle: metaTitle.value,
+  description: 'Pmatch遊戲道具交易平台 - 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全',
+  ogDescription: 'Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全',
+  keywords: '星城online,包你發娛樂城,聚寶Online,老子有錢Online,寶島娛樂城,錢街Online,金好運娛樂城,滿貫大亨,豪神娛樂城,辣財神,金爸爸,HUGA野蠻世界娛樂城,明星3缺1,大福娛樂城'
+})
 </script>
 
 <style scoped>
