@@ -3,8 +3,8 @@
     <title>10月超值豪禮三重奏</title>
     <Meta property="og:title" content="10月超值豪禮三重奏" />
     <Meta name="keywords" content="pmatch,pmatch交易,博奕遊戲,幣商,媒合商,遊戲幣,虛擬幣,遊戲交易,媒合交易,買幣,賣幣,虛寶交易" />
-    <Meta name="description" content="Pmatch遊戲道具交易平台 - 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
-    <Meta property="og:description" content="Pmatch遊戲道具交易平台 - 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
+    <Meta name="description" content="PMatch遊戲道具交易平台 - 線上遊戲安心交易的第一選擇，PMatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
+    <Meta property="og:description" content="PMatch遊戲道具交易平台 - 線上遊戲安心交易的第一選擇，PMatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
@@ -258,7 +258,7 @@
             <TitleBlock class="font-Noto" title="領取流程" />
             <div class="font-Inter text-[#741B15] text-[20px] md:text-[28px] lg:text-[32px] text-start mx-[5%] md:mx-[10%] my-[40px]">
               <p class="my-[8px]">1. 活動結束後，隨機抽取兩位符合抽獎資格玩家</p>
-              <p class="my-[8px]">2. 小編透過臉書聯繫獲獎玩家，確認PMatch會員資訊後，送至Pmatch官網領獎中心</p>
+              <p class="my-[8px]">2. 小編透過臉書聯繫獲獎玩家，確認PMatch會員資訊後，送至PMatch官網領獎中心</p>
             </div>
           </div>
           <div class="md:my-[60px] my-[30px]">
