@@ -157,22 +157,22 @@
                           <NuxtLink class="flex items-center ms-1 me-1" v-show="item.FB !== ''" :to="item.FB">
                             <img class="w-30px h-30px" src="/images/iconFB.png" alt="fbIcon" />
                           </NuxtLink>
-                          <NuxtLink class="flex items-center ms-1 me-1" v-show="item.LineId !== ''
-                            " :to="item.LineId">
+                          <NuxtLink class="flex items-center ms-1 me-1" v-show="item.LineId !== ''" :to="item.LineId">
                             <img class="w-30px h-30px" src="/images/iconLine.png" alt="lineIcon" />
                           </NuxtLink>
-                          <NuxtLink class="flex items-center ms-1 me-1" v-show="item.IGId !== ''
-                            " :to="item.IGId">
+                          <NuxtLink class="flex items-center ms-1 me-1" v-show="item.IGId !== ''" :to="item.IGId">
                             <img class="w-30px h-30px" src="/images/iconIG.png" alt="igIcon" />
                           </NuxtLink>
-                          <NuxtLink class="flex items-center ms-1 me-1" v-show="item.TwitterId !==
-                            ''
-                            " :to="item.TwitterId">
+                          <NuxtLink class="flex items-center ms-1 me-1" v-show="item.TwitterId !== ''" :to="item.TwitterId">
                             <img class="w-30px h-30px" src="/images/iconX.png" alt="推特icon" />
                           </NuxtLink>
-                          <NuxtLink class="flex items-center ms-1 me-1" v-show="item.PhoneNumber !==
-                          ''
-                          " :href="`tel:${item.PhoneNumber}`">
+                          <NuxtLink class="flex items-center ms-1 me-1" v-show="item.WechatId !== ''" :to="item.WechatId">
+                            <img class="w-30px h-30px" src="/images/iconWeChat.png" alt="wechatIcon" />
+                          </NuxtLink>                          
+                          <NuxtLink class="flex items-center ms-1 me-1" v-show="item.Email !== ''" :href="`mailto:${item.Email}`">
+                            <img class="w-30px h-30px" src="/images/iconEmail.png" alt="emailIcon" />
+                          </NuxtLink>
+                          <NuxtLink class="flex items-center ms-1 me-1" v-show="item.PhoneNumber !== ''" :href="`tel:${item.PhoneNumber}`">
                           <img class="w-30px h-30px" src="/public/images/iconPhone.png" alt="phoneIcon" />
                         </NuxtLink>                        
                         </div>
