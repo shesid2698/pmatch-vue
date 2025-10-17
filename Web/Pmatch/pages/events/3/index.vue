@@ -167,7 +167,7 @@
           <div class="md:my-[60px] my-[30px]">
             <TitleBlock class="font-Noto" title="活動內容" />
             <div class="font-Inter text-[#741B15] text-[20px] md:text-[28px] lg:text-[32px] text-start mx-[5%] md:mx-[10%] my-[12px] md:my-[20px] ">
-              <p class="my-[8px]">1. 活動期間指定平台委買不限金額98折，指定平台最高享8折優惠</p>
+              <p class="my-[8px]">1. 活動期間指定商店委買不限金額98折，指定平台最高享8折優惠</p>
               <p class="my-[8px]">2. 委買優惠活動僅限列表中指定之遊戲平台及媒合商</p>    
             </div>            
           </div>
