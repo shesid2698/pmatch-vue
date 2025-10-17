@@ -86,21 +86,26 @@
                   <span>活動結束</span> 
                 </div> 
               </div>
-              <div v-else class="absolute bottom-[31.5%] right-[3.85%]" :class="isEligible && !claimedReward ? 'w-[33.3%]' : 'w-[35.155%]'">
-                <div class="font-Inter w-full rounded-full text-[#FFF4B5] text-[3.75cqi] leading-[3.75cqi] flex items-center justify-center bg-[linear-gradient(to_bottom,#951111AB,#841111AB)]" :class="isEligible && !claimedReward ? 'aspect-[323/68]' : 'aspect-[341/68]'">
-                  <template v-if="isEligible && !claimedReward">
+              <div v-else-if="!isEligible" class="absolute bottom-[31.5%] right-[3.85%] w-[35.155%]">
+                <div class="font-Inter aspect-[341/68] w-full rounded-full text-[#FFF4B5] text-[3.75cqi] leading-[3.75cqi] flex items-center justify-center bg-[linear-gradient(to_bottom,#951111AB,#841111AB)]">
+                  <svg width="3.33cqi" height="3.33cqi" viewBox="0 0 37 37" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M32.7324 0.732422C33.7087 -0.243889 35.2913 -0.243889 36.2676 0.732422C37.2437 1.70875 37.2438 3.29133 36.2676 4.26758L22.0352 18.5L36.2676 32.7324C37.2435 33.7088 37.2438 35.2914 36.2676 36.2676C35.2914 37.2438 33.7088 37.2435 32.7324 36.2676L18.5 22.0352L4.26758 36.2676C3.29132 37.2436 1.70868 37.2436 0.732422 36.2676C-0.243826 35.2913 -0.243699 33.7087 0.732422 32.7324L14.9648 18.5L0.732422 4.26758C-0.243889 3.29127 -0.243889 1.70873 0.732422 0.732422C1.70873 -0.243889 3.29127 -0.243889 4.26758 0.732422L18.5 14.9648L32.7324 0.732422Z" fill="#FFF4B5"/>
+                  </svg>
+                  <span class="ms-[1.03cqi]">不符合領獎資格</span> 
+                </div> 
+              </div>
+              <div v-else class="absolute bottom-[31.5%] right-[3.85%]" :class="!claimedReward ? 'w-[33.3%]' : 'w-[36.6%]'">
+                <div class="font-Inter w-full rounded-full text-[#FFF4B5] text-[3.75cqi] leading-[3.75cqi] flex items-center justify-center bg-[linear-gradient(to_bottom,#951111AB,#841111AB)]" :class="isEligible && !claimedReward ? 'aspect-[323/68]' : 'aspect-[355/68]'">
+                  <template v-if="!claimedReward">
                     <svg width="4.44cqi" height="4.44cqi" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M42.6667 23C42.6667 12.1384 33.8616 3.33333 23 3.33333C12.1384 3.33333 3.33333 12.1384 3.33333 23C3.33333 33.8616 12.1384 42.6667 23 42.6667V46C10.2975 46 0 35.7025 0 23C0 10.2975 10.2975 0 23 0C35.7025 0 46 10.2975 46 23C46 35.7025 35.7025 46 23 46V42.6667C33.8616 42.6667 42.6667 33.8616 42.6667 23Z" fill="#FFF4B5"/>
                       <path d="M34.7251 13.2596C35.318 12.5555 36.3693 12.4655 37.0734 13.0584C37.7774 13.6513 37.8675 14.7026 37.2746 15.4067L21.2746 34.4067C20.9772 34.7598 20.5468 34.974 20.0858 34.9978C19.6248 35.0216 19.1744 34.8529 18.8423 34.5323L9.1756 25.199C8.51346 24.5597 8.49474 23.5044 9.13393 22.8422C9.77324 22.1801 10.8285 22.1614 11.4907 22.8006L19.8742 30.895L34.7251 13.2596Z" fill="#FFF4B5"/>
                     </svg>
                     <span class="ms-[1.12cqi]">符合領獎資格</span> 
-                  </template>
+                  </template>  
                   <template v-else>
-                    <svg width="3.33cqi" height="3.33cqi" viewBox="0 0 37 37" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M32.7324 0.732422C33.7087 -0.243889 35.2913 -0.243889 36.2676 0.732422C37.2437 1.70875 37.2438 3.29133 36.2676 4.26758L22.0352 18.5L36.2676 32.7324C37.2435 33.7088 37.2438 35.2914 36.2676 36.2676C35.2914 37.2438 33.7088 37.2435 32.7324 36.2676L18.5 22.0352L4.26758 36.2676C3.29132 37.2436 1.70868 37.2436 0.732422 36.2676C-0.243826 35.2913 -0.243699 33.7087 0.732422 32.7324L14.9648 18.5L0.732422 4.26758C-0.243889 3.29127 -0.243889 1.70873 0.732422 0.732422C1.70873 -0.243889 3.29127 -0.243889 4.26758 0.732422L18.5 14.9648L32.7324 0.732422Z" fill="#FFF4B5"/>
-                    </svg>
-                    <span class="ms-[1.03cqi]">不符合領獎資格</span> 
-                  </template>               
+                    <span class="ms-[1.03cqi]">感謝參與本次活動！</span> 
+                  </template>
                 </div> 
               </div>
               <!-- 下拉式選單 -->
