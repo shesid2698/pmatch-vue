@@ -172,7 +172,7 @@
           <div class="md:my-[60px] my-[30px]">
             <TitleBlock class="font-Noto" title="活動內容" />
             <div class="font-Inter text-[#741B15] text-[20px] md:text-[28px] lg:text-[32px] text-start mx-[5%] md:mx-[10%] my-[12px] md:my-[20px] ">
-              <p class="my-[8px]">1. 活動期間指定商店委買不限金額98折，指定平台最高享8折優惠</p>
+              <p class="my-[8px]">1. 活動期間指定商店委買不限金額98折，指定商店最高享8折優惠</p>
               <p class="my-[8px]">2. 委買優惠活動僅限列表中指定之遊戲平台及媒合商</p>    
             </div>            
           </div>
@@ -235,8 +235,8 @@
             <TitleBlock class="font-Noto" title="活動內容" />
             <div class="font-Inter text-[#741B15] text-[20px] md:text-[28px] lg:text-[32px] text-start mx-[5%] md:mx-[10%] my-[12px] md:my-[20px] ">
               <p class="my-[8px]">1. 活動期間內透過PMatch官網媒合交易下單且完成交易</p>
-              <p class="my-[8px]">2. 完成交易後，至粉絲團活動PO下方回覆以下指定內容，即可獲得抽獎資格</p>
-              <p class="my-[8px]"><span class="opacity-0">3. </span>「媒合交易好方便，快上PMatch最優惠」並附上委託媒合紀錄完成交易截圖</p>              
+              <p class="my-[8px]">2. 完成交易後，至粉絲團活動PO下方回覆以下指定內容，即獲得抽獎資格</p>
+              <p class="my-[8px]">「媒合交易好方便，快上PMatch最優惠」並附上委託媒合紀錄完成交易截圖</p>              
               <div class="flex flex-col items-center justify-center">
                 <img class="max-w-full" src="/images/activity/3/tab3-post1.png" alt="粉絲團活動貼文">
                 <NuxtLink to="https://www.pmatch.com.tw/member/center/reward" target="_blank" class="cursor-pointer">
