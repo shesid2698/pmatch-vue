@@ -1449,7 +1449,7 @@ watch(
   width: 420px; 
   height: 420px;
   z-index: 10;
-  background-image: url('/images/吉祥物舉牌.svg');
+  background-image: url('/images/mascot.svg');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;

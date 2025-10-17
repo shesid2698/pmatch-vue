@@ -45,20 +45,20 @@
                   item.ActivityName }}</div>
                 <div v-if="innerPage !== 4">
                   <div v-if="innerPage === 1">
-                    <img class="left-img" :src="item.RewardType === 3 ? '/images/實體獎項-l.svg' : '/images/虛擬獎項-l.svg'"
+                    <img class="left-img" :src="item.RewardType === 3 ? '/images/reward-physical-l.svg' : '/images/reward-virtual-l.svg'"
                       alt="" />
                   </div>
                   <div v-else>
                     <!-- <img class="left-img"
-                                             :src="item.RewardType === 3 ? '/images/實體獎項-l.svg' : '/images/虛擬獎項-disabled-l.svg'"
+                                             :src="item.RewardType === 3 ? '/images/reward-physical-l.svg' : '/images/reward-virtual-disabled.svg'"
                                              alt="" /> -->
                     <img class="left-img"
-                      :src="item.RewardType === 3 ? (item.ReviewStatus === 3 ? '/images/實體獎項-l.svg' : '/images/實體獎項-disabled-l.svg') : '/images/虛擬獎項-disabled-l.svg'"
+                      :src="item.RewardType === 3 ? (item.ReviewStatus === 3 ? '/images/reward-physical-l.svg' : '/images/reward-physical-disabled.svg') : '/images/reward-virtual-disabled.svg'"
                       alt="" />
                   </div>
                 </div>
                 <img v-else class="left-img"
-                  :src="item.RewardType === 3 ? '/images/實體獎項-disabled-l.svg' : '/images/虛擬獎項-disabled-l.svg'" alt="">
+                  :src="item.RewardType === 3 ? '/images/reward-physical-disabled.svg' : '/images/reward-virtual-disabled.svg'" alt="">
               </div>
               <div class="relative w-fit h-fit cursor-pointer" @click="GetReward($event, item)">
                 <div v-if="item.RewardType === 1"
@@ -69,15 +69,15 @@
                       1 ? "複製序號" : item.RewardType === 2 ? '兌換' : "領獎") : "補件" }}</span></div>
                 <div v-if="innerPage !== 4">
                   <div v-if="innerPage === 1">
-                    <img class="right-img" :src="item.RewardType === 3 ? '/images/實體獎項-r.svg' : '/images/虛擬獎項-r.svg'"
+                    <img class="right-img" :src="item.RewardType === 3 ? '/images/reward-physical-r.svg' : '/images/reward-virtual-r.svg'"
                       alt="" />
                   </div>
                   <div v-else>
                     <img class="right-img"
-                      :src="item.ReviewStatus === 3 ? '/images/實體獎項-r.svg' : '/images/獎項-disabled-r.svg'" alt="" />
+                      :src="item.ReviewStatus === 3 ? '/images/reward-physical-r.svg' : '/images/reward-r-disabled-.svg'" alt="" />
                   </div>
                 </div>
-                <img v-else class="right-img" src="/images/獎項-disabled-r.svg" alt="">
+                <img v-else class="right-img" src="/images/reward-r-disabled-.svg" alt="">
               </div>
             </div>
           </div>
