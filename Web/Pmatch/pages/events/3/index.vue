@@ -73,7 +73,7 @@
               </div>
               <div v-else>
                 <SignUp class="font-Noto absolute top-[25.55%] right-[22.55%] leading-[6.5cqi] text-[6.5cqi]" content="註冊時間" />
-                <Timing class="absolute top-[39.33%] right-[9.5%] leading-[4.75cqi] text-[4.75cqi]" :content="registrationDate || '20XX-XX-XX'" />
+                <Timing class="absolute top-[39.33%] right-[9.5%] leading-[4.75cqi] text-[4.75cqi]" :content="displayRegistrationDate"/>
               </div>
               <!-- 領獎資格 -->
                <div v-if="!isLoggedIn" class="absolute bottom-[31.5%] right-[3.85%] w-[16.46%]">
@@ -428,6 +428,14 @@
     return regDate >= eventStartTime.value && regDate <= eventEndTime.value;
   });
 
+  const displayRegistrationDate = computed(() => {
+    if (registrationDate.value) {
+      // 這裡才.split('T')[0]"
+      return registrationDate.value.split('T')[0];
+    }
+    return '20XX-XX-XX';
+  });
+
   const dropdownOption = computed(() => {
     return selectedPlatform.value || '遊戲平台選擇';
   });
@@ -472,7 +480,7 @@
               const userData = response.data.Data[0];              
               // 儲存 "CreateTime"
               if (userData && userData.CreateTime) {
-                  registrationDate.value = userData.CreateTime.split('T')[0];
+                  registrationDate.value = userData.CreateTime;
               } else {
                 console.warn('GetMemberDetail API 未取得 CreateTime');
               }
