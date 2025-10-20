@@ -1962,11 +1962,9 @@ onMounted(async () => {
     position: relative;
     width: 100%;
   }
-
   .border-gradient-l {
     width: 20px;
   }
-
   .border-gradient-r {
     width: 20px;
   }

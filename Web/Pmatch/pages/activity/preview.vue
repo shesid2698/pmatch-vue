@@ -71,13 +71,14 @@
   const assetsUrl = useCookie('_PmAssetsUrl').value || ''
   const jwtStore = useJwtStore()
   const route = useRoute();
-
+  let token = userToken.value;
+  
   const activityItem = ref(null); // 初始化活動頁
   const isLoading = ref(true);
     
   async function RedisGetString() {
     const key = route.query.key;
-    let token = userToken.value;
+
     
     if (!key) {
       console.warn('您無權限瀏覽此頁');
