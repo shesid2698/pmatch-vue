@@ -70,7 +70,7 @@
                   </NuxtLink>
                 </div>
                 <div>
-                  <button class="chat-btn" @click="OpenChat"><img src="/public/images/chatRoomIcon.svg" /> 聊聊</button>
+                  <button v-if="storesItem.IsEnableChat"  class="chat-btn" @click="OpenChat"><img src="/public/images/chatRoomIcon.svg" />聊聊</button>
                 </div>
               </div>
             </div>
