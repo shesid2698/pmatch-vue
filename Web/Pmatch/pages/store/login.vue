@@ -196,7 +196,6 @@ const onVerify = (tokenValue) => {
 async function login(event) {
   event.preventDefault();
   const token = await getToken();
-  console.log('拿到的 Token 是:', token);
   try {
     const response = await $axios.post("/api/v1/User/Logon", {
       Account: accountId.value,
