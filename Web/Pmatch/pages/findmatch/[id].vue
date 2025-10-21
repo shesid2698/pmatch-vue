@@ -624,14 +624,22 @@ onMounted(async () => {
         await fetchAdvertisementList(token);
       }
     }
-    const root = platformCarousel.value?.$el;
-    if (!root) return;
-
-    const items = root.querySelectorAll('.el-carousel__item');
-
-    if (items.length > 2) {
-      items[items.length - 1].classList.add('leftItem');
-      items[1].classList.add('rightItem');
+    // 所有資料都取完才跑UI(輪播)
+    await nextTick();
+    if (!platformCarousel.value)return;
+    const currentPlatformIndex = filteredPlatformArray.value.findIndex(
+    platform => platform === routeParamPlatformName
+    );
+    let targetIndex = 0; // 第一個平台
+    if (currentPlatformIndex !== -1) {
+        targetIndex = currentPlatformIndex;
+    }
+    platformIndex.value = targetIndex;
+    // 如果不是第一個平台(pn=有參數) 先換頁再addClass
+    if (targetIndex !== 0) {
+      platformCarousel.value.setActiveItem(targetIndex);
+    } else {
+      await platformChange(0);
     }
   } catch (error) {
     console.error('頁面初始化失敗:', error);
@@ -917,34 +925,6 @@ const OpenChat = async () => {
     );
   }
 };
-watch(
-  [filteredPlatform, filteredPlatformArray, gameList],
-  ([newFilteredPlatform, newFilteredPlatformArray]) => {
-    // 更新 accPlatformName
-    if (newFilteredPlatform) {
-      accPlatformName.value = newFilteredPlatform;
-    }
-
-    // 如果有路由參數，則將路由參數的值設置為 currentPlatform
-    const currentPlatformIndex = newFilteredPlatformArray.findIndex(
-      platform => platform === routeParamPlatformName
-    );
-    // 更新 platformIndex
-    if (newFilteredPlatformArray.length > 0 && !currentPlatform.value) {
-      platformIndex.value = 0;
-    } else if (currentPlatformIndex !== -1) {
-      // 如果有找到，則將索引設置為 platformIndex
-      platformIndex.value = currentPlatformIndex;
-      // 設置輪播至當前項目
-      nextTick(() => {
-        if (platformCarousel.value) {
-          platformCarousel.value.setActiveItem(currentPlatformIndex);
-        }
-      });
-    }
-  },
-  { immediate: true } // 立刻執行一次，將初始值設置進去
-);
 </script>
 
 <style scoped>
