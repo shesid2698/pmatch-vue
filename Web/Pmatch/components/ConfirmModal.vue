@@ -32,7 +32,7 @@ const $store = useModalStore();
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 999;
+  z-index: 5000; /**因為掛在app.vue;套件dialog官方變化範圍:999-2000 */
 }
 
 .modalContent {

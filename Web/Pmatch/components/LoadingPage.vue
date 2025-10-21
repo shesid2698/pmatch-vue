@@ -11,7 +11,7 @@ const $store = useLoadStore();
 </script>
 <style scoped>
 .loadingBac {
-  z-index: 99;
+  z-index: 9999; /**因為掛在app.vue;套件dialog官方變化範圍:999-2000 */
   position: fixed;
   top: 0;
 }
