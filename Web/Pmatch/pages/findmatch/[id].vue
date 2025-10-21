@@ -60,7 +60,7 @@
                   </NuxtLink>
                 </div>
                 <div>
-                  <button class="chat-btn" @click="OpenChat"><img src="/public/images/chatRoomIcon.svg" /> 聊聊</button>
+                  <button v-if="storesItem.IsEnableChat"  class="chat-btn" @click="OpenChat"><img src="/public/images/chatRoomIcon.svg" />聊聊</button>
                 </div>
               </div>
             </div>
@@ -1462,7 +1462,7 @@ useSeoMeta({
   width: 420px;
   height: 420px;
   z-index: 10;
-  background-image: url('/images/吉祥物舉牌.svg');
+  background-image: url('/images/mascot.svg');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;

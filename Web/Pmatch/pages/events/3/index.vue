@@ -312,9 +312,6 @@
             </div>
           </div>
           <div class="md:my-[60px] my-[30px]">
-            <div class="md:my-[60px] my-[30px]">
-              <img class="max-w-full" src="/images/activity/3/tab3-post1.png" alt="粉絲團活動貼文">
-            </div>
             <TitleBlock class="font-Noto" title="貼文截圖" />
             <div class="md:my-[60px] my-[30px]">
               <img class="max-w-full" src="/images/activity/3/tab3-post2.png" alt="前往會員中心">
@@ -390,7 +387,9 @@ useHead({
 // SEO 相關 meta
 useSeoMeta({
   title: '10月超值豪禮三重奏',
+  ogTitle: '10月超值豪禮三重奏',
   description: 'Pmatch遊戲道具交易平台 - 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全',
+  ogDescription: 'PMatch遊戲道具交易平台 - 線上遊戲安心交易的第一選擇，PMatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全',
   keywords: 'pmatch,pmatch交易,博奕遊戲,幣商,媒合商,遊戲幣,虛擬幣,遊戲交易,媒合交易,買幣,賣幣,虛寶交易'
 })
 // DI & Global

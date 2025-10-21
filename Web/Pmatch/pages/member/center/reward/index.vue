@@ -37,20 +37,20 @@
                   item.ActivityName }}</div>
                 <div v-if="innerPage !== 4">
                   <div v-if="innerPage === 1">
-                    <img class="left-img" :src="item.RewardType === 3 ? '/images/實體獎項-l.svg' : '/images/虛擬獎項-l.svg'"
+                    <img class="left-img" :src="item.RewardType === 3 ? '/images/reward-physical-l.svg' : '/images/reward-virtual-l.svg'"
                       alt="" />
                   </div>
                   <div v-else>
                     <!-- <img class="left-img"
-                                             :src="item.RewardType === 3 ? '/images/實體獎項-l.svg' : '/images/虛擬獎項-disabled-l.svg'"
+                                             :src="item.RewardType === 3 ? '/images/reward-physical-l.svg' : '/images/reward-virtual-disabled.svg'"
                                              alt="" /> -->
                     <img class="left-img"
-                      :src="item.RewardType === 3 ? (item.ReviewStatus === 3 ? '/images/實體獎項-l.svg' : '/images/實體獎項-disabled-l.svg') : '/images/虛擬獎項-disabled-l.svg'"
+                      :src="item.RewardType === 3 ? (item.ReviewStatus === 3 ? '/images/reward-physical-l.svg' : '/images/reward-physical-disabled.svg') : '/images/reward-virtual-disabled.svg'"
                       alt="" />
                   </div>
                 </div>
                 <img v-else class="left-img"
-                  :src="item.RewardType === 3 ? '/images/實體獎項-disabled-l.svg' : '/images/虛擬獎項-disabled-l.svg'" alt="">
+                  :src="item.RewardType === 3 ? '/images/reward-physical-disabled.svg' : '/images/reward-virtual-disabled.svg'" alt="">
               </div>
               <div class="relative w-fit h-fit cursor-pointer" @click="GetReward($event, item)">
                 <div v-if="item.RewardType === 1"
@@ -61,15 +61,15 @@
                       1 ? "複製序號" : item.RewardType === 2 ? '兌換' : "領獎") : "補件" }}</span></div>
                 <div v-if="innerPage !== 4">
                   <div v-if="innerPage === 1">
-                    <img class="right-img" :src="item.RewardType === 3 ? '/images/實體獎項-r.svg' : '/images/虛擬獎項-r.svg'"
+                    <img class="right-img" :src="item.RewardType === 3 ? '/images/reward-physical-r.svg' : '/images/reward-virtual-r.svg'"
                       alt="" />
                   </div>
                   <div v-else>
                     <img class="right-img"
-                      :src="item.ReviewStatus === 3 ? '/images/實體獎項-r.svg' : '/images/real-disabled-r.svg'" alt="" />
+                      :src="item.ReviewStatus === 3 ? '/images/reward-physical-r.svg' : '/images/reward-r-disabled-.svg'" alt="" />
                   </div>
                 </div>
-                <img v-else class="right-img" src="/images/real-disabled-r.svg" alt="">
+                <img v-else class="right-img" src="/images/reward-r-disabled-.svg" alt="">
               </div>
             </div>
           </div>
@@ -377,7 +377,7 @@
               type="submit">確認送出</button>
           </div>
           <div class="w-100% fixed h-100vh"></div>
-          <el-dialog v-model="dialogVisible" width="500" align-center :show-close="false" :close-on-click-modal="false">
+          <el-dialog v-model="dialogVisible" width="500" align-center :show-close="false" :close-on-click-modal="false" append-to-body>
             <div v-if="!image">
               <div v-if="IsOpenRewardRule === false && IsOpenIdRule === false">
                 <div
@@ -578,7 +578,7 @@
                     src="/images/rotate-right.png" width="14" alt="">向右旋轉</button>
 
               </div>
-              <Cropper class=" bg-white" :src="image" ref="cropperRef" />
+              <Cropper class=" bg-white" :src="image" ref="cropperRef" append-to-body />
               <div class="flex flex-row-reverse px-5 py-2">
                 <button @click="saveCrop"
                   class="border-1px border-solid border-[#4fb55f] bg-[#cdf4d3] w-80px h-32px rounded-3px cursor-pointer">確定上傳</button>
@@ -618,7 +618,7 @@
                 @click="ReturnList">回上一頁</button><button class="colorful-btn">確認送出</button></div>
           </form>
         </div>
-        <ElDialog v-model="dialogVisible2" :show-close="false" :close-on-click-modal="false">
+        <ElDialog v-model="dialogVisible2" :show-close="false" :close-on-click-modal="false" append-to-body>
           <div class="dialogHeader absolute">
             服務條款
           </div>
@@ -1107,14 +1107,6 @@ const ReturnList = async () => {
     ResetData();
   }
 };
-watch(dialogVisible, newVal => {
-  var header = document.getElementsByClassName('headerBox');
-  if (newVal) {
-    if (header.length > 0) header[0].style.zIndex = 0;
-  } else {
-    if (header.length > 0) header[0].style.zIndex = 99;
-  }
-});
 const handleFileUpload = event => {
   const file = event.target.files[0];
   if (file) {
