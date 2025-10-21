@@ -1,11 +1,4 @@
 <template>
-  <Head>
-    <title>PMatch遊戲道具交易平台</title>
-    <Meta property="og:title" content="PMatch遊戲道具交易平台" />
-    <Meta name="keywords" content="pmatch,pmatch交易,博奕遊戲,幣商,媒合商,遊戲幣,虛擬幣,遊戲交易,媒合交易,買幣,賣幣,虛寶交易" />
-    <Meta name="description" content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
-    <Meta property="og:description" content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
-  </Head>
   <div class="storeBac pb-[25rem] pt-130px">
     <div class="max-w-1110px w-100% md-w-50% m-auto ps-5 pe-5 relative z-2">
       <div class="w-100%">
@@ -20,14 +13,16 @@
           <form action="" method="POST" @submit.prevent="login">
             <div class="mt-15px">
               <div class="mb-5px text-white">登入帳號</div>
-              <input type="text" required v-model="accountId" ref="accountInput" autocomplete :disabled="loginStep !== 'credentials'"
+              <input type="text" required v-model="accountId" ref="accountInput" autocomplete
+                :disabled="loginStep !== 'credentials'"
                 class="loginEntry box-border py-1.5 px-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
             </div>
 
             <div class="mt-15px">
               <div class="mb-5px text-white">密碼</div>
               <div class="relative">
-                <input type="password" ref="i_password" autocomplete="current-password" v-model="password" :disabled="loginStep !== 'credentials'"
+                <input type="password" ref="i_password" autocomplete="current-password" v-model="password"
+                  :disabled="loginStep !== 'credentials'"
                   class="loginEntry password box-border py-1.5 px-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
                 <div @click="turnInputType"
                   class="cursor-pointer absolute top-50% transform translate-y-[-45%] right-20px">
@@ -39,12 +34,14 @@
                   其中必須包含至少一位數字、一位英文，若需有特殊符號僅限於
                   ! @ # $ % & *
                 </div>
-                <div class="absolute w-15px h-15px bg-dark left-50% translate-x-[-50%] bottom-110% translate-y-[-3.5px] [clip-path:polygon(50%_100%,_0_50%,_100%_50%)] tips"></div>
+                <div
+                  class="absolute w-15px h-15px bg-dark left-50% translate-x-[-50%] bottom-110% translate-y-[-3.5px] [clip-path:polygon(50%_100%,_0_50%,_100%_50%)] tips">
+                </div>
               </div>
             </div>
             <div v-if="!hasToken" class="w-100% mt-15px">
               <VueTurnstile :site-key="turnstilesitekey" size="normal" @update:model-value="onVerify"></VueTurnstile>
-            </div> 
+            </div>
             <!-- 登入 -->
             <div v-if="loginStep === 'credentials'" class="mt-15px">
               <div class="flex">
@@ -62,47 +59,61 @@
             <div v-if="loginStep === '2fa-choice' || loginStep === '2fa-verify'" class="mt-15px">
               <div class="mb-10px flex items-center">
                 <span class="text-white pe-[6px]">驗證方式 </span>
-                <span class="text-[#FF5454] text-[14px]" v-if="timers.phone.countdown < timers.phone.duration"> 如需再次傳送簡訊，請稍等 {{ timers.phone.countdown }} 秒</span>
-              </div>                  
-                <div class="flex justify-center gap-[10px]">
-                  <!-- 手機驗證 -->          
-                  <div class="relative inline-block w-[50%] group" :class="{ 'brightness-75 select-none pointer-events-none': isPhoneDisabled || !twoFactorOptions.phone  }">
-                    <button class="verifyBtn" @click.prevent="select2faMethod('phone')" :disabled="isPhoneDisabled"></button>
-                    <div class="absolute pointer-events-none inset-0 flex items-center justify-center w-[100%] h-[36px] mx-auto text-[15px] font-bold before:content-[''] before:absolute before:inset-0 before:bg-[#6FF1FE33] before:rounded-[10px] before:z-0 group-hover:before:bg-[linear-gradient(to_bottom,_#FFFFFF80,_#A2F7FF80)] group-active:before:bg-[#6FF1FEA6]">
-                      <span class="group-hover:hidden bg-gradient-to-b from-[#fff] to-[#43edff] bg-clip-text text-transparent z-1">電話驗證</span>
-                      <span class="group-hover:inline text-[#31129B] z-1 hidden">電話驗證</span>
-                    </div>
-                  </div>
-                  <!-- Email驗證 -->
-                  <div class="relative inline-block w-[50%] group" :class="{ 'brightness-75 select-none pointer-events-none': isEmailDisabled || !twoFactorOptions.email }">
-                    <button class="verifyBtn" @click.prevent="select2faMethod('email')" :disabled="isEmailDisabled"></button>
-                    <div class="absolute pointer-events-none inset-0 flex items-center justify-center w-[100%] h-[36px] mx-auto text-[15px] font-bold before:content-[''] before:absolute before:inset-0 before:bg-[#6FF1FE33] before:rounded-[10px] before:z-0 group-hover:before:bg-[linear-gradient(to_bottom,_#FFFFFF80,_#A2F7FF80)] group-active:before:bg-[#6FF1FEA6]">
-                      <span class="group-hover:hidden bg-gradient-to-b from-[#fff] to-[#43edff] bg-clip-text text-transparent z-1">Email驗證</span>
-                      <span class="group-hover:inline text-[#31129B] z-1 hidden">Email驗證</span>
-                    </div>
+                <span class="text-[#FF5454] text-[14px]" v-if="timers.phone.countdown < timers.phone.duration">
+                  如需再次傳送簡訊，請稍等 {{ timers.phone.countdown }} 秒</span>
+              </div>
+              <div class="flex justify-center gap-[10px]">
+                <!-- 手機驗證 -->
+                <div class="relative inline-block w-[50%] group"
+                  :class="{ 'brightness-75 select-none pointer-events-none': isPhoneDisabled || !twoFactorOptions.phone }">
+                  <button class="verifyBtn" @click.prevent="select2faMethod('phone')"
+                    :disabled="isPhoneDisabled"></button>
+                  <div
+                    class="absolute pointer-events-none inset-0 flex items-center justify-center w-[100%] h-[36px] mx-auto text-[15px] font-bold before:content-[''] before:absolute before:inset-0 before:bg-[#6FF1FE33] before:rounded-[10px] before:z-0 group-hover:before:bg-[linear-gradient(to_bottom,_#FFFFFF80,_#A2F7FF80)] group-active:before:bg-[#6FF1FEA6]">
+                    <span
+                      class="group-hover:hidden bg-gradient-to-b from-[#fff] to-[#43edff] bg-clip-text text-transparent z-1">電話驗證</span>
+                    <span class="group-hover:inline text-[#31129B] z-1 hidden">電話驗證</span>
                   </div>
                 </div>
-                <div v-if="loginStep === '2fa-verify'" class="mt-15px">
-                    <div class="mb-5px text-white">
-                        {{ active2faMethod === 'phone' ? '簡訊驗證碼' : 'Email 驗證碼' }}
-                    </div>
-                    <div class="relative">
-                        <span class="w-[52px] inline-block py-1.5 pe-[10px] mx-auto text-end text-[17px] text-white">{{ verificationPrefix }} -</span>
-                        <input type="text" v-model="verificationSuffix" maxlength="6"
-                              class="loginEntry verify box-border py-1.5 px-3 text-base w-[calc(100%-62px)] outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
-                        <div class="absolute text-16px text-center w-160px h-auto bg-dark left-50% translate-x-[-50%] bottom-130% text-white p-10px rounded-1 tips">
-                          請輸入 6 位數字碼
-                        </div>
-                        <div class="absolute w-15px h-15px bg-dark left-50% translate-x-[-50%] bottom-110% translate-y-[-3.5px] [clip-path:polygon(50%_100%,_0_50%,_100%_50%)] tips"></div>
-                    </div>
-                    <div class="mt-15px">
-                      <div class="loginBtnBox">
-                          <button @click.prevent="submit2faCode" type="button" class="loginBtn disabled:opacity-70 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#e93470] hover:bg-[#bb2d3b] transition duration-200 cursor-pointer">
-                              驗證並登入
-                          </button>
-                        </div>
-                    </div>
+                <!-- Email驗證 -->
+                <div class="relative inline-block w-[50%] group"
+                  :class="{ 'brightness-75 select-none pointer-events-none': isEmailDisabled || !twoFactorOptions.email }">
+                  <button class="verifyBtn" @click.prevent="select2faMethod('email')"
+                    :disabled="isEmailDisabled"></button>
+                  <div
+                    class="absolute pointer-events-none inset-0 flex items-center justify-center w-[100%] h-[36px] mx-auto text-[15px] font-bold before:content-[''] before:absolute before:inset-0 before:bg-[#6FF1FE33] before:rounded-[10px] before:z-0 group-hover:before:bg-[linear-gradient(to_bottom,_#FFFFFF80,_#A2F7FF80)] group-active:before:bg-[#6FF1FEA6]">
+                    <span
+                      class="group-hover:hidden bg-gradient-to-b from-[#fff] to-[#43edff] bg-clip-text text-transparent z-1">Email驗證</span>
+                    <span class="group-hover:inline text-[#31129B] z-1 hidden">Email驗證</span>
+                  </div>
                 </div>
+              </div>
+              <div v-if="loginStep === '2fa-verify'" class="mt-15px">
+                <div class="mb-5px text-white">
+                  {{ active2faMethod === 'phone' ? '簡訊驗證碼' : 'Email 驗證碼' }}
+                </div>
+                <div class="relative">
+                  <span class="w-[52px] inline-block py-1.5 pe-[10px] mx-auto text-end text-[17px] text-white">{{
+                    verificationPrefix }} -</span>
+                  <input type="text" v-model="verificationSuffix" maxlength="6"
+                    class="loginEntry verify box-border py-1.5 px-3 text-base w-[calc(100%-62px)] outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
+                  <div
+                    class="absolute text-16px text-center w-160px h-auto bg-dark left-50% translate-x-[-50%] bottom-130% text-white p-10px rounded-1 tips">
+                    請輸入 6 位數字碼
+                  </div>
+                  <div
+                    class="absolute w-15px h-15px bg-dark left-50% translate-x-[-50%] bottom-110% translate-y-[-3.5px] [clip-path:polygon(50%_100%,_0_50%,_100%_50%)] tips">
+                  </div>
+                </div>
+                <div class="mt-15px">
+                  <div class="loginBtnBox">
+                    <button @click.prevent="submit2faCode" type="button"
+                      class="loginBtn disabled:opacity-70 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#e93470] hover:bg-[#bb2d3b] transition duration-200 cursor-pointer">
+                      驗證並登入
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </form>
         </div>
@@ -113,6 +124,15 @@
 </template>
 
 <script setup>
+useHead({
+  title: 'PMatch遊戲道具交易平台'
+})
+useSeoMeta({
+  ogTitle: 'PMatch遊戲道具交易平台',
+  keywords: 'pmatch,pmatch交易,博奕遊戲,幣商,媒合商,遊戲幣,虛擬幣,遊戲交易,媒合交易,買幣,賣幣,虛寶交易',
+  description: 'Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全',
+  ogDescription: 'Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全'
+})
 // loading page
 import { useLoadStore } from "../stores/loading.js";
 import { useConfigStore } from "../stores/config.js";
@@ -166,11 +186,11 @@ const isEmailDisabled = computed(() => {
 });
 
 async function getToken() {
-    let token = userToken.value;
-    if (!token) {
-        token = await jwtStore.generateToken();
-    }
-    return token;
+  let token = userToken.value;
+  if (!token) {
+    token = await jwtStore.generateToken();
+  }
+  return token;
 }
 
 const turnInputType = () => {
@@ -203,12 +223,12 @@ async function login(event) {
       // MacAddress: iData.value.m,
       // SerialNumber: iData.value.s,
     },
-    {
-      headers: {
-        Authorization: token
+      {
+        headers: {
+          Authorization: token
+        }
       }
-    }
-  );
+    );
     if (response.data.Status.Code === 0) {
       const responseData = response.data.Data;
 
@@ -227,7 +247,7 @@ async function login(event) {
         // 選驗證方式
         loginStep.value = '2fa-choice';
       } else {
-         await openAlertModal(" ", "登入失敗：伺服器沒有回應。");
+        await openAlertModal(" ", "登入失敗：伺服器沒有回應。");
       }
     } else {
       await openAlertModal(" ", `${response.data.Status.Message}`);
@@ -255,16 +275,16 @@ async function select2faMethod(method) {
       // MacAddress: iData.value.m,
       // SerialNumber: iData.value.s,
     },
-    {
-      headers: {
-        Authorization: token
+      {
+        headers: {
+          Authorization: token
+        }
       }
-    }
-  );
+    );
     if (response.data.Status.Code === 0) {
       verificationPrefix.value = response.data.Code;
       loginStep.value = '2fa-verify';
-      startCountdown(method);      
+      startCountdown(method);
     } else {
       await openAlertModal(" ", `發送驗證碼失敗: ${response.data.Status.Message}`);
     }
@@ -277,9 +297,9 @@ async function select2faMethod(method) {
 }
 
 async function submit2faCode() {
-  const verificationCode = `${verificationPrefix.value}-${verificationSuffix .value}`; 
+  const verificationCode = `${verificationPrefix.value}-${verificationSuffix.value}`;
   const token = await getToken();
-    console.log('拿2到的 Token 是:', token);
+  console.log('拿2到的 Token 是:', token);
 
   try {
     const response = await $axios.post("/api/v1/User/Logon", {
@@ -292,12 +312,12 @@ async function submit2faCode() {
       // MacAddress: iData.value.m,
       // SerialNumber: iData.value.s,
     },
-    {
-      headers: {
-        Authorization: token
-      }
-    }  );
-    
+      {
+        headers: {
+          Authorization: token
+        }
+      });
+
     if (response.data.Status.Code === 0 && response.data.Data.Token) {
       let token = response.data.Data.Token;
       const base64UrlToken = btoa(token).replace(/\+/g, "-").replace(/\//g, "_");
@@ -307,7 +327,7 @@ async function submit2faCode() {
       const targetUrl = `${configStore.envUrl}${base64UrlToken}`;
       window.location.href = targetUrl;
     } else {
-       await openAlertModal(" ", `驗證失敗: ${response.data.Status.Message || '驗證碼錯誤'}`);
+      await openAlertModal(" ", `驗證失敗: ${response.data.Status.Message || '驗證碼錯誤'}`);
     }
   } catch (error) {
     console.error("驗證失敗:", error);
@@ -317,17 +337,17 @@ async function submit2faCode() {
 
 // 計時器
 const startCountdown = (method) => {
-  if (!timers[method]) return;  
+  if (!timers[method]) return;
   const timerState = timers[method];
   const now = Date.now();
   const endTime = localStorage.getItem(timerState.storageKey);  // localStorage key
- if (endTime) {
+  if (endTime) {
     timerState.countdown = Math.max(0, Math.floor((+endTime - now) / 1000));
   } else {
     localStorage.setItem(timerState.storageKey, now + timerState.duration * 1000);
-    timerState.countdown = timerState.duration -1;
+    timerState.countdown = timerState.duration - 1;
   }
- if (timerState.countdown > 0 && !timerState.instance) {
+  if (timerState.countdown > 0 && !timerState.instance) {
     timerState.instance = setInterval(() => {
       timerState.countdown -= 1;
       if (timerState.countdown <= 0) {
@@ -337,7 +357,7 @@ const startCountdown = (method) => {
         timerState.countdown = timerState.duration;
       }
     }, 1000);
- } else if (timerState.countdown <= 0) {
+  } else if (timerState.countdown <= 0) {
     localStorage.removeItem(timerState.storageKey);
     timerState.countdown = timerState.duration;
   }
@@ -441,6 +461,7 @@ onBeforeUnmount(() => {
   -webkit-text-stroke: 1px rgba(200, 200, 200, 0.1);
   color: transparent;
 }
+
 .text-gradient-b {
   background: linear-gradient(to bottom, #43edff, #fff);
   background: -webkit-linear-gradient(#43edff, #fff);
@@ -458,6 +479,7 @@ onBeforeUnmount(() => {
   border-image: linear-gradient(to right, #fff, #43edff) 1;
   margin-right: 1rem;
 }
+
 .border-gradient-r {
   width: 40px;
   border: 2px solid;
@@ -529,10 +551,10 @@ onBeforeUnmount(() => {
   cursor: pointer;
   position: relative;
   border-style: solid;
-  border-color: transparent; 
+  border-color: transparent;
   background:
-  linear-gradient(rgba(255, 255, 255, 0.01), #6FF1FE , rgba(255, 255, 255, 0.01)),
-  linear-gradient(to right, rgba(255, 255, 255, 0.01), #6FF1FE , rgba(255, 255, 255, 0.01));
+    linear-gradient(rgba(255, 255, 255, 0.01), #6FF1FE, rgba(255, 255, 255, 0.01)),
+    linear-gradient(to right, rgba(255, 255, 255, 0.01), #6FF1FE, rgba(255, 255, 255, 0.01));
   background-origin: border-box;
   background-clip: padding-box, border-box;
   mask-image: linear-gradient(white, white), linear-gradient(white, white);
@@ -544,6 +566,7 @@ onBeforeUnmount(() => {
   .border-gradient-l {
     width: 20px;
   }
+
   .border-gradient-r {
     width: 20px;
   }

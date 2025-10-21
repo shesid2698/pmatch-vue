@@ -57,7 +57,7 @@ onMounted(async () => {
         console.error("無法解析 buyLog 的 JSON 數據", error);
       }
     } else {
-      console.error("localStorage 中未找到 buyLog");
+      console.warn("該使用者未找到 buyLog");
     }
   }
 });

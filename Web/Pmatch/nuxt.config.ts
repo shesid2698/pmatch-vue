@@ -2,7 +2,7 @@ export default defineNuxtConfig({
     // 確保 SSR 啟用
     ssr: true,
     devtools: { enabled: true },
-    modules: ['@unocss/nuxt', '@element-plus/nuxt', '@pinia/nuxt', '@pinia-plugin-persistedstate/nuxt', '@nuxt/icon'],
+    modules: ['@unocss/nuxt', '@element-plus/nuxt', '@pinia/nuxt', '@pinia-plugin-persistedstate/nuxt', '@nuxt/icon', 'v-gsap-nuxt'],
     nitro: {
         prerender: {
             crawlLinks: true,

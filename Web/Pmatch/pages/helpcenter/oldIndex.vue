@@ -1,11 +1,4 @@
 <template>
-  <Head>
-    <title>PMatch遊戲道具交易平台</title>
-    <Meta property="og:title" content="PMatch遊戲道具交易平台" />
-    <Meta name="keywords" content="pmatch,pmatch交易,博奕遊戲,幣商,媒合商,遊戲幣,虛擬幣,遊戲交易,媒合交易,買幣,賣幣,虛寶交易" />
-    <Meta name="description" content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
-    <Meta property="og:description" content="Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全" />
-  </Head>
   <div class="max-w-1110px m-auto pt-60px ps-5 pe-5 relative z-2">
     <div class="mb-5 flex items-center justify-between">
       <!-- title -->
