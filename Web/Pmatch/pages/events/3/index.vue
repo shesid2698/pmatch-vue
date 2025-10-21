@@ -390,7 +390,7 @@ useSeoMeta({
   ogTitle: '10月超值豪禮三重奏',
   description: 'Pmatch遊戲道具交易平台 - 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全',
   ogDescription: 'PMatch遊戲道具交易平台 - 線上遊戲安心交易的第一選擇，PMatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全',
-  keywords: 'pmatch,pmatch交易,博奕遊戲,幣商,媒合商,遊戲幣,虛擬幣,遊戲交易,媒合交易,買幣,賣幣,虛寶交易'
+  keywords: 'pmatch,pmatch交易,媒合商,遊戲幣,虛擬幣,遊戲交易,媒合交易,買幣,賣幣,虛寶交易'
 })
 // DI & Global
 const { $axios } = useNuxtApp();
