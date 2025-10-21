@@ -93,7 +93,7 @@
                   {{ active2faMethod === 'phone' ? '簡訊驗證碼' : 'Email 驗證碼' }}
                 </div>
                 <div class="relative">
-                  <span class="w-[52px] inline-block py-1.5 pe-[10px] mx-auto text-end text-[17px] text-white">{{
+                  <span class="w-[52px] inline-block py-1.5 pe-[10px] mx-auto text-end text-[17px] text-white font-mono">{{
                     verificationPrefix }} -</span>
                   <input type="text" v-model="verificationSuffix" maxlength="6"
                     class="loginEntry verify box-border py-1.5 px-3 text-base w-[calc(100%-62px)] outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
@@ -265,6 +265,7 @@ async function select2faMethod(method) {
   isSendingCode.value = true;
   await nextTick();
   active2faMethod.value = method;
+  verificationSuffix.value = ''; // 切換驗證方式時，清空輸入欄位
   const token = await getToken();
   try {
     const response = await $axios.post("/api/v1/User/SendVerifyCode", {
