@@ -19,12 +19,12 @@
             <div class="mt-15px">
               <div class="mb-5px text-16px">新密碼</div>
               <div class="relative">
-                <input type="password" required autocomplete="off" ref="i_password2" v-model="newPassword"
+                <input :type="GetNPWDType" required autocomplete="off" ref="i_password2" v-model="newPassword"
                   class="password box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200"
                   pattern="(?=.*\d)(?=.*[a-zA-Z])[A-Za-z0-9!@#$%&*]{8,20}" />
-                <div @click="turnInputType2"
+                <div @click="nPwdVisible = !nPwdVisible"
                   class="cursor-pointer absolute top-50% transform translate-y-[-45%] left-92%">
-                  <i ref="eyes2" class="fa-solid fa-eye text-gray"></i>
+                  <i ref="eyes2" class="fa-solid text-gray" :class="GetNPWDEyesIcon"></i>
                 </div>
 
                 <div
@@ -39,12 +39,12 @@
             <div class="mt-15px">
               <div class="mb-5px text-16px">確認密碼</div>
               <div class="relative">
-                <input type="password" required autocomplete="off" v-model="confirmPassword" ref="i_password2"
+                <input :type="GetCPWDType" required autocomplete="off" v-model="confirmPassword" ref="i_password2"
                   class="password box-border p-y-1.5 p-x-3 text-base w-100% outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200"
                   pattern="(?=.*\d)(?=.*[a-zA-Z])[A-Za-z0-9!@#$%&*]{8,20}" />
-                <div @click="turnInputType2"
+                <div @click="cPwdVisible = !cPwdVisible"
                   class="cursor-pointer absolute top-50% transform translate-y-[-45%] left-92%">
-                  <i ref="eyes2" class="fa-solid fa-eye text-gray"></i>
+                  <i ref="eyes2" class="fa-solid text-gray" :class="GetCPWDEyesIcon"></i>
                 </div>
 
                 <div
@@ -72,13 +72,26 @@
 import { useAlertModalStore } from "../stores/useAlertModal.js";
 const alertModalStore = useAlertModalStore();
 const openAlertModal = alertModalStore.alertShowModal;
-
+const nPwdVisible = ref(false)
+const cPwdVisible = ref(false)
 const { $axios } = useNuxtApp();
 const { md5 } = crypto();
 const userToken = useCookie("_PmToken");
 const oldPassword = ref("");
 const newPassword = ref("");
 const confirmPassword = ref("");
+const GetNPWDType = computed(() => {
+  return !nPwdVisible.value ? "password" : "text"
+})
+const GetCPWDType = computed(() => {
+  return !cPwdVisible.value ? "password" : "text"
+})
+const GetNPWDEyesIcon = computed(() => {
+  return !nPwdVisible.value ? 'fa-eye' : 'fa-eye-slash'
+})
+const GetCPWDEyesIcon = computed(() => {
+  return !cPwdVisible.value ? 'fa-eye' : 'fa-eye-slash'
+})
 const CheckPassword = async (e) => {
   e.preventDefault();
   if (newPassword.value !== confirmPassword.value) {
@@ -112,7 +125,9 @@ const CheckPassword = async (e) => {
   }
 };
 
-onMounted(() => { });
+onMounted(() => {
+
+});
 </script>
 <style scoped>
 .ccontainer {
