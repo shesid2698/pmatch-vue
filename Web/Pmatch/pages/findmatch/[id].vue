@@ -1462,7 +1462,7 @@ useSeoMeta({
   width: 420px;
   height: 420px;
   z-index: 10;
-  background-image: url('/images/mascot.svg');
+  background-image: url('/images/pm-mascot.svg');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
