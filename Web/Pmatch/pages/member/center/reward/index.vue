@@ -607,8 +607,8 @@
             <div class="mb-3">
               <select class="colorful-input2" name="Phone" required>
                 <option :value="PmMemberPhones[0]" selected>{{ PmMemberPhones[0] }}</option>
-                <option :value="PmMemberPhones[1]">{{ PmMemberPhones[1] }}</option>
-                <option :value="PmMemberPhones[2]">{{ PmMemberPhones[2] }}</option>
+                <option v-if="PmMemberPhones[1]" :value="PmMemberPhones[1]">{{ PmMemberPhones[1] }}</option>
+                <option v-if="PmMemberPhones[2]" :value="PmMemberPhones[2]">{{ PmMemberPhones[2] }}</option>
               </select>
             </div>
             <div class="w-fit m-auto mb-3" @click='dialogVisible2 = true'><input type="radio" id="pmatchOrder"
