@@ -43,19 +43,22 @@
                   <NuxtLink class="flex items-center ms-1 me-1" v-show="storesItem.FB !== ''" :to="storesItem.FB">
                     <img class="w-30px h-30px" src="/images/iconFB.png" alt="fbIcon" />
                   </NuxtLink>
-                  <NuxtLink class="flex items-center ms-1 me-1" v-show="storesItem.LineId !== ''"
-                    :to="storesItem.LineId">
+                  <NuxtLink class="flex items-center ms-1 me-1" v-show="storesItem.LineId !== ''" :to="storesItem.LineId">
                     <img class="w-30px h-30px" src="/images/iconLine.png" alt="lineIcon" />
                   </NuxtLink>
                   <NuxtLink class="flex items-center ms-1 me-1" v-show="storesItem.IGId !== ''" :to="storesItem.IGId">
                     <img class="w-30px h-30px" src="/images/iconIG.png" alt="igIcon" />
                   </NuxtLink>
-                  <NuxtLink class="flex items-center ms-1 me-1" v-show="storesItem.TwitterId !== ''"
-                    :to="storesItem.TwitterId">
+                  <NuxtLink class="flex items-center ms-1 me-1" v-show="storesItem.TwitterId !== ''" :to="storesItem.TwitterId">
                     <img class="w-30px h-30px" src="/images/iconX.png" alt="推特icon" />
                   </NuxtLink>
-                  <NuxtLink class="flex items-center ms-1 me-1" v-show="storesItem.PhoneNumber !== ''"
-                    :href="`tel:${storesItem.PhoneNumber}`">
+                  <NuxtLink class="flex items-center ms-1 me-1" v-show="storesItem.WechatId !== ''" :to="storesItem.WechatId">
+                    <img class="w-30px h-30px" src="/images/iconWeChat.png" alt="wechatIcon" />
+                  </NuxtLink>                  
+                  <NuxtLink class="flex items-center ms-1 me-1" v-show="storesItem.Email !== ''" :href="`mailto:${storesItem.Email}`">
+                    <img class="w-30px h-30px" src="/images/iconEmail.png" alt="emailIcon" />
+                  </NuxtLink>
+                  <NuxtLink class="flex items-center ms-1 me-1" v-show="storesItem.PhoneNumber !== ''" :href="`tel:${storesItem.PhoneNumber}`">
                     <img class="w-30px h-30px" src="/public/images/iconPhone.png" alt="phoneIcon" />
                   </NuxtLink>
                 </div>
