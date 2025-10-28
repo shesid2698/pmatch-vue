@@ -627,14 +627,22 @@ onMounted(async () => {
         await fetchAdvertisementList(token);
       }
     }
-    const root = platformCarousel.value?.$el;
-    if (!root) return;
-
-    const items = root.querySelectorAll('.el-carousel__item');
-
-    if (items.length > 2) {
-      items[items.length - 1].classList.add('leftItem');
-      items[1].classList.add('rightItem');
+    // 所有資料都取完才跑UI(輪播)
+    await nextTick();
+    if (!platformCarousel.value)return;
+    const currentPlatformIndex = filteredPlatformArray.value.findIndex(
+    platform => platform === routeParamPlatformName
+    );
+    let targetIndex = 0; // 第一個平台
+    if (currentPlatformIndex !== -1) {
+        targetIndex = currentPlatformIndex;
+    }
+    platformIndex.value = targetIndex;
+    // 如果不是第一個平台(pn=有參數) 先換頁再addClass
+    if (targetIndex !== 0) {
+      platformCarousel.value.setActiveItem(targetIndex);
+    } else {
+      await platformChange(0);
     }
   } catch (error) {
     console.error('頁面初始化失敗:', error);
