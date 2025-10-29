@@ -51,10 +51,10 @@
             <TitleBlock class="font-Noto" title="活動內容" />
             <div
               class="font-Inter text-[#741B15] text-[20px] md:text-[28px] lg:text-[32px] text-start mx-[5%] md:mx-[10%] my-[12px] md:my-[20px] ">
-              <p class="my-[8px]">＊ 活動期間註冊PMatch新會員，可取得指定遊戲平台遊戲幣 (價值$400)</p>
-              <p class="my-[8px]">＊ 玩家完成註冊後，需於活動結束前至活動頁面選擇領取的遊戲平台，活動結束前未完成兌換的玩家，視同放棄領獎資格</p>
-              <p class="my-[8px]">＊ 註冊活動獎項由指定媒合商提供，玩家僅能選擇活動頁面中指定平台的遊戲幣</p>
-              <p class="my-[8px]">＊ 獎項預計前發送至領獎中心，獎項領取期限為30天，請玩家於領獎期限內完成領獎，獎項逾期後無法領取且不再補發</p>
+              <p class="my-[8px]">1. 活動期間註冊PMatch新會員，可取得指定遊戲平台遊戲幣 (價值$400)</p>
+              <p class="my-[8px]">2. 玩家完成註冊後，需於活動結束前至活動頁面選擇領取的遊戲平台，活動結束前未完成兌換的玩家，視同放棄領獎資格</p>
+              <p class="my-[8px]">3. 註冊活動獎項由指定媒合商提供，玩家僅能選擇活動頁面中指定平台的遊戲幣</p>
+              <p class="my-[8px]">4. 獎項預計前發送至領獎中心，獎項領取期限為30天，請玩家於領獎期限內完成領獎，獎項逾期後無法領取且不再補發</p>
             </div>
           </div>
           <div class="md:my-[80px] my-[40px] max-w-[979px] mx-auto">
@@ -80,8 +80,7 @@
               <div v-else>
                 <SignUp class="font-Noto absolute top-[25.55%] right-[22.55%] leading-[6.5cqi] text-[6.5cqi]"
                   content="註冊時間" />
-                <Timing class="absolute top-[39.33%] right-[9.5%] leading-[4.75cqi] text-[4.75cqi]"
-                  :content="registrationDate || '20XX-XX-XX'" />
+                <Timing class="absolute top-[39.33%] right-[9.5%] leading-[4.75cqi] text-[4.75cqi]" :content="displayRegistrationDate"/>
               </div>
               <!-- 領獎資格 -->
               <div v-if="!isLoggedIn" class="absolute bottom-[31.5%] right-[3.85%] w-[16.46%]">
@@ -96,31 +95,25 @@
                   <span>活動結束</span>
                 </div>
               </div>
-              <div v-else class="absolute bottom-[31.5%] right-[3.85%]"
-                :class="isEligible && !claimedReward ? 'w-[33.3%]' : 'w-[35.155%]'">
-                <div
-                  class="font-Inter w-full rounded-full text-[#FFF4B5] text-[3.75cqi] leading-[3.75cqi] flex items-center justify-center bg-[linear-gradient(to_bottom,#951111AB,#841111AB)]"
-                  :class="isEligible && !claimedReward ? 'aspect-[323/68]' : 'aspect-[341/68]'">
-                  <template v-if="isEligible && !claimedReward">
-                    <svg width="4.44cqi" height="4.44cqi" viewBox="0 0 46 46" fill="none"
-                      xmlns="http://www.w3.org/2000/svg">
-                      <path
-                        d="M42.6667 23C42.6667 12.1384 33.8616 3.33333 23 3.33333C12.1384 3.33333 3.33333 12.1384 3.33333 23C3.33333 33.8616 12.1384 42.6667 23 42.6667V46C10.2975 46 0 35.7025 0 23C0 10.2975 10.2975 0 23 0C35.7025 0 46 10.2975 46 23C46 35.7025 35.7025 46 23 46V42.6667C33.8616 42.6667 42.6667 33.8616 42.6667 23Z"
-                        fill="#FFF4B5" />
-                      <path
-                        d="M34.7251 13.2596C35.318 12.5555 36.3693 12.4655 37.0734 13.0584C37.7774 13.6513 37.8675 14.7026 37.2746 15.4067L21.2746 34.4067C20.9772 34.7598 20.5468 34.974 20.0858 34.9978C19.6248 35.0216 19.1744 34.8529 18.8423 34.5323L9.1756 25.199C8.51346 24.5597 8.49474 23.5044 9.13393 22.8422C9.77324 22.1801 10.8285 22.1614 11.4907 22.8006L19.8742 30.895L34.7251 13.2596Z"
-                        fill="#FFF4B5" />
+              <div v-else-if="!isEligible" class="absolute bottom-[31.5%] right-[3.85%] w-[35.155%]">
+                <div class="font-Inter aspect-[341/68] w-full rounded-full text-[#FFF4B5] text-[3.75cqi] leading-[3.75cqi] flex items-center justify-center bg-[linear-gradient(to_bottom,#951111AB,#841111AB)]">
+                  <svg width="3.33cqi" height="3.33cqi" viewBox="0 0 37 37" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M32.7324 0.732422C33.7087 -0.243889 35.2913 -0.243889 36.2676 0.732422C37.2437 1.70875 37.2438 3.29133 36.2676 4.26758L22.0352 18.5L36.2676 32.7324C37.2435 33.7088 37.2438 35.2914 36.2676 36.2676C35.2914 37.2438 33.7088 37.2435 32.7324 36.2676L18.5 22.0352L4.26758 36.2676C3.29132 37.2436 1.70868 37.2436 0.732422 36.2676C-0.243826 35.2913 -0.243699 33.7087 0.732422 32.7324L14.9648 18.5L0.732422 4.26758C-0.243889 3.29127 -0.243889 1.70873 0.732422 0.732422C1.70873 -0.243889 3.29127 -0.243889 4.26758 0.732422L18.5 14.9648L32.7324 0.732422Z" fill="#FFF4B5"/>
+                  </svg>
+                  <span class="ms-[1.03cqi]">不符合領獎資格</span> 
+                </div> 
+              </div>
+              <div v-else class="absolute bottom-[31.5%] right-[3.85%]" :class="!claimedReward ? 'w-[33.3%]' : 'w-[36.6%]'">
+                <div class="font-Inter w-full rounded-full text-[#FFF4B5] text-[3.75cqi] leading-[3.75cqi] flex items-center justify-center bg-[linear-gradient(to_bottom,#951111AB,#841111AB)]" :class="isEligible && !claimedReward ? 'aspect-[323/68]' : 'aspect-[355/68]'">
+                  <template v-if="!claimedReward">
+                    <svg width="4.44cqi" height="4.44cqi" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M42.6667 23C42.6667 12.1384 33.8616 3.33333 23 3.33333C12.1384 3.33333 3.33333 12.1384 3.33333 23C3.33333 33.8616 12.1384 42.6667 23 42.6667V46C10.2975 46 0 35.7025 0 23C0 10.2975 10.2975 0 23 0C35.7025 0 46 10.2975 46 23C46 35.7025 35.7025 46 23 46V42.6667C33.8616 42.6667 42.6667 33.8616 42.6667 23Z" fill="#FFF4B5"/>
+                      <path d="M34.7251 13.2596C35.318 12.5555 36.3693 12.4655 37.0734 13.0584C37.7774 13.6513 37.8675 14.7026 37.2746 15.4067L21.2746 34.4067C20.9772 34.7598 20.5468 34.974 20.0858 34.9978C19.6248 35.0216 19.1744 34.8529 18.8423 34.5323L9.1756 25.199C8.51346 24.5597 8.49474 23.5044 9.13393 22.8422C9.77324 22.1801 10.8285 22.1614 11.4907 22.8006L19.8742 30.895L34.7251 13.2596Z" fill="#FFF4B5"/>
                     </svg>
-                    <span class="ms-[1.12cqi]">符合領獎資格</span>
+                    <span class="ms-[1.12cqi]">符合領獎資格</span> 
                   </template>
                   <template v-else>
-                    <svg width="3.33cqi" height="3.33cqi" viewBox="0 0 37 37" fill="none"
-                      xmlns="http://www.w3.org/2000/svg">
-                      <path
-                        d="M32.7324 0.732422C33.7087 -0.243889 35.2913 -0.243889 36.2676 0.732422C37.2437 1.70875 37.2438 3.29133 36.2676 4.26758L22.0352 18.5L36.2676 32.7324C37.2435 33.7088 37.2438 35.2914 36.2676 36.2676C35.2914 37.2438 33.7088 37.2435 32.7324 36.2676L18.5 22.0352L4.26758 36.2676C3.29132 37.2436 1.70868 37.2436 0.732422 36.2676C-0.243826 35.2913 -0.243699 33.7087 0.732422 32.7324L14.9648 18.5L0.732422 4.26758C-0.243889 3.29127 -0.243889 1.70873 0.732422 0.732422C1.70873 -0.243889 3.29127 -0.243889 4.26758 0.732422L18.5 14.9648L32.7324 0.732422Z"
-                        fill="#FFF4B5" />
-                    </svg>
-                    <span class="ms-[1.03cqi]">不符合領獎資格</span>
+                    <span class="ms-[1.03cqi]">感謝參與本次活動！</span> 
                   </template>
                 </div>
               </div>
@@ -200,8 +193,8 @@
             <TitleBlock class="font-Noto" title="活動內容" />
             <div
               class="font-Inter text-[#741B15] text-[20px] md:text-[28px] lg:text-[32px] text-start mx-[5%] md:mx-[10%] my-[12px] md:my-[20px] ">
-              <p class="my-[8px]">＊ 活動期間指定平台委買不限金額98折，指定平台最高享8折優惠</p>
-              <p class="my-[8px]">＊ 委買優惠活動僅限列表中指定之遊戲平台及媒合商</p>
+              <p class="my-[8px]">1. 活動期間指定商店委買不限金額98折，指定商店最高享8折優惠</p>
+              <p class="my-[8px]">2. 委買優惠活動僅限列表中指定之遊戲平台及媒合商</p>
             </div>
           </div>
           <div class="md:my-[60px] my-[30px]" ref="merchantsTable">
@@ -281,10 +274,22 @@
             <TitleBlock class="font-Noto" title="活動內容" />
             <div
               class="font-Inter text-[#741B15] text-[20px] md:text-[28px] lg:text-[32px] text-start mx-[5%] md:mx-[10%] my-[12px] md:my-[20px] ">
-              <p class="my-[8px]">1.活動期間內透過PMatch官網媒合交易下單且完成交易</p>
-              <p class="my-[8px]">2.完成交易後，至粉絲團活動PO下方回覆以下指定內容，即可獲得抽獎資格</p>
-              <p class="my-[8px] ps-3">「媒合交易好方便，快上PMatch最優惠」 並附上委託媒合紀錄完成交易截圖</p>
-              <div class="flex flex-col items-center justify-center ">
+              <p class="my-[8px]">1. 同一筆交易僅限留言一次，重複留言或是使用不同FB帳號留言同一筆交易，則僅有第一篇留言者方可獲得抽獎資格</p>
+              <p class="my-[8px]">2. 活動期間內透過PMatch官網媒合交易下單且完成交易</p>
+              <p class="my-[8px]">3. 完成交易後，至粉絲團活動PO下方回覆以下指定內容，即獲得抽獎資格</p>
+              <p class="my-[8px]">「媒合交易好方便，快上PMatch最優惠」並附上委託媒合紀錄完成交易截圖</p>              
+              <div class="flex flex-col items-center justify-center">
+                <img class="max-w-full" src="/images/activity/3/tab3-post1.png" alt="粉絲團活動貼文">
+                <NuxtLink to="https://www.facebook.com/share/p/1BKpCqnH5W/" target="_blank" class="cursor-pointer">
+                  <JumpButton class="font-Inter my-[12px] md:my-[20px] " content="前往貼文"  />
+                </NuxtLink>
+              </div>  
+            </div>
+          </div>
+          <div class="md:my-[60px] my-[30px]">
+            <TitleBlock class="font-Noto" title="活動獎勵" />
+            <div class="font-Inter text-[#741B15] text-[20px] md:text-[28px] lg:text-[32px] text-start mx-[5%] md:mx-[10%] my-[12px] md:my-[20px] ">
+              <div class="flex flex-col items-center justify-center">
                 <img class="max-w-full -m-[20px] select-none" src="/images/activity/3/tab3-award.png"
                   alt="Apple iPad Wi-Fi機型128G (市價$11,900)">
                 <p class="text-[#A21010] text-[14px] md:text-[20px] md:leading-0 text-center">Apple iPad Wi-Fi機型128G
@@ -297,18 +302,7 @@
             <div
               class="font-Inter text-[#741B15] text-[20px] md:text-[28px] lg:text-[32px] text-start mx-[5%] md:mx-[10%] my-[40px]">
               <p class="my-[8px]">1. 活動結束後，隨機抽取兩位符合抽獎資格玩家</p>
-              <p class="my-[8px]">2. 小編透過臉書聯繫獲獎玩家，確認PMatch會員資訊後，送至Pmatch官網領獎中心</p>
-            </div>
-          </div>
-          <div class="md:my-[60px] my-[30px]">
-            <TitleBlock class="font-Noto" title="活動貼文" />
-            <NuxtLink to="https://www.pmatch.com.tw/member/center/reward" target="_blank" class="cursor-pointer">
-              <JumpButton class="font-Inter my-[12px] md:my-[20px] " content="前往貼文" />
-            </NuxtLink>
-            <div
-              class="font-Inter text-[#741B15] text-[20px] md:text-[28px] lg:text-[32px] text-start mx-[5%] md:mx-[10%] my-[40px]">
-              <p class="my-[12px] md:my-[20px] ">PO文範例 : 請玩家於指定粉絲團活動貼文下方回復以下內容，即可獲得抽獎資格</p>
-              <p class="my-[12px] md:my-[20px] ">媒合交易好方便，快上PMatch最優惠 + 活動期間委託媒合紀錄完成交易截圖</p>
+              <p class="my-[8px]">2. 小編透過臉書聯繫獲獎玩家，確認PMatch會員資訊後，送至PMatch官網領獎中心</p>
             </div>
           </div>
           <div class="md:my-[60px] my-[30px]">
@@ -388,9 +382,9 @@ useHead({
 useSeoMeta({
   title: '10月超值豪禮三重奏',
   ogTitle: '10月超值豪禮三重奏',
-  description: 'Pmatch遊戲道具交易平台 - 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全',
+  description: 'PMatch遊戲道具交易平台 - 線上遊戲安心交易的第一選擇，PMatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全',
   ogDescription: 'PMatch遊戲道具交易平台 - 線上遊戲安心交易的第一選擇，PMatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全',
-  keywords: 'pmatch,pmatch交易,媒合商,遊戲幣,虛擬幣,遊戲交易,媒合交易,買幣,賣幣,虛寶交易'
+  keywords: 'PMatch,PMatch交易,媒合商,遊戲幣,虛擬幣,遊戲交易,媒合交易,買幣,賣幣,虛寶交易'
 })
 // DI & Global
 const { $axios } = useNuxtApp();
@@ -503,6 +497,14 @@ const isEligible = computed(() => {
   }
   const regDate = new Date(registrationDate.value);
   return regDate >= eventStartTime.value && regDate <= eventEndTime.value;
+});
+
+const displayRegistrationDate = computed(() => {
+  if (registrationDate.value) {
+    // 這裡才.split('T')[0]"
+    return registrationDate.value.split('T')[0];
+  }
+  return '20XX-XX-XX';
 });
 
 const dropdownOption = computed(() => {
