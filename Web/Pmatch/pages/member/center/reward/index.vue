@@ -1,8 +1,11 @@
 <template>
-  <div v-if="isCameraOn && !image" class="w-100% h-100vh fixed bg-blue">
-    <video ref="video" autoplay playsinline></video>
-    <button @click="takePhoto" aria-label="拍照"
-      class="rounded-100% absolute left-50% bottom-20% transform-translate-x-[-50%] w-20px h-20px bg-red-6 outline-solid outline-red-6 border-none outline-offset-2"></button>
+  <div v-if="isCameraOn && !image">
+    <Teleport to="body">  
+      <div class="w-100% h-100vh fixed bg-blue top-0 left-0 z-2000">
+        <video ref="video" autoplay playsinline></video>
+        <button @click="takePhoto" aria-label="拍照" class="rounded-100% absolute left-50% bottom-20% transform-translate-x-[-50%] w-20px h-20px bg-red-6 outline-solid outline-red-6 border-none outline-offset-2"></button>
+      </div>
+    </Teleport>
   </div>
   <div v-else class="ccontainer pt-60px ps-5 pe-5 w-90% lg:w-70%">
     <div class="lg:w-160px">
