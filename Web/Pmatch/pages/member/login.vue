@@ -116,7 +116,7 @@ const eyes = ref(null);
 const i_password = ref(null);
 let turnstilesitekey = '1x00000000000000000000AA'; // 預設測試用KEY
 const loginToken = useCookie('loginToken');
-const hasToken = ref(loginToken.value !== undefined);
+const hasToken = ref("");
 // 登入用
 let accountId = ref('');
 let password = ref('');
