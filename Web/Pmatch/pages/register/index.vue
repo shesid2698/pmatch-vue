@@ -137,9 +137,9 @@ const ToFormPage = async () => {
     if (shortUrlResponse.data.Status.Code === 0) {
       // 完成註冊並登入
       const registerRes = await $axios.post(
-        'http://localhost:2450/api/v1/Pmatch/Register',
+        '/api/v1/Pmatch/Register',
         {
-          MobileNumber: route.query.Phone,
+          MobileNumber: encrypt.decrypt(route.query.Phone),
           IsPromoteCode: false,
           IsFromShortUrl: true
         }, {
@@ -149,12 +149,12 @@ const ToFormPage = async () => {
       }
       );
       if (registerRes.data.Status.Code === 0) {
-        memberList.value = response.data.Data2;
-        userNameCookie.value = response.data.Data2.Name;
-        tokenCookie.value = response.data.Data2.Token;
-        MemberIdCookie.value = response.data.Data2.PmatchMemberId;
+        memberList.value = registerRes.data.Data2;
+        userNameCookie.value = registerRes.data.Data2.Name;
+        tokenCookie.value = registerRes.data.Data2.Token;
+        MemberIdCookie.value = registerRes.data.Data2.PmatchMemberId;
         await GetMemberDetail(MemberIdCookie.value, tokenCookie.value);
-        window.location.href = '/';
+        window.location.href = '/member/center';
       } else {
         await openAlertModal(' ', `短網址註冊錯誤`, 'loginFailed');
       }
