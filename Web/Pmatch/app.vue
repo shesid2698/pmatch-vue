@@ -1,9 +1,4 @@
 <template>
-  <noscript>
-    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TBHCXFCD" height="0" width="0"
-      style="display: none; visibility: hidden"></iframe>
-  </noscript>
-
   <div :class="{ pageSetting: isHomePage }">
     <AlertModal />
     <ConfirmModal />
@@ -175,5 +170,14 @@ useSeoMeta({
   ogTitle: 'PMatch遊戲道具交易平台',
   description: 'Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全',
   ogDescription: 'Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全'
+})
+useHead({
+  noscript: [
+    {
+      key: 'gtm-noscript',
+      innerHTML: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TBHCXFCD" height="0" width="0" style="display:none;visibility:hidden"></iframe>`,
+      tagPosition: 'bodyOpen'
+    }
+  ]
 })
 </script>
