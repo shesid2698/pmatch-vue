@@ -174,8 +174,16 @@ useSeoMeta({
 useHead({
   noscript: [
     {
-      children: '<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TBHCXFCD" height="0" width="0" style="display: none; visibility: hidden"></iframe>',
-      body: true
+      key: 'gtm-noscript',
+      innerHTML: `
+        <iframe 
+          src="https://www.googletagmanager.com/ns.html?id=GTM-TBHCXFCD"
+          height="0" 
+          width="0" 
+          style="display:none;visibility:hidden">
+        </iframe>
+      `.trim(),
+      tagPosition: 'bodyOpen'  // 必須！放在 <body> 開頭
     }
   ]
 })
