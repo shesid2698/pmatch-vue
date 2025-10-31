@@ -13,7 +13,7 @@
       <div class="max-w-1110px m-auto pt-60px ps-5 pe-5 relative z-2">
         <div class="mb-3">
           <h1 class="m-0 mb-2 text-center font-size-33px md-font-size-44px slogan">
-            PMatch 整合媒合市場的領頭羊
+            PMatch遊戲幣媒合交易市場的首選
           </h1>
           <h3 class="m-0 font-size-14px md-font-size-22px text-center subSlogan">
             嚴選合法媒合商、用合約保障交易權益、有效防堵詐騙、媒合交易更安全
