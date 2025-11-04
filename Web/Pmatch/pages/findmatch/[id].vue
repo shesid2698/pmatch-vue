@@ -220,7 +220,7 @@
               <ElButton plain @click="readContact" :disabled="isTransactionDisabled">
                 我已詳細閱讀此服務條款(必填)
               </ElButton>
-              <ElDialog v-model="dialogVisible" :close-on-click-modal="false">
+              <ElDialog v-model="dialogVisible" :close-on-click-modal="false" append-to-body>
                 <div class="dialogHeader absolute">
                   服務條款
                 </div>
