@@ -62,9 +62,9 @@
                 <span class="text-[#FF5454] text-[14px]" v-if="timers.phone.countdown < timers.phone.duration">
                   如需再次傳送簡訊，請稍等 {{ timers.phone.countdown }} 秒</span>
               </div>
-              <div class="flex justify-center gap-[10px]">
+              <div class="flex justify-start gap-[10px]">
                 <!-- 手機驗證 -->
-                <div class="relative inline-block w-[50%] group"
+                <div class="relative inline-block w-[20%] group"
                   :class="{ 'brightness-75 select-none pointer-events-none': isPhoneDisabled || !twoFactorOptions.phone }">
                   <button class="verifyBtn" @click.prevent="select2faMethod('phone')"
                     :disabled="isPhoneDisabled"></button>
@@ -76,7 +76,7 @@
                   </div>
                 </div>
                 <!-- Email驗證 -->
-                <div class="relative inline-block w-[50%] group"
+                <div class="relative inline-block w-[20%] group"
                   :class="{ 'brightness-75 select-none pointer-events-none': isEmailDisabled || !twoFactorOptions.email }">
                   <button class="verifyBtn" @click.prevent="select2faMethod('email')"
                     :disabled="isEmailDisabled"></button>
@@ -87,6 +87,7 @@
                     <span class="group-hover:inline text-[#31129B] z-1 hidden">Email驗證</span>
                   </div>
                 </div>
+                <div class="box-border p-0 m-0 line-height-200%"><span class="text-red-500">{{ errorMessage }}</span></div>
               </div>
               <div v-if="loginStep === '2fa-verify'" class="mt-15px">
                 <div class="mb-5px text-white">
@@ -148,6 +149,7 @@ import { useLoadStore } from "../stores/loading.js";
 import { useConfigStore } from "../stores/config.js";
 import { useAlertModalStore } from "../stores/useAlertModal.js";
 import VueTurnstile from "vue-turnstile";
+import { fa } from "element-plus/es/locale/index.mjs";
 
 const store = useLoadStore();
 const configStore = useConfigStore();
@@ -164,6 +166,7 @@ const password = ref("");
 const accountInput = ref(null);
 const i_password = ref(null);
 const eyes = ref(null);
+const errorMessage = ref("");
 
 // 登入流程
 const loginStep = ref('credentials');  // 'credentials' (輸入帳密), '2fa-choice' (選擇驗證方式), '2fa-verify' (輸入驗證碼)
@@ -297,11 +300,11 @@ async function select2faMethod(method) {
       loginStep.value = '2fa-verify';
       startCountdown(method);
     } else {
-      await openAlertModal(" ", `發送驗證碼失敗: ${response.data.Status.Message}`);
+      errorMessage.value = `發送驗證碼失敗: ${response.data.Status.Message}`;
     }
   } catch (error) {
     console.error("發送驗證碼失敗:", error);
-    await openAlertModal(" ", "發送驗證碼失敗，請檢查網路再試。");
+    errorMessage.value = `發送驗證碼失敗，請檢查網路再試。`;
   } finally {
     isSendingCode.value = false;
   }
@@ -338,11 +341,11 @@ async function submit2faCode() {
       const targetUrl = `${configStore.envUrl}${base64UrlToken}`;
       window.location.href = targetUrl;
     } else {
-      await openAlertModal(" ", `驗證失敗: ${response.data.Status.Message || '驗證碼錯誤'}`);
+      errorMessage.value = `驗證失敗: ${response.data.Status.Message || '驗證碼錯誤'}`;
     }
   } catch (error) {
     console.error("驗證失敗:", error);
-    await openAlertModal(" ", "驗證時發生錯誤，請檢查網路再試。");
+    errorMessage.value = `驗證時發生錯誤，請檢查網路再試。`;
   }
 }
 
@@ -374,28 +377,6 @@ const startCountdown = (method) => {
   }
 };
 
-// 檢查工具安裝
-const getSerialNumber = async () => {
-  try {
-    const response = await fetch("http://localhost:23100/EIS/I", {
-      method: "POST",
-      body: null,
-    });
-
-    // 檢查 HTTP 狀態碼
-    if (!response.ok) {
-      await openAlertModal(
-        " ",
-        "請依文件調整瀏覽器設定值,安裝工具再行登入"
-      );
-    }
-
-    const result = await response.json(); // 解析 JSON 資料
-    return result;
-  } catch (error) {
-    console.error("Fetching serial number failed:", error);
-  }
-};
 onMounted(async () => {
   // 計時器狀態
   Object.keys(timers).forEach(method => {
@@ -405,21 +386,7 @@ onMounted(async () => {
     }
   });
   await setPageLoading(true);
-  //const res = await getSerialNumber(); // 等待回應
-  //console.log(res);
-
-  // 取得turnstileKey
   turnstilesitekey = configStore.turnstilesitekey;
-  //console.log('configStore.turnstilesitekey1', turnstilesitekey);
-
-  // 驗證 status.code
-  // if (res && res.status && res.status.code === 0) {
-  //   iData.value = res.data;
-  // } else if (res && res.status && res.status.code !== 0) {
-  //   await openAlertModal(" ", "安裝工具過程中請記得輸入序號");
-  // } else {
-  //   await openAlertModal(" ", "請依文件調整瀏覽器設定值,安裝工具再行登入");
-  // }
   if (accountInput.value) {
     accountInput.value.focus();
   }
