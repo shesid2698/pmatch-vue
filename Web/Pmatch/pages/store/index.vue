@@ -68,80 +68,80 @@
         </div>
       </div>
     </div>
-    
+
     <!-- 富豪榜 -->
     <div class="pb-7rem">
-          <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
-            <div class="flex justify-center">
-              <div class="w-90%">
-                <div class="flex tableTh">
-                  <div class="w-100% font-size-1.2rem text-center color-#beffff">
-                    遊戲平台
-                  </div>
-                  <div class="w-100% font-size-1.2rem text-center color-#beffff">
-                    富豪榜財產
-                  </div>
-                  <div class="w-100% font-size-1.2rem text-center color-#beffff">
-                    遊戲幣走向
-                  </div>
-                </div>
-                <div class="flex tableTd">
-                  <div class="w-100% platformName font-size-1.5rem text-center color-#beffff">
-                    滿貫大亨
-                  </div>
-                  <div class="w-100% patchNumber font-size-1.5rem text-center color-#beffff">
-                    {{ dailyPatchList0.length ? dailyPatchList0[dailyPatchList0.length - 1].Total.toLocaleString() : "0" }}
-                  </div>
-                  <div class="w-100% font-size-1.2rem text-center color-#beffff">
-                    <ElButton plain @click="openDialog(0)">
-                      
-                      <Line :data="simpleChartData" :options="simpleChartOptions" class="md-w-150px w-80px" />
-                    </ElButton>
-                  </div>
-                </div>
-                <div class="flex tableTd">
-                  <div class="w-100% platformName font-size-1.5rem text-center color-#beffff">
-                    老子有錢
-                  </div>
-                  <div class="w-100% patchNumber font-size-1.5rem text-center color-#beffff">
-                    {{ dailyPatchList1.length ? dailyPatchList1[dailyPatchList1.length - 1].Total.toLocaleString() : "0" }}
-                  </div>
-                  <div class="w-100% font-size-1.2rem text-center color-#beffff">
-                    <ElButton plain @click="openDialog(1)">
-                    
-                      <Line :data="simpleChartData1" :options="simpleChartOptions" class="md-w-150px w-80px" />
-                    </ElButton>
-                  </div>
-                </div>
-                <div class="flex tableTd">
-                  <div class="w-100% platformName font-size-1.5rem text-center color-#beffff">
-                    錢街Online
-                  </div>
-                  <div class="w-100% patchNumber font-size-1.5rem text-center color-#beffff">
-                    {{ dailyPatchList2.length ? dailyPatchList2[dailyPatchList2.length - 1].Total.toLocaleString() : '0' }}
-                  </div>
-                  <div class="w-100% text-center">
-                    <ElButton plain @click="openDialog(2)">
-                      
-                      <Line :data="simpleChartData2" :options="simpleChartOptions" class="md-w-150px w-80px" />
-                    </ElButton>
-                  </div>
-                </div>
-                <div class="flex tableTd">
-                  <div class="w-100% platformName font-size-1.5rem text-center color-#beffff">
-                    聚寶Online
-                  </div>
-                  <div class="w-100% patchNumber font-size-1.5rem text-center color-#beffff">
-                    {{ dailyPatchList3.length ? dailyPatchList3[dailyPatchList3.length - 1].Total.toLocaleString() : '0' }}
-                  </div>
-                  <div class="w-100% text-center">
-                    <ElButton plain @click="openDialog(3)">
-                      
-                      <Line :data="simpleChartData3" :options="simpleChartOptions" class="md-w-150px w-80px" />
-                    </ElButton>
-                  </div>
-                </div>
-                <!-- <div class="flex tableTd">
+      <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
+        <div class="flex justify-center">
+          <div class="w-90%">
+            <div class="flex tableTh">
+              <div class="w-100% font-size-1.2rem text-center color-#beffff">
+                遊戲平台
+              </div>
+              <div class="w-100% font-size-1.2rem text-center color-#beffff">
+                富豪榜財產
+              </div>
+              <div class="w-100% font-size-1.2rem text-center color-#beffff">
+                遊戲幣走向
+              </div>
+            </div>
+            <div class="flex tableTd">
+              <div class="w-100% platformName font-size-1.5rem text-center color-#beffff">
+                滿貫大亨
+              </div>
+              <div class="w-100% patchNumber font-size-1.5rem text-center color-#beffff">
+                {{ dailyPatchList0.length ? dailyPatchList0[dailyPatchList0.length - 1].Total.toLocaleString() : "0" }}
+              </div>
+              <div class="w-100% font-size-1.2rem text-center color-#beffff">
+                <ElButton plain @click="openDialog(0)">
+
+                  <Line :data="simpleChartData" :options="simpleChartOptions" class="md-w-150px w-80px" />
+                </ElButton>
+              </div>
+            </div>
+            <div class="flex tableTd">
+              <div class="w-100% platformName font-size-1.5rem text-center color-#beffff">
+                老子有錢
+              </div>
+              <div class="w-100% patchNumber font-size-1.5rem text-center color-#beffff">
+                {{ dailyPatchList1.length ? dailyPatchList1[dailyPatchList1.length - 1].Total.toLocaleString() : "0" }}
+              </div>
+              <div class="w-100% font-size-1.2rem text-center color-#beffff">
+                <ElButton plain @click="openDialog(1)">
+
+                  <Line :data="simpleChartData1" :options="simpleChartOptions" class="md-w-150px w-80px" />
+                </ElButton>
+              </div>
+            </div>
+            <div class="flex tableTd">
+              <div class="w-100% platformName font-size-1.5rem text-center color-#beffff">
+                錢街Online
+              </div>
+              <div class="w-100% patchNumber font-size-1.5rem text-center color-#beffff">
+                {{ dailyPatchList2.length ? dailyPatchList2[dailyPatchList2.length - 1].Total.toLocaleString() : '0' }}
+              </div>
+              <div class="w-100% text-center">
+                <ElButton plain @click="openDialog(2)">
+
+                  <Line :data="simpleChartData2" :options="simpleChartOptions" class="md-w-150px w-80px" />
+                </ElButton>
+              </div>
+            </div>
+            <div class="flex tableTd">
+              <div class="w-100% platformName font-size-1.5rem text-center color-#beffff">
+                聚寶Online
+              </div>
+              <div class="w-100% patchNumber font-size-1.5rem text-center color-#beffff">
+                {{ dailyPatchList3.length ? dailyPatchList3[dailyPatchList3.length - 1].Total.toLocaleString() : '0' }}
+              </div>
+              <div class="w-100% text-center">
+                <ElButton plain @click="openDialog(3)">
+
+                  <Line :data="simpleChartData3" :options="simpleChartOptions" class="md-w-150px w-80px" />
+                </ElButton>
+              </div>
+            </div>
+            <!-- <div class="flex tableTd">
                   <div class="w-100% platformName font-size-1.5rem text-center color-#beffff">
                     金爸爸娛樂城
                   </div>
@@ -155,24 +155,24 @@
                     </ElButton>
                   </div>
                 </div> -->
-                <div class="flex tableTd">
-                  <div class="w-100% platformName font-size-1.5rem text-center color-#beffff">
-                    寶島娛樂城
-                  </div>
-                  <div class="w-100% patchNumber font-size-1.5rem text-center color-#beffff">
-                    {{ dailyPatchList5.length ? dailyPatchList5[dailyPatchList5.length - 1].Total.toLocaleString() : '0' }}
-                  </div>
-                  <div class="w-100% text-center">
-                    <ElButton plain @click="openDialog(5)">
-                      
-                      <Line :data="simpleChartData5" :options="simpleChartOptions" class="md-w-150px w-80px" />
-                    </ElButton>
-                  </div>
-                </div>
+            <div class="flex tableTd">
+              <div class="w-100% platformName font-size-1.5rem text-center color-#beffff">
+                寶島娛樂城
+              </div>
+              <div class="w-100% patchNumber font-size-1.5rem text-center color-#beffff">
+                {{ dailyPatchList5.length ? dailyPatchList5[dailyPatchList5.length - 1].Total.toLocaleString() : '0' }}
+              </div>
+              <div class="w-100% text-center">
+                <ElButton plain @click="openDialog(5)">
+
+                  <Line :data="simpleChartData5" :options="simpleChartOptions" class="md-w-150px w-80px" />
+                </ElButton>
               </div>
             </div>
           </div>
         </div>
+      </div>
+    </div>
 
     <!-- 先不開(遊戲榜) -->
     <!-- <div class="pb-7rem">
@@ -303,221 +303,261 @@
         </div> -->
 
     <!-- 最新消息 -->
-     <div ref="newsRef" class="max-w-1110px h-[920px] m-auto ps-5 pe-5 relative z-2 pb-7rem">
-        <div class="flex items-center justify-center mb-3rem">
-          <div class="border-gradient-l"></div>
-          <span class="text-gradient-t font-bold text-[32px] md:text-[40px]">最新</span>
-          <span class="text-gradient-b font-bold text-[32px] md:text-[40px]">消息</span>
-          <div class="border-gradient-r"></div>
-        </div>
-        <div class="flex justify-center">
-          <div class="w-100%">
-            <div class="flex lg:justify-start justify-center">
-              <!-- ALL -->
-              <div class="relative inline-block w-[60px] h-[48px] group">
-                <button class="hollow-btn-all cursor-pointer w-full h-full rounded-full" @click="fetchNewsListData([5, 6], '', 'ALL')" :aria-pressed="activeNewsType === 'ALL'"></button>
-                <div
-                  class="absolute pointer-events-none inset-0 flex items-center justify-center mx-auto font-bold before:content-[''] before:absolute before:inset-0 before:rounded-full before:z-0"
+    <div ref="newsRef" class="max-w-1110px h-[920px] m-auto ps-5 pe-5 relative z-2 pb-7rem">
+      <div class="flex items-center justify-center mb-3rem">
+        <div class="border-gradient-l"></div>
+        <span class="text-gradient-t font-bold text-[32px] md:text-[40px]">最新</span>
+        <span class="text-gradient-b font-bold text-[32px] md:text-[40px]">消息</span>
+        <div class="border-gradient-r"></div>
+      </div>
+      <div class="flex justify-center">
+        <div class="w-100%">
+          <div class="flex lg:justify-start justify-center">
+            <!-- ALL -->
+            <div class="relative inline-block w-[60px] h-[48px] group">
+              <button class="hollow-btn-all cursor-pointer w-full h-full rounded-full"
+                @click="fetchNewsListData([5, 6], '', 'ALL')" :aria-pressed="activeNewsType === 'ALL'"></button>
+              <div
+                class="absolute pointer-events-none inset-0 flex items-center justify-center mx-auto font-bold before:content-[''] before:absolute before:inset-0 before:rounded-full before:z-0"
+                :class="[activeNewsType === 'ALL'
+                  ? 'before:bg-[linear-gradient(to_bottom,_#FFFFFF,_#6DF0FE)] group-hover:before:bg-[linear-gradient(to_bottom,_transparent,_#6DF0FE33,_transparent)]'
+                  : 'before:bg-[linear-gradient(to_bottom,_transparent,_#6DF0FE33,_transparent)] group-hover:before:bg-[linear-gradient(to_bottom,_#FFFFFF,_#6DF0FE)]']">
+                <span class="z-1 transition-colors"
                   :class="[activeNewsType === 'ALL'
-                      ? 'before:bg-[linear-gradient(to_bottom,_#FFFFFF,_#6DF0FE)] group-hover:before:bg-[linear-gradient(to_bottom,_transparent,_#6DF0FE33,_transparent)]'
-                      : 'before:bg-[linear-gradient(to_bottom,_transparent,_#6DF0FE33,_transparent)] group-hover:before:bg-[linear-gradient(to_bottom,_#FFFFFF,_#6DF0FE)]']">
-                  <span
-                    class="z-1 transition-colors" :class="[activeNewsType === 'ALL'
-                        ? 'text-[#31129B] group-hover:bg-gradient-to-b group-hover:from-[#fff] group-hover:to-[#6DF0FE] group-hover:bg-clip-text group-hover:text-transparent'
-                        : 'bg-gradient-to-b from-[#fff] to-[#6DF0FE] bg-clip-text text-transparent group-hover:text-[#31129B]']">ALL
-                  </span>
-                </div>
-              </div>
-              <!-- SYSTEM -->
-              <div class="relative inline-block ms-2.5 w-[90px] h-[48px] group">
-                <button class="hollow-btn-system cursor-pointer w-full h-full rounded-full" @click="fetchNewsListData([5], '', 'SYSTEM')" :aria-pressed="activeNewsType === 'SYSTEM'"></button>
-                <div
-                  class="absolute pointer-events-none inset-0 flex items-center justify-center mx-auto font-bold before:content-[''] before:absolute before:inset-0 before:rounded-full before:z-0"
-                  :class="[ activeNewsType === 'SYSTEM'
-                      ? 'before:bg-[linear-gradient(to_bottom,_#FFFFFF,_#FE6FDA)] group-hover:before:bg-[linear-gradient(to_bottom,_transparent,_#FE6FDA33,_transparent)]'
-                      : 'before:bg-[linear-gradient(to_bottom,_transparent,_#FE6FDA33,_transparent)] group-hover:before:bg-[linear-gradient(to_bottom,_#FFFFFF,_#FE6FDA)]']">
-                  <span
-                    class="z-1 transition-colors" :class="[ activeNewsType === 'SYSTEM'
-                        ? 'text-[#31129B] group-hover:bg-gradient-to-b group-hover:from-[#fff] group-hover:to-[#FE6FDA] group-hover:bg-clip-text group-hover:text-transparent'
-                        : 'bg-gradient-to-b from-[#fff] to-[#FE6FDA] bg-clip-text text-transparent group-hover:text-[#31129B]']">系統公告
-                  </span>
-                </div>
-              </div>
-              <!-- POLICY -->
-              <div class="relative inline-block ms-2.5 w-[90px] h-[48px] group">
-                <button class="hollow-btn-policy cursor-pointer w-full h-full rounded-full" @click="fetchNewsListData([6], '', 'POLICY')" :aria-pressed="activeNewsType === 'POLICY'"></button>
-                <div
-                  class="absolute pointer-events-none inset-0 flex items-center justify-center mx-auto font-bold before:content-[''] before:absolute before:inset-0 before:rounded-full before:z-0"
-                  :class="[ activeNewsType === 'POLICY'
-                      ? 'before:bg-[linear-gradient(to_bottom,_#FFFFFF,_#B698FF)] group-hover:before:bg-[linear-gradient(to_bottom,_transparent,_#B698FF33,_transparent)]'
-                      : 'before:bg-[linear-gradient(to_bottom,_transparent,_#B698FF33,_transparent)] group-hover:before:bg-[linear-gradient(to_bottom,_#FFFFFF,_#B698FF)]']">
-                  <span
-                    class="z-1 transition-colors" :class="[activeNewsType === 'POLICY'
-                        ? 'text-[#31129B] group-hover:bg-gradient-to-b group-hover:from-[#fff] group-hover:to-[#B698FF] group-hover:bg-clip-text group-hover:text-transparent'
-                        : 'bg-gradient-to-b from-[#fff] to-[#B698FF] bg-clip-text text-transparent group-hover:text-[#31129B]']">政策公告
-                  </span>
-                </div>
+                    ? 'text-[#31129B] group-hover:bg-gradient-to-b group-hover:from-[#fff] group-hover:to-[#6DF0FE] group-hover:bg-clip-text group-hover:text-transparent'
+                    : 'bg-gradient-to-b from-[#fff] to-[#6DF0FE] bg-clip-text text-transparent group-hover:text-[#31129B]']">ALL
+                </span>
               </div>
             </div>
-            <div v-if="newsList.length > 0">
-              <NuxtLink :to="`/store/news?id=${item.Id}`" v-for="(item, index) in newsList .filter((item) => item.Category !== 3) .reverse() .slice(0, 6)":key="index" class="newsLink color-#555553 decoration-none">
-                <div class="w-full mt-1.8rem">
-                  <div class="w-80 font-size-.8rem">
-                    <div class="flex items-center">
-                      <div :class="{ 'bg-[linear-gradient(to_bottom,_#FFFFFF,_#FE6FDA)]': item.Category === 5, 'bg-[linear-gradient(to_bottom,_#FFFFFF,_#B698FF)]': item.Category === 6 }"
-                        class="flex items-center justify-center w-70px text-[#31129B]  p-1 font-size-12px rounded-50px">
-                        {{ item.Category === 5 ? "系統公告" : item.Category === 6 ? "政策公告" : "" }}
-                      </div>
-                      <div class="flex font-size-12px items-center p-2">
-                        <span class="bg-gradient-to-b from-[#fff] to-[#6DF0FE] bg-clip-text text-transparent">
-                          {{ item.StartTime.slice(0, 10) }}
-                        </span>
-                      </div>
+            <!-- SYSTEM -->
+            <div class="relative inline-block ms-2.5 w-[90px] h-[48px] group">
+              <button class="hollow-btn-system cursor-pointer w-full h-full rounded-full"
+                @click="fetchNewsListData([5], '', 'SYSTEM')" :aria-pressed="activeNewsType === 'SYSTEM'"></button>
+              <div
+                class="absolute pointer-events-none inset-0 flex items-center justify-center mx-auto font-bold before:content-[''] before:absolute before:inset-0 before:rounded-full before:z-0"
+                :class="[activeNewsType === 'SYSTEM'
+                  ? 'before:bg-[linear-gradient(to_bottom,_#FFFFFF,_#FE6FDA)] group-hover:before:bg-[linear-gradient(to_bottom,_transparent,_#FE6FDA33,_transparent)]'
+                  : 'before:bg-[linear-gradient(to_bottom,_transparent,_#FE6FDA33,_transparent)] group-hover:before:bg-[linear-gradient(to_bottom,_#FFFFFF,_#FE6FDA)]']">
+                <span class="z-1 transition-colors"
+                  :class="[activeNewsType === 'SYSTEM'
+                    ? 'text-[#31129B] group-hover:bg-gradient-to-b group-hover:from-[#fff] group-hover:to-[#FE6FDA] group-hover:bg-clip-text group-hover:text-transparent'
+                    : 'bg-gradient-to-b from-[#fff] to-[#FE6FDA] bg-clip-text text-transparent group-hover:text-[#31129B]']">系統公告
+                </span>
+              </div>
+            </div>
+            <!-- POLICY -->
+            <div class="relative inline-block ms-2.5 w-[90px] h-[48px] group">
+              <button class="hollow-btn-policy cursor-pointer w-full h-full rounded-full"
+                @click="fetchNewsListData([6], '', 'POLICY')" :aria-pressed="activeNewsType === 'POLICY'"></button>
+              <div
+                class="absolute pointer-events-none inset-0 flex items-center justify-center mx-auto font-bold before:content-[''] before:absolute before:inset-0 before:rounded-full before:z-0"
+                :class="[activeNewsType === 'POLICY'
+                  ? 'before:bg-[linear-gradient(to_bottom,_#FFFFFF,_#B698FF)] group-hover:before:bg-[linear-gradient(to_bottom,_transparent,_#B698FF33,_transparent)]'
+                  : 'before:bg-[linear-gradient(to_bottom,_transparent,_#B698FF33,_transparent)] group-hover:before:bg-[linear-gradient(to_bottom,_#FFFFFF,_#B698FF)]']">
+                <span class="z-1 transition-colors"
+                  :class="[activeNewsType === 'POLICY'
+                    ? 'text-[#31129B] group-hover:bg-gradient-to-b group-hover:from-[#fff] group-hover:to-[#B698FF] group-hover:bg-clip-text group-hover:text-transparent'
+                    : 'bg-gradient-to-b from-[#fff] to-[#B698FF] bg-clip-text text-transparent group-hover:text-[#31129B]']">政策公告
+                </span>
+              </div>
+            </div>
+          </div>
+          <div v-if="newsList.length > 0">
+            <NuxtLink :to="`/store/news?id=${item.Id}`"
+              v-for="(item, index) in newsList.filter((item) => item.Category !== 3).reverse().slice(0, 6)"
+              :key="index" class="newsLink color-#555553 decoration-none">
+              <div class="w-full mt-1.8rem">
+                <div class="w-80 font-size-.8rem">
+                  <div class="flex items-center">
+                    <div
+                      :class="{ 'bg-[linear-gradient(to_bottom,_#FFFFFF,_#FE6FDA)]': item.Category === 5, 'bg-[linear-gradient(to_bottom,_#FFFFFF,_#B698FF)]': item.Category === 6 }"
+                      class="flex items-center justify-center w-70px text-[#31129B]  p-1 font-size-12px rounded-50px">
+                      {{ item.Category === 5 ? "系統公告" : item.Category === 6 ? "政策公告" : "" }}
                     </div>
-                  </div>
-                  <div class="w-full pt-3 pb-4 relative before:content-[''] before:absolute before:h-[1px] before:w-[105%] before:bottom-0 before:left-1/2 before:-translate-x-1/2 before:bg-[linear-gradient(to_right,_#ffffff00,_#6FF1FE,_#ffffff00)] flex items-end justify-between">
-                    <div class="ms-2.5">
-                      <h2 class="my-0  font-size-30px bg-gradient-to-b from-[#fff] to-[#6DF0FE] bg-clip-text text-transparent hover:bg-gradient-to-t">
-                        {{ item.Title }}
-                      </h2>
-                      <h4 class="my-0 font-size-15px bg-gradient-to-b from-[#fff] to-[#6DF0FE] bg-clip-text text-transparent">
-                        {{ item.Summary }}
-                      </h4>
-                    </div>
-                    <div class="me-2.5">
-                      <p class="my-0 font-size-15px bg-gradient-to-b from-[#fff] to-[#6DF0FE] bg-clip-text text-transparent">
-                        詳細資訊...
-                      </p>
+                    <div class="flex font-size-12px items-center p-2">
+                      <span class="bg-gradient-to-b from-[#fff] to-[#6DF0FE] bg-clip-text text-transparent">
+                        {{ item.StartTime.slice(0, 10) }}
+                      </span>
                     </div>
                   </div>
                 </div>
-              </NuxtLink>
-            </div>
+                <div
+                  class="w-full pt-3 pb-4 relative before:content-[''] before:absolute before:h-[1px] before:w-[105%] before:bottom-0 before:left-1/2 before:-translate-x-1/2 before:bg-[linear-gradient(to_right,_#ffffff00,_#6FF1FE,_#ffffff00)] flex items-end justify-between">
+                  <div class="ms-2.5">
+                    <h2
+                      class="my-0  font-size-30px bg-gradient-to-b from-[#fff] to-[#6DF0FE] bg-clip-text text-transparent hover:bg-gradient-to-t">
+                      {{ item.Title }}
+                    </h2>
+                    <h4
+                      class="my-0 font-size-15px bg-gradient-to-b from-[#fff] to-[#6DF0FE] bg-clip-text text-transparent">
+                      {{ item.Summary }}
+                    </h4>
+                  </div>
+                  <div class="me-2.5">
+                    <p
+                      class="my-0 font-size-15px bg-gradient-to-b from-[#fff] to-[#6DF0FE] bg-clip-text text-transparent">
+                      詳細資訊...
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </NuxtLink>
           </div>
         </div>
       </div>
+    </div>
 
-     <!-- 方案費用 -->
+    <!-- 方案費用 -->
     <div class="pb-7rem">
-        <div class="max-w-1372px m-auto ps-5 pe-5 relative z-2">
-            <div class="flex items-center justify-center mb-3rem">
-                <div class="border-gradient-l"></div>
-                <span class="text-gradient-t font-bold text-[32px] md:text-[40px]">方案</span>
-                <span class="text-gradient-b font-bold text-[32px] md:text-[40px]">費用</span>
-                <div class="border-gradient-r"></div>
-            </div>
+      <div class="max-w-1372px m-auto ps-5 pe-5 relative z-2">
+        <div class="flex items-center justify-center mb-3rem">
+          <div class="border-gradient-l"></div>
+          <span class="text-gradient-t font-bold text-[32px] md:text-[40px]">方案</span>
+          <span class="text-gradient-b font-bold text-[32px] md:text-[40px]">費用</span>
+          <div class="border-gradient-r"></div>
+        </div>
 
-          <div class="lg:pt-[40px] flex flex-wrap lg:flex-nowrap justify-center gap-6">
-            <div class="w-full lg:w-1/3">
-              <div class="h-[1280px] px-15 rounded-[25px] bg-gradient-to-b from-[#C3E2EB77] to-[#C3E2EB22] gradient-border">
-                <div class="h-[140px]"></div>
-                <div class="relative pt-[30px] px-[28px] rounded-lg bg-gradient-to-b from-[#FFFFFF] to-[#EFFFF2] text-gray-800 h-[960px] w-[calc(100%-56px)] lg:w-[calc(100%-56px)] md:w-[calc(50%-56px)] md:mx-auto">
-                  <div class="text-center">
-                    <h2 class="text-[40px] font-normal m-0 bg-gradient-to-r from-[#4BAAA7] to-[#82DE94] bg-clip-text text-transparent">{{ plans[0].title }}</h2>
-                    <div class="h-[100px] my-4 flex justify-center items-center translate-x-[-12px]">
-                      <span class="text-[24px] translate-[24px,-36px]">NT$</span>
-                      <span class="text-[96px] font-medium mx-1 my-0 w-[100px] italic bg-gradient-to-r from-[#82DE94] to-[#4BAAA7] bg-clip-text text-transparent">0</span>
-                    </div>
-                    <NuxtLink to="/store/register" class="flex-inline no-underline">
-                      <div class="w-[200px] h-[60px] leading-[60px] rounded-full text-[28px] text-white border-none bg-gradient-to-r from-[#48A7A8] to-[#84E093] hover:opacity-90 cursor-pointer ">
-                        {{ plans[0].cta }}                      
-                      </div>
-                    </NuxtLink>
+        <div class="lg:pt-[40px] flex flex-wrap lg:flex-nowrap justify-center gap-6">
+          <div class="w-full lg:w-1/3">
+            <div
+              class="h-[1280px] px-15 rounded-[25px] bg-gradient-to-b from-[#C3E2EB77] to-[#C3E2EB22] gradient-border">
+              <div class="h-[140px]"></div>
+              <div
+                class="relative pt-[30px] px-[28px] rounded-lg bg-gradient-to-b from-[#FFFFFF] to-[#EFFFF2] text-gray-800 h-[960px] w-[calc(100%-56px)] lg:w-[calc(100%-56px)] md:w-[calc(50%-56px)] md:mx-auto">
+                <div class="text-center">
+                  <h2
+                    class="text-[40px] font-normal m-0 bg-gradient-to-r from-[#4BAAA7] to-[#82DE94] bg-clip-text text-transparent">
+                    {{ plans[0].title }}</h2>
+                  <div class="h-[100px] my-4 flex justify-center items-center translate-x-[-12px]">
+                    <span class="text-[24px] translate-[24px,-36px]">NT$</span>
+                    <span
+                      class="text-[96px] font-medium mx-1 my-0 w-[100px] italic bg-gradient-to-r from-[#82DE94] to-[#4BAAA7] bg-clip-text text-transparent">0</span>
                   </div>
-                  <ul class="mt-6 space-y-[30px] ps-[16px]">
-                    <li v-for="detail in plans[0].details" :key="detail" class="flex items-start">
-                      <img :src="plans[0].icon" class="w-[30px] me-3 mt-0.5 select-none pointer-events-none" alt="check" />
-                      <span class="text-[22px]" v-html="detail"></span>
-                    </li>
-                  </ul>
-                  <p v-if="plans[0].note" class="text-[18px] text-[#D31E00] mt-[20px]"><Asterisk class="translate-x-[1px]" /> {{ plans[0].note }}</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="w-full lg:w-2/3">
-              <div class="md:h-[1280px] h-[2360px] px-15 rounded-[25px] bg-gradient-to-b from-[#C3E2EB77] to-[#C3E2EB22] gradient-border gradient-box">
-                <div class="h-[140px]">
-                  <div class="flex justify-end pt-[20px] -me-[36px] gap-[20px] text-[#383838]">
-                    <div class="w-[182px] h-[53px] leading-[53px] flex items-center justify-center text-[18px] rounded-full bg-gradient-to-r from-[#FFFFFF] to-[#73FBFD] gradient-border !before:bg-gradient-to-r !before:from-[#73FBFD] !before:to-white !before:rounded-[99px]">
-                      年繳省更多
-                      <img src="/images/confetti.svg" class="w-[30px] mt-0.5 select-none pointer-events-none" alt="check" />
+                  <NuxtLink to="/store/register" class="flex-inline no-underline">
+                    <div
+                      class="w-[200px] h-[60px] leading-[60px] rounded-full text-[28px] text-white border-none bg-gradient-to-r from-[#48A7A8] to-[#84E093] hover:opacity-90 cursor-pointer ">
+                      {{ plans[0].cta }}
                     </div>
-                    <div class="relative flex items-center w-[103px] h-[26px] rounded-[5px] bg-gradient-to-r transition-all duration-400 button-shadow"
-                        :class="isYearly ? 'from-[#FFFFFF] to-[#73FBFD]' : 'from-[#73FBFD] to-[#FFFFFF]'">
-                      <div class="absolute h-full w-1/2 top-0 transition-all duration-400 rounded-[5px] bg-gradient-to-r button-shadow"
-                        :class="isYearly ? 'left-0 from-[#73FBFD] to-[#00CDCF]' : 'left-1/2 from-[#00CDCF] to-[#73FBFD]'">
-                      </div>
-                      <button @click="isYearly = true" class="relative z-1 w-[50%] text-[14px] border-none bg-transparent text-start ps-10px text-[#383838] cursor-pointer ">年繳</button>
-                      <button @click="isYearly = false" class="relative z-1 w-[50%] text-[14px] border-none bg-transparent text-end pe-10px text-[#383838] cursor-pointer ">月繳</button>
-                    </div>
-                  </div>
-                
-                </div>
-                <div class="flex flex-col md:flex-row gap-20">
-                    <div v-for="plan in plans.slice(1)" :key="plan.title" class="w-full md:w-1/2">
-                      <template v-if="plan.wrapperClass">
-                        <div :class="plan.wrapperClass">
-                          <div class="relative pt-[30px] px-[28px] rounded-lg h-[960px]" :class="plan.contentClass">
-                            <div v-if="plan.badge" class="absolute -top-[18px] left-1/2 -translate-x-1/2 w-[150px] h-[36px] leading-[36px] text-[20px] text-center text-white bg-[#AB6CEB] rounded-full shadow-lg">
-                              {{ plan.badge }}
-                            </div>
-                            <div class="text-center">
-                              <h2 class="text-[40px] font-normal m-0" :class="plan.textClass">{{ plan.title }}</h2>
-                              <div class="h-[100px] my-4 flex justify-center items-center translate-x-[-12px]">
-                                <span class="text-[24px] translate-[24px,-36px]">NT$</span>
-                                <span class="text-[36px] mx-1" :class="plan.textClass">{{ isYearly ? plan.price.yearly : plan.price.monthly }}</span>
-                                <span class="text-[36px]"> / {{ isYearly ? '年' : '月' }}</span>
-                              </div>
-                              <button @click="selectAndScrollToForm" class="w-[200px] h-[60px] leading-[60px] rounded-full text-[28px] text-white border-none cursor-pointer" :class="plan.buttonClass">{{ plan.cta }}</button>
-                            </div>
-                            <ul class="mt-6 space-y-[30px] ps-[16px]">
-                              <li v-for="detail in plan.details" :key="detail" class="flex items-start">
-                                <img :src="plan.icon" class="w-[30px] me-3 mt-0.5 select-none pointer-events-none" alt="check" />
-                                <span class="text-[22px] " v-html="detail"></span>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </template>
-                      <template v-else>
-                        <div class="relative pt-[30px] px-[28px] rounded-lg h-[960px]" :class="plan.contentClass">   
-                            <div class="text-center">
-                              <h2 class="text-[40px] font-normal m-0" :class="plan.textClass">{{ plan.title }}</h2>
-                              <div class="h-[100px] my-4 flex justify-center items-center translate-x-[-12px]">
-                                <span class="text-[24px] translate-[24px,-36px]">NT$</span>
-                                <span class="text-[36px] mx-1" :class="plan.textClass">{{ isYearly ? plan.price.yearly : plan.price.monthly }}</span>
-                                <span class="text-[36px]"> / {{ isYearly ? '年' : '月' }}</span>
-                              </div>
-                              <button @click="selectAndScrollToForm" class="w-[200px] h-[60px] leading-[60px] rounded-full text-[28px] text-white border-none cursor-pointer " :class="plan.buttonClass">{{ plan.cta }}</button>
-                            </div>
-                            <ul class="mt-6 space-y-[30px] ps-[16px]">
-                              <li v-for="detail in plan.details" :key="detail" class="flex items-start">
-                                <img :src="plan.icon" class="w-[30px] me-3 mt-0.5 select-none pointer-events-none" alt="check" />
-                                <span class="text-[22px] " v-html="detail"></span>
-                              </li>
-                            </ul>
-                            <p v-if="plan.note" class="text-[18px] text-[#D31E00] mt-[20px] text-center xl:-translate-x-[5%] translate-x-[0]"><Asterisk class="translate-x-[1px]" /> {{ plan.note }}</p>
-                          </div>
-                      </template>
-                    </div>
-                </div>
-                <div class="my-[36px] text-center">
-                  <NuxtLink href="/store/program" class="w-[367px] h-[75px] inline-flex justify-center items-center rounded-full border-solid border-0px bg-gradient-to-r from-[#7C2CBE] to-[#F12588] no-underline text-white text-[26px] hover:border-3px hover:w-[361px] hover:h-[69px] hover:from-white hover:to-white hover:text-[#EE2589] active:border-0px active:w-[367px] active:h-[75px] active:from-[#F12588] active:to-[#F12588] active:text-white">
-                    更多進階服務與功能
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 ms-2 mt-0.8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
                   </NuxtLink>
                 </div>
+                <ul class="mt-6 space-y-[30px] ps-[16px]">
+                  <li v-for="detail in plans[0].details" :key="detail" class="flex items-start">
+                    <img :src="plans[0].icon" class="w-[30px] me-3 mt-0.5 select-none pointer-events-none"
+                      alt="check" />
+                    <span class="text-[22px]" v-html="detail"></span>
+                  </li>
+                </ul>
+                <p v-if="plans[0].note" class="text-[18px] text-[#D31E00] mt-[20px]">
+                  <Asterisk class="translate-x-[1px]" /> {{ plans[0].note }}
+                </p>
               </div>
             </div>
           </div>
 
-        </div>
-    </div>  
+          <div class="w-full lg:w-2/3">
+            <div
+              class="md:h-[1280px] h-[2360px] px-15 rounded-[25px] bg-gradient-to-b from-[#C3E2EB77] to-[#C3E2EB22] gradient-border gradient-box">
+              <div class="h-[140px]">
+                <div class="flex justify-end pt-[20px] -me-[36px] gap-[20px] text-[#383838]">
+                  <div
+                    class="w-[182px] h-[53px] leading-[53px] flex items-center justify-center text-[18px] rounded-full bg-gradient-to-r from-[#FFFFFF] to-[#73FBFD] gradient-border !before:bg-gradient-to-r !before:from-[#73FBFD] !before:to-white !before:rounded-[99px]">
+                    年繳省更多
+                    <img src="/images/confetti.svg" class="w-[30px] mt-0.5 select-none pointer-events-none"
+                      alt="check" />
+                  </div>
+                  <div
+                    class="relative flex items-center w-[103px] h-[26px] rounded-[5px] bg-gradient-to-r transition-all duration-400 button-shadow"
+                    :class="isYearly ? 'from-[#FFFFFF] to-[#73FBFD]' : 'from-[#73FBFD] to-[#FFFFFF]'">
+                    <div
+                      class="absolute h-full w-1/2 top-0 transition-all duration-400 rounded-[5px] bg-gradient-to-r button-shadow"
+                      :class="isYearly ? 'left-0 from-[#73FBFD] to-[#00CDCF]' : 'left-1/2 from-[#00CDCF] to-[#73FBFD]'">
+                    </div>
+                    <button @click="isYearly = true"
+                      class="relative z-1 w-[50%] text-[14px] border-none bg-transparent text-start ps-10px text-[#383838] cursor-pointer ">年繳</button>
+                    <button @click="isYearly = false"
+                      class="relative z-1 w-[50%] text-[14px] border-none bg-transparent text-end pe-10px text-[#383838] cursor-pointer ">月繳</button>
+                  </div>
+                </div>
 
-    
+              </div>
+              <div class="flex flex-col md:flex-row gap-20">
+                <div v-for="plan in plans.slice(1)" :key="plan.title" class="w-full md:w-1/2">
+                  <template v-if="plan.wrapperClass">
+                    <div :class="plan.wrapperClass">
+                      <div class="relative pt-[30px] px-[28px] rounded-lg h-[960px]" :class="plan.contentClass">
+                        <div v-if="plan.badge"
+                          class="absolute -top-[18px] left-1/2 -translate-x-1/2 w-[150px] h-[36px] leading-[36px] text-[20px] text-center text-white bg-[#AB6CEB] rounded-full shadow-lg">
+                          {{ plan.badge }}
+                        </div>
+                        <div class="text-center">
+                          <h2 class="text-[40px] font-normal m-0" :class="plan.textClass">{{ plan.title }}</h2>
+                          <div class="h-[100px] my-4 flex justify-center items-center translate-x-[-12px]">
+                            <span class="text-[24px] translate-[24px,-36px]">NT$</span>
+                            <span class="text-[36px] mx-1" :class="plan.textClass">{{ isYearly ? plan.price.yearly :
+                              plan.price.monthly }}</span>
+                            <span class="text-[36px]"> / {{ isYearly ? '年' : '月' }}</span>
+                          </div>
+                          <button @click="selectAndScrollToForm"
+                            class="w-[200px] h-[60px] leading-[60px] rounded-full text-[28px] text-white border-none cursor-pointer"
+                            :class="plan.buttonClass">{{ plan.cta }}</button>
+                        </div>
+                        <ul class="mt-6 space-y-[30px] ps-[16px]">
+                          <li v-for="detail in plan.details" :key="detail" class="flex items-start">
+                            <img :src="plan.icon" class="w-[30px] me-3 mt-0.5 select-none pointer-events-none"
+                              alt="check" />
+                            <span class="text-[22px] " v-html="detail"></span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </template>
+                  <template v-else>
+                    <div class="relative pt-[30px] px-[28px] rounded-lg h-[960px]" :class="plan.contentClass">
+                      <div class="text-center">
+                        <h2 class="text-[40px] font-normal m-0" :class="plan.textClass">{{ plan.title }}</h2>
+                        <div class="h-[100px] my-4 flex justify-center items-center translate-x-[-12px]">
+                          <span class="text-[24px] translate-[24px,-36px]">NT$</span>
+                          <span class="text-[36px] mx-1" :class="plan.textClass">{{ isYearly ? plan.price.yearly :
+                            plan.price.monthly }}</span>
+                          <span class="text-[36px]"> / {{ isYearly ? '年' : '月' }}</span>
+                        </div>
+                        <button @click="selectAndScrollToForm"
+                          class="w-[200px] h-[60px] leading-[60px] rounded-full text-[28px] text-white border-none cursor-pointer "
+                          :class="plan.buttonClass">{{ plan.cta }}</button>
+                      </div>
+                      <ul class="mt-6 space-y-[30px] ps-[16px]">
+                        <li v-for="detail in plan.details" :key="detail" class="flex items-start">
+                          <img :src="plan.icon" class="w-[30px] me-3 mt-0.5 select-none pointer-events-none"
+                            alt="check" />
+                          <span class="text-[22px] " v-html="detail"></span>
+                        </li>
+                      </ul>
+                      <p v-if="plan.note"
+                        class="text-[18px] text-[#D31E00] mt-[20px] text-center xl:-translate-x-[5%] translate-x-[0]">
+                        <Asterisk class="translate-x-[1px]" /> {{ plan.note }}
+                      </p>
+                    </div>
+                  </template>
+                </div>
+              </div>
+              <div class="my-[36px] text-center">
+                <NuxtLink href="/store/program"
+                  class="w-[367px] h-[75px] inline-flex justify-center items-center rounded-full border-solid border-0px bg-gradient-to-r from-[#7C2CBE] to-[#F12588] no-underline text-white text-[26px] hover:border-3px hover:w-[361px] hover:h-[69px] hover:from-white hover:to-white hover:text-[#EE2589] active:border-0px active:w-[367px] active:h-[75px] active:from-[#F12588] active:to-[#F12588] active:text-white">
+                  更多進階服務與功能
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 ms-2 mt-0.8" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </NuxtLink>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
     <!-- 我們的優勢 -->
     <div class="pb-7rem">
       <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
@@ -548,19 +588,9 @@
         <div v-for="(item, index) in advantagesList" :key="index" class="md-flex adBox"
           :class="{ advantagesEven: index % 2 !== 0 }">
           <div class="w-100% lg-w-50% md-mb-0rem mb-2rem">
-            <div class="ps-5 pe-5 flex items-center select-none pointer-events-none">      
-              <img
-                class="w-100%"
-                :class="item.imagesOffsetClass"
-                :src="item.img"
-                :alt="item.title"
-              />
-              <img
-                class="w-74.5%"
-                :class="item.animeOffsetClass"
-                :src="item.anime"
-                :alt="item.title"
-              />
+            <div class="ps-5 pe-5 flex items-center select-none pointer-events-none">
+              <img class="w-100%" :class="item.imagesOffsetClass" :src="item.img" :alt="item.title" />
+              <img class="w-74.5%" :class="item.animeOffsetClass" :src="item.anime" :alt="item.title" />
             </div>
           </div>
           <div class="adContentBox w-100% lg-w-50% flex items-center">
@@ -580,7 +610,7 @@
       </div>
     </div>
 
-   
+
     <!-- 聯絡我們 -->
     <div ref="formRef" class="pb-25rem">
       <div class="max-w-1110px m-auto ps-5 pe-5 relative z-2">
@@ -611,11 +641,13 @@
               <input class="contactEntry" placeholder="Email" type="text" v-model="contactMail" />
             </div>
             <div class="mb-1rem">
-              <div class="contactEntry purposeSelect relative" :class="{ 'pointer-events-none opacity-70 bg-gray-200': isLocked }" @click.stop="togglePurposeBox">
+              <div class="contactEntry purposeSelect relative"
+                :class="{ 'pointer-events-none opacity-70 bg-gray-200': isLocked }" @click.stop="togglePurposeBox">
                 <span>{{ selectedPurpose || "主旨 ..." }}</span>
-                <div class="purposeBox" v-show="showPurposeBox">                  
+                <div class="purposeBox" v-show="showPurposeBox">
                   <div class="purposeBoxContent">
-                    <div class="relative w-100% purposeOption" v-for="(option, index) in purposeOptions" :key="option" @click.stop="selectPurpose(option)">
+                    <div class="relative w-100% purposeOption" v-for="(option, index) in purposeOptions" :key="option"
+                      @click.stop="selectPurpose(option)">
                       {{ option }}
                       <div v-show="index === 0" class="absolute top-15px right-15px">
                         <img class="w-15px" src="/images/icon-arrow-down-03.png" alt="下拉選單箭頭" />
@@ -630,7 +662,8 @@
             </div>
             <transition name="fade">
               <div class="mb-1rem" v-if="selectedPurpose === '商務洽談'">
-                <input class="contactEntry" placeholder="遊戲平台/經營角色" maxlength="20" type="text" v-model="contactPlatform" />
+                <input class="contactEntry" placeholder="遊戲平台/經營角色" maxlength="20" type="text"
+                  v-model="contactPlatform" />
               </div>
             </transition>
             <div class="mb-1rem">
@@ -703,7 +736,7 @@ let captcha = null;
 const route = useRoute();
 const router = useRouter();
 const newsRef = ref(null);
-const formRef = ref(null); 
+const formRef = ref(null);
 const newsList = ref([]); // 儲存 API 獲取的最新消息
 const activeNewsType = ref('ALL'); // 追蹤當前點選的消息分類頁籤
 
@@ -727,7 +760,7 @@ const contactMail = ref('');
 const contactComment = ref('');
 const contactCap = ref('');
 const showPurposeBox = ref(false);
-const isLocked = ref(false); 
+const isLocked = ref(false);
 const selectedPurpose = ref('');
 const purposeOptions = ref(['主旨 ...', '商務洽談', '合作邀請', '網站使用問題', '其他']);
 const isCapError = ref(false);
@@ -756,11 +789,11 @@ async function fetchNewsListData(num, token = '', type = 'ALL') {
         }
       }
     );
-     if (response.data.Status.Code === 0) {
+    if (response.data.Status.Code === 0) {
       const sortedData = response.data.Data.sort((a, b) => {
         const topSort = a.IsTop - b.IsTop;
         if (topSort !== 0) {
-        return topSort;
+          return topSort;
         }
         return new Date(a.StartTime) - new Date(b.StartTime);
       });
@@ -1252,7 +1285,7 @@ async function fetchRichList(token, type) {
 }
 // 切換下拉選單的顯示/隱藏
 const togglePurposeBox = () => {
-  if (isLocked.value) return; 
+  if (isLocked.value) return;
   showPurposeBox.value = !showPurposeBox.value;
   // 選單開啟時添加全域點擊監聽
   if (showPurposeBox.value) {
@@ -1412,47 +1445,47 @@ onMounted(async () => {
   } catch (error) {
     console.error('頁面初始化失敗:', error);
   } finally {
-  await setPageLoading(false);
+    await setPageLoading(false);
 
-  // --- 整合所有 URL Query 參數的處理邏輯 ---
+    // --- 整合所有 URL Query 參數的處理邏輯 ---
 
-  // 1. 一次性讀取所有可能用到的參數
-  const { scrollToNews, purpose, scrollToForm } = route.query;
-  let queryParamsWereHandled = false; // 旗標，記錄是否處理過任何參數
+    // 1. 一次性讀取所有可能用到的參數
+    const { scrollToNews, purpose, scrollToForm } = route.query;
+    let queryParamsWereHandled = false; // 旗標，記錄是否處理過任何參數
 
-  // 2. 處理 purpose 參數
-  if (purpose && purposeOptions.value.includes(purpose)) {
-    selectedPurpose.value = purpose;
-    isLocked.value = true;
-    queryParamsWereHandled = true;
-  }
-
-  // 3. 處理滾動到 news 區域
-  if (scrollToNews === '1') {
-    await nextTick();
-    if (newsRef.value) {
-      setTimeout(() => {
-        newsRef.value.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
+    // 2. 處理 purpose 參數
+    if (purpose && purposeOptions.value.includes(purpose)) {
+      selectedPurpose.value = purpose;
+      isLocked.value = true;
+      queryParamsWereHandled = true;
     }
-    queryParamsWereHandled = true;
-  }
-  
-  // 4. 處理滾動到 form 區域
-  if (scrollToForm === '1') {
-    await nextTick();
-    if (formRef.value) {
-      setTimeout(() => {
-        formRef.value.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
-    }
-    queryParamsWereHandled = true;
-  }
 
-  // 5. 如果有任何參數被處理過，最後統一清除 URL
-  if (queryParamsWereHandled) {
-    router.replace({ path: route.path });
-  }
+    // 3. 處理滾動到 news 區域
+    if (scrollToNews === '1') {
+      await nextTick();
+      if (newsRef.value) {
+        setTimeout(() => {
+          newsRef.value.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+      queryParamsWereHandled = true;
+    }
+
+    // 4. 處理滾動到 form 區域
+    if (scrollToForm === '1') {
+      await nextTick();
+      if (formRef.value) {
+        setTimeout(() => {
+          formRef.value.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+      queryParamsWereHandled = true;
+    }
+
+    // 5. 如果有任何參數被處理過，最後統一清除 URL
+    if (queryParamsWereHandled) {
+      router.replace({ path: route.path });
+    }
   }
 });
 </script>
@@ -1688,31 +1721,33 @@ onMounted(async () => {
   border-radius: 9999px;
   position: relative;
   border-style: solid;
-  border-color: transparent; 
+  border-color: transparent;
   background:
-  linear-gradient(rgba(255, 255, 255, 0.01), #6DF0FE , rgba(255, 255, 255, 0.01)),
-  linear-gradient(to right, rgba(255, 255, 255, 0.01), #6DF0FE , rgba(255, 255, 255, 0.01));
+    linear-gradient(rgba(255, 255, 255, 0.01), #6DF0FE, rgba(255, 255, 255, 0.01)),
+    linear-gradient(to right, rgba(255, 255, 255, 0.01), #6DF0FE, rgba(255, 255, 255, 0.01));
   background-origin: border-box;
   background-clip: padding-box, border-box;
   mask-image: linear-gradient(white, white), linear-gradient(white, white);
   mask-clip: padding-box, border-box;
   mask-composite: exclude, add;
 }
+
 .hollow-btn-system {
   border-width: 2px;
   border-radius: 9999px;
   position: relative;
   border-style: solid;
-  border-color: transparent; 
+  border-color: transparent;
   background:
-  linear-gradient(rgba(255, 255, 255, 0.01), #FE6FDA , rgba(255, 255, 255, 0.01)),
-  linear-gradient(to right, rgba(255, 255, 255, 0.01), #FE6FDA , rgba(255, 255, 255, 0.01));
+    linear-gradient(rgba(255, 255, 255, 0.01), #FE6FDA, rgba(255, 255, 255, 0.01)),
+    linear-gradient(to right, rgba(255, 255, 255, 0.01), #FE6FDA, rgba(255, 255, 255, 0.01));
   background-origin: border-box;
   background-clip: padding-box, border-box;
   mask-image: linear-gradient(white, white), linear-gradient(white, white);
   mask-clip: padding-box, border-box;
   mask-composite: exclude, add;
 }
+
 .hollow-btn-policy {
   border-width: 2px;
   border-radius: 9999px;
@@ -1720,8 +1755,8 @@ onMounted(async () => {
   border-style: solid;
   border-color: transparent;
   background:
-  linear-gradient(rgba(255, 255, 255, 0.01), #B698FF , rgba(255, 255, 255, 0.01)),
-  linear-gradient(to right, rgba(255, 255, 255, 0.01), #B698FF , rgba(255, 255, 255, 0.01));
+    linear-gradient(rgba(255, 255, 255, 0.01), #B698FF, rgba(255, 255, 255, 0.01)),
+    linear-gradient(to right, rgba(255, 255, 255, 0.01), #B698FF, rgba(255, 255, 255, 0.01));
   background-origin: border-box;
   background-clip: padding-box, border-box;
   mask-image: linear-gradient(white, white), linear-gradient(white, white);
@@ -1777,6 +1812,7 @@ onMounted(async () => {
 .gradient-border {
   position: relative;
 }
+
 .gradient-border::before {
   content: '';
   position: absolute;
@@ -1790,6 +1826,7 @@ onMounted(async () => {
   mask-composite: exclude;
   pointer-events: none;
 }
+
 .button-shadow {
   box-shadow: inset 0 2px 0 #fff8;
 }
@@ -1954,9 +1991,11 @@ onMounted(async () => {
     position: relative;
     width: 100%;
   }
+
   .border-gradient-l {
     width: 20px;
   }
+
   .border-gradient-r {
     width: 20px;
   }
