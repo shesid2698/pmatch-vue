@@ -1029,7 +1029,7 @@ const purpleStrokeDashoffset = computed(() => {
 const GetWeeklyDeal = async () => {
   let token = await jwtStore.generateToken();
   const response = await $axios.post(
-    '/api/v1/Pmatch/KeyValues/GetList',
+    '/api/v1/pmatch/localgetlist',
     {
       categories: [
         10// 依照指定值篩選，空陣列為顯示全部設定
