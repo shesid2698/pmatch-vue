@@ -138,24 +138,29 @@
                           {{ item.Name }}
                         </h2>
                         <a>
-                            <p class="m-0 text-15px md:text-22px text-gray-5 aboutContent pl-10px md:pl-0">
-                                <!-- 顯示 About 的完整 HTML 格式 -->
-                                <span v-if="item.About.length > 0" v-html="item.About"></span>
-                            </p>
+                          <p class="m-0 text-15px md:text-22px text-gray-5 aboutContent pl-10px md:pl-0">
+                            <!-- 顯示 About 的完整 HTML 格式 -->
+                            <span v-if="item.About.length > 0" v-html="item.About"></span>
+                          </p>
                         </a>
                       </div>
                       <div class="w-100%">
                         <div class="flex md:pl-5px pl-0 justify-center md:justify-start" v-if="item">
-                          <NuxtLink class="flex items-center ms-1 me-1" v-show="item.FB !== ''" :to="item.FB">
+                          <NuxtLink class="flex items-center ms-1 me-1" v-show="item.FB !== ''"
+                            @click.prevent="navigateTo(item.FB, { external: true })" target="_blank" rel="noopener">
                             <img class="w-30px h-30px" src="/images/iconFB.png" alt="fbIcon" />
                           </NuxtLink>
-                          <NuxtLink class="flex items-center ms-1 me-1" v-show="item.LineId !== ''" :to="item.LineId">
+                          <NuxtLink class="flex items-center ms-1 me-1" v-show="item.LineId !== ''"
+                            @click.prevent="navigateTo(item.LineId, { external: true })" target="_blank" rel="noopener">
                             <img class="w-30px h-30px" src="/images/iconLine.png" alt="lineIcon" />
                           </NuxtLink>
-                          <NuxtLink class="flex items-center ms-1 me-1" v-show="item.IGId !== ''" :to="item.IGId">
+                          <NuxtLink class="flex items-center ms-1 me-1" v-show="item.IGId !== ''"
+                            @click.prevent="navigateTo(item.IGId, { external: true })" target="_blank" rel="noopener">
                             <img class="w-30px h-30px" src="/images/iconIG.png" alt="igIcon" />
                           </NuxtLink>
-                          <NuxtLink class="flex items-center ms-1 me-1" v-show="item.TwitterId !== ''" :to="item.TwitterId">
+                          <NuxtLink class="flex items-center ms-1 me-1" v-show="item.TwitterId !== ''"
+                            @click.prevent="navigateTo(item.TwitterId, { external: true })" target="_blank"
+                            rel="noopener">
                             <img class="w-30px h-30px" src="/images/iconX.png" alt="推特icon" />
                           </NuxtLink>
                           <NuxtLink class="flex items-center ms-1 me-1" v-show="item.WechatId !== ''" :to="item.WechatId">
@@ -621,7 +626,7 @@ const filteredStores = computed(() => {
   return filtered.sort((a, b) => {
     const hotSort = b.IsHot - a.IsHot
     if (hotSort !== 0) return hotSort;
-    return b.SortingId - a.SortingId; 
+    return b.SortingId - a.SortingId;
   })
 });
 
@@ -863,23 +868,26 @@ const filteredProcessedGamePlatforms = computed(() => {
   border-radius: 10px;
 }
 
-    .aboutContent {
-        height: 130px;
-        overflow: hidden;
-        line-height: 35px;
-        display: block; /* Remove flexbox-related properties */
-        position: relative;
-    }
+.aboutContent {
+  height: 130px;
+  overflow: hidden;
+  line-height: 35px;
+  display: block;
+  /* Remove flexbox-related properties */
+  position: relative;
+}
 
-        .aboutContent::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 35px; /* Match line-height or adjust for fade effect */
-            background: linear-gradient(transparent, white); /* Optional: fade to background color */
-        }
+.aboutContent::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 35px;
+  /* Match line-height or adjust for fade effect */
+  background: linear-gradient(transparent, white);
+  /* Optional: fade to background color */
+}
 
 :deep(.el-pager > .number) {
   color: #f72585;

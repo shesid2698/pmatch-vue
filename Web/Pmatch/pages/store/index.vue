@@ -365,6 +365,20 @@
                 </ElButton>
               </div>
             </div>
+            <div class="flex tableTd">
+              <div class="w-100% platformName font-size-1.5rem text-center color-#beffff">
+                王牌俱樂部
+              </div>
+              <div class="w-100% patchNumber font-size-1.5rem text-center color-#beffff">
+                {{ dailyPatchList6.length ? dailyPatchList6[dailyPatchList6.length - 1].Total.toLocaleString() : '0' }}
+              </div>
+              <div class="w-100% text-center">
+                <ElButton plain @click="openDialog(6)">
+
+                  <Line :data="simpleChartData6" :options="simpleChartOptions" class="md-w-150px w-80px" />
+                </ElButton>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -560,8 +574,8 @@
           </div>
           <div v-if="newsList.length > 0">
             <NuxtLink :to="`/store/news?id=${item.Id}`"
-              v-for="(item, index) in newsList.filter((item) => item.Category !== 3).reverse().slice(0, 6)" :key="index"
-              class="newsLink color-#555553 decoration-none">
+              v-for="(item, index) in newsList.filter((item) => item.Category !== 3).reverse().slice(0, 6)"
+              :key="index" class="newsLink color-#555553 decoration-none">
               <div class="w-full mt-1.8rem">
                 <div class="w-80 font-size-.8rem">
                   <div class="flex items-center">
@@ -947,9 +961,10 @@ const dailyPatchList2 = ref([]);
 const dailyPatchList3 = ref([]);
 const dailyPatchList4 = ref([]);
 const dailyPatchList5 = ref([]);
-const dailyPatchLists = [dailyPatchList0, dailyPatchList1, dailyPatchList2, dailyPatchList3, dailyPatchList4, dailyPatchList5];
+const dailyPatchList6 = ref([]);
+const dailyPatchLists = [dailyPatchList0, dailyPatchList1, dailyPatchList2, dailyPatchList3, dailyPatchList4, dailyPatchList5,dailyPatchList6];
 // 用來控制每個對話框的開關狀態
-const dialogVisible = ref([false, false, false, false, false, false]);
+const dialogVisible = ref([false, false, false, false, false, false,false]);
 
 const contactName = ref('');
 const contactPhone = ref('');
@@ -1310,6 +1325,18 @@ const simpleChartData5 = computed(() => {
   }
   return getSimpleChartData(endDateData);
 });
+const simpleChartData6 = computed(() => {
+  // 假設這裡使用 endDate 的數據
+  const { EndTime } = calculateWeekRange();
+  let endDateData = dailyPatchList6.value.filter(item => item.Time.split('T')[0] === EndTime);
+  // 如果沒有找到數據，則取最後最多5筆數據
+  if (endDateData.length === 0) {
+    const totalRecords = dailyPatchList6.value.length;
+    const recordsToTake = Math.min(5, totalRecords); // 如果總數據少於5筆，就取全部
+    endDateData = dailyPatchList6.value.slice(-recordsToTake);
+  }
+  return getSimpleChartData(endDateData);
+});
 // 修改 getChartData 函數
 const getChartData = index => {
   // 先確保 dailyPatchLists[index] 存在
@@ -1401,7 +1428,7 @@ const chartOptions = {
         // 獲取當前圖表的索引
         const chartId = context.chart.canvas.id;
         const index = parseInt(chartId.split('-')[2]); // 從 'my-chart-0' 取得索引
-        const platformNames = ['滿貫大亨', '老子有錢', '錢街Online', '聚寶Online', '金爸爸娛樂城', '寶島娛樂城'];
+        const platformNames = ['滿貫大亨', '老子有錢', '錢街Online', '聚寶Online', '金爸爸娛樂城', '寶島娛樂城','王牌俱樂部'];
         return `${platformNames[index]} - 近五日富豪榜財產走勢`;
       },
       font: {
@@ -1550,7 +1577,7 @@ async function fetchRichList(token, type) {
     const response = await $axios.post(
       '/api/v1/Statist/GetDailyPatchList',
       {
-        GamePlatformType: type, // 1錢街, 2滿貫, 3包你發, 4老子有錢, 5聚寶, 6金爸爸,
+        GamePlatformType: type, // 1錢街, 2滿貫, 3包你發, 4老子有錢, 5聚寶, 6金爸爸, 7寶島, 9王牌
         StartTime: useStartTime,
         EndTime: useEndTime
       },
@@ -1573,6 +1600,8 @@ async function fetchRichList(token, type) {
         dailyPatchList4.value = response.data.Data;
       } else if (type === 7) {
         dailyPatchList5.value = response.data.Data;
+      }else if(type===9){
+        dailyPatchList6.value = response.data.Data;
       }
     } else {
       await openAlertModal(' ', `${response.data.Status.Message}`);
@@ -1739,6 +1768,7 @@ onMounted(async () => {
         await fetchRichList(token, 5); // 聚寶
         // await fetchRichList(token, 6); // 金爸爸
         await fetchRichList(token, 7); // 寶島
+        await fetchRichList(token, 9); // 王牌俱樂部
       }
     }
   } catch (error) {
