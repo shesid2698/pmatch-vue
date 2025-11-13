@@ -40,19 +40,19 @@
             <div class="pt-2rem">
               <div class="flex justify-between items-center" v-if="storesItem">
                 <div class="flex">
-                  <NuxtLink class="flex items-center ms-1 me-1" v-show="storesItem.FB !== ''" :to="storesItem.FB">
+                  <NuxtLink class="flex items-center ms-1 me-1" v-show="storesItem.FB !== ''" :to="storesItem.FB" target="_blank" rel="noopener noreferrer">
                     <img class="w-30px h-30px" src="/images/iconFB.png" alt="fbIcon" />
                   </NuxtLink>
-                  <NuxtLink class="flex items-center ms-1 me-1" v-show="storesItem.LineId !== ''" :to="storesItem.LineId">
+                  <NuxtLink class="flex items-center ms-1 me-1" v-show="storesItem.LineId !== ''" :to="storesItem.LineId" target="_blank" rel="noopener noreferrer">
                     <img class="w-30px h-30px" src="/images/iconLine.png" alt="lineIcon" />
                   </NuxtLink>
-                  <NuxtLink class="flex items-center ms-1 me-1" v-show="storesItem.IGId !== ''" :to="storesItem.IGId">
+                  <NuxtLink class="flex items-center ms-1 me-1" v-show="storesItem.IGId !== ''" :to="storesItem.IGId" target="_blank" rel="noopener noreferrer">
                     <img class="w-30px h-30px" src="/images/iconIG.png" alt="igIcon" />
                   </NuxtLink>
-                  <NuxtLink class="flex items-center ms-1 me-1" v-show="storesItem.TwitterId !== ''" :to="storesItem.TwitterId">
+                  <NuxtLink class="flex items-center ms-1 me-1" v-show="storesItem.TwitterId !== ''" :to="storesItem.TwitterId" target="_blank" rel="noopener noreferrer">
                     <img class="w-30px h-30px" src="/images/iconX.png" alt="推特icon" />
                   </NuxtLink>
-                  <NuxtLink class="flex items-center ms-1 me-1" v-show="storesItem.WechatId !== ''" :to="storesItem.WechatId">
+                  <NuxtLink class="flex items-center ms-1 me-1" v-show="storesItem.WechatId !== ''" :to="storesItem.WechatId" target="_blank" rel="noopener noreferrer">
                     <img class="w-30px h-30px" src="/images/iconWeChat.png" alt="wechatIcon" />
                   </NuxtLink>                  
                   <NuxtLink class="flex items-center ms-1 me-1" v-show="storesItem.Email !== ''" :href="`mailto:${storesItem.Email}`">
