@@ -156,7 +156,6 @@ import { useLoadStore } from "../stores/loading.js";
 import { useConfigStore } from "../stores/config.js";
 import { useAlertModalStore } from "../stores/useAlertModal.js";
 import VueTurnstile from "vue-turnstile";
-import { fa } from "element-plus/es/locale/index.mjs";
 
 const store = useLoadStore();
 const configStore = useConfigStore();
