@@ -121,7 +121,7 @@
               </div>
             </div>
           </form>
-          <div class="flex justify-end items-center mt-20px" v-if="loginStep === 'credentials'">
+          <div class="flex justify-end items-center mt-20px">
             <NuxtLink to="/store/register"
               class="flex-inline no-underline text-18px text-white fill-white hover:text-[#00F3FF] hover:fill-[#00F3FF] active:text-[#004DC1] active:fill-[#004DC1]">
               <svg width="20" height="23" viewBox="0 0 20 26" xmlns="http://www.w3.org/2000/svg">
