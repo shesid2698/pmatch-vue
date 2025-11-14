@@ -76,7 +76,6 @@ export const useJwtStore = defineStore('jwt', {
 
                 // 直接獲取校正時間，不再檢查初始化狀態
                 const timeTicks = await this.getRightTime();
-                console.log('校正後的時間戳:', timeTicks);
                 return new Promise(resolve => {
                     const now = Math.floor(timeTicks / 1000);
                     const payload = {
