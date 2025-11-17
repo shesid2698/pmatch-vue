@@ -74,7 +74,6 @@ export const useJwtStore = defineStore('jwt', {
                     typ: 'JWT',
                 };
 
-                // 直接獲取校正時間，不再檢查初始化狀態
                 const timeTicks = await this.getRightTime();
                 return new Promise(resolve => {
                     const payload = {
@@ -107,7 +106,10 @@ export const useJwtStore = defineStore('jwt', {
             this.token = null;
         },
 
-        // 獲取當前校正時間
+        /**
+         * 獲取當前校正後的時間戳
+         * @returns {number} 校正後的 Unix 時間戳
+         */
         async getRightTime() {
 
             const { $axios } = useNuxtApp();
