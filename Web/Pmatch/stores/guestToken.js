@@ -82,7 +82,7 @@ export const useJwtStore = defineStore('jwt', {
                         unique_name: '',
                         iat: now,
                         nbf: now,
-                        exp: now + 1800,
+                        exp: now + 20,
                         ...customPayload,
                     };
 
