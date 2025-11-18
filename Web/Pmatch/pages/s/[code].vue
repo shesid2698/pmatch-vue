@@ -33,9 +33,6 @@ onMounted(async () => {
       );
       if (response.data.Status.Code === 0 && response.data.Data != null) {
         var t_Phone = encrypt.encrypt(response.data.Data.Data.Phone);
-        var t_PmatchStoreIds = encrypt.encrypt(
-          response.data.Data.Data.PmatchStoreIds
-        );
         var t_IsPromoteCode = encrypt.encrypt(
           response.data.Data.Data.IsPromoteCode
         );
@@ -44,7 +41,6 @@ onMounted(async () => {
           path: "/register",
           query: {
             Phone: t_Phone,
-            PmatchStoreIds: t_PmatchStoreIds,
             D: t_Id,
             IsPromoteCode: t_IsPromoteCode,
           },

@@ -30,9 +30,11 @@
         class="p-x-10px rounded-1 overflow-y-auto w-100% md:w-864px h-500px mt-20px border border-solid border-1px border-[#dee2e6]">
       </div>
 
-      <div v-if="route.query.PmatchStoreIds" v-html="data2" id="service2" @scroll="handleScroll($event, 2)"
-        class="p-x-10px rounded-1 overflow-y-auto w-100% md:w-864px h-500px mt-20px border border-solid border-1px border-[#dee2e6]">
-      </div>
+      <pre v-if="data2 !== ''" id="service2" @scroll="handleScroll($event, 2)"
+        class="p-x-10px rounded-1 overflow-y-auto w-100% md:w-864px h-500px mt-20px border border-solid border-1px border-[#dee2e6] text-16px font-light"
+        style="white-space: pre-line;">
+        {{ data2 }}
+      </pre>
 
       <div class="mt-15px">
         <button :disabled="!isBottom || !isBottom2" @click="ToFormPage"
@@ -46,11 +48,11 @@
 <script setup>
 // loading page
 import { useLoadStore } from '../stores/loading.js';
-
 import { useAlertModalStore } from '../stores/useAlertModal.js';
+
+const encrypt = useEncrypt();
 const alertModalStore = useAlertModalStore();
 const openAlertModal = alertModalStore.alertShowModal;
-
 const store = useLoadStore();
 const setPageLoading = store.setPageLoading;
 const route = useRoute();
@@ -59,9 +61,20 @@ const jwtStore = useJwtStore();
 const data = ref('');
 const data2 = ref('');
 const token = ref('');
-const encrypt = useEncrypt();
-const contractStores = ref('');
+const isBottom = ref(false);
 const { $axios } = useNuxtApp();
+
+/**登入會員 */
+const memberList = ref({});
+
+/**會員類型(短網址註冊)*/
+let MemberTypeCookie = useCookie('_PmMemberType');
+let MemberStaffIdCookie = useCookie('_PmStaffId');
+/**使用者名稱 */
+let userNameCookie = useCookie('_PmUserName');
+let tokenCookie = useCookie('_PmToken');
+let MemberIdCookie = useCookie('_PmMemberId');
+
 async function GetService(token, num) {
   try {
     const response = await $axios.post(
@@ -84,42 +97,11 @@ async function GetService(token, num) {
     console.error('請求失敗:', error);
   }
 }
-const GetStoreService = async storeIds => {
-  try {
-    token.value = await jwtStore.generateToken();
-    const response = await $axios.post(
-      '/api/v1/Pmatch/GetStoreDetail',
-      {
-        IsFront: true,
-        StoreId: storeIds[0]
-      },
-      {
-        headers: {
-          Authorization: token.value // 帶上 Token
-        }
-      }
-    );
-    if (response.data.Status.Code === 0) {
-      data2.value = response.data.Data.ContractConetnt;
-      if (response.data.Data.ContractId) {
-        storeIds.forEach(x => {
-          contractStores.value += `${x}^${response.data.Data.ContractId},`;
-        });
-        contractStores.value = contractStores.value.slice(0, -1);
-      }
-    } else {
-      await openAlertModal(' ', `${response.data.Status.Message}`);
-    }
-  } catch (error) {
-    console.error('請求失敗:', error);
-    data.value = '無法取得資料。'; // 畫面顯示錯誤訊息
-  }
-};
-const isBottom = ref(false);
+
 /**
  * 商店合約書是否閱覽完畢，一開始不能設為true，會影響一般註冊過程的條件
  */
-const isBottom2 = ref(true);
+const isBottom2 = ref(false);
 const handleScroll = (event, index) => {
   const target = event.target;
   const isAtBottom = target.scrollHeight - target.scrollTop <= target.clientHeight + 50;
@@ -137,20 +119,73 @@ const handleScroll = (event, index) => {
 /**
  * 提交表單
  */
-const ToFormPage = () => {
-  if (route.query.PmatchStoreIds) {
-    router.push({
-      path: '/register/form',
-      query: {
-        Phone: route.query.Phone,
-        ContractStores: encrypt.encrypt(contractStores.value),
-        PmatchStoreIds: route.query.PmatchStoreIds,
-        D: route.query.D,
-        IsPromoteCode: route.query.IsPromoteCode
+const ToFormPage = async () => {
+  if (route.query.Phone) {
+    const shortUrlResponse = await $axios.post(
+      '/api/v1/ShortUrl/RegisterNotify',
+      {
+        Data: {
+          Id: encrypt.decrypt(route.query.D)
+        }
+      },
+      {
+        headers: {
+          Authorization: token.value
+        }
       }
-    });
+    );
+    if (shortUrlResponse.data.Status.Code === 0) {
+      // 完成註冊並登入
+      const registerRes = await $axios.post(
+        '/api/v1/Pmatch/Register',
+        {
+          MobileNumber: encrypt.decrypt(route.query.Phone),
+          IsPromoteCode: false,
+          IsFromShortUrl: true
+        }, {
+        headers: {
+          Authorization: token.value
+        }
+      }
+      );
+      if (registerRes.data.Status.Code === 0) {
+        memberList.value = registerRes.data.Data2;
+        userNameCookie.value = registerRes.data.Data2.Name;
+        tokenCookie.value = registerRes.data.Data2.Token;
+        MemberIdCookie.value = registerRes.data.Data2.PmatchMemberId;
+        await GetMemberDetail(MemberIdCookie.value, tokenCookie.value);
+        window.location.href = '/member/center';
+      } else {
+        await openAlertModal(' ', `短網址註冊錯誤`, 'loginFailed');
+      }
+    } else {
+      await openAlertModal(' ', `${shortUrlResponse.data.Status.Message}`);
+      return;
+    }
   } else {
     router.push('/register/form');
+  }
+};
+/**
+ * 取得登入的會員資料
+ * @param memberId 
+ * @param token 
+ */
+const GetMemberDetail = async (memberId, token) => {
+  const response = await $axios.post(
+    '/api/v1/Pmatch/GetMemberDetail',
+    {
+      PmatchMemberId: memberId
+    },
+    {
+      headers: {
+        Authorization: token
+      }
+    }
+  );
+  if (response.data.Status.Code === 0) {
+    MemberTypeCookie.value = response.data.Data[0].Type;
+    MemberStaffIdCookie.value = response.data.Data[0].StaffId;
   }
 };
 onMounted(async () => {
@@ -158,12 +193,11 @@ onMounted(async () => {
   const targetNode2 = document.querySelector('#service2');
   const observer = new MutationObserver(async () => {
     //短網址註冊
-    if (route.query.PmatchStoreIds) {
-      isBottom2.value = false;
-      let storeIds = encrypt.decrypt(route.query.PmatchStoreIds);
-      storeIds = storeIds.split(',');
-      await GetStoreService(storeIds);
+    if (route.query.Phone) {
+      const { data: textContent } = await useFetch('/授權書.txt')
+      data2.value = textContent.value;
     }
+
     //
     if (targetNode != null && targetNode != undefined) {
       if (targetNode.scrollHeight == targetNode.clientHeight) isBottom.value = true;

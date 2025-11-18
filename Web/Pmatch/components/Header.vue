@@ -17,7 +17,7 @@
           <div :class="`relative login${item.className}`" @click.stop="handleDropdown(item)" :ref="setDropdownRef(item.id)">
             <span v-show="item.dropdown" class="loginLink decoration-none font-bold w-100% cursor-pointer ps-1.2rem pe-1.2rem" :alt="item.title">{{ item.title }}</span>
             <!-- 已登入 -->
-            <button v-if="item.items && userNameCookie != null && userNameCookie.value !== ''" class="logoutBtn ms-1 bg-#fff border-none">
+            <button v-if="item.items && userNameCookie != null" class="logoutBtn ms-1 bg-#fff border-none">
               <span v-for="subItem in item.items" :key="subItem.id" @click="subItem.action">{{ subItem.title }}</span>
             </button>
             <!-- 未登入 -->
@@ -198,7 +198,7 @@
         })
       }
     }
-    if (userNameCookie.value !== '' && userNameCookie.value != undefined) {
+    if (userNameCookie.value != undefined) {
       headerLink.value = [
         {
           id: 0,
