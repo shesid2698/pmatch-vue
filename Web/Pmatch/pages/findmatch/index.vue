@@ -163,15 +163,18 @@
                             rel="noopener">
                             <img class="w-30px h-30px" src="/images/iconX.png" alt="推特icon" />
                           </NuxtLink>
-                          <NuxtLink class="flex items-center ms-1 me-1" v-show="item.WechatId !== ''" :to="item.WechatId">
+                          <NuxtLink class="flex items-center ms-1 me-1" v-show="item.WechatId !== ''"
+                            @click.prevent="navigateTo(item.WechatId)">
                             <img class="w-30px h-30px" src="/images/iconWeChat.png" alt="wechatIcon" />
-                          </NuxtLink>                          
-                          <NuxtLink class="flex items-center ms-1 me-1" v-show="item.Email !== ''" :href="`mailto:${item.Email}`">
+                          </NuxtLink>
+                          <NuxtLink class="flex items-center ms-1 me-1" v-show="item.Email !== ''"
+                            @click.prevent="OpenMailUrl(item.Email)">
                             <img class="w-30px h-30px" src="/images/iconEmail.png" alt="emailIcon" />
                           </NuxtLink>
-                          <NuxtLink class="flex items-center ms-1 me-1" v-show="item.PhoneNumber !== ''" :href="`tel:${item.PhoneNumber}`">
-                          <img class="w-30px h-30px" src="/public/images/iconPhone.png" alt="phoneIcon" />
-                        </NuxtLink>                        
+                          <NuxtLink class="flex items-center ms-1 me-1" v-show="item.PhoneNumber !== ''"
+                            @click.prevent="OpenTelUrl(item.PhoneNumber)">
+                            <img class="w-30px h-30px" src="/public/images/iconPhone.png" alt="phoneIcon" />
+                          </NuxtLink>
                         </div>
                       </div>
                     </div>
@@ -336,6 +339,25 @@ const selectedGame = ref('');
 const selectedKeyword = ref('');
 const selectedSearchGame = ref('');
 const showPlatformBox = ref(false);
+
+/**打開遊戲商店的email連結
+ * @param {string} email 電子郵件地址
+ * @returns {void} 無返回值
+ */
+const OpenMailUrl = (email) => {
+  const mailtoLink = `mailto:${email}`;
+  window.location.href = mailtoLink;
+}
+
+/**
+ * 打開電話撥打連結
+ * @param {string} phoneNumber 
+ * @returns {void} 無返回值
+ */
+const OpenTelUrl = (phoneNumber) => {
+  const telLink = `tel:${phoneNumber}`;
+  window.location.href = telLink;
+}
 
 // 切換下拉選單的顯示/隱藏
 const togglePlatformBox = () => {
