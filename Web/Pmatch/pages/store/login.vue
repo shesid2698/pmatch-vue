@@ -51,9 +51,11 @@
                       class="loginBtn disabled:opacity-70 w-100% border-none outline-none text-16px text-white rounded-1 bg-[#e93470] hover:bg-[#bb2d3b] transition duration-200 cursor-pointer">
                       登入
                     </button>
+
                   </div>
                 </div>
               </div>
+              <div class="text-[#A8C3FF] text-16px mt-10px">．測試帳號可由此頁面登入測試環境</div>
             </div>
             <!-- 2fa驗證 -->
             <div v-if="loginStep === '2fa-choice' || loginStep === '2fa-verify'" class="mt-15px">
@@ -87,15 +89,17 @@
                     <span class="group-hover:inline text-[#31129B] z-1 hidden">Email驗證</span>
                   </div>
                 </div>
-                <div class="box-border p-0 m-0 line-height-200%"><span class="text-red-500">{{ errorMessage }}</span></div>
+                <div class="box-border p-0 m-0 line-height-200%"><span class="text-red-500">{{ errorMessage }}</span>
+                </div>
               </div>
               <div v-if="loginStep === '2fa-verify'" class="mt-15px">
                 <div class="mb-5px text-white">
                   {{ active2faMethod === 'phone' ? '簡訊驗證碼' : 'Email 驗證碼' }}
                 </div>
                 <div class="relative">
-                  <span class="w-[52px] inline-block py-1.5 pe-[10px] mx-auto text-end text-[17px] text-white font-mono">{{
-                    verificationPrefix }} -</span>
+                  <span
+                    class="w-[52px] inline-block py-1.5 pe-[10px] mx-auto text-end text-[17px] text-white font-mono">{{
+                      verificationPrefix }} -</span>
                   <input type="text" v-model="verificationSuffix" maxlength="6"
                     class="loginEntry verify box-border py-1.5 px-3 text-base w-[calc(100%-62px)] outline-none rounded-1 border-solid border-1 border-[#ced4da] focus:outline-5 focus:outline-[#c2d9fe] focus:outline-offset-0 focus:border-[#A1C0E3] transition duration-200" />
                   <div
@@ -118,11 +122,14 @@
             </div>
           </form>
           <div class="flex justify-end items-center mt-20px">
-            <NuxtLink to="/store/register" class="flex-inline no-underline text-18px text-white fill-white hover:text-[#00F3FF] hover:fill-[#00F3FF] active:text-[#004DC1] active:fill-[#004DC1]">
+            <NuxtLink to="/store/register"
+              class="flex-inline no-underline text-18px text-white fill-white hover:text-[#00F3FF] hover:fill-[#00F3FF] active:text-[#004DC1] active:fill-[#004DC1]">
               <svg width="20" height="23" viewBox="0 0 20 26" xmlns="http://www.w3.org/2000/svg">
-                <rect x="12.0545" y="3.84515" width="5.67273" height="16.0727" transform="rotate(32.4113 12.0545 3.84515)"/>
-                <path d="M13.263 1.94182C13.855 1.00932 15.0909 0.733317 16.0234 1.32536L17.4356 2.22193C18.3681 2.81397 18.6441 4.04986 18.052 4.98236L17.097 6.48661L12.3079 3.44607L13.263 1.94182Z"/>
-                <path d="M2.79361 23.7234L8.06345 20.7697L3.22478 17.6977L2.79361 23.7234Z"/>
+                <rect x="12.0545" y="3.84515" width="5.67273" height="16.0727"
+                  transform="rotate(32.4113 12.0545 3.84515)" />
+                <path
+                  d="M13.263 1.94182C13.855 1.00932 15.0909 0.733317 16.0234 1.32536L17.4356 2.22193C18.3681 2.81397 18.6441 4.04986 18.052 4.98236L17.097 6.48661L12.3079 3.44607L13.263 1.94182Z" />
+                <path d="M2.79361 23.7234L8.06345 20.7697L3.22478 17.6977L2.79361 23.7234Z" />
               </svg>
               申請試用 >
             </NuxtLink>
@@ -149,7 +156,6 @@ import { useLoadStore } from "../stores/loading.js";
 import { useConfigStore } from "../stores/config.js";
 import { useAlertModalStore } from "../stores/useAlertModal.js";
 import VueTurnstile from "vue-turnstile";
-import { fa } from "element-plus/es/locale/index.mjs";
 
 const store = useLoadStore();
 const configStore = useConfigStore();
