@@ -43,27 +43,33 @@
                   <NuxtLink class="flex items-center ms-1 me-1" v-show="storesItem.FB !== ''" :to="storesItem.FB">
                     <img class="w-30px h-30px" src="/images/iconFB.png" alt="fbIcon" />
                   </NuxtLink>
-                  <NuxtLink class="flex items-center ms-1 me-1" v-show="storesItem.LineId !== ''" :to="storesItem.LineId">
+                  <NuxtLink class="flex items-center ms-1 me-1" v-show="storesItem.LineId !== ''"
+                    :to="storesItem.LineId">
                     <img class="w-30px h-30px" src="/images/iconLine.png" alt="lineIcon" />
                   </NuxtLink>
                   <NuxtLink class="flex items-center ms-1 me-1" v-show="storesItem.IGId !== ''" :to="storesItem.IGId">
                     <img class="w-30px h-30px" src="/images/iconIG.png" alt="igIcon" />
                   </NuxtLink>
-                  <NuxtLink class="flex items-center ms-1 me-1" v-show="storesItem.TwitterId !== ''" :to="storesItem.TwitterId">
+                  <NuxtLink class="flex items-center ms-1 me-1" v-show="storesItem.TwitterId !== ''"
+                    :to="storesItem.TwitterId">
                     <img class="w-30px h-30px" src="/images/iconX.png" alt="推特icon" />
                   </NuxtLink>
-                  <NuxtLink class="flex items-center ms-1 me-1" v-show="storesItem.WechatId !== ''" :to="storesItem.WechatId">
+                  <NuxtLink class="flex items-center ms-1 me-1" v-show="storesItem.WechatId !== ''"
+                    :to="storesItem.WechatId">
                     <img class="w-30px h-30px" src="/images/iconWeChat.png" alt="wechatIcon" />
-                  </NuxtLink>                  
-                  <NuxtLink class="flex items-center ms-1 me-1" v-show="storesItem.Email !== ''" :href="`mailto:${storesItem.Email}`">
+                  </NuxtLink>
+                  <NuxtLink class="flex items-center ms-1 me-1" v-show="storesItem.Email !== ''"
+                    :href="`mailto:${storesItem.Email}`">
                     <img class="w-30px h-30px" src="/images/iconEmail.png" alt="emailIcon" />
                   </NuxtLink>
-                  <NuxtLink class="flex items-center ms-1 me-1" v-show="storesItem.PhoneNumber !== ''" :href="`tel:${storesItem.PhoneNumber}`">
+                  <NuxtLink class="flex items-center ms-1 me-1" v-show="storesItem.PhoneNumber !== ''"
+                    :href="`tel:${storesItem.PhoneNumber}`">
                     <img class="w-30px h-30px" src="/public/images/iconPhone.png" alt="phoneIcon" />
                   </NuxtLink>
                 </div>
                 <div>
-                  <button v-if="storesItem.IsEnableChat"  class="chat-btn" @click="OpenChat"><img src="/public/images/chatRoomIcon.svg" />聊聊</button>
+                  <button v-if="storesItem.IsEnableChat" class="chat-btn" @click="OpenChat"><img
+                      src="/public/images/chatRoomIcon.svg" />聊聊</button>
                 </div>
               </div>
             </div>
@@ -287,7 +293,7 @@
                           {{ item.Mobile }}
                         </h4>
                         <p class="m-0 font-size-12px color-#6a6a6a">
-                          {{ item.CreateTime }}
+                          {{ FormatDateTime(item.CreateTime) }}
                         </p>
                         <h3 class="m-0 mt-3">
                           {{ item.Question }}
@@ -629,13 +635,13 @@ onMounted(async () => {
     }
     // 所有資料都取完才跑UI(輪播)
     await nextTick();
-    if (!platformCarousel.value)return;
+    if (!platformCarousel.value) return;
     const currentPlatformIndex = filteredPlatformArray.value.findIndex(
-    platform => platform === routeParamPlatformName
+      platform => platform === routeParamPlatformName
     );
     let targetIndex = 0; // 第一個平台
     if (currentPlatformIndex !== -1) {
-        targetIndex = currentPlatformIndex;
+      targetIndex = currentPlatformIndex;
     }
     platformIndex.value = targetIndex;
     // 如果不是第一個平台(pn=有參數) 先換頁再addClass
@@ -967,6 +973,23 @@ useSeoMeta({
   ogDescription: 'Pmatch遊戲道具交易平台 – 線上遊戲安心交易的第一選擇，Pmatch為你嚴選商家，用合約保障你的權益，杜絕詐騙，防護交易安全',
   keywords: '星城online,包你發娛樂城,聚寶Online,老子有錢Online,寶島娛樂城,錢街Online,金好運娛樂城,滿貫大亨,豪神娛樂城,辣財神,金爸爸,HUGA野蠻世界娛樂城,明星3缺1,大福娛樂城'
 })
+
+const FormatDateTime = (timeStr) => {
+  const date = new Date(timeStr.split('.')[0])
+
+  // 再格式化
+  const formatted = date.toLocaleString('zh-TW', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false
+  }).replace(/\//g, '-')
+  return formatted;
+}
+
 </script>
 
 <style scoped>
