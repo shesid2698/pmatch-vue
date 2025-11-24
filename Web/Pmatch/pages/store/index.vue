@@ -121,6 +121,10 @@
                 <stop stopColor="white" />
                 <stop offset="1" stopColor="#B0B0E7" />
               </linearGradient>
+              <linearGradient id="paint0_linear_0_2" x1="75" y1="0" x2="75" y2="37" gradientUnits="userSpaceOnUse">
+                <stop stop-color="white" />
+                <stop offset="1" stop-color="#9E77E6" />
+              </linearGradient>
             </defs>
 
             <!-- 圓環圖 -->
@@ -134,17 +138,23 @@
                 :stroke-dasharray="purpleStrokeDasharray" :stroke-dashoffset="purpleStrokeDashoffset"
                 transform="rotate(-90 125 125)" />
 
+              <g>
+                <rect x="85" y="98" width="80" height="23" rx="12" fill="#D9D9D9" fill-opacity="0.1" />
+                <rect x="85" y="98" width="80" height="23" rx="12" stroke="url(#paint0_linear_0_2)"
+                  stroke-opacity="0.5" fill="none" />
+                <text x="125" y="115" text-anchor="middle" fill="white" font-size="14" opacity="0.8">
+                  週交易量
+                </text>
+              </g>
               <!-- 中心文字 -->
-              <text x="125" y="115" text-anchor="middle" fill="white" font-size="14" opacity="0.8">
-                週交易量
-              </text>
+
               <text x="125" y="140" text-anchor="middle" fill="white" font-size="20" font-weight="bold">
-                {{weeklyData.toLocaleString()}}
+                {{ weeklyData.toLocaleString() }}
               </text>
             </g>
 
             <!-- 黃色提示框（左側） -->
-            <g :transform="yellowTipsTransform" v-if="yellowPercent!=0">
+            <g :transform="yellowTipsTransform" v-if="yellowPercent != 0">
               <path opacity="0.2"
                 d="M0.560242 5.06595C2.18168 0.956365 6.82739 -1.06088 10.9372 0.560089C14.8499 2.10359 16.8644 6.3884 15.6501 10.3423L44.7477 25.6958L46.1345 25.6949C46.898 16.1791 54.8626 8.69485 64.5749 8.69485H146.575C156.792 8.69502 165.075 16.9777 165.075 27.1949C165.075 37.412 156.792 45.6947 146.575 45.6949H64.5749C54.8626 45.6949 46.899 38.2106 46.1354 28.6949H44.3747L44.0036 28.6939L43.6745 28.521L14.2536 12.9966C12.1191 15.6701 8.41457 16.7647 5.0661 15.4439C0.956229 13.8225 -1.06099 9.17592 0.560242 5.06595Z"
                 fill="white" />
@@ -154,7 +164,7 @@
             </g>
 
             <!-- 紫色提示框（右側） -->
-            <g :transform="purpleTipsTransform" v-if="purplePercent!=0">
+            <g :transform="purpleTipsTransform" v-if="purplePercent != 0">
               <path opacity="0.2"
                 d="M100.5 0C110.717 0 119 8.28274 119 18.5C119 18.6672 118.998 18.8339 118.993 19H136.422L136.781 19.2207L148.074 26.1221C150.368 23.5934 154.124 22.7315 157.381 24.25C161.385 26.1173 163.118 30.8767 161.251 34.8809C159.384 38.8851 154.623 40.618 150.619 38.751C146.801 36.9705 145.05 32.5602 146.514 28.6826L135.577 21.999H118.667C117.031 30.543 109.521 37 100.5 37H18.5C8.28273 37 0 28.7173 0 18.5C8.24703e-06 8.28274 8.28274 0 18.5 0H100.5Z"
                 fill="white" />
@@ -574,8 +584,8 @@
           </div>
           <div v-if="newsList.length > 0">
             <NuxtLink :to="`/store/news?id=${item.Id}`"
-              v-for="(item, index) in newsList.filter((item) => item.Category !== 3).reverse().slice(0, 6)"
-              :key="index" class="newsLink color-#555553 decoration-none">
+              v-for="(item, index) in newsList.filter((item) => item.Category !== 3).reverse().slice(0, 6)" :key="index"
+              class="newsLink color-#555553 decoration-none">
               <div class="w-full mt-1.8rem">
                 <div class="w-80 font-size-.8rem">
                   <div class="flex items-center">
@@ -962,9 +972,9 @@ const dailyPatchList3 = ref([]);
 const dailyPatchList4 = ref([]);
 const dailyPatchList5 = ref([]);
 const dailyPatchList6 = ref([]);
-const dailyPatchLists = [dailyPatchList0, dailyPatchList1, dailyPatchList2, dailyPatchList3, dailyPatchList4, dailyPatchList5,dailyPatchList6];
+const dailyPatchLists = [dailyPatchList0, dailyPatchList1, dailyPatchList2, dailyPatchList3, dailyPatchList4, dailyPatchList5, dailyPatchList6];
 // 用來控制每個對話框的開關狀態
-const dialogVisible = ref([false, false, false, false, false, false,false]);
+const dialogVisible = ref([false, false, false, false, false, false, false]);
 
 const contactName = ref('');
 const contactPhone = ref('');
@@ -1428,7 +1438,7 @@ const chartOptions = {
         // 獲取當前圖表的索引
         const chartId = context.chart.canvas.id;
         const index = parseInt(chartId.split('-')[2]); // 從 'my-chart-0' 取得索引
-        const platformNames = ['滿貫大亨', '老子有錢', '錢街Online', '聚寶Online', '金爸爸娛樂城', '寶島娛樂城','王牌俱樂部'];
+        const platformNames = ['滿貫大亨', '老子有錢', '錢街Online', '聚寶Online', '金爸爸娛樂城', '寶島娛樂城', '王牌俱樂部'];
         return `${platformNames[index]} - 近五日富豪榜財產走勢`;
       },
       font: {
@@ -1600,7 +1610,7 @@ async function fetchRichList(token, type) {
         dailyPatchList4.value = response.data.Data;
       } else if (type === 7) {
         dailyPatchList5.value = response.data.Data;
-      }else if(type===9){
+      } else if (type === 9) {
         dailyPatchList6.value = response.data.Data;
       }
     } else {
