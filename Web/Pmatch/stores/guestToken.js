@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 import CryptoJS from 'crypto-js';
-import { resolve } from 'chart.js/helpers';
 
 // 輔助函數
 const base64UrlEncode = str => {
