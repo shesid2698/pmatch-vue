@@ -160,7 +160,7 @@ const IsMatchActivity = computed(() => {
  */
 const carrierStatus = computed(() => {
     let status = "不符合領獎資格";
-    if (memberDetail.Carrier !== "" && memberDetail.Carrier !== null) {
+    if (memberDetail.CarrierType !== 0 && memberDetail.Carrier !== "" && memberDetail.Carrier !== null) {
         if (!exceptMemberList.find(x => x === memberDetail.Id)) {
             status = "已完成";
         }
@@ -254,7 +254,7 @@ const BindHoverHamndler = computed(() => {
                                 <div
                                     class="w-25vw absolute lg:top-60% top-59% lg:left-75% left-85% transform-translate-x-[-50%] lg:text-[1.4vw] text-[2.5vw] font-400 text-center z-1000">
                                     <span v-if="IsMatchActivity !== '已完成'" class="text-[#D6D6D6]">{{ IsMatchActivity
-                                        }}</span>
+                                    }}</span>
                                     <span v-else class="text-linear-gold">{{ IsMatchActivity }}</span>
                                 </div>
 
@@ -264,7 +264,7 @@ const BindHoverHamndler = computed(() => {
                                     <div v-if="carrierStatus === '已完成'" class="text-linear-gold">{{ carrierStatus }}
                                     </div>
                                     <div v-else-if="carrierStatus === '不符合領獎資格'" class="text-[#D6D6D6]">{{ carrierStatus
-                                        }}
+                                    }}
                                     </div>
                                     <div v-else class="gold-bind-btn">
                                         <NuxtLink to="/member/center" target="_blank">
@@ -289,9 +289,9 @@ const BindHoverHamndler = computed(() => {
                                 width="100%">
                             <img src="/public/images/activity/4/page_1_table_expired_lg.svg" alt="" class="lg-table">
                         </div>
-                        <div class="text-center md:mb-5rem mt-10">
+                        <!-- <div class="text-center md:mb-5rem mt-10">
                             <img src="/public/images/activity/4/page_1_process.svg" alt="" class="w-80% lg:w-100%">
-                        </div>
+                        </div> -->
                     </div>
                     <!-- 未登入 -->
                     <div v-else class="relative flex justify-center">
