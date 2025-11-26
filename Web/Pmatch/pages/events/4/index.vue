@@ -1,5 +1,7 @@
 <script setup>
-import { ElButton } from 'element-plus';
+const loginBtnHover = ref(false);
+const registBtnHover = ref(false);
+const bindBtnHover = ref(false);
 
 const router = useRouter();
 const route = useRoute();
@@ -150,6 +152,7 @@ const IsMatchActivity = computed(() => {
     }
     return "不符合領獎資格"
 })
+
 /**
  * 檢查載具綁定狀態
  * @returns {string} 狀態
@@ -164,7 +167,25 @@ const carrierStatus = computed(() => {
     else {
         status = "待綁定";
     }
+    // status = "不符合領獎資格";
     return status;
+})
+/**
+ * 載具狀態class定位(top)
+ * @returns {string}
+ */
+const carrierStatusClass = computed(() => {
+    let _carrierStatusClass = "";
+    switch (carrierStatus.value) {
+        case "已完成":
+        case "不符合領獎資格":
+            _carrierStatusClass = "lg:top-76% top-73.5%";
+            break;
+        case "待綁定":
+            _carrierStatusClass = "top-74% lg:top-72%"
+            break;
+    }
+    return _carrierStatusClass;
 })
 /**
  * 檢查活動是否過期
@@ -173,137 +194,177 @@ const carrierStatus = computed(() => {
 const IsActExpired = computed(() => {
     // const startTime = new Date(activityInfo.StartTime);
     const startTime = new Date("2025-11-01");
-    const endTime = new Date(activityInfo.EndTime);
+    // const endTime = new Date(activityInfo.EndTime);
+    const endTime = new Date("2025-12-31");
     if (endTime >= Date.now() && Date.now() >= startTime) return false;
     else return true;
 })
+/**
+ * 登入鈕hover
+ */
+const LoginHoverHandler = computed(() => {
+    return loginBtnHover.value === true ? "/images/activity/4/page_1_login_btn_hover.svg" : "/images/activity/4/page_1_login_btn.svg";
+})
+/**
+ * 註冊鈕hover
+ */
+const RegistHoverHamndler = computed(() => {
+    return registBtnHover.value === true ? "/images/activity/4/page_1_regist_btn_hover.svg" : "/images/activity/4/page_1_regist_btn.svg";
+})
+/**
+ * 綁定鈕hover
+ */
+const BindHoverHamndler = computed(() => {
+    return bindBtnHover.value === true ? "/images/activity/4/page_1_bind_btn_hover.svg" : "/images/activity/4/page_1_bind_btn.svg";
+})
 </script>
 <template>
-    <div class="px-2% py-3%">
-        <h2 class="m-0">包你發金幣，滿額大放送</h2>
-        <h4 class="m-0">註冊、綁定送金幣、抽AirPods 4</h4>
-        <h4 class="m-0">單筆滿萬再送兩萬六</h4>
-        <div class="flex">
-            <div class="w-50%  border-1 border-black border-solid border-r-0" @click="currentPage = 1"
-                :class="{ 'border-b-0': currentPage === 1 }">
-                <div>第一重</div>
-                <div>註冊綁定抽AirPods 4</div>
+    <!-- 上方大圖 -->
+    <div class="w-auto mb-[-5px]">
+        <img src="/public/images/activity/4/top.png" alt="" width="100%">
+    </div>
+    <div id="main">
+        <!-- 頁籤按鈕 -->
+        <div class="flex cursor-pointer">
+            <div class="w-50%" @click="currentPage = 1">
+                <img v-if="currentPage === 1" src="/public/images/activity/4/page_1_btn_active.svg" alt="" width="100%">
+                <img v-else src="/public/images/activity/4/page_1_btn.svg" alt="" width="100%">
             </div>
-            <div class="flex-1  border-1 border-black border-solid" @click="currentPage = 2"
-                :class="{ 'border-b-0': currentPage === 2 }">
-                <div>第二重</div>
-                <div>單筆滿萬送兩萬六</div>
+            <div class="flex-1" @click="currentPage = 2">
+                <img v-if="currentPage === 2" src="/public/images/activity/4/page_2_btn_active.svg" alt="" width="100%">
+                <img v-else src="/public/images/activity/4/page_2_btn.svg" alt="" width="100%">
             </div>
         </div>
-        <div class="w-100% border-1 border-black border-solid border-t-0 pt-3 box-border">
-            <div v-if="currentPage === 1" class="mb-3">內文1
-                <div v-if="token !== null && token !== undefined">
-                    <div v-if="!IsActExpired">
-                        <div class="flex justify-center">
-                            <table class="w-60%">
-                                <thead>
-                                    <tr>
-                                        <th>任務內容</th>
-                                        <th>活動獎勵</th>
-                                        <th>完成狀態</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>註冊PMatch會員</td>
-                                        <td>26,000 包你發金幣(價值$200 元)</td>
-                                        <td>{{ IsMatchActivity }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>完成電子載具綁定</td>
-                                        <td>26,000 包你發金幣(價值$200 元)</td>
-                                        <td v-if="carrierStatus === '待綁定'">
-                                            <ElButton>
-                                                <NuxtLink to="/member/center" target="_blank">{{ carrierStatus }}
-                                                </NuxtLink>
-                                            </ElButton>
-                                        </td>
-                                        <td v-else>{{ carrierStatus }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>完成電子載具綁定</td>
-                                        <td>參加AirPods 4 抽獎，共六台</td>
-                                        <td v-if="carrierStatus === '待綁定'">
-                                            <ElButton>
-                                                <NuxtLink to="/member/center" target="_blank">{{ carrierStatus }}
-                                                </NuxtLink>
-                                            </ElButton>
-                                        </td>
-                                        <td v-else>{{ carrierStatus }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+        <div class="w-100% border-1 box-border">
+            <!-- 頁籤1 -->
+            <div v-if="currentPage === 1" class="overflow-hidden mb-5 lg:px-10% box-border">
+                <div class="pc-border">
+                    <img src="/public/images/activity/4/page_1_content.svg" alt="" width="100%"
+                        class="md:mt-[-15vh] mt-[-5vh] mb-3">
+                    <!-- 如果有登入 -->
+                    <div v-if="token !== null && token !== undefined">
+                        <!-- 如果活動未到期 -->
+                        <div v-if="!IsActExpired">
+                            <div class="relative flex justify-center">
+                                <!-- 會員註冊時間 -->
+                                <div
+                                    class="w-fit absolute top-31% left-50% transform-translate-x-[-50%] lg:text-[2.1vw] text-[3.5vw] text-[#0E0F0E] font-400 z-1000">
+                                    {{ memberDetail.CreateTime.split("T")[0] }}
+                                </div>
+
+                                <!-- 註冊PMatch會員狀態 -->
+                                <div
+                                    class="w-25vw absolute lg:top-60% top-59% lg:left-75% left-85% transform-translate-x-[-50%] lg:text-[1.4vw] text-[2.5vw] font-400 text-center z-1000">
+                                    <span v-if="IsMatchActivity !== '已完成'" class="text-[#D6D6D6]">{{ IsMatchActivity
+                                        }}</span>
+                                    <span v-else class="text-linear-gold">{{ IsMatchActivity }}</span>
+                                </div>
+
+                                <!-- 完成電子載具綁定狀態 -->
+                                <div class="w-25vw absolute lg:left-75% left-85% transform-translate-x-[-50%] lg:text-[1.7vw] text-[2.5vw] font-400 text-center z-1000"
+                                    :class="carrierStatusClass">
+                                    <div v-if="carrierStatus === '已完成'" class="text-linear-gold">{{ carrierStatus }}
+                                    </div>
+                                    <div v-else-if="carrierStatus === '不符合領獎資格'" class="text-[#D6D6D6]">{{ carrierStatus
+                                        }}
+                                    </div>
+                                    <div v-else class="gold-bind-btn">
+                                        <NuxtLink to="/member/center" target="_blank">
+                                            <img :src="BindHoverHamndler" alt="" width="100%"
+                                                @mouseenter="bindBtnHover = true" @mouseleave="bindBtnHover = false">
+                                        </NuxtLink>
+                                    </div>
+                                </div>
+
+
+                                <img src="/public/images/activity/4/page_1_table_logined.svg" alt="" width="100%"
+                                    class="mb-3 sm-table ">
+                                <img src="/public/images/activity/4/page_1_table_logined_lg.svg" alt=""
+                                    class="lg-table mb-3">
+                            </div>
+
                         </div>
-                        <div>
-                            領取流程 :
-                            <div class="text-center">
-                                <ElButton>
-                                    <NuxtLink to="/member/center/reward" target="_blank">前往領獎中心</NuxtLink>
-                                </ElButton>
+
+                        <!-- 活動過期 -->
+                        <div v-else class="flex justify-center mt-5">
+                            <img src="/public/images/activity/4/page_1_table_expired.svg" alt="" class="sm-table"
+                                width="100%">
+                            <img src="/public/images/activity/4/page_1_table_expired_lg.svg" alt="" class="lg-table">
+                        </div>
+                        <div class="text-center md:mb-5rem mt-10">
+                            <img src="/public/images/activity/4/page_1_process.svg" alt="" class="w-80% lg:w-100%">
+                        </div>
+                    </div>
+                    <!-- 未登入 -->
+                    <div v-else class="relative flex justify-center">
+                        <div class="absolute top-28% left-50% transform-translate-x-[-50%] flex z-1000">
+                            <!-- 註冊鈕 -->
+                            <div class="gold-btn flex items-center justify-center mr-5vw lg:mr-0">
+                                <NuxtLink to="/register" target="_blank">
+                                    <img :src="RegistHoverHamndler" alt="" class="cursor-pointer w-100% block"
+                                        @mouseenter="registBtnHover = true" @mouseleave="registBtnHover = false">
+                                </NuxtLink>
+                            </div>
+                            <!-- 登入鈕 -->
+                            <div class="gold-btn flex items-center justify-center">
+                                <NuxtLink to="/member/login" target="_blank">
+                                    <img :src="LoginHoverHandler" alt="" class="cursor-pointer w-100% block"
+                                        @mouseenter="loginBtnHover = true" @mouseleave="loginBtnHover = false">
+                                </NuxtLink>
+                            </div>
+                        </div>
+                        <img src="/public/images/activity/4/page_1_table.svg" class="sm-table" alt="" width="100%">
+                        <img src="/public/images/activity/4/page_1_lg_table.svg" class="lg-table" alt="">
+                    </div>
+                    <div class="text-center md:mb-5rem mt-10">
+                        <img src="/public/images/activity/4/page_1_process.svg" alt="" class="w-80% lg:w-100%">
+                    </div>
+                </div>
+            </div>
+            <!-- 頁籤2 -->
+            <div v-else class="mb-3 text-center overflow-hidden lg:px-10% box-border">
+                <div class="pc-border !pt-0">
+                    <div class="mb-5 lg:mb-20">
+                        <img src="/public/images/activity/4/page_2_content.svg" alt="" width="73%"
+                            class="md:mt-10vh mt-2vh mr-[0.3rem] lg:mr-0">
+                    </div>
+                    <div class="relative flex justify-center">
+                        <img src="/public/images/activity/4/page_2_table.svg" alt="" class="sm-table" width="100%">
+                        <img src="/public/images/activity/4/page_2_table_lg.svg" alt="" class="lg-table !lg:w-150%">
+
+                        <!-- 遊戲平台 -->
+                        <div
+                            class="absolute 2xl:w-25% w-30% aspect-[300/169] md:top-63% top-61% 2xl:left-10% left-2% z-1000">
+                            <NuxtLink
+                                to="https://www.pmatch.com.tw/findmatch?platformName=%E5%8C%85%E4%BD%A0%E7%99%BC%E5%A8%9B%E6%A8%82%E5%9F%8E"
+                                target="_blank"><img src="/public/images/activity/4/page_2_gameplat.svg" alt=""
+                                    width="100%"></NuxtLink>
+                        </div>
+
+                        <!-- 小幸運銀行、好好銀行-->
+                        <div
+                            class="absolute 2xl:w-50% w-64% aspect-[611/211] 2xl:top-60% top-59% 2xl:left-37.5% left-33.7% flex justify-around items-center z-1000">
+                            <div class="w-50% px-10% box-border">
+                                <NuxtLink
+                                    to="https://www.pmatch.com.tw/findmatch/224?pn=%E5%8C%85%E4%BD%A0%E7%99%BC%E5%A8%9B%E6%A8%82%E5%9F%8E"
+                                    target="_blank"><img src="/public/images/activity/4/page_2_game_1.svg" alt=""
+                                        width="100%"></NuxtLink>
+                            </div>
+                            <div class="w-50% px-10% box-border">
+                                <NuxtLink
+                                    to="https://www.pmatch.com.tw/findmatch/240?pn=%E5%8C%85%E4%BD%A0%E7%99%BC%E5%A8%9B%E6%A8%82%E5%9F%8E"
+                                    target="_blank"><img src="/public/images/activity/4/page_2_game_2.svg" alt=""
+                                        width="100%"></NuxtLink>
                             </div>
                         </div>
                     </div>
-                    <div v-else>
-                        活動已過期
-                    </div>
-                </div>
-                <div v-else>
-                    <div class="flex justify-center">
-                        <ElButton class="mr-0">
-                            <NuxtLink to="/member/login" target="_blank">登入</NuxtLink>
-                        </ElButton>
-                        <ElButton>
-                            <NuxtLink to="/register" target="_blank">註冊</NuxtLink>
-                        </ElButton>
+                    <div class="w-100% p-3% box-border">
+                        <img src="/public/images/activity/4/page_2_process.svg" alt="" class="max-w-full h-auto block">
                     </div>
                 </div>
             </div>
-            <div v-else class="mb-3">
-                內文2
-                <div>指定平台及媒合商</div>
-                <div class="flex justify-center">
-                    <table class="w-60%">
-                        <thead>
-                            <tr>
-                                <th>遊戲平台</th>
-                                <th>指定媒合商</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td rowspan="2">包你發娛樂城</td>
-                                <td>
-                                    <NuxtLink
-                                        to="https://www.pmatch.com.tw/findmatch/224?pn=%E5%8C%85%E4%BD%A0%E7%99%BC%E5%A8%9B%E6%A8%82%E5%9F%8E"
-                                        target="_blank">
-                                        <img src="http://192.168.10.206/images/2025/20251001112014607.png" alt=""
-                                            width="150"></NuxtLink>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <NuxtLink
-                                        to="https://www.pmatch.com.tw/findmatch/240?pn=%E5%8C%85%E4%BD%A0%E7%99%BC%E5%A8%9B%E6%A8%82%E5%9F%8E"
-                                        target="_blank">
-                                        <img src="http://192.168.10.206/images/2025/20250702165654639.png" alt=""
-                                            width="150"></NuxtLink>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="border-solid border-0 border-black border-t-1">
-                <div>i. 本次活動範圍僅包含包你發娛樂城及活動頁面指頂之媒合商，詳細內容請參照上</div>
-                <div>ii. 活動一 獎項將於活動結束後三天內發送至PMtach官網領獎中心</div>
-                <div>iii. 領獎中心活動獎項設有30天領取時間限制，獎項發送後請盡快至領獎中心領取，逾期視同放棄領獎資格</div>
-                <div>iv. Pmatch平台保留更換等值贈品以及變更活動內容或終止活動的權利，以及最終活動解釋權</div>
-                <div>v. Pmatch平台僅提供媒合交易服務，如有任何交易相關問題請直接洽詢委託媒合交易之媒合商</div>
+            <div class="w-100%">
+                <img src="/public/images/activity/4/footer.svg" alt="" width="100%" class="block">
             </div>
         </div>
     </div>
@@ -320,5 +381,83 @@ td {
 
 table {
     border-collapse: collapse;
+}
+
+#main {
+    background-color: #0E0F0E;
+}
+
+.page-active {
+    background: linear-gradient(90deg, #181B20 0%, #21242C 42.79%, #181B20 79.81%);
+}
+
+.gold-btn {
+    width: 18vw;
+    aspect-ratio: 197/75;
+}
+
+.gold-bind-btn {
+    margin: 0 auto;
+    width: 12vw;
+    aspect-ratio: 138/75;
+}
+
+.text-linear-gold {
+    background-image: linear-gradient(to bottom, #E2CD99 27.17%, #AF8312 71.74%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+}
+
+.lg-table {
+    display: none;
+}
+
+@media screen and (min-width: 1024px) {
+    .pc-border {
+        position: relative;
+        padding: 10% 0;
+    }
+
+    .pc-border::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: linear-gradient(to bottom,
+                #D7B700,
+                #FFFADE,
+                #FFD900,
+                #726100,
+                #807B00);
+    }
+
+    .pc-border::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: linear-gradient(to bottom,
+                #D7B700,
+                #FFFADE,
+                #FFD900,
+                #726100,
+                #807B00);
+    }
+
+    .sm-table {
+        display: none;
+    }
+
+    .lg-table {
+        display: block;
+        width: 126%;
+        z-index: 999;
+    }
 }
 </style>
