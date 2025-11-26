@@ -1,4 +1,5 @@
 <script setup>
+// hover事件
 const loginBtnHover = ref(false);
 const registBtnHover = ref(false);
 const bindBtnHover = ref(false);
@@ -167,7 +168,6 @@ const carrierStatus = computed(() => {
     else {
         status = "待綁定";
     }
-    // status = "不符合領獎資格";
     return status;
 })
 /**
@@ -192,10 +192,8 @@ const carrierStatusClass = computed(() => {
  * @returns {boolean}
  */
 const IsActExpired = computed(() => {
-    // const startTime = new Date(activityInfo.StartTime);
-    const startTime = new Date("2025-11-01");
-    // const endTime = new Date(activityInfo.EndTime);
-    const endTime = new Date("2025-12-31");
+    const startTime = new Date(activityInfo.StartTime);
+    const endTime = new Date(activityInfo.EndTime);
     if (endTime >= Date.now() && Date.now() >= startTime) return false;
     else return true;
 })
