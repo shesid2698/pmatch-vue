@@ -26,18 +26,18 @@
       </div>
 
       <!-- 服務條款內容 -->
-      <div v-html="data" @scroll="handleScroll($event, 1)" id="service1"
+      <div v-html="data" @scroll="handleScroll($event, 1)" id="service1" ref="service1"
         class="p-x-10px rounded-1 overflow-y-auto w-100% md:w-864px h-500px mt-20px border border-solid border-1px border-[#dee2e6]">
       </div>
 
-      <pre v-if="data2 !== ''" id="service2" @scroll="handleScroll($event, 2)"
+      <pre v-show="data2 !== ''" id="service2" @scroll="handleScroll($event, 2)" ref="service2"
         class="p-x-10px rounded-1 overflow-y-auto w-100% md:w-864px h-500px mt-20px border border-solid border-1px border-[#dee2e6] text-16px font-light"
         style="white-space: pre-line;">
         {{ data2 }}
       </pre>
 
       <div class="mt-15px">
-        <button :disabled="!isBottom || !isBottom2" @click="ToFormPage"
+        <button :disabled="IsAgreeDisabled" @click="ToFormPage"
           class="w-200px p-y-1.5 p-x-3 border-none outline-none text-16px text-white rounded-1 bg-[#1a6db4] hover:bg-[#0b5ed7] transition duration-200 cursor-pointer disabled:bg-gray disabled:hover:bg-gray">
           同意
         </button>
@@ -63,6 +63,10 @@ const data2 = ref('');
 const token = ref('');
 const isBottom = ref(false);
 const { $axios } = useNuxtApp();
+const service1 = ref(null);
+const service2 = ref(null);
+const isServiceScroll1 = ref(false);
+const isServiceScroll2 = ref(false);
 
 /**登入會員 */
 const memberList = ref({});
@@ -116,6 +120,17 @@ const handleScroll = (event, index) => {
     }
   }
 };
+const IsAgreeDisabled = computed(() => {
+  // 強制轉為布林值 (Boolean)，避免回傳空字串
+  // !!data.value 會把 "" 轉成 false，把 "文字" 轉成 true
+  const hasData1 = !!data.value;
+  const hasData2 = !!data2.value;
+
+  const block1 = hasData1 && isServiceScroll1.value && !isBottom.value;
+  const block2 = hasData2 && isServiceScroll2.value && !isBottom2.value;
+
+  return block1 || block2;
+});
 /**
  * 提交表單
  */
@@ -197,14 +212,6 @@ onMounted(async () => {
       const { data: textContent } = await useFetch('/授權書.txt')
       data2.value = textContent.value;
     }
-
-    //
-    if (targetNode != null && targetNode != undefined) {
-      if (targetNode.scrollHeight == targetNode.clientHeight) isBottom.value = true;
-    }
-    if (targetNode2 != null && targetNode2 != undefined) {
-      if (targetNode2.scrollHeight == targetNode2.clientHeight) isBottom2.value = true;
-    }
   });
 
   observer.observe(targetNode, { childList: true, subtree: true });
@@ -216,6 +223,28 @@ onMounted(async () => {
   await GetService(token.value, 4);
   await setPageLoading(false);
 });
+watch(data2, async (newVal) => {
+  // 只有當 data2 真的有內容時才執行
+  if (newVal && newVal !== '') {
+
+    // 重點：等待 Vue 完成 DOM 更新 (把 v-if 的區塊畫出來)
+    await nextTick();
+
+    // 這時候 service2.value 才真的存在
+    if (service2.value.scrollHeight > service2.value.clientHeight) isServiceScroll2.value = true;
+  }
+})
+watch(data, async (newVal) => {
+  // 只有當 data2 真的有內容時才執行
+  if (newVal && newVal !== '') {
+
+    // 重點：等待 Vue 完成 DOM 更新 (把 v-if 的區塊畫出來)
+    await nextTick();
+
+    // 這時候 service2.value 才真的存在
+    if (service1.value.scrollHeight > service1.value.clientHeight) isServiceScroll1.value = true;
+  }
+})
 </script>
 <style scoped>
 .ccontainer {
