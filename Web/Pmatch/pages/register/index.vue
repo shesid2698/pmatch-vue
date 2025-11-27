@@ -145,7 +145,7 @@ const ToFormPage = async () => {
       },
       {
         headers: {
-          Authorization: token.value
+          Authorization: await jwtStore.generateToken()
         }
       }
     );
@@ -159,7 +159,7 @@ const ToFormPage = async () => {
           IsFromShortUrl: true
         }, {
         headers: {
-          Authorization: token.value
+          Authorization: await jwtStore.generateToken()
         }
       }
       );
