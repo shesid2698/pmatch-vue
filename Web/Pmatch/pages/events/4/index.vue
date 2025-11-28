@@ -179,10 +179,10 @@ const carrierStatusClass = computed(() => {
     switch (carrierStatus.value) {
         case "已完成":
         case "不符合領獎資格":
-            _carrierStatusClass = "lg:top-76% top-73.5%";
+            _carrierStatusClass = "top-54% lg:top-48.3%";
             break;
         case "待綁定":
-            _carrierStatusClass = "top-74% lg:top-72%"
+            _carrierStatusClass = "top-53% lg:top-46.8%"
             break;
     }
     return _carrierStatusClass;
@@ -237,8 +237,10 @@ const BindHoverHamndler = computed(() => {
             <!-- 頁籤1 -->
             <div v-if="currentPage === 1" class="overflow-hidden mb-5 lg:px-10% box-border">
                 <div class="pc-border">
-                    <img src="/public/images/activity/4/page_1_content.svg" alt="" width="100%"
-                        class="md:mt-[-15vh] mt-[-5vh] mb-3">
+                    <div class="px-10% py-5%">
+                        <img src="/public/images/activity/4/page_1_content.svg" alt="" width="100%" class="mb-3">
+                    </div>
+
                     <!-- 如果有登入 -->
                     <div v-if="token !== null && token !== undefined">
                         <!-- 如果活動未到期 -->
@@ -246,25 +248,25 @@ const BindHoverHamndler = computed(() => {
                             <div class="relative flex justify-center">
                                 <!-- 會員註冊時間 -->
                                 <div
-                                    class="w-fit absolute top-31% left-50% transform-translate-x-[-50%] lg:text-[2.1vw] text-[3.5vw] text-[#0E0F0E] font-400 z-1000">
+                                    class="w-fit absolute lg:top-19.7% top-22.5% left-50% transform-translate-x-[-50%] lg:text-[2.1vw] text-[3.5vw] text-[#0E0F0E] font-400 z-1000">
                                     {{ memberDetail.CreateTime.split("T")[0] }}
                                 </div>
 
                                 <!-- 註冊PMatch會員狀態 -->
                                 <div
-                                    class="w-25vw absolute lg:top-60% top-59% lg:left-75% left-85% transform-translate-x-[-50%] lg:text-[1.4vw] text-[2.5vw] font-400 text-center z-1000">
+                                    class="w-25vw absolute lg:top-38% top-42.3% lg:left-75% left-85% transform-translate-x-[-50%] lg:text-[1.4vw] text-[2.5vw] font-400 text-center z-1000">
                                     <span v-if="IsMatchActivity !== '已完成'" class="text-[#D6D6D6]">{{ IsMatchActivity
-                                    }}</span>
+                                        }}</span>
                                     <span v-else class="text-linear-gold">{{ IsMatchActivity }}</span>
                                 </div>
 
                                 <!-- 完成電子載具綁定狀態 -->
-                                <div class="w-25vw absolute lg:left-75% left-85% transform-translate-x-[-50%] lg:text-[1.7vw] text-[2.5vw] font-400 text-center z-1000"
+                                <div class="w-25vw absolute lg:left-75% left-85% transform-translate-x-[-50%] lg:text-[1.4vw] text-[2.5vw] font-400 text-center z-1000"
                                     :class="carrierStatusClass">
                                     <div v-if="carrierStatus === '已完成'" class="text-linear-gold">{{ carrierStatus }}
                                     </div>
                                     <div v-else-if="carrierStatus === '不符合領獎資格'" class="text-[#D6D6D6]">{{ carrierStatus
-                                    }}
+                                        }}
                                     </div>
                                     <div v-else class="gold-bind-btn">
                                         <NuxtLink to="/member/center" target="_blank">
@@ -276,7 +278,7 @@ const BindHoverHamndler = computed(() => {
 
 
                                 <img src="/public/images/activity/4/page_1_table_logined.svg" alt="" width="100%"
-                                    class="mb-3 sm-table ">
+                                    class="sm-table ">
                                 <img src="/public/images/activity/4/page_1_table_logined_lg.svg" alt=""
                                     class="lg-table mb-3">
                             </div>
@@ -289,15 +291,12 @@ const BindHoverHamndler = computed(() => {
                                 width="100%">
                             <img src="/public/images/activity/4/page_1_table_expired_lg.svg" alt="" class="lg-table">
                         </div>
-                        <!-- <div class="text-center md:mb-5rem mt-10">
-                            <img src="/public/images/activity/4/page_1_process.svg" alt="" class="w-80% lg:w-100%">
-                        </div> -->
                     </div>
                     <!-- 未登入 -->
                     <div v-else class="relative flex justify-center">
-                        <div class="absolute top-28% left-50% transform-translate-x-[-50%] flex z-1000">
+                        <div class="absolute lg:top-18% top-20% left-50% transform-translate-x-[-50%] flex z-1000">
                             <!-- 註冊鈕 -->
-                            <div class="gold-btn flex items-center justify-center mr-5vw lg:mr-0">
+                            <div class="gold-btn flex items-center justify-center mr-5vw">
                                 <NuxtLink to="/register" target="_blank">
                                     <img :src="RegistHoverHamndler" alt="" class="cursor-pointer w-100% block"
                                         @mouseenter="registBtnHover = true" @mouseleave="registBtnHover = false">
@@ -314,7 +313,7 @@ const BindHoverHamndler = computed(() => {
                         <img src="/public/images/activity/4/page_1_table.svg" class="sm-table" alt="" width="100%">
                         <img src="/public/images/activity/4/page_1_lg_table.svg" class="lg-table" alt="">
                     </div>
-                    <div class="text-center md:mb-5rem mt-10">
+                    <div class="text-center mt-7 mb-5 lg:mb-0 lg:px-7% lg:pb-5%">
                         <img src="/public/images/activity/4/page_1_process.svg" alt="" class="w-80% lg:w-100%">
                     </div>
                 </div>
@@ -323,7 +322,7 @@ const BindHoverHamndler = computed(() => {
             <div v-else class="mb-3 text-center overflow-hidden lg:px-10% box-border">
                 <div class="pc-border !pt-0">
                     <div class="mb-5 lg:mb-20">
-                        <img src="/public/images/activity/4/page_2_content.svg" alt="" width="73%"
+                        <img src="/public/images/activity/4/page_2_content.svg" alt="" width="70%"
                             class="md:mt-10vh mt-2vh mr-[0.3rem] lg:mr-0">
                     </div>
                     <div class="relative flex justify-center">
@@ -356,8 +355,8 @@ const BindHoverHamndler = computed(() => {
                             </div>
                         </div>
                     </div>
-                    <div class="w-100% p-3% box-border">
-                        <img src="/public/images/activity/4/page_2_process.svg" alt="" class="max-w-full h-auto block">
+                    <div class="w-100% p-5% box-border">
+                        <img src="/public/images/activity/4/page_2_process.svg" alt="" width="100%">
                     </div>
                 </div>
             </div>
@@ -415,7 +414,6 @@ table {
 @media screen and (min-width: 1024px) {
     .pc-border {
         position: relative;
-        padding: 10% 0;
     }
 
     .pc-border::after {
@@ -456,6 +454,14 @@ table {
         display: block;
         width: 126%;
         z-index: 999;
+    }
+
+    .gold-btn {
+        width: 12vw;
+    }
+
+    .gold-bind-btn {
+        width: 10vw;
     }
 }
 </style>
