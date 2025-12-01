@@ -314,7 +314,7 @@ const BindHoverHamndler = computed(() => {
                         <img src="/public/images/activity/4/page_1_lg_table.svg" class="lg-table" alt="">
                     </div>
                     <div class="text-center mt-7 mb-5 lg:mb-0 lg:px-7% lg:pb-5%">
-                        <img src="/public/images/activity/4/page_1_process.svg" alt="" class="w-80% lg:w-100%">
+                        <img src="/public/images/activity/4/page_1_process.png" alt="" class="w-80% lg:w-100%">
                     </div>
                 </div>
             </div>
@@ -356,7 +356,7 @@ const BindHoverHamndler = computed(() => {
                         </div>
                     </div>
                     <div class="w-100% p-5% box-border">
-                        <img src="/public/images/activity/4/page_2_process.svg" alt="" width="100%">
+                        <img src="/public/images/activity/4/page_2_process.png" alt="" width="100%">
                     </div>
                 </div>
             </div>
