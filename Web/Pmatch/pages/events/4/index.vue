@@ -179,10 +179,10 @@ const carrierStatusClass = computed(() => {
     switch (carrierStatus.value) {
         case "已完成":
         case "不符合領獎資格":
-            _carrierStatusClass = "top-54% lg:top-48.3%";
+            _carrierStatusClass = "top-54.5% lg:top-48.3%";
             break;
         case "待綁定":
-            _carrierStatusClass = "top-53% lg:top-46.8%"
+            _carrierStatusClass = "top-53.5% lg:top-46.8%"
             break;
     }
     return _carrierStatusClass;
@@ -254,7 +254,7 @@ const BindHoverHamndler = computed(() => {
 
                                 <!-- 註冊PMatch會員狀態 -->
                                 <div
-                                    class="w-25vw absolute lg:top-38% top-42.3% lg:left-75% left-85% transform-translate-x-[-50%] lg:text-[1.4vw] text-[2.5vw] font-400 text-center z-1000">
+                                    class="w-25vw absolute lg:top-38% top-42.9% lg:left-75% left-85% transform-translate-x-[-50%] lg:text-[1.4vw] text-[2.5vw] font-400 text-center z-1000">
                                     <span v-if="IsMatchActivity !== '已完成'" class="text-[#D6D6D6]">{{ IsMatchActivity
                                         }}</span>
                                     <span v-else class="text-linear-gold">{{ IsMatchActivity }}</span>
@@ -327,20 +327,20 @@ const BindHoverHamndler = computed(() => {
                     </div>
                     <div class="relative flex justify-center">
                         <img src="/public/images/activity/4/page_2_table.svg" alt="" class="sm-table" width="100%">
-                        <img src="/public/images/activity/4/page_2_table_lg.svg" alt="" class="lg-table !lg:w-150%">
+                        <img src="/public/images/activity/4/page_2_table_lg.svg" alt="" class="lg-table">
 
                         <!-- 遊戲平台 -->
-                        <div
+                        <!-- <div
                             class="absolute 2xl:w-25% w-30% aspect-[300/169] md:top-63% top-61% 2xl:left-10% left-2% z-1000">
                             <NuxtLink
                                 to="https://www.pmatch.com.tw/findmatch?platformName=%E5%8C%85%E4%BD%A0%E7%99%BC%E5%A8%9B%E6%A8%82%E5%9F%8E"
                                 target="_blank"><img src="/public/images/activity/4/page_2_gameplat.svg" alt=""
                                     width="100%"></NuxtLink>
-                        </div>
+                        </div> -->
 
                         <!-- 小幸運銀行、好好銀行-->
                         <div
-                            class="absolute 2xl:w-50% w-64% aspect-[611/211] 2xl:top-60% top-59% 2xl:left-37.5% left-33.7% flex justify-around items-center z-1000">
+                            class="absolute lg:w-75% w-90% aspect-[611/211] lg:top-43% top-43.5% left-50% transform-translate-x-[-50%] flex justify-around items-center z-1000">
                             <div class="w-50% px-10% box-border">
                                 <NuxtLink
                                     to="https://www.pmatch.com.tw/findmatch/224?pn=%E5%8C%85%E4%BD%A0%E7%99%BC%E5%A8%9B%E6%A8%82%E5%9F%8E"
