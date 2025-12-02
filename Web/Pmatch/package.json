@@ -20,6 +20,7 @@
     "crypto-js": "^4.2.0",
     "element-plus": "^2.7.4",
     "events": "^3.3.0",
+    "firebase": "^12.6.0",
     "form-data": "^4.0.3",
     "jose": "^5.9.6",
     "jwt-simple": "^0.5.6",

@@ -86,6 +86,7 @@ import { useLoadStore } from "./stores/loading.js";
 import { useModalStore } from "./stores/useModal.js";
 import { useAlertModalStore } from "./stores/useAlertModal.js";
 import { useConfigStore } from "./stores/config.js";
+import { isEmailValid } from "./utils/validator.js";
 const store = useLoadStore();
 const modal = useModalStore();
 const alertModal = useAlertModalStore();
@@ -103,7 +104,10 @@ const isHomePage = computed(() => route.path === "/");
 const isStorePage = computed(() => {
   return route.path.startsWith("/store");
 });
-const router = useRouter();
+// firebase
+// Nuxt 3 自動匯入 composables，所以直接用
+const { requestPermission, listenToMessages } = useFcm();
+// firebase
 
 onMounted(async () => {
   await setPageLoading(true);
@@ -126,6 +130,18 @@ onMounted(async () => {
       }
     }
     await setPageLoading(false);
+
+    // firebase
+    if(!!userToken.value){
+      console.log("準備監聽訊息..");
+      await requestPermission().then(() => {
+        listenToMessages();
+      }).catch((err) => {
+        console.error("取得通知權限失敗:", err);
+      });
+    }
+    console.log('email',isEmailValid('wadecsa@csacsx.com'))
+
   } catch (error) {
     console.error("頁面初始化失敗:", error);
   }
