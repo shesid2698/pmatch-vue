@@ -132,14 +132,20 @@ onMounted(async () => {
     await setPageLoading(false);
 
     // firebase
-    if(!!userToken.value){
-      console.log("準備監聽訊息..");
-      await requestPermission().then(() => {
-        listenToMessages();
-      }).catch((err) => {
-        console.error("取得通知權限失敗:", err);
-      });
-    }
+    // if(!!userToken.value){
+    //   console.log("準備監聽訊息..");
+    //   await requestPermission().then(() => {
+    //     listenToMessages();
+    //   }).catch((err) => {
+    //     console.error("取得通知權限失敗:", err);
+    //   });
+    // }
+    console.log("準備監聽訊息..");
+    await requestPermission().then(() => {
+      listenToMessages();
+    }).catch((err) => {
+      console.error("取得通知權限失敗:", err);
+    });
 
   } catch (error) {
     console.error("頁面初始化失敗:", error);
