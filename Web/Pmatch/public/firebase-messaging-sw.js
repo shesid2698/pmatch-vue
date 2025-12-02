@@ -20,14 +20,21 @@ const messaging = firebase.messaging();
 messaging.onBackgroundMessage((payload) => {
   console.log('[Service Worker] 收到背景通知:', payload);
   
-  // ★★★ 修改這裡：從 payload.data 讀取 ★★★
-  // 因為後端現在把標題塞在 data 裡了
-  const notificationTitle = payload.data.title; 
+  const notificationTitle = payload.notification.title;
   const notificationOptions = {
-    body: payload.data.body,
-    icon: '/icon.png',
-    data: payload.data // 把整包 data 傳下去，方便點擊事件使用
+    body: payload.notification.body,
+    icon: '/icon.png', // 請確保 public 資料夾裡有一張 icon.png
+    data: {
+        url: '/' 
+    }
   };
-
   self.registration.showNotification(notificationTitle, notificationOptions);
+});
+
+// 4. 點擊通知後的行為
+self.addEventListener('notificationclick', function(event) {
+    event.notification.close();
+    event.waitUntil(
+        clients.openWindow(event.notification.data.url || '/')
+    );
 });
