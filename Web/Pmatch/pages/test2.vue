@@ -11,6 +11,8 @@ const indicator = ref(null)
 const offsetX = ref(0)
 const offsetY = ref(0)
 
+const fcmToken = useCookie("fcmToken");
+
 // 點擊按鈕移動灰色區塊
 const moveIndicator = async (i) => {
   index.value = i
@@ -90,6 +92,7 @@ onMounted(() => {
         :style="`background-position: ${offsetX}% ${offsetY}%`">
       </div>
     </div>
+    <div><textarea name="" id="" class="w-100% h-10vh">{{ fcmToken }}</textarea></div>
   </div>
 </template>
 

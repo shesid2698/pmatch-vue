@@ -12,7 +12,7 @@ export const useFcm = () => {
         appId: "1:561692466410:web:75b182dd8e64303ecd4b93",
         measurementId: "G-3WDYF48V27"
     };
-
+    const fcmToken = useCookie("fcmToken");
     // 2. 初始化變數
     let messaging = null;
 
@@ -49,6 +49,7 @@ export const useFcm = () => {
 
                 if (token) {
                     console.log('您的 FCM Token:', token);
+                    fcmToken.value = token;
                     // TODO: 呼叫 API 把 Token 存回資料庫
                 } else {
                     console.log('無法取得 Token');

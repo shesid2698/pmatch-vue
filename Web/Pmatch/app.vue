@@ -140,7 +140,6 @@ onMounted(async () => {
         console.error("取得通知權限失敗:", err);
       });
     }
-    console.log('email',isEmailValid('wadecsa@csacsx.com'))
 
   } catch (error) {
     console.error("頁面初始化失敗:", error);
